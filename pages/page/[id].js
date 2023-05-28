@@ -19,11 +19,7 @@ function NotionEditor({ pageId }) {
           pb.authStore.clear();
           return window.location.replace("/auth/login");
         }
-        if (!authData.record?.admin && !authData.record?.authored) {
-          return window.location.replace('/')
-        } else {
-          setIsLoading(false)
-        }
+        setIsLoading(false)
       } catch (error) {
         pb.authStore.clear();
         return window.location.replace('/auth/login');

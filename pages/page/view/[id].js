@@ -18,9 +18,7 @@ export default function Viewer({ arti }) {
     useEffect(() => {
         async function fetchArticles() {
             try {
-                const record = await pb.collection('pages').getOne(arti.article, {
-                    expand: 'author',
-                });
+                const record = await pb.collection('pages').getOne(arti.article);
                 setArticleData(record.content)
                 setArticle(record)
                 setIsLoading(false)

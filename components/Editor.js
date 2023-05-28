@@ -33,14 +33,11 @@ function Editor(page) {
             async function fetchArticles() {
                 try {
                     const record = await pb.collection('pages').getOne(page.page);
-                    if (!pb.authStore.model.admin && pb.authStore.model.id !== record.author) {
-                        toast.warning("You can't edit this article!");
-                        setError(true);
-                        return;
-                    }
                     setEditorData(record.content);
                     setArticleTitle(record.title);
-                    setArticleHeader(`${process.env.NEXT_PUBLIC_POCKETURL}/api/files/pages/${page.page}/${record.header_img}`);
+                    if(record.header_img){
+                        setArticleHeader(`${process.env.NEXT_PUBLIC_POCKETURL}/api/files/pages/${page.page}/${record.header_img}`);
+                    }
                 } catch (error) {
                     toast.error('Could not get article data! Please do not attempt to save it', {
                         position: toast.POSITION.TOP_LEFT,

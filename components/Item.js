@@ -13,23 +13,38 @@ const MyComponent = ({ currPage }) => {
 
   useEffect(() => {
     async function getData() {
-      const records = await pb.collection('pages').getFullList({
-        sort: '-created',
-      });
+      const records = await pb.collection('pages')
+        .getFullList({
+          sort: '-created',
+        });
       setItems(records);
     }
     getData();
-
-    const unsubscribe = pb.collection('pages').subscribe('*', function (e) {
-      //console.log(e.record);
-      setItems(prevItems => {
-        // Remove any previous item with the same ID
-        const filteredItems = prevItems.filter(item => item.id !== e.record.id);
-        // Add the new record
-        return [...filteredItems, e.record];
+  
+    const unsubscribe = pb.collection('pages')
+      .subscribe('*', function (e) {
+        const updatedRecord = e.record;
+  
+        setItems(prevItems => {
+          // Remove any previous item with the same ID
+          const filteredItems = prevItems.filter(item => item.id !== updatedRecord.id);
+  
+          // Add the new record at the appropriate position based on its created date
+          let insertIndex = filteredItems.findIndex(item => item.created < updatedRecord.created);
+          if (insertIndex === -1) {
+            insertIndex = filteredItems.length;
+          }
+  
+          return [
+            ...filteredItems.slice(0, insertIndex),
+            updatedRecord,
+            ...filteredItems.slice(insertIndex)
+          ];
+        });
       });
-    });
+
   }, []);
+  
 
   const renderChildComponents = (parentId, level) => {
     const children = items.filter((item) => item.parentId === parentId);
@@ -71,6 +86,7 @@ const MyComponent = ({ currPage }) => {
 
   return (
     <div className={styles.itemroot}>
+      
       {rootParents.map((rootParent) => (
         <div key={rootParent.id} className={styles.itemscon}>
           <RootParentComponent
@@ -82,6 +98,19 @@ const MyComponent = ({ currPage }) => {
           </RootParentComponent>
         </div>
       ))}
+      <span
+          title='New page'
+          onClick={(e) => {
+            e.stopPropagation();
+            createNewPage(e, null);
+          }}
+          className={styles.createpage}
+        >
+          <svg xmlns='http://www.w3.org/2000/svg' height='20' viewBox='0 -960 960 960' width='20'>
+            <path d='M444-240v-204H240v-72h204v-204h72v204h204v72H516v204h-72Z' />
+          </svg>
+          Create page
+        </span>
     </div>
   );
 };

@@ -6,7 +6,6 @@ import Head from 'next/head';
 import dynamic from 'next/dynamic'
 import validator from 'validator';
 import Loader from '@/components/Loader'
-import { getPosition } from '@/lib/position.js'
 
 const Tc = dynamic(() => import('@/components/Termsandconditions'), {
     ssr: false, loading: () => <p>Loading...</p>,
@@ -93,20 +92,12 @@ export default function Login() {
             if (filteredUsername.error) {
                 return toast.error(`${filteredUsername.error}`)
             }
-            const response = await fetch('/api/botprotection');
-            const botdata = await response.json();
-            if (botdata.error) {
-                return toast.error('Bot protection failed!')
-            }
-            const { encryptedLocation } = await getPosition();
-
             const data = {
                 "username": filteredUsername,
                 "email": sanitizedEmail,
                 "emailVisibility": false,
                 "password": sanitizedPassword,
-                "passwordConfirm": sanitizedPassword,
-                "protection_data": true
+                "passwordConfirm": sanitizedPassword
 
             };
             setIsLoading(true)
@@ -128,20 +119,7 @@ export default function Login() {
                     }
                 );
                 const authDataaaa = await pb.collection('users').authRefresh();
-                try {
-                    const privatedata = {
-                        "user": response.id,
-                        "protection_data": {
-                            ...botdata,
-                            location: encryptedLocation
-                        }
-                    };
-
-                    const record = await pb.collection('private_data').create(privatedata);
-                    console.log(record)
-                } catch (error) {
-                    console.log(error)
-                }
+                
                 const response3 = await toast.promise(
                     pb.collection('users').requestVerification(email),
                     {
