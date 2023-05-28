@@ -1,0 +1,479 @@
+.main{
+    min-height: 100dvh;
+    padding: 4rem 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.main > button{
+    background-color: darkcyan;
+    color: rgb(233, 233, 233);
+    padding: 2vh;
+    border: 3px solid darkcyan;
+    border-radius: 10px;
+    font-weight: 600;
+}
+.main>button:hover{
+    background-color: rgba(0, 139, 139, 0.749);
+}
+
+.loginbox{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: bisque;
+    border-radius: 5px;
+    width: 390px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 77px 55px 33px;
+    box-shadow: 0 5px 10px 0 rgb(0 0 0 / 10%);
+    -moz-box-shadow: 0 5px 10px 0 rgba(0,0,0,.1);
+    -webkit-box-shadow: 0 5px 10px 0 rgb(0 0 0 / 10%);
+    -o-box-shadow: 0 5px 10px 0 rgba(0,0,0,.1);
+    -ms-box-shadow: 0 5px 10px 0 rgba(0,0,0,.1);
+}
+
+.loginbtn {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    min-width: 160px;
+    height: 50px;
+    background-color: #59d4af;
+    border: none;
+    border-radius: 25px;
+    font-family: 'Source Sans Pro';
+    font-size: 14px;
+    color: #fff;
+    line-height: 1.2;
+    text-transform: uppercase;
+    -webkit-transition: all .4s;
+    -o-transition: all .4s;
+    -moz-transition: all .4s;
+    transition: all .4s;
+    box-shadow: 0 10px 30px 0 rgba(89, 212, 183, 0.5);
+    -moz-box-shadow: 0 10px 30px 0 rgba(89, 198, 212, 0.5);
+    -webkit-box-shadow: 0 10px 30px 0 rgba(89, 212, 183, 0.5);
+    -o-box-shadow: 0 10px 30px 0 rgba(89, 210, 212, 0.5);
+    -ms-box-shadow: 0 10px 30px 0 rgba(89, 212, 200, 0.5);
+    margin: 3vh;
+    
+}
+
+.loginbtn:hover{
+        background-color: #1f9185;
+        box-shadow: 0 10px 30px 0 rgba(89, 191, 212, 0.8);
+        -moz-box-shadow: 0 10px 30px 0 rgba(89, 193, 212, 0.8);
+        -webkit-box-shadow: 0 10px 30px 0 rgba(89, 200, 212, 0.8);
+        -o-box-shadow: 0 10px 30px 0 rgba(89, 198, 212, 0.8);
+        -ms-box-shadow: 0 10px 30px 0 rgba(89, 196, 212, 0.8);
+    
+}
+
+.logincancel{
+    color: grey;
+    bottom: 0;
+    position: relative;
+    transition: all 2s cubic-bezier(0.94, 0, 0.51, 0.69);
+    text-decoration: none;
+background-image: linear-gradient(#b6b6b6, #464646);
+background-size: 0% 0.1em;
+background-position-y: 100%;
+background-position-x: 50%;
+background-repeat: no-repeat;
+transition: background-size 0.2s ease-in-out;
+}
+
+.logincancel:hover{
+    background-size: 100% 0.1em;
+    
+}
+
+@media (max-width: 600px) {
+    .loginbox{
+        width: 80%;
+    }
+}
+
+.login{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
+    background: #607D8B;
+}
+
+.login_box{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    grid-template-columns: 1fr;
+    background: #f1f5f9;
+}
+.login_box>.card{
+    grid-column: 1;
+}
+
+
+
+   .card {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    grid-column: 2;
+    padding: 1.9rem 1.2rem;
+    /* text-align: center; */
+    /* border-radius: 1em; */
+    font-size: 150% !important;
+    background: white;
+    color: black !important;
+    /* background-size: 400% 400%; */
+    /* animation: Auth_Authformbg__7kJJm 11s ease infinite; */
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+   
+   /*Inputs*/
+   .field {
+    margin-top: .5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5em;
+    background-color: transparent;
+    border: 1px solid #0000006b;
+    border-radius: 4px;
+    font-size: 16px;
+    padding: 1em;
+   }
+   
+   .inputicon {
+    height: 1em;
+    width: 1em;
+    fill: #7a5ad9;;
+   }
+   
+   .inputfield {
+    background: none;
+    border: none;
+    outline: none;
+    width: 100%;
+    color: #000000;
+    font-weight: 600;
+   }
+   .inputfield::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgb(123, 123, 123);
+    opacity: 1; /* Firefox */
+  }
+
+   .signup{
+    font-size: 60%;
+    color: #919191 ;
+    text-align: center;
+   }
+   .signuplink{
+    color: #1fdaff;
+   }
+   .signuplink:hover{
+    text-decoration: underline;
+    cursor: pointer;
+   }
+   /*Text*/
+   .title {
+    margin-bottom: 1rem;
+    font-size: 1.5em;
+    font-weight: 500;
+    color: #000000;
+   }
+   .buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+   }
+
+   .signupbtns{
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    align-items: center;
+   }
+
+   .tandccon{
+    display: grid;
+    text-align: center;
+    grid-template-columns: 1fr;
+    gap: 0.5em;
+    font-size: 12px;
+    width: 100%;
+    justify-items: center;
+    padding: 1em;
+    
+   }
+
+   .legalbtn{
+    color: inherit;
+    background: none;
+    border: none;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: inherit;
+   }
+
+   @media (max-width: 900px){
+    .login{
+        justify-items: center;
+        grid-template-columns: 1fr;
+    }
+    .card{
+        grid-column: auto;
+        width: 100%;
+        padding: 1em;
+    }
+   }
+   /*./pocketbase serve --http "192.168.86.178:8090"
+*/
+   /*Buttons*/
+   /*Login btn and default*/
+   .btn {
+    margin: 1rem;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: .8em;
+    text-transform: uppercase;
+    padding: 0.6em 1.2em;    
+    background-color: #7a5ad9;
+    color: #ffffff;
+    box-shadow: 0 8px 24px 0 rgb(255 235 167 / 20%);
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+   }
+   /*Logout btn*/
+   .crbtn{
+    margin: 1rem;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: .8em;
+    text-transform: uppercase;
+    padding: 0.6em 1.2em;
+    background-color: #ff4d4d;
+    color: #ffffff;
+    box-shadow: 0 8px 24px 0 rgb(255 235 167 / 20%);
+    transition: all .3s;
+    cursor: pointer;
+   }
+   /*oauth btn*/
+   .obtn {
+    margin: 1rem;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: .8em;
+    text-transform: uppercase;
+    padding: 0.6em 1.2em;
+    background-color: #afafaf;
+    color: #676767;
+    box-shadow: 0 8px 24px 0 rgb(255 235 167 / 20%);
+    transition: all .3s;
+    cursor: pointer;
+
+   }
+   /*the small things idk what for*/
+   .btnlink {
+    color: #f5f5f5;
+    display: block;
+    font-size: .75em;
+    transition: color .3s ease-out;
+   }
+   
+   /*Hover & focus*/
+   .field input:focus::placeholder {
+    opacity: 0;
+    transition: opacity .3s;
+   }
+   
+   .btn:hover {
+    background-color: #8666e6;
+    color: #ffffff;
+    transform: scale(1.02);
+   }
+   .btn:active{
+    transform: scale(0.93);
+   }
+   .obtn:hover {
+    background-color: #424242;
+    color: #75ffff;
+    box-shadow: 0 8px 24px 0 rgb(16 39 112 / 20%);
+    transform: scale(1.04);
+   }
+   .obtn:active{
+    transform: scale(0.93);
+   }
+   .crbtn:hover{
+    background-color: #cfcfcf;
+    color: #ff4d4d;
+    box-shadow: 0 8px 24px 0 rgb(16 39 112 / 20%);
+    transform: scale(1.04);
+   }
+   .crbtn:active{
+    transform: scale(0.93);
+   }
+   
+   .btnlink:hover {
+    color: #ffeba7;
+   }
+
+   .provi{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    justify-content: center;
+   }
+   
+   .avatar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: nowrap;
+   }
+   
+  .button{
+    padding: 0;
+    --button_radius: 0.75em;
+    --button_color: #e8e8e8;
+    --button_outline_color: #000000;
+    font-size: 17px;
+    font-weight: bold;
+    border: none;
+    border-radius: var(--button_radius);
+    background: var(--button_outline_color);
+    margin: 1vh 0;
+    width: 80%;
+  }
+
+  .finput{
+    display: none;
+  }
+
+  .button:hover .buttontop {
+    /* Pull the button upwards when hovered */
+    transform: translateY(-0.33em);
+  }
+  
+  .button:active .buttontop {
+    /* Push the button downwards when pressed */
+    transform: translateY(0);
+  }
+
+  .buttontop{
+    display: block;
+    box-sizing: border-box;
+    border: 2px solid var(--button_outline_color);
+    border-radius: var(--button_radius);
+    background: var(--button_color);
+    color: var(--button_outline_color);
+    transform: translateY(-0.2em);
+    transition: transform 0.1s ease;
+  }
+
+
+  .cbx {
+    position: relative;
+    top: 1px;
+    width: 27px;
+    height: 27px;
+    border: 1px solid #c8ccd4;
+    border-radius: 3px;
+    vertical-align: middle;
+    transition: background 0.1s ease;
+    cursor: pointer;
+    display: block;
+   }
+   
+   .cbx:after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 8px;
+    width: 7px;
+    height: 14px;
+    opacity: 0;
+    transform: rotate(45deg) scale(0);
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transition: all 0.3s ease;
+    transition-delay: 0.15s;
+   }
+   
+   .lbl {
+    margin-left: 5px;
+    vertical-align: middle;
+    cursor: pointer;
+   }
+   
+   .cbx2:checked ~ .cbx {
+    border-color: transparent;
+    background: #6871f1;
+    animation: jelly 0.6s ease;
+   }
+   
+.cbx2:checked ~ .cbx:after {
+    opacity: 1;
+    transform: rotate(45deg) scale(1);
+   }
+   
+   .cntr {
+    position: relative;
+   }
+   
+   @keyframes jelly {
+    from {
+     transform: scale(1, 1);
+    }
+   
+    30% {
+     transform: scale(1.25, 0.75);
+    }
+   
+    40% {
+     transform: scale(0.75, 1.25);
+    }
+   
+    50% {
+     transform: scale(1.15, 0.85);
+    }
+   
+    65% {
+     transform: scale(0.95, 1.05);
+    }
+   
+    75% {
+     transform: scale(1.05, 0.95);
+    }
+   
+    to {
+     transform: scale(1, 1);
+    }
+   }
+   
+   .hiddenxsup {
+    display: none!important;
+   }
+   

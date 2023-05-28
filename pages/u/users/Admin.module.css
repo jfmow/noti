@@ -1,0 +1,322 @@
+.container {
+    width: 100%;
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+}
+
+.header {
+    width: 100%;
+    margin-top: 10vh;
+    height: 30vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid_names {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.user_list_container {
+    padding: 2em;
+}
+
+.userlist {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 2em;
+    border: 3px solid gray;
+    border-radius: 1em;
+    margin: 2em;
+    background: #fff;
+    color: #000;
+    box-shadow: 0px 0px 13px 8px #1b2040;
+}
+
+.user {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    padding: 1em;
+    border-bottom: 1px solid gray;
+}
+
+.disabled_btn{
+    background: #ff3232;
+    border: none;
+    padding: 1em;
+    border-radius: 1em;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.enable_btn{
+    background: #58e46f;
+    border: none;
+    padding: 1em;
+    border-radius: 1em;
+    cursor: pointer;
+}
+.loading_btn{
+    background: #434343;
+    border: none;
+    padding: 1em;
+    border-radius: 1em;
+    cursor: pointer;
+}
+
+.filter {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 0.5em;    
+    justify-content: space-between;
+
+}
+
+.filter input {
+    background: #ffffff;
+    color: #000000;
+    border: 2px solid gray;
+    outline: none;
+    padding: 1em;
+    border-radius: 2em;
+    box-shadow: #e7e7e7 1px 1px 1px;
+}
+
+.filter input::placeholder {
+    color: gray;
+}
+
+
+
+
+.buttonred {
+    background-color: #eb2323 !important;
+  }
+  
+  .buttonred::after {
+    background-color: #f63b3b !important;
+  }
+  
+  .buttongreen {
+    background-color: #1d926f !important;
+  }
+  
+  .buttongreen::after {
+    background-color: #3bb994 !important;
+  }
+  
+  .buttongray {
+    background-color: #4f4f4f !important;
+  }
+  
+  .buttongray::after {
+    background-color: #919191 !important;
+  }
+  
+  .uploader .buttondefault {
+    width: 100% !important;
+    overflow: hidden;
+  }
+  
+  .buttondefault {
+    appearance: button;
+    background-color: #1899D6;
+    border: solid transparent;
+    border-radius: 16px;
+    border-width: 0 0 4px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: .8px;
+    line-height: 20px;
+    margin: 0;
+    outline: none;
+    overflow: visible;
+    padding: 13px 19px;
+    text-align: center;
+    text-transform: uppercase;
+    touch-action: manipulation;
+    transform: translateZ(0);
+    transition: filter .2s, transform 0.3s;
+    user-select: none;
+    -webkit-user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    min-width: 200px;
+  }
+  
+  .buttondefault:after {
+    background-clip: padding-box;
+    background-color: #1CB0F6;
+    border: solid transparent;
+    border-radius: 16px;
+    border-width: 0 0 4px;
+    bottom: -4px;
+    content: "";
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: -1;
+  }
+  
+  .buttondefault:main,
+  .buttondefault:focus {
+    user-select: auto;
+  }
+  
+  .buttondefault:hover:not(:disabled) {
+    filter: brightness(1.1);
+    transform: scale(1.02);
+  }
+  
+  .buttondefault:disabled {
+    cursor: not-allowed;
+  }
+  
+  .buttondefault:active:after {
+    border-width: 0 0 0px;
+  }
+  
+  .buttondefault:active {
+    padding-bottom: 10px;
+  }
+
+
+
+
+  
+.usrname_container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .usrname_bg {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .usrname_block {
+    background: #fff;
+    border-radius: 1em;
+    padding: 2em;
+    min-height: 10em;
+    width: 30em;
+    display: flex;
+    border: 1px solid rgb(219, 219, 219);
+    box-shadow: 1px 1px 17px 11px #eeeeee;
+    z-index: 20;
+    justify-content: flex-end;
+  }
+  
+  .usrname_block form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2em;
+    justify-items: start;
+    width: 100%;
+  }
+  
+  .usrname_edit_form {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 0.2em;
+  }
+  
+  .usrname_block form input {
+    border: none;
+    padding: 1em;
+    border-radius: 0.5em;
+    background: #f7f7f7;
+    color: #7a5ad9;
+    width: 100%;
+    height: 100%;
+    outline: none;
+  }
+  
+  .usrname_block form input::placeholder {
+    color: #919191;
+  }
+  
+  .usrname_block form input:focus-visible {
+    outline: 2px solid #4f4f4f;
+  }
+  
+  .usrclose_btn {
+    position: absolute;
+    background: none;
+    border: none;
+    margin: none;
+  }
+  
+  .usrclose_btn svg {
+    height: 1.5em;
+    width: 1.5em;
+    cursor: pointer;
+  }
+  
+  .usrclose_btn svg:hover {
+    fill: #919191;
+  }
+
+  @media(max-width: 800px){
+    .user_list_container{
+        padding: 0;
+    }
+    .filter{
+        flex-wrap: wrap;
+        gap: 1em;
+    }
+    .grid_names{
+        grid-template-columns: 1fr;
+    }
+    .userlist{
+        margin: 0;
+    }
+    .user{
+        grid-template-columns: 1fr;
+    }
+  }
+
+  .useroptions{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1em;
+    max-height: 50vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  .optionuser{
+    display: flex;
+    flex-direction: row;
+  }
+  .notdiv{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+  .notinput{
+    background: #e8e8e8;
+    color: #000;
+    border: none;
+    padding: 1em;
+  }

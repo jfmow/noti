@@ -1,0 +1,275 @@
+.container {
+  width: 100%;
+  min-height: 100dvh;
+  margin: 0;
+  margin-top: 10dvh;
+  padding: 0;
+}
+
+.create{
+  height: 100dvh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+.create::-webkit-scrollbar {
+  width: 2px;
+}
+
+/* Track */
+.create::-webkit-scrollbar-track {
+  background: #dedede;
+}
+
+/* Handle */
+.create::-webkit-scrollbar-thumb {
+  border-radius: 1em;
+  background: rgb(52, 228, 255);
+}
+
+/* Handle on hover */
+.create::-webkit-scrollbar-thumb:hover {
+  background: rgb(0, 225, 255);
+  
+}
+
+.creategrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 3em;
+  word-break: break-word;
+}
+
+.header {
+  width: 100%;
+  height: 40dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.formbuttons {
+  display: grid;
+  /* width: 100%; */
+  grid-template-columns: 1fr;
+  justify-items: center;
+  align-items: center;
+  grid-gap: 1em;
+  gap: 1em;
+  padding: 1em;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 2;
+}
+
+.submitbutton {
+  font-family: monospace;
+  background-color: #98A6D4;
+  color: #f63b3b;
+  border: none;
+  border-radius: 8px;
+  width: fit-content;
+  height: fit-content;
+  padding: 0 1vh;
+  transition: .3s;
+  fill: #fff;
+  /* min-width: 100px;*/
+}
+
+.submitbutton:hover {
+  background-color: #3bf6a2;
+  box-shadow: 0 0 0 5px #3bf67d5f;
+  color: #878787;
+  cursor: pointer;
+}
+
+
+.pubbutton {
+  background-color: #f63b3b;
+  color: #f63b3b;
+}
+
+.pubbutton:hover {
+  background-color: #f63b3b;
+  box-shadow: 0 0 0 5px #ff5b5b5f;
+  color: black;
+}
+
+.draftbutton {
+  background-color: rgb(188 255 212);
+  color: #20a04b;
+}
+
+
+
+
+.customfileupload {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.finput {
+  display: none;
+}
+
+.specialinputs {
+  display: flex;
+  justify-content: center;
+}
+
+.titleinput {
+  /* min-width: 40%; */
+  width: 100%;
+  resize: none;
+  outline: none;
+  background-color: transparent;
+  color: #ffffff;
+  border: none;
+  /* border-radius: 10px; */
+  padding: 10px;
+  /* font-family: monospace; */
+  font-size: 40px;
+  line-height: 1.5;
+  resize: none;/*
+  -webkit-text-shadow: 0 0 5px #000000;/*
+  /* text-shadow: 0 0 5px #9f86ff; */
+  text-align: center;
+  font-weight: 700;
+}
+
+.titleinput::placeholder {
+  text-shadow: none;
+  color: #8f8f8f;
+  font-weight: 600;
+}
+
+
+.containererror {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.containererror>h1 {
+  padding: 1em;
+}
+
+.backbutton {
+  display: flex;
+  height: 3em;
+  width: 100px;
+  align-items: center;
+  justify-content: center;
+  background-color: #eeeeee4b;
+  border-radius: 3px;
+  letter-spacing: 1px;
+  transition: all 0.2s linear;
+  cursor: pointer;
+  border: none;
+  background: #000;
+  color: white;
+}
+
+.backbutton>svg {
+  margin-right: 5px;
+  margin-left: 5px;
+  font-size: 20px;
+  transition: all 0.4s ease-in;
+  fill: white;
+}
+
+.backbutton:hover>svg {
+  font-size: 1.2em;
+  transform: translateX(-5px);
+}
+
+.backbutton:hover {
+  box-shadow: 9px 9px 33px #d1d1d1, -9px -9px 33px #ffffff;
+  transform: translateY(-2px);
+}
+
+@media(max-width: 800px) {
+  .formbuttons {
+    z-index: auto;
+    position: relative;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+
+
+.title {
+  width: 100%;
+  position: relative;
+  height: 30dvh;
+  background: linear-gradient(20deg, #5f10b3, #0f8e9e);
+  background-size: 100%;
+}
+
+.title img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.headerstuff {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+}
+
+
+.title h1 {
+  font-size: 4em;
+  /* text-align: center; */
+  color: white;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  word-break: break-all;
+
+}
+
+.title h4 {
+  color: white;
+  font-size: 1em;
+  text-align: center;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+.title p {
+  color: white;
+  font-size: 1rem;
+  text-align: center;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+@media(max-width: 900px) {
+  .headerstuff {
+    padding: 1em;
+  }
+
+  .title h1 {
+    font-size: 2em;
+  }
+
+  .title p h4 {
+    font-size: 0.8em;
+  }
+}
