@@ -273,3 +273,15 @@
     font-size: 0.8em;
   }
 }
+
+
+@media(max-width: 800px){
+  .create{
+    height: 100%;
+  }
+  .formbuttons{
+    position: fixed;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
