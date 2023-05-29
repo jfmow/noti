@@ -38,6 +38,8 @@ function Editor(page, preview) {
                         setArticleTitle(record.title);
                         if (record.header_img) {
                             setArticleHeader(`${process.env.NEXT_PUBLIC_POCKETURL}/api/files/preview/${page.page}/${record.header_img}`);
+                        } else {
+                            setArticleHeader(null)
                         }
                     } catch (error) {
                         toast.error('Could not get article data! Please do not attempt to save it', {
