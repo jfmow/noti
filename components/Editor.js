@@ -31,7 +31,7 @@ function Editor(page, preview) {
     useEffect(() => {
         if (page.page) {
             async function fetchArticles() {
-                if (preview) {
+                if (preview === 'true') {
                     try {
                         const record = await pb.collection('preview').getOne(page.page);
                         setEditorData(record.content);

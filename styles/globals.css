@@ -107,3 +107,9 @@ a {
     color-scheme: dark;
   }
 }
+
+@media(max-width: 800px){
+  .main{
+    grid-template-columns: 1fr;
+  }
+}

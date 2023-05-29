@@ -47,3 +47,9 @@
     object-position: center;
     overflow: hidden;
 }
+
+@media(max-width: 800px){
+    .nav_container{
+        position: fixed;
+    }
+}

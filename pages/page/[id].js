@@ -35,7 +35,7 @@ function NotionEditor({ pageId }) {
     <div>
       <div className='main'>
         <MyComponent currPage={pageId} />
-        <Editor page={pageId} />
+        <Editor page={pageId} preview='false' />
       </div>
     </div>
   );

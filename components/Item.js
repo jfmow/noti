@@ -93,34 +93,48 @@ const MyComponent = ({ currPage, preview }) => {
     //setItems((prevItems) => [...prevItems, record]);
   }
 
-  return (
-    <div className={styles.itemroot}>
+  const [visible, setVisible] = useState(true)
 
-      {rootParents.map((rootParent) => (
-        <div key={rootParent.id} className={styles.itemscon}>
-          <RootParentComponent
-            item={rootParent}
-            currPage={currPage}
-            createNewPage={createNewPage}
-          >
-            {renderChildComponents(rootParent.id, 0)}
-          </RootParentComponent>
-        </div>
-      ))}
-      <span
-        title='New page'
-        onClick={(e) => {
-          e.stopPropagation();
-          createNewPage(e, null);
-        }}
-        className={styles.createpage}
-      >
-        <svg xmlns='http://www.w3.org/2000/svg' height='20' viewBox='0 -960 960 960' width='20'>
-          <path d='M444-240v-204H240v-72h204v-204h72v204h204v72H516v204h-72Z' />
-        </svg>
-        Create page
-      </span>
-    </div>
+  return (
+    <>
+
+      <div className={styles.itemroot}>
+        {visible ? (
+        <button onClick={() => setVisible(false)} className={styles.hidebtn}>Hide</button>
+        ):(
+          <button onClick={() => setVisible(true)} className={styles.hidebtn}>Menu</button>
+        )}
+        {visible && (
+          <>
+            {rootParents.map((rootParent) => (
+              <div key={rootParent.id} className={styles.itemscon}>
+                <RootParentComponent
+                  item={rootParent}
+                  currPage={currPage}
+                  createNewPage={createNewPage}
+                >
+                  {renderChildComponents(rootParent.id, 0)}
+                </RootParentComponent>
+              </div>
+            ))}
+            <span
+              title='New page'
+              onClick={(e) => {
+                e.stopPropagation();
+                createNewPage(e, null);
+              }}
+              className={styles.createpage}
+            >
+              <svg xmlns='http://www.w3.org/2000/svg' height='20' viewBox='0 -960 960 960' width='20'>
+                <path d='M444-240v-204H240v-72h204v-204h72v204h204v72H516v204h-72Z' />
+              </svg>
+              Create page
+            </span>
+          </>
+        )}
+      </div>
+
+    </>
   );
 };
 
