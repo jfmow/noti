@@ -21,7 +21,7 @@
   align-items: center;
   padding: 0 2em;
   /*background: linear-gradient(#3F51B5, transparent);*/
-  background: #2c3e50;
+  background: #C5D5EA;
 }
 
 
@@ -424,6 +424,7 @@
   .forms {
     grid-template-columns: 1fr;
     margin: 1em;
+    margin-top: -7dvh;
   }
 
   .forms>form {

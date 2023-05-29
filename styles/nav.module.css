@@ -7,7 +7,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    background: #2c3e50;
+    background: #7392B7;
     height: 9dvh;
     justify-content: space-between;
     padding: 0 10%;
@@ -25,7 +25,7 @@
 }
 .navitems_item{
     cursor: pointer;
-    color: #FFC107;
+    color: #D8E1E9;
     transition: 0.3s all;
 }
 .navitems_item:hover{

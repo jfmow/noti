@@ -38,7 +38,7 @@ export default function Login() {
         pb.authStore.clear()
         return window.location.replace('/u/disabled')
       }
-      return window.location.replace(prevPage)
+      return window.location.replace('/pages')
     } catch (error) {
       // Handle errors appropriately
       console.log(error);
@@ -52,12 +52,7 @@ export default function Login() {
 
   async function oAthLogin() {
     const authData = await pb.collection('users').authWithOAuth2({ provider: 'github' });
-    try {
-      await getUserData(authData.record)
-    } catch (error) {
-      return window.location.replace(prevPage)
-    }
-    return window.location.replace(prevPage)
+    return window.location.replace('/pages')
   }
 
   const status = pb.authStore.isValid

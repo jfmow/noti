@@ -140,7 +140,7 @@ transition: background-size 0.2s ease-in-out;
     /* text-align: center; */
     /* border-radius: 1em; */
     font-size: 150% !important;
-    background: white;
+    background: #C5D5EA;
     color: black !important;
     /* background-size: 400% 400%; */
     /* animation: Auth_Authformbg__7kJJm 11s ease infinite; */
@@ -239,11 +239,16 @@ transition: background-size 0.2s ease-in-out;
     .login{
         justify-items: center;
         grid-template-columns: 1fr;
+        height: 100dvh;
     }
     .card{
         grid-column: auto;
         width: 100%;
         padding: 1em;
+    }
+    .login_box{
+        height: 100dvh;
+
     }
    }
    /*./pocketbase serve --http "192.168.86.178:8090"
@@ -399,7 +404,7 @@ transition: background-size 0.2s ease-in-out;
     top: 1px;
     width: 27px;
     height: 27px;
-    border: 1px solid #c8ccd4;
+    border: 1px solid #000000;
     border-radius: 3px;
     vertical-align: middle;
     transition: background 0.1s ease;

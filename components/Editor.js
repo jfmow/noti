@@ -18,7 +18,9 @@ import Loader from './Loader';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 
-function Editor(page, preview) {
+function Editor({ page, preview }) {
+    console.log(preview)
+    console.log(page)
     const editorRef = useRef(null);
     const [editor, setEditor] = useState(null);
     const [editorData, setEditorData] = useState({});
@@ -29,15 +31,15 @@ function Editor(page, preview) {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        if (page.page) {
+        if (page) {
             async function fetchArticles() {
                 if (preview === 'true') {
                     try {
-                        const record = await pb.collection('preview').getOne(page.page);
+                        const record = await pb.collection('preview').getOne(page);
                         setEditorData(record.content);
                         setArticleTitle(record.title);
                         if (record.header_img) {
-                            setArticleHeader(`${process.env.NEXT_PUBLIC_POCKETURL}/api/files/preview/${page.page}/${record.header_img}`);
+                            setArticleHeader(`${process.env.NEXT_PUBLIC_POCKETURL}/api/files/preview/${page}/${record.header_img}`);
                         } else {
                             setArticleHeader(null)
                         }
@@ -49,22 +51,24 @@ function Editor(page, preview) {
                         setError(true);
                     }
                 } else {
-                try {
-                    const record = await pb.collection('pages').getOne(page.page);
-                    setEditorData(record.content);
-                    setArticleTitle(record.title);
-                    if (record.header_img) {
-                        setArticleHeader(`${process.env.NEXT_PUBLIC_POCKETURL}/api/files/pages/${page.page}/${record.header_img}`);
+                    try {
+                        const record = await pb.collection('pages').getOne(page);
+                        setEditorData(record.content);
+                        setArticleTitle(record.title);
+                        if (record.header_img) {
+                            setArticleHeader(`${process.env.NEXT_PUBLIC_POCKETURL}/api/files/pages/${page}/${record.header_img}`);
+                        } else{
+                            setArticleHeader(null)
+                        }
+                        setError(false)
+                    } catch (error) {
+                        toast.error('Could not get page data! Please do not attempt to save it', {
+                            position: toast.POSITION.TOP_LEFT,
+                        });
+                        console.log(error);
+                        setError(true);
                     }
-                    setError(false)
-                } catch (error) {
-                    toast.error('Could not get page data! Please do not attempt to save it', {
-                        position: toast.POSITION.TOP_LEFT,
-                    });
-                    console.log(error);
-                    setError(true);
                 }
-            }
             }
             fetchArticles();
             setIsLoading(false)
@@ -220,7 +224,7 @@ function Editor(page, preview) {
                 }
             }
         };
-    }, [editorData, page.page]);
+    }, [editorData, page]);
 
     async function handleSaveArticle() {
         const articleContent = await editor.saver.save();
@@ -229,9 +233,9 @@ function Editor(page, preview) {
         formData.append("title", articleTitle);
         formData.append("content", JSON.stringify(articleContent));
 
-        if (page.page) {
+        if (page) {
             try {
-                await pb.collection('pages').update(page.page, formData);
+                await pb.collection('pages').update(page, formData);
                 toast.success('Saved successfully!', {
                     position: toast.POSITION.BOTTOM_LEFT,
                 });
@@ -266,7 +270,7 @@ function Editor(page, preview) {
     }
 
     async function handleDeleteArticle() {
-        await pb.collection('pages').delete(page.page);
+        await pb.collection('pages').delete(page);
         router.replace('/');
     }
 
@@ -310,7 +314,7 @@ function Editor(page, preview) {
                 if (compressedFile.size > 4508876.8) {
                     return toast.error('Compresed file too big!')
                 }
-                await pb.collection('pages').update(page.page, formData);
+                await pb.collection('pages').update(page, formData);
             } catch (error) {
                 toast.error('Error uploading header img', {
                     position: toast.POSITION.TOP_LEFT,
@@ -347,7 +351,7 @@ function Editor(page, preview) {
     return (
         <div className={styles.create}>
             <Head>
-                <title>{page.page ? 'Edit Article' : 'Create Article'}</title>
+                <title>{page ? 'Edit Article' : 'Create Article'}</title>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>

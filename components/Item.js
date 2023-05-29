@@ -28,7 +28,6 @@ const MyComponent = ({ currPage, preview }) => {
       }
     }
     getData();
-    if (!preview) {
       const unsubscribe = pb.collection('pages')
         .subscribe('*', function (e) {
           const updatedRecord = e.record;
@@ -50,7 +49,6 @@ const MyComponent = ({ currPage, preview }) => {
             ];
           });
         });
-    }
 
   }, []);
 

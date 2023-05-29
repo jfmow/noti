@@ -1,4 +1,3 @@
-import Loader from '@/components/Loader';
 import dynamic from 'next/dynamic';
 import PocketBase from 'pocketbase'
 import { useEffect, useState } from 'react';
@@ -9,15 +8,11 @@ const Editor = dynamic(() => import('../../components/Editor'), {
   ssr: false,
 });
 function NotionEditor({ pageId }) {
-  const [isLoading, setIsLoading] = useState(false);
-  if (isLoading) {
-    return (<Loader />)
-  }
   return (
     <div>
       <div className='main'>
         <MyComponent preview='true'/>
-        <Editor preview='true' page={pageId} />
+        <Editor preview='true' page={pageId.toString()} />
       </div>
     </div>
   );
@@ -27,7 +22,6 @@ export default NotionEditor;
 
 
 import styles from '@/styles/Home.module.css';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 
@@ -51,29 +45,6 @@ const MyComponent = ({ currPage, preview }) => {
       }
     }
     getData();
-    if (!preview) {
-      const unsubscribe = pb.collection('pages')
-        .subscribe('*', function (e) {
-          const updatedRecord = e.record;
-
-          setItems(prevItems => {
-            // Remove any previous item with the same ID
-            const filteredItems = prevItems.filter(item => item.id !== updatedRecord.id);
-
-            // Add the new record at the appropriate position based on its created date
-            let insertIndex = filteredItems.findIndex(item => item.created < updatedRecord.created);
-            if (insertIndex === -1) {
-              insertIndex = filteredItems.length;
-            }
-
-            return [
-              ...filteredItems.slice(0, insertIndex),
-              updatedRecord,
-              ...filteredItems.slice(insertIndex)
-            ];
-          });
-        });
-    }
 
   }, []);
 
