@@ -110,7 +110,7 @@ transition: background-size 0.2s ease-in-out;
     display: grid;
     justify-content: center;
     align-items: center;
-    min-height: 91dvh;
+    min-height: 100dvh;
     width: 100%;
     grid-template-columns: 1fr 1fr;
     background: #607D8B;
@@ -120,7 +120,7 @@ transition: background-size 0.2s ease-in-out;
     display: grid;
     justify-content: center;
     align-items: center;
-    min-height: 91dvh;
+    min-height: 100dvh;
     width: 100%;
     grid-template-columns: 1fr;
     background: #f1f5f9;
@@ -151,16 +151,22 @@ transition: background-size 0.2s ease-in-out;
    
    /*Inputs*/
    .field {
-    margin-top: .5rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: .5em;
-    background-color: transparent;
-    border: 1px solid #0000006b;
-    border-radius: 4px;
+    gap: 0;
+    background-color: white;
+    border: none;
     font-size: 16px;
     padding: 1em;
+    gap: 0.5em;/*
+    margin-top: 3px;*/
+   }
+   .field_start{
+    border-radius: 5px 5px 0 0;
+   }
+   .field_end{
+    border-radius: 0 0 5px 5px;
    }
    
    .inputicon {
@@ -188,7 +194,7 @@ transition: background-size 0.2s ease-in-out;
     text-align: center;
    }
    .signuplink{
-    color: #1fdaff;
+    color: #00bcd4;
    }
    .signuplink:hover{
     text-decoration: underline;
@@ -200,6 +206,7 @@ transition: background-size 0.2s ease-in-out;
     font-size: 1.5em;
     font-weight: 500;
     color: #000000;
+    font-family: 'Anton';
    }
    .buttons{
     display: flex;

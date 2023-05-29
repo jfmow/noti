@@ -8,7 +8,7 @@ export default async function addSub(req, res) {
     //  },
     //})
     console.log(req.body.data)
-    await fetch("https://notidb.suddsy.dev/api/collections/subscriptions/records", {
+    await fetch(`${process.env.NEXT_PUBLIC_POCKETURL}/api/collections/subscriptions/records`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

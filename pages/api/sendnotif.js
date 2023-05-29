@@ -7,7 +7,7 @@ export default async function sendNotif(req, res) {
   try {
     const userIds = JSON.parse(req.body).user.id; // Get the user IDs array from req.body
 
-    const subs = await fetch(`https://notidb.suddsy.dev/api/collections/subscriptions/records`, {
+    const subs = await fetch(`${process.env.NEXT_PUBLIC_POCKETURL}/api/collections/subscriptions/records`, {
       method: "GET",
       headers: {
         Authorization: JSON.parse(req.body).user.token, // Set the Authorization header

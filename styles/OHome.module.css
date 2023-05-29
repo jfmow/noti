@@ -2,7 +2,7 @@
 
 /* Header styles */
 .header {
-  height: 91dvh;
+  height: 100dvh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -48,6 +48,7 @@
   overflow: hidden;
   transition-duration: .3s;
   font-size: 20px;
+  border-radius: 5px;
 }
 
 .svgIcon {
@@ -69,6 +70,7 @@
   top: 0;
   transition-duration: .3s;
   mix-blend-mode: difference;
+  border-radius: 5px;
 }
 
 .Btn:hover::before {

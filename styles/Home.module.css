@@ -121,9 +121,29 @@
     border: none;
 }
 
+.usrsettings{
+  background: none;
+  border: none;
+  position: absolute;
+  bottom: 1em;
+  left: 1em;
+  cursor: pointer;
+}
+
+.usrsettinghidden{
+  display: none;
+}
+
 @media(max-width: 800px){
-  .itemroot{
-    margin-top: 9dvh;
+  .usrsettings{
+    background: none;
+    border: none;
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    cursor: pointer;
+    bottom: auto;
+    left: auto;
   }
   .hidebtn{
     display: block;

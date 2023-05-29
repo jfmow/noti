@@ -114,3 +114,31 @@ a {
     height: 100dvh;
   }
 }
+
+@font-face {
+  font-family: "Anton";
+  src: url('../fonts/Anton-Regular.ttf');
+}
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #dedede;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 1em;
+  background: rgb(157, 212, 220);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(0, 225, 255);
+  
+}

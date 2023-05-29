@@ -78,11 +78,11 @@ export default function Login() {
         <div className={styles.card}>
           <h4 className={styles.title}>Login!</h4>
           <form onSubmit={auth}>
-            <div className={styles.field}>
+            <div className={`${styles.field} ${styles.field_start}`}>
               <svg className={styles.inputicon} xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48"><path d="M480 575q-66 0-108-42t-42-108q0-66 42-108t108-42q66 0 108 42t42 108q0 66-42 108t-108 42ZM220 896q-25 0-42.5-17.5T160 836v-34q0-38 19-65t49-41q67-30 128.5-45T480 636q62 0 123 15.5T731 696q31 14 50 41t19 65v34q0 25-17.5 42.5T740 896H220Z" /></svg>
               <input required autoComplete="off" id="logemail" value={email} placeholder="Email or Username" className={styles.inputfield} name="email" type="text" onChange={event => setEmail(event.target.value)} />
             </div>
-            <div className={styles.field}>
+            <div className={`${styles.field} ${styles.field_end}`}>
               <svg className={styles.inputicon} viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
                 <path d="M80 192V144C80 64.47 144.5 0 224 0C303.5 0 368 64.47 368 144V192H384C419.3 192 448 220.7 448 256V448C448 483.3 419.3 512 384 512H64C28.65 512 0 483.3 0 448V256C0 220.7 28.65 192 64 192H80zM144 192H304V144C304 99.82 268.2 64 224 64C179.8 64 144 99.82 144 144V192z"></path></svg>
               <input autoComplete="off" value={password} id="logpass" placeholder="Password" className={styles.inputfield} name="password" type="password" onChange={event => setPassword(event.target.value)} required />
@@ -95,6 +95,7 @@ export default function Login() {
 
             <p className={styles.signup}>Forgot password? <a className={styles.signuplink} href='/auth/pwdreset'>Reset</a></p>
             <p className={styles.signup}>New here? <Link className={styles.signuplink} href='/auth/signup'>Signup</Link></p>
+            <Link href='/'><p className={styles.signup}>Cancel</p></Link>
           </form>
 
         </div>

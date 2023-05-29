@@ -1,17 +1,23 @@
 .nav_container{
-    position: sticky;
+    position: fixed;
     top: 0;
-    left: 0;
-    right: 0;
+    left: 50%;
+    gap: 2em;
+    right: 50%;
     z-index: 10;
     display: flex;
     flex-direction: row;
     align-items: center;
-    background: #7392B7;
-    height: 9dvh;
-    justify-content: space-between;
-    padding: 0 10%;
+    background: linear-gradient(39deg, #7392b7b5 50%, #00bcd4b8 50%);
+    /* height: 9dvh; */
+    justify-content: center;
+    padding: 1em 4em;
+    margin-top: 1dvh;
+    -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
+    width: fit-content;
+    transform: translate(-50%, -0%);
+    border-radius: 5em;
 }
 .navitems{
     display: flex;

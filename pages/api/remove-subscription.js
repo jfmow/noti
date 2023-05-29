@@ -5,7 +5,7 @@ export default async function unSub(req, res) {
     return res.status(429).send('Not allowed!')
   }
   try {
-    const subs = await fetch("https://notidb.suddsy.dev/api/collections/subscriptions/records", {
+    const subs = await fetch(`${process.env.NEXT_PUBLIC_POCKETURL}/api/collections/subscriptions/records`, {
       method: "GET",
       headers: {
         Authorization: req.body.user.token, // Set the Authorization header
@@ -15,7 +15,7 @@ export default async function unSub(req, res) {
     const items = data.items.filter(item => item.endpoint.trim() === req.body.data.endpoint.trim());
     items.forEach(async item => {
       console.log(item);
-      await fetch(`https://notidb.suddsy.dev/api/collections/subscriptions/records/${item.id}`, {
+      await fetch(`${process.env.NEXT_PUBLIC_POCKETURL}/api/collections/subscriptions/records/${item.id}`, {
         method: "DELETE",
         headers: {
           Authorization: req.body.user.token, // Set the Authorization header

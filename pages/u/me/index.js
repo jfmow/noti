@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import Loader from '@/components/Loader';
 import Head from 'next/head';
 import Link from 'next/link';
+import Nav from '@/components/Nav';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
@@ -27,6 +28,7 @@ export default function Account() {
           return window.location.replace('/u/disabled')
         }
         setIsLoading(false)
+
       } catch (error) {
         pb.authStore.clear();
         return window.location.replace('/auth/login');
@@ -47,22 +49,26 @@ export default function Account() {
 
 
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Settings: {pb.authStore.model?.username}</title>
-        <link rel="favicon" href="/favicon.ico" />
-        <meta name="robots" content="noindex"></meta>
-      </Head>
-      <main className={styles.main}>
-        <h1>My Account</h1>
-      </main>
-      <div className={styles.forms}>
-        <AvatarForm />
-        <AccManagementForm />
-      </div>
-      <button className={styles.logoutbtn} onClick={clearAuthStore}>Logout</button>
+    <>
+      <Nav />
+      <div className={styles.container}>
+        <Head>
+          <title>Settings: {pb.authStore.model?.username}</title>
+          <link rel="favicon" href="/favicon.ico" />
+          <meta name="robots" content="noindex"></meta>
+        </Head>
 
-    </div>
+        <main className={styles.main}>
+          <h1>My Account</h1>
+        </main>
+        <div className={styles.forms}>
+          <AvatarForm />
+          <AccManagementForm />
+        </div>
+        <button className={styles.logoutbtn} onClick={clearAuthStore}>Logout</button>
+
+      </div>
+    </>
   )
 }
 
@@ -175,6 +181,11 @@ function AccManagementForm() {
 
   async function deleteAccount(e) {
     e.preventDefault();
+    //  await pb.send("/hello", {
+    //    // for all possible options check
+    //    // https://developer.mozilla.org/en-US/docs/Web/API/fetch#options
+    //    query: { "abc": 123 },
+    //});
 
     try {
       const response = await toast.promise(
@@ -470,12 +481,12 @@ async function postToServer(url, data) {
 const urlB64ToUint8Array = (base64String) => {
   const padding = '='.repeat((4 - base64String.length % 4) % 4);
   const base64 = (base64String + padding)
-      .replace(/\-/g, '+')
-      .replace(/_/g, '/');
+    .replace(/\-/g, '+')
+    .replace(/_/g, '/');
   const rawData = window.atob(base64);
   const outputArray = new Uint8Array(rawData.length);
   for (let i = 0; i < rawData.length; ++i) {
-      outputArray[i] = rawData.charCodeAt(i);
+    outputArray[i] = rawData.charCodeAt(i);
   }
   return outputArray;
 };

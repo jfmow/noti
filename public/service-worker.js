@@ -49,6 +49,7 @@
 
 self.addEventListener('push', (event) => {
   let notification = event.data.json();
+
   
   const notificationOptions = {
     title: notification.title,

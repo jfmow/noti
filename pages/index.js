@@ -3,6 +3,7 @@ import styles from '@/styles/OHome.module.css';
 import Link from 'next/link';
 import PocketBase from 'pocketbase'
 import { useEffect } from 'react';
+import Nav from '@/components/Nav';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
@@ -28,6 +29,7 @@ const Home = () => {
   }, []);
   return (
     <div>
+      <Nav/>
       <header className={styles.header}>
         <div className={styles.headerContent}>
           <h3 className={styles.subtitle}>Welcome to</h3>
