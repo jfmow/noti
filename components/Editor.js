@@ -18,7 +18,7 @@ import Loader from './Loader';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 
-function Editor(page) {
+function Editor(page, preview) {
     const editorRef = useRef(null);
     const [editor, setEditor] = useState(null);
     const [editorData, setEditorData] = useState({});
@@ -31,11 +31,27 @@ function Editor(page) {
     useEffect(() => {
         if (page.page) {
             async function fetchArticles() {
+                if (preview) {
+                    try {
+                        const record = await pb.collection('preview').getOne(page.page);
+                        setEditorData(record.content);
+                        setArticleTitle(record.title);
+                        if (record.header_img) {
+                            setArticleHeader(`${process.env.NEXT_PUBLIC_POCKETURL}/api/files/preview/${page.page}/${record.header_img}`);
+                        }
+                    } catch (error) {
+                        toast.error('Could not get article data! Please do not attempt to save it', {
+                            position: toast.POSITION.TOP_LEFT,
+                        });
+                        console.log(error);
+                        setError(true);
+                    }
+                } else {
                 try {
                     const record = await pb.collection('pages').getOne(page.page);
                     setEditorData(record.content);
                     setArticleTitle(record.title);
-                    if(record.header_img){
+                    if (record.header_img) {
                         setArticleHeader(`${process.env.NEXT_PUBLIC_POCKETURL}/api/files/pages/${page.page}/${record.header_img}`);
                     }
                 } catch (error) {
@@ -45,6 +61,7 @@ function Editor(page) {
                     console.log(error);
                     setError(true);
                 }
+            }
             }
             fetchArticles();
             setIsLoading(false)
@@ -205,7 +222,7 @@ function Editor(page) {
     async function handleSaveArticle() {
         const articleContent = await editor.saver.save();
         let formData = new FormData();
-        
+
         formData.append("title", articleTitle);
         formData.append("content", JSON.stringify(articleContent));
 
@@ -257,10 +274,10 @@ function Editor(page) {
     async function handleFileChange(e) {
         const file = e.target.files[0];
         setSelectedFile(file);
-    
+
         const reader = new FileReader();
         reader.onload = (event) => {
-          setArticleHeader(event.target.result);
+            setArticleHeader(event.target.result);
         };
         reader.readAsDataURL(file);
         let formData = new FormData();
@@ -298,7 +315,7 @@ function Editor(page) {
 
             }
         }
-      }
+    }
 
     if (isError) {
         return (<div>

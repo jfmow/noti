@@ -8,12 +8,12 @@
     flex-direction: row;
     align-items: center;
     background: #2c3e50;
-    height: 7dvh;
+    height: 9dvh;
     justify-content: space-between;
+    padding: 0 10%;
     backdrop-filter: blur(5px);
 }
 .navitems{
-    padding: 1.5em 3em;
     display: flex;
     
     /* width: fit-content; */
@@ -34,4 +34,16 @@
 
 .navitems_useraccount{
 
+}
+
+
+.usericon{
+    width: 2.5em;
+    height: 2.5em;
+    border: 3px solid #ededed;
+    border-radius: 50%;
+    transition: border 0.3s;
+    object-fit: cover;
+    object-position: center;
+    overflow: hidden;
 }

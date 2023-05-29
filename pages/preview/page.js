@@ -1,10 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import styles from '@/styles/Home.module.css';
-import Link from 'next/link';
-import PocketBase from 'pocketbase';
-
+import Loader from '@/components/Loader';
+import dynamic from 'next/dynamic';
+import PocketBase from 'pocketbase'
+import { useEffect, useState } from 'react';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
+
+const Editor = dynamic(() => import('../../components/Editor'), {
+  ssr: false,
+});
+function NotionEditor({ pageId }) {
+  const [isLoading, setIsLoading] = useState(false);
+  if (isLoading) {
+    return (<Loader />)
+  }
+  return (
+    <div>
+      <div className='main'>
+        <MyComponent preview='true'/>
+        <Editor preview='true' />
+      </div>
+    </div>
+  );
+}
+
+export default NotionEditor;
+
+
+import styles from '@/styles/Home.module.css';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 
@@ -82,15 +105,7 @@ const MyComponent = ({ currPage, preview }) => {
   const rootParents = items.filter((item) => item.parentId === '');
 
   async function createNewPage(e, parent) {
-    const data = {
-      parentId: parent,
-      owner: pb.authStore.model.id,
-    };
-    const record = await pb.collection('pages').create(data);
-    //console.log(record.id);
-
-    // Update the items state by adding the new record
-    //setItems((prevItems) => [...prevItems, record]);
+    toast.info('New page would be created')
   }
 
   return (
@@ -149,7 +164,7 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
   const router = useRouter()
   function openPage(e, item) {
     e.preventDefault()
-    router.push(`/page/${item}`)
+    router.push(`/preview/${item}`)
   }
 
 
@@ -236,5 +251,3 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
 
   );
 };
-
-export default MyComponent;
