@@ -4,8 +4,8 @@
     "display": "standalone",
     "scope": "/",
     "start_url": "/",
-    "name": "News",
-    "short_name": "jmnews",
+    "name": "Noti-jm",
+    "short_name": "Noti",
     "icons": [
         {
             "src": "/icon-192x192.png",
