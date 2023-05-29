@@ -98,7 +98,7 @@ const MyComponent = ({ currPage, preview }) => {
   return (
     <>
 
-      <div className={styles.itemroot}>
+      <div className={`${styles.itemroot} ${!visible && styles.itemrootoff}`}>
         {visible ? (
         <button onClick={() => setVisible(false)} className={styles.hidebtn}>Hide</button>
         ):(

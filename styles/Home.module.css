@@ -112,6 +112,15 @@
     color: #000;
 }
 
+.itemrootoff{
+  position: fixed;
+    z-index: 11;
+    top: 0;
+    /* left: 0; */
+    background: none;
+    border: none;
+}
+
 @media(max-width: 800px){
   .itemroot{
     margin-top: 9dvh;
