@@ -6,16 +6,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #C5D5EA;
+  background: radial-gradient(#C5D5EA , #00BCD4);
   color: #fff;
   font-size: 200%;
 }
 
 .headerContent {
   text-align: center;
-  gap: 10px;
-  display: flex;
-  flex-direction: column;
+    height: 100%;
+    gap: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(130px);
+    justify-content: center;
+    align-items: center;
 }
 
 .subtitle {
@@ -32,14 +37,14 @@
 }
 
 .Btn {
-  width: 100%;
+  width: 300px;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgb(15, 15, 15);
+  background-color:  white;
   border: none;
-  color: white;
+  color: rgb(0, 0, 0);
   font-weight: 600;
   gap: 8px;
   cursor: pointer;
@@ -60,7 +65,7 @@
 }
 
 .Btn::before {
-  width: 100%;
+  width: 300px;
   height: 130px;
   position: absolute;
   content: "";
@@ -92,8 +97,11 @@
   flex-direction: column;
   align-items: center;
   gap: 30dvh;
-  background: #B3C5D7;
+  background: #fff;
+  z-index: 2;
+  position: relative;
 }
+
 
 .section1 {
   margin-top: calc(-10dvh - 2em);
@@ -153,7 +161,10 @@
 
 
 .section3 .content1 {
-  background: #fff;
+  background: url('https://pocket.suddsy.dev/api/files/70b5uqgjjraese3/lv34q4eywvau7f4/c495b563_7143_45d0_8a3f_ab71f3b4936e_dO448tokIx.jfif');
+  background-position: center;
+  object-fit: cover;
+  color: #fff;
   height: 100%;
   border-radius: 1em;
   box-shadow: 0px 0px 15px 4px #a2ffff;
@@ -166,8 +177,11 @@
   text-align: center;
 }
 .section3 .content2 {
-  background: #fff;
+  background: url('https://pocket.suddsy.dev/api/files/70b5uqgjjraese3/lv34q4eywvau7f4/21ca70be_989c_4295_983a_6ad3377f9b49_iFDvsu7sHx.jfif');
   height: 100%;
+  background-position: center;
+  object-fit: cover;
+  color: #fff;
   border-radius: 1em;
   box-shadow: 0px 0px 15px 4px #cca2ff;
   padding: 2em;
@@ -179,8 +193,11 @@
   text-align: center;
 }
 .section3 .content3 {
-  background: #fff;
+  background: url('https://pocket.suddsy.dev/api/files/70b5uqgjjraese3/lv34q4eywvau7f4/c218bb06_90c9_4e29_8c15_a2ce7cf7ecdb_84kefUq5fV.jfif');
   height: 100%;
+  background-position: center;
+  object-fit: cover;
+  color: #fff;
   border-radius: 1em;
   box-shadow: 0px 0px 15px 4px #ffa2a2;
   padding: 2em;
@@ -192,8 +209,11 @@
   text-align: center;
 }
 .section3 .content4 {
-  background: #fff;
+  background: url('https://pocket.suddsy.dev/api/files/70b5uqgjjraese3/lv34q4eywvau7f4/cda16c8b_f187_4b17_9587_84c0b1aa3c4e_cge1mgXtIy.jfif');
   height: 100%;
+  background-position: center;
+  object-fit: cover;
+  color: #fff;
   border-radius: 1em;
   box-shadow: 0px 0px 15px 4px #a7ffa2;
   padding: 2em;
@@ -226,7 +246,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #B3C5D7;
+  background: #ffffff;
 }
 
 

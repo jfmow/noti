@@ -52,6 +52,7 @@ const Home = () => {
         </div>
         <div className={styles.section3}>
           <div className={styles.content1}>
+            
             <div className={styles.idk}>
               <h1>Super simple</h1>
             </div>
