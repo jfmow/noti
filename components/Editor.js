@@ -14,13 +14,12 @@ import AttachesTool from '@editorjs/attaches';
 import PocketBase from 'pocketbase';
 import styles from '@/styles/Create.module.css';
 import Loader from './Loader';
+import Embed from '@editorjs/embed';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 
 function Editor({ page, preview }) {
-    console.log(preview)
-    console.log(page)
     const editorRef = useRef(null);
     const [editor, setEditor] = useState(null);
     const [editorData, setEditorData] = useState({});
@@ -57,7 +56,7 @@ function Editor({ page, preview }) {
                         setArticleTitle(record.title);
                         if (record.header_img) {
                             setArticleHeader(`${process.env.NEXT_PUBLIC_POCKETURL}/api/files/pages/${page}/${record.header_img}`);
-                        } else{
+                        } else {
                             setArticleHeader(null)
                         }
                         setError(false)
@@ -78,6 +77,18 @@ function Editor({ page, preview }) {
         }
     }, [page]);
 
+    const pdfService = {
+        regex: /https?:\/\/notidb\.suddsy\.dev\/api\/files\/videos\/[^\/]+\/([^\/\?\&]*)\.pdf/,
+        embedUrl: '<%= remote_id %>',
+        html: '<iframe src="<%= embed_url %>" width="100%" height="600px" frameborder="0" scrolling="auto"></iframe>',
+        height: 600,
+        width: '100%',
+        id: (groups) => groups[1]
+    };
+
+
+
+
     useEffect(() => {
         if (editorRef.current && (editorData == null || Object.keys(editorData).length > 0)) {
             const editorInstance = new EditorJS({
@@ -86,6 +97,23 @@ function Editor({ page, preview }) {
                     header: {
                         class: Header,
                         inlineToolbar: true,
+                    },
+                    embed: {
+                        class: Embed,
+                        config: {
+                            services: {
+                                youtube: true,
+                                codepen: true,
+                                customPdf: {
+                                    regex: /https?:\/\/notidb\.suddsy\.dev\/api\/files\/videos\/([^\/\?\&]*)\/([^\/\?\&]*)\.pdf/,
+                                    embedUrl: 'https://notidb.suddsy.dev/api/files/videos/<%= remote_id %>.pdf',
+                                    html: "<iframe  width='100%' height='500' style='border: none;'></iframe>",
+                                    height: 300,
+                                    width: 600,
+                                    id: (groups) => groups.join('/')
+                                },
+                            },
+                        },
                     },
                     list: {
                         class: List,
@@ -189,8 +217,12 @@ function Editor({ page, preview }) {
                     table: Table,
                 },
                 data: editorData,
-                placeholder: 'Enter some text...'
+                placeholder: 'Enter some text...',
             });
+
+
+
+
 
             setEditor(editorInstance, () => {
                 // Cleanup logic

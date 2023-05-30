@@ -115,7 +115,11 @@ const SavedData = ({ savedData, articleArti }) => {
                 {blocks?.map((block) => {
                     switch (block.type) {
                         case "paragraph":
-                            return <li key={block.id} dangerouslySetInnerHTML={{ __html: block.data.text.replace(/<br>/g, '<br/>') }}></li>;
+                            return (
+                                <li key={block.id}>
+                                    <span dangerouslySetInnerHTML={{ __html: block.data.text.replace(/&lt;b&gt;/g, "<b>").replace(/&lt;\/b&gt;/g, "</b>") }}></span>
+                                </li>
+                            );
                         case "header":
                             const Header = `h${block.data.level}`;
                             return (
@@ -128,14 +132,18 @@ const SavedData = ({ savedData, articleArti }) => {
                                 <li key={block.id}>
                                     {block.data.style === "ordered" ? (
                                         <ol>
-                                            {block.data.items.map((item) => (
-                                                <li key={item}>{item}</li>
+                                            {block.data.items.map((item, index) => (
+                                                <li key={index}>
+                                                    <span dangerouslySetInnerHTML={{ __html: item.replace(/&lt;b&gt;/g, "<b>").replace(/&lt;\/b&gt;/g, "</b>") }}></span>
+                                                </li>
                                             ))}
                                         </ol>
                                     ) : (
                                         <ul>
-                                            {block.data.items.map((item) => (
-                                                <li key={item}>{item}</li>
+                                            {block.data.items.map((item, index) => (
+                                                <li key={index}>
+                                                    <span dangerouslySetInnerHTML={{ __html: item.replace(/&lt;b&gt;/g, "<b>").replace(/&lt;\/b&gt;/g, "</b>") }}></span>
+                                                </li>
                                             ))}
                                         </ul>
                                     )}
@@ -143,11 +151,16 @@ const SavedData = ({ savedData, articleArti }) => {
                             );
 
                         case "attaches":
-                            console.log(block.data.file)
                             if (block.data.file.extension == "MP4" || block.data.file.extension == "mp4" || block.data.file.extension == "mov" || block.data.file.extension == "MOV") {
                                 return (
                                     <li key={block.id} style={{ width: "100%", display: 'flex', justifyContent: 'center' }}>
                                         <video controls style={{ width: '50%' }} src={block.data.file.url} alt={block.data.caption} />
+                                    </li>
+                                );
+                            } else if (block.data.file.extension == "pdf"){
+                                return (
+                                    <li key={block.id} style={{ width: "100%", display: 'flex', justifyContent: 'center' }}>
+                                        <iframe style={{ width: '100%' }} src={block.data.file.url} alt={block.data.caption} />
                                     </li>
                                 );
                             }
