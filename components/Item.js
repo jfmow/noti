@@ -28,27 +28,48 @@ const MyComponent = ({ currPage, preview }) => {
       }
     }
     getData();
-      const unsubscribe = pb.collection('pages')
-        .subscribe('*', function (e) {
-          const updatedRecord = e.record;
-
+    const unsubscribe = pb.collection('pages')
+      .subscribe('*', function (e) {
+        const updatedRecord = e.record;
+        if(e.action === 'delete'){
+          const filteredItems = items.filter(item => item.id !== updatedRecord.id);
+          setItems(filteredItems)
+        } else {
           setItems(prevItems => {
             // Remove any previous item with the same ID
             const filteredItems = prevItems.filter(item => item.id !== updatedRecord.id);
-
+  
             // Add the new record at the appropriate position based on its created date
             let insertIndex = filteredItems.findIndex(item => item.created < updatedRecord.created);
             if (insertIndex === -1) {
               insertIndex = filteredItems.length;
             }
-
+  
             return [
               ...filteredItems.slice(0, insertIndex),
               updatedRecord,
               ...filteredItems.slice(insertIndex)
             ];
           });
+        }
+
+        setItems(prevItems => {
+          // Remove any previous item with the same ID
+          const filteredItems = prevItems.filter(item => item.id !== updatedRecord.id);
+
+          // Add the new record at the appropriate position based on its created date
+          let insertIndex = filteredItems.findIndex(item => item.created < updatedRecord.created);
+          if (insertIndex === -1) {
+            insertIndex = filteredItems.length;
+          }
+
+          return [
+            ...filteredItems.slice(0, insertIndex),
+            updatedRecord,
+            ...filteredItems.slice(insertIndex)
+          ];
         });
+      });
 
   }, []);
 
@@ -97,10 +118,10 @@ const MyComponent = ({ currPage, preview }) => {
     <>
 
       <div className={`${styles.itemroot} ${!visible && styles.itemrootoff}`}>
-        <Link href='/u/me' className={`${styles.usrsettings} ${!visible && styles.usrsettinghidden}`}><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M440-120v-240h80v80h320v80H520v80h-80Zm-320-80v-80h240v80H120Zm160-160v-80H120v-80h160v-80h80v240h-80Zm160-80v-80h400v80H440Zm160-160v-240h80v80h160v80H680v80h-80Zm-480-80v-80h400v80H120Z"/></svg></Link>
+        <Link href='/u/me' className={`${styles.usrsettings} ${!visible && styles.usrsettinghidden}`}><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M440-120v-240h80v80h320v80H520v80h-80Zm-320-80v-80h240v80H120Zm160-160v-80H120v-80h160v-80h80v240h-80Zm160-80v-80h400v80H440Zm160-160v-240h80v80h160v80H680v80h-80Zm-480-80v-80h400v80H120Z" /></svg></Link>
         {visible ? (
-        <button onClick={() => setVisible(false)} className={styles.hidebtn}>Hide</button>
-        ):(
+          <button onClick={() => setVisible(false)} className={styles.hidebtn}>Hide</button>
+        ) : (
           <button onClick={() => setVisible(true)} className={styles.hidebtn}>Menu</button>
         )}
         {visible && (
@@ -122,7 +143,7 @@ const MyComponent = ({ currPage, preview }) => {
                 e.stopPropagation();
                 createNewPage(e, null);
               }}
-              className={styles.createpage}
+              className={`${styles.createpage} ${styles.createrootpage}`}
             >
               <svg xmlns='http://www.w3.org/2000/svg' height='20' viewBox='0 -960 960 960' width='20'>
                 <path d='M444-240v-204H240v-72h204v-204h72v204h204v72H516v204h-72Z' />
@@ -214,7 +235,7 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
 
         {item.title ? item.title : `Untitled: ${item.id}`}
 
-        {(expand && currPage2 === item.id) && (
+        {(expand) && (
           <span
             title='New page'
             onClick={(e) => {
@@ -230,18 +251,8 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
         )}
       </div>
       {expand && children.length === 0 && (
-        <span
-          title='New page'
-          onClick={(e) => {
-            e.stopPropagation();
-            createNewPage(e, item.id);
-          }}
-          className={styles.createpage}
-        >
-          <svg xmlns='http://www.w3.org/2000/svg' height='20' viewBox='0 -960 960 960' width='20'>
-            <path d='M444-240v-204H240v-72h204v-204h72v204h204v72H516v204h-72Z' />
-          </svg>
-          Create first page
+        <span className={styles.createpage_txt}>
+          No pages
         </span>
       )}
       {children && expand ? <ol className={styles.items2}>{children}</ol> : null}

@@ -28,19 +28,28 @@ function Editor({ page, preview }) {
     const [selectedFile, setSelectedFile] = useState(null);
     const [articleHeader, setArticleHeader] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    
+
+    const [lastTypedTime, setLastTypedTime] = useState(Date.now());
+    const [lastTypedTimeIdle, setLastTypedTimeIdle] = useState(false);
+
     useEffect(() => {
-        const saveInterval = setInterval(async () => {
-            if (editor) {
-                const articleContent = await editor.saver.save();
-                let formData = new FormData();
+        let timer;
 
-                formData.append("title", articleTitle);
-                formData.append("content", JSON.stringify(articleContent));
+        // Function to save the article after the specified delay
+        const saveArticle = async () => {
+            const currentTime = Date.now();
+            const elapsedTime = currentTime - lastTypedTime;
 
-                if (page) {
+            if (elapsedTime >= 2000 && !lastTypedTimeIdle) {  // Auto-save 3 seconds after the user stops typing
+                setLastTypedTimeIdle(true)
+                if (editor) {
+                    const articleContent = await editor.saver.save();
+                    let formData = new FormData();
+
+                    formData.append("title", articleTitle);
+                    formData.append("content", JSON.stringify(articleContent));
                     try {
-                        await pb.collection('pages').update(page, formData);
+                        const state = await pb.collection('pages').update(page, formData);
                         console.log('Auto saved successfully!')
                     } catch (error) {
                         toast.error('Could not auto save!', {
@@ -48,14 +57,45 @@ function Editor({ page, preview }) {
                         });
                         console.log(error);
                     }
-                } 
+                    console.log('Auto-save executed.');
+                }
+                setLastTypedTimeIdle(true)
             }
-        }, 15000); // 15 seconds
+        };
+
+        // Function to update the last typing timestamp
+        const updateLastTypedTime = () => {
+            setLastTypedTime(Date.now());
+        };
+
+        // Event listener for detecting user typing
+        const typingEventListener = () => {
+            updateLastTypedTime();
+            setLastTypedTimeIdle(false)
+        };
+
+        // Event listener for detecting mouse movement
+        const mouseMovementEventListener = () => {
+            updateLastTypedTime();
+        };
+
+        // Attach event listeners
+        window.addEventListener('keydown', typingEventListener);
+        window.addEventListener('mousemove', mouseMovementEventListener);
+
+        // Start the auto-save timer
+        timer = setTimeout(() => {
+            saveArticle();
+        }, 2000);  // Initial auto-save 3 seconds after component mount
 
         return () => {
-            clearInterval(saveInterval);
+            // Clean up the event listeners and timer on component unmount
+            window.removeEventListener('keydown', typingEventListener);
+            window.removeEventListener('mousemove', mouseMovementEventListener);
+            clearTimeout(timer);
         };
-    }, [editor, articleTitle, page]);
+    }, [lastTypedTime]);
+
 
 
 
