@@ -28,6 +28,37 @@ function Editor({ page, preview }) {
     const [selectedFile, setSelectedFile] = useState(null);
     const [articleHeader, setArticleHeader] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    
+    useEffect(() => {
+        const saveInterval = setInterval(async () => {
+            if (editor) {
+                const articleContent = await editor.saver.save();
+                let formData = new FormData();
+
+                formData.append("title", articleTitle);
+                formData.append("content", JSON.stringify(articleContent));
+
+                if (page) {
+                    try {
+                        await pb.collection('pages').update(page, formData);
+                        console.log('Auto saved successfully!')
+                    } catch (error) {
+                        toast.error('Could not auto save!', {
+                            position: toast.POSITION.BOTTOM_LEFT,
+                        });
+                        console.log(error);
+                    }
+                } 
+            }
+        }, 15000); // 15 seconds
+
+        return () => {
+            clearInterval(saveInterval);
+        };
+    }, [editor, articleTitle, page]);
+
+
+
 
     useEffect(() => {
         if (page) {
@@ -76,18 +107,6 @@ function Editor({ page, preview }) {
             setIsLoading(false);
         }
     }, [page]);
-
-    const pdfService = {
-        regex: /https?:\/\/notidb\.suddsy\.dev\/api\/files\/videos\/[^\/]+\/([^\/\?\&]*)\.pdf/,
-        embedUrl: '<%= remote_id %>',
-        html: '<iframe src="<%= embed_url %>" width="100%" height="600px" frameborder="0" scrolling="auto"></iframe>',
-        height: 600,
-        width: '100%',
-        id: (groups) => groups[1]
-    };
-
-
-
 
     useEffect(() => {
         if (editorRef.current && (editorData == null || Object.keys(editorData).length > 0)) {
