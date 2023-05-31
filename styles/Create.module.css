@@ -48,78 +48,6 @@
 
 }
 
-.formbuttons {
-  display: grid;
-  /* width: 100%; */
-  grid-template-columns: 1fr;
-  justify-items: center;
-  align-items: center;
-  grid-gap: 1em;
-  gap: 1em;
-  padding: 1em;
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  z-index: 2;
-}
-
-.submitbutton {
-  font-family: monospace;
-  background-color: #98A6D4;
-  color: #f63b3b;
-  border: none;
-  border-radius: 8px;
-  width: fit-content;
-  height: fit-content;
-  padding: 0 1vh;
-  transition: .3s;
-  fill: #fff;
-  /* min-width: 100px;*/
-}
-
-.submitbutton:hover {
-  background-color: #3bf6a2;
-  box-shadow: 0 0 0 5px #3bf67d5f;
-  color: #878787;
-  cursor: pointer;
-}
-
-
-.pubbutton {
-  background-color: #f63b3b;
-  color: #f63b3b;
-}
-
-.pubbutton:hover {
-  background-color: #f63b3b;
-  box-shadow: 0 0 0 5px #ff5b5b5f;
-  color: black;
-}
-
-.draftbutton {
-  background-color: rgb(188 255 212);
-  color: #20a04b;
-}
-
-
-
-
-.customfileupload {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.finput {
-  display: none;
-}
-
-.specialinputs {
-  display: flex;
-  justify-content: center;
-}
-
 .titleinput {
   /* min-width: 40%; */
   width: 100%;
@@ -196,14 +124,6 @@
   transform: translateY(-2px);
 }
 
-@media(max-width: 800px) {
-  .formbuttons {
-    z-index: auto;
-    position: relative;
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
 
 
 .title {
@@ -246,20 +166,6 @@
 
 }
 
-.title h4 {
-  color: white;
-  font-size: 1em;
-  text-align: center;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
-}
-
-.title p {
-  color: white;
-  font-size: 1rem;
-  text-align: center;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
-}
-
 @media(max-width: 900px) {
   .headerstuff {
     padding: 1em;
@@ -268,10 +174,6 @@
   .title h1 {
     font-size: 2em;
   }
-
-  .title p h4 {
-    font-size: 0.8em;
-  }
 }
 
 
@@ -279,9 +181,42 @@
   .create{
     height: 100%;
   }
-  .formbuttons{
-    position: fixed;
-    display: grid;
-    grid-template-columns: 1fr;
-  }
+}
+
+.title_buttons{
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.title_buttons_btn{
+  display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 3px;
+    fill: #00bcd4;
+    cursor: pointer;
+}
+
+.customfileupload {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.customfileupload span {
+  display: flex;
+}
+
+.finput {
+  display: none;
 }

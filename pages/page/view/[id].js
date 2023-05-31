@@ -106,8 +106,6 @@ const SavedData = ({ savedData, articleArti }) => {
                     <Image width='1500' height='700' src={`${process.env.NEXT_PUBLIC_POCKETURL}/api/files/pages/${articleArti.id}/${articleArti.header_img}`} alt="Article header image" />}
                 <div className={styles.headerstuff}>
                     <h1>{articleArti?.title || "unknown"}</h1>
-                    <h4>Written by: <Link className={styles.authorlink} href={`/u/@${articleArti.expand?.author?.username}`}>{articleArti.expand?.author?.username || "unknown"}</Link></h4>
-                    <p>On the {new Date(time).toLocaleDateString()}</p>
                 </div>
             </div>
 
@@ -157,12 +155,6 @@ const SavedData = ({ savedData, articleArti }) => {
                                         <video controls style={{ width: '50%' }} src={block.data.file.url} alt={block.data.caption} />
                                     </li>
                                 );
-                            } else if (block.data.file.extension == "pdf"){
-                                return (
-                                    <li key={block.id} style={{ width: "100%", display: 'flex', justifyContent: 'center' }}>
-                                        <iframe style={{ width: '100%' }} src={block.data.file.url} alt={block.data.caption} />
-                                    </li>
-                                );
                             }
                             return (
                                 <li key={block.id}>
@@ -202,6 +194,12 @@ const SavedData = ({ savedData, articleArti }) => {
                             return (
                                 <li key={block.id}>
                                     <img loading="lazy" className={styles.article_body_img} src={block.data.file.url} alt={block.data.caption} />
+                                </li>
+                            );
+                        case "embed":
+                            return (
+                                <li key={block.id}>
+                                    <iframe loading="lazy" className={styles.article_body_embed} height={block.data.service === 'customPdf' ? ('500') : (block.data.height)} width='100%' src={block.data.embed} alt={block.data.caption} />
                                 </li>
                             );
                         default:

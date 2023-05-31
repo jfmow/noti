@@ -85,6 +85,20 @@
   padding: 3em;
   list-style-type: none;
   word-wrap: break-word;
+  gap: 2vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.article tr, .article th, .article td {
+  border: 2px solid #dedede;
+  padding: 10px;
+}
+
+.article ol {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
 }
 
 

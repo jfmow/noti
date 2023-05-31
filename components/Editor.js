@@ -33,7 +33,7 @@ function Editor({ page, preview }) {
     const [lastTypedTimeIdle, setLastTypedTimeIdle] = useState(false);
 
     useEffect(() => {
-        if(preview === 'true'){
+        if (preview === 'true') {
             return
         }
         let timer;
@@ -106,7 +106,7 @@ function Editor({ page, preview }) {
     useEffect(() => {
         if (page) {
             async function fetchArticles() {
-                if(page === 'firstopen'){
+                if (page === 'firstopen') {
                     return
                 }
                 if (preview === 'true') {
@@ -467,41 +467,31 @@ function Editor({ page, preview }) {
                             onChange={handleTitleChange}
                             placeholder="Untitled"
                         />
+
+                        <div className={styles.title_buttons}>
+                            <div className={`${styles.title_buttons_btn}`}>
+                                <label className={styles.customfileupload}>
+                                    <input
+                                        type="file"
+                                        name="file"
+                                        id="fileInput"
+                                        accept="image/*"
+                                        className={styles.finput}
+                                        onChange={handleFileChange}
+                                    />
+                                    <span><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0V0z" fill="none" /><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.53 3.1-3.99c.2-.26.6-.26.8.01l3.51 4.68c.25.33.01.8-.4.8H6.02c-.42 0-.65-.48-.39-.81L8.12 14c.19-.26.57-.27.78-.02z" /></svg></span>
+                                </label>
+                            </div>
+                            <button type='button' onClick={handleDeleteArticle} className={styles.title_buttons_btn}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0V0z" fill="none"/><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM18 4h-2.5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1z"/></svg></button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div className={styles.specialinputs}>
-
             </div>
             <div className={styles.creategrid}>
                 <div className={styles.form}>
 
-
                     <div className={styles.editor} ref={editorRef}></div>
 
-                    <div className={styles.formbuttons}>
-                        <button className={styles.submitbutton} type="button" onClick={handleSaveArticle}>
-                            <svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 96 960 960" width="40"><path d="M840 374v495.334q0 27-19.833 46.833T773.334 936H186.666q-27 0-46.833-19.833T120 869.334V282.666q0-27 19.833-46.833T186.666 216H682l158 158Zm-66.666 29.333L652.667 282.666H186.666v586.668h586.668V403.333ZM479.843 812.667q45.49 0 77.49-31.844 32-31.843 32-77.333 0-45.49-31.843-77.49-31.843-31.999-77.333-31.999-45.49 0-77.49 31.843-32 31.843-32 77.333 0 45.49 31.843 77.49 31.843 32 77.333 32ZM235.333 480H594V331.333H235.333V480Zm-48.667-76.667v466.001-586.668 120.667Z" /></svg>
-                        </button>
-                        <div
-                            className={`${styles.submitbutton}`}
-                        >
-                            <label class={styles.customfileupload}>
-                                <input
-                                    type="file"
-                                    name="file"
-                                    id="fileInput"
-                                    accept="image/*"
-                                    className={styles.finput}
-                                    onChange={handleFileChange}
-                                />
-                                <p id="fileInputName"><svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 96 960 960" width="40"><path d="M146.666 896q-27 0-46.833-19.833T80 829.334V322.666q0-27 19.833-46.833T146.666 256h666.668q27 0 46.833 19.833T880 322.666v506.668q0 27-19.833 46.833T813.334 896H146.666Zm0-66.666h666.668V405.333H146.666v424.001Z" /></svg></p>
-                            </label>
-                        </div>
-                        <button className={styles.submitbutton} type="button" onClick={handleDeleteArticle}>
-                            <svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 96 960 960" width="40"><path d="m366 756.667 114-115.334 114.667 115.334 50-50.667-114-115.333 114-115.334-50-50.667L480 540 366 424.666l-50.667 50.667L430 590.667 315.333 706 366 756.667ZM267.333 936q-27 0-46.833-19.833t-19.833-46.833V315.999H160v-66.666h192V216h256v33.333h192v66.666h-40.667v553.335q0 27-19.833 46.833T692.667 936H267.333Zm425.334-620.001H267.333v553.335h425.334V315.999Zm-425.334 0v553.335-553.335Z" /></svg>
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
