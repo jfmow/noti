@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 
 const MyComponent = ({ currPage, preview }) => {
   const [items, setItems] = useState([]);
+  const router = useRouter()
 
   useEffect(() => {
     async function getData() {
@@ -97,6 +98,7 @@ const MyComponent = ({ currPage, preview }) => {
       owner: pb.authStore.model.id,
     };
     const record = await pb.collection('pages').create(data);
+    router.push(`/page/${record.id}`)
     //console.log(record.id);
 
     // Update the items state by adding the new record
