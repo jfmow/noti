@@ -40,7 +40,7 @@ function Editor({ page, preview, firstOpen }) {
             const currentTime = Date.now();
             const elapsedTime = currentTime - lastTypedTime;
 
-            if (elapsedTime >= 3000 && !lastTypedTimeIdle) {  // Auto-save 3 seconds after the user stops typing
+            if (elapsedTime >= 1000 && !lastTypedTimeIdle) {  // Auto-save 3 seconds after the user stops typing
                 setLastTypedTimeIdle(true)
                 if (editor) {
                     const articleContent = await editor.saver.save();
@@ -86,7 +86,7 @@ function Editor({ page, preview, firstOpen }) {
         // Start the auto-save timer
         timer = setTimeout(() => {
             saveArticle();
-        }, 3000);  // Initial auto-save 3 seconds after component mount
+        }, 1000);  // Initial auto-save 3 seconds after component mount
 
         return () => {
             // Clean up the event listeners and timer on component unmount
