@@ -7,6 +7,8 @@
   background: #fffff9;
   padding: 1em;
   border-right: 1px solid #dfdfdf;
+  max-height: 100dvh;
+  overflow: scroll;
 }
 .itemscon{
   display: flex;
@@ -121,11 +123,17 @@
 
 .hidebtn{
   display: none;
-  background: #FFC107;
+    background: #FFC107;
     border: none;
     padding: 5px;
     border-radius: 5px;
     color: #000;
+    position: absolute;
+    left: 1em;
+    /* left: 50%; */
+    cursor: pointer;
+    z-index: 999;
+    top: 0;
 }
 
 .itemrootoff{
@@ -135,6 +143,7 @@
     /* left: 0; */
     background: none;
     border: none;
+    overflow: auto !important;
 }
 
 .usrsettings{
@@ -165,7 +174,8 @@
     display: block;
   }
   .itemroot{
-    max-height: 80dvh;
+    margin-top: 1vh;
+    height: 50dvh;
     overflow-x: scroll;
     overflow-y: scroll;
   }
