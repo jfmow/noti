@@ -12,7 +12,7 @@ function NotionEditor({ pageId }) {
     <div>
       <div className='main'>
         <MyComponent preview='true'/>
-        <Editor preview='true' page={pageId.toString()} />
+        <Editor preview='true' page={pageId} />
       </div>
     </div>
   );

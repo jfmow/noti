@@ -19,7 +19,7 @@ import Embed from '@editorjs/embed';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 
-function Editor({ page, preview, firstOpen }) {
+function Editor({ page, preview }) {
     const editorRef = useRef(null);
     const [editor, setEditor] = useState(null);
     const [editorData, setEditorData] = useState({});
@@ -33,6 +33,9 @@ function Editor({ page, preview, firstOpen }) {
     const [lastTypedTimeIdle, setLastTypedTimeIdle] = useState(false);
 
     useEffect(() => {
+        if(preview === 'true'){
+            return
+        }
         let timer;
 
         // Function to save the article after the specified delay
@@ -40,7 +43,7 @@ function Editor({ page, preview, firstOpen }) {
             const currentTime = Date.now();
             const elapsedTime = currentTime - lastTypedTime;
 
-            if (elapsedTime >= 1000 && !lastTypedTimeIdle) {  // Auto-save 3 seconds after the user stops typing
+            if (elapsedTime >= 500 && !lastTypedTimeIdle) {  // Auto-save 3 seconds after the user stops typing
                 setLastTypedTimeIdle(true)
                 if (editor) {
                     const articleContent = await editor.saver.save();
@@ -86,7 +89,7 @@ function Editor({ page, preview, firstOpen }) {
         // Start the auto-save timer
         timer = setTimeout(() => {
             saveArticle();
-        }, 1000);  // Initial auto-save 3 seconds after component mount
+        }, 500);  // Initial auto-save 3 seconds after component mount
 
         return () => {
             // Clean up the event listeners and timer on component unmount
@@ -103,6 +106,9 @@ function Editor({ page, preview, firstOpen }) {
     useEffect(() => {
         if (page) {
             async function fetchArticles() {
+                if(page === 'firstopen'){
+                    return
+                }
                 if (preview === 'true') {
                     try {
                         const record = await pb.collection('preview').getOne(page);
@@ -120,8 +126,6 @@ function Editor({ page, preview, firstOpen }) {
                         console.log(error);
                         setError(true);
                     }
-                } else if(page === 'firstopen') {
-                    return
                 } else {
                     try {
                         const record = await pb.collection('pages').getOne(page);

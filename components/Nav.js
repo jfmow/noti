@@ -33,7 +33,7 @@ export default function Nav() {
 
             <div className={styles.nav_container}>
                 <div className={styles.navitems}>
-                    <Link href='/pages' className={styles.navitems_item}>Pages</Link>
+                    <Link href='/preview/firstopen' className={styles.navitems_item}>Demo</Link>
                     <Link href='/auth/login' className={styles.navitems_item}>Login</Link>
                     
                 </div>
