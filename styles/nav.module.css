@@ -1,41 +1,48 @@
 .nav_container{
     position: fixed;
     top: 0;
-    left: 50%;
+    /* left: 50%; */
     gap: 2em;
-    right: 50%;
+    /* right: 50%; */
     z-index: 10;
     display: flex;
     flex-direction: row;
     align-items: center;
-    background: linear-gradient(39deg, #7392b7b5 50%, #00bcd4b8 50%);
-    /* height: 9dvh; */
-    justify-content: center;
-    padding: 1em 4em;
-    margin-top: 1dvh;
+    background: #fff;
+    height: 9dvh;
+    padding: 0.5em 2em;
+    /* margin-top: 1dvh; */
     -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
-    width: fit-content;
-    transform: translate(-50%, -0%);
-    border-radius: 5em;
+    width: -moz-fit-content;
+    width: 100%;
+    /* transform: translate(-50%, -0%); */
+    /* border-radius: 5em; */
+    justify-content: center;
 }
 .navitems{
     display: flex;
     
     /* width: fit-content; */
-    gap: 1em;
+    width: 100%;
+    gap: 2em;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     /* border-radius: 20em; */
     
 }
 .navitems_item{
     cursor: pointer;
-    color: #D8E1E9;
+    color: #00BCD4;
     transition: 0.3s all;
+    /* box-shadow: 0px 0px 11px 3px #f2f2f2; */
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: 700;
 }
 .navitems_item:hover{
-    color: #fff;
+    color: #ff9800;
 }
 
 .navitems_useraccount{

@@ -21,6 +21,7 @@
     backdrop-filter: blur(130px);
     justify-content: center;
     align-items: center;
+    font-family: "Ab";
 }
 
 .subtitle {
@@ -131,6 +132,12 @@
   max-height: 100dvh;
   gap: 0.5em;
   width: 80%;
+}
+
+.section3 h1 {
+  
+  font-family: 'Ab';
+  color: #ff5722;
 }
 
 .icon1 {

@@ -120,6 +120,11 @@ a {
   src: url('../fonts/Anton-Regular.ttf');
 }
 
+@font-face {
+  font-family: "Ab";
+  src: url('../fonts/Abelone-FREE.otf');
+}
+
 
 /* width */
 ::-webkit-scrollbar {

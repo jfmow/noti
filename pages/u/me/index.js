@@ -58,13 +58,16 @@ export default function Account() {
           <meta name="robots" content="noindex"></meta>
         </Head>
 
-        <main className={styles.main}>
-          <h1>My Account</h1>
-        </main>
         <div className={styles.forms}>
           <AvatarForm />
           <AccManagementForm />
         </div>
+
+        <div>
+          <h5>Quick links</h5>
+          <h6><Link href='/termsandconditions'>Terms & Conditions</Link> | <Link href='/privacypolicy'>Privacy policy</Link></h6>
+        </div>
+
         <button className={styles.logoutbtn} onClick={clearAuthStore}>Logout</button>
 
       </div>
@@ -151,7 +154,6 @@ function AvatarForm() {
   return (
     <>
       <form className={styles.aform} id="form" onChange={handleFileInputChange}>
-        <h2>Avatar</h2>
         <img loading='lazy' className={styles.usericon} src={pb.baseUrl + "/api/files/_pb_users_auth_/" + pb.authStore.model.id + "/" + pb.authStore.model.avatar || `https://github.com/identicons/${pb.authStore.model.username}.png`} />
         <div className={styles.uploader}>
           <button className={`${styles.buttondefault} ${styles.buttonred}`} onClick={rmAvatar} type="button" >
@@ -268,55 +270,56 @@ function AccManagementForm() {
     }
   }
 
-  async function downloadUserData() {
-    // Get the data from the API
-    const [privateData, userData] = await Promise.all([
-      pb.collection("private_data").getFullList({
-        sort: "-created", filter: `user = '${pb.authStore.model.id}'`
-      }),
-      pb.collection("users").getOne(pb.authStore.model.id),
-    ]);
-
-    // Merge the privateData and userData into a single object
-    const data = {
-      privateData,
-      userData,
-    };
-    // Create a blob with the data
-    const blob = new Blob([JSON.stringify(data)], {
-      type: "application/json",
-    });
-
-    // Create a URL for the blob
-    const url = URL.createObjectURL(blob);
-
-    // Create a link element and click it to download the file
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "data.json";
-    link.click();
-
-    // Release the URL object
-    URL.revokeObjectURL(url);
-  };
+  //async function downloadUserData() {
+  //  // Get the data from the API
+  //  const [privateData, userData] = await Promise.all([
+  //    pb.collection("private_data").getFullList({
+  //      sort: "-created", filter: `user = '${pb.authStore.model.id}'`
+  //    }),
+  //    pb.collection("users").getOne(pb.authStore.model.id),
+  //  ]);
+  //
+  //  // Merge the privateData and userData into a single object
+  //  const data = {
+  //    privateData,
+  //    userData,
+  //  };
+  //  // Create a blob with the data
+  //  const blob = new Blob([JSON.stringify(data)], {
+  //    type: "application/json",
+  //  });
+  //
+  //  // Create a URL for the blob
+  //  const url = URL.createObjectURL(blob);
+  //
+  //  // Create a link element and click it to download the file
+  //  const link = document.createElement("a");
+  //  link.href = url;
+  //  link.download = "data.json";
+  //  link.click();
+  //
+  //  // Release the URL object
+  //  URL.revokeObjectURL(url);
+  //};
 
   return (
     <>
       <form className={styles.pform}>
-        <h2>Account management</h2>
         <div className={styles.accmanagemt_btns}>
           <button type='button' className={styles.buttondefault} onClick={() => setUserInfoDisplay(true)}>
             Account Info
           </button>
+
+          <button className={`${styles.buttondefault}`} disabled type="button">
+            Download my data
+          </button>
+
           <button className={`${styles.buttondefault} ${styles.buttongreen}`} type="button" onClick={() => setUsernameField(true)}>
             Edit username
           </button>
 
           <button className={`${styles.buttondefault} ${styles.buttonred}`} onClick={() => setDelAccField(true)} type="button">
             Delete account
-          </button>
-          <button className={`${styles.buttondefault}`} onClick={downloadUserData} type="button">
-            Download my data
           </button>
           {pb.authStore.model.notis ? (
             <button className={`${styles.buttondefault} ${styles.buttonred}`} onClick={unsubscribeFromPush} type="button">
@@ -338,10 +341,6 @@ function AccManagementForm() {
               Management
             </button>
           )}
-        </div>
-        <div>
-          <h5>Quick links</h5>
-          <h6><Link href='/termsandconditions'>Terms & Conditions</Link> | <Link href='/privacypolicy'>Privacy policy</Link></h6>
         </div>
 
         {userNameField ?

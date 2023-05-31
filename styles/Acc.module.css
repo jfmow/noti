@@ -1,6 +1,12 @@
 .container {
-  min-height: 93dvh;
-  overflow: hidden;
+  height: 100dvh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2em;
 }
 
 .disabled{
@@ -111,16 +117,18 @@
 
 .forms {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  flex-direction: row;
-  text-align: center;
-  grid-gap: 2em;
-  gap: 2em;
-  margin: 3em;
-  justify-items: center;
-  height: fit-content;
-  padding-top: 0;
-    margin-top: -5dvh;
+    grid-template-columns: 1fr 1fr;
+    flex-direction: row;
+    text-align: center;
+    grid-gap: 2em;
+    grid-gap: 2em;
+    gap: 2em;
+    /* margin: 3em; */
+    justify-items: center;
+    height: -moz-fit-content;
+    height: 100dvh;
+    /* padding-top: 0; */
+    padding: 2em;
 }
 
 
@@ -134,7 +142,6 @@
 .pform,
 .aform {
   border-radius: 3em;
-  background-color: #92dce5;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -424,7 +431,6 @@
   .forms {
     grid-template-columns: 1fr;
     margin: 1em;
-    margin-top: -7dvh;
   }
 
   .forms>form {

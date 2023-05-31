@@ -18,12 +18,11 @@ export default function Nav() {
             <>
 
                 <div className={styles.nav_container}>
-                    <div className={styles.navitems}>
-                        <Link href='/pages' className={styles.navitems_item}>Pages</Link>
-                    </div>
-                    <div className={styles.navitems_useraccount}>
-                        <span className={styles.avatar}><Link aria-label='Settings' href="/u/me" passHref><Image width='100' height='100' className={styles.usericon} src={pb.baseUrl + "/api/files/_pb_users_auth_/" + pb.authStore.model?.id + "/" + pb.authStore.model?.avatar + "?thumb=400x400"}></Image></Link></span>
-                    </div>
+                <div className={styles.navitems}>
+                    <Link href='/pages' className={styles.navitems_item}>Pages</Link>
+                    <Link href='/u/me' className={styles.navitems_item}>Account</Link>
+                    
+                </div>
                 </div>
 
             </>
@@ -35,10 +34,8 @@ export default function Nav() {
             <div className={styles.nav_container}>
                 <div className={styles.navitems}>
                     <Link href='/pages' className={styles.navitems_item}>Pages</Link>
-                </div>
-                <div className={styles.navitems_useraccount}>
-                <Link href='/auth/login' className={styles.navitems_item}>Login</Link>
-
+                    <Link href='/auth/login' className={styles.navitems_item}>Login</Link>
+                    
                 </div>
             </div>
 
