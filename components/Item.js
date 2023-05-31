@@ -32,8 +32,15 @@ const MyComponent = ({ currPage, preview }) => {
       .subscribe('*', function (e) {
         const updatedRecord = e.record;
         if(e.action === 'delete'){
-          const filteredItems = items.filter(item => item.id !== updatedRecord.id);
-          setItems(filteredItems)
+          setItems(prevItems => {
+            // Remove any previous item with the same ID
+            const filteredItems = prevItems.filter(item => item.id !== updatedRecord.id);
+
+  
+            return [
+              ...filteredItems
+            ];
+          })
         } else {
           setItems(prevItems => {
             // Remove any previous item with the same ID
@@ -53,22 +60,6 @@ const MyComponent = ({ currPage, preview }) => {
           });
         }
 
-        setItems(prevItems => {
-          // Remove any previous item with the same ID
-          const filteredItems = prevItems.filter(item => item.id !== updatedRecord.id);
-
-          // Add the new record at the appropriate position based on its created date
-          let insertIndex = filteredItems.findIndex(item => item.created < updatedRecord.created);
-          if (insertIndex === -1) {
-            insertIndex = filteredItems.length;
-          }
-
-          return [
-            ...filteredItems.slice(0, insertIndex),
-            updatedRecord,
-            ...filteredItems.slice(insertIndex)
-          ];
-        });
       });
 
   }, []);

@@ -15,7 +15,7 @@ const Home = () => {
         if (pb.authStore.isValid == false) {
           pb.authStore.clear();
         } else {
-          window.location.replace('/pages')
+          window.location.replace('/page/firstopen')
         }
         if (authData.record.disabled) {
           pb.authStore.clear()

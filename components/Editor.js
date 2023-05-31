@@ -364,7 +364,7 @@ function Editor({ page, preview, firstOpen }) {
 
     async function handleDeleteArticle() {
         await pb.collection('pages').delete(page);
-        router.replace('/');
+        //router.replace('/');
     }
 
     function handleTitleChange(e) {
