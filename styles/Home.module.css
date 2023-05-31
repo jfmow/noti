@@ -164,4 +164,9 @@
   .hidebtn{
     display: block;
   }
+  .itemroot{
+    max-height: 80dvh;
+    overflow-x: scroll;
+    overflow-y: scroll;
+  }
 }
