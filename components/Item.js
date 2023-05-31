@@ -179,7 +179,6 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
     router.push(`/page/${item}`)
   }
   async function handleSetExpand(e, item, state){
-    pb.collection('pages').unsubscribe('*');
     e.preventDefault()
     setExpand(state);
     const data = {
