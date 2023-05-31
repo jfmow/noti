@@ -172,11 +172,20 @@ const RootParentComponent = ({ item, currPage, createNewPage, children }) => {
 };
 
 const ChildComponent = ({ item, level, children, currPage2, isActive, createNewPage }) => {
-  const [expand, setExpand] = useState(false);
+  const [expand, setExpand] = useState(item.expanded);
   const router = useRouter()
   function openPage(e, item) {
     e.preventDefault()
     router.push(`/page/${item}`)
+  }
+  async function handleSetExpand(e, item, state){
+    pb.collection('pages').unsubscribe('*');
+    e.preventDefault()
+    setExpand(state);
+    const data = {
+      "expanded": state
+  };
+  const record = await pb.collection('pages').update(item, data);
   }
 
 
@@ -194,7 +203,7 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
             className={styles.btn1}
             onClick={(e) => {
               e.stopPropagation();
-              setExpand(false);
+              handleSetExpand(e, item.id, false);
             }}
           >
             <svg
@@ -212,7 +221,7 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
             className={styles.btn1}
             onClick={(e) => {
               e.stopPropagation();
-              setExpand(true);
+              handleSetExpand(e, item.id, true);
             }}
           >
             <svg

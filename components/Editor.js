@@ -413,7 +413,7 @@ function Editor({ page, preview }) {
                 );
                 formData.append("header_img", compressedFile);
                 if (compressedFile.size > 4500000) {
-                    return toast.error('Compresed file too big!')
+                    return toast.error('Compresed file may be too big (>4.5mb)!')
                 }
                 await pb.collection('pages').update(page, formData);
             } catch (error) {

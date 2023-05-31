@@ -11,7 +11,7 @@ const Editor = dynamic(() => import('../../components/Editor'), {
 });
 function NotionEditor({ pageId }) {
   const [isLoading, setIsLoading] = useState(true);
-  
+
   useEffect(() => {
     async function authUpdate() {
       try {
@@ -35,8 +35,8 @@ function NotionEditor({ pageId }) {
   return (
     <div>
       <div className='main'>
-        <MyComponent currPage={pageId} />
-        <Editor page={pageId} preview='false' />
+        <MyComponent currPage={pageId}  />
+        <Editor page={pageId} preview='false'  />
       </div>
     </div>
   );
