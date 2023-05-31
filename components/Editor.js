@@ -19,7 +19,7 @@ import Embed from '@editorjs/embed';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 
-function Editor({ page, preview }) {
+function Editor({ page, preview, firstOpen }) {
     const editorRef = useRef(null);
     const [editor, setEditor] = useState(null);
     const [editorData, setEditorData] = useState({});
@@ -120,6 +120,8 @@ function Editor({ page, preview }) {
                         console.log(error);
                         setError(true);
                     }
+                } else if(page === 'firstopen') {
+                    return
                 } else {
                     try {
                         const record = await pb.collection('pages').getOne(page);

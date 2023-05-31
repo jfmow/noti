@@ -11,6 +11,7 @@ const Editor = dynamic(() => import('../../components/Editor'), {
 });
 function NotionEditor({ pageId }) {
   const [isLoading, setIsLoading] = useState(true);
+  
   useEffect(() => {
     async function authUpdate() {
       try {
