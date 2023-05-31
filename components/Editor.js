@@ -25,12 +25,12 @@ function Editor({ page, preview }) {
     const [editorData, setEditorData] = useState({});
     const [isError, setError] = useState(false);
     const [articleTitle, setArticleTitle] = useState('');
-    const [selectedFile, setSelectedFile] = useState(null);
     const [articleHeader, setArticleHeader] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-
     const [lastTypedTime, setLastTypedTime] = useState(Date.now());
     const [lastTypedTimeIdle, setLastTypedTimeIdle] = useState(false);
+    const [pageShared, setPageShared] = useState(false)
+    const [linkSHow, setLinkShow] = useState(false)
 
     useEffect(() => {
         if (preview === 'true') {
@@ -99,10 +99,6 @@ function Editor({ page, preview }) {
         };
     }, [lastTypedTime]);
 
-
-
-
-
     useEffect(() => {
         if (page) {
             async function fetchArticles() {
@@ -131,6 +127,7 @@ function Editor({ page, preview }) {
                         const record = await pb.collection('pages').getOne(page);
                         setEditorData(record.content);
                         setArticleTitle(record.title);
+                        setPageShared(record.shared);
                         if (record.header_img) {
                             setArticleHeader(`${process.env.NEXT_PUBLIC_POCKETURL}/api/files/pages/${page}/${record.header_img}`);
                         } else {
@@ -377,7 +374,6 @@ function Editor({ page, preview }) {
 
     async function handleFileChange(e) {
         const file = e.target.files[0];
-        setSelectedFile(file);
 
         const reader = new FileReader();
         reader.onload = (event) => {
@@ -390,7 +386,7 @@ function Editor({ page, preview }) {
                 const compressedFile = await toast.promise(
                     new Promise((resolve, reject) => {
                         new Compressor(file, {
-                            quality: 0.9,
+                            quality: 1,
                             mimeType: "image/webp",
                             maxSize: 4 * 1024 * 1024,
                             success(result) {
@@ -419,6 +415,52 @@ function Editor({ page, preview }) {
 
             }
         }
+    }
+
+    async function handleSharePage() {
+        if (pageShared) {
+            return setLinkShow(true)
+        } else {
+            const data = {
+                "shared": true
+            };
+
+            const record = await pb.collection('pages').update(page, data);
+            setPageShared(true)
+            setLinkShow(true)
+            toast.success('Page now public for anyone with the link.')
+        }
+
+    }
+
+    async function unSharePage() {
+        const data = {
+            "shared": false
+        };
+
+        const record = await pb.collection('pages').update(page, data);
+        setPageShared(false)
+        setLinkShow(false)
+        toast.success('Page now hidden.')
+    }
+
+    function copyToClip() {
+        // Create a dummy input element
+        var dummyInput = document.createElement('input');
+        dummyInput.setAttribute('value', `https://noti.jamesmowat.com/page/view/${page}`);
+
+        // Append it to the body
+        document.body.appendChild(dummyInput);
+
+        // Select and copy the value of the dummy input
+        dummyInput.select();
+        document.execCommand('copy');
+
+        // Remove the dummy input from the DOM
+        document.body.removeChild(dummyInput);
+
+        // Optionally, provide visual feedback to the user
+        setLinkShow(false)
     }
 
     if (isError) {
@@ -482,11 +524,27 @@ function Editor({ page, preview }) {
                                     <span><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0V0z" fill="none" /><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.53 3.1-3.99c.2-.26.6-.26.8.01l3.51 4.68c.25.33.01.8-.4.8H6.02c-.42 0-.65-.48-.39-.81L8.12 14c.19-.26.57-.27.78-.02z" /></svg></span>
                                 </label>
                             </div>
-                            <button type='button' onClick={handleDeleteArticle} className={styles.title_buttons_btn}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0V0z" fill="none"/><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM18 4h-2.5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1z"/></svg></button>
+                            <button type='button' onClick={handleSharePage} className={styles.title_buttons_btn}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z" /></svg></button>
+                            <button type='button' onClick={handleDeleteArticle} className={styles.title_buttons_btn}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0V0z" fill="none" /><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM18 4h-2.5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1z" /></svg></button>
                         </div>
                     </div>
                 </div>
             </div>
+            {linkSHow && (
+                <>
+                    <div className={styles.sharemodal_container} onClick={() => setLinkShow(false)}>
+                        <div className={styles.shareModal} onClick={(event) => event.stopPropagation()}>
+                            <div className={styles.shareModal_link}>
+                                <div className={styles.shareModal_link_text}>
+                                    https://noti.jamesmowat.com/page/view/{page}
+                                </div>
+                                <button onClick={copyToClip} className={styles.shareModal_link_btn}><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-160q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Z" /></svg></button>
+                                <button className={`${styles.buttondefault} ${styles.buttonred}`} onClick={unSharePage} type='button' >Un-share</button>
+                            </div>
+                        </div>
+                    </div>
+                </>
+            )}
             <div className={styles.creategrid}>
                 <div className={styles.form}>
 
