@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import PocketBase from 'pocketbase'
 import { useEffect, useState } from 'react';
 import MyComponent from '@/components/Item';
+import Link from 'next/link';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 
@@ -34,7 +35,11 @@ function NotionEditor({ pageId }) {
   }
   return (
     <div>
+      <div className='onMobile'>
+          <h3>On mobile? Use the mobile site: <Link href={`https://m.noti.jamesmowat.com/page/${pageId}`}>(Click)</Link></h3>
+        </div>
       <div className='main'>
+        
         <MyComponent currPage={pageId}  />
         <Editor page={pageId} preview='false'  />
       </div>
