@@ -6,6 +6,7 @@ import Head from 'next/head';
 import dynamic from 'next/dynamic'
 import validator from 'validator';
 import Loader from '@/components/Loader'
+import { enc, lib } from 'crypto-js';
 
 const Tc = dynamic(() => import('@/components/Termsandconditions'), {
     ssr: false, loading: () => <p>Loading...</p>,
@@ -92,7 +93,9 @@ export default function Login() {
             if (filteredUsername.error) {
                 return toast.error(`${filteredUsername.error}`)
             }
-            const data = {
+
+
+            const newAccData = {
                 "username": filteredUsername,
                 "email": sanitizedEmail,
                 "emailVisibility": false,
@@ -103,13 +106,14 @@ export default function Login() {
             setIsLoading(true)
             try {
                 const response = await toast.promise(
-                    pb.collection('users').create(data),
+                    pb.collection('users').create(newAccData),
                     {
                         pending: 'Creating account...',
                         success: 'Account created successfuly. 👌',
                         error: 'Failed to create account! 🤯'
                     }
                 );
+                
                 const response2 = await toast.promise(
                     pb.collection('users').authWithPassword(name, password),
                     {
@@ -119,7 +123,20 @@ export default function Login() {
                     }
                 );
                 const authDataaaa = await pb.collection('users').authRefresh();
+                const keySize = 128 / 8; // Key size in bytes
+                const key = lib.WordArray.random(keySize);
+                const encryptionKey = enc.Hex.stringify(key);
+                const encData = {
+                    "chef": encryptionKey,
+                    "plate": response.id
+                };
+
+                const encRec = await pb.collection('cookies').create(encData);
+                const usrDataUp = {
+                    "meal": encRec.id
+                };
                 
+                await pb.collection('users').update(response.id, usrDataUp);
                 const response3 = await toast.promise(
                     pb.collection('users').requestVerification(email),
                     {

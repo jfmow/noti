@@ -15,6 +15,8 @@ import PocketBase from 'pocketbase';
 import styles from '@/styles/Create.module.css';
 import Loader from './Loader';
 import Embed from '@editorjs/embed';
+import { AES, enc } from 'crypto-js';
+
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
@@ -35,6 +37,7 @@ function Editor({ page, preview }) {
     const [shareLinkModalState, setShareLinkModalState] = useState(false)
     const [iconModalState, setIconModalState] = useState(false)
     const [currentPageIconValue, setCurrentPageIconValue] = useState('')
+    const [chefKey, setChefKey] = useState('');
 
     useEffect(() => {
         if (preview === 'true') {
@@ -54,7 +57,14 @@ function Editor({ page, preview }) {
                     let formData = new FormData();
 
                     formData.append("title", articleTitle);
-                    formData.append("content", JSON.stringify(articleContent));
+                    // Encrypt the note content
+                    // Replace with the user's encryption key
+
+                    const encryptedNote = AES.encrypt(JSON.stringify(articleContent), chefKey).toString();
+
+                    // Decrypt the note content
+
+                    formData.append("content", JSON.stringify(encryptedNote));
                     try {
                         const state = await pb.collection('pages').update(page, formData);
                         console.log('Auto saved successfully!')
@@ -130,9 +140,19 @@ function Editor({ page, preview }) {
                     }
                 } else {
                     try {
-                        console.log(currentPageIconValue)
                         const record = await pb.collection('pages').getOne(page);
-                        setEditorData(record.content);
+                        //encryption
+                        try {
+                            const encryptrec = await pb.collection('cookies').getOne(pb.authStore.model.meal);
+                            setChefKey(encryptrec.chef);
+                            const decryptedNote = AES.decrypt(record.content, encryptrec.chef).toString(enc.Utf8);
+                            setEditorData(JSON.parse(decryptedNote));
+                        } catch (error) {
+                            console.warn(error)
+                            setEditorData(record.content)
+                        }
+
+                        //rest of unencrypt data
                         setArticleTitle(record.title);
                         setPageSharedTF(record.shared);
                         setCurrentPageIconValue(record.icon);
@@ -425,7 +445,7 @@ function Editor({ page, preview }) {
         }
     }
 
-    async function handleSetcurrentPageIconValue(e, icon){
+    async function handleSetcurrentPageIconValue(e, icon) {
         const data = {
             "icon": icon
         };
@@ -543,7 +563,7 @@ function Editor({ page, preview }) {
                                 </label>
                             </div>
                             <button type='button' onClick={handleSharePage} className={styles.title_buttons_btn}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z" /></svg></button>
-                            <button type='button' onClick={()=>setIconModalState(true)} className={styles.title_buttons_btn}><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" ><g><rect fill="none" height="24" width="24"/><rect fill="none" height="24" width="24"/></g><g><g/><path d="M11.99,2C6.47,2,2,6.48,2,12c0,5.52,4.47,10,9.99,10C17.52,22,22,17.52,22,12C22,6.48,17.52,2,11.99,2z M8.5,8 C9.33,8,10,8.67,10,9.5S9.33,11,8.5,11S7,10.33,7,9.5S7.67,8,8.5,8z M16.71,14.72C15.8,16.67,14.04,18,12,18s-3.8-1.33-4.71-3.28 C7.13,14.39,7.37,14,7.74,14h8.52C16.63,14,16.87,14.39,16.71,14.72z M15.5,11c-0.83,0-1.5-0.67-1.5-1.5S14.67,8,15.5,8 S17,8.67,17,9.5S16.33,11,15.5,11z"/></g></svg></button>
+                            <button type='button' onClick={() => setIconModalState(true)} className={styles.title_buttons_btn}><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" ><g><rect fill="none" height="24" width="24" /><rect fill="none" height="24" width="24" /></g><g><g /><path d="M11.99,2C6.47,2,2,6.48,2,12c0,5.52,4.47,10,9.99,10C17.52,22,22,17.52,22,12C22,6.48,17.52,2,11.99,2z M8.5,8 C9.33,8,10,8.67,10,9.5S9.33,11,8.5,11S7,10.33,7,9.5S7.67,8,8.5,8z M16.71,14.72C15.8,16.67,14.04,18,12,18s-3.8-1.33-4.71-3.28 C7.13,14.39,7.37,14,7.74,14h8.52C16.63,14,16.87,14.39,16.71,14.72z M15.5,11c-0.83,0-1.5-0.67-1.5-1.5S14.67,8,15.5,8 S17,8.67,17,9.5S16.33,11,15.5,11z" /></g></svg></button>
                             <button type='button' onClick={handleDeleteArticle} className={styles.title_buttons_btn}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0V0z" fill="none" /><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM18 4h-2.5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1z" /></svg></button>
                         </div>
                     </div>
@@ -566,11 +586,11 @@ function Editor({ page, preview }) {
             )}
             {iconModalState && (
                 <>
-                <div className={styles.sharemodal_container} onClick={() => setIconModalState(false)}>
+                    <div className={styles.sharemodal_container} onClick={() => setIconModalState(false)}>
                         <div className={styles.shareModal} onClick={(event) => event.stopPropagation()}>
                             <div className={styles.shareModal_link}>
-                                <input className={styles.shareModal_input} placeholder='1 emoji only' type='text' value={currentPageIconValue} onChange={(e)=>setCurrentPageIconValue(e.target.value)}/>
-                                <button className={`${styles.buttondefault} ${styles.buttonred}`} onClick={(e)=>handleSetcurrentPageIconValue(e, currentPageIconValue)} type='button' >Set</button>
+                                <input className={styles.shareModal_input} placeholder='1 emoji only' type='text' value={currentPageIconValue} onChange={(e) => setCurrentPageIconValue(e.target.value)} />
+                                <button className={`${styles.buttondefault} ${styles.buttonred}`} onClick={(e) => handleSetcurrentPageIconValue(e, currentPageIconValue)} type='button' >Set</button>
                             </div>
                         </div>
                     </div>
