@@ -394,7 +394,7 @@ function Editor({ page, preview }) {
                 const compressedFile = await toast.promise(
                     new Promise((resolve, reject) => {
                         new Compressor(file, {
-                            quality: 0.9,
+                            quality: 0.8,
                             mimeType: "image/webp",
                             maxSize: 4 * 1024 * 1024,
                             success(result) {
