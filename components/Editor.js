@@ -517,7 +517,7 @@ function Editor({ page, preview }) {
 
                 <div className={styles.title}>
                     {articleHeader &&
-                        <Image src={articleHeader} alt="Page header img" width={600} height={400} />}
+                        <Image src={articleHeader} alt="Page header img" width={1200} height={400} />}
                     <div className={styles.headerstuff}>
                         <input
                             className={styles.titleinput}
