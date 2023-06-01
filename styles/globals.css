@@ -113,10 +113,10 @@ a {
 }
 
 @media(max-width: 800px){
-  .main{
+  /*.main{
     grid-template-columns: 1fr;
     height: 100dvh;
-  }
+  }*/
   .onMobile{
     color: #03a9f4;
     position: relative;
