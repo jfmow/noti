@@ -394,9 +394,9 @@ function Editor({ page, preview }) {
                 const compressedFile = await toast.promise(
                     new Promise((resolve, reject) => {
                         new Compressor(file, {
-                            quality: 0.8,
+                            quality: 0.9,
                             mimeType: "image/webp",
-                            maxSize: 4 * 1024 * 1024,
+                            //maxSize: 4 * 1024 * 1024,
                             success(result) {
                                 resolve(result);
                             },
@@ -412,9 +412,9 @@ function Editor({ page, preview }) {
                     }
                 );
                 formData.append("header_img", compressedFile);
-                if (compressedFile.size > 4500000) {
-                    return toast.error('Compresed file may be too big (>4.5mb)!')
-                }
+                //if (compressedFile.size > 4500000) {
+                //    return toast.error('Compresed file may be too big (>4.5mb)!')
+                //}
                 await pb.collection('pages').update(page, formData);
             } catch (error) {
                 toast.error('Error uploading header img', {
