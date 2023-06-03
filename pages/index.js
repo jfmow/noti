@@ -1,32 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from '@/styles/OHome.module.css';
 import Link from 'next/link';
 import PocketBase from 'pocketbase'
 import { useEffect } from 'react';
 import Nav from '@/components/Nav';
-
+import PlainLoader from '@/components/PlainLoader';
+import { useRouter } from 'next/router';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
-const Home = () => {
+export default function Home(){
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter()
   useEffect(() => {
     async function authUpdate() {
       try {
-        const authData = await pb.collection('users').authRefresh();
-        if (pb.authStore.isValid == false) {
+        await pb.collection('users').authRefresh();
+        if (!pb.authStore.isValid) {
           pb.authStore.clear();
+          setIsLoading(false)
         } else {
-          window.location.replace('/page/firstopen')
-        }
-        if (authData.record.disabled) {
-          pb.authStore.clear()
-          return window.location.replace('/u/disabled')
+          router.push('/page/firstopen')
         }
       } catch (error) {
         pb.authStore.clear();
+        setIsLoading(false)
       }
+      
     }
     authUpdate()
   }, []);
+  if(isLoading){
+    return <PlainLoader/>
+  }
   return (
     <div>
       <Nav/>
@@ -102,5 +107,3 @@ const Home = () => {
     </div>
   );
 };
-
-export default Home;
