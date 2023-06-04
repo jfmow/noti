@@ -414,7 +414,14 @@
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 800px) {
+  .container{
+    min-height: 100dvh;
+    height: auto;
+    overflow: auto;
+    overflow-x: hidden;
+    margin-top: 10dvh;
+  }
 
   .gridcontainer,
   .links {
@@ -431,15 +438,17 @@
   .forms {
     grid-template-columns: 1fr;
     margin: 1em;
+    padding: 0;
   }
 
   .forms>form {
-    min-height: 70vh;
+    min-height: fit-content;
   }
 
   .pform,
   .aform {
     border-radius: 1em;
+    padding: 0;
   }
 
   .uploadbtns {
