@@ -54,10 +54,9 @@ self.addEventListener('fetch', (event) => {
 self.addEventListener('push', (event) => {
   let notification = event.data.json();
 
-  
   const notificationOptions = {
     title: notification.title,
-    body: notification.body,
+    body: notification.options.body,
     icon: notification.icon,
     image: notification.image,
     badge: notification.badge,
@@ -72,7 +71,7 @@ self.addEventListener('push', (event) => {
     dir: notification.dir,
     lang: notification.lang
   };
-  
+
   self.registration.showNotification(
     notification.title,
     notificationOptions
