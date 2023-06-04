@@ -66,7 +66,6 @@ const MyComponent = ({ currPage, preview }) => {
 
   }, []);
 
-
   const renderChildComponents = (parentId, level) => {
     const children = items.filter((item) => item.parentId === parentId);
 

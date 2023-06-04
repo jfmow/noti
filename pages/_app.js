@@ -3,8 +3,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { register } from 'next-offline/runtime';
 import { useEffect, useState } from 'react';
-
-import { useRouter } from 'next/router';
 export default function App({ Component, pageProps }) {
   
   useEffect(()=>{
