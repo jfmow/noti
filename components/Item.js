@@ -183,10 +183,15 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
   const [expand, setExpand] = useState(item.expanded);
   const router = useRouter()
   function openPage(e, item) {
-    e.preventDefault()
-    setVisibleState(false)
-    router.push(`/page/${item}`)
+    e.preventDefault();
+    
+    if (window.innerWidth < 800) {
+      // Perform actions for screens less than 800px wide
+      setVisibleState(false);
+    }
+    router.push(`/page/${item}`);
   }
+  
   async function handleSetExpand(e, item, state) {
     e.preventDefault()
     setExpand(state);
