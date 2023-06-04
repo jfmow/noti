@@ -120,3 +120,62 @@
 .itemoption:hover{
   background: rgb(245, 245, 245);
 }
+
+
+.mobilePageNav,
+.mobile_back_btn{
+  display: none;
+}
+
+
+@media(max-width: 800px){
+  .itemroot{
+    background: #fffff9;
+    padding: 1em;
+    border-right: 1px solid #dfdfdf;
+    height: 100dvh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    z-index: 99;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+  .mobilePageNav{
+    display: flex;
+    flex-direction: row;
+    padding: 1em;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 98;
+    height: fit-content;
+    background: #ffffff83;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .itemscon{
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    list-style-type: none;
+  }
+  .mobile_back_btn{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    padding: 2px 5px;
+    gap: 3px;
+    background: #fafafa;
+      border: 2px solid #e8e8e8;
+      border-radius: 5px;
+      color: #03a9f4;
+      fill: #03a9f4;
+      cursor: pointer;
+  
+  }
+}
+
