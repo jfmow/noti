@@ -11,7 +11,7 @@ export default function App({ Component, pageProps }) {
   })
   return (
     <>
-      <ToastContainer position="top-left" />
+      <ToastContainer position="top-left" theme='dark' />
       <Component {...pageProps} />
     </>
   )
