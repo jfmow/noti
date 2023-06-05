@@ -420,6 +420,7 @@ function Editor({ page, preview }) {
                 //    return toast.error('Compresed file may be too big (>4.5mb)!')
                 //}
                 await pb.collection('pages').update(page, formData);
+                toast.dismiss(compressidToast)
             } catch (error) {
                 toast.error('Error uploading header img', {
                     position: toast.POSITION.TOP_LEFT,
