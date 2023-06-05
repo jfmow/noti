@@ -9,6 +9,7 @@
   border-right: 1px solid #dfdfdf;
   max-height: 100dvh;
   overflow: scroll;
+  width: 300px;
 }
 .itemscon{
   display: flex;
@@ -142,6 +143,7 @@
     right: 0;
     top: 0;
     bottom: 0;
+    width: 100%;
   }
   .mobilePageNav{
     display: flex;
