@@ -22,10 +22,9 @@ const MyComponent = ({ currPage, preview }) => {
         setItems(records)
       } else {
 
-        const records = await pb.collection('pages')
-          .getFullList({
+          const records = await pb.collection('pages_Bare').getFullList({
             sort: '-created',
-          });
+        });
         setItems(records);
       }
     }
