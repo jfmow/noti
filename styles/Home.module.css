@@ -4,12 +4,13 @@
   /*background: radial-gradient(#7a5ad9, #FFF7EA);*/
 }
 .itemroot{
-  background: #fffff9;
+  background: #fff;
   padding: 1em;
   border-right: 1px solid #dfdfdf;
   max-height: 100dvh;
   overflow: scroll;
   width: 300px;
+  box-shadow: inset 0px 0px 15px 4px #e7e7e7;
 }
 .itemscon{
   display: flex;
