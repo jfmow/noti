@@ -13,7 +13,7 @@ import ImageTool from '@editorjs/image';
 import AttachesTool from '@editorjs/attaches';
 import PocketBase from 'pocketbase';
 import styles from '@/styles/Create.module.css';
-import Loader from './Loader';
+import Loader from './PlainLoader';
 import Embed from '@editorjs/embed';
 import { AES, enc } from 'crypto-js';
 
@@ -116,9 +116,11 @@ function Editor({ page, preview }) {
     useEffect(() => {
         if (page) {
             setLastTypedTimeIdle(true)
-            setError(false)
+            setError(false);
+            setIsLoading(true);
             async function fetchArticles() {
                 if (page === 'firstopen') {
+                    setIsLoading(false);
                     return
                 }
                 if (preview === 'true') {
@@ -131,12 +133,14 @@ function Editor({ page, preview }) {
                         } else {
                             setArticleHeader(null)
                         }
+                        setIsLoading(false);
                     } catch (error) {
                         toast.error('Could not get article data! Please do not attempt to save it', {
                             position: toast.POSITION.TOP_LEFT,
                         });
                         console.log(error);
                         setError(true);
+                        setIsLoading(false);
                     }
                 } else {
                     try {
@@ -162,17 +166,18 @@ function Editor({ page, preview }) {
                             setArticleHeader(null)
                         }
                         setError(false)
+                        setIsLoading(false);
                     } catch (error) {
                         toast.error('Could not get page data! Please do not attempt to save it', {
                             position: toast.POSITION.TOP_LEFT,
                         });
                         console.log(error);
                         setError(true);
+                        setIsLoading(false);
                     }
                 }
             }
             fetchArticles();
-            setIsLoading(false)
         } else {
             setError(true);
             setIsLoading(false);

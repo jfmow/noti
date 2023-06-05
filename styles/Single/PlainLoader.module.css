@@ -1,5 +1,5 @@
 .loadercontainer{
-    width: 100%;
+    flex: 1 1 0%;
     height: 100dvh;
     z-index: 999;
     display: flex;
