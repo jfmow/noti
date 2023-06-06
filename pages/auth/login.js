@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { toast } from 'react-toastify';
 import Head from 'next/head';
 import validator from 'validator';
-
+import { AES, enc, lib } from 'crypto-js';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false)
