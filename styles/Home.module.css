@@ -13,7 +13,6 @@
   box-shadow: inset 0px 0px 15px 4px #e7e7e7;
   
   transition: 0.7s all ease-in-out;
-  white-space: nowrap;
 }
 .itemscon{
   display: flex;
