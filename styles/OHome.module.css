@@ -6,7 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: radial-gradient(#C5D5EA , #00BCD4);
+  background:  #00BCD4;
   color: #fff;
   font-size: 200%;
 }
@@ -26,6 +26,31 @@
 
 .subtitle {
   margin-bottom: 10px;
+}
+
+.title::before{
+  background: linear-gradient(to bottom right,#2196f382,#03a9f44d,#03a9f466);
+  border-radius: 50%;
+  width: 480px;
+  height: 360px;
+  margin-left: -400px;
+  content: "";
+  left: 50%;
+  position: absolute;
+  filter: blur(45px);
+  transform: translateZ(0);
+  z-index: -1;
+}
+.title::after{
+  content: "";
+    left: 50%;
+    position: absolute;
+    filter: blur(45px);
+    transform: translateZ(0);
+    background: linear-gradient(to bottom right,#2196f382,#03a9f44d,#03a9f466);
+    width: 240px;
+    height: 180px;
+    z-index: -1;
 }
 
 .title {

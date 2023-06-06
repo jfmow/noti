@@ -198,7 +198,7 @@ export default function Login() {
                 <link rel="favicon" href="/favicon.ico" />
                 <meta name="robots" content="noindex"></meta>
             </Head>
-            <div className={styles.login}>
+            <div className={styles.login_box}>
                 <div className={styles.card}>
                     <h4 className={styles.title}>Signup!</h4>
                     <form onSubmit={auth}>

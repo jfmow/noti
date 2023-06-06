@@ -106,16 +106,6 @@ transition: background-size 0.2s ease-in-out;
     }
 }
 
-.login{
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    min-height: 100dvh;
-    width: 100%;
-    grid-template-columns: 1fr 1fr;
-    background: #607D8B;
-}
-
 .login_box{
     display: grid;
     justify-content: center;
@@ -123,7 +113,7 @@ transition: background-size 0.2s ease-in-out;
     min-height: 100dvh;
     width: 100%;
     grid-template-columns: 1fr;
-    background: #f1f5f9;
+    background: radial-gradient(#00BCD4, #03A9F4);
 }
 .login_box>.card{
     grid-column: 1;
@@ -140,7 +130,6 @@ transition: background-size 0.2s ease-in-out;
     /* text-align: center; */
     /* border-radius: 1em; */
     font-size: 150% !important;
-    background: #C5D5EA;
     color: black !important;
     /* background-size: 400% 400%; */
     /* animation: Auth_Authformbg__7kJJm 11s ease infinite; */
@@ -155,9 +144,9 @@ transition: background-size 0.2s ease-in-out;
     align-items: center;
     justify-content: center;
     gap: 0;
-    background-color: white;
+    background-color: rgb(248 248 248);
     border: none;
-    font-size: 16px;
+    font-size: 17px;
     padding: 1em;
     gap: 0.5em;/*
     margin-top: 3px;*/
@@ -190,11 +179,11 @@ transition: background-size 0.2s ease-in-out;
 
    .signup{
     font-size: 60%;
-    color: #919191 ;
+    color: #545454 ;
     text-align: center;
    }
    .signuplink{
-    color: #00bcd4;
+    color: #ffffff;
    }
    .signuplink:hover{
     text-decoration: underline;
@@ -203,10 +192,10 @@ transition: background-size 0.2s ease-in-out;
    /*Text*/
    .title {
     margin-bottom: 1rem;
-    font-size: 1.5em;
+    font-size: 40px;
     font-weight: 500;
     color: #000000;
-    font-family: 'Anton';
+    font-family: "Chairbomb";
    }
    .buttons{
     display: flex;
@@ -243,11 +232,6 @@ transition: background-size 0.2s ease-in-out;
    }
 
    @media (max-width: 900px){
-    .login{
-        justify-items: center;
-        grid-template-columns: 1fr;
-        height: 100dvh;
-    }
     .card{
         grid-column: auto;
         width: 100%;

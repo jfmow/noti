@@ -112,6 +112,19 @@
   color: white;
 }
 
+.emojidiv{
+  overflow: scroll;
+  max-height: 30dvh;
+}
+
+.emoji_button{
+  cursor: pointer;
+  background: #ebebeb;
+  padding: 2px;
+  border-radius: 5px;
+  border: none;
+}
+
 .backbutton>svg {
   margin-right: 5px;
   margin-left: 5px;

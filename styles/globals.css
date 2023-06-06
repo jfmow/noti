@@ -124,6 +124,10 @@ a {
   font-family: "Ab";
   src: url('../fonts/Abelone-FREE.otf');
 }
+@font-face {
+  font-family: "Chairbomb";
+  src: url('../fonts/CherryBombOne-Regular.ttf');
+}
 
 
 /* width */
