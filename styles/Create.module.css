@@ -43,6 +43,7 @@
   grid-template-columns: 1fr;
   padding: 3em;
   word-break: break-word;
+  min-height: 100dvh;
 }
 
 .header {
