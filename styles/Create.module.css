@@ -407,3 +407,11 @@
 .title_buttons_btn_usrSettings_btn{
   fill: #ff6c6c;
 }
+
+
+@media (prefers-color-scheme: dark) {
+  .create{
+    background: #000;
+    color: #fff;
+  }
+}

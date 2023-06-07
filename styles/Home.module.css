@@ -134,6 +134,42 @@
   display: none;
 }
 
+@media (prefers-color-scheme: dark) {
+  
+.itemroot{
+  background: #202020;
+  border-right: none;
+}
+.btn1{
+  background: none;
+  fill: rgba(255, 255, 255, 0.35);
+}
+.btn1:hover{
+  background: rgb(51, 51, 51);
+}
+.createpage:hover{
+  background: #242424;
+}
+.createpage svg:hover{
+  background: rgb(34, 34, 34);
+  fill: rgba(255, 255, 255, 0.35);
+}
+.createpage svg{
+  fill: rgba(255, 255, 255, 0.35);
+}
+
+.itemoption{
+  background: inherit;
+    color: #ffffff99;
+    fill: rgba(55, 53, 47, 0.35);
+}
+.itemoption svg:hover{
+  background: none;
+}
+.itemoption:hover{
+  background: rgb(0, 0, 0);
+}
+}
 
 @media(max-width: 800px){
   .itemroot{
