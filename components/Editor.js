@@ -153,6 +153,7 @@ function Editor({ page, preview }) {
                             setEditorData(JSON.parse(decryptedNote));
                         } catch (error) {
                             console.warn(error)
+                            toast.error('Critical failure! Contact support.')
                             setEditorData(record.content)
                         }
 
