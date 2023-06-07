@@ -155,15 +155,4 @@ a {
   ::-webkit-scrollbar {
     display: none;
   }
-  .ce-inline-toolbar{
-    color: #000;
-  }
-
-  .ce-toolbar__plus>svg {
-    color: #fff !important;
-  }
-
-  .ce-toolbar__settings-btn>svg {
-    color: #fff !important;
-  }
 }
