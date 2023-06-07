@@ -55,6 +55,7 @@
   border-radius: 5px;
   font-size: 12px;
   flex-direction: row;
+  margin-left: 15%;
   /* justify-self: flex-end; */
 }
 .createpage{
