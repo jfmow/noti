@@ -270,38 +270,6 @@ function AccManagementForm() {
     }
   }
 
-  //async function downloadUserData() {
-  //  // Get the data from the API
-  //  const [privateData, userData] = await Promise.all([
-  //    pb.collection("private_data").getFullList({
-  //      sort: "-created", filter: `user = '${pb.authStore.model.id}'`
-  //    }),
-  //    pb.collection("users").getOne(pb.authStore.model.id),
-  //  ]);
-  //
-  //  // Merge the privateData and userData into a single object
-  //  const data = {
-  //    privateData,
-  //    userData,
-  //  };
-  //  // Create a blob with the data
-  //  const blob = new Blob([JSON.stringify(data)], {
-  //    type: "application/json",
-  //  });
-  //
-  //  // Create a URL for the blob
-  //  const url = URL.createObjectURL(blob);
-  //
-  //  // Create a link element and click it to download the file
-  //  const link = document.createElement("a");
-  //  link.href = url;
-  //  link.download = "data.json";
-  //  link.click();
-  //
-  //  // Release the URL object
-  //  URL.revokeObjectURL(url);
-  //};
-
   return (
     <>
       <form className={styles.pform}>
@@ -331,11 +299,6 @@ function AccManagementForm() {
             </button>
           )}
 
-          {pb.authStore.model.verified ? ('') : (
-            <button className={`${styles.buttondefault}`} onClick={sendEmailVerf} type="button">
-              Request verification
-            </button>
-          )}
           {pb.authStore.model.admin && (
             <button className={`${styles.buttondefault}`} onClick={() => window.location.replace('/u/users')} type="button">
               Management
@@ -406,7 +369,6 @@ function UserInfoList({ onClose }) {
               <p>Email: {pb.authStore.model.email}</p>
               <p>Joined: {new Date(pb.authStore.model.created).toLocaleString()}</p>
               <h6>Unique user id: {pb.authStore.model.id}</h6>
-              <h6>(DO NOT SHARE)</h6>
             </form>
           </div>
         </div>

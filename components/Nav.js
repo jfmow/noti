@@ -19,7 +19,7 @@ export default function Nav() {
 
                 <div className={styles.nav_container}>
                 <div className={styles.navitems}>
-                    <Link href='/pages' className={styles.navitems_item}>Pages</Link>
+                    <Link href='/page/firstopen' className={styles.navitems_item}>Pages</Link>
                     <Link href='/u/me' className={styles.navitems_item}>Account</Link>
                     
                 </div>

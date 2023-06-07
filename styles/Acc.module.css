@@ -38,11 +38,14 @@
 }
 
 .accmanagemt_btns{
-  display: grid;
+  display: flex;
   grid-template-columns: 1fr 1fr;
   width: 100%;
+  grid-gap: 1em;
   gap: 1em;
-  align-items: center;
+  align-items: stretch;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .userinfopannel_container {
