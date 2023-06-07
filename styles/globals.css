@@ -168,4 +168,7 @@ a {
   .ce-conversion-tool__icon{
     background: #000;
   }
+  .ce-block--selected .ce-block__content {
+    background: #383d40;
+}
 }
