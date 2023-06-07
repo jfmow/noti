@@ -68,6 +68,22 @@ export default function Login() {
 
   async function oAthLogin() {
     const authData = await pb.collection('users').authWithOAuth2({ provider: 'github' });
+    if(!authData.record.meal){
+      const keySize = 128 / 8; // Key size in bytes
+              const key = lib.WordArray.random(keySize);
+              const encryptionKey = enc.Hex.stringify(key);
+              const encData = {
+                  "chef": encryptionKey,
+                  "plate": authData.record.id
+              };
+
+              const encRec = await pb.collection('cookies').create(encData);
+              const usrDataUp = {
+                  "meal": encRec.id
+              };
+              
+              await pb.collection('users').update(authData.record.id, usrDataUp);
+    }
     return window.location.replace('/page/firstopen')
   }
 
