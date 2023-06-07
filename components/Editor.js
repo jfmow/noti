@@ -565,7 +565,7 @@ function Editor({ page, preview }) {
     return (
         <div className={styles.create}>
             <Head>
-                <title>{page ? 'Edit Article' : 'Create Article'}</title>
+                <title>Page: {articleTitle}</title>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
