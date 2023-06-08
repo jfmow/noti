@@ -595,9 +595,13 @@ class SimpleIframe {
         this.wrapper.classList.add('simple-image');
 
         if (this.data && this.data.url) {
-            this._createImage(this.data.url);
+            const originalUrl = decodeURIComponent(this.data.url).replace(/&amp;/g, '&');
+            this._createImage(originalUrl);
             return this.wrapper;
         }
+        
+        
+        
 
         const fileInput = document.createElement('input');
         fileInput.type = 'file';
