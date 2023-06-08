@@ -32,6 +32,7 @@ function Editor({ page, preview }) {
 
     const [lastTypedTime, setLastTypedTime] = useState(Date.now());
     const [lastTypedTimeIdle, setLastTypedTimeIdle] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
 
     const [pageSharedTF, setPageSharedTF] = useState(false)
     const [shareLinkModalState, setShareLinkModalState] = useState(false)
@@ -52,6 +53,7 @@ function Editor({ page, preview }) {
 
             if (elapsedTime >= 500 && !lastTypedTimeIdle) {  // Auto-save 3 seconds after the user stops typing
                 setLastTypedTimeIdle(true)
+                setIsSaving(true)
                 if (editor) {
                     const articleContent = await editor.saver.save();
                     let formData = new FormData();
@@ -77,6 +79,7 @@ function Editor({ page, preview }) {
                     console.log('Auto-save executed.');
                 }
                 setLastTypedTimeIdle(true)
+                setIsSaving(false)
             }
         };
 
@@ -183,7 +186,26 @@ function Editor({ page, preview }) {
             setError(true);
             setIsLoading(false);
         }
+        
     }, [page]);
+
+    useEffect(()=>{
+        if (isSaving) {
+            window.addEventListener('beforeunload', handleBeforeUnload);
+          } else {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+          }
+        
+          return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+          };
+    },[isSaving])
+
+    const handleBeforeUnload = (event) => {
+        event.preventDefault();
+        event.returnValue = '';
+        return 'Page currently saving. Are your sure you want to continue';
+      };
 
     useEffect(() => {
         if (editorRef.current && (editorData == null || Object.keys(editorData).length > 0)) {
