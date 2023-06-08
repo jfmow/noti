@@ -112,6 +112,12 @@ const SavedData = ({ savedData, articleArti }) => {
             <ul className={styles.article}>
                 {blocks?.map((block) => {
                     switch (block.type) {
+                        case "simpleEmbeds":
+                            return (
+                                <li key={block.id} style={{ width: "100%", display: 'flex', justifyContent: 'center' }}>
+                                    <iframe controls style={{ width: '50%' }} src={block.data.url} alt="File embed" />
+                                </li>
+                            );
                         case "paragraph":
                             return (
                                 <li key={block.id}>

@@ -7,6 +7,7 @@ import Loader from '@/components/Loader';
 import Head from 'next/head';
 import Link from 'next/link';
 import Nav from '@/components/Nav';
+import compressImage from '@/lib/CompressImg';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
@@ -105,31 +106,8 @@ function AvatarForm() {
     document.getElementById('fileInputName').textContent = 'Uploading...';
     if (selectedFile) {
       const formData = new FormData();
-      const compressedFile = await toast.promise(
-        new Promise((resolve, reject) => {
-          new Compressor(selectedFile, {
-            quality: 1,
-            // Set the quality of the output image to a high value
-            maxWidth: 2000, // Limit the maximum width of the output image to 1920 pixels
-            maxHeight: 2000, // Limit the maximum height of the output image to 1920 pixels
-            mimeType: "image/jpeg",
-            maxSize: 3 * 1024 * 1024,
-
-            // The compression process is asynchronous,
-            // which means you have to access the `result` in the `success` hook function.
-            success(result) {
-              resolve(result);
-            },
-            error(err) {
-              reject(err);
-            },
-          });
-        }),
-        {
-          pending: "Compressing img... 📸",
-          error: "failed 🤯",
-        }
-      );
+      const compressedBlob = await compressImage(file); // Maximum file size in KB (100KB in this example)
+      const compressedFile = new File([compressedBlob], file.name, { type: 'image/jpeg' });
       formData.append('avatar', compressedFile);
 
       try {

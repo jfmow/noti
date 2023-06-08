@@ -3,7 +3,6 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
-import Compressor from 'compressorjs';
 import EditorJS from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 import List from '@editorjs/list';
@@ -16,6 +15,7 @@ import styles from '@/styles/Create.module.css';
 import Loader from './PlainLoader';
 import Embed from '@editorjs/embed';
 import { AES, enc } from 'crypto-js';
+import compressImage from '@/lib/CompressImg';
 
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
@@ -194,6 +194,10 @@ function Editor({ page, preview }) {
                         class: Header,
                         inlineToolbar: true,
                     },
+                    simpleEmbeds: {
+                        class: SimpleIframe,
+                        inlineToolbar: true
+                    },
                     embed: {
                         class: Embed,
                         config: {
@@ -271,31 +275,8 @@ function Editor({ page, preview }) {
                                     // your own uploading logic here
                                     async function upl(file) {
                                         const formData = new FormData();
-                                        const compressedFile = await toast.promise(
-                                            new Promise((resolve, reject) => {
-                                                new Compressor(file, {
-                                                    quality: 1,
-                                                    // Set the quality of the output image to a high value
-                                                    maxWidth: 2000, // Limit the maximum width of the output image to 1920 pixels
-                                                    maxHeight: 2000, // Limit the maximum height of the output image to 1920 pixels
-                                                    mimeType: "image/webp",
-                                                    maxSize: 3 * 1024 * 1024,
-
-                                                    // The compression process is asynchronous,
-                                                    // which means you have to access the `result` in the `success` hook function.
-                                                    success(result) {
-                                                        resolve(result);
-                                                    },
-                                                    error(err) {
-                                                        reject(err);
-                                                    },
-                                                });
-                                            }),
-                                            {
-                                                pending: "Compressing img's... 📸",
-                                                error: "failed 🤯",
-                                            }
-                                        );
+                                        const compressedBlob = await compressImage(file); // Maximum file size in KB (100KB in this example)
+                                        const compressedFile = new File([compressedBlob], file.name, { type: 'image/jpeg' });
                                         formData.append('file_data', compressedFile);
                                         formData.append('uploader', pb.authStore.model.id);
                                         const response = await toast.promise(
@@ -362,48 +343,7 @@ function Editor({ page, preview }) {
         };
     }, [editorData, page]);
 
-    async function handleSaveArticle() {
-        const articleContent = await editor.saver.save();
-        let formData = new FormData();
 
-        formData.append("title", articleTitle);
-        formData.append("content", JSON.stringify(articleContent));
-
-        if (page) {
-            try {
-                await pb.collection('pages').update(page, formData);
-                toast.success('Saved successfully!', {
-                    position: toast.POSITION.BOTTOM_LEFT,
-                });
-            } catch (error) {
-                toast.error('Could not save!', {
-                    position: toast.POSITION.BOTTOM_LEFT,
-                });
-                console.log(error);
-            }
-        } else {
-            try {
-                const response = await toast.promise(pb.collection('pages').create(article), {
-                    pending: 'Saving article...',
-                    success: 'Saved successfully. 📄',
-                    error: 'Failed 🤯',
-                });
-
-                if (response.error) {
-                    throw new Error(response.error);
-                }
-
-                toast.success('Saved successfully!', {
-                    position: toast.POSITION.BOTTOM_LEFT,
-                });
-            } catch (error) {
-                toast.warning('Could not save!', {
-                    position: toast.POSITION.BOTTOM_LEFT,
-                });
-                console.log(error);
-            }
-        }
-    }
 
     async function handleDeleteArticle() {
         await pb.collection('pages').delete(page);
@@ -444,51 +384,7 @@ function Editor({ page, preview }) {
         }
     }
 
-    const compressImage = async (file, maxSizeKB) => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                const img = document.createElement('img');
-                img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
 
-                    // Calculate the new dimensions to maintain aspect ratio
-                    let { width, height } = img;
-                    const maxDimension = Math.max(width, height);
-                    if (maxDimension > 1200) {
-                        const scaleFactor = 1200 / maxDimension;
-                        width *= scaleFactor;
-                        height *= scaleFactor;
-                    }
-
-                    // Set the canvas dimensions
-                    canvas.width = width;
-                    canvas.height = height;
-
-                    // Draw the image on the canvas
-                    ctx.drawImage(img, 0, 0, width, height);
-
-                    // Compress the canvas image as a data URL
-                    canvas.toBlob(
-                        (compressedBlob) => {
-                            resolve(compressedBlob);
-                        },
-                        'image/jpeg',
-                        0.8 // Adjust the compression quality as desired (0.8 means 80% compression)
-                    );
-                };
-                img.onerror = (error) => {
-                    reject(error);
-                };
-                img.src = event.target.result;
-            };
-            reader.onerror = (error) => {
-                reject(error);
-            };
-            reader.readAsDataURL(file);
-        });
-    };
 
 
     async function handleSetcurrentPageIconValue(e, icon) {
@@ -657,3 +553,116 @@ function Editor({ page, preview }) {
 }
 
 export default Editor;
+
+
+class SimpleIframe {
+    static get toolbox() {
+        return {
+            title: 'Embed',
+            icon: '<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#000"><g><rect fill="none" height="24" width="24"/><rect fill="none" height="24" width="24"/></g><g><g><path d="M20,3H4C2.9,3,2,3.9,2,5v12c0,1.1,0.89,2,2,2h4v1c0,0.55,0.45,1,1,1h6c0.55,0,1-0.45,1-1v-1h4c1.1,0,2-0.9,2-2V5 C22,3.89,21.1,3,20,3z M20,17H4V5h16V17z"/><path d="M6.5,7.5h1.75C8.66,7.5,9,7.16,9,6.75v0C9,6.34,8.66,6,8.25,6H6C5.45,6,5,6.45,5,7v2.25C5,9.66,5.34,10,5.75,10h0 C6.16,10,6.5,9.66,6.5,9.25V7.5z"/><path d="M18.25,12L18.25,12c-0.41,0-0.75,0.34-0.75,0.75v1.75h-1.75c-0.41,0-0.75,0.34-0.75,0.75v0c0,0.41,0.34,0.75,0.75,0.75H18 c0.55,0,1-0.45,1-1v-2.25C19,12.34,18.66,12,18.25,12z"/></g></g></svg>',
+        };
+    }
+
+    constructor({ data }) {
+        this.data = data;
+        this.wrapper = undefined;
+    }
+
+    render() {
+        this.wrapper = document.createElement('div');
+        this.wrapper.classList.add('simple-image');
+
+        if (this.data && this.data.url) {
+            this._createImage(this.data.url);
+            return this.wrapper;
+        }
+
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.style.display = 'none'; // Set the input display to hidden
+        fileInput.addEventListener('change', this._handleFileSelection.bind(this));
+
+        const uploadBtn = document.createElement('button');
+        uploadBtn.textContent = 'Upload File';
+        uploadBtn.classList.add('upload-button'); // Add a class for styling the button
+        uploadBtn.style.background = '#fff';
+        uploadBtn.style.color = '#000';
+        uploadBtn.style.border = '1px solid #FF9800';
+        uploadBtn.style.padding = '1em';
+        uploadBtn.style.width = '100%';
+        uploadBtn.style.borderRadius = '5px';
+        uploadBtn.style.cursor = 'pointer';
+        uploadBtn.style.boxShadow = 'inset 0px 0px 8px 3px #d2d2d2';
+        uploadBtn.style.fontWeight = '700';
+        uploadBtn.addEventListener('click', () => fileInput.click());
+
+        this.wrapper.appendChild(uploadBtn);
+        this.wrapper.appendChild(fileInput);
+
+        return this.wrapper;
+    }
+
+
+    _handleFileSelection(event) {
+        const file = event.target.files[0];
+        if (!file) {
+            return;
+        }
+
+        const uploadFile = async (file) => {
+            const fileInput = this.wrapper.querySelector('input[type="file"]');
+            const uploadBtn = this.wrapper.querySelector('button');
+
+            fileInput.disabled = true;
+            uploadBtn.disabled = true;
+
+            const formData = new FormData();
+            formData.append('file_data', file);
+            formData.append('uploader', pb.authStore.model.id);
+
+            try {
+                const record = await pb.collection('videos').create(formData);
+                console.log(record);
+                this._createImage(`https://notidb.suddsy.dev/api/files/videos/${record.id}/${record.file_data}`);
+            } catch (error) {
+                console.error(error);
+                // Handle error
+            } finally {
+                fileInput.disabled = false;
+                uploadBtn.disabled = false;
+            }
+        };
+
+        uploadFile(file);
+    }
+
+    _createImage(url) {
+        const iframe = document.createElement('iframe');
+        iframe.classList.add(styles.embedIframe);
+        iframe.style.width = '100%';
+        iframe.style.height = '70vh';
+        iframe.style.border = '2px solid #c29fff';
+        iframe.style.borderRadius = '5px';
+        let modifiedUrl = url;
+
+        if (url.endsWith('.docx') || url.endsWith('.docx/')) {
+            modifiedUrl = url.replace(/\/$/, ''); // Remove trailing slash
+            modifiedUrl = `https://docs.google.com/viewerng/viewer?url=${encodeURIComponent(modifiedUrl)}&embedded=true`;
+        }
+
+        iframe.src = modifiedUrl;
+
+        this.wrapper.innerHTML = '';
+        this.wrapper.appendChild(iframe);
+    }
+
+    save(blockContent) {
+        const image = blockContent.querySelector('iframe');
+        //const caption = blockContent.querySelector('[contenteditable]');
+
+        return {
+            url: image.src,
+            //caption: caption.innerHTML || ''
+        }
+    }
+}
