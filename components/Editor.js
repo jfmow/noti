@@ -669,7 +669,7 @@ class SimpleIframe {
 
         if (url.endsWith('.docx') || url.endsWith('.docx/')) {
             modifiedUrl = url.replace(/\/$/, ''); // Remove trailing slash
-            modifiedUrl = `https://docs.google.com/viewerng/viewer?url=${encodeURIComponent(modifiedUrl)}&embedded=true`;
+            modifiedUrl = encodeURI(`https://docs.google.com/viewerng/viewer?url=${encodeURIComponent(modifiedUrl)}&embedded=true`);
         }
 
         iframe.src = modifiedUrl;
