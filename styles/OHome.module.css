@@ -127,6 +127,10 @@
   border-radius: 5px;
 }
 
+.img1{
+  position: fixed;
+}
+
 .Btn:hover::before {
   transition-duration: .3s;
   transform: translate(100%, -50%);
@@ -176,4 +180,92 @@
 
 @media(max-width: 800px){
 
+}
+
+.navcontainer{
+  position: absolute;
+  z-index: 99;
+  top: 0;
+  width: 100%;
+}
+.items{
+  height: fit-content;
+  padding: 1em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  
+}
+
+.items h1{
+  font-family: "Mori";
+  text-shadow: 0px 0px 10px yellow;
+}
+
+.sign_Button {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 30px;
+  border: 0;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10rem;
+  transition: all 0.2s;
+  font-weight: bold;
+  color: rgb(37, 37, 37);
+  z-index: 0;
+  box-shadow: 0 0px 7px -5px rgba(0, 0, 0, 0.5);
+}
+
+.sign_Button:hover {
+  background: rgb(193, 228, 248);
+  color: rgb(33, 0, 85);
+  border-radius: 1em;
+}
+
+.sign_Button:active {
+  transform: scale(0.97);
+}
+
+.sign_hoverEffect {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.sign_hoverEffect div {
+  background: rgb(222,0,75);
+  background: linear-gradient(90deg, #0a70c482,#ae3bd74d,#35a7db66);
+  border-radius: 40rem;
+  width: 10rem;
+  height: 10rem;
+  transition: 0.4s;
+  filter: blur(20px);
+  animation: effect infinite 3s linear;
+  opacity: 0.5;
+}
+
+.sign_Button:hover .sign_hoverEffect div {
+  width: 8rem;
+  height: 8rem;
+}
+
+@keyframes effect {
+
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }

@@ -195,7 +195,6 @@ transition: background-size 0.2s ease-in-out;
     font-size: 40px;
     font-weight: 500;
     color: #000000;
-    font-family: "Chairbomb";
    }
    .buttons{
     display: flex;
