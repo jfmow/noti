@@ -156,7 +156,7 @@ function Editor({ page, preview }) {
                             setEditorData(JSON.parse(decryptedNote));
                         } catch (error) {
                             console.warn(error)
-                            toast.error('Critical failure! Contact support.')
+                            toast.info('Critical error, page content may not be upto date!')
                             setEditorData(record.content)
                         }
 
@@ -186,26 +186,26 @@ function Editor({ page, preview }) {
             setError(true);
             setIsLoading(false);
         }
-        
+
     }, [page]);
 
-    useEffect(()=>{
+    useEffect(() => {
         if (isSaving) {
             window.addEventListener('beforeunload', handleBeforeUnload);
-          } else {
+        } else {
             window.removeEventListener('beforeunload', handleBeforeUnload);
-          }
-        
-          return () => {
+        }
+
+        return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
-          };
-    },[isSaving])
+        };
+    }, [isSaving])
 
     const handleBeforeUnload = (event) => {
         event.preventDefault();
         event.returnValue = '';
         return 'Page currently saving. Are your sure you want to continue';
-      };
+    };
 
     useEffect(() => {
         if (editorRef.current && (editorData == null || Object.keys(editorData).length > 0)) {
@@ -599,9 +599,9 @@ class SimpleIframe {
             this._createImage(originalUrl);
             return this.wrapper;
         }
-        
-        
-        
+
+
+
 
         const fileInput = document.createElement('input');
         fileInput.type = 'file';
@@ -611,15 +611,15 @@ class SimpleIframe {
         const uploadBtn = document.createElement('button');
         uploadBtn.textContent = 'Upload File';
         uploadBtn.classList.add('upload-button'); // Add a class for styling the button
-        uploadBtn.style.background = '#fff';
+        uploadBtn.style.background = 'linear-gradient(45deg, white 40%, #03A9F4 60%)';
         uploadBtn.style.color = '#000';
-        uploadBtn.style.border = '1px solid #FF9800';
+        uploadBtn.style.border = 'none';
         uploadBtn.style.padding = '1em';
         uploadBtn.style.width = '100%';
         uploadBtn.style.borderRadius = '5px';
         uploadBtn.style.cursor = 'pointer';
-        uploadBtn.style.boxShadow = 'inset 0px 0px 8px 3px #d2d2d2';
         uploadBtn.style.fontWeight = '700';
+        fileInput.click() //open imeditly
         uploadBtn.addEventListener('click', () => fileInput.click());
 
         this.wrapper.appendChild(uploadBtn);
@@ -663,7 +663,7 @@ class SimpleIframe {
     }
 
     _createImage(url) {
-        const iframe = document.createElement('iframe');
+        const iframe = document.createElement('object');
         iframe.classList.add(styles.embedIframe);
         iframe.style.width = '100%';
         iframe.style.height = '70vh';
@@ -676,18 +676,18 @@ class SimpleIframe {
             modifiedUrl = `https://docs.google.com/viewerng/viewer?url=${encodeURIComponent(modifiedUrl)}&amp;embedded=true`;
         }
 
-        iframe.src = modifiedUrl;
+        iframe.data = modifiedUrl;
 
         this.wrapper.innerHTML = '';
         this.wrapper.appendChild(iframe);
     }
 
     save(blockContent) {
-        const image = blockContent.querySelector('iframe');
+        const image = blockContent.querySelector('object');
         //const caption = blockContent.querySelector('[contenteditable]');
 
         return {
-            url: image.src,
+            url: image.data,
             //caption: caption.innerHTML || ''
         }
     }
