@@ -117,6 +117,10 @@ a {
   font-family: "Chairbomb";
   src: url('../fonts/CherryBombOne-Regular.ttf');
 }
+@font-face {
+  font-family: "Mori";
+  src: url('../fonts/MoiraiOne-Regular.ttf');
+}
 
 
 /* width */

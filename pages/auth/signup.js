@@ -39,7 +39,7 @@ export default function Login() {
     useEffect(() => {
 
         if (pb.authStore.isValid) {
-            return window.location.replace('/')
+            return window.location.replace('/page/firstopen')
         }
         // Get previous URL from session storage
         const prevUrl = sessionStorage.getItem('prevUrl');

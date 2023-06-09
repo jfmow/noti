@@ -196,29 +196,6 @@
 }
 
 
-.logoutbtn {
-  font-family: monospace;
-  background-color: #fef3f3;
-  color: #f63b3b;
-  border: none;
-  border-radius: 8px;
-  width: fit-content;
-  height: 45px;
-  padding: 0 1vh;
-  transition: .3s;
-  min-width: 100px;
-  position: fixed;
-  bottom: 1em;
-  right: 1em;
-}
-
-.logoutbtn:hover {
-  background-color: #843bf6;
-  box-shadow: 0 0 0 5px #ee3bf65f;
-  color: #ffffff;
-  cursor: pointer;
-  transform: translateY(-7px) scale(1.05);
-}
 
 .row2 {
   grid-row: 2;
@@ -409,6 +386,76 @@
   fill: #d3d3d3;
 }
 
+
+.logoutBtn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 45px;
+  height: 45px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition-duration: .3s;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+  background-color: rgb(255, 65, 65);
+  position: fixed;
+  bottom: 2em;
+  right: 2em;
+}
+
+/* plus sign */
+.logoutBtn_sign {
+  width: 100%;
+  transition-duration: .3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoutBtn_sign svg {
+  width: 17px;
+}
+
+.logoutBtn_sign svg path {
+  fill: white;
+}
+/* text */
+.logoutBtn_text {
+  position: absolute;
+  right: 0%;
+  width: 0%;
+  opacity: 0;
+  color: white;
+  font-size: 1.2em;
+  font-weight: 600;
+  transition-duration: .3s;
+}
+/* hover effect on button width */
+.logoutBtn:hover {
+  width: 125px;
+  border-radius: 40px;
+  transition-duration: .3s;
+}
+
+.logoutBtn:hover .logoutBtn_sign {
+  width: 30%;
+  transition-duration: .3s;
+  padding-left: 20px;
+}
+/* hover effect button's text */
+.logoutBtn:hover .logoutBtn_text {
+  opacity: 1;
+  width: 70%;
+  transition-duration: .3s;
+  padding-right: 10px;
+}
+/* button click effect*/
+.logoutBtn:active {
+  transform: translate(2px ,2px);
+}
 
 
 @media (max-width: 1050px) {
