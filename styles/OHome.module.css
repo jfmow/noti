@@ -1,5 +1,9 @@
 /* OHome.module.css */
-
+.container{
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
 /* Header styles */
 .header {
   height: 100dvh;

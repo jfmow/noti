@@ -33,7 +33,7 @@ export default function Home() {
     return <PlainLoader />
   }
   return (
-    <div>
+    <div className={styles.container}>
       <Nav />
       <header className={styles.header}>
         <div className={styles.headerContent}>
