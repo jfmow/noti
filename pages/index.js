@@ -27,7 +27,7 @@ export default function Home() {
       }
 
     }
-    //authUpdate()
+    authUpdate()
   }, []);
   if (isLoading) {
     return <PlainLoader />
