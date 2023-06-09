@@ -57,10 +57,9 @@
 .title {
   margin-bottom: 10px;
 }
-
 .title::before {
-  background: -webkit-linear-gradient(to bottom right, #9C27B0, #03a9f44d, #3F51B5);
-  background: linear-gradient(to bottom right, #9C27B0, #03a9f44d, #3F51B5);
+  background: -webkit-linear-gradient(to bottom right, #2196f382, #03a9f44d, #03a9f466);
+  background: linear-gradient(to bottom right, #2196f382, #03a9f44d, #03a9f466);
   border-radius: 50%;
   width: 480px;
   height: 360px;
@@ -81,12 +80,13 @@
   filter: blur(45px);
   -webkit-filter: blur(45px);
   transform: translateZ(0);
-  background: -webkit-linear-gradient(to bottom right, #9C27B0, #03a9f44d, #3F51B5);
-  background: linear-gradient(to bottom right, #9C27B0, #03a9f44d, #3F51B5);
+  background: -webkit-linear-gradient(to bottom right, #2196f382, #03a9f44d, #03a9f466);
+  background: linear-gradient(to bottom right, #2196f382, #03a9f44d, #03a9f466);
   width: 240px;
   height: 180px;
   z-index: -1;
 }
+
 
 
 .description {
