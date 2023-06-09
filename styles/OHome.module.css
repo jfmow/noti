@@ -1,6 +1,10 @@
 /* OHome.module.css */
 .container{
   width: 100%;
+  
+  scroll-snap-type: y mandatory;
+  height: 100dvh;
+  overflow-y: scroll;
 }
 /* Header styles */
 .header {
@@ -11,6 +15,8 @@
   background:  #00BCD4;
   color: #fff;
   font-size: 200%;
+  background-image: url('/img1.png');
+  scroll-snap-align: center;
 }
 
 .headerContent {
@@ -127,6 +133,86 @@
   border-radius: 5px;
 }
 
+.sections{
+}
+
+.section1{
+  scroll-snap-align: center;
+  background-image: url('/hmpgimg2.png');
+  height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2em;
+  text-align: center;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+}
+
+.section1 h2{
+  background: linear-gradient(to right, #00ffd5, #8359ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  font-size: 60px;
+  font-family: "Anton";
+}
+.section3{
+  
+  scroll-snap-align: center;
+  background: #fff;
+  height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2em;
+  text-align: center;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+}
+
+.section3 h2{
+  background: linear-gradient(to right, #9C27B0, #00BCD4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  font-size: 60px;
+  font-family: "Anton";
+}
+.section2{
+  scroll-snap-align: center;
+  background-image: url('/hmpgimg3.png');
+  height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2em;
+  text-align: center;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+}
+
+.section2 h2{
+  background: linear-gradient(to right, #FF9800, #E91E63);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  font-size: 60px;
+  font-family: "Anton";
+}
+
 .img1{
   position: absolute;
   height: 100dvh;
@@ -153,6 +239,7 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
+  scroll-snap-align: start;
   
 }
 
@@ -180,8 +267,10 @@
 }
 
 
-@media(max-width: 800px){
-
+@media(max-width: 600px){
+  .section1 h2, .section2 h2, .section3 h2{
+    font-size: 40px;
+  }
 }
 
 .navcontainer{
