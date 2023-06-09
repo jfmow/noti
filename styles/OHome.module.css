@@ -3,6 +3,8 @@
   width: 100%;
   margin: 0;
   padding: 0;
+  
+  border: 2px dashed blue;
 }
 /* Header styles */
 .header {
@@ -13,6 +15,7 @@
   background:  #00BCD4;
   color: #fff;
   font-size: 200%;
+  border: 2px dashed red;
 }
 
 .headerContent {
@@ -149,6 +152,8 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
+  
+  border: 2px dashed orchid;
   
 }
 
