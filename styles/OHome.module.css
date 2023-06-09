@@ -61,8 +61,6 @@
 
 .test{
   
-  filter: blur(45px);
-  -webkit-filter: blur(45px);
 }
 
 .test::before {
