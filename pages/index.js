@@ -39,7 +39,6 @@ export default function Home() {
         <div className={styles.headerContent}>
           <h3 className={styles.subtitle}>Welcome to</h3>
           <h1 className={styles.title}>Noti</h1>
-          <span className={styles.test}/>
           <h5 className={styles.description}>The best note-taking app ever</h5>
           <Link href='/auth/signup' className={styles.Btn}>
             Join now

@@ -1,8 +1,6 @@
 /* OHome.module.css */
 .container{
   width: 100%;
-  margin: 0;
-  padding: 0;
 }
 /* Header styles */
 .header {
@@ -53,47 +51,34 @@
   margin-bottom: 10px;
 }
 
-
-.title {
-  margin-bottom: 10px;
-  
-}
-
-.test{
-  
-  max-width: 100dvw;
-}
-
-.test::before {
-  background: -webkit-linear-gradient(to bottom right, #3F51B5, #03a9f44d, #03f4d266);
-  background: linear-gradient(to bottom right, #3F51B5, #03a9f44d, #03f4d266);
+.title::before{
+  background: linear-gradient(to bottom right,#2196f382,#03a9f44d,#03a9f466);
   border-radius: 50%;
-  
-  max-width: 100dvw;
-  width: 100%;
+  width: 480px;
   height: 360px;
   margin-left: -400px;
   content: "";
   left: 50%;
   position: absolute;
+  filter: blur(45px);
   transform: translateZ(0);
   z-index: -1;
 }
-
-.test::after {
+.title::after{
   content: "";
-  left: 50%;
-  position: absolute;
-  transform: translateZ(0);
-  background: -webkit-linear-gradient(to bottom right, #3F51B5, #03a9f44d, #03f4d266);
-  background: linear-gradient(to bottom right, #3F51B5, #03a9f44d, #03f4d266);
-  max-width: 100dvw;
-  width: 240px;
-  height: 180px;
-  z-index: -1;
+    left: 50%;
+    position: absolute;
+    filter: blur(45px);
+    transform: translateZ(0);
+    background: linear-gradient(to bottom right,#2196f382,#b872d24d,#03a9f466);
+    width: 100px;
+    height: 180px;
+    z-index: -1;
 }
 
-
+.title {
+  margin-bottom: 10px;
+}
 
 .description {
   font-size: 18px;
@@ -186,4 +171,9 @@
   .githublogo path{
     fill: #fff;
   }
+}
+
+
+@media(max-width: 800px){
+
 }
