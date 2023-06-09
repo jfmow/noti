@@ -71,7 +71,7 @@
 
 html,
 body {
-  width: 100%;
+  max-width: 100dvw;
   overflow-x: hidden;
 }
 
@@ -83,8 +83,6 @@ body {
 body {
   color: #000;
   background: #fff;
-width: 100%;
-  border: 2px dashed yellow;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
