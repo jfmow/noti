@@ -128,7 +128,8 @@
 }
 
 .img1{
-  position: fixed;
+  position: absolute;
+  height: 100dvh;
 }
 
 .Btn:hover::before {
