@@ -34,7 +34,7 @@ export default function Home() {
   }
   return (
     <div className={styles.container}>
-      <Nav />
+      
       <header className={styles.header}>
         <div className={styles.headerContent}>
           <h3 className={styles.subtitle}>Welcome to</h3>
