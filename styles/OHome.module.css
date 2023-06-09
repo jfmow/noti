@@ -66,6 +66,7 @@
   left: 50%;
   position: absolute;
   filter: blur(45px);
+  -webkit-filter: blur(45px);
   transform: translateZ(0);
   z-index: -1;
 }
@@ -74,6 +75,7 @@
     left: 50%;
     position: absolute;
     filter: blur(45px);
+    -webkit-filter: blur(45px);
     transform: translateZ(0);
     background: linear-gradient(to bottom right,#2196f382,#03a9f44d,#03a9f466);
     width: 240px;
