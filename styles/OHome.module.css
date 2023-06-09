@@ -3,7 +3,7 @@
   width: 100%;
   
   scroll-snap-type: y mandatory;
-  height: 100dvh;
+  height: 102dvh;
   overflow-y: scroll;
 }
 /* Header styles */
