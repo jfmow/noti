@@ -529,16 +529,6 @@ input:checked ~ .slider {
     border: 2px solid black;
   }
 
-  .row2 {
-    grid-row: auto !important;
-  }
-
-  .main {
-    flex-direction: column;
-    justify-content: center;
-    gap: 2em;
-  }
-
   .accinfo {
     text-align: left;
   }
@@ -549,7 +539,7 @@ input:checked ~ .slider {
     color: #4f4f4f;
   }
 
-  .usrname_block {
+  .default_settings_modal_container_usrname_block {
     width: 100%;
     margin: 1em;
   }
