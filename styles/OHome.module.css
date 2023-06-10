@@ -27,6 +27,7 @@
     height: 50%;
     background: linear-gradient(0deg, #00BCD4 20%, #3F51B5, #673AB7);
     filter: blur(141px);
+    -webkit-filter: blur(141px);
     border-radius: 50%;
     z-index: -1;
 }
@@ -38,6 +39,7 @@
     width: 50%;
     height: 50%;
     background: linear-gradient(0deg, #7ef0ff 20%, #3F51B5, #b88fff);
+    -webkit-filter: blur(141px);
     filter: blur(141px);
     border-radius: 20%;
     z-index: -1;
