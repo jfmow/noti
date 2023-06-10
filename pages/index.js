@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter()
   useEffect(() => {
     async function authUpdate() {
