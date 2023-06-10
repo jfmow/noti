@@ -113,7 +113,7 @@ transition: background-size 0.2s ease-in-out;
     min-height: 100dvh;
     width: 100%;
     grid-template-columns: 1fr;
-    background: radial-gradient(#00BCD4, #03A9F4);
+    background: radial-gradient(#93a3ff,#6ceeff);
 }
 .login_box>.card{
     grid-column: 1;
@@ -130,7 +130,6 @@ transition: background-size 0.2s ease-in-out;
     /* text-align: center; */
     /* border-radius: 1em; */
     font-size: 150% !important;
-    color: black !important;
     /* background-size: 400% 400%; */
     /* animation: Auth_Authformbg__7kJJm 11s ease infinite; */
     align-items: center;
@@ -194,7 +193,6 @@ transition: background-size 0.2s ease-in-out;
     margin-bottom: 1rem;
     font-size: 40px;
     font-weight: 500;
-    color: #000000;
    }
    .buttons{
     display: flex;
