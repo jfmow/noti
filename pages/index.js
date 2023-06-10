@@ -56,9 +56,24 @@ export default function Home() {
         </section>
         <section className={styles.section3}>
           <h2>Get work done quickly and efficiently with fast loading and low data usage.</h2>
+          <img className={styles.bg} src='/static/hmpgimg3.png'/>
         </section>
         <section className={styles.section2}>
           <h2>Enjoy new features and updates every week to keep your notes looking fresh.</h2>
+          <div className={styles.stats}>
+            <div className={styles.stat}>
+              <h1>99% Uptime</h1>
+              <p>Thats our goal but 100% would be even better!</p>
+            </div>
+            <div className={styles.stat}>
+              <h1>Latest features</h1>
+              <p>New features published each week making your notes even better</p>
+            </div>
+            <div className={styles.stat}>
+              <h1>Fast</h1>
+              <p>Quick server response times mean you can get to writing even faster</p>
+            </div>
+          </div>
         </section>
 </div>
         <div className={styles.footer}>

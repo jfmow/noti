@@ -173,12 +173,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
   padding: 2em;
   text-align: center;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.bg{
+  height: 70%;
+  width: 100%;
+  border-radius: 3em;
+  object-fit: cover;
 }
 
 .section3 h2{
@@ -191,8 +198,8 @@
 }
 .section2{
   scroll-snap-align: center;
-  background-image: url('/static/hmpgimg3.png');
-  height: 100dvh;
+  background: #fff;
+  min-height: 100dvh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -213,6 +220,36 @@
   text-fill-color: transparent;
   font-size: 60px;
 }
+
+
+.stats{
+  width: 100%;
+  height: 30dvh;
+  padding: 2em;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2em;
+}
+
+.stat{
+  width: 100%;
+    background: #fff;
+    box-shadow: 0px 0px 13px 1px #f1f1f1;
+    border-radius: 2em;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 1em;
+    color: #000;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat h1{
+  color: #73ff8b;
+}
+
 
 .img1{
   position: absolute;
@@ -271,6 +308,17 @@
 @media(max-width: 600px){
   .section1 h2, .section2 h2, .section3 h2{
     font-size: 40px;
+  }
+  .section3{
+    flex-direction: column;
+    gap: 20px;
+  }
+  .bg{
+    height: 30%;
+  }
+  .stats{
+    grid-template-columns: 1fr;
+    height: 100%;
   }
 }
 
