@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import Nav from '@/components/Nav';
 import PlainLoader from '@/components/PlainLoader';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 export default function Home() {
@@ -34,6 +35,9 @@ export default function Home() {
   }
   return (
     <>
+    <Head>
+      <title>Noti</title>
+    </Head>
       <HomeNav />
       <div className={styles.container}>
         <header className={styles.header}>
