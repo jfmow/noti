@@ -5,6 +5,7 @@
   scroll-snap-type: y mandatory;
   height: 100dvh;
   overflow-y: scroll;
+  position: relative;
 }
 /* Header styles */
 .header {
@@ -15,6 +16,7 @@
   color: #fff;
   font-size: 200%;
   scroll-snap-align: center;
+  position: relative;
 }
 
 .headerContent::before{

@@ -1,52 +1,60 @@
-.loadercontainer{
-    flex: 1 1 0%;
-    height: 100dvh;
-    z-index: 999;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    pointer-events: none;
+.loadercontainer {
+  flex: 1 1 0%;
+  height: 100dvh;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  gap: 1dvh;
 }
+
 .loader {
-    border: 4px solid rgba(0, 0, 0, .1);
-    border-left-color: transparent;
-    border-radius: 50%;
-  }
-  
-  .loader {
-    border: 4px solid rgba(0, 0, 0, .1);
-    border-left-color: transparent;
-    width: 36px;
-    height: 36px;
-  }
-  
-  .loader {
-    border: 4px solid rgb(0 188 212 / 33%);
-    border-left-color: transparent;
-    width: 36px;
-    height: 36px;
-    animation: spin89345 1s linear infinite;
-  }
-  
-  @keyframes spin89345 {
-    0% {
-      transform: rotate(0deg);
-    }
-  
-    100% {
-      transform: rotate(360deg);
-    }
+  border: 4px solid rgba(0, 0, 0, .1);
+  border-left-color: transparent;
+  border-radius: 50%;
+}
+
+.loader {
+  border: 4px solid rgba(0, 0, 0, .1);
+  border-left-color: transparent;
+  width: 36px;
+  height: 36px;
+}
+
+.loader {
+  border: 4px solid rgb(0 188 212 / 33%);
+  border-left-color: transparent;
+  width: 36px;
+  height: 36px;
+  animation: spin89345 1s linear infinite;
+}
+
+@keyframes spin89345 {
+  0% {
+    transform: rotate(0deg);
   }
 
-  @media(max-width: 800px){
-    .loadercontainer{
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: #fff;
-      z-index: 98;
-    }
+  100% {
+    transform: rotate(360deg);
   }
+}
+
+@media(max-width: 800px) {
+  .loadercontainer {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    z-index: 98;
+  }
+}
+
+.title {
+font-size: 30px;
+  font-family: "Mori", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
