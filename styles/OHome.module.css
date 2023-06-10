@@ -12,11 +12,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background:  linear-gradient(0deg, #6ffdfe 20%, #FFC107, #673AB7);
   color: #fff;
   font-size: 200%;
   scroll-snap-align: center;
-  position: relative;
 }
 
 .headerContent::before{
@@ -312,7 +310,7 @@
   border-radius: 10rem;
   transition: all 0.2s;
   font-weight: bold;
-  color: rgb(37, 37, 37);
+  color: rgb(236, 236, 236);
   z-index: 0;
   box-shadow: 0 0px 7px -5px rgba(0, 0, 0, 0.5);
 }
