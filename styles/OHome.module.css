@@ -5,7 +5,6 @@
   scroll-snap-type: y mandatory;
   height: 100dvh;
   overflow-y: scroll;
-  position: relative;
 }
 /* Header styles */
 .header {
@@ -19,7 +18,7 @@
   position: relative;
 }
 
-.headerContent::before{
+.header::before{
   content: "";
     position: absolute;
     bottom: 0;
@@ -32,7 +31,7 @@
     border-radius: 50%;
     z-index: -1;
 }
-.headerContent::after{
+.header::after{
   content: "";
     position: absolute;
     bottom: 0;
