@@ -44,10 +44,6 @@
     color: #ff9800;
 }
 
-.navitems_useraccount{
-
-}
-
 
 .usericon{
     width: 2.5em;
@@ -63,5 +59,11 @@
 @media(max-width: 800px){
     .nav_container{
         position: fixed;
+    }
+}
+
+@media(prefers-color-scheme: dark){
+    .nav_container{
+        background: #252525;
     }
 }
