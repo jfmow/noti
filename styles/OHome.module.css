@@ -12,11 +12,35 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background:  #00BCD4;
+  background:  linear-gradient(0deg, #6ffdfe 20%, #FFC107, #673AB7);
   color: #fff;
   font-size: 200%;
-  background-image: url('/static/img1.webp');
   scroll-snap-align: center;
+}
+
+.headerContent::before{
+  content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: 50%;
+    background: linear-gradient(0deg, #00BCD4 20%, #3F51B5, #673AB7);
+    filter: blur(141px);
+    border-radius: 50%;
+    z-index: -1;
+}
+.headerContent::after{
+  content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    height: 50%;
+    background: linear-gradient(0deg, #7ef0ff 20%, #3F51B5, #b88fff);
+    filter: blur(141px);
+    border-radius: 20%;
+    z-index: -1;
 }
 
 .headerContent {
