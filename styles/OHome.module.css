@@ -15,7 +15,7 @@
   background:  #00BCD4;
   color: #fff;
   font-size: 200%;
-  background-image: url('/img1.png');
+  background-image: url('/img1.webp');
   scroll-snap-align: center;
 }
 
@@ -115,7 +115,7 @@
 
 .section1{
   scroll-snap-align: center;
-  background-image: url('/hmpgimg2.png');
+  background-image: url('/hmpgimg2.webp');
   height: 100dvh;
   display: flex;
   justify-content: center;
@@ -166,7 +166,7 @@
 }
 .section2{
   scroll-snap-align: center;
-  background-image: url('/hmpgimg3.png');
+  background-image: url('/hmpgimg3.webp');
   height: 100dvh;
   display: flex;
   justify-content: center;
