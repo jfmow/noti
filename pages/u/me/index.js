@@ -258,8 +258,22 @@ function AccManagementForm() {
 
   async function ChangeEmail(){
     setUpdateEmailField(false);
-    await pb.collection('users').requestEmailChange(newEmail);
-    return toast.info(`Please check the inbox of ${newEmail} to confirm the change.`)
+  
+    try {
+      await pb.collection('users').requestEmailChange(newEmail);
+      const response = await fetch("/api/user/emailchange", {
+        method: "POST",
+  
+        body: JSON.stringify({
+          user: { token: pb.authStore.token },
+        }),
+      });
+      return toast.info(`Please check the inbox of ${newEmail} to confirm the change.`)
+    } catch (error) {
+      console.log(error)
+      toast.error('Unable to change email!')
+    }
+
   }
 
   return (
