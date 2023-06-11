@@ -256,22 +256,25 @@ function AccManagementForm() {
     }
   }
 
-  async function ChangeEmail(){
+  async function ChangeEmail() {
     setUpdateEmailField(false);
-  
+    const updateEmailToastid = toast.loading("Please wait...")
     try {
       await pb.collection('users').requestEmailChange(newEmail);
       const response = await fetch("/api/user/emailchange", {
         method: "POST",
-  
+
         body: JSON.stringify({
           user: { token: pb.authStore.token },
         }),
       });
-      return toast.info(`Please check the inbox of ${newEmail} to confirm the change.`)
+      toast.update(updateEmailToastid, { render: "`Please check the inbox of ${newEmail} to confirm the change.`", type: "success", isLoading: false });
+      setTimeout(() => {
+        toast.dismiss(updateEmailToastid)
+      }, 2300);
     } catch (error) {
       console.log(error)
-      toast.error('Unable to change email!')
+      return toast.error('Unable to change email!')
     }
 
   }
@@ -372,10 +375,10 @@ function AccManagementForm() {
                 <div className={styles.default_settings_modal_container_usrname_bg}>
                   <div className={styles.default_settings_modal_container_usrname_block} onClick={(event) => event.stopPropagation()}>
                     <form>
-                  <h2>Toggle notifications</h2>
-                      
-                    <Notitoggle />
-                      </form>
+                      <h2>Toggle notifications</h2>
+
+                      <Notitoggle />
+                    </form>
                   </div>
                 </div>
               </div>
