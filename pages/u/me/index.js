@@ -162,7 +162,9 @@ function AccManagementForm() {
   const [newUsername, setNewUsername] = useState('');
   const [delAccField, setDelAccField] = useState(false);
   const [userInfoOpen, setUserInfoDisplay] = useState(false);
-  const [notiField, setNotiField] = useState(false)
+  const [notiField, setNotiField] = useState(false);
+  const [updateEmailField, setUpdateEmailField] = useState(false);
+  const [newEmail, setNewEmail] = useState('')
 
 
   async function deleteAccount(e) {
@@ -254,6 +256,12 @@ function AccManagementForm() {
     }
   }
 
+  async function ChangeEmail(){
+    setUpdateEmailField(false);
+    await pb.collection('users').requestEmailChange(newEmail);
+    return toast.info(`Please check the inbox of ${newEmail} to confirm the change.`)
+  }
+
   return (
     <>
       <form className={styles.user_account_form_profile_settings}>
@@ -264,6 +272,9 @@ function AccManagementForm() {
           </button>
           <button className={styles.acc_button} type="button" onClick={() => setUsernameField(true)}>
             <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" ><g><rect fill="none" height="24" width="24" /></g><g><path d="M20,24H4c-1.1,0-2-0.9-2-2v0c0-1.1,0.9-2,2-2h16c1.1,0,2,0.9,2,2v0C22,23.1,21.1,24,20,24z M13.06,5.19l3.75,3.75l-8.77,8.77C7.86,17.9,7.6,18,7.34,18H5c-0.55,0-1-0.45-1-1v-2.34c0-0.27,0.11-0.52,0.29-0.71L13.06,5.19z M17.88,7.87l-3.75-3.75l1.83-1.83c0.39-0.39,1.02-0.39,1.41,0l2.34,2.34c0.39,0.39,0.39,1.02,0,1.41L17.88,7.87z" enable-background="new" /></g></svg>            <p className={styles.acc_button_text}>Edit username</p>
+          </button>
+          <button className={styles.acc_button} type="button" onClick={() => setUpdateEmailField(true)}>
+            <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" ><g><rect fill="none" height="24" width="24" /></g><g><path d="M20,24H4c-1.1,0-2-0.9-2-2v0c0-1.1,0.9-2,2-2h16c1.1,0,2,0.9,2,2v0C22,23.1,21.1,24,20,24z M13.06,5.19l3.75,3.75l-8.77,8.77C7.86,17.9,7.6,18,7.34,18H5c-0.55,0-1-0.45-1-1v-2.34c0-0.27,0.11-0.52,0.29-0.71L13.06,5.19z M17.88,7.87l-3.75-3.75l1.83-1.83c0.39-0.39,1.02-0.39,1.41,0l2.34,2.34c0.39,0.39,0.39,1.02,0,1.41L17.88,7.87z" enable-background="new" /></g></svg>            <p className={styles.acc_button_text}>Update email</p>
           </button>
           <button className={`${styles.acc_button} ${styles.acc_button_red}`} type="button" onClick={() => setDelAccField(true)}>
             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM18 4h-2.5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1z" /></svg>            <p className={styles.acc_button_text}>Delete Account</p>
@@ -293,6 +304,26 @@ function AccManagementForm() {
                         <input autoCorrect='false' autoCapitalize='false' id='usrnameinput' onChange={event => setNewUsername(event.target.value)} type='text' placeholder={`@${pb.authStore.model.username}`} />
                       </div>
                       <button style={{ justifySelf: 'end' }} className={`${styles.buttondefault}`} type='submit' onClick={changeUsername}>Update</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </>
+          ) :
+          ('')}
+        {updateEmailField ?
+          (
+            <>
+              <div className={styles.default_settings_modal_container} onClick={() => { setUpdateEmailField(false) }}>
+                <div className={styles.default_settings_modal_container_usrname_bg}>
+                  <div className={styles.default_settings_modal_container_usrname_block} onClick={(event) => event.stopPropagation()}>
+                    <button type='button' onClick={() => { setUpdateEmailField(false) }} className={styles.default_settings_modal_container_usrclose_btn}><svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48"><path d="M480 618 270 828q-9 9-21 9t-21-9q-9-9-9-21t9-21l210-210-210-210q-9-9-9-21t9-21q9-9 21-9t21 9l210 210 210-210q9-9 21-9t21 9q9 9 9 21t-9 21L522 576l210 210q9 9 9 21t-9 21q-9 9-21 9t-21-9L480 618Z" /></svg></button>
+                    <form>
+                      <h2>Update email:</h2>
+                      <div className={styles.default_settings_modal_container_usrname_edit_form}>
+                        <input autoCorrect='false' autoCapitalize='false' onChange={(e) => setNewEmail(e.target.value)} type='text' placeholder={`${pb.authStore.model.email}`} />
+                      </div>
+                      <button style={{ justifySelf: 'end' }} className={`${styles.buttondefault}`} type='button' onClick={ChangeEmail}>Update</button>
                     </form>
                   </div>
                 </div>
