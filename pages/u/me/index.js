@@ -111,8 +111,8 @@ function AvatarForm() {
     document.getElementById('fileInputName').textContent = 'Uploading...';
     if (selectedFile) {
       const formData = new FormData();
-      const compressedBlob = await compressImage(file); // Maximum file size in KB (100KB in this example)
-      const compressedFile = new File([compressedBlob], file.name, { type: 'image/jpeg' });
+      const compressedBlob = await compressImage(selectedFile); // Maximum file size in KB (100KB in this example)
+      const compressedFile = new File([compressedBlob], selectedFile.name, { type: 'image/jpeg' });
       formData.append('avatar', compressedFile);
 
       try {
