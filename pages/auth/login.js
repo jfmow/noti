@@ -56,13 +56,62 @@ export default function Login() {
       }
       if(!authData.record.time_zone){
         function getUserTimeZone() {
-          const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-          return timeZone;
+          const availableTimeZones = [
+            "Pacific/Auckland",
+            "America/New_York",
+            "Asia/Tokyo",
+            "Europe/London",
+            "America/Los_Angeles",
+            "Australia/Sydney",
+            "Europe/Paris",
+            "Asia/Dubai",
+            "America/Chicago",
+            "Asia/Shanghai",
+            "America/Toronto",
+            "Europe/Berlin",
+            "Asia/Singapore",
+            "America/Denver",
+            "Asia/Kolkata",
+            "Africa/Johannesburg",
+            "America/Mexico_City",
+            "Europe/Moscow",
+            "Pacific/Honolulu",
+            "America/Sao_Paulo"
+          ];
+        
+          const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        
+          // Check if userTimeZone is one of the available options
+          if (availableTimeZones.includes(userTimeZone)) {
+            return userTimeZone;
+          }
+        
+          // If userTimeZone is not in the available options, find the closest match
+          let closestMatch = availableTimeZones[0];
+          let closestOffset = Math.abs(
+            Intl.DateTimeFormat(undefined, { timeZone: closestMatch }).resolvedOptions().timeZoneOffset
+          );
+        
+          for (let i = 1; i < availableTimeZones.length; i++) {
+            const timeZone = availableTimeZones[i];
+            const offset = Math.abs(
+              Intl.DateTimeFormat(undefined, { timeZone }).resolvedOptions().timeZoneOffset
+            );
+        
+            if (offset < closestOffset) {
+              closestMatch = timeZone;
+              closestOffset = offset;
+            }
+          }
+        
+          return closestMatch;
         }
         
-        const userTimeZone = getUserTimeZone();    
+        const userTimeZone = getUserTimeZone();
+        
+          
         const Data3 = {
-          "time_zone": userTimeZone
+          "time_zone": closestTimeZone
         };
   
         await pb.collection('users').update(authData.record.id, Data3);  
@@ -83,11 +132,58 @@ export default function Login() {
     const authData = await pb.collection('users').authWithOAuth2({ provider: 'github' });
     if(!authData.record.time_zone){
       function getUserTimeZone() {
-        const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        return timeZone;
+        const availableTimeZones = [
+          "Pacific/Auckland",
+          "America/New_York",
+          "Asia/Tokyo",
+          "Europe/London",
+          "America/Los_Angeles",
+          "Australia/Sydney",
+          "Europe/Paris",
+          "Asia/Dubai",
+          "America/Chicago",
+          "Asia/Shanghai",
+          "America/Toronto",
+          "Europe/Berlin",
+          "Asia/Singapore",
+          "America/Denver",
+          "Asia/Kolkata",
+          "Africa/Johannesburg",
+          "America/Mexico_City",
+          "Europe/Moscow",
+          "Pacific/Honolulu",
+          "America/Sao_Paulo"
+        ];
+      
+        const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      
+        // Check if userTimeZone is one of the available options
+        if (availableTimeZones.includes(userTimeZone)) {
+          return userTimeZone;
+        }
+      
+        // If userTimeZone is not in the available options, find the closest match
+        let closestMatch = availableTimeZones[0];
+        let closestOffset = Math.abs(
+          Intl.DateTimeFormat(undefined, { timeZone: closestMatch }).resolvedOptions().timeZoneOffset
+        );
+      
+        for (let i = 1; i < availableTimeZones.length; i++) {
+          const timeZone = availableTimeZones[i];
+          const offset = Math.abs(
+            Intl.DateTimeFormat(undefined, { timeZone }).resolvedOptions().timeZoneOffset
+          );
+      
+          if (offset < closestOffset) {
+            closestMatch = timeZone;
+            closestOffset = offset;
+          }
+        }
+      
+        return closestMatch;
       }
       
-      const userTimeZone = getUserTimeZone();    
+      const userTimeZone = getUserTimeZone();
       const Data = {
         "time_zone": userTimeZone
       };
