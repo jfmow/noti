@@ -63,12 +63,12 @@ self.addEventListener('push', (event) => {
     icon: notification.icon,
     image: notification.image,
     badge: notification.badge,
-    vibrate: notification.vibrate,
+    vibrate: [200, 100, 200], // Add vibrate property with an array of durations in milliseconds
     tag: notification.tag,
     data: notification.data,
     actions: notification.actions,
     renotify: notification.renotify,
-    requireInteraction: notification.requireInteraction,
+    requireInteraction: true, // Set requireInteraction to true for highest priority
     silent: notification.silent,
     timestamp: notification.timestamp,
     dir: notification.dir,
@@ -80,4 +80,5 @@ self.addEventListener('push', (event) => {
     notificationOptions
   );
 });
+
 
