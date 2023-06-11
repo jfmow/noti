@@ -268,7 +268,7 @@ function AccManagementForm() {
           user: { token: pb.authStore.token },
         }),
       });
-      toast.update(updateEmailToastid, { render: "`Please check the inbox of ${newEmail} to confirm the change.`", type: "success", isLoading: false });
+      toast.update(updateEmailToastid, { render: `Please check the inbox of ${newEmail} to confirm the change.`, type: "success", isLoading: false });
       setTimeout(() => {
         toast.dismiss(updateEmailToastid)
       }, 2300);
