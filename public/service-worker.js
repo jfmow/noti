@@ -35,20 +35,23 @@ self.addEventListener('activate', (event) => {
   );
 });
 self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    fetch(event.request)
-      .then((networkResponse) => {
-        caches.open(CACHE_NAME)
-          .then((cache) => {
-            cache.put(event.request, networkResponse.clone()); // Update the cache with the new response
-          });
-        return networkResponse; // Return the fetched response
-      })
-      .catch(() => {
-        return caches.match(event.request); // Serve the cached version if the network request fails
-      })
-  );
+  if (event.request.url === self.location.origin + '/') {
+    event.respondWith(
+      fetch(event.request)
+        .then((networkResponse) => {
+          caches.open(CACHE_NAME)
+            .then((cache) => {
+              cache.put(event.request, networkResponse.clone());
+            });
+          return networkResponse;
+        })
+        .catch(() => {
+          return caches.match(event.request);
+        })
+    );
+  }
 });
+
 
 
 self.addEventListener('push', (event) => {
