@@ -3,6 +3,7 @@ import PocketBase from 'pocketbase';
 import styles from './Admin.module.css';
 import Loader from "@/components/Loader";
 import Link from "next/link";
+import Nav from "@/components/Nav";
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
@@ -92,6 +93,7 @@ export default function UserListAdmin() {
 
     return (
         <>
+        <Nav/>
             <div className={styles.container}>
                 <div className={styles.header}>
                     <h1>User list</h1>
