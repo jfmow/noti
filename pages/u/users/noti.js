@@ -1,66 +1,49 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import Loader from "@/components/Loader";
-import styles from './Admin.module.css';
+import styles from "./Admin.module.css";
 
-import PocketBase from 'pocketbase';
-const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
+import PocketBase from "pocketbase";
+import Nav from "@/components/Nav";
+const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 export default function Home() {
-  const [msg, setMessage] = useState('')
-  const [msg_body, setMessageBody] = useState('')
+  const [msg, setMessage] = useState("");
+  const [msg_body, setMessageBody] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [userList, setUserList] = useState([]);
   const [users, setUsers] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
 
-
   useEffect(() => {
     async function getUserList() {
-      const records = await pb.collection('users').getFullList({
-        sort: '-created',
+      const records = await pb.collection("users").getFullList({
+        sort: "-created",
       });
       setUserList(records);
     }
 
     async function authUpdate() {
       try {
-        const authData = await pb.collection('users').authRefresh();
+        const authData = await pb.collection("users").authRefresh();
         if (!pb.authStore.isValid) {
           pb.authStore.clear();
           return window.location.replace("/auth/login");
         }
         if (!authData.record?.admin) {
-          return window.location.replace('/');
+          return window.location.replace("/");
         } else {
           getUserList();
           setIsLoading(false);
         }
       } catch (error) {
         pb.authStore.clear();
-        return window.location.replace('/auth/login');
+        return window.location.replace("/auth/login");
       }
     }
 
     authUpdate();
   }, []);
-
-
-  async function notifyAll() {
-    const response = await fetch('/api/notify-all', {
-      method: 'POST',
-
-      body: JSON.stringify({ msg: { title: msg, body: msg_body }, user: { token: pb.authStore.token, id: pb.authStore.model.id } })
-    });
-    if (response.status === 409) {
-      document.getElementById('notification-status-message').textContent =
-        'There are no subscribed endpoints to send messages to, yet.';
-    }
-    if (response.status != 200) {
-      toast.warning('Failed to send!')
-    }
-  }
-
 
   function addUser(userId) {
     if (users.includes(userId)) {
@@ -82,35 +65,40 @@ export default function Home() {
 
   async function postNoti() {
     if (!msg || !msg_body) {
-      return toast.warning('Please fill out all inputs!');
+      return toast.warning("Please fill out all inputs!");
     }
     if (users.length === 0) {
-      return toast.warning('Please select at least one user!');
+      return toast.warning("Please select at least one user!");
     }
 
     try {
-      const response = await fetch('/api/sendnotif', {
-        method: 'POST',
+      const sendingToastID = toast.loading("Sending please wait...")
+      const response = await fetch("/api/sendnotif", {
+        method: "POST",
 
-        body: JSON.stringify({ msg: { title: msg, body: msg_body }, user: { token: pb.authStore.token, id: users } })
+        body: JSON.stringify({
+          msg: { title: msg, body: msg_body },
+          user: { token: pb.authStore.token, id: users },
+        }),
       });
       if (response.status === 409) {
-        document.getElementById('notification-status-message').textContent =
-          'There are no subscribed endpoints to send messages to, yet.';
+        toast.warning('There are no subscribed endpoints to send messages to, yet! (No users have notis on)')
       }
       if (response.status !== 200) {
-        return toast.warning('Failed to send!')
+        return toast.warning("Failed to send!");
       }
-      setMessage('');
-      setMessageBody('');
-      setUsers([])
-      toast.success('Posted!');
+      setMessage("");
+      setMessageBody("");
+      setUsers([]);
+      toast.update(sendingToastID, { render: "Sent", type: "success", isLoading: false });
+      setTimeout(() => {
+        toast.dismiss(sendingToastID)
+      }, 1000);
     } catch (err) {
-      console.log(err)
-      toast.error('Failed to post');
+      console.log(err);
+      toast.error("Failed to send!");
     }
   }
-
 
   if (isLoading) {
     return <Loader />;
@@ -118,10 +106,8 @@ export default function Home() {
 
   return (
     <>
+      <Nav />
       <div className={styles.container}>
-        <div className={styles.header}>
-          <h1>Notify</h1>
-        </div>
 
         <div className={styles.user_list_container}>
           <div className={styles.userlist}>
@@ -149,7 +135,7 @@ export default function Home() {
                     type="checkbox"
                     checked={selectAll}
                   />
-                  <h5>Select All</h5>
+                  <h3 style={{ color: 'red' }}>Select All</h3>
                 </div>
                 {userList.map((user) => (
                   <div className={styles.optionuser} key={user.id}>
@@ -163,102 +149,28 @@ export default function Home() {
                   </div>
                 ))}
               </div>
-              <button onClick={notifyAll} type="button" className={`${styles.buttondefault} ${styles.buttonred}`}>
-                Send to all users
-              </button>
-              <button type="button" onClick={postNoti} className={styles.buttondefault}>
-                Send to select users
-              </button>
-              <button
-                id="subscribe"
-                onClick={subscribeToPush}
-              >
-                Subscribe to push
-              </button>
-              <button
-                id="unsubscribe"
-                onClick={unsubscribeFromPush}
-              >
-                Unsubscribe from push
-              </button>
+              <div className={styles.Notification_buttons_div}>
+
+                <button
+                  onClick={postNoti} className={`${styles.noselect} `}>
+                  <span className={styles.stext}>Send</span>
+                  <span className={styles.sicon}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="24px"
+                      viewBox="0 0 24 24"
+                      width="24px"
+                    >
+                      <path d="M0 0h24v24H0V0z" fill="none" />
+                      <path d="M3.4 20.4l17.45-7.48c.81-.35.81-1.49 0-1.84L3.4 3.6c-.66-.29-1.39.2-1.39.91L2 9.12c0 .5.37.93.87.99L17 12 2.87 13.88c-.5.07-.87.5-.87 1l.01 4.61c0 .71.73 1.2 1.39.91z" />
+                    </svg>
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </>
   );
-
 }
-
-
-
-
-const VAPID_PUBLIC_KEY = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY
-
-/* Push notification logic. */
-
-async function registerServiceWorker() {
-  console.log('hg')
-  await navigator.serviceWorker.register('service-worker.js');
-  toast.success('Sw enabled')
-}
-
-async function unregisterServiceWorker() {
-  const registration = await navigator.serviceWorker.getRegistration();
-  await registration.unregister();
-  toast.success('Sw removed')
-}
-
-async function subscribeToPush() {
-  const registration = await navigator.serviceWorker.getRegistration();
-  try {
-    Notification.requestPermission()
-    const subscription = await registration.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: urlB64ToUint8Array(VAPID_PUBLIC_KEY)
-    });
-    console.log(subscription)
-    postToServer('/api/add-subscription', subscription);
-    toast.info('Subscribed to notis')
-  } catch (err) {
-    console.log(err)
-    return toast.error('Permision denied. Enable notifs')
-  }
-
-}
-
-async function unsubscribeFromPush() {
-  const registration = await navigator.serviceWorker.getRegistration();
-  const subscription = await registration.pushManager.getSubscription();
-  postToServer('/api/remove-subscription', {
-    endpoint: subscription.endpoint
-  });
-  await subscription.unsubscribe();
-  toast.info('Unsubbed from notis')
-}
-
-// Convert a base64 string to Uint8Array.
-// Must do this so the server can understand the VAPID_PUBLIC_KEY.
-const urlB64ToUint8Array = (base64String) => {
-  const padding = '='.repeat((4 - base64String.length % 4) % 4);
-  const base64 = (base64String + padding)
-    .replace(/\-/g, '+')
-    .replace(/_/g, '/');
-  const rawData = window.atob(base64);
-  const outputArray = new Uint8Array(rawData.length);
-  for (let i = 0; i < rawData.length; ++i) {
-    outputArray[i] = rawData.charCodeAt(i);
-  }
-  return outputArray;
-};
-
-async function postToServer(url, data) {
-  let response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ data, user: { token: pb.authStore.token, id: pb.authStore.model.id } })
-  });
-}
-

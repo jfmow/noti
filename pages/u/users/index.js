@@ -12,11 +12,10 @@ export default function UserListAdmin() {
     const [userList, setUserList] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [loadingUser, setLoadingUser] = useState(null);
-    const [enableServiceModeModal, setEnableServiceModeModal] = useState(false);
 
     useEffect(() => {
         async function getUserList() {
-            const records = await pb.collection('users').getFullList({
+            const records = await pb.collection('users_admin_list').getFullList({
                 sort: '-created', filter: `username ~ '${searchTerm}'`
             });
             setUserList(records)
@@ -87,20 +86,6 @@ export default function UserListAdmin() {
         });
     }
 
-    async function serviceMode(event) {
-        event.preventDefault()
-        //get the id of the service mode item
-        const recordId = await pb.collection('server').getFirstListItem('option="service"');
-        console.log(recordId)
-        const data = {
-            "option": "service",
-            "value": true
-        };
-        //enable service mode
-        await pb.collection('server').update(recordId.id, data);
-        return window.location.reload();
-    }
-
     if(isLoading){
         return <Loader/>
     }
@@ -116,27 +101,8 @@ export default function UserListAdmin() {
                     <div className={styles.userlist}>
                         <div className={styles.filter}>
                             <input type="text" placeholder="Search by username" value={searchTerm} onChange={handleSearch} />
-                            <button className={`${styles.buttondefault}`} type="button" onClick={() => setEnableServiceModeModal(true)}>Enable service mode</button>
                             <Link href='/u/users/noti' className={`${styles.buttondefault}`} >Notify users</Link>
-                            {enableServiceModeModal &&
-                                (
-                                    <>
-                                        <div className={styles.usrname_container} onClick={() => { setDelAccField(false) }}>
-                                            <div className={styles.usrname_bg}>
-                                                <div className={styles.usrname_block} onClick={(event) => event.stopPropagation()}>
-                                                    <button type='button' onClick={() => { setEnableServiceModeModal(false) }} className={styles.usrclose_btn}><svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48"><path d="M480 618 270 828q-9 9-21 9t-21-9q-9-9-9-21t9-21l210-210-210-210q-9-9-9-21t9-21q9-9 21-9t21 9l210 210 210-210q9-9 21-9t21 9q9 9 9 21t-9 21L522 576l210 210q9 9 9 21t-9 21q-9 9-21 9t-21-9L480 618Z" /></svg></button>
-                                                    <form >
-                                                        <h2>Enable service mode</h2>
-                                                        <div className={styles.usrname_edit_form}>
-                                                            <p>Please be advised that enabling the service mode will result in the temporary suspension of the website. If this is your intention, please proceed with caution!</p>
-                                                        </div>
-                                                        <button style={{ justifySelf: 'end' }} className={`${styles.buttondefault} ${styles.buttonred}`} type='submit' onClick={(event)=>serviceMode(event)}>Enable</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </>
-                                )}
+                            
                         </div>
                         <div className={styles.grid_names}>
                             <h2>Id</h2>
