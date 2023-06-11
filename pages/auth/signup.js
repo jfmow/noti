@@ -94,13 +94,21 @@ export default function Login() {
                 return toast.error(`${filteredUsername.error}`)
             }
 
+            function getUserTimeZone() {
+                const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                return timeZone;
+              }
+              
+              const userTimeZone = getUserTimeZone();    
+
 
             const newAccData = {
                 "username": filteredUsername,
                 "email": sanitizedEmail,
                 "emailVisibility": false,
                 "password": sanitizedPassword,
-                "passwordConfirm": sanitizedPassword
+                "passwordConfirm": sanitizedPassword,
+                "time_zone": userTimeZone
 
             };
             setIsLoading(true)

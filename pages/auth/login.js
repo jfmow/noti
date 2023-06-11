@@ -38,21 +38,34 @@ export default function Login() {
         pb.authStore.clear()
         return window.location.replace('/u/disabled')
       }
-      if(!authData.record.meal){
+      if (!authData.record.meal) {
         const keySize = 128 / 8; // Key size in bytes
-                const key = lib.WordArray.random(keySize);
-                const encryptionKey = enc.Hex.stringify(key);
-                const encData = {
-                    "chef": encryptionKey,
-                    "plate": authData.record.id
-                };
+        const key = lib.WordArray.random(keySize);
+        const encryptionKey = enc.Hex.stringify(key);
+        const encData = {
+          "chef": encryptionKey,
+          "plate": authData.record.id
+        };
 
-                const encRec = await pb.collection('cookies').create(encData);
-                const usrDataUp = {
-                    "meal": encRec.id
-                };
-                
-                await pb.collection('users').update(authData.record.id, usrDataUp);
+        const encRec = await pb.collection('cookies').create(encData);
+        const usrDataUp = {
+          "meal": encRec.id
+        };
+
+        await pb.collection('users').update(authData.record.id, usrDataUp);
+      }
+      if(!authData.record.time_zone){
+        function getUserTimeZone() {
+          const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+          return timeZone;
+        }
+        
+        const userTimeZone = getUserTimeZone();    
+        const Data3 = {
+          "time_zone": userTimeZone
+        };
+  
+        await pb.collection('users').update(authData.record.id, Data3);  
       }
       return window.location.replace('/page/firstopen')
     } catch (error) {
@@ -68,21 +81,34 @@ export default function Login() {
 
   async function oAthLogin() {
     const authData = await pb.collection('users').authWithOAuth2({ provider: 'github' });
-    if(!authData.record.meal){
-      const keySize = 128 / 8; // Key size in bytes
-              const key = lib.WordArray.random(keySize);
-              const encryptionKey = enc.Hex.stringify(key);
-              const encData = {
-                  "chef": encryptionKey,
-                  "plate": authData.record.id
-              };
+    if(!authData.record.time_zone){
+      function getUserTimeZone() {
+        const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        return timeZone;
+      }
+      
+      const userTimeZone = getUserTimeZone();    
+      const Data = {
+        "time_zone": userTimeZone
+      };
 
-              const encRec = await pb.collection('cookies').create(encData);
-              const usrDataUp = {
-                  "meal": encRec.id
-              };
-              
-              await pb.collection('users').update(authData.record.id, usrDataUp);
+      await pb.collection('users').update(authData.record.id, Data);  
+    }
+    if (!authData.record.meal) {
+      const keySize = 128 / 8; // Key size in bytes
+      const key = lib.WordArray.random(keySize);
+      const encryptionKey = enc.Hex.stringify(key);
+      const encData = {
+        "chef": encryptionKey,
+        "plate": authData.record.id
+      };
+
+      const encRec = await pb.collection('cookies').create(encData);
+      const usrDataUp = {
+        "meal": encRec.id
+      };
+
+      await pb.collection('users').update(authData.record.id, usrDataUp);
     }
     return window.location.replace('/page/firstopen')
   }
