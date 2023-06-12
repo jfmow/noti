@@ -10,8 +10,8 @@
   max-height: 100dvh;
   overflow: scroll;
   width: 300px;
-  
-  transition: 0.7s all ease-in-out;
+  opacity: 1;
+  transition: 0.55s all linear;
 }
 .itemscon{
   display: flex;
@@ -29,6 +29,8 @@
 .hidden{
   width: 0px !important;
   transform: translateX(-10em);
+  white-space: nowrap;
+  opacity: 0.2 !important;
 }
 .btn1{
   background: none;
@@ -132,7 +134,6 @@
 
 .mobilePageNav,
 .hidemenubtn,
-.burger,
 .mobile_back_btn{
   display: none;
 }
@@ -248,72 +249,4 @@
   .burger{
     display: block;
   }
-}
-
-
-.burger {
-  position: fixed;
-  width: 40px;
-  height: 30px;
-  background: transparent;
-  cursor: pointer;
-  z-index: 101;
-  right: 1em;
-  top: 1em;
-}
-
-.burger input {
-  display: none;
-}
-
-.burger span {
-  display: block;
-  position: absolute;
-  height: 6px;
-  width: 100%;
-  background: #fff;
-  border-radius: 9px;
-  opacity: 1;
-  left: 0;
-  transform: rotate(0deg);
-  transition: .25s ease-in-out;
-}
-
-.burger input:checked ~ span{
-  
-  background: #767676;
-}
-
-.burger span:nth-of-type(1) {
-  top: 0px;
-  transform-origin: left center;
-}
-
-.burger span:nth-of-type(2) {
-  top: 50%;
-  transform: translateY(-50%);
-  transform-origin: left center;
-}
-
-.burger span:nth-of-type(3) {
-  top: 100%;
-  transform-origin: left center;
-  transform: translateY(-100%);
-}
-
-.burger input:checked ~ span:nth-of-type(1) {
-  transform: rotate(45deg);
-  top: 0px;
-  left: 5px;
-}
-
-.burger input:checked ~ span:nth-of-type(2) {
-  width: 0%;
-  opacity: 0;
-}
-
-.burger input:checked ~ span:nth-of-type(3) {
-  transform: rotate(-45deg);
-  top: 28px;
-  left: 5px;
 }
