@@ -397,8 +397,7 @@ function Editor({ page, preview }) {
 
   async function handleTitleChange() {
     setIsTitleEdit(false);
-    const title = document.querySelector(`.${styles.titleinput}`);
-
+    const title = document.getElementById('tit')
     setArticleTitle(title.innerText);
     const newTitle = {
       title: title.innerText
@@ -554,8 +553,8 @@ function Editor({ page, preview }) {
                 className={styles.titleinput}
                 contentEditable
                 type="text"
+                id='tit'
                 onFocus={() => setIsTitleEdit(true)}
-                onBlur={()=>setIsTitleEdit(false)}
               >
                 {articleTitle ? articleTitle : "Untitled"}
               </div>
