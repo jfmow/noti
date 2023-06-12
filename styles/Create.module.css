@@ -154,6 +154,31 @@
   background-size: 100%;
 }
 
+.titleeditorcontainer{
+  display: flex;
+    flex-direction: row;
+    align-items: center;
+    max-width: 80%;
+    justify-content: center;
+
+}
+
+.savetitlebtn{
+  background: none;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  fill: #ff6c6c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.savetitlebtn:hover{
+  fill: #3bb994;
+}
+
 .title img {
   position: absolute;
   top: 0;

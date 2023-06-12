@@ -11,7 +11,7 @@
   overflow: scroll;
   width: 300px;
   opacity: 1;
-  transition: 0.55s all linear;
+  transition: 1s all ease-in-out;
 }
 .itemscon{
   display: flex;
@@ -27,10 +27,7 @@
   font-size: 110%;
 }*/
 .hidden{
-  width: 0px !important;
-  transform: translateX(-10em);
-  white-space: nowrap;
-  opacity: 0.2 !important;
+  transform: translateX(-110%);
 }
 .btn1{
   background: none;
