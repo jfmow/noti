@@ -399,9 +399,9 @@ function Editor({ page, preview }) {
     setIsTitleEdit(false);
     const title = document.querySelector(`.${styles.titleinput}`);
 
-    setArticleTitle(title.textContent);
+    setArticleTitle(title.innerText);
     const newTitle = {
-      title: title.textContent,
+      title: title.innerText
     };
     await pb.collection("pages").update(page, newTitle);
   }
