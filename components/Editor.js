@@ -663,7 +663,7 @@ class SimpleIframe {
     }
 
     _createImage(url) {
-        const iframe = document.createElement('object');
+        const iframe = document.createElement('iframe');
         iframe.classList.add(styles.embedIframe);
         iframe.style.width = '100%';
         iframe.style.height = '70vh';
@@ -673,21 +673,21 @@ class SimpleIframe {
 
         if (url.endsWith('.docx') || url.endsWith('.docx/')) {
             modifiedUrl = url.replace(/\/$/, ''); // Remove trailing slash
-            modifiedUrl = `https://docs.google.com/viewerng/viewer?url=${encodeURIComponent(modifiedUrl)}&amp;embedded=true`;
+            modifiedUrl = `https://docs.google.com/viewerng/viewer?url=${encodeURIComponent(modifiedUrl)}&embedded=true`;
         }
 
-        iframe.data = modifiedUrl;
+        iframe.src = modifiedUrl;
 
         this.wrapper.innerHTML = '';
         this.wrapper.appendChild(iframe);
     }
 
     save(blockContent) {
-        const image = blockContent.querySelector('object');
+        const image = blockContent.querySelector('iframe');
         //const caption = blockContent.querySelector('[contenteditable]');
 
         return {
-            url: image.data,
+            url: image.src,
             //caption: caption.innerHTML || ''
         }
     }
