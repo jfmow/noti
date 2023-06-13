@@ -17,30 +17,34 @@ export default function Viewer({ arti }) {
     const [isLoading, setIsLoading] = useState(true)
     useEffect(() => {
         async function fetchArticles() {
-            try {
-                const record = await pb.collection('pages').getOne(arti.article);
-                setArticleData(record.content)
-                setArticle(record)
-                setIsLoading(false)
-            } catch (error) {
-                console.log(error);
-                setError(true)
-            }
+          try {
+            const record = await pb.collection('pages').getOne(arti.article);
+            setArticleData(record.content);
+            setArticle(record);
+            setIsLoading(false);
+          } catch (error) {
+            console.log(error);
+            setError(true);
+          }
         }
+      
         async function authUpdate() {
-            try {
-                const authData = await pb.collection('users').authRefresh();
-                if (!pb.authStore.isValid) {
-                    pb.authStore.clear()
-                }
-            } catch (error) {
-                pb.authStore.clear()
+          try {
+            const authData = await pb.collection('users').authRefresh();
+            if (!pb.authStore.isValid) {
+              pb.authStore.clear();
             }
-            fetchArticles();
+          } catch (error) {
+            pb.authStore.clear();
+          }
+          fetchArticles();
         }
-        authUpdate()
-
-    }, []);
+      
+        authUpdate();
+      
+        
+      }, []);
+      
 
     if (isLoading) {
         return (<Loader />)

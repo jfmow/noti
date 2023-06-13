@@ -29,6 +29,34 @@ function NotionEditor({ pageId }) {
 
     }
     authUpdate()
+    console.log('gi')
+    const lastActiveInti = setInterval(async () => {
+      async function getCurrentDateTime() {
+        const currentDate = new Date();
+        const year = currentDate.getUTCFullYear();
+        const month = String(currentDate.getUTCMonth() + 1).padStart(2, '0');
+        const day = String(currentDate.getUTCDate()).padStart(2, '0');
+        const hours = String(currentDate.getHours()).padStart(2, '0');
+        const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+        const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+        const milliseconds = String(currentDate.getUTCMilliseconds()).padStart(3, '0');
+      
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}Z`;
+      }
+      
+
+      const date = await getCurrentDateTime();
+      const data = {
+        "last_active": date
+      };
+
+      const record = await pb.collection('users').update(pb.authStore.model.id, data);
+      console.log(record)
+    }, 450000);
+    return () => {
+      clearInterval(lastActiveInti);
+      console.log('ff')
+    };
   }, [])
   if (isLoading) {
     return (<Loader />)
@@ -36,9 +64,9 @@ function NotionEditor({ pageId }) {
   return (
     <div>
       <div className='main'>
-        
-        <MyComponent currPage={pageId}  />
-        <Editor page={pageId} preview='false'  />
+
+        <MyComponent currPage={pageId} />
+        <Editor page={pageId} preview='false' />
       </div>
     </div>
   );
