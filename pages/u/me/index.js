@@ -169,11 +169,6 @@ function AccManagementForm() {
 
   async function deleteAccount(e) {
     e.preventDefault();
-    //  await pb.send("/hello", {
-    //    // for all possible options check
-    //    // https://developer.mozilla.org/en-US/docs/Web/API/fetch#options
-    //    query: { "abc": 123 },
-    //});
 
     try {
       const response = await toast.promise(
@@ -190,8 +185,6 @@ function AccManagementForm() {
     } catch (error) {
       console.log(error);
     }
-
-    return response.json();
   }
   async function authUpdate() {
     try {
