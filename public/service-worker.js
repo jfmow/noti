@@ -63,7 +63,7 @@ self.addEventListener('push', (event) => {
     icon: notification.icon,
     image: notification.image,
     badge: notification.badge,
-    vibrate: [700, 300, 700, 700, 300, 700], // Add vibrate property with an array of durations in milliseconds
+    vibrate: [700, 300, 700, 700, 300, 700], //Add vibrate property with an array of durations in milliseconds
     tag: notification.tag,
     data: notification.data,
     actions: notification.actions,
