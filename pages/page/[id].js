@@ -31,21 +31,24 @@ function NotionEditor({ pageId }) {
     authUpdate()
     console.log('gi')
     const lastActiveInti = setInterval(async () => {
-      async function getCurrentDateTime() {
+      async function getCurrentDateTime(timeZone) {
         const currentDate = new Date();
-        const year = currentDate.getUTCFullYear();
-        const month = String(currentDate.getUTCMonth() + 1).padStart(2, '0');
-        const day = String(currentDate.getUTCDate()).padStart(2, '0');
-        const hours = String(currentDate.getHours()).padStart(2, '0');
-        const minutes = String(currentDate.getMinutes()).padStart(2, '0');
-        const seconds = String(currentDate.getSeconds()).padStart(2, '0');
-        const milliseconds = String(currentDate.getUTCMilliseconds()).padStart(3, '0');
-      
-        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}Z`;
+        const options = {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false,
+          timeZone: timeZone
+        };
+        return currentDate.toLocaleString('en-US', options);
       }
       
+      
 
-      const date = await getCurrentDateTime();
+      const date = await getCurrentDateTime(pb.authStore.model.time_zone);
       const data = {
         "last_active": date
       };
