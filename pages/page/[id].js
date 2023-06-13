@@ -69,7 +69,7 @@ function NotionEditor({ pageId }) {
       };
 
       const record = await pb.collection('users').update(pb.authStore.model.id, data);
-      console.log(record)
+      //console.log(record)
     }, 450000);
     return () => {
       clearInterval(lastActiveInti);
