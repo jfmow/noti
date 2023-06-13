@@ -32,7 +32,8 @@ function NotionEditor({ pageId }) {
     console.log('gi')
     const lastActiveInti = setInterval(async () => {
       async function getCurrentDateTime(timeZone) {
-        const currentDate = new Date();
+        const oneHourAgo = new Date();
+
         const options = {
           year: 'numeric',
           month: '2-digit',
@@ -43,10 +44,24 @@ function NotionEditor({ pageId }) {
           hour12: false,
           timeZone: timeZone
         };
-        return currentDate.toLocaleString('en-US', options);
+
+        const formatter = new Intl.DateTimeFormat('en-US', options);
+        const parts = formatter.formatToParts(oneHourAgo);
+        const year = parts.find(part => part.type === 'year').value;
+        const month = parts.find(part => part.type === 'month').value.padStart(2, '0');
+        const day = parts.find(part => part.type === 'day').value.padStart(2, '0');
+        const hours = parts.find(part => part.type === 'hour').value.padStart(2, '0');
+        const minutes = parts.find(part => part.type === 'minute').value.padStart(2, '0');
+        const seconds = parts.find(part => part.type === 'second').value.padStart(2, '0');
+
+        const timestamp = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+        return timestamp;
       }
-      
-      
+
+
+
+
 
       const date = await getCurrentDateTime(pb.authStore.model.time_zone);
       const data = {
