@@ -12,7 +12,6 @@ export default function Home() {
   useEffect(() => {
     async function authUpdate() {
       try {
-        await pb.collection('users').authRefresh();
         if (!pb.authStore.isValid) {
           pb.authStore.clear();
         } else {
