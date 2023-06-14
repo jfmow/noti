@@ -114,7 +114,7 @@
     min-height: 100dvh;
     width: 100%;
     grid-template-columns: 1fr;
-    background: radial-gradient(#93a3ff, #6ceeff);
+    background: radial-gradient(#fff, #00bcd4);
 }
 
 .login_box>.card {
@@ -150,7 +150,7 @@
     padding: 1em;
     margin: 10px 0px;
     gap: 0.5em;
-    background: linear-gradient(90deg, #be99ff 30%, #00BCD4 90%);
+    background: linear-gradient(90deg, #ffffff 30%, #00BCD4 90%);
 }
 
 .field_start {
