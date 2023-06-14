@@ -118,6 +118,7 @@ a {
 }
 @font-face {
   font-family: "Mori";
+  font-display: swap;
   src: url('../fonts/MoiraiOne-Regular.ttf');
 }
 

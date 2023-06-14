@@ -1,11 +1,9 @@
 /* OHome.module.css */
-.container{
+.container {
   width: 100%;
-  
-  scroll-snap-type: y mandatory;
-  height: 100dvh;
-  overflow-y: scroll;
+  background: #fff;
 }
+
 /* Header styles */
 .header {
   height: 100dvh;
@@ -14,68 +12,75 @@
   align-items: center;
   color: #fff;
   font-size: 200%;
-  scroll-snap-align: center;
+  scroll-snap-align: start;
   position: relative;
+  background: linear-gradient(180deg, #00BCD4 60%, white 20%, white)
 }
 
-.header::before{
-  content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 50%;
-    height: 50%;
-    background: linear-gradient(0deg, #00BCD4 20%, #3F51B5, #673AB7);
-    filter: blur(141px);
-    -webkit-filter: blur(141px);
-    border-radius: 50%;
-    z-index: -1;
-}
-.header::after{
-  content: "";
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 50%;
-    height: 50%;
-    background: linear-gradient(0deg, #7ef0ff 20%, #3F51B5, #b88fff);
-    -webkit-filter: blur(141px);
-    filter: blur(141px);
-    border-radius: 20%;
-    z-index: -1;
-}
+
 
 .headerContent {
   text-align: center;
-    height: 100%;
-    gap: 10px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    backdrop-filter: blur(130px);
-    justify-content: center;
-    align-items: center;
-    
+  height: 100%;
+  gap: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(130px);
+  justify-content: center;
+  align-items: center;
+  text-shadow: 0px 0px 15px #fff;
+
 }
 
 .headerContent h1 {
   font-family: "Mori", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-  Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    
   animation: rainbowAnimation 15s linear infinite;
   display: inline-block;
 }
 
 @keyframes rainbowAnimation {
-  
-  0%, 100% { text-shadow: 0 0 3px red; }
-  7%, 93% { text-shadow: 5px 0 3px orange; }
-  14%, 86% { text-shadow: 10px 0 3px yellow; }
-  21%, 79% { text-shadow: 15px 0 3px green; }
-  28%, 71% { text-shadow: 20px 0 3px blue; }
-  35%, 64% { text-shadow: 25px 0 3px indigo; }
-  42%, 57% { text-shadow: 30px 0 3px violet; }
-  50% { text-shadow: 35px 0 3px red; }
+
+  0%,
+  100% {
+    text-shadow: 0 0 3px red;
+  }
+
+  7%,
+  93% {
+    text-shadow: 5px 0 3px orange;
+  }
+
+  14%,
+  86% {
+    text-shadow: 10px 0 3px yellow;
+  }
+
+  21%,
+  79% {
+    text-shadow: 15px 0 3px green;
+  }
+
+  28%,
+  71% {
+    text-shadow: 20px 0 3px blue;
+  }
+
+  35%,
+  64% {
+    text-shadow: 25px 0 3px indigo;
+  }
+
+  42%,
+  57% {
+    text-shadow: 30px 0 3px violet;
+  }
+
+  50% {
+    text-shadow: 35px 0 3px red;
+  }
 }
 
 
@@ -103,7 +108,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color:  white;
+  background-color: white;
   border: none;
   color: rgb(0, 0, 0);
   gap: 8px;
@@ -138,11 +143,10 @@
   border-radius: 5px;
 }
 
-.sections{
-}
+.sections {}
 
-.section1{
-  scroll-snap-align: center;
+.section1 {
+  scroll-snap-align: start;
   background-image: url('/static/hmpgimg2.png');
   height: 100dvh;
   display: flex;
@@ -154,10 +158,10 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  
+
 }
 
-.section1 h2{
+.section1 h2 {
   background: linear-gradient(to right, #00ffd5, #8359ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -165,9 +169,10 @@
   text-fill-color: transparent;
   font-size: 60px;
 }
-.section3{
-  
-  scroll-snap-align: center;
+
+.section3 {
+
+  scroll-snap-align: start;
   background: #fff;
   height: 100dvh;
   display: flex;
@@ -179,16 +184,19 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  gap: 2em;
 }
 
-.bg{
+.bg {
   height: 70%;
   width: 100%;
   border-radius: 3em;
   object-fit: cover;
+  box-shadow: 0px 8px 7px 0px #e5e5e5;
+  max-width: 40dvw;
 }
 
-.section3 h2{
+.section3 h2 {
   background: linear-gradient(to right, #9C27B0, #00BCD4);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -196,8 +204,9 @@
   text-fill-color: transparent;
   font-size: 60px;
 }
-.section2{
-  scroll-snap-align: center;
+
+.section2 {
+  scroll-snap-align: start;
   background: #fff;
   min-height: 100dvh;
   display: flex;
@@ -209,10 +218,10 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  
+
 }
 
-.section2 h2{
+.section2 h2 {
   background: linear-gradient(to right, #FF9800, #E91E63);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -222,7 +231,7 @@
 }
 
 
-.stats{
+.stats {
   width: 100%;
   height: 30dvh;
   padding: 2em;
@@ -231,27 +240,52 @@
   gap: 2em;
 }
 
-.stat{
+.stat {
   width: 100%;
-    background: #fff;
-    box-shadow: 0px 0px 13px 1px #f1f1f1;
-    border-radius: 2em;
-    min-height: 200px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 1em;
-    color: #000;
-    align-items: center;
-    justify-content: center;
+  background: #fff;
+  box-shadow: 0px 0px 13px 1px #f1f1f1;
+  border-radius: 2em;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 1em;
+  color: #000;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  transition: all 0.3s;
 }
 
-.stat h1{
+
+
+.stat:hover {
+  background: linear-gradient(310deg, #ffffff, #00BCD4);
+  animation: statbg linear infinite 5s;
+  background-size: 400% 400%;
+  border-radius: 1em;
+}
+
+@keyframes statbg {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.stat h1 {
   color: #73ff8b;
 }
 
 
-.img1{
+.img1 {
   position: absolute;
   height: 100dvh;
   width: 100%;
@@ -270,7 +304,7 @@
 
 
 
-.footer{
+.footer {
   height: 20dvh;
   display: flex;
   flex-direction: column;
@@ -278,68 +312,51 @@
   justify-content: center;
   gap: 10px;
   scroll-snap-align: start;
-  
+  color: #202020;
+
 }
 
-.footer h5{
+.footer h5 {
   display: flex;
   flex-direction: row;
   justify-content: center;
   gap: 5px;
 }
 
-.githublogo{
+.githublogo {
   width: 20px;
   height: 20px;
 }
 
-.githublogo path{
+.githublogo path {
   fill: #000;
 }
 
 
-@media (prefers-color-scheme: dark) {
-  .githublogo path{
-    fill: #fff;
-  }
-}
 
 
-@media(max-width: 600px){
-  .section1 h2, .section2 h2, .section3 h2{
-    font-size: 40px;
-  }
-  .section3{
-    flex-direction: column;
-    gap: 20px;
-  }
-  .bg{
-    height: 30%;
-  }
-  .stats{
-    grid-template-columns: 1fr;
-    height: 100%;
-  }
-}
 
-.navcontainer{
+.navcontainer {
   position: absolute;
   z-index: 99;
   top: 0;
   width: 100%;
 }
-.items{
+
+.items {
   height: fit-content;
   padding: 1em;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-  
+
 }
 
-.items h1{
-  font-family: "Mori";
+.items h1 {
+  font-family: "Mori", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  
   text-shadow: 0px 0px 10px yellow;
 }
 
@@ -383,8 +400,8 @@
 }
 
 .sign_hoverEffect div {
-  background: rgb(222,0,75);
-  background: linear-gradient(90deg, #0a70c482,#ae3bd74d,#35a7db66);
+  background: rgb(222, 0, 75);
+  background: linear-gradient(90deg, #0a70c482, #ae3bd74d, #35a7db66);
   border-radius: 40rem;
   width: 10rem;
   height: 10rem;
@@ -407,5 +424,33 @@
 
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@media(max-width: 600px) {
+
+  .section1 h2,
+  .section2 h2,
+  .section3 h2 {
+    font-size: 40px;
+  }
+
+  .section3 {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .bg {
+    height: 30%;
+    max-width: 100%;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+    height: 100%;
+  }
+  .items h1, .headerContent h1{
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   }
 }
