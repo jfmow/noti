@@ -119,6 +119,8 @@
     fill: rgba(55, 53, 47, 0.35);
     gap: 5px;
     cursor: pointer;
+    margin: 1px;
+    transition: 0.1s all ease-in;
 }
 .itemoption svg:hover{
   background: rgb(228, 228, 228);
@@ -126,6 +128,13 @@
 }
 .itemoption:hover{
   background: rgb(245, 245, 245);
+}
+
+.active{
+  background: #cecece1a;
+}
+#active{
+  background: #ababab6e;
 }
 
 
@@ -173,6 +182,12 @@
 .hidemenubtn{
   
   fill: #767676 !important;
+}
+.active{
+  background: #0000001a;
+}
+#active{
+  background: #2e2e2e6e;
 }
 }
 
