@@ -1,10 +1,11 @@
-.container{
+.container {
   min-height: 100dvh;
-  
+
   /*background: radial-gradient(#7a5ad9, #FFF7EA);*/
 }
-.itemroot{
-  background: #fff;
+
+.itemroot {
+  background: linear-gradient(45deg, #00BCD4 50%, white 50%);
   padding: 1em;
   border-right: 1px solid #dfdfdf;
   max-height: 100dvh;
@@ -13,12 +14,18 @@
   opacity: 1;
   transition: 1s all ease-in-out;
 }
-.itemscon{
+
+.itemroot::-webkit-scrollbar{
+  display: none;
+}
+
+.itemscon {
   display: flex;
   flex-direction: column;
   padding: 0;
   list-style-type: none;
 }
+
 /*#active{
   color: red;
 }
@@ -26,10 +33,13 @@
   color: red !important;
   font-size: 110%;
 }*/
-.hidden{
+.hidden {
   transform: translateX(-110%);
+  filter: blur(3px);
+  -webkit-filter: blur(3px);
 }
-.btn1{
+
+.btn1 {
   background: none;
   border-radius: 5px;
   outline: none;
@@ -40,11 +50,13 @@
   align-items: center;
   justify-content: center;
 }
-.btn1:hover{
+
+.btn1:hover {
   background: rgb(228, 228, 228);
   cursor: pointer;
 }
-.createpage_txt{
+
+.createpage_txt {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -57,7 +69,8 @@
   margin-left: 15%;
   /* justify-self: flex-end; */
 }
-.createpage{
+
+.createpage {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -70,129 +83,149 @@
   flex-direction: row;
   /* justify-self: flex-end; */
 }
-.createpage:hover{
+
+.createpage:hover {
   background: #f4f4f4;
 }
-.createpage svg:hover{
+
+.createpage svg:hover {
   background: rgb(228, 228, 228);
   border-radius: 5px;
   outline: none;
   border: none;
   fill: rgba(55, 53, 47, 0.35);
 }
-.createpage svg{
+
+.createpage svg {
   outline: none;
   border: none;
   fill: rgba(55, 53, 47, 0.35);
 }
 
-.createrootpage{
+.createrootpage {
   padding: 5px;
 }
-.items{
+
+.items {
   display: flex;
   flex-direction: column;
   padding: 0;
   list-style-type: none;
 }
-.items h1{
+
+.items h1 {
   font-size: smaller;
 }
-.items2{
-    display: flex;
-    flex-direction: column;
-    margin-left: 10px;
-    list-style-type: none;
+
+.items2 {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  list-style-type: none;
 }
-.itemoption{
+
+.itemoption {
   background: inherit;
   padding: 10px 10px;
-    width: -moz-fit-content;
-    width: 100%;
-    /* border: 1px solid gray; */
-    display: flex;
-    /* padding: 10px; */
-    align-items: center;
-    justify-content: flex-start;
-    border-radius: 5px;
-    color: #19171199;
-    fill: rgba(55, 53, 47, 0.35);
-    gap: 5px;
-    cursor: pointer;
-    margin: 1px;
-    transition: 0.1s all ease-in;
+  width: -moz-fit-content;
+  width: 100%;
+  /* border: 1px solid gray; */
+  display: flex;
+  /* padding: 10px; */
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 5px;
+  color: #19171199;
+  fill: rgba(55, 53, 47, 0.35);
+  gap: 5px;
+  cursor: pointer;
+  margin: 1px;
+  transition: 0.1s all ease-in;
 }
-.itemoption svg:hover{
+
+.itemoption svg:hover {
   background: rgb(228, 228, 228);
   border-radius: 5px;
 }
-.itemoption:hover{
+
+.itemoption:hover {
   background: rgb(245, 245, 245);
 }
 
-.active{
+.active {
   background: #cecece1a;
 }
-#active{
+
+#active {
   background: #ababab6e;
 }
 
 
 .mobilePageNav,
 .hidemenubtn,
-.mobile_back_btn{
+.mobile_back_btn {
   display: none;
 }
 
 @media (prefers-color-scheme: dark) {
-  
-.itemroot{
-  background: linear-gradient(45deg, black, #022429, black);
-  border-right: none;
-}
-.btn1{
-  background: none;
-  fill: rgba(255, 255, 255, 0.35);
-}
-.btn1:hover{
-  background: rgb(51, 51, 51);
-}
-.createpage:hover{
-  background: #242424;
-}
-.createpage svg:hover{
-  background: rgb(34, 34, 34);
-  fill: rgba(255, 255, 255, 0.35);
-}
-.createpage svg{
-  fill: rgba(255, 255, 255, 0.35);
-}
 
-.itemoption{
-  background: inherit;
+  .itemroot {
+    background: linear-gradient(45deg, black, #022429, black);
+    border-right: none;
+  }
+
+  .btn1 {
+    background: none;
+    fill: rgba(255, 255, 255, 0.35);
+  }
+
+  .btn1:hover {
+    background: rgb(51, 51, 51);
+  }
+
+  .createpage:hover {
+    background: #242424;
+  }
+
+  .createpage svg:hover {
+    background: rgb(34, 34, 34);
+    fill: rgba(255, 255, 255, 0.35);
+  }
+
+  .createpage svg {
+    fill: rgba(255, 255, 255, 0.35);
+  }
+
+  .itemoption {
+    background: inherit;
     color: #ffffff99;
     fill: rgba(55, 53, 47, 0.35);
-}
-.itemoption svg:hover{
-  background: none;
-}
-.itemoption:hover{
-  background: rgb(0, 0, 0);
-}
-.hidemenubtn{
-  
-  fill: #767676 !important;
-}
-.active{
-  background: #0000001a;
-}
-#active{
-  background: #2e2e2e6e;
-}
+  }
+
+  .itemoption svg:hover {
+    background: none;
+  }
+
+  .itemoption:hover {
+    background: rgb(0, 0, 0);
+  }
+
+  .hidemenubtn {
+
+    fill: #767676 !important;
+  }
+
+  .active {
+    background: #0000001a;
+  }
+
+  #active {
+    background: #2e2e2e6e;
+  }
 }
 
-@media(max-width: 800px){
-  .itemroot{
+@media(max-width: 800px) {
+  .itemroot {
     padding: 1em;
     height: 100dvh;
     overflow-y: scroll;
@@ -208,7 +241,8 @@
     flex-direction: column;
     align-items: baseline;
   }
-  .mobilePageNav{
+
+  .mobilePageNav {
     display: flex;
     flex-direction: row;
     padding: 1em;
@@ -222,27 +256,30 @@
     align-items: center;
     justify-content: space-between;
   }
-  .itemscon{
+
+  .itemscon {
     display: flex;
     flex-direction: column;
     padding: 0;
     list-style-type: none;
   }
-  .mobile_back_btn{
+
+  .mobile_back_btn {
     display: flex;
     align-items: center;
     flex-direction: row;
     padding: 2px 5px;
     gap: 3px;
     background: #fafafa;
-      border: 2px solid #e8e8e8;
-      border-radius: 5px;
-      color: #03a9f4;
-      fill: #03a9f4;
-      cursor: pointer;
-  
+    border: 2px solid #e8e8e8;
+    border-radius: 5px;
+    color: #03a9f4;
+    fill: #03a9f4;
+    cursor: pointer;
+
   }
-  .hidemenubtn{
+
+  .hidemenubtn {
     transform: rotate(180deg);
     display: flex;
     align-items: center;
@@ -250,15 +287,16 @@
     padding: 2px 5px;
     gap: 3px;
     background: none;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      position: fixed;
-      fill: #03a9f4;
-      right: 1em;
-      top: 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    position: fixed;
+    fill: #03a9f4;
+    right: 1em;
+    top: 1em;
   }
-  .burger{
+
+  .burger {
     display: block;
   }
 }
