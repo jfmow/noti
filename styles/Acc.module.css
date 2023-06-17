@@ -91,6 +91,16 @@
   margin: 0;
 }
 
+.default_settings_modal_container_usrname_toggles{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  color: #000000;
+  font-weight: 500;
+  flex-wrap: wrap;
+}
 
 .default_settings_modal_container_usrclose_btn {
   position: absolute;

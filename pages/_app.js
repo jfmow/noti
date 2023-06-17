@@ -3,6 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { register } from 'next-offline/runtime';
 import { useEffect, useState } from 'react';
+import Nav from '@/components/Nav';
 export default function App({ Component, pageProps }) {
   
   useEffect(()=>{

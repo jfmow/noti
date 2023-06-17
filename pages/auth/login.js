@@ -6,22 +6,32 @@ import { toast } from 'react-toastify';
 import Head from 'next/head';
 import validator from 'validator';
 import { AES, enc, lib } from 'crypto-js';
+import { useRouter } from 'next/router';
+import getUserTimeZone from '@/lib/getUserTimeZone';
+import PlainLoader from '@/components/PlainLoader';
+import createKey from '@/lib/createEncKey';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false)
 export default function Login() {
+  const Router = useRouter()
 
   const [email, setEmail] = useState('');
-  //const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  const [prevPage, setPrevUrl] = useState('');
-  async function auth(event) {
-    event.preventDefault();
-    console.error(pb.autoCancellation)
-    //console.log(name, email)
+  const [loading, setIsLoading] = useState(false)
 
 
+
+  useEffect(() => {
+    if (pb.authStore.isValid) {
+      Router.push("/auth/logout")
+      return
+    }
+  }, []);
+
+  async function auth() {
     try {
+      setIsLoading(true)
       pb.authStore.clear();
       // Retrieve user inputs
       // Sanitize inputs using validator.js
@@ -36,12 +46,10 @@ export default function Login() {
       console.log(authData)
       if (authData.record.disabled) {
         pb.authStore.clear()
-        return window.location.replace('/u/disabled')
+        return Router.push('/u/disabled')
       }
       if (!authData.record.meal) {
-        const keySize = 128 / 8; // Key size in bytes
-        const key = lib.WordArray.random(keySize);
-        const encryptionKey = enc.Hex.stringify(key);
+        const encryptionKey = createKey()
         const encData = {
           "chef": encryptionKey,
           "plate": authData.record.id
@@ -54,173 +62,61 @@ export default function Login() {
 
         await pb.collection('users').update(authData.record.id, usrDataUp);
       }
-      if(!authData.record.time_zone){
-        function getUserTimeZone() {
-          const availableTimeZones = [
-            "Pacific/Auckland",
-            "America/New_York",
-            "Asia/Tokyo",
-            "Europe/London",
-            "America/Los_Angeles",
-            "Australia/Sydney",
-            "Europe/Paris",
-            "Asia/Dubai",
-            "America/Chicago",
-            "Asia/Shanghai",
-            "America/Toronto",
-            "Europe/Berlin",
-            "Asia/Singapore",
-            "America/Denver",
-            "Asia/Kolkata",
-            "Africa/Johannesburg",
-            "America/Mexico_City",
-            "Europe/Moscow",
-            "Pacific/Honolulu",
-            "America/Sao_Paulo"
-          ];
-        
-          const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        
-          // Check if userTimeZone is one of the available options
-          if (availableTimeZones.includes(userTimeZone)) {
-            return userTimeZone;
-          }
-        
-          // If userTimeZone is not in the available options, find the closest match
-          let closestMatch = availableTimeZones[0];
-          let closestOffset = Math.abs(
-            Intl.DateTimeFormat(undefined, { timeZone: closestMatch }).resolvedOptions().timeZoneOffset
-          );
-        
-          for (let i = 1; i < availableTimeZones.length; i++) {
-            const timeZone = availableTimeZones[i];
-            const offset = Math.abs(
-              Intl.DateTimeFormat(undefined, { timeZone }).resolvedOptions().timeZoneOffset
-            );
-        
-            if (offset < closestOffset) {
-              closestMatch = timeZone;
-              closestOffset = offset;
-            }
-          }
-        
-          return closestMatch;
-        }
-        
+      if (!authData.record.time_zone) {
+
         const userTimeZone = getUserTimeZone();
-        
-          
-        const Data3 = {
-          "time_zone": closestTimeZone
+
+
+        const newTimeZoneUser = {
+          "time_zone": userTimeZone
         };
-  
-        await pb.collection('users').update(authData.record.id, Data3);  
+
+        await pb.collection('users').update(authData.record.id, newTimeZoneUser);
       }
-      return window.location.replace('/page/firstopen')
+      return Router.push('/page/firstopen')
     } catch (error) {
       // Handle errors appropriately
       console.log(error);
-      toast.error('Error logging in. Please make sure you have a valid account', {
-        position: toast.POSITION.TOP_LEFT,
-      });
+      toast.error('Error logging in. Please make sure you have a valid account');
+      setIsLoading(false)
     }
 
 
   }
 
-  async function oAthLogin() {
+  async function oAtuh() {
     const authData = await pb.collection('users').authWithOAuth2({ provider: 'github' });
-    if(!authData.record.time_zone){
-      function getUserTimeZone() {
-        const availableTimeZones = [
-          "Pacific/Auckland",
-          "America/New_York",
-          "Asia/Tokyo",
-          "Europe/London",
-          "America/Los_Angeles",
-          "Australia/Sydney",
-          "Europe/Paris",
-          "Asia/Dubai",
-          "America/Chicago",
-          "Asia/Shanghai",
-          "America/Toronto",
-          "Europe/Berlin",
-          "Asia/Singapore",
-          "America/Denver",
-          "Asia/Kolkata",
-          "Africa/Johannesburg",
-          "America/Mexico_City",
-          "Europe/Moscow",
-          "Pacific/Honolulu",
-          "America/Sao_Paulo"
-        ];
-      
-        const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      
-        // Check if userTimeZone is one of the available options
-        if (availableTimeZones.includes(userTimeZone)) {
-          return userTimeZone;
-        }
-      
-        // If userTimeZone is not in the available options, find the closest match
-        let closestMatch = availableTimeZones[0];
-        let closestOffset = Math.abs(
-          Intl.DateTimeFormat(undefined, { timeZone: closestMatch }).resolvedOptions().timeZoneOffset
-        );
-      
-        for (let i = 1; i < availableTimeZones.length; i++) {
-          const timeZone = availableTimeZones[i];
-          const offset = Math.abs(
-            Intl.DateTimeFormat(undefined, { timeZone }).resolvedOptions().timeZoneOffset
-          );
-      
-          if (offset < closestOffset) {
-            closestMatch = timeZone;
-            closestOffset = offset;
-          }
-        }
-      
-        return closestMatch;
-      }
-      
+    if (!authData.record.time_zone) {
+
       const userTimeZone = getUserTimeZone();
       const Data = {
         "time_zone": userTimeZone
       };
 
-      await pb.collection('users').update(authData.record.id, Data);  
+      await pb.collection('users').update(authData.record.id, Data);
     }
     if (!authData.record.meal) {
-      const keySize = 128 / 8; // Key size in bytes
-      const key = lib.WordArray.random(keySize);
-      const encryptionKey = enc.Hex.stringify(key);
+      const encryptionKey = createKey()
       const encData = {
         "chef": encryptionKey,
         "plate": authData.record.id
       };
-
       const encRec = await pb.collection('cookies').create(encData);
       const usrDataUp = {
         "meal": encRec.id
       };
-
       await pb.collection('users').update(authData.record.id, usrDataUp);
     }
-    return window.location.replace('/page/firstopen')
+    return Router.push('/page/firstopen')
   }
 
-  const status = pb.authStore.isValid
-  useEffect(() => {
-    if (status == true) {
-      window.location.replace("/auth/logout")
-      return
-    }
-    const prevUrl = sessionStorage.getItem('prevUrl');
 
-    if (prevUrl) {
-      setPrevUrl(prevUrl)
-    }
-  }, []);
+  if (loading) {
+    return (
+      <PlainLoader />
+    )
+  }
+
   return (
     <div>
       <Head>
@@ -229,29 +125,42 @@ export default function Login() {
         <meta name="robots" content="noindex"></meta>
       </Head>
       <div className={styles.login_box}>
-        <div className={styles.card}>
-          <h4 className={styles.title}>Login!</h4>
-          <form onSubmit={auth}>
-            <div className={`${styles.field} ${styles.field_start}`}>
-              <svg className={styles.inputicon} xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48"><path d="M480 575q-66 0-108-42t-42-108q0-66 42-108t108-42q66 0 108 42t42 108q0 66-42 108t-108 42ZM220 896q-25 0-42.5-17.5T160 836v-34q0-38 19-65t49-41q67-30 128.5-45T480 636q62 0 123 15.5T731 696q31 14 50 41t19 65v34q0 25-17.5 42.5T740 896H220Z" /></svg>
-              <input required autoComplete="off" id="logemail" value={email} placeholder="Email or Username" className={styles.inputfield} name="email" type="text" onChange={event => setEmail(event.target.value)} />
+        <div className={styles.formcontainer}>
+          <p className={styles.title}>Login</p>
+          <form className={styles.form}>
+            <div className={styles.inputgroup}>
+              <label for="username">Username</label>
+              <input onChange={event => setEmail(event.target.value)} type="text" name="username" id="username" placeholder="" />
             </div>
-            <div className={`${styles.field} ${styles.field_end}`}>
-              <svg className={styles.inputicon} viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
-                <path d="M80 192V144C80 64.47 144.5 0 224 0C303.5 0 368 64.47 368 144V192H384C419.3 192 448 220.7 448 256V448C448 483.3 419.3 512 384 512H64C28.65 512 0 483.3 0 448V256C0 220.7 28.65 192 64 192H80zM144 192H304V144C304 99.82 268.2 64 224 64C179.8 64 144 99.82 144 144V192z"></path></svg>
-              <input autoComplete="off" value={password} id="logpass" placeholder="Password" className={styles.inputfield} name="password" type="password" onChange={event => setPassword(event.target.value)} required />
+            <div className={styles.inputgroup}>
+              <label for="password">Password</label>
+              <input onChange={(e) => setPassword(e.target.value)} type="password" name="password" id="password" placeholder="" />
+              <div className={styles.forgot}>
+                <a rel="noopener noreferrer" href="/auth/pwdreset">Forgot Password ?</a>
+              </div>
             </div>
-            <div className={styles.buttons}>
-              <button className={styles.btn} type="submit">Login</button>
-              <button className={styles.obtn} type="button" onClick={oAthLogin}>Github</button>
-            </div>
-
-            <p className={styles.signup}>Forgot password? <a className={styles.signuplink} href='/auth/pwdreset'>Reset</a></p>
-            <p className={styles.signup}>New here? <Link className={styles.signuplink} href='/auth/signup'>Signup</Link></p>
-            <Link href='/'><p className={styles.signup}>Cancel</p></Link>
+            <button onClick={auth} className={styles.sign} type='button'>Sign in</button>
           </form>
-
+          <div className={styles.socialmessage}>
+            <div className={styles.line}></div>
+            <p className={styles.message}>Login with other accounts</p>
+            <div className={styles.line}></div>
+          </div>
+          <div className={styles.socialicons}>
+            <button aria-label="Log in with GitHub" className={styles.icon} type='button' onClick={oAtuh}>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" className={`${styles.w5} ${styles.h5} ${styles.fillcurrent}`}>
+                <path d="M16 0.396c-8.839 0-16 7.167-16 16 0 7.073 4.584 13.068 10.937 15.183 0.803 0.151 1.093-0.344 1.093-0.772 0-0.38-0.009-1.385-0.015-2.719-4.453 0.964-5.391-2.151-5.391-2.151-0.729-1.844-1.781-2.339-1.781-2.339-1.448-0.989 0.115-0.968 0.115-0.968 1.604 0.109 2.448 1.645 2.448 1.645 1.427 2.448 3.744 1.74 4.661 1.328 0.14-1.031 0.557-1.74 1.011-2.135-3.552-0.401-7.287-1.776-7.287-7.907 0-1.751 0.62-3.177 1.645-4.297-0.177-0.401-0.719-2.031 0.141-4.235 0 0 1.339-0.427 4.4 1.641 1.281-0.355 2.641-0.532 4-0.541 1.36 0.009 2.719 0.187 4 0.541 3.043-2.068 4.381-1.641 4.381-1.641 0.859 2.204 0.317 3.833 0.161 4.235 1.015 1.12 1.635 2.547 1.635 4.297 0 6.145-3.74 7.5-7.296 7.891 0.556 0.479 1.077 1.464 1.077 2.959 0 2.14-0.020 3.864-0.020 4.385 0 0.416 0.28 0.916 1.104 0.755 6.4-2.093 10.979-8.093 10.979-15.156 0-8.833-7.161-16-16-16z"></path>
+              </svg>
+            </button>
+          </div>
+          <p className={styles.signup}>Don't have an account?
+            <a rel="noopener noreferrer" href="/auth/signup" className={styles.signup}>Sign up</a>
+          </p>
+          <p className={styles.signup}>
+            <a rel="noopener noreferrer" href="/" className={styles.signup}>Cancel</a>
+          </p>
         </div>
+
       </div>
     </div>
   )

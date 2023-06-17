@@ -40,66 +40,6 @@
     -ms-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
 }
 
-.loginbtn {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 20px;
-    min-width: 160px;
-    height: 50px;
-    background-color: #59d4af;
-    border: none;
-    border-radius: 25px;
-    font-family: 'Source Sans Pro';
-    font-size: 14px;
-    color: #fff;
-    line-height: 1.2;
-    text-transform: uppercase;
-    -webkit-transition: all .4s;
-    -o-transition: all .4s;
-    -moz-transition: all .4s;
-    transition: all .4s;
-    box-shadow: 0 10px 30px 0 rgba(89, 212, 183, 0.5);
-    -moz-box-shadow: 0 10px 30px 0 rgba(89, 198, 212, 0.5);
-    -webkit-box-shadow: 0 10px 30px 0 rgba(89, 212, 183, 0.5);
-    -o-box-shadow: 0 10px 30px 0 rgba(89, 210, 212, 0.5);
-    -ms-box-shadow: 0 10px 30px 0 rgba(89, 212, 200, 0.5);
-    margin: 3vh;
-
-}
-
-.loginbtn:hover {
-    background-color: #1f9185;
-    box-shadow: 0 10px 30px 0 rgba(89, 191, 212, 0.8);
-    -moz-box-shadow: 0 10px 30px 0 rgba(89, 193, 212, 0.8);
-    -webkit-box-shadow: 0 10px 30px 0 rgba(89, 200, 212, 0.8);
-    -o-box-shadow: 0 10px 30px 0 rgba(89, 198, 212, 0.8);
-    -ms-box-shadow: 0 10px 30px 0 rgba(89, 196, 212, 0.8);
-
-}
-
-.logincancel {
-    color: grey;
-    bottom: 0;
-    position: relative;
-    transition: all 2s cubic-bezier(0.94, 0, 0.51, 0.69);
-    text-decoration: none;
-    background-image: linear-gradient(#b6b6b6, #464646);
-    background-size: 0% 0.1em;
-    background-position-y: 100%;
-    background-position-x: 50%;
-    background-repeat: no-repeat;
-    transition: background-size 0.2s ease-in-out;
-}
-
-.logincancel:hover {
-    background-size: 100% 0.1em;
-
-}
 
 @media (max-width: 600px) {
     .loginbox {
@@ -108,144 +48,167 @@
 }
 
 .login_box {
-    display: grid;
+    display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100dvh;
     width: 100%;
-    grid-template-columns: 1fr;
-    background: radial-gradient(#fff, #00bcd4);
 }
 
-.login_box>.card {
-    grid-column: 1;
+.formcontainer {
+    width: 320px;
+    border-radius: 0.75rem;
+    background-color: rgb(16, 16, 16);
+    padding: 2rem;
+    color: rgba(243, 244, 246, 1);
+    box-shadow: 0px 8px 8px 6px #1e1e1e;
 }
 
-
-
-.card {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    grid-column: 2;
-    padding: 1.9rem 1.2rem;
-    /* text-align: center; */
-    /* border-radius: 1em; */
-    font-size: 150% !important;
-    /* background-size: 400% 400%; */
-    /* animation: Auth_Authformbg__7kJJm 11s ease infinite; */
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-
-/*Inputs*/
-.field {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* gap: 10px; */
-    border: none;
-    font-size: 17px;
-    padding: 1em;
-    margin: 10px 0px;
-    gap: 0.5em;
-    background: linear-gradient(90deg, #ffffff 30%, #00BCD4 90%);
-}
-
-.field_start {
-    border-radius: 5px 5px 0 0;
-}
-
-.field_end {
-    border-radius: 0 0 5px 5px;
-}
-
-.inputicon {
-    height: 1em;
-    width: 1em;
-    fill: #7a5ad9;
-    ;
-}
-
-.inputfield {
-    background: none;
-    border: none;
-    outline: none;
-    width: 100%;
-    color: #000000;
-    font-weight: 600;
-}
-
-.inputfield::placeholder {
-    /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: rgb(123, 123, 123);
-    opacity: 1;
-    /* Firefox */
-}
-
-.signup {
-    font-size: 60%;
-    color: #545454;
+.title {
     text-align: center;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 700;
 }
 
-.signuplink {
-    color: #ffffff;
+.form {
+    margin-top: 1.5rem;
 }
 
-.signuplink:hover {
-    text-decoration: underline;
+.inputgroup {
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.inputgroup label {
+    display: block;
+    color: rgba(156, 163, 175, 1);
+    margin-bottom: 4px;
+}
+
+.inputgroup input {
+    width: 100%;
+    border-radius: 0.375rem;
+    border: 1px solid rgba(55, 65, 81, 1);
+    outline: 0;
+    background-color: rgb(0, 0, 0);
+    padding: 0.75rem 1rem;
+    color: rgba(243, 244, 246, 1);
+}
+
+.inputgroup input:focus {
+    border-color: rgba(167, 139, 250);
+}
+
+.forgot {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: rgba(156, 163, 175, 1);
+    margin: 8px 0 14px 0;
+}
+
+.forgot a,
+.signup a {
+    color: rgba(243, 244, 246, 1);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.forgot a:hover,
+.signup a:hover {
+    text-decoration: underline rgba(167, 139, 250, 1);
+}
+
+.sign {
+    display: block;
+    width: 100%;
+    background-color: rgba(167, 139, 250, 1);
+    padding: 0.75rem;
+    text-align: center;
+    color: rgba(17, 24, 39, 1);
+    border: none;
+    border-radius: 0.375rem;
+    font-weight: 600;
     cursor: pointer;
 }
 
-/*Text*/
-.title {
-    margin-bottom: 1rem;
-    font-size: 40px;
-    font-weight: 500;
+.socialmessage {
+    display: flex;
+    align-items: center;
+    padding-top: 1rem;
 }
 
-.buttons {
+.line {
+    height: 1px;
+    flex: 1 1 0%;
+    background-color: rgba(55, 65, 81, 1);
+}
+
+.socialmessage .message {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: rgba(156, 163, 175, 1);
+}
+
+.socialicons {
+    display: flex;
+    justify-content: center;
+}
+
+.socialicons .icon {
+    border-radius: 0.125rem;
+    padding: 0.75rem;
+    border: none;
+    background-color: transparent;
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+.socialicons .icon svg {
+    height: 1.25rem;
+    width: 1.25rem;
+    fill: #fff;
+}
+
+.socialicons .icon:hover svg {
+    height: 1.25rem;
+    width: 1.25rem;
+    fill: #e6e6e6;
+}
+
+.signup {
+    text-align: center;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: rgba(156, 163, 175, 1);
+    gap: 5px;
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 
-.signupbtns {
-    display: grid;
-    grid-template-columns: 1fr;
-    justify-items: center;
+
+.tandccon {
+    color: #c6c6c6;
+    font-size: 12px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 15px 10px;
     align-items: center;
 }
 
-.tandccon {
-    display: grid;
-    text-align: center;
-    grid-template-columns: 1fr;
-    gap: 0.5em;
-    font-size: 12px;
-    width: 100%;
-    justify-items: center;
-    padding: 1em;
-
-}
-
 .legalbtn {
-    color: inherit;
-    background: none;
-    border: none;
     text-decoration: underline;
-    cursor: pointer;
-    font-size: inherit;
 }
 
 @media (max-width: 900px) {
-    .card {
-        grid-column: auto;
-        width: 100%;
-        padding: 1em;
-    }
 
     .login_box {
         height: 100dvh;
@@ -253,160 +216,6 @@
     }
 }
 
-/*./pocketbase serve --http "192.168.86.178:8090"
-*/
-/*Buttons*/
-/*Login btn and default*/
-.btn {
-    margin: 1rem;
-    border: none;
-    border-radius: 4px;
-    font-weight: bold;
-    font-size: .8em;
-    text-transform: uppercase;
-    padding: 0.6em 1.2em;
-    background-color: #7a5ad9;
-    color: #ffffff;
-    box-shadow: 0 8px 24px 0 rgb(255 235 167 / 20%);
-    transition: all .2s ease-in-out;
-    cursor: pointer;
-}
-
-/*Logout btn*/
-.crbtn {
-    margin: 1rem;
-    border: none;
-    border-radius: 4px;
-    font-weight: bold;
-    font-size: .8em;
-    text-transform: uppercase;
-    padding: 0.6em 1.2em;
-    background-color: #ff4d4d;
-    color: #ffffff;
-    box-shadow: 0 8px 24px 0 rgb(255 235 167 / 20%);
-    transition: all .3s;
-    cursor: pointer;
-}
-
-/*oauth btn*/
-.obtn {
-    margin: 1rem;
-    border: none;
-    border-radius: 4px;
-    font-weight: bold;
-    font-size: .8em;
-    text-transform: uppercase;
-    padding: 0.6em 1.2em;
-    background-color: #afafaf;
-    color: #676767;
-    box-shadow: 0 8px 24px 0 rgb(255 235 167 / 20%);
-    transition: all .3s;
-    cursor: pointer;
-
-}
-
-/*the small things idk what for*/
-.btnlink {
-    color: #f5f5f5;
-    display: block;
-    font-size: .75em;
-    transition: color .3s ease-out;
-}
-
-/*Hover & focus*/
-.field input:focus::placeholder {
-    opacity: 0;
-    transition: opacity .3s;
-}
-
-.btn:hover {
-    background-color: #8666e6;
-    color: #ffffff;
-    transform: scale(1.02);
-}
-
-.btn:active {
-    transform: scale(0.93);
-}
-
-.obtn:hover {
-    background-color: #424242;
-    color: #75ffff;
-    box-shadow: 0 8px 24px 0 rgb(16 39 112 / 20%);
-    transform: scale(1.04);
-}
-
-.obtn:active {
-    transform: scale(0.93);
-}
-
-.crbtn:hover {
-    background-color: #cfcfcf;
-    color: #ff4d4d;
-    box-shadow: 0 8px 24px 0 rgb(16 39 112 / 20%);
-    transform: scale(1.04);
-}
-
-.crbtn:active {
-    transform: scale(0.93);
-}
-
-.btnlink:hover {
-    color: #ffeba7;
-}
-
-.provi {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    justify-content: center;
-}
-
-.avatar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-wrap: nowrap;
-}
-
-.button {
-    padding: 0;
-    --button_radius: 0.75em;
-    --button_color: #e8e8e8;
-    --button_outline_color: #000000;
-    font-size: 17px;
-    font-weight: bold;
-    border: none;
-    border-radius: var(--button_radius);
-    background: var(--button_outline_color);
-    margin: 1vh 0;
-    width: 80%;
-}
-
-.finput {
-    display: none;
-}
-
-.button:hover .buttontop {
-    /* Pull the button upwards when hovered */
-    transform: translateY(-0.33em);
-}
-
-.button:active .buttontop {
-    /* Push the button downwards when pressed */
-    transform: translateY(0);
-}
-
-.buttontop {
-    display: block;
-    box-sizing: border-box;
-    border: 2px solid var(--button_outline_color);
-    border-radius: var(--button_radius);
-    background: var(--button_color);
-    color: var(--button_outline_color);
-    transform: translateY(-0.2em);
-    transition: transform 0.1s ease;
-}
 
 
 .cbx {
@@ -414,7 +223,7 @@
     top: 1px;
     width: 27px;
     height: 27px;
-    border: 1px solid #000000;
+    border: 1px solid #ff5454;
     border-radius: 3px;
     vertical-align: middle;
     transition: background 0.1s ease;
@@ -490,4 +299,26 @@
 
 .hiddenxsup {
     display: none !important;
+}
+
+@media (prefers-color-scheme: light) {
+    .formcontainer {
+        box-shadow: 0px 8px 8px 6px #f1f1f1;
+        background: linear-gradient(45deg, white 30%, #00BCD4);
+        color: #000;
+    }
+    .tandccon, .forgot a, .signup a{
+        color: #7c7c7c;
+    }
+    .socialicons .icon svg{
+        fill: #000;
+    }
+    .socialicons .icon:hover svg{
+        fill: #404040;
+    }
+    .inputgroup input{
+        background: #fff;
+        border-color: #c1c1c1;
+        color: #000;
+    }
 }
