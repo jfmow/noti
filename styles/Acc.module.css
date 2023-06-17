@@ -91,7 +91,7 @@
   margin: 0;
 }
 
-.default_settings_modal_container_usrname_toggles{
+.default_settings_modal_container_usrname_toggles {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -137,7 +137,7 @@
   width: 100%;
 }
 
-.user_account_form_container > form {
+.user_account_form_container>form {
   width: 100%;
   align-self: center;
   height: 100%;
@@ -434,19 +434,19 @@
   transform: rotateY(180deg);
 }
 
-input:checked ~ .slidercard .slidercardback {
+input:checked~.slidercard .slidercardback {
   transform: rotateY(0);
 }
 
-input:checked ~ .slidercard .slidercardfront {
+input:checked~.slidercard .slidercardfront {
   transform: rotateY(-180deg);
 }
 
-input:checked ~ .slidercard {
+input:checked~.slidercard {
   transform: translateX(1.5em);
 }
 
-input:checked ~ .slider {
+input:checked~.slider {
   background-color: #9ed99c;
 }
 
@@ -456,13 +456,14 @@ input:checked ~ .slider {
   align-items: center;
   padding: 10px 15px;
   gap: 15px;
-  background-color: #181717;
-  outline: 3px #181717 solid;
+  background-color: #ffffff;
+  outline: 3px #f4ebeb solid;
   outline-offset: -3px;
   border-radius: 5px;
   border: none;
   cursor: pointer;
   transition: 400ms;
+  box-shadow: 0px 7px 6px 1px #efefef;
 }
 
 .acc_button_red {
@@ -470,7 +471,7 @@ input:checked ~ .slider {
 }
 
 .acc_button .acc_button_text {
-  color: rgb(149, 149, 149);
+  color: rgb(31, 31, 31);
   font-weight: 700;
   font-size: 1em;
   transition: 400ms;
@@ -482,15 +483,16 @@ input:checked ~ .slider {
 }
 
 .acc_button:hover {
-  background-color: transparent;
+  background-color: #000;
+  outline-color: #000;
 }
 
 .acc_button:hover .acc_button_text {
-  color: #000000;
+  color: #ffffff;
 }
 
 .acc_button:hover svg {
-  fill: #000000;
+  fill: #ffffff;
 }
 
 
@@ -522,7 +524,7 @@ input:checked ~ .slider {
     padding: 0;
   }
 
-  .user_account_form_container > form {
+  .user_account_form_container>form {
     min-height: fit-content;
   }
 
@@ -549,12 +551,12 @@ input:checked ~ .slider {
     color: #4f4f4f;
   }
 
-  .default_settings_modal_container{
+  .default_settings_modal_container {
     padding: 0;
   }
 
   .default_settings_modal_container_usrname_block {
-    
+
     width: 100dvw;
     margin: 0;
   }
@@ -565,11 +567,35 @@ input:checked ~ .slider {
 }
 
 @media (prefers-color-scheme: dark) {
+
+  .acc_button {
+    background-color: #181717;
+    outline: 3px #181717 solid;
+    box-shadow: 0px 7px 6px 1px #191919;
+  }
+
+  .acc_button_red {
+    outline: 3px #ff2d2d solid;
+  }
+
+  .acc_button .acc_button_text {
+    color: rgb(149, 149, 149);
+  }
+
+  .acc_button svg {
+    fill: #9c9c9c;
+  }
+  .acc_button:hover {
+    background: transparent;
+    box-shadow: none;
+  }
+
   .acc_button:hover .acc_button_text {
-    color: #ffffff;
+    color: #000000;
   }
 
   .acc_button:hover svg {
-    fill: #ffffff;
+    fill: #000000;
   }
+
 }
