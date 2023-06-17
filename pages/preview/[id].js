@@ -21,7 +21,7 @@ function NotionEditor({ pageId }) {
 export default NotionEditor;
 
 import React from 'react';
-import styles from '@/styles/Home.module.css';
+import styles from '@/styles/PageList.module.css';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import UAParser from 'ua-parser-js';
