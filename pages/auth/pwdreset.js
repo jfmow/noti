@@ -13,22 +13,24 @@ export default function PasswordReset() {
     async function auth(event) {
         event.preventDefault();
         console.error(pb.autoCancellation)
-        //console.log(name, email)
-        try {
-            const response = await toast.promise(
-                pb.collection('users').requestPasswordReset(email),
-                {
-                    pending: 'Requesting reset...',
-                    success: 'Reset email sent',
-                    error: 'Rest email failed to send 🤯'
-                }
-            );
-            //console.error(authData)
+        if (email.includes('@')) {
+            //console.log(name, email)
+            try {
+                const response = await toast.promise(
+                    pb.collection('users').requestPasswordReset(email),
+                    {
+                        pending: 'Requesting reset...',
+                        success: 'Reset email sent',
+                        error: 'Rest email failed to send 🤯'
+                    }
+                );
+                //console.error(authData)
 
-        } catch (error) {
-            toast.warning('Failed to send reset email', {
-                position: toast.POSITION.TOP_LEFT,
-            });
+            } catch (error) {
+                toast.warning('Failed to send reset email');
+            }
+        } else {
+            return
         }
     }
     return (
@@ -44,7 +46,7 @@ export default function PasswordReset() {
                     <form className={styles.form}>
                         <div className={styles.inputgroup}>
                             <label for="username">Email</label>
-                            <input onChange={event => setEmail(event.target.value)} type="text" name="username" id="username" placeholder="" />
+                            <input onChange={event => setEmail(event.target.value)} type="email" name="email" id="email" placeholder="" />
                         </div>
                         <button onClick={auth} className={styles.sign} type='button'>Reset</button>
                     </form>
