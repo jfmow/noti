@@ -8,7 +8,7 @@ import validator from 'validator';
 import { AES, enc, lib } from 'crypto-js';
 import { useRouter } from 'next/router';
 import getUserTimeZone from '@/lib/getUserTimeZone';
-import PlainLoader from '@/components/PlainLoader';
+import PlainLoader from '@/components/Loader';
 import createKey from '@/lib/createEncKey';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);

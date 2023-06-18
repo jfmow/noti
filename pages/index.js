@@ -5,7 +5,7 @@ import PocketBase from 'pocketbase'
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import PlainLoader from '@/components/PlainLoader';
+import PlainLoader from '@/components/Loader';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 export default function Home() {

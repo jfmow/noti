@@ -12,7 +12,7 @@ import ImageTool from "@editorjs/image";
 import AttachesTool from "@editorjs/attaches";
 import PocketBase from "pocketbase";
 import styles from "@/styles/Create.module.css";
-import Loader from "./PlainLoader";
+import Loader from "./Loader";
 import Embed from "@editorjs/embed";
 import { AES, enc } from "crypto-js";
 import compressImage from "@/lib/CompressImg";
