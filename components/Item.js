@@ -21,6 +21,12 @@ const MyComponent = ({ currPage }) => {
       });
       setItems(records);
       setIsLoading(false)
+      if(!currPage || currPage === "firstopen"){
+        const latestRecord = records.filter(record => record.updated)[0];
+        console.log(latestRecord)
+        router.push(`/page/${latestRecord.id}`)
+      }
+      
 
     }
     getData();
