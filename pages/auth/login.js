@@ -84,6 +84,7 @@ export default function Login() {
   }
 
   async function oAtuh() {
+    setIsLoading(true)
     const authData = await pb.collection('users').authWithOAuth2({ provider: 'github' });
     if (!authData.record.time_zone) {
 
