@@ -5,11 +5,11 @@ import { toast } from 'react-toastify';
 import Head from 'next/head';
 import validator from 'validator';
 import Loader from '@/components/Loader'
-import { enc, lib } from 'crypto-js';
+
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import getUserTimeZone from '@/lib/getUserTimeZone';
-import createKey from '@/lib/createEncKey';
+import { getUserTimeZone } from '@/lib/getUserTimeZone';
+import { createKey } from '@/lib/createEncKey';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 
@@ -46,7 +46,7 @@ export default function Login() {
             if (!name || !email || !password) {
                 return toast.error('Please fill out all fields', { position: toast.POSITION.TOP_LEFT });
             }
-            setIsLoading(true)
+            setIsLoading(true);
             const sanitizedEmail = validator.trim(validator.escape(email));
             const sanitizedPassword = validator.trim(validator.escape(password));
             const sanitizedName = validator.trim(validator.escape(name));
@@ -65,13 +65,7 @@ export default function Login() {
             }
 
             const userTimeZone = getUserTimeZone()
-            const encryptionKey = createKey()
-            const encData = {
-                "chef": encryptionKey,
-                "plate": response.id
-            };
 
-            const encRec = await pb.collection('cookies').create(encData);
 
             const newAccData = {
                 "username": sanitizedName,
@@ -79,34 +73,28 @@ export default function Login() {
                 "emailVisibility": false,
                 "password": sanitizedPassword,
                 "passwordConfirm": sanitizedPassword,
-                "time_zone": userTimeZone,
-                "meal": encRec.id
+                "time_zone": userTimeZone
             };
 
             try {
-                await toast.promise(
-                    pb.collection('users').create(newAccData),
-                    {
-                        pending: 'Creating account...',
-                        success: 'Account created successfuly. 👌',
-                        error: 'Failed to create account! 🤯'
-                    }
-                );
+                const crateAccProgressToast = toast.loading("Please wait...")
+                const userAccountData = await pb.collection('users').create(newAccData)
+                await pb.collection('users').authWithPassword(name, password)
 
-                await toast.promise(
-                    pb.collection('users').authWithPassword(name, password),
-                    {
-                        pending: 'Signing in...',
-                        success: 'Signed in successfuly. 👌',
-                        error: 'Failed to sign-in! 🤯'
-                    }
-                );
+                const encryptionKey = createKey()
+                const encData = {
+                    "chef": encryptionKey,
+                    "plate": userAccountData.id
+                };
+                console.log(encData)
 
-                /* The code is generating a random encryption key of size 128 bits (16 bytes)
-                using the CryptoJS library in JavaScript. The key is then converted to a hexadecimal
-                string and stored in the variable `encryptionKey`. The `encData` object contains the
-                `encryptionKey` and the `id` property of the `response` object, which is being
-                encrypted using this key. */
+                const encRec = await pb.collection('cookies').create(encData);
+                console.log(encRec)
+                const newRec = {
+                    "meal": encRec.id
+                }
+                await pb.collection('users').update(userAccountData.id, newRec)
+                toast.update(crateAccProgressToast, { render: "Created", type: "success", isLoading: false });
 
 
                 /* The code is using the `toast.promise()` method to display a toast message
@@ -115,29 +103,20 @@ export default function Login() {
                 email sending process. The `toast.promise()` method takes an object with three
                 properties (`pending`, `success`, and `error`) to display different messages based
                 on the status of the email sending process. */
-                await toast.promise(
-                    pb.collection('users').requestVerification(email),
-                    {
-                        pending: 'Sending verification email...',
-                        success: 'Please verify email!. 👌',
-                        error: 'Failed to send verification email 🤯'
-                    }
-                );
+                await pb.collection('users').requestVerification(email)
                 setTimeout(() => {
+                    toast.dismiss(crateAccProgressToast)
                     Router.push('/page/firstopen')
                 }, 1000);
             } catch (error) {
                 console.log(error)
                 setIsLoading(false)
-                toast.error('Error while creating account!', {
-                    position: toast.POSITION.TOP_LEFT,
-                });
+                toast.update(crateAccProgressToast, { render: "Unable to create account!", type: "error", isLoading: false });
             }
         } catch (error) {
             setIsLoading(false)
-            toast.error('Error while creating account!', {
-                position: toast.POSITION.TOP_LEFT,
-            });
+            console.log(error)
+            toast.update(crateAccProgressToast, { render: "Unable to create account!", type: "error", isLoading: false });
         }
     }
 
@@ -164,7 +143,7 @@ export default function Login() {
                     <form className={styles.form}>
                         <div className={styles.inputgroup}>
                             <label for="username">Email</label>
-                            <input onChange={event => setEmail(event.target.value)} type="email" name="username" id="username" placeholder="" />
+                            <input onChange={event => setEmail(event.target.value)} type="email" name="email" id="email" placeholder="" />
                         </div>
                         <div className={styles.inputgroup}>
                             <label for="username">Username</label>
