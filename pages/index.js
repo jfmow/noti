@@ -5,26 +5,35 @@ import PocketBase from 'pocketbase'
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import PlainLoader from '@/components/PlainLoader';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 export default function Home() {
   const router = useRouter()
+  const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
     async function authUpdate() {
       try {
         if (!pb.authStore.isValid) {
+
+          setIsLoading(false)
           pb.authStore.clear();
         } else {
           router.push('/page/firstopen')
         }
       } catch (error) {
+
+        setIsLoading(false)
         pb.authStore.clear();
       }
-
     }
     authUpdate()
   }, []);
-  
+
+  if (isLoading) {
+    return <PlainLoader />
+  }
+
   return (
     <>
       <Head>
