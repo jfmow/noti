@@ -30,6 +30,9 @@ export default function Login() {
 
   async function auth() {
     try {
+      if(!email || !password){
+        return
+      }
       setIsLoading(true)
       pb.authStore.clear();
       // Retrieve user inputs
