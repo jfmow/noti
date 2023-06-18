@@ -1,0 +1,6 @@
+{
+    "crons": [{
+      "path": "/api/server/offlineping",
+      "schedule": "*/2 * * * *"
+    }]
+  }
