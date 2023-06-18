@@ -5,11 +5,10 @@ import Link from 'next/link'
 import { toast } from 'react-toastify';
 import Head from 'next/head';
 import validator from 'validator';
-import { AES, enc, lib } from 'crypto-js';
 import { useRouter } from 'next/router';
-import getUserTimeZone from '@/lib/getUserTimeZone';
+import { getUserTimeZone } from '@/lib/getUserTimeZone';
 import PlainLoader from '@/components/Loader';
-import createKey from '@/lib/createEncKey';
+import { createKey } from '@/lib/createEncKey';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false)
