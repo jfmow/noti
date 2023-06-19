@@ -130,76 +130,51 @@ function Editor({ page, preview }) {
           setIsLoading(false);
           return;
         }
-        if (preview === "true") {
+
+        try {
+          const record = await pb.collection("pages").getOne(page);
+          //encryption
           try {
-            const record = await pb.collection("preview").getOne(page);
-            setEditorData(record.content);
-            setArticleTitle(record.title);
-            if (record.header_img) {
-              setArticleHeader(
-                `${process.env.NEXT_PUBLIC_POCKETURL}/api/files/preview/${page}/${record.header_img}`
-              );
-            } else {
-              setArticleHeader(null);
-            }
-            setIsLoading(false);
-          } catch (error) {
-            toast.error(
-              "Could not get article data! Please do not attempt to save it",
-              {
-                position: toast.POSITION.TOP_LEFT,
-              }
-            );
-            console.log(error);
-            setError(true);
-            setIsLoading(false);
-          }
-        } else {
-          try {
-            const record = await pb.collection("pages").getOne(page);
-            //encryption
-            try {
-              const encryptrec = await pb
-                .collection("cookies")
-                .getOne(pb.authStore.model.meal);
+            if (record.content) {
+              const encryptrec = await pb.collection("cookies").getOne(pb.authStore.model.meal);
               setChefKey(encryptrec.chef);
               const decryptedNote = AES.decrypt(
                 record.content,
                 encryptrec.chef
               ).toString(enc.Utf8);
               setEditorData(JSON.parse(decryptedNote));
-            } catch (error) {
-              console.warn(error);
-              toast.info("Critical error, page content may not be upto date!");
-              setEditorData(record.content);
             }
-
-            //rest of unencrypt data
-            setArticleTitle(record.title);
-            setPageSharedTF(record.shared);
-            setCurrentPageIconValue(record.icon);
-            if (record.header_img) {
-              setArticleHeader(
-                `${process.env.NEXT_PUBLIC_POCKETURL}/api/files/pages/${page}/${record.header_img}`
-              );
-            } else {
-              setArticleHeader(null);
-            }
-            setError(false);
-            setIsLoading(false);
           } catch (error) {
-            toast.error(
-              "Could not get page data! Please do not attempt to save it",
-              {
-                position: toast.POSITION.TOP_LEFT,
-              }
-            );
-            console.log(error);
-            setError(true);
-            setIsLoading(false);
+            console.warn(error);
+            toast.info("Critical error, page content may not be upto date!");
+            setEditorData(record.content);
           }
+          //rest of unencrypt data
+          setArticleTitle(record.title);
+          setPageSharedTF(record.shared);
+          setCurrentPageIconValue(record.icon);
+          if (record.header_img) {
+            setArticleHeader(
+              `${process.env.NEXT_PUBLIC_POCKETURL}/api/files/pages/${page}/${record.header_img}`
+            );
+          } else {
+            setArticleHeader(null);
+          }
+          setError(false);
+          setIsLoading(false);
+        } catch (error) {
+          toast.error(
+            "Could not get page data! Please do not attempt to save it",
+            {
+              position: toast.POSITION.TOP_LEFT,
+            }
+          );
+          console.log(error);
+          setError(true);
+          setIsLoading(false);
         }
       }
+
       fetchArticles();
     } else {
       setError(true);
@@ -839,7 +814,7 @@ class SimpleIframe {
       formData.append("file_data", file);
       formData.append("uploader", pb.authStore.model.id);
       try {
-        if(file.size > 5242880){
+        if (file.size > 5242880) {
           return toast.error('File too big. Must be < 5mb')
         }
         if (file.name.endsWith(".docx") || file.name.endsWith(".docx/")) {
