@@ -839,6 +839,9 @@ class SimpleIframe {
       formData.append("file_data", file);
       formData.append("uploader", pb.authStore.model.id);
       try {
+        if(file.size > 5242880){
+          return toast.error('File too big. Must be < 5mb')
+        }
         if (file.name.endsWith(".docx") || file.name.endsWith(".docx/")) {
           return toast.error('File type not supported yet!');
         }
