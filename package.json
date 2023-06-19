@@ -17,7 +17,6 @@
     "@editorjs/list": "^1.8.0",
     "@editorjs/quote": "^2.5.0",
     "@editorjs/table": "^2.2.1",
-    "@prisma/client": "^4.14.1",
     "axios": "^1.4.0",
     "compressorjs": "^1.2.1",
     "crypto-js": "^4.1.1",

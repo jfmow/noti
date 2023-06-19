@@ -761,7 +761,6 @@ function Editor({ page, preview }) {
 }
 
 export default Editor;
-
 class SimpleIframe {
   static get toolbox() {
     return {
@@ -778,13 +777,22 @@ class SimpleIframe {
   render() {
     this.wrapper = document.createElement("div");
     this.wrapper.classList.add("simple-image");
+    try {
+      if (this.data.url) {
+        if (url.endsWith(".docx") || url.endsWith(".docx/")) {
+          return toast.error('File type not supported please reupload as a pdf!');
+        }
+      }
+    } catch (err) {
+      return
+    }
 
-    if (this.data && this.data.url) {
-      const originalUrl = decodeURIComponent(this.data.url).replace(
-        /&amp;/g,
-        "&"
-      );
-      this._createImage(originalUrl);
+    if (this.data && this.data.fileId) {
+      //const originalUrl = decodeURIComponent(this.data.url).replace(
+      //  /&amp;/g,
+      //  "&"
+      //);
+      this._createImage(this.data.fileId);
       return this.wrapper;
     }
 
@@ -805,7 +813,7 @@ class SimpleIframe {
     uploadBtn.style.borderRadius = "5px";
     uploadBtn.style.cursor = "pointer";
     uploadBtn.style.fontWeight = "700";
-    fileInput.click(); //open imeditly
+    fileInput.click(); //open immediately
     uploadBtn.addEventListener("click", () => fileInput.click());
 
     this.wrapper.appendChild(uploadBtn);
@@ -830,12 +838,14 @@ class SimpleIframe {
       const formData = new FormData();
       formData.append("file_data", file);
       formData.append("uploader", pb.authStore.model.id);
-
       try {
+        if (file.name.endsWith(".docx") || file.name.endsWith(".docx/")) {
+          return toast.error('File type not supported yet!');
+        }
         const record = await pb.collection("videos").create(formData);
         console.log(record);
         this._createImage(
-          `https://notidb.suddsy.dev/api/files/videos/${record.id}/${record.file_data}`
+          record.id // Pass the fileId as an argument
         );
       } catch (error) {
         console.error(error);
@@ -849,35 +859,31 @@ class SimpleIframe {
     uploadFile(file);
   }
 
-  _createImage(url) {
+  async _createImage(fileId) {
     const iframe = document.createElement("iframe");
     iframe.classList.add(styles.embedIframe);
     iframe.style.width = "100%";
     iframe.style.height = "70vh";
     iframe.style.border = "2px solid #c29fff";
     iframe.style.borderRadius = "5px";
-    let modifiedUrl = url;
-
-    if (url.endsWith(".docx") || url.endsWith(".docx/")) {
-      modifiedUrl = url.replace(/\/$/, ""); // Remove trailing slash
-      modifiedUrl = `https://docs.google.com/viewerng/viewer?url=${encodeURIComponent(
-        modifiedUrl
-      )}&embedded=true`;
-    }
-
-    iframe.src = modifiedUrl;
+    const fileToken = await pb.files.getToken();
+    // retrieve an example protected file url (will be valid ~5min)
+    const record = await pb.collection('videos').getOne(fileId); // Use the fileId to retrieve the record
+    const url = pb.files.getUrl(record, record.file_data, { 'token': fileToken });
+    iframe.src = url;
+    iframe.setAttribute('fileId', fileId); // Set the fileId as an attribute of the iframe
 
     this.wrapper.innerHTML = "";
     this.wrapper.appendChild(iframe);
   }
 
   save(blockContent) {
-    const image = blockContent.querySelector("iframe");
-    //const caption = blockContent.querySelector('[contenteditable]');
+    const iframe = blockContent.querySelector("iframe");
+    const fileId = iframe.getAttribute('fileId'); // Retrieve the fileId attribute
 
     return {
-      url: image.src,
-      //caption: caption.innerHTML || ''
+      fileId: fileId // Include the fileId in the saved data
     };
   }
 }
+
