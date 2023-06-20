@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from '@/styles/PageList.module.css';
 import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
 import PocketBase from 'pocketbase';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
@@ -14,8 +15,6 @@ const MyComponent = ({ currPage }) => {
 
   useEffect(() => {
     async function getData() {
-
-
       const records = await pb.collection('pages_Bare').getFullList({
         sort: '-created',
       });
@@ -140,8 +139,16 @@ const MyComponent = ({ currPage }) => {
 
       <div className={`${styles.itemroot}`} id='rootitems'>
         <button onClick={setVisibleState} className={styles.hidemenubtn}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0V0z" fill="none" /><path d="M18.3 5.71c-.39-.39-1.02-.39-1.41 0L12 10.59 7.11 5.7c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L10.59 12 5.7 16.89c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0L12 13.41l4.89 4.89c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z" /></svg></button>
+        <AnimatePresence>
         {rootParents.map((rootParent) => (
-          <div key={rootParent.id} className={styles.itemscon}>
+          <motion.div
+            key={rootParent.id}
+            className={styles.itemscon}
+            initial={{ opacity: 0, y: -20, scale: 1.3 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 1 }}
+          >
             <RootParentComponent
               item={rootParent}
               currPage={currPage}
@@ -149,8 +156,9 @@ const MyComponent = ({ currPage }) => {
             >
               {renderChildComponents(rootParent.id, 0)}
             </RootParentComponent>
-          </div>
+          </motion.div>
         ))}
+      </AnimatePresence>
         <span
           title='New page'
           onClick={(e) => {
