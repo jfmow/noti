@@ -75,9 +75,9 @@ export default function Login() {
                 "passwordConfirm": sanitizedPassword,
                 "time_zone": userTimeZone
             };
-
+            const crateAccProgressToast = toast.loading("Please wait...")
             try {
-                const crateAccProgressToast = toast.loading("Please wait...")
+                
                 const userAccountData = await pb.collection('users').create(newAccData)
                 await pb.collection('users').authWithPassword(name, password)
 
