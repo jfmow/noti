@@ -25,8 +25,8 @@
   position: fixed;
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   top: 0;
   left: 0;
   z-index: 11;
@@ -34,18 +34,16 @@
   align-items: center;
   justify-content: center;
   padding: 2em;
-  background: #000000e8;
 }
 
 .default_settings_modal_container_usrname_block {
-  background: linear-gradient(45deg, #ffffff, #00BCD4);
+  background: #0090a2;
   border-radius: 1em;
   padding: 2em;
   min-height: 10em;
   width: 30em;
   display: flex;
-  border: none;
-  /* box-shadow: 0px 0px 10px 4px #eee; */
+  border: 3px solid #fff;
   z-index: 20;
   justify-content: flex-end;
   color: #fff;
@@ -454,7 +452,7 @@ input:checked~.slider {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px 15px;
+  padding: 15px 25px;
   gap: 15px;
   background-color: #ffffff;
   outline: 3px #f4ebeb solid;
@@ -464,6 +462,7 @@ input:checked~.slider {
   cursor: pointer;
   transition: 400ms;
   box-shadow: 0px 7px 6px 1px #efefef;
+  font-size: 20px;
 }
 
 .acc_button_red {
@@ -561,7 +560,7 @@ input:checked~.slider {
     margin: 0;
   }
 
-  .accmanagemt_btns {
+  .user_setting_buttons_grid{
     grid-template-columns: 1fr;
   }
 }
@@ -588,14 +587,6 @@ input:checked~.slider {
   .acc_button:hover {
     background: transparent;
     box-shadow: none;
-  }
-
-  .acc_button:hover .acc_button_text {
-    color: #000000;
-  }
-
-  .acc_button:hover svg {
-    fill: #000000;
   }
 
 }
