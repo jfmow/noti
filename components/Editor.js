@@ -63,14 +63,14 @@ function Editor({ page, preview }) {
           // Encrypt the note content
           // Replace with the user's encryption key
 
-          const encryptedNote = AES.encrypt(
-            JSON.stringify(articleContent),
-            chefKey
-          ).toString();
+          //const encryptedNote = AES.encrypt(
+          //  JSON.stringify(articleContent),
+          //  chefKey
+          //).toString();
 
           // Decrypt the note content
 
-          formData.append("content", JSON.stringify(encryptedNote));
+          formData.append("content", JSON.stringify(articleContent));
           try {
             const state = await pb.collection("pages").update(page, formData);
             console.log("Auto saved successfully!");
@@ -135,20 +135,21 @@ function Editor({ page, preview }) {
           const record = await pb.collection("pages").getOne(page);
           //encryption
           try {
-            if (record.content) {
-              const encryptrec = await pb.collection("cookies").getOne(pb.authStore.model.meal);
-              setChefKey(encryptrec.chef);
-              const decryptedNote = AES.decrypt(
-                record.content,
-                encryptrec.chef
-              ).toString(enc.Utf8);
-              setEditorData(JSON.parse(decryptedNote));
-            }
+            const encryptrec = await pb
+              .collection("cookies")
+              .getOne(pb.authStore.model.meal);
+            setChefKey(encryptrec.chef);
+            const decryptedNote = AES.decrypt(
+              record.content,
+              encryptrec.chef
+            ).toString(enc.Utf8);
+            setEditorData(JSON.parse(decryptedNote));
+            toast.info("Note no longer encrypted on server.")
           } catch (error) {
             console.warn(error);
-            toast.info("Critical error, page content may not be upto date!");
             setEditorData(record.content);
           }
+
           //rest of unencrypt data
           setArticleTitle(record.title);
           setPageSharedTF(record.shared);
@@ -518,7 +519,7 @@ function Editor({ page, preview }) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
+      {isSaving && (<AutoSaveLoader />)}
       <div className={styles.title}>
         <div className={styles.title}>
           {articleHeader && <img src={articleHeader} alt="Page header img" />}
@@ -865,3 +866,9 @@ class SimpleIframe {
   }
 }
 
+
+function AutoSaveLoader() {
+  return (
+    <div className={styles.autosaveloader}></div>
+  )
+}

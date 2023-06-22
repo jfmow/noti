@@ -6,17 +6,18 @@
   padding: 0;
 }
 
-.popOverShare{
+.popOverShare {
   position: absolute;
   top: -12vh;
 }
 
-.create{
+.create {
   height: 100dvh;
   overflow-x: hidden;
   overflow-y: scroll;
   flex: 1 1 0%;
 }
+
 .create::-webkit-scrollbar {
   width: 2px;
 }
@@ -35,7 +36,7 @@
 /* Handle on hover */
 .create::-webkit-scrollbar-thumb:hover {
   background: rgb(0, 225, 255);
-  
+
 }
 
 .creategrid {
@@ -68,7 +69,8 @@
   /* font-family: monospace; */
   font-size: 40px;
   line-height: 1.5;
-  resize: none;/*
+  resize: none;
+  /*
   -webkit-text-shadow: 0 0 5px #000000;/*
   /* text-shadow: 0 0 5px #9f86ff; */
   text-align: center;
@@ -113,12 +115,12 @@
   color: white;
 }
 
-.emojidiv{
+.emojidiv {
   overflow: scroll;
   max-height: 30dvh;
 }
 
-.emoji_button{
+.emoji_button {
   cursor: pointer;
   background: #ebebeb;
   padding: 2px;
@@ -150,20 +152,21 @@
   width: 100%;
   position: relative;
   height: 40dvh;
-  background: linear-gradient(20deg,#00e1ff,#c29fff,#03a9f4);;
+  background: linear-gradient(20deg, #00e1ff, #c29fff, #03a9f4);
+  ;
   background-size: 100%;
 }
 
-.titleeditorcontainer{
+.titleeditorcontainer {
   display: flex;
-    flex-direction: row;
-    align-items: center;
-    max-width: 80%;
-    justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  max-width: 80%;
+  justify-content: center;
 
 }
 
-.savetitlebtn{
+.savetitlebtn {
   background: none;
   border: none;
   padding: 5px;
@@ -175,7 +178,8 @@
   cursor: pointer;
   transition: all 0.2s;
 }
-.savetitlebtn:hover{
+
+.savetitlebtn:hover {
   fill: #3bb994;
 }
 
@@ -253,7 +257,7 @@
   overflow-y: hidden;
 }
 
-.shareModal_link_text::-webkit-scrollbar{
+.shareModal_link_text::-webkit-scrollbar {
   width: 1px;
   height: 2px;
 }
@@ -269,12 +273,12 @@
   fill: #fff;
 }
 
-.shareModal_input{
+.shareModal_input {
   background: #fff;
-    border: none;
-    border-radius: 3px;
-    box-shadow: 0px 0px 6px 2px #ededed;
-    padding: 1em;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0px 0px 6px 2px #ededed;
+  padding: 1em;
 }
 
 
@@ -386,13 +390,13 @@
 }
 
 
-@media(max-width: 800px){
-  .create{
+@media(max-width: 800px) {
+  .create {
     height: 100%;
   }
 }
 
-.title_buttons{
+.title_buttons {
   position: absolute;
   bottom: 1em;
   right: 1em;
@@ -402,17 +406,17 @@
   gap: 0.5em;
 }
 
-.title_buttons_btn{
+.title_buttons_btn {
   display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    background: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 3px;
-    fill: #00bcd4;
-    cursor: pointer;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 3px;
+  fill: #00bcd4;
+  cursor: pointer;
 }
 
 .customfileupload {
@@ -430,15 +434,66 @@
   display: none;
 }
 
-.title_buttons_btn_usrSettings_btn{
+.title_buttons_btn_usrSettings_btn {
   fill: #ff6c6c;
 }
 
 
 @media (prefers-color-scheme: dark) {
-  .create{
+  .create {
     background: #000;
     color: #fff;
   }
 }
 
+
+
+.autosaveloader {
+  z-index: 10;
+  position: fixed;
+  border-radius: 50%;
+  border-top: 16px rgba(0, 225, 255, 0.75) solid;
+  border-left: 16px rgba(0, 225, 255, 0.25) solid;
+  border-bottom: 16px rgba(0, 225, 255, 0.25) solid;
+  border-right: 16px rgba(0, 225, 255, 0.25) solid;
+  top: 1em;
+  right: 1em;
+  animation: spSlices 1s infinite linear;
+}
+
+@keyframes spSlices {
+  0% {
+    border-top: 16px rgba(0, 225, 255, 0.75) solid;
+    border-right: 16px rgba(0, 225, 255, 0.25) solid;
+    border-bottom: 16px rgba(0, 225, 255, 0.25) solid;
+    border-left: 16px rgba(0, 225, 255, 0.25) solid;
+  }
+
+  25% {
+    border-top: 16px rgba(0, 225, 255, 0.25) solid;
+    border-right: 16px rgba(0, 225, 255, 0.75) solid;
+    border-bottom: 16px rgba(0, 225, 255, 0.25) solid;
+    border-left: 16px rgba(0, 225, 255, 0.25) solid;
+  }
+
+  50% {
+    border-top: 16px rgba(0, 225, 255, 0.25) solid;
+    border-right: 16px rgba(0, 225, 255, 0.25) solid;
+    border-bottom: 16px rgba(0, 225, 255, 0.75) solid;
+    border-left: 16px rgba(0, 225, 255, 0.25) solid;
+  }
+
+  75% {
+    border-top: 16px rgba(0, 225, 255, 0.25) solid;
+    border-right: 16px rgba(0, 225, 255, 0.25) solid;
+    border-bottom: 16px rgba(0, 225, 255, 0.25) solid;
+    border-left: 16px rgba(0, 225, 255, 0.75) solid;
+  }
+
+  100% {
+    border-top: 16px rgba(0, 225, 255, 0.75) solid;
+    border-right: 16px rgba(0, 225, 255, 0.25) solid;
+    border-bottom: 16px rgba(0, 225, 255, 0.25) solid;
+    border-left: 16px rgba(0, 225, 255, 0.25) solid;
+  }
+}
