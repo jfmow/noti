@@ -16,7 +16,14 @@ import Loader from "./Loader";
 import Embed from "@editorjs/embed";
 import { AES, enc } from "crypto-js";
 import compressImage from "@/lib/CompressImg";
-import { ModalButton, ModalContainer, ModalForm, ModalInput, ModalTitle } from '@/lib/Modal';
+import dynamic from 'next/dynamic';
+
+const ModalButton = dynamic(() => import('@/lib/Modal').then((module) => module.ModalButton));
+const ModalContainer = dynamic(() => import('@/lib/Modal').then((module) => module.ModalContainer));
+const ModalForm = dynamic(() => import('@/lib/Modal').then((module) => module.ModalForm));
+const ModalInput = dynamic(() => import('@/lib/Modal').then((module) => module.ModalInput));
+const ModalTitle = dynamic(() => import('@/lib/Modal').then((module) => module.ModalTitle));
+
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
