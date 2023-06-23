@@ -279,6 +279,10 @@
 
   }
 
+  .itemoption{
+    font-size: 21px;
+  }
+
   .hidemenubtn {
     transform: rotate(180deg);
     display: flex;
