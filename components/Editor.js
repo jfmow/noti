@@ -899,11 +899,7 @@ function ImportantNote({ classname, importt, page }) {
       <label className={styles.abookmark}>
         <input type="checkbox" onChange={(e) => Save(e)} defaultChecked={importt} />
         <div className={styles.bookmark}>
-          <svg viewBox="0 0 32 32">
-            <g>
-              <path d="M27 4v27a1 1 0 0 1-1.625.781L16 24.281l-9.375 7.5A1 1 0 0 1 5 31V4a4 4 0 0 1 4-4h14a4 4 0 0 1 4 4z"></path>
-            </g>
-          </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" height="36px" viewBox="0 0 24 24" width="36px" ><path d="M0 0h24v24H0V0z" fill="none"/><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
         </div>
       </label>
     </div>
