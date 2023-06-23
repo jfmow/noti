@@ -187,7 +187,7 @@
   fill: #8f8f8f;
   background: rgb(51, 51, 51);
   border-radius: 5px;
-  
+
 }
 
 .dskhidden .desktophidemenu {
@@ -200,7 +200,8 @@
 
 .dskhidden {
   width: 0;
-  padding: 0;
+  padding-left: 0;
+  padding-right: 0;
   white-space: nowrap;
 }
 
@@ -262,9 +263,10 @@
 }
 
 @media(max-width: 800px) {
-  .desktophidemenu{
+  .desktophidemenu {
     display: none;
   }
+
   .dskhidden {
     transform: translateX(-110%);
     filter: blur(3px);

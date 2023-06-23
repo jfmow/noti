@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
-import Image from "next/image";
 import { toast } from "react-toastify";
 import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
@@ -108,13 +107,13 @@ function Editor({ page, preview }) {
     };
 
     // Event listener for detecting mouse movement
-    const mouseMovementEventListener = () => {
-      updateLastTypedTime();
-    };
+    //const mouseMovementEventListener = () => {
+    //  updateLastTypedTime();
+    //};
 
     // Attach event listeners
     window.addEventListener("keydown", typingEventListener);
-    window.addEventListener("mousemove", mouseMovementEventListener);
+    //window.addEventListener("mousemove", mouseMovementEventListener);
 
     // Start the auto-save timer
     timer = setTimeout(() => {
@@ -124,7 +123,7 @@ function Editor({ page, preview }) {
     return () => {
       // Clean up the event listeners and timer on component unmount
       window.removeEventListener("keydown", typingEventListener);
-      window.removeEventListener("mousemove", mouseMovementEventListener);
+      //window.removeEventListener("mousemove", mouseMovementEventListener);
       clearTimeout(timer);
     };
   }, [lastTypedTime]);
@@ -687,7 +686,7 @@ function Editor({ page, preview }) {
               <ModalButton classnm={`${styles.buttonred}`} events={unSharePage}>Hide</ModalButton>
             </ModalForm>
           </ModalContainer>
-          
+
         </>
       )}
       {iconModalState && (
