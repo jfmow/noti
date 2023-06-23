@@ -555,6 +555,8 @@ function Editor({ page, preview }) {
               )}
             </div>
             <div className={styles.title_buttons}>
+            <ImportantNote classname={styles.title_buttons_btn} importt={importantNote} page={page} />
+
               <Link
                 href="/u/me"
                 className={`${styles.title_buttons_btn} ${styles.title_buttons_btn_usrSettings_btn}`}
@@ -654,7 +656,6 @@ function Editor({ page, preview }) {
                   <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM18 4h-2.5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1z" />
                 </svg>
               </button>
-              <ImportantNote classname={styles.title_buttons_btn} importt={importantNote} page={page} />
             </div>
           </div>
         </div>
@@ -878,26 +879,27 @@ function AutoSaveLoader() {
 }
 
 function ImportantNote({ classname, importt, page }) {
+  const [checked, setChecked]= useState(importt)
   async function Save(e) {
     console.log(e.target.checked)
-    if (importt) {
+    if (checked) {
       const data = {
         "important": false
       };
-
-      const record = await pb.collection('pages').update(page, data);
+      setChecked(false)
+      await pb.collection('pages').update(page, data);
     } else {
       const data = {
         "important": true
       };
-
-      const record = await pb.collection('pages').update(page, data);
+      setChecked(true)
+      await pb.collection('pages').update(page, data);
     }
   }
   return (
     <div>
       <label className={styles.abookmark}>
-        <input type="checkbox" onChange={(e) => Save(e)} defaultChecked={importt} />
+        <input type="checkbox" onChange={(e) => Save(e)} defaultChecked={checked} />
         <div className={styles.bookmark}>
         <svg xmlns="http://www.w3.org/2000/svg" height="36px" viewBox="0 0 24 24" width="36px" ><path d="M0 0h24v24H0V0z" fill="none"/><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
         </div>

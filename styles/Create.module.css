@@ -502,7 +502,7 @@
 
 .abookmark {
   --icon-size: 24px;
-  --icon-secondary-color: rgb(255 240 193);
+  --icon-secondary-color: rgb(255, 255, 255);
   --icon-hover-color: rgb(255, 216, 99);
   --icon-primary-color: gold;
   --icon-circle-border: 1px solid var(--icon-primary-color);
