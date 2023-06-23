@@ -449,7 +449,7 @@
 
 
 .autosaveloader {
-  z-index: 10;
+  z-index: 99;
   position: fixed;
   border-radius: 50%;
   border-top: 16px rgba(0, 225, 255, 0.75) solid;
