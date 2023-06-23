@@ -166,8 +166,6 @@
 
 .importantnote {
   list-style-type: none;
-  border-bottom: 2px solid #000000;
-  margin-bottom: 10px;
   padding-bottom: 10px;
 }
 
@@ -207,10 +205,6 @@
 }
 
 @media (prefers-color-scheme: dark) {
-
-  .importantnote {
-    border-bottom: 2px solid #fff;
-  }
 
   .itemroot {
     background: linear-gradient(45deg, black, #022429, black);
