@@ -21,107 +21,9 @@
   flex-wrap: wrap;
 }
 
-.default_settings_modal_container {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  top: 0;
-  left: 0;
-  z-index: 11;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2em;
-}
-
-.default_settings_modal_container_usrname_block {
-  background: #0090a2;
-  border-radius: 1em;
-  padding: 2em;
-  min-height: 10em;
-  width: 30em;
-  display: flex;
-  border: 3px solid #fff;
-  z-index: 20;
-  justify-content: flex-end;
-  color: #fff;
-}
-
-
-
-.default_settings_modal_container_usrname_block form {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2em;
-  justify-items: start;
-  width: 100%;
-}
-
-.default_settings_modal_container_usrname_edit_form {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  gap: 0.2em;
-}
-
-.default_settings_modal_container_usrname_block form input {
-  border: none;
-  padding: 1em;
-  border-radius: 0.5em;
-  background: rgb(34, 34, 34);
-  color: #ffffff;
-  width: 100%;
-  height: 100%;
-  outline: none;
-}
-
-.default_settings_modal_container_usrname_block form input::placeholder {
-  color: #ffffff;
-}
-
-.default_settings_modal_container_usrname_block form input:focus-visible {
-  outline: 2px solid #4f4f4f;
-}
-
-.default_settings_modal_container_userinfopannel .default_settings_modal_container_usrname_block {
-  margin: 0;
-}
-
-.default_settings_modal_container_usrname_toggles {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-  color: #000000;
-  font-weight: 500;
-  flex-wrap: wrap;
-}
-
-.default_settings_modal_container_usrclose_btn {
-  position: absolute;
-  background: none;
-  border: none;
-  margin: none;
-}
-
-.default_settings_modal_container_usrclose_btn svg {
-  height: 1.5em;
-  width: 1.5em;
-  cursor: pointer;
-  fill: #fff;
-}
-
-.default_settings_modal_container_usrclose_btn svg:hover {
-  fill: #d3d3d3;
-}
-
-
 .user_account_form_container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   flex-direction: row;
   text-align: center;
   grid-gap: 2em;
@@ -148,7 +50,6 @@
   padding: 20px;
   display: flex;
   flex-direction: column;
-  margin: 3vh 2%;
   align-items: center;
   justify-content: center;
   gap: 4em;
@@ -482,8 +383,7 @@ input:checked~.slider {
 }
 
 .acc_button:hover {
-  background-color: #000;
-  outline-color: #000;
+  background-color: #d4d4d4;
 }
 
 .acc_button:hover .acc_button_text {
@@ -492,6 +392,17 @@ input:checked~.slider {
 
 .acc_button:hover svg {
   fill: #ffffff;
+}
+
+.default_settings_modal_container_usrname_toggles {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  color: #000000;
+  font-weight: 500;
+  flex-wrap: wrap;
 }
 
 
@@ -550,17 +461,9 @@ input:checked~.slider {
     color: #4f4f4f;
   }
 
-  .default_settings_modal_container {
-    padding: 0;
-  }
+  
 
-  .default_settings_modal_container_usrname_block {
-
-    width: 100dvw;
-    margin: 0;
-  }
-
-  .user_setting_buttons_grid{
+  .user_setting_buttons_grid {
     grid-template-columns: 1fr;
   }
 }
@@ -584,9 +487,16 @@ input:checked~.slider {
   .acc_button svg {
     fill: #9c9c9c;
   }
+
   .acc_button:hover {
     background: transparent;
     box-shadow: none;
+  }
+
+  .default_settings_modal_container_usrname_block {
+    background: #1f1f1f;
+    border: 3px solid #000;
+    box-shadow: 5px 8px 5px 1px #000;
   }
 
 }

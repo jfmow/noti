@@ -16,6 +16,7 @@ import Loader from "./Loader";
 import Embed from "@editorjs/embed";
 import { AES, enc } from "crypto-js";
 import compressImage from "@/lib/CompressImg";
+import { ModalButton, ModalContainer, ModalForm, ModalInput, ModalTitle } from '@/lib/Modal';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
@@ -418,14 +419,14 @@ function Editor({ page, preview }) {
     }
   }
 
-  async function handleSetcurrentPageIconValue(e, icon) {
+  async function handleSetcurrentPageIconValue() {
     const data = {
-      icon: icon,
+      icon: currentPageIconValue,
     };
     //icon.codePointAt(0).toString(16)
     setIconModalState(false);
 
-    const record = await pb.collection("pages").update(page, data);
+    await pb.collection("pages").update(page, data);
   }
 
   async function handleSharePage() {
@@ -555,7 +556,7 @@ function Editor({ page, preview }) {
               )}
             </div>
             <div className={styles.title_buttons}>
-            <ImportantNote classname={styles.title_buttons_btn} importt={importantNote} page={page} />
+              <ImportantNote classname={styles.title_buttons_btn} importt={importantNote} page={page} />
 
               <Link
                 href="/u/me"
@@ -662,73 +663,35 @@ function Editor({ page, preview }) {
       </div>
       {shareLinkModalState && (
         <>
-          <div
-            className={styles.sharemodal_container}
-            onClick={() => setShareLinkModalState(false)}
-          >
-            <div
-              className={styles.shareModal}
-              onClick={(event) => event.stopPropagation()}
-            >
-              <div className={styles.shareModal_link}>
-                <div className={styles.shareModal_link_text}>
-                  https://noti.jamesmowat.com/page/view/{page}
-                </div>
-                <button
-                  onClick={copyToClip}
-                  className={styles.shareModal_link_btn}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24"
-                    viewBox="0 -960 960 960"
-                    width="24"
-                  >
-                    <path d="M200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-160q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Z" />
-                  </svg>
-                </button>
-                <button
-                  className={`${styles.buttondefault} ${styles.buttonred}`}
-                  onClick={unSharePage}
-                  type="button"
-                >
-                  Un-share
-                </button>
+          <ModalContainer events={() => setShareLinkModalState(false)}>
+            <ModalForm>
+              <ModalTitle>Page icon</ModalTitle>
+              <div className={styles.shareModal_link_text}>
+                https://noti.jamesmowat.com/page/view/{page}
               </div>
-            </div>
-          </div>
+              <ModalButton events={copyToClip}> <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24"
+                viewBox="0 -960 960 960"
+                width="24"
+              >
+                <path d="M200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-160q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Z" />
+              </svg></ModalButton>
+              <ModalButton classnm={`${styles.buttonred}`} events={unSharePage}>Hide</ModalButton>
+            </ModalForm>
+          </ModalContainer>
+          
         </>
       )}
       {iconModalState && (
         <>
-          <div
-            className={styles.sharemodal_container}
-            onClick={() => setIconModalState(false)}
-          >
-            <div
-              className={styles.shareModal}
-              onClick={(event) => event.stopPropagation()}
-            >
-              <div className={styles.shareModal_link}>
-                <input
-                  className={styles.shareModal_input}
-                  placeholder="1 emoji only"
-                  type="text"
-                  value={currentPageIconValue}
-                  onChange={(e) => setCurrentPageIconValue(e.target.value)}
-                />
-                <button
-                  className={`${styles.buttondefault} ${styles.buttonred}`}
-                  onClick={(e) =>
-                    handleSetcurrentPageIconValue(e, currentPageIconValue)
-                  }
-                  type="button"
-                >
-                  Set
-                </button>
-              </div>
-            </div>
-          </div>
+          <ModalContainer events={() => setIconModalState(false)}>
+            <ModalForm>
+              <ModalTitle>Page icon</ModalTitle>
+              <ModalInput chngevent={setCurrentPageIconValue} place={"1 emoji only"} type={"text"} />
+              <ModalButton events={handleSetcurrentPageIconValue} classnm={`${styles.buttonred}`}>Change</ModalButton>
+            </ModalForm>
+          </ModalContainer>
         </>
       )}
       <div className={styles.creategrid}>
@@ -879,7 +842,7 @@ function AutoSaveLoader() {
 }
 
 function ImportantNote({ classname, importt, page }) {
-  const [checked, setChecked]= useState(importt)
+  const [checked, setChecked] = useState(importt)
   async function Save(e) {
     console.log(e.target.checked)
     if (checked) {
@@ -901,7 +864,7 @@ function ImportantNote({ classname, importt, page }) {
       <label className={styles.abookmark}>
         <input type="checkbox" onChange={(e) => Save(e)} defaultChecked={checked} />
         <div className={styles.bookmark}>
-        <svg xmlns="http://www.w3.org/2000/svg" height="36px" viewBox="0 0 24 24" width="36px" ><path d="M0 0h24v24H0V0z" fill="none"/><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" height="36px" viewBox="0 0 24 24" width="36px" ><path d="M0 0h24v24H0V0z" fill="none" /><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z" /></svg>
         </div>
       </label>
     </div>

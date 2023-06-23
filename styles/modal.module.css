@@ -1,0 +1,224 @@
+.default_settings_modal_container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    top: 0;
+    left: 0;
+    z-index: 11;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2em;
+}
+
+.default_settings_modal_container_usrname_block {
+
+    border-radius: 1em;
+    padding: 2em;
+    min-height: 10em;
+    width: 30em;
+    display: flex;
+
+    z-index: 20;
+    justify-content: flex-end;
+    color: #fff;
+
+
+    background: #bbbbbb;
+    box-shadow: 5px 8px 5px 1px #9d9d9d;
+    border: 2px solid #fff;
+}
+
+
+
+.default_settings_modal_container_usrname_block form {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    justify-items: start;
+    width: 100%;
+}
+
+.default_settings_modal_container_usrname_edit_form {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 0.2em;
+}
+
+.default_settings_modal_container_usrname_block form input {
+    border: none;
+    padding: 1em;
+    border-radius: 0.5em;
+    background: rgb(227, 227, 227);
+    color: #000000;
+    width: 100%;
+    height: 100%;
+    outline: none;
+}
+
+.default_settings_modal_container_usrname_block form input::placeholder {
+    color: #8e8e8eb8;
+}
+
+.default_settings_modal_container_usrname_block form input:focus-visible {
+    outline: 2px solid #4f4f4f;
+}
+
+.default_settings_modal_container_userinfopannel .default_settings_modal_container_usrname_block {
+    margin: 0;
+}
+
+
+
+.default_settings_modal_container_usrclose_btn {
+    position: absolute;
+    background: none;
+    border: none;
+    margin: none;
+}
+
+.default_settings_modal_container_usrclose_btn svg {
+    height: 1.5em;
+    width: 1.5em;
+    cursor: pointer;
+    fill: #fff;
+}
+
+.default_settings_modal_container_usrclose_btn svg:hover {
+    fill: #d3d3d3;
+}
+
+
+
+
+
+
+.buttonred {
+    background-color: #eb2323 !important;
+}
+
+.buttonred::after {
+    background-color: #f63b3b !important;
+}
+
+.buttongreen {
+    background-color: #1d926f !important;
+}
+
+.buttongreen::after {
+    background-color: #3bb994 !important;
+}
+
+.buttongray {
+    background-color: #4f4f4f !important;
+}
+
+.buttongray::after {
+    background-color: #919191 !important;
+}
+
+.uploader .buttondefault {
+    width: 100% !important;
+    overflow: hidden;
+}
+
+.buttondefault {
+    appearance: button;
+    background-color: #1899d6;
+    border: solid transparent;
+    border-radius: 16px;
+    border-width: 0 0 4px;
+    box-sizing: border-box;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    line-height: 20px;
+    margin: 0;
+    outline: none;
+    overflow: visible;
+    padding: 13px 19px;
+    text-align: center;
+    text-transform: uppercase;
+    touch-action: manipulation;
+    transform: translateZ(0);
+    transition: filter 0.2s, transform 0.3s;
+    user-select: none;
+    -webkit-user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    min-width: 200px;
+}
+
+.buttondefault:after {
+    background-clip: padding-box;
+    background-color: #1cb0f6;
+    border: solid transparent;
+    border-radius: 16px;
+    border-width: 0 0 4px;
+    bottom: -4px;
+    content: "";
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: -1;
+}
+
+.buttondefault:main,
+.buttondefault:focus {
+    user-select: auto;
+}
+
+.buttondefault:hover:not(:disabled) {
+    filter: brightness(1.1);
+    transform: scale(1.02);
+}
+
+.buttondefault:disabled {
+    cursor: not-allowed;
+}
+
+.buttondefault:active:after {
+    border-width: 0 0 0px;
+}
+
+.buttondefault:active {
+    padding-bottom: 10px;
+}
+
+
+
+@media (prefers-color-scheme: dark) {
+
+
+
+    .default_settings_modal_container_usrname_block {
+        background: #1f1f1f;
+        border: 3px solid #000;
+        box-shadow: 5px 8px 5px 1px #000;
+    }
+
+    .default_settings_modal_container_usrname_block form input {
+        background: rgb(34, 34, 34);
+        color: #ffffff;
+    }
+
+}
+
+@media(max-width: 800px) {
+    .default_settings_modal_container {
+        padding: 0;
+    }
+
+    .default_settings_modal_container_usrname_block {
+
+        width: 100dvw;
+        margin: 0;
+    }
+}

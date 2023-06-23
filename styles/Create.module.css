@@ -99,54 +99,6 @@
   padding: 1em;
 }
 
-.backbutton {
-  display: flex;
-  height: 3em;
-  width: 100px;
-  align-items: center;
-  justify-content: center;
-  background-color: #eeeeee4b;
-  border-radius: 3px;
-  letter-spacing: 1px;
-  transition: all 0.2s linear;
-  cursor: pointer;
-  border: none;
-  background: #000;
-  color: white;
-}
-
-.emojidiv {
-  overflow: scroll;
-  max-height: 30dvh;
-}
-
-.emoji_button {
-  cursor: pointer;
-  background: #ebebeb;
-  padding: 2px;
-  border-radius: 5px;
-  border: none;
-}
-
-.backbutton>svg {
-  margin-right: 5px;
-  margin-left: 5px;
-  font-size: 20px;
-  transition: all 0.4s ease-in;
-  fill: white;
-}
-
-.backbutton:hover>svg {
-  font-size: 1.2em;
-  transform: translateX(-5px);
-}
-
-.backbutton:hover {
-  box-shadow: 9px 9px 33px #d1d1d1, -9px -9px 33px #ffffff;
-  transform: translateY(-2px);
-}
-
-
 
 .title {
   width: 100%;
@@ -218,35 +170,6 @@
 
 
 
-.sharemodal_container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 100dvh;
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(3px);
-}
-
-.shareModal {
-  background: #ffffff;
-  border-radius: 1em;
-  padding: 3em;
-  color: #000;
-  display: flex;
-  flex-direction: column;
-  gap: 2em;
-  width: 50%;
-}
-
-.shareModal_link {
-  display: grid;
-  grid-template-columns: 4fr 1fr;
-  gap: 1em;
-}
 
 .shareModal_link_text {
   padding: 1em;
@@ -255,30 +178,12 @@
   box-shadow: inset 0px 0px 10px 2px #ececec;
   overflow-x: scroll;
   overflow-y: hidden;
+  color: #000;
 }
 
 .shareModal_link_text::-webkit-scrollbar {
   width: 1px;
   height: 2px;
-}
-
-.shareModal_link_btn {
-  background: linear-gradient(45deg, #00BCD4, #2196F3);
-  border: none;
-  border-radius: 5px;
-  /* width: fit-content; */
-  /* height: fit-content; */
-  /* padding: 1em; */
-  cursor: pointer;
-  fill: #fff;
-}
-
-.shareModal_input {
-  background: #fff;
-  border: none;
-  border-radius: 3px;
-  box-shadow: 0px 0px 6px 2px #ededed;
-  padding: 1em;
 }
 
 

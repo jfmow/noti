@@ -5,7 +5,7 @@
 }
 
 .itemroot {
-  background: linear-gradient(45deg, #00BCD4 50%, white 50%);
+  background: #fff;
   padding: 1em;
   border-right: 1px solid #dfdfdf;
   max-height: 100dvh;

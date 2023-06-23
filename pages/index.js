@@ -8,6 +8,7 @@ import Head from 'next/head';
 import PlainLoader from '@/components/Loader';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import Nav from '@/components/Nav';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
@@ -42,7 +43,7 @@ export default function Home() {
       <Head>
         <title>Noti</title>
       </Head>
-      <HomeNav />
+      <Nav/>
       <div className={styles.container}>
         <header className={styles.header}>
           <div className={styles.headerContent}>
@@ -108,21 +109,6 @@ export default function Home() {
   );
 }
 
-function HomeNav() {
-  return (
-    <div className={styles.navcontainer}>
-      <div className={styles.items}>
-        <h1>Noti</h1>
-        <Link href="/auth/login" className={styles.sign_Button}>
-          Signup
-          <div className={styles.sign_hoverEffect}>
-            <div></div>
-          </div>
-        </Link>
-      </div>
-    </div>
-  );
-}
 
 function AnimatedSection({ children, className }) {
   const [ref, inView] = useInView({ threshold: 0.4 });

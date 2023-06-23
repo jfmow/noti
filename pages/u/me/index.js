@@ -8,6 +8,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Nav from '@/components/Nav';
 import compressImage from '@/lib/CompressImg';
+import { ModalButton, ModalContainer, ModalForm, ModalInput, ModalTitle } from '@/lib/Modal';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
@@ -60,7 +61,6 @@ export default function Account() {
         </Head>
 
         <div className={styles.user_account_form_container}>
-          <AvatarForm />
           <AccManagementForm />
         </div>
 
@@ -233,21 +233,6 @@ function AccManagementForm() {
     toast.success('Username updated 👍', { position: toast.POSITION.TOP_RIGHT })
     return
   }
-  function checkLength() {
-    if (newUsername.length <= 2) {
-      document.getElementById('usrnameinput').style.outline = '#ff3737 2px solid';
-    } else {
-      document.getElementById('usrnameinput').style.outline = '#59d4af 2px solid';
-    }
-  }
-  async function sendEmailVerf() {
-    try {
-      const email = await pb.collection('users').requestVerification(pb.authStore.model.email)
-      return toast.success('Sent! Please check your inbox for an email.')
-    } catch (error) {
-      return toast.error('Failed to send email. Please try again soon!')
-    }
-  }
 
   async function ChangeEmail() {
     setUpdateEmailField(false);
@@ -301,115 +286,70 @@ function AccManagementForm() {
           </button>
         </div>
 
-        {userNameField ?
-          (
-            <>
-              <div className={styles.default_settings_modal_container} onClick={() => { setUsernameField(false) }}>
-                <div className={styles.default_settings_modal_container_usrname_bg}>
-                  <div className={styles.default_settings_modal_container_usrname_block} onClick={(event) => event.stopPropagation()}>
-                    <button type='button' onClick={() => { setUsernameField(false) }} className={styles.default_settings_modal_container_usrclose_btn}><svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48"><path d="M480 618 270 828q-9 9-21 9t-21-9q-9-9-9-21t9-21l210-210-210-210q-9-9-9-21t9-21q9-9 21-9t21 9l210 210 210-210q9-9 21-9t21 9q9 9 9 21t-9 21L522 576l210 210q9 9 9 21t-9 21q-9 9-21 9t-21-9L480 618Z" /></svg></button>
-                    <form onChange={checkLength}>
-                      <h2>Edit username:</h2>
-                      <div className={styles.default_settings_modal_container_usrname_edit_form}>
-                        <input autoCorrect='false' autoCapitalize='false' id='usrnameinput' onChange={event => setNewUsername(event.target.value)} type='text' placeholder={`@${pb.authStore.model.username}`} />
-                      </div>
-                      <button style={{ justifySelf: 'end' }} className={`${styles.buttondefault}`} type='submit' onClick={changeUsername}>Update</button>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </>
-          ) :
-          ('')}
-        {updateEmailField ?
-          (
-            <>
-              <div className={styles.default_settings_modal_container} onClick={() => { setUpdateEmailField(false) }}>
-                <div className={styles.default_settings_modal_container_usrname_bg}>
-                  <div className={styles.default_settings_modal_container_usrname_block} onClick={(event) => event.stopPropagation()}>
-                    <button type='button' onClick={() => { setUpdateEmailField(false) }} className={styles.default_settings_modal_container_usrclose_btn}><svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48"><path d="M480 618 270 828q-9 9-21 9t-21-9q-9-9-9-21t9-21l210-210-210-210q-9-9-9-21t9-21q9-9 21-9t21 9l210 210 210-210q9-9 21-9t21 9q9 9 9 21t-9 21L522 576l210 210q9 9 9 21t-9 21q-9 9-21 9t-21-9L480 618Z" /></svg></button>
-                    <form>
-                      <h2>Update email:</h2>
-                      <div className={styles.default_settings_modal_container_usrname_edit_form}>
-                        <input autoCorrect='false' autoCapitalize='false' onChange={(e) => setNewEmail(e.target.value)} type='text' placeholder={`${pb.authStore.model.email}`} />
-                      </div>
-                      <button style={{ justifySelf: 'end' }} className={`${styles.buttondefault}`} type='button' onClick={ChangeEmail}>Update</button>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </>
-          ) :
-          ('')}
-        {delAccField ?
-          (
-            <>
-              <div className={styles.default_settings_modal_container} onClick={() => { setDelAccField(false) }}>
-                <div className={styles.default_settings_modal_container_usrname_bg}>
-                  <div className={styles.default_settings_modal_container_usrname_block} onClick={(event) => event.stopPropagation()}>
-                    <button type='button' onClick={() => { setDelAccField(false) }} className={styles.default_settings_modal_container_usrclose_btn}><svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48"><path d="M480 618 270 828q-9 9-21 9t-21-9q-9-9-9-21t9-21l210-210-210-210q-9-9-9-21t9-21q9-9 21-9t21 9l210 210 210-210q9-9 21-9t21 9q9 9 9 21t-9 21L522 576l210 210q9 9 9 21t-9 21q-9 9-21 9t-21-9L480 618Z" /></svg></button>
-                    <form >
-                      <h2>DELETE ACCOUNT</h2>
-                      <div className={styles.default_settings_modal_container_usrname_edit_form}>
-                        <p>By deleting your account, you acknowledge that all of your data linked to this account will be deleted and can NOT be restored. This will have an immediate effect!</p>
-                      </div>
-                      <button style={{ justifySelf: 'end' }} className={`${styles.buttondefault} ${styles.buttonred}`} type='submit' onClick={deleteAccount}>Delete</button>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </>
-          ) :
-          ('')}
-        {notiField ?
-          (
-            <>
-              <div className={styles.default_settings_modal_container} onClick={() => { setNotiField(false) }}>
-                <div className={styles.default_settings_modal_container_usrname_bg}>
-                  <div className={styles.default_settings_modal_container_usrname_block} onClick={(event) => event.stopPropagation()}>
-                    <button type='button' onClick={() => setNotiField(false)} className={styles.default_settings_modal_container_usrclose_btn}><svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48"><path d="M480 618 270 828q-9 9-21 9t-21-9q-9-9-9-21t9-21l210-210-210-210q-9-9-9-21t9-21q9-9 21-9t21 9l210 210 210-210q9-9 21-9t21 9q9 9 9 21t-9 21L522 576l210 210q9 9 9 21t-9 21q-9 9-21 9t-21-9L480 618Z" /></svg></button>
+        {userNameField && (
+          <>
+            <ModalContainer events={() => { setUsernameField(false) }}>
+              <ModalForm>
+                <ModalTitle>Update username</ModalTitle>
+                <ModalInput chngevent={setNewUsername} place={`${pb.authStore.model.username}`} type={"text"} />
+                <ModalButton events={changeUsername}>Change</ModalButton>
+              </ModalForm>
+            </ModalContainer>
 
-                    <form>
-                      <h2>Toggle notifications</h2>
-                      <div className={styles.default_settings_modal_container_usrname_toggles}>Global <Notitoggle /></div>
-                      <div className={styles.default_settings_modal_container_usrname_toggles}>Hourly quotes (requires global to be enabled) <Quotetoggle /></div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </>
-          ) :
-          ('')}
-        {userInfoOpen ? (<UserInfoList onClose={() => setUserInfoDisplay(false)} />) : ('')}
-      </form>
-    </>
-  )
-}
+          </>
+        )}
+        {updateEmailField && (
+          <>
+            <ModalContainer events={() => setUpdateEmailField(false)}>
+              <ModalForm>
+                <ModalTitle>Update email</ModalTitle>
+                <ModalInput chngevent={setNewEmail} place={`${pb.authStore.model.email}`} type={"email"} />
+                <ModalButton events={ChangeEmail}>Change</ModalButton>
+              </ModalForm>
+            </ModalContainer>
 
-function UserInfoList({ onClose }) {
-  function setClosed() {
-    onClose()
-  }
-  return (
-    <>
-      <div className={styles.default_settings_modal_container} onClick={setClosed}>
-        <div className={styles.default_settings_modal_container_userinfopannel}>
-          <div className={styles.default_settings_modal_container_usrname_block} onClick={(event) => event.stopPropagation()}>
-            <button type='button' onClick={setClosed} className={styles.default_settings_modal_container_usrclose_btn}><svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48"><path d="M480 618 270 828q-9 9-21 9t-21-9q-9-9-9-21t9-21l210-210-210-210q-9-9-9-21t9-21q9-9 21-9t21 9l210 210 210-210q9-9 21-9t21 9q9 9 9 21t-9 21L522 576l210 210q9 9 9 21t-9 21q-9 9-21 9t-21-9L480 618Z" /></svg></button>
-            <form>
+          </>
+        )}
+
+        {notiField && (
+          <>
+            <ModalContainer events={() => { setNotiField(false) }}>
+              <ModalForm>
+                <ModalTitle>Notification options</ModalTitle>
+                <div className={styles.default_settings_modal_container_usrname_toggles}>Global <Notitoggle /></div>
+                <div className={styles.default_settings_modal_container_usrname_toggles}>Hourly quotes (requires global to be enabled) <Quotetoggle /></div>
+              </ModalForm>
+            </ModalContainer>
+          </>
+        )}
+        {userInfoOpen && (
+          <ModalContainer events={()=>setUserInfoDisplay(false)}>
+            <ModalForm>
+              <ModalTitle>Account details</ModalTitle>
               <h4>Username: {pb.authStore.model.username}</h4>
               <h4>Verified: {pb.authStore.model.verified ? ('true') : ('false')}</h4>
               <p>Email visibility: {pb.authStore.model.emailVisibility ? ('visible') : ('hidden')}</p>
               <p>Email: {pb.authStore.model.email}</p>
               <p>Joined: {new Date(pb.authStore.model.created).toLocaleString()}</p>
               <h6>Unique user id: {pb.authStore.model.id}</h6>
-            </form>
-          </div>
-        </div>
-      </div>
+            </ModalForm>
+          </ModalContainer>
+        )}
+        {delAccField && (
+          <ModalContainer events={() => setDelAccField(false)}>
+            <ModalForm>
+              <ModalTitle>Delete account</ModalTitle>
+              <p>By deleting your account, you acknowledge that all of your data linked to this account will be deleted and can NOT be restored. This will have an immediate effect!</p>
+              <ModalButton classnm={`${styles.buttonred}`} events={deleteAccount}>Delete</ModalButton>
+            </ModalForm>
+          </ModalContainer>
+        )}
+      </form>
+
     </>
   )
 }
+
 
 
 function Notitoggle() {
@@ -537,6 +477,4 @@ function Quotetoggle() {
     </>
   )
 }
-
-
 
