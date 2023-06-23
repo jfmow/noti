@@ -17,34 +17,34 @@ export default function Viewer({ arti }) {
     const [isLoading, setIsLoading] = useState(true)
     useEffect(() => {
         async function fetchArticles() {
-          try {
-            const record = await pb.collection('pages').getOne(arti.article);
-            setArticleData(record.content);
-            setArticle(record);
-            setIsLoading(false);
-          } catch (error) {
-            console.log(error);
-            setError(true);
-          }
-        }
-      
-        async function authUpdate() {
-          try {
-            const authData = await pb.collection('users').authRefresh();
-            if (!pb.authStore.isValid) {
-              pb.authStore.clear();
+            try {
+                const record = await pb.collection('pages').getOne(arti.article);
+                setArticleData(record.content);
+                setArticle(record);
+                setIsLoading(false);
+            } catch (error) {
+                console.log(error);
+                setError(true);
             }
-          } catch (error) {
-            pb.authStore.clear();
-          }
-          fetchArticles();
         }
-      
+
+        async function authUpdate() {
+            try {
+                const authData = await pb.collection('users').authRefresh();
+                if (!pb.authStore.isValid) {
+                    pb.authStore.clear();
+                }
+            } catch (error) {
+                pb.authStore.clear();
+            }
+            fetchArticles();
+        }
+
         authUpdate();
-      
-        
-      }, []);
-      
+
+
+    }, []);
+
 
     if (isLoading) {
         return (<Loader />)
@@ -117,9 +117,10 @@ const SavedData = ({ savedData, articleArti }) => {
                 {blocks?.map((block) => {
                     switch (block.type) {
                         case "simpleEmbeds":
+
                             return (
                                 <li key={block.id} style={{ width: "100%", display: 'flex', justifyContent: 'center' }}>
-                                    <iframe controls style={{ width: '50%' }} src={block.data.url} alt="File embed" />
+                                    <h5 style={{color: 'rgb(255 140 140)', border: '1px dashed rgb(255 140 140)', padding: '5px'}}>Embed requires permision to view which is not supported yet!</h5>
                                 </li>
                             );
                         case "paragraph":
@@ -180,7 +181,7 @@ const SavedData = ({ savedData, articleArti }) => {
                         case "table":
                             return (
                                 <li key={block.id}>
-                                    <table>
+                                    <table style={{ width: '100%' }}>
                                         <thead>
                                             <tr>
                                                 {block.data.content[0].map((header) => (
