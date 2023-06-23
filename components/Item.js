@@ -138,27 +138,28 @@ const MyComponent = ({ currPage }) => {
       </>
 
       <div className={`${styles.itemroot}`} id='rootitems'>
+        <ImportantNotes notes={items} />
         <button onClick={setVisibleState} className={styles.hidemenubtn}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0V0z" fill="none" /><path d="M18.3 5.71c-.39-.39-1.02-.39-1.41 0L12 10.59 7.11 5.7c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L10.59 12 5.7 16.89c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0L12 13.41l4.89 4.89c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z" /></svg></button>
         <AnimatePresence>
-        {rootParents.map((rootParent) => (
-          <motion.div
-            key={rootParent.id}
-            className={styles.itemscon}
-            initial={{ opacity: 0, y: -20, scale: 1.3 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 1 }}
-          >
-            <RootParentComponent
-              item={rootParent}
-              currPage={currPage}
-              createNewPage={createNewPage}
+          {rootParents.map((rootParent) => (
+            <motion.div
+              key={rootParent.id}
+              className={styles.itemscon}
+              initial={{ opacity: 0, y: -20, scale: 1.3 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 1 }}
             >
-              {renderChildComponents(rootParent.id, 0)}
-            </RootParentComponent>
-          </motion.div>
-        ))}
-      </AnimatePresence>
+              <RootParentComponent
+                item={rootParent}
+                currPage={currPage}
+                createNewPage={createNewPage}
+              >
+                {renderChildComponents(rootParent.id, 0)}
+              </RootParentComponent>
+            </motion.div>
+          ))}
+        </AnimatePresence>
         <span
           title='New page'
           onClick={(e) => {
@@ -296,3 +297,45 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
 };
 
 export default MyComponent;
+
+
+function ImportantNotes({ notes }) {
+  const router = useRouter()
+  function openPage(e, item) {
+    e.preventDefault();
+
+    if (window.innerWidth < 800) {
+      // Perform actions for screens less than 800px wide
+      setVisibleState(false);
+    }
+    router.push(`/page/${item}`);
+  }
+  return (
+    <div style={{ listStyleType: 'none' }}>
+      {notes.map((note) => {
+        if (note.important) {
+          return (
+            <>
+              <li >
+                <div
+                  className={`${styles.itemoption}`}
+
+                  onClick={(e) => openPage(e, note.id)}
+                >
+                  <button
+                    className={styles.btn1}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 20 20" height="18px" viewBox="0 0 20 20" width="18px" ><g><rect fill="none" height="20" width="20" /></g><g><g><path d="M15,10.47c0-0.26-0.19-0.46-0.44-0.52C13.67,9.75,13,8.95,13,8V4h0.5C13.78,4,14,3.78,14,3.5C14,3.22,13.78,3,13.5,3h-7 C6.22,3,6,3.22,6,3.5C6,3.78,6.22,4,6.5,4H7v4c0,0.95-0.67,1.75-1.56,1.95C5.19,10.01,5,10.21,5,10.47v0C5,10.76,5.24,11,5.53,11 H9.5v5.5c0,0.28,0.22,0.5,0.5,0.5h0c0.28,0,0.5-0.22,0.5-0.5V11h3.97C14.76,11,15,10.76,15,10.47L15,10.47z" /></g></g></svg>
+                  </button>
+
+                  {note.icon ? note.icon : '📄'}{note.title ? note.title : `Untitled: ${note.id}`}
+
+                </div>
+              </li>
+            </>
+          )
+        }
+      })}
+    </div>
+  )
+}

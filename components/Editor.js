@@ -39,6 +39,7 @@ function Editor({ page, preview }) {
   const [currentPageIconValue, setCurrentPageIconValue] = useState("");
   const [chefKey, setChefKey] = useState("");
   const [isTitleEdit, setIsTitleEdit] = useState(false);
+  const [importantNote, setImportantNote] = useState(false)
 
   useEffect(() => {
     if (preview === "true") {
@@ -154,6 +155,7 @@ function Editor({ page, preview }) {
           setArticleTitle(record.title);
           setPageSharedTF(record.shared);
           setCurrentPageIconValue(record.icon);
+          setImportantNote(record.important)
           if (record.header_img) {
             setArticleHeader(
               `${process.env.NEXT_PUBLIC_POCKETURL}/api/files/pages/${page}/${record.header_img}`
@@ -652,6 +654,7 @@ function Editor({ page, preview }) {
                   <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM18 4h-2.5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1z" />
                 </svg>
               </button>
+              <ImportantNote classname={styles.title_buttons_btn} importt={importantNote} page={page} />
             </div>
           </div>
         </div>
@@ -867,8 +870,42 @@ class SimpleIframe {
 }
 
 
+
 function AutoSaveLoader() {
   return (
     <div className={styles.autosaveloader}></div>
+  )
+}
+
+function ImportantNote({ classname, importt, page }) {
+  async function Save(e) {
+    console.log(e.target.checked)
+    if (importt) {
+      const data = {
+        "important": false
+      };
+
+      const record = await pb.collection('pages').update(page, data);
+    } else {
+      const data = {
+        "important": true
+      };
+
+      const record = await pb.collection('pages').update(page, data);
+    }
+  }
+  return (
+    <div>
+      <label className={styles.abookmark}>
+        <input type="checkbox" onChange={(e) => Save(e)} defaultChecked={importt} />
+        <div className={styles.bookmark}>
+          <svg viewBox="0 0 32 32">
+            <g>
+              <path d="M27 4v27a1 1 0 0 1-1.625.781L16 24.281l-9.375 7.5A1 1 0 0 1 5 31V4a4 4 0 0 1 4-4h14a4 4 0 0 1 4 4z"></path>
+            </g>
+          </svg>
+        </div>
+      </label>
+    </div>
   )
 }
