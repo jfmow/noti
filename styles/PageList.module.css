@@ -182,10 +182,14 @@
   border: none;
   cursor: pointer;
   transition: transform 0.2s;
+  display: flex;
 }
 
 .desktophidemenu:hover {
   fill: #8f8f8f;
+  background: rgb(51, 51, 51);
+  border-radius: 5px;
+  
 }
 
 .dskhidden .desktophidemenu {
