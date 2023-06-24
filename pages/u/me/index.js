@@ -8,7 +8,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Nav from '@/components/Nav';
 import compressImage from '@/lib/CompressImg';
-import { ModalButton, ModalContainer, ModalForm, ModalInput, ModalTitle } from '@/lib/Modal';
+import { ModalButton, ModalCheckBox, ModalContainer, ModalForm, ModalInput, ModalTitle } from '@/lib/Modal';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
@@ -159,16 +159,20 @@ function AvatarForm() {
 function AccManagementForm() {
 
   const [userNameField, setUsernameField] = useState(false);
-  const [newUsername, setNewUsername] = useState('');
+  const [newUsername, setNewUsernameData] = useState("");
   const [delAccField, setDelAccField] = useState(false);
   const [userInfoOpen, setUserInfoDisplay] = useState(false);
   const [notiField, setNotiField] = useState(false);
   const [updateEmailField, setUpdateEmailField] = useState(false);
-  const [newEmail, setNewEmail] = useState('')
+  const [newEmail, setNewEmail] = useState('');
+  const [confirmDel, setConfirmDel] = useState(false);
 
 
   async function deleteAccount(e) {
     e.preventDefault();
+    if (!confirmDel) {
+      return
+    }
 
     try {
       const response = await toast.promise(
@@ -203,35 +207,17 @@ function AccManagementForm() {
     e.preventDefault()
 
     if (newUsername.length <= 2) {
-      toast.warning('Must be longer than 3 char', {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-      return
-    }
-    const sanitizedName = newUsername
-    const res = await fetch('/api/filterusername', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ sanitizedName })
-    });
-    if (res.status === 429) {
-      return toast.error(`Rate limited!`)
-    }
-    const filteredUsername = await res.json();
-    if (filteredUsername.error) {
-      return toast.error(`${filteredUsername.error}`)
+      return toast.warning('Must be longer than 3 char');
+
     }
     const data = {
-      "username": newUsername,
+      "username": newUsername
     };
-
-    const record = await pb.collection('users').update(pb.authStore.model.id, data);
-    authUpdate();
     setUsernameField(false);
-    toast.success('Username updated 👍', { position: toast.POSITION.TOP_RIGHT })
-    return
+    await pb.collection('users').update(pb.authStore.model.id, data);
+    toast.success(`Username updated to ${newUsername} 👍`)
+    return authUpdate();
+
   }
 
   async function ChangeEmail() {
@@ -241,7 +227,6 @@ function AccManagementForm() {
       await pb.collection('users').requestEmailChange(newEmail);
       const response = await fetch("/api/user/emailchange", {
         method: "POST",
-
         body: JSON.stringify({
           user: { token: pb.authStore.token },
         }),
@@ -255,6 +240,10 @@ function AccManagementForm() {
       return toast.error('Unable to change email!')
     }
 
+  }
+
+  function setCheckDel(value) {
+    setConfirmDel(value);
   }
 
   return (
@@ -291,7 +280,7 @@ function AccManagementForm() {
             <ModalContainer events={() => { setUsernameField(false) }}>
               <ModalForm>
                 <ModalTitle>Update username</ModalTitle>
-                <ModalInput chngevent={setNewUsername} place={`${pb.authStore.model.username}`} type={"text"} />
+                <ModalInput chngevent={setNewUsernameData} place={`${pb.authStore.model.username}`} type={"text"} />
                 <ModalButton events={changeUsername}>Change</ModalButton>
               </ModalForm>
             </ModalContainer>
@@ -323,7 +312,7 @@ function AccManagementForm() {
           </>
         )}
         {userInfoOpen && (
-          <ModalContainer events={()=>setUserInfoDisplay(false)}>
+          <ModalContainer events={() => setUserInfoDisplay(false)}>
             <ModalForm>
               <ModalTitle>Account details</ModalTitle>
               <h4>Username: {pb.authStore.model.username}</h4>
@@ -340,6 +329,7 @@ function AccManagementForm() {
             <ModalForm>
               <ModalTitle>Delete account</ModalTitle>
               <p>By deleting your account, you acknowledge that all of your data linked to this account will be deleted and can NOT be restored. This will have an immediate effect!</p>
+              <ModalCheckBox chngevent={setCheckDel}>Confirm:</ModalCheckBox>
               <ModalButton classnm={`${styles.buttonred}`} events={deleteAccount}>Delete</ModalButton>
             </ModalForm>
           </ModalContainer>
