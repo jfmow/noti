@@ -52,5 +52,5 @@ export default async function handler(request, response) {
     request.headers['x-real-ip'] ||
     request.connection.remoteAddress;
 
-  response.status(200).json({ ip: userIp });
+  response.status(200).send(userIp);
 }
