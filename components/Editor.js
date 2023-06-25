@@ -567,6 +567,7 @@ function Editor({ page, preview }) {
               <Link
                 href="/u/me"
                 className={`${styles.title_buttons_btn} ${styles.title_buttons_btn_usrSettings_btn}`}
+                title="Account settings"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -589,7 +590,7 @@ function Editor({ page, preview }) {
               </Link>
 
               <div className={`${styles.title_buttons_btn}`}>
-                <label className={styles.customfileupload}>
+                <label className={styles.customfileupload} title="Upload page header image">
                   <input
                     type="file"
                     name="file"
@@ -615,6 +616,7 @@ function Editor({ page, preview }) {
                 type="button"
                 onClick={handleSharePage}
                 className={styles.title_buttons_btn}
+                title="Share page"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -630,6 +632,7 @@ function Editor({ page, preview }) {
                 type="button"
                 onClick={() => setIconModalState(true)}
                 className={styles.title_buttons_btn}
+                title="Set Icon for page"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -652,6 +655,7 @@ function Editor({ page, preview }) {
                 type="button"
                 onClick={handleDeleteArticle}
                 className={styles.title_buttons_btn}
+                title="Delete page"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
