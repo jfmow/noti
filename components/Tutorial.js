@@ -39,7 +39,7 @@ export default function Tut({ setHidden }) {
     const isFirstCard = currentCardIndex === 0;
     return (
         <>
-            <ModalContainer events={() => setHidden(true)} noblur={true}>
+            <ModalContainer events={Hide} noblur={true}>
                 <ModalForm>
                     <ModalTitle>
                         {currentCard.name}
