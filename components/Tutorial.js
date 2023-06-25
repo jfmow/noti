@@ -24,7 +24,7 @@ export default function Tut({ setHidden }) {
     function Hide() {
         setHidden(true);
         document.getElementById('createnewpageid').classList.remove('tut')
-        document.getElementById('tut_title_id').classList.remove('tut')
+        document.getElementById('tit').classList.remove('tut')
         document.getElementById('tut_title_btns_id').classList.remove('tut')
     }
     const handleNextCard = () => {
