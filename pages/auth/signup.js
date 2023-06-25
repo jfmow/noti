@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { getUserTimeZone } from '@/lib/getUserTimeZone';
 import { createKey } from '@/lib/createEncKey';
+import { ModalButton, ModalCheckBox, ModalContainer, ModalForm, ModalInput, ModalTitle } from '@/lib/Modal';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 
@@ -21,8 +22,8 @@ export default function Login() {
     const [password, setPassword] = useState('');
     const [agree, setAgree] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-
-
+    const [riskAccept, setRiskAccept] = useState(false);
+    const [signUpDisclamer, setDisclamerState] = useState(false);
 
     useEffect(() => {
         if (pb.authStore.isValid) {
@@ -38,6 +39,10 @@ export default function Login() {
      * does not show the entire function.
      */
     async function auth() {
+        if (riskAccept === false) {
+            setDisclamerState(true)
+            return
+        }
         try {
             if (!agree) {
                 return toast.error('Please agree to the T&Cs to continue', { position: toast.POSITION.TOP_LEFT });
@@ -77,7 +82,7 @@ export default function Login() {
             };
             const crateAccProgressToast = toast.loading("Please wait...")
             try {
-                
+
                 const userAccountData = await pb.collection('users').create(newAccData)
                 await pb.collection('users').authWithPassword(name, password)
 
@@ -120,6 +125,39 @@ export default function Login() {
         }
     }
 
+    async function oAtuh() {
+        if (!signUpDisclamer) {
+            setDisclamerState(true);
+        };
+        if (riskAccept === false) {
+            return
+        };
+        setIsLoading(true)
+        const authData = await pb.collection('users').authWithOAuth2({ provider: 'github' });
+        if (!authData.record.time_zone) {
+
+            const userTimeZone = getUserTimeZone();
+            const Data = {
+                "time_zone": userTimeZone
+            };
+
+            await pb.collection('users').update(authData.record.id, Data);
+        }
+        if (!authData.record.meal) {
+            const encryptionKey = createKey()
+            const encData = {
+                "chef": encryptionKey,
+                "plate": authData.record.id
+            };
+            const encRec = await pb.collection('cookies').create(encData);
+            const usrDataUp = {
+                "meal": encRec.id
+            };
+            await pb.collection('users').update(authData.record.id, usrDataUp);
+        }
+        return Router.push('/page/firstopen')
+    }
+
     function setAgreeState() {
         if (!agree) {
             setAgree(true)
@@ -127,6 +165,11 @@ export default function Login() {
             setAgree(false)
         }
     }
+
+    function riskAllow(){
+        setDisclamerState(false);
+        toast.info("Please press signup or the github icon (if you are using github to signup) to finish the signup process. Thank you.")
+    };
     if (isLoading) {
         return <Loader />
     }
@@ -172,7 +215,7 @@ export default function Login() {
                         <div className={styles.line}></div>
                     </div>
                     <div className={styles.socialicons}>
-                        <button aria-label="Log in with GitHub" className={styles.icon} type='button'>
+                        <button aria-label="Log in with GitHub" className={styles.icon} type='button' onClick={oAtuh}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" className={`${styles.w5} ${styles.h5} ${styles.fillcurrent}`}>
                                 <path d="M16 0.396c-8.839 0-16 7.167-16 16 0 7.073 4.584 13.068 10.937 15.183 0.803 0.151 1.093-0.344 1.093-0.772 0-0.38-0.009-1.385-0.015-2.719-4.453 0.964-5.391-2.151-5.391-2.151-0.729-1.844-1.781-2.339-1.781-2.339-1.448-0.989 0.115-0.968 0.115-0.968 1.604 0.109 2.448 1.645 2.448 1.645 1.427 2.448 3.744 1.74 4.661 1.328 0.14-1.031 0.557-1.74 1.011-2.135-3.552-0.401-7.287-1.776-7.287-7.907 0-1.751 0.62-3.177 1.645-4.297-0.177-0.401-0.719-2.031 0.141-4.235 0 0 1.339-0.427 4.4 1.641 1.281-0.355 2.641-0.532 4-0.541 1.36 0.009 2.719 0.187 4 0.541 3.043-2.068 4.381-1.641 4.381-1.641 0.859 2.204 0.317 3.833 0.161 4.235 1.015 1.12 1.635 2.547 1.635 4.297 0 6.145-3.74 7.5-7.296 7.891 0.556 0.479 1.077 1.464 1.077 2.959 0 2.14-0.020 3.864-0.020 4.385 0 0.416 0.28 0.916 1.104 0.755 6.4-2.093 10.979-8.093 10.979-15.156 0-8.833-7.161-16-16-16z"></path>
                             </svg>
@@ -184,6 +227,32 @@ export default function Login() {
                 </div>
 
             </div>
+            {signUpDisclamer && (
+                <ModalContainer events={() => setDisclamerState(false)}>
+                    <ModalForm>
+                        <ModalTitle>Beta App</ModalTitle>
+                        <p className={styles.warn} style={{ maxHeight: '40dvh', overflowY: 'scroll', overflowX: 'hidden' }}>
+                            Important Notice: Beta App - Data Security and Service Availability
+
+                            Dear User,
+
+                            We would like to inform you about the nature of our platform before you proceed with signing up. Please note that our application is currently in the proof of concept stage, and as such, certain limitations and risks exist that you should be aware of.
+
+                            Firstly, it is crucial to understand that our platform is not yet a fully developed and stable service. While we are working diligently to improve its functionality and reliability, there is a possibility of encountering unexpected issues, including data loss or service disruptions.
+
+                            In light of this, we want to reiterate that storing sensitive or confidential data on our platform is strongly discouraged. Given its experimental nature, we cannot guarantee the same level of security and data protection as more established services. We kindly request you to refrain from inputting sensitive information that you would not be comfortable with potentially being exposed or lost.
+
+                            By continuing with the signup process, you acknowledge that this is a proof of concept app and accept the associated risks. We appreciate your understanding and participation as we work towards enhancing the stability and security of our platform.
+
+                            If you have any questions or require further clarification, please do not hesitate to reach out to our <a href='mailto:help@jamesmowat.com'>support team</a>.
+
+                            Thank you for your cooperation.
+                        </p>
+                        <ModalCheckBox chngevent={setRiskAccept}>Accept risk</ModalCheckBox>
+                        <ModalButton events={riskAllow}>Continue</ModalButton>
+                    </ModalForm>
+                </ModalContainer>
+            )}
         </div>
     )
 }
