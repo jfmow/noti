@@ -165,6 +165,9 @@ a {
     color-scheme: light;
     color: #000;
   }
+  .ce-toolbar__settings-btn, .ce-toolbar__plus {
+    color: rgb(0 225 255);
+  }
 }
 
 .tut {
