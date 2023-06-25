@@ -29,6 +29,8 @@
     background: #bbbbbb;
     box-shadow: 5px 8px 5px 1px #9d9d9d;
     border: 2px solid #fff;
+    
+    position: relative;
 }
 
 

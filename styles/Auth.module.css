@@ -301,31 +301,10 @@
     display: none !important;
 }
 
-@media (prefers-color-scheme: light) {
-    .formcontainer {
-        box-shadow: 0px 8px 8px 6px #f1f1f1;
-        background: linear-gradient(45deg, white 30%, #00BCD4);
-        color: #000;
-    }
-    .tandccon, .forgot a, .signup a{
-        color: #7c7c7c;
-    }
-    .socialicons .icon svg{
-        fill: #000;
-    }
-    .socialicons .icon:hover svg{
-        fill: #404040;
-    }
-    .inputgroup input{
-        background: #fff;
-        border-color: #c1c1c1;
-        color: #000;
-    }
-}
-
-.warn::-webkit-scrollbar{
+.warn::-webkit-scrollbar {
     display: block;
 }
+
 .warningsvg {
     display: flex;
     margin-left: auto;
@@ -337,10 +316,49 @@
     width: 3rem;
     height: 3rem;
     border-radius: 9999px;
-  }
-  
-  .warningsvg svg {
+    position: absolute;
+    top: 1.5em;
+    left: 0;
+    right: 0;
+}
+
+.warningsvg svg {
     color: #DC2626;
     width: 1.5rem;
     height: 1.5rem;
-  }
+}
+
+@media(max-width: 430px)
+{
+    .warningsvg{
+        display: none;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    .formcontainer {
+        box-shadow: 0px 8px 8px 6px #f1f1f1;
+        background: linear-gradient(45deg, white 30%, #00BCD4);
+        color: #000;
+    }
+
+    .tandccon,
+    .forgot a,
+    .signup a {
+        color: #7c7c7c;
+    }
+
+    .socialicons .icon svg {
+        fill: #000;
+    }
+
+    .socialicons .icon:hover svg {
+        fill: #404040;
+    }
+
+    .inputgroup input {
+        background: #fff;
+        border-color: #c1c1c1;
+        color: #000;
+    }
+}
