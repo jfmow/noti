@@ -169,6 +169,10 @@
   padding-bottom: 10px;
 }
 
+.pushpinImportantNote{
+  transform: rotate(320deg);
+}
+
 .desktophidemenu {
   position: absolute;
   top: 10px;

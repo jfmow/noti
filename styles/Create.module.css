@@ -494,6 +494,11 @@
   animation-delay: var(--icon-anmt-duration);
 }
 
+.abookmark input:checked + .bookmark svg{
+  transform: rotate(320deg);
+}
+
+
 .abookmark input:checked + .bookmark {
   fill: var(--icon-primary-color);
   -webkit-animation: bookmark var(--icon-anmt-duration) forwards;
