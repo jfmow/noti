@@ -161,23 +161,12 @@ a {
     display: none;
   }
 
-
-  .ce-toolbar__plus,
-  .ce-toolbar__settings-btn {
-    color: #ffffff;
-  }
-
-  .ce-toolbar__plus:hover,
-  .ce-toolbar__settings-btn:hover {
-    background: #000;
-  }
-
-  .ce-inline-toolbar {
-    color: #000;
+  .tc-toolbox {
+    color-scheme: light;
   }
 }
 
-.tut{
+.tut {
   animation: tutbounce 1.5s ease-in-out infinite;
   padding: 10px;
   border-radius: 5px;
@@ -189,9 +178,12 @@ a {
 }
 
 @keyframes tutbounce {
-  0%, 100% {
+
+  0%,
+  100% {
     border: 2px solid rgb(255, 72, 72);
   }
+
   50% {
     border: 2px solid rgb(0, 247, 255);
   }
