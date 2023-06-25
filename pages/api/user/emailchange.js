@@ -14,7 +14,7 @@ export default async function notifAll(req, res) {
   console.log(data.items)
   if (data.items.length > 0) {
     try {
-      const state = await sendNotifications(data.items, {"title": "Email change alert!", "body": "Your email accounts email has been changed! If this wasn't you contact support."})
+      const state = await sendNotifications(data.items, {"title": "Email change alert!", "body": "Your accounts email has been changed! If this wasn't you contact support."})
       console.log(state)
       res.status(200).send('Success');
     } catch (error) {
