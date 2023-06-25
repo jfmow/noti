@@ -1,11 +1,11 @@
 import { ModalContainer, ModalForm, ModalTitle, ModalButton } from "@/lib/Modal"
-import { useState, useEffect } from "react"
+import { useState} from "react"
 import styles from '@/styles/Auth.module.css'
 export default function Tut({ setHidden }) {
     const cards = [
-        { name: "Welcome to Noti", info: "Click next to get started with the tutorial. (Instructions are for desktop users, phone users may have a different layout, its basicly the same though :))" },
-        { name: "Creating a page", info: "To create the first page click the '+ Create Page'. To create a page in a page, select the page you want to add a sub page to an click the + on the right hand side" },
-        { name: "Managing pages", info: "Every option you could need is one of the little white buttons on the right, click them to see what they do. But DO NOT click the trash can unless you want the page to be deleted, they cannot be recovered" },
+        { name: "Welcome to Noti", info: "Click 'Next' to start the tutorial. (Instructions are for desktop users. Mobile users may have a slightly different layout, but it's essentially the same.)" },
+        { name: "Creating a page", info: "To create a page, click '+ Create Page'. To create a subpage within a page, select the desired page and click the '+' icon on the right." },
+        { name: "Managing pages", info: "All the options you need are to manage the page are the small white buttons on the right. Click them to see their functions. Do not click the trash can icon, as it permanently deletes the page and cannot this can not undone." },
     ];
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
