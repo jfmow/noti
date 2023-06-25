@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 import styles from '@/styles/Auth.module.css'
 export default function Tut({ setHidden }) {
     const cards = [
-        { name: "Welcome to Noti", info: "Click next to get started with the tutorial" },
+        { name: "Welcome to Noti", info: "Click next to get started with the tutorial. (Instructions are for desktop users, phone users may have a different layout, its basicly the same though :))" },
         { name: "Creating a page", info: "To create the first page click the '+ Create Page'. To create a page in a page, select the page you want to add a sub page to an click the + on the right hand side" },
         { name: "Managing pages", info: "Every option you could need is one of the little white buttons on the right, click them to see what they do. But DO NOT click the trash can unless you want the page to be deleted, they cannot be recovered" },
     ];
