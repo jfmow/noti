@@ -561,7 +561,7 @@ function Editor({ page, preview }) {
                 </button>
               )}
             </div>
-            <div className={styles.title_buttons}>
+            <div className={styles.title_buttons} id="tut_title_btns_id">
               <ImportantNote classname={styles.title_buttons_btn} importt={importantNote} page={page} />
 
               <Link

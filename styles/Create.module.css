@@ -77,6 +77,10 @@
   font-weight: 700;
 }
 
+.titleinput:hover{
+  cursor: text;
+}
+
 .titleinput::placeholder {
   text-shadow: none;
   color: #8f8f8f;
