@@ -116,6 +116,7 @@ a {
   font-family: "Chairbomb";
   src: url('../fonts/CherryBombOne-Regular.ttf');
 }
+
 @font-face {
   font-family: "Mori";
   font-display: swap;
@@ -151,7 +152,7 @@ a {
     color-scheme: dark;
   }
 
-  body{
+  body {
     background: #202020;
     color: #fff;
   }
@@ -159,20 +160,18 @@ a {
   ::-webkit-scrollbar {
     display: none;
   }
-  .ce-inline-toolbar{
-    background-color: #000;
+
+  .ce-toolbar__plus,
+  .ce-toolbar__settings-btn {
+    color: #ffffff;
   }
-  .ce-inline-toolbar__dropdown:hover, .ce-conversion-tool:hover, .ce-inline-tool:hover{
-    background: #232323;
-    background-color: #232323;
-  }
-  .ce-conversion-toolbar{
-    background-color: #000;
-  }
-  .ce-conversion-tool__icon{
+
+  .ce-toolbar__plus:hover,
+  .ce-toolbar__settings-btn:hover {
     background: #000;
   }
-  .ce-block--selected .ce-block__content {
-    background: #383d40;
-}
+
+  .ce-inline-toolbar {
+    color: #000;
+  }
 }
