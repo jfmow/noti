@@ -212,7 +212,7 @@
 @media (prefers-color-scheme: dark) {
 
   .itemroot {
-    background: linear-gradient(45deg, #404040, #141414, #252525);
+    background: linear-gradient(76deg, #404040, #18181800, #202020, #202020);
     border-right: none;
   }
 
