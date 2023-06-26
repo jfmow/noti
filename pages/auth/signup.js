@@ -78,8 +78,7 @@ export default function Login() {
                 "emailVisibility": false,
                 "password": sanitizedPassword,
                 "passwordConfirm": sanitizedPassword,
-                "time_zone": userTimeZone,
-                "seen_risk_warning": true
+                "time_zone": userTimeZone
             };
             const crateAccProgressToast = toast.loading("Please wait...")
             try {
