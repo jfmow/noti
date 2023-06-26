@@ -611,18 +611,18 @@
   }
 }
 
-.btntest1 {
+.buttonlabel {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.btntest1:hover>.tt1 {
+.buttonlabel:hover>.buttonlabel_label {
   display: block;
 }
 
-.tt1 {
+.buttonlabel_label {
   display: none;
   position: absolute;
   top: calc(-30px - 1em);

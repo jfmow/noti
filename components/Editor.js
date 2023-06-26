@@ -563,8 +563,8 @@ function Editor({ page, preview }) {
             </div>
             <div className={styles.title_buttons} id="tut_title_btns_id">
               <ImportantNote classname={styles.title_buttons_btn} importt={importantNote} page={page} />
-              <div className={styles.btntest1}>
-                <div className={styles.tt1}>My account settings</div>
+              <div className={styles.buttonlabel}>
+                <div className={styles.buttonlabel_label}>My account settings</div>
                 <Link
                   href="/u/me"
                   className={`${styles.title_buttons_btn} ${styles.title_buttons_btn_usrSettings_btn}`}
@@ -589,8 +589,8 @@ function Editor({ page, preview }) {
                   </svg>
                 </Link>
               </div>
-              <div className={styles.btntest1}>
-                <div className={styles.tt1}>Set page header image</div>
+              <div className={styles.buttonlabel}>
+                <div className={styles.buttonlabel_label}>Set page header image</div>
                 <div className={`${styles.title_buttons_btn}`}>
                   <label className={styles.customfileupload} >
                     <input
@@ -616,8 +616,8 @@ function Editor({ page, preview }) {
                 </div>
               </div>
 
-              <div className={styles.btntest1}>
-                <div className={styles.tt1}>Share page</div>
+              <div className={styles.buttonlabel}>
+                <div className={styles.buttonlabel_label}>Share page</div>
                 <button
                   type="button"
                   onClick={handleSharePage}
@@ -635,8 +635,8 @@ function Editor({ page, preview }) {
                 </button>
               </div>
 
-              <div className={styles.btntest1}>
-                <div className={styles.tt1}>Change page list icon</div>
+              <div className={styles.buttonlabel}>
+                <div className={styles.buttonlabel_label}>Change page list icon</div>
                 <button
                   type="button"
                   onClick={() => setIconModalState(true)}
@@ -661,8 +661,8 @@ function Editor({ page, preview }) {
                 </button>
               </div>
 
-              <div className={styles.btntest1}>
-                <div className={styles.tt1}>Delete page</div>
+              <div className={styles.buttonlabel}>
+                <div className={styles.buttonlabel_label}>Delete page</div>
                 <button
                   type="button"
                   onClick={handleDeleteArticle}
