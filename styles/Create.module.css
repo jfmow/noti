@@ -77,7 +77,7 @@
   font-weight: 700;
 }
 
-.titleinput:hover{
+.titleinput:hover {
   cursor: text;
 }
 
@@ -489,21 +489,19 @@
   fill: var(--icon-hover-color);
 }
 
-.abookmark input:checked + .bookmark::after {
-  -webkit-animation: circles var(--icon-anmt-duration)
-    cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-  animation: circles var(--icon-anmt-duration)
-    cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+.abookmark input:checked+.bookmark::after {
+  -webkit-animation: circles var(--icon-anmt-duration) cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  animation: circles var(--icon-anmt-duration) cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
   -webkit-animation-delay: var(--icon-anmt-duration);
   animation-delay: var(--icon-anmt-duration);
 }
 
-.abookmark input:checked + .bookmark svg{
+.abookmark input:checked+.bookmark svg {
   transform: rotate(320deg);
 }
 
 
-.abookmark input:checked + .bookmark {
+.abookmark input:checked+.bookmark {
   fill: var(--icon-primary-color);
   -webkit-animation: bookmark var(--icon-anmt-duration) forwards;
   animation: bookmark var(--icon-anmt-duration) forwards;
@@ -512,11 +510,9 @@
   transition-delay: 0.3s;
 }
 
-.abookmark input:checked + .bookmark::before {
-  -webkit-animation: circle var(--icon-anmt-duration)
-    cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-  animation: circle var(--icon-anmt-duration)
-    cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+.abookmark input:checked+.bookmark::before {
+  -webkit-animation: circle var(--icon-anmt-duration) cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  animation: circle var(--icon-anmt-duration) cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
   -webkit-animation-delay: var(--icon-anmt-duration);
   animation-delay: var(--icon-anmt-duration);
 }
@@ -613,4 +609,29 @@
     transform: scale(0.8);
     opacity: 0;
   }
+}
+
+.btntest1 {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btntest1:hover>.tt1 {
+  display: block;
+}
+
+.tt1 {
+  display: none;
+  position: absolute;
+  top: calc(-30px - 1em);
+  padding: 5px;
+  border-radius: 5px;
+  background: #ffffffad;
+  width: fit-content;
+  white-space: nowrap;
+  color: #000000dc;
+  font-size: 12px;
+  font-weight: 100;
 }
