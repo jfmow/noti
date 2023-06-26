@@ -609,23 +609,20 @@
     transform: scale(0.8);
     opacity: 0;
   }
-}
-
-.buttonlabel {
+}.buttonlabel {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.buttonlabel:hover>.buttonlabel_label {
+.buttonlabel:hover > .buttonlabel_label {
   display: block;
 }
 
 .buttonlabel_label {
   display: none;
   position: absolute;
-  top: calc(-30px - 1em);
   padding: 5px;
   border-radius: 5px;
   background: #ffffffad;
@@ -634,4 +631,25 @@
   color: #000000dc;
   font-size: 12px;
   font-weight: 100;
+
+  /* Adjustments to prevent going off-screen */
+  left: 50%; /* Position at the horizontal center */
+  transform: translateX(-50%); /* Move label back by half its width */
+
+  /* Optional: Add padding to the top to create space between button and label */
+  top: calc(-30px - 1em - 5px);
+
+  /* Arrow styles */
+  
+}
+
+.buttonlabel_label:after {
+  content: "";
+  position: absolute;
+  bottom: -9.9px; /* Adjust as needed */
+  left: 50%;
+  transform: translateX(-50%) rotate(180deg);
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #ffffffad transparent;
 }
