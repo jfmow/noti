@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import { getUserTimeZone } from '@/lib/getUserTimeZone';
 import PlainLoader from '@/components/Loader';
 import { createKey } from '@/lib/createEncKey';
+import { ModalButton, ModalCheckBox, ModalContainer, ModalForm, ModalInput, ModalTitle } from '@/lib/Modal';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false)
@@ -18,6 +19,7 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setIsLoading] = useState(false)
+  const [showRisk, setShowRisk] = useState(false);
 
 
 
@@ -30,7 +32,7 @@ export default function Login() {
 
   async function auth() {
     try {
-      if(!email || !password){
+      if (!email || !password) {
         return
       }
       setIsLoading(true)
@@ -46,6 +48,11 @@ export default function Login() {
         { '$autoCancel': false },
       );
       console.log(authData)
+      if (!authData.record.seen_risk_warning) {
+        setIsLoading(false)
+        setShowRisk(true)
+        return
+      }
       if (authData.record.disabled) {
         pb.authStore.clear()
         return Router.push('/u/disabled')
@@ -88,7 +95,13 @@ export default function Login() {
 
   async function oAtuh() {
     setIsLoading(true)
+
     const authData = await pb.collection('users').authWithOAuth2({ provider: 'github' });
+    if (!authData.record.seen_risk_warning) {
+      setIsLoading(false)
+      setShowRisk(true)
+      return
+    }
     if (!authData.record.time_zone) {
 
       const userTimeZone = getUserTimeZone();
@@ -111,6 +124,13 @@ export default function Login() {
       await pb.collection('users').update(authData.record.id, usrDataUp);
     }
     return Router.push('/page/firstopen')
+  }
+
+  async function updateRiskVal() {
+    const data = {
+      "seen_risk_warning": true
+    }
+    await pb.collection('users').update(pb.authStore.model.id, data);
   }
 
 
@@ -165,6 +185,35 @@ export default function Login() {
         </div>
 
       </div>
+      {showRisk && (
+        <ModalContainer events={() => setShowRisk(false)}>
+          <ModalForm>
+            <div className={styles.warningsvg}><svg aria-hidden="true" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none">
+              <path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" stroke-linejoin="round" stroke-linecap="round"></path>
+            </svg></div>
+
+            <ModalTitle>Beta App</ModalTitle>
+            <p className={styles.warn} style={{ maxHeight: '40dvh', overflowY: 'scroll', overflowX: 'hidden' }}>
+              Important Notice: Beta App - Data Security and Service Availability
+
+              Dear User,
+
+              We would like to inform you about the nature of our platform before you proceed with signing up. Please note that our application is currently in the proof of concept stage, and as such, certain limitations and risks exist that you should be aware of.
+
+              Firstly, it is crucial to understand that our platform is not yet a fully developed and stable service. While we are working diligently to improve its functionality and reliability, there is a possibility of encountering unexpected issues, including data loss or service disruptions.
+
+              In light of this, we want to reiterate that storing sensitive or confidential data on our platform is strongly discouraged. Given its experimental nature, we cannot guarantee the same level of security and data protection as more established services. We kindly request you to refrain from inputting sensitive information that you would not be comfortable with potentially being exposed or lost.
+
+              By continuing with the signup process, you acknowledge that this is a proof of concept app and accept the associated risks. We appreciate your understanding and participation as we work towards enhancing the stability and security of our platform.
+
+              If you have any questions or require further clarification, please do not hesitate to reach out to our <a href='mailto:help@jamesmowat.com'>support team</a>.
+
+              Thank you for your cooperation.
+            </p>
+            <ModalButton events={updateRiskVal}>Continue</ModalButton>
+          </ModalForm>
+        </ModalContainer>
+      )}
     </div>
   )
 
