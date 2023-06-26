@@ -264,6 +264,13 @@
   #active {
     background: #2e2e2e6e;
   }
+  @media(max-width: 800px){
+    .itemroot{
+      background: #242424d0;
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+    }
+  }
 }
 
 @media(max-width: 800px) {
