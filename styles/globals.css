@@ -168,6 +168,9 @@ a {
   .ce-toolbar__settings-btn, .ce-toolbar__plus {
     color: rgb(0 225 255);
   }
+  .ce-inline-toolbar {
+    color: #000;
+}
 }
 
 .tut {
