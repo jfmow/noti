@@ -675,7 +675,7 @@ function Editor({ page, preview }) {
         <>
           <ModalContainer events={() => setShareLinkModalState(false)}>
             <ModalForm>
-              <ModalTitle>Page icon</ModalTitle>
+              <ModalTitle>Share page</ModalTitle>
               <div className={styles.shareModal_link_text}>
                 https://noti.jamesmowat.com/page/view/{page}
               </div>
