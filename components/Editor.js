@@ -970,15 +970,6 @@ class SimpleTodo {
 
 
 
-
-
-
-
-
-
-
-
-
 function AutoSaveLoader() {
   return (
     <div className={styles.autosaveloader}></div>
