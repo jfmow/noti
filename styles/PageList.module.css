@@ -207,6 +207,7 @@
   padding-left: 0;
   padding-right: 0;
   white-space: nowrap;
+  border-right: none;
 }
 
 @media (prefers-color-scheme: dark) {

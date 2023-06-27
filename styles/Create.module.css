@@ -348,11 +348,6 @@
 }
 
 
-@media (prefers-color-scheme: dark) {
-  .create {
-    color: #fff;
-  }
-}
 
 
 
@@ -740,7 +735,7 @@
   top: 0.25em;
   width: 0.25em;
   height: 0.5em;
-  border-color: #fff0 white white #fff0;
+  border-color: #fff0 rgb(0,rgb(0, 0, 0)) white #fff0;
   border-width: 0 0.15em 0.15em 0;
   border-radius: 0em;
   transform: rotate(45deg);
@@ -749,3 +744,21 @@
 
 
 /*!!END!! todo checkbox styles*/
+
+
+
+@media (prefers-color-scheme: dark) {
+  .create {
+    color: #fff;
+  }
+  .todocontainer input:checked~.todocheckmark:after {
+    left: 0.45em;
+    top: 0.25em;
+    width: 0.25em;
+    height: 0.5em;
+    border-color: #fff0 white white #fff0;
+    border-width: 0 0.15em 0.15em 0;
+    border-radius: 0em;
+    transform: rotate(45deg);
+  }
+}
