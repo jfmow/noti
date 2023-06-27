@@ -627,12 +627,13 @@
   position: absolute;
   padding: 5px;
   border-radius: 5px;
-  background: #ffffffad;
+  background: #0d2342;
+  width: -moz-fit-content;
   width: fit-content;
   white-space: nowrap;
-  color: #000000dc;
+  color: #ffffff;
   font-size: 12px;
-  font-weight: 100;
+  /* font-weight: 100; */
 
   /* Adjustments to prevent going off-screen */
   left: 50%;
@@ -656,7 +657,7 @@
   transform: translateX(-50%) rotate(180deg);
   border-width: 5px;
   border-style: solid;
-  border-color: transparent transparent #ffffffad transparent;
+  border-color: transparent transparent #0d2342 transparent;
 }
 
 
