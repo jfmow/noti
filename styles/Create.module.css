@@ -716,7 +716,7 @@
 
 /* When the checkbox is checked, add a blue background */
 .todocontainer input:checked~.todocheckmark {
-  background-color: #2196F3;
+  /*background-color: #2196F3;*/
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
