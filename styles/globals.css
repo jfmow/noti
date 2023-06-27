@@ -173,11 +173,6 @@ a {
 }
 }
 
-@media(max-width: 650px){
-  .ce-popover{
-    z-index: 999;
-  }
-}
 
 .tut {
   animation: tutbounce 1.5s ease-in-out infinite;
