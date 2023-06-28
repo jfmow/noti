@@ -210,6 +210,7 @@
   padding-right: 0;
   white-space: nowrap;
   border-right: none;
+  box-shadow: none !important;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -286,7 +287,6 @@
     -webkit-filter: blur(3px);
     width: auto;
     padding: inherit;
-    box-shadow: none !important;
   }
 
   .itemroot {
