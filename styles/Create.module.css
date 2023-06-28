@@ -665,7 +665,7 @@
   list-style-type: none;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 3px;
 }
 .todoiteminput{
   border: none;
@@ -682,6 +682,19 @@
   flex-direction: row;
   gap: 10px;
   align-items: center;
+  min-height: 25px;
+}
+
+.todolist li span {
+  padding: 10px;
+  border: 1px solid transparent;
+  outline: none;
+}
+
+.todolist li span:focus-within{
+  color: #e4e4e4;
+  border: 1px solid #353535;
+  border-radius: 5px;
 }
 
 /* Hide the default checkbox */
@@ -742,16 +755,26 @@
 }
 
 .tododeletebtn{
-  background: #353535;
   border: none;
   color: #a9a9a9;
-  padding:5px;
   border-radius: 3px;
   cursor: pointer;
   font-weight: 600;
   font-size: 12px;
+  background: none;
 }
 
+.tododeletebtn svg {
+  fill: #353535;
+  transition: 0.2s;
+}
+.tododeletebtn:hover svg {
+  fill: #ff5555;
+}
+
+.tododeletebtn svg path {
+  stroke: none !important;
+}
 
 /*!!END!! todo checkbox styles*/
 
