@@ -39,6 +39,8 @@ const MyComponent = ({ currPage }) => {
     }
     getData();
 
+
+
     const unsubscribe = pb.collection('pages')
       .subscribe('*', function (e) {
         const updatedRecord = e.record;
@@ -131,6 +133,22 @@ const MyComponent = ({ currPage }) => {
   //const [visible, setVisibleState] = useState(true);
   function setVisibleState() {
     document.getElementById('rootitems').classList.toggle(styles.dskhidden)
+    window.localStorage.setItem('_menu', document.getElementById('rootitems').classList.contains(styles.dskhidden) ? ('closed') : ('open'))
+  }
+
+  if (window.localStorage.getItem('_menu') === 'closed') {
+    try {
+      document.getElementById('rootitems').classList.add(styles.dskhidden)
+    } catch (err) {
+      console.log(err)
+      return
+    }
+  } else if (window.localStorage.getItem('_menu') === "open"){
+    try {
+      document.getElementById('rootitems').classList.remove(styles.dskhidden)
+    } catch (err) {
+      return
+    }
   }
 
   return (

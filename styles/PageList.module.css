@@ -271,7 +271,7 @@
   }
   @media(max-width: 800px){
     .itemroot{
-      background: #242424de;
+      background: #242424de !important;
     }
   }
 }
