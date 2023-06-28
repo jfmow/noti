@@ -286,6 +286,7 @@
     -webkit-filter: blur(3px);
     width: auto;
     padding: inherit;
+    box-shadow: none !important;
   }
 
   .itemroot {
