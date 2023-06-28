@@ -213,8 +213,9 @@
 @media (prefers-color-scheme: dark) {
 
   .itemroot {
-    background: linear-gradient(76deg, #404040, #18181800, #202020, #202020);
+    background: radial-gradient(#202020, #141414);
     border-right: none;
+    box-shadow: 10px 0px 13px 2px #191919;
   }
 
   .btn1 {
@@ -267,9 +268,9 @@
   }
   @media(max-width: 800px){
     .itemroot{
-      background: #242424d0;
-      backdrop-filter: blur(3px);
-      -webkit-backdrop-filter: blur(3px);
+      background: #242424de;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     }
   }
 }
@@ -314,7 +315,7 @@
     right: 0;
     z-index: 98;
     height: fit-content;
-    background: #ffffff83;
+    background: #1d1d1d83;
     align-items: center;
     justify-content: space-between;
   }
