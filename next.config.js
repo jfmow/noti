@@ -12,7 +12,7 @@ const nextConfig = {
           headers: [
             {
               key: 'Content-Security-Policy',
-              value: "default-src 'self' noti.jamesmowat.com; style-src 'self' 'unsafe-inline'; frame-src 'self' docs.google.com notidb.suddsy.dev; connect-src 'self' notidb.suddsy.dev; img-src 'self' notidb.suddsy.dev data:;",
+              value: "default-src 'self' noti.jamesmowat.com; style-src 'self' 'unsafe-inline'; frame-src 'self' docs.google.com notidb.suddsy.dev noti.suddsy.dev; connect-src 'self' notidb.suddsy.dev noti.suddsy.dev; img-src 'self' notidb.suddsy.dev noti.suddsy.dev data:;",
             },
           ],
         },
