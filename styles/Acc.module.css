@@ -383,7 +383,10 @@ input:checked~.slider {
 }
 
 .acc_button:hover {
-  background-color: #d4d4d4;
+  background-color: #000000;
+  /* border-color: #000; */
+  outline: 3px solid #000;
+  /* border: 1px solid #000;*/
 }
 
 .acc_button:hover .acc_button_text {
@@ -413,7 +416,7 @@ input:checked~.slider {
     height: auto;
     overflow: auto;
     overflow-x: hidden;
-    margin-top: 10dvh;
+    padding: 2em;
   }
 
   .gridcontainer,
@@ -430,7 +433,7 @@ input:checked~.slider {
 
   .user_account_form_container {
     grid-template-columns: 1fr;
-    margin: 1em;
+    margin: 0;
     padding: 0;
   }
 
