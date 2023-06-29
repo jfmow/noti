@@ -62,7 +62,7 @@
   resize: none;
   outline: none;
   background-color: transparent;
-  color: #ffffff;
+  color: #000000;
   border: none;
   /* border-radius: 10px; */
   padding: 10px;
@@ -108,8 +108,7 @@
   width: 100%;
   position: relative;
   height: 40dvh;
-  background: linear-gradient(20deg, #9E9E9E, #607D8B, #9E9E9E);
-  ;
+  background: linear-gradient(20deg,#607d8b,#fff,#607d8b);
   background-size: 100%;
 }
 
@@ -405,7 +404,7 @@
 
 .abookmark {
   --icon-size: 24px;
-  --icon-secondary-color: rgb(255, 255, 255);
+  --icon-secondary-color: rgb(153, 153, 153);
   --icon-hover-color: rgb(255, 216, 99);
   --icon-primary-color: gold;
   --icon-circle-border: 1px solid var(--icon-primary-color);
@@ -793,5 +792,11 @@
     border-width: 0 0.15em 0.15em 0;
     border-radius: 0em;
     transform: rotate(45deg);
+  }
+  .title{
+    background: linear-gradient(20deg, #9E9E9E, #607D8B, #9E9E9E);
+  }
+  .titleinput{
+    color: #fff;
   }
 }
