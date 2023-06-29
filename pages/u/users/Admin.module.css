@@ -284,6 +284,10 @@
   }
 
   @media(max-width: 800px){
+    .container{
+      
+    margin-top: 10dvh;
+    }
     .user_list_container{
         padding: 0;
         width: 100%;

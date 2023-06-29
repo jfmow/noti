@@ -240,6 +240,7 @@ function Editor({ page, preview }) {
                     const formData = new FormData();
                     formData.append("file_data", file);
                     formData.append("uploader", pb.authStore.model.id);
+                    formData.append("size", file.size);
                     let record = null
                     try {
                       if (file.size > 5242880) {

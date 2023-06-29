@@ -4,6 +4,7 @@ import styles from './Admin.module.css';
 import Loader from "@/components/Loader";
 import Link from "next/link";
 import Nav from "@/components/Nav";
+import GraphComponent from "@/components/Graph";
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
@@ -13,6 +14,8 @@ export default function UserListAdmin() {
     const [userList, setUserList] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [loadingUser, setLoadingUser] = useState(null);
+    const [gpdata, setGpData] = useState([])
+    const [gpdata2, setGpData2] = useState([])
 
     useEffect(() => {
         async function getUserList() {
@@ -21,6 +24,15 @@ export default function UserListAdmin() {
             });
             setUserList(records)
         }
+
+        async function getStats(){
+            const records = await pb.collection('Total_pages_per_user').getFullList();
+            console.log(records)
+            setGpData(records)
+            const records2 = await pb.collection('total_files_per_user').getFullList();
+            setGpData2(records2)
+        }
+        getStats()
 
         
         async function authUpdate() {
@@ -98,7 +110,7 @@ export default function UserListAdmin() {
                 <div className={styles.header}>
                     <h1>User list</h1>
                 </div>
-
+                <GraphComponent data1={gpdata} data2={gpdata2}/>
                 <div className={styles.user_list_container}>
                     <div className={styles.userlist}>
                         <div className={styles.filter}>
@@ -136,3 +148,4 @@ export default function UserListAdmin() {
         </>
     )
 };
+
