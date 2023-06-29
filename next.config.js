@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['news1.suddsy.dev', 'news2.suddsy.dev', '127.0.0.1', 'notidb.suddsy.dev'],
+    domains: ['news1.suddsy.dev', 'news2.suddsy.dev', '127.0.0.1', 'notidb.suddsy.dev', 'noti.suddsy.dev'],
   },
   async headers() {
     if (process.env.PRODUCTION === 'true') {
