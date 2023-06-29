@@ -225,9 +225,64 @@ function Editor({ page, preview }) {
           simpleEmbeds: {
             class: SimpleIframe,
             inlineToolbar: true,
+            config: {
+              saveData: {
+                saveAll() {
+                  setLastTypedTime(Date.now());
+                  setLastTypedTimeIdle(false);
+                  return
+                }
+              },
+              storeFile: {
+                uploadFile(file) {
+                  async function uploadbyFile(file) {
+
+                    const formData = new FormData();
+                    formData.append("file_data", file);
+                    formData.append("uploader", pb.authStore.model.id);
+                    let record = null
+                    try {
+                      if (file.size > 5242880) {
+                        toast.error('File too big. Must be < 5mb')
+                        return { success: 0 }
+                      }
+                      if (file.name.endsWith(".docx") || file.name.endsWith(".docx/")) {
+                        toast.error('File type not supported yet!')
+                        return { success: 0 }
+                      }
+                      record = await pb.collection("videos").create(formData);
+                      console.log(record);
+
+                    } catch (error) {
+                      console.error(error);
+                      return { success: 0 }
+                      // Handle error
+                    }
+
+                    return {
+                      success: 1,
+                      file: {
+                        recid: record.id,
+                      },
+                    };
+                  }
+                  return uploadbyFile(file)
+                },
+              }
+
+            }
           },
           SimpleTodo: {
             class: SimpleTodo,
+            config: {
+              saveData: {
+                saveAll() {
+                  setLastTypedTime(Date.now());
+                  setLastTypedTimeIdle(false);
+                  return
+                }
+              },
+            }
           },
           embed: {
             class: Embed,
@@ -730,6 +785,10 @@ function Editor({ page, preview }) {
 }
 
 export default Editor;
+
+
+//Custom editor js plugins
+
 class SimpleIframe {
   static get toolbox() {
     return {
@@ -738,9 +797,10 @@ class SimpleIframe {
     };
   }
 
-  constructor({ data }) {
+  constructor({ data, config }) {
     this.data = data;
     this.wrapper = undefined;
+    this.config = config || {};
   }
 
   render() {
@@ -791,44 +851,28 @@ class SimpleIframe {
     return this.wrapper;
   }
 
-  _handleFileSelection(event) {
+  async _handleFileSelection(event) {
     const file = event.target.files[0];
     if (!file) {
       return;
     }
 
-    const uploadFile = async (file) => {
-      const fileInput = this.wrapper.querySelector('input[type="file"]');
-      const uploadBtn = this.wrapper.querySelector("button");
+    const fileInput = this.wrapper.querySelector('input[type="file"]');
+    const uploadBtn = this.wrapper.querySelector("button");
 
-      fileInput.disabled = true;
-      uploadBtn.disabled = true;
+    fileInput.disabled = true;
+    uploadBtn.disabled = true;
+    const data2 = await this.config.storeFile.uploadFile(file)
 
-      const formData = new FormData();
-      formData.append("file_data", file);
-      formData.append("uploader", pb.authStore.model.id);
-      try {
-        if (file.size > 5242880) {
-          return toast.error('File too big. Must be < 5mb')
-        }
-        if (file.name.endsWith(".docx") || file.name.endsWith(".docx/")) {
-          return toast.error('File type not supported yet!');
-        }
-        const record = await pb.collection("videos").create(formData);
-        console.log(record);
-        this._createImage(
-          record.id // Pass the fileId as an argument
-        );
-      } catch (error) {
-        console.error(error);
-        // Handle error
-      } finally {
-        fileInput.disabled = false;
-        uploadBtn.disabled = false;
-      }
-    };
-
-    uploadFile(file);
+    fileInput.disabled = false;
+    uploadBtn.disabled = false;
+    if (data2.success === 0) {
+      return
+    }
+    await this._createImage(
+      data2.file.recid // Pass the fileId as an argument
+    );
+    this.config.saveData.saveAll()
   }
 
   async _createImage(fileId) {
@@ -858,6 +902,7 @@ class SimpleIframe {
     };
   }
 }
+
 class SimpleTodo {
   static get toolbox() {
     return {
@@ -866,11 +911,12 @@ class SimpleTodo {
     };
   }
 
-  constructor({ data }) {
+  constructor({ data, config }) {
     this.data = data || {
       items: []
     };
     this.wrapper = undefined;
+    this.config = config;
   }
 
   render() {
@@ -919,11 +965,12 @@ class SimpleTodo {
         checkbox.addEventListener("change", () => {
           item.checked = checkbox.checked;
           if (item.checked) {
-
             listItem.appendChild(deleteButton);
           } else {
             listItem.removeChild(deleteButton);
           }
+
+          this.config.saveData.saveAll()
         });
         if (item.checked) {
           listItem.appendChild(deleteButton);
@@ -974,14 +1021,16 @@ class SimpleTodo {
 
         listItem.appendChild(content);
 
-        
+
 
         checkbox.addEventListener("change", () => {
           newItem.checked = checkbox.checked;
+
+          this.config.saveData.saveAll()
         });
 
         list.appendChild(listItem);
-        
+
 
         addItemInput.value = "";
       }
@@ -999,14 +1048,17 @@ class SimpleTodo {
   }
 }
 
+//END custom editorjs plugins
 
-
+//autosave loader component
 
 function AutoSaveLoader() {
   return (
     <div className={styles.autosaveloader}></div>
   )
 }
+
+//Pin note component
 
 function ImportantNote({ classname, importt, page }) {
   const [checked, setChecked] = useState(importt)
