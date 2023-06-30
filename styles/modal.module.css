@@ -251,6 +251,7 @@
         background: #1f1f1f;
         border: 3px solid #000;
         box-shadow: 5px 8px 5px 1px #000;
+        color: #fff;
     }
 
     .default_settings_modal_container_usrname_block form input {
@@ -269,5 +270,6 @@
 
         width: 100dvw;
         margin: 0;
+
     }
 }
