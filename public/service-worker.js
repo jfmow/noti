@@ -8,6 +8,12 @@ self.addEventListener('install', (event) => {
           '/', // Add the URLs of your static assets here
           '/favicon.ico',
           '/manifest.json',
+          '/offline.html',
+          '/offline/editor.js',
+          '/offline/header.js',
+          '/offline/list.js',
+          '/offline/quote.js',
+          '/offline/table.js'
           // Include other static assets such as images, icons, etc.
         ]);
       })
