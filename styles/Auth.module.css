@@ -198,10 +198,11 @@
     font-size: 12px;
     text-align: center;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 5px;
     padding: 15px 10px;
     align-items: center;
+    text-align: left;
 }
 
 .legalbtn {
@@ -223,7 +224,7 @@
     top: 1px;
     width: 27px;
     height: 27px;
-    border: 1px solid #ff5454;
+    border: 1px solid rgba(167, 139, 250, 1);
     border-radius: 3px;
     vertical-align: middle;
     transition: background 0.1s ease;
@@ -361,4 +362,24 @@
         border-color: #c1c1c1;
         color: #000;
     }
+}
+
+
+.pwinput{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+}
+
+.pwinput input {
+    padding-right: 2.3em;
+}
+
+.pwinput svg {
+    position: absolute;
+    right: 5px;
+    fill: rgba(167, 139, 250, 1);
+    transform: scale(0.7);
+    cursor: pointer;
 }

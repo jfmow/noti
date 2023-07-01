@@ -85,7 +85,10 @@ export default function Home() {
             {/* Animate the third section */}
             <AnimatedSection className={styles.section3}>
               <img alt="floating notebook" className={styles.bg} src="/static/notebookfloating1.jpg" />
-              <h2>Safe, Fast, Secure, Free.</h2>
+              <div>
+              <h2>Just the right ammount of features</h2>
+              <p>And just ask if you think theres something more that could be added</p>
+              </div>
             </AnimatedSection>
           </AnimatePresence>
         </div>

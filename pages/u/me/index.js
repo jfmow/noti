@@ -1,7 +1,6 @@
 import styles from '@/styles/Acc.module.css';
 import { useState, useEffect, useRef } from 'react';
 import PocketBase from 'pocketbase';
-import Compressor from 'compressorjs';
 import { toast } from 'react-toastify';
 import Loader from '@/components/Loader';
 import Head from 'next/head';
@@ -66,7 +65,7 @@ export default function Account() {
 
         <div>
           <h5>Quick links</h5>
-          <h6><Link href='/termsandconditions'>Terms & Conditions</Link> | <Link href='/privacypolicy'>Privacy policy</Link></h6>
+          <h6><Link href='/auth/terms-and-conditions'>Terms & Conditions</Link> | <Link href='/auth/privacy-policy'>Privacy policy</Link></h6>
         </div>
 
         <button className={styles.logoutBtn} onClick={clearAuthStore}>
