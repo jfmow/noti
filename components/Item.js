@@ -24,7 +24,7 @@ const MyComponent = ({ currPage }) => {
       setItems(records);
       setIsLoading(false)
 
-      if (!currPage || currPage === "firstopen") {
+      if (!currPage || currPage === "firstopen" && localStorage.getItem('Offlinetime') != "true") {
         const latestRecord = records.filter(record => record.updated)[0];
         console.log(latestRecord)
         if (latestRecord) {

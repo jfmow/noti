@@ -16,6 +16,7 @@ import Embed from "@editorjs/embed";
 import { AES, enc } from "crypto-js";
 import compressImage from "@/lib/CompressImg";
 import dynamic from 'next/dynamic';
+import Router from "next/router";
 
 const ModalButton = dynamic(() => import('@/lib/Modal').then((module) => module.ModalButton));
 const ModalContainer = dynamic(() => import('@/lib/Modal').then((module) => module.ModalContainer));
@@ -47,6 +48,8 @@ function Editor({ page, preview }) {
   const [chefKey, setChefKey] = useState("");
   const [isTitleEdit, setIsTitleEdit] = useState(false);
   const [importantNote, setImportantNote] = useState(false)
+
+  const [wasOffline, setWasOffline] = useState(false);
 
   useEffect(() => {
     if (preview === "true") {
@@ -135,6 +138,25 @@ function Editor({ page, preview }) {
       setIsLoading(true);
       async function fetchArticles() {
         if (page === "firstopen") {
+          if (localStorage.getItem('Offlinetime') === 'true') {
+            try {
+              setWasOffline(true)
+              setEditorData(JSON.parse(localStorage.getItem('Offlinesave')));
+              const data = {
+                "content": localStorage.getItem('Offlinesave'),
+                "owner": pb.authStore.model.id,
+                "title": `Migrated offline page ${Date.now()}`
+              }
+              pb.autoCancellation(true)
+
+              const state = await pb.collection("pages").create(data);
+              Router.push(`/page/${state.id}`)
+              localStorage.setItem('Offlinetime', 'false')
+              localStorage.removeItem('Offlinesave');
+            } catch (err) {
+              console.log(err)
+            }
+          }
           setIsLoading(false);
           return;
         }

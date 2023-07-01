@@ -24,6 +24,7 @@ export default function Home() {
           setIsLoading(false);
           pb.authStore.clear();
         } else {
+          
           router.push('/page/firstopen');
         }
       } catch (error) {
