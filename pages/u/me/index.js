@@ -370,11 +370,6 @@ function Notitoggle() {
         applicationServerKey: urlB64ToUint8Array(VAPID_PUBLIC_KEY)
       });
       postToServer('/api/add-subscription', subscription);
-      const data = {
-        "notis": true
-      };
-
-      await pb.collection('users').update(pb.authStore.model.id, data);
       toast.info('Subscribed to notis')
       setPendingPush(false)
 
@@ -382,7 +377,7 @@ function Notitoggle() {
       console.log(err)
       setPush(false)
       setPendingPush(false)
-      return toast.error('Permision denied!')
+      return toast.error(`Permision denied! ${err}`)
     }
 
   }
