@@ -1,4 +1,4 @@
-const CACHE_NAME = 'Noti-v0.4';
+const CACHE_NAME = 'Noti-v0.1';
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -45,20 +45,18 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       fetch(event.request)
         .then((networkResponse) => {
-          return caches.open(CACHE_NAME)
+          caches.open(CACHE_NAME)
             .then((cache) => {
               cache.put(event.request, networkResponse.clone());
-              return networkResponse;
             });
+          return networkResponse;
         })
         .catch(() => {
-          return caches.match('/offline.html');
+          return caches.match(event.request);
         })
     );
   }
 });
-
-
 
 
 
@@ -88,3 +86,4 @@ self.addEventListener('push', (event) => {
     notificationOptions
   );
 });
+
