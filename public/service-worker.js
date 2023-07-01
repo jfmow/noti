@@ -1,4 +1,4 @@
-const CACHE_NAME = 'Noti-v0.1';
+const CACHE_NAME = 'Noti-v0.2';
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -8,6 +8,7 @@ self.addEventListener('install', (event) => {
           '/', // Add the URLs of your static assets here
           '/favicon.ico',
           '/manifest.json',
+          '/offline.html',
           // Include other static assets such as images, icons, etc.
         ]);
       })
@@ -39,18 +40,20 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       fetch(event.request)
         .then((networkResponse) => {
-          caches.open(CACHE_NAME)
+          return caches.open(CACHE_NAME)
             .then((cache) => {
               cache.put(event.request, networkResponse.clone());
+              return networkResponse;
             });
-          return networkResponse;
         })
         .catch(() => {
-          return caches.match(event.request);
+          return caches.match('/offline.html');
         })
     );
   }
 });
+
+
 
 
 
