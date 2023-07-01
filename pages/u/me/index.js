@@ -365,10 +365,12 @@ function Notitoggle() {
     const registration = await navigator.serviceWorker.getRegistration();
     try {
       Notification.requestPermission()
+      toast.info('A')
       const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: urlB64ToUint8Array(VAPID_PUBLIC_KEY)
       });
+      toast.info('B')
       postToServer('/api/add-subscription', subscription);
       toast.info('Subscribed to notis')
       setPendingPush(false)
