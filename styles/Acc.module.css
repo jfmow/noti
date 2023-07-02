@@ -356,7 +356,7 @@ input:checked~.slider {
   padding: 15px 25px;
   gap: 15px;
   background-color: #ffffff;
-  outline: 3px #f4ebeb solid;
+  outline: 3px #a39c9c solid;
   outline-offset: -3px;
   border-radius: 5px;
   border: none;

@@ -42,7 +42,7 @@
 .default_settings_modal_container_usrname_block form {
     display: flex;
     flex-direction: column;
-    gap: 2em;
+    gap: 1.3em;
     justify-items: start;
     width: 100%;
 }
