@@ -1,4 +1,4 @@
-const CACHE_NAME = 'Noti-v0.75';
+const CACHE_NAME = 'Noti-v0.69420';
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
