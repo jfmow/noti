@@ -19,12 +19,17 @@ export default function Nav() {
         return (
             <>
 
-                <div className={styles.nav_container}>
+                <div className={styles.navcontainer}>
                     <div className={styles.items}>
                         <h1>Noti</h1>
-                        <button className={styles.navbutton} onClick={()=>(Router.push('/page/firstopen'))}>
-                            Pages
-                        </button>
+                        <div className={styles.subitems}>
+                        <Link className={styles.navlink} href='/page/firstopen'>
+                        Pages
+                        </Link>
+                        <Link className={styles.navlink} href='/u/me'>
+                        Account
+                        </Link>
+                        </div>
                     </div>
                 </div>
 
