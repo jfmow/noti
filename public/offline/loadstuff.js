@@ -1,46 +1,43 @@
-if (!localStorage.getItem("Offlinesave")) {
-    localStorage.removeItem('Offlinesave');
-  }
-  const editor = new EditorJS({
+const editor = new EditorJS({
     autofocus: true,
     tools: {
-      header: {
-        class: Header,
-        inlineToolbar: true,
-      },
-      list: {
-        class: List,
-        inlineToolbar: true,
-      },
-      quote: {
-        class: Quote,
-        inlineToolbar: true,
-      },
-      table: Table,
-      todo: {
-        class: SimpleTodo,
-        config: {
-          saveData: {
-            saveAll() {
-              async function save() {
-                const data2 = await editor.save();
-                localStorage.setItem("Offlinesave", JSON.stringify(data2));
-                localStorage.setItem('Offlinetime', 'true')
-                console.log(
-                  JSON.parse(localStorage.getItem("Offlinesave"))
-                );
-              }
-              return save();
-            },
-          },
+        header: {
+            class: Header,
+            inlineToolbar: true,
         },
-      },
+        list: {
+            class: List,
+            inlineToolbar: true,
+        },
+        quote: {
+            class: Quote,
+            inlineToolbar: true,
+        },
+        table: Table,
+        todo: {
+            class: SimpleTodo,
+            config: {
+                saveData: {
+                    saveAll() {
+                        async function save() {
+                            const data2 = await editor.save();
+                            localStorage.setItem("Offlinesave", JSON.stringify(data2));
+                            localStorage.setItem('Offlinetime', 'true')
+                            console.log(
+                                JSON.parse(localStorage.getItem("Offlinesave"))
+                            );
+                        }
+                        return save();
+                    },
+                },
+            },
+        },
     },
     placeholder: "Enter some text...",
-    data: localStorage.getItem('Offlinesave') ? JSON.parse(localStorage.getItem("Offlinesave")) : null,
-  });
+    data: localStorage.getItem('Offlinesave') ? JSON.parse(localStorage.getItem("Offlinesave")) : {"time":1688257618252,"blocks":[{"id":"fSS7EY0VOi","type":"paragraph","data":{"text":"Click on me to type"}}],"version":"2.27.2"},
+});
 
-  document.getElementById('restbtn').addEventListener('click', ()=>{
+document.getElementById('restbtn').addEventListener('click', () => {
     localStorage.removeItem('Offlinesave')
     window.location.reload()
-  })
+})
