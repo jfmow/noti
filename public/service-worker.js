@@ -1,4 +1,4 @@
-const CACHE_NAME = 'Noti-v0.69420';
+const CACHE_NAME = 'Noti-v0.69';
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -13,7 +13,10 @@ self.addEventListener('install', (event) => {
           '/offline/header.js',
           '/offline/list.js',
           '/offline/quote.js',
-          '/offline/table.js'
+          '/offline/table.js',
+          '/offline/savestuff.js',
+          '/offline/todo.js',
+          '/offline/loadstuff.js'
           // Include other static assets such as images, icons, etc.
         ]);
       })
