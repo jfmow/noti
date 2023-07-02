@@ -1,5 +1,5 @@
 if (!localStorage.getItem("Offlinesave")) {
-    localStorage.setItem("Offlinesave", null);
+    localStorage.removeItem('Offlinesave');
   }
   const editor = new EditorJS({
     autofocus: true,
@@ -37,5 +37,10 @@ if (!localStorage.getItem("Offlinesave")) {
       },
     },
     placeholder: "Enter some text...",
-    data: JSON.parse(localStorage.getItem("Offlinesave")),
+    data: localStorage.getItem('Offlinesave') ? JSON.parse(localStorage.getItem("Offlinesave")) : null,
   });
+
+  document.getElementById('restbtn').addEventListener('click', ()=>{
+    localStorage.removeItem('Offlinesave')
+    window.location.reload()
+  })
