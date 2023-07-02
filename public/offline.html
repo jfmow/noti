@@ -7,10 +7,14 @@
     <style>
       body {
         font-family: Arial, sans-serif;
-        background-color: #f2f2f2;
-        color: #333333;
+        background-color: #333333;
         text-align: center;
         margin: 0;
+        color: #fff;
+      }
+
+      ::-webkit-scrollbar{
+        display: none;
       }
       /*Todo check box styles*/
 
@@ -132,7 +136,64 @@
         stroke: none !important;
       }
 
+      .nav{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    width: 100%;
+    justify-items: center;
+    align-items: center;
+    background: #1818183d;
+    backdrop-filter: blur(5px);
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 998;
+      }
+
+      .tc-toolbox {
+    color-scheme: light;
+    color: #000;
+  }
+  .ce-toolbar__settings-btn, .ce-toolbar__plus {
+    color: rgb(124, 124, 124);
+  }
+  .ce-inline-toolbar {
+    color: #000;
+}
+
       /*!!END!! todo checkbox styles*/
+
+      #closepopup{
+        cursor: pointer;
+          background: #1f1f1f;
+          color: #fff;
+          padding: 1em 2em;
+          border: none;
+          border-radius: 5px;
+          font-weight: 500;
+          transition: 0.3s all;
+      }
+
+      #closepopup:hover{
+        background: #353535;
+        transform: scale(1.05);
+      }
+
+      #restbtn{
+        background: #ff4a3d;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 700;
+        transition: all 0.3s;
+      }
+
+      #restbtn:hover{
+        
+        transform: scale(1.05);
+      }
     </style>
   </head>
   <body>
@@ -142,32 +203,49 @@
     <script src="/offline/list.js"></script>
     <script src="/offline/header.js"></script>
 
-    <div style="padding: 40px;">
-    <h1>Oops! You're offline</h1>
-    <p>
-      Sorry, it looks like you are currently offline. Please check your internet
-      connection and try again. Offline support is currently in devlopment.
-      <br/><br/>Not all features are supported as they require network connection. This is still beta so it may not work as expected
-    </p>
-    <button id="restbtn">Reset editor</button>
+    <div
+      id="popup"
+      style="
+        padding: 40px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        z-index: 999;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(3px); /* background: #ff4f4f0d; */
+        color: #ff3f3f;
+      "
+    >
+      <h1>Oops! You're offline</h1>
+      <p style="color: #000;">Not all features are supported as they require network
+        connection. This is still beta so it may not work as expected</p>
+      <button
+        id="closepopup"
+      >
+        Continue to offline editor
+      </button>
+      
     </div>
 
-    <script src="/offline/todo.js">
-        
-    </script>
-    <div
-      style="text-align: left; padding: 2em; background: #e4e4e4"
-      id="editorjs"
-    ></div>
-    <script src="/offline/loadstuff.js">
-      
-    </script>
-    <script src="/offline/savestuff.js">
-      
-    </script>
+    <script src="/offline/todo.js"></script>
+    <div class="nav">
+    <h4 id="savedstate">Unsaved</h4>
+    <button
+      id="restbtn"
+    >
+      Reset editor
+    </button>
+    </div>
+    <div style="text-align: left; padding: 2em" id="editorjs"></div>
+    <script src="/offline/loadstuff.js"></script>
+    <script src="/offline/savestuff.js"></script>
   </body>
 </html>
-
 
 <!--
     image: {

@@ -34,10 +34,14 @@ const editor = new EditorJS({
         },
     },
     placeholder: "Enter some text...",
-    data: localStorage.getItem('Offlinesave') ? JSON.parse(localStorage.getItem("Offlinesave")) : {"time":1688257618252,"blocks":[{"id":"fSS7EY0VOi","type":"paragraph","data":{"text":"Click on me to type"}}],"version":"2.27.2"},
+    data: localStorage.getItem('Offlinesave') ? JSON.parse(localStorage.getItem("Offlinesave")) : { "time": 1688257618252, "blocks": [{ "id": "fSS7EY0VOi", "type": "paragraph", "data": { "text": "" } }], "version": "2.27.2" },
 });
 
 document.getElementById('restbtn').addEventListener('click', () => {
     localStorage.removeItem('Offlinesave')
-    window.location.reload()
+    editor.clear()
+})
+
+document.getElementById('closepopup').addEventListener('click', () => {
+    document.getElementById('popup').style.display = 'none'
 })
