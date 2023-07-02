@@ -14,7 +14,7 @@ const editor = new EditorJS({
             inlineToolbar: true,
         },
         table: Table,
-        todo: {
+        SimpleTodo: {
             class: SimpleTodo,
             config: {
                 saveData: {
