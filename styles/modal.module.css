@@ -328,8 +328,27 @@
 
     .default_settings_modal_container_usrname_block {
 
+        border: none;
         width: 100dvw;
         margin: 0;
+        position: relative;
+        height: 100dvh;
+        display: flex;
+        align-items: center;
+        box-shadow: none;
+        border-radius: 0;
+        flex-direction: row;
 
+    }
+
+    .default_settings_modal_container_usrclose_btn{
+        position: absolute;
+        top: 2em;
+        right: 2em;
+    }
+
+    .default_settings_modal_container_usrclose_btn svg{
+        width: 2.5em;
+        height: 2.5em;
     }
 }
