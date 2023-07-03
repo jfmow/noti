@@ -87,7 +87,7 @@ export default function Home() {
             <AnimatedSection className={styles.section3}>
               <img alt="floating notebook" className={styles.bg} src="/static/notebookfloating1.jpg" />
               <div>
-              <h2>Just the right ammount of features</h2>
+              <h2>Just the right amount of features</h2>
               <p>And just ask if you think theres something more that could be added</p>
               </div>
             </AnimatedSection>
