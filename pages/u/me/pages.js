@@ -88,7 +88,7 @@ export default function BulkManagment() {
                     <h3>Total pages: {pages.length <= 0 ? ('Loading...') : (pages.length)}</h3>
                 </div>
                 <div className={styles.page_align_center}>
-                    {seletedPages && (
+                    {seletedPages.length > 0 && (
                         <ModalButton classnm={styles.fixeddeletebtn} events={DeleteWarning}>Delete selected pages</ModalButton>
                     )}
                     <div className={styles.pages}>

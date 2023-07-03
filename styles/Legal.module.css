@@ -12,22 +12,6 @@
     overflow: scroll;
 }
 
-.container>button {
-    bottom: 2em;
-    position: fixed;
-    /* bottom: 1em; */
-    /* left: 1em; */
-    /* transform: translate(-50%, -50%); */
-    /* top: 2em; */
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #000;
-    border: none;
-    padding: 1em 1.5em;
-    border-radius: 0.5em;
-    cursor: pointer;
-}
-
 .container>ol {
     font-size: 20px;
 }
@@ -75,4 +59,14 @@
 
 .container a:hover {
     text-decoration: underline;
+}
+
+.back{
+    position: fixed;
+    top: 2em;
+    left: 2em;
+    display: flex;
+    background: none;
+    border: none;
+    cursor: pointer;
 }

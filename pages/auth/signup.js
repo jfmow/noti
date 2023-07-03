@@ -44,12 +44,13 @@ export default function Login() {
                 return toast.error('Please agree to the T&Cs to continue', { position: toast.POSITION.TOP_LEFT });
             }
             //console.log(name, email, mail)
-            if (!email || !password) {
+            if (!email || !password || !name) {
                 return toast.error('Please fill out all fields', { position: toast.POSITION.TOP_LEFT });
             }
             setIsLoading(true);
             const sanitizedEmail = validator.trim(validator.escape(email));
             const sanitizedPassword = validator.trim(validator.escape(password));
+            const sanitizedName = validator.trim(validator.escape(name));
             // Validate sanitized inputs
             if (!validator.isLength(sanitizedPassword, { min: 7 })) {
                 toast.warning('Invalid password', {
@@ -69,6 +70,7 @@ export default function Login() {
 
             const newAccData = {
                 "email": sanitizedEmail,
+                "username": sanitizedName,
                 "emailVisibility": false,
                 "password": sanitizedPassword,
                 "passwordConfirm": sanitizedPassword,
@@ -178,10 +180,14 @@ export default function Login() {
                     <p className={styles.title}>Signup</p>
                     <form className={styles.form}>
                         <div className={styles.inputgroup}>
+                            <label for="username">Username</label>
+                            <input onChange={(e) => setName(e.target.value)} type="text" name="username" id="username" placeholder="" />
+
+                        </div>
+                        <div className={styles.inputgroup}>
                             <label for="username">Email</label>
                             <input onChange={event => setEmail(event.target.value)} type="email" name="email" id="email" placeholder="" />
                         </div>
-
                         <div className={styles.inputgroup}>
                             <label for="password">Password</label>
                             <div className={styles.pwinput}>
@@ -231,7 +237,7 @@ export default function Login() {
 
                         <ModalTitle>Beta App</ModalTitle>
                         <p className={styles.warn} style={{ maxHeight: '40dvh', overflowY: 'scroll', overflowX: 'hidden' }}>
-                            Important Notice: Beta App - Data Security and Service Availability.<br/><br/>
+                            Important Notice: Beta App - Data Security and Service Availability.<br /><br />
 
                             Dear User,
 
@@ -256,8 +262,3 @@ export default function Login() {
     )
 }
 
-//<div className={styles.inputgroup}>
-//    <label for="username">Username</label>
-//    <input onChange={(e) => setName(e.target.value)} type="text" name="username" id="username" placeholder="" />
-//
-//</div>

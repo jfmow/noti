@@ -461,7 +461,7 @@ function Editor({ page, preview }) {
     };
   }, [editorData, page]);
 
-  async function handleDeleteArticle() {
+  async function handleDeletePage() {
     await pb.collection("pages").delete(page);
     editor.destroy()
     Router.push('/page/firstopen')
@@ -735,7 +735,7 @@ function Editor({ page, preview }) {
                 <div className={styles.buttonlabel_label}>Delete page</div>
                 <button
                   type="button"
-                  onClick={handleDeleteArticle}
+                  onClick={handleDeletePage}
                   className={styles.title_buttons_btn}
                 >
                   <svg

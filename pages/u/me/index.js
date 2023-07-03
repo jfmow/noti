@@ -62,7 +62,7 @@ export default function Account() {
         <div className={styles.user_account_form_container}>
           <AccManagementForm />
 
-          <div style={{position: 'absolute', bottom: '3dvh', left: '0', right: '0'}}>
+          <div style={{ position: 'absolute', bottom: '3dvh', left: '0', right: '0' }}>
             <h5>Quick links</h5>
             <h6><Link href='/auth/terms-and-conditions'>Terms & Conditions</Link> | <Link href='/auth/privacy-policy'>Privacy policy</Link></h6>
           </div>
@@ -317,7 +317,8 @@ function AccManagementForm() {
           <ModalContainer events={() => setUserInfoDisplay(false)}>
             <ModalForm>
               <ModalTitle>Account details</ModalTitle>
-              <p>Email: {pb.authStore.model.email}</p>
+              <h4>Username: {pb.authStore.model.username}</h4>
+              <h4>Email: {pb.authStore.model.email}</h4>
               <p>Joined: {new Date(pb.authStore.model.created).toLocaleString()}</p>
               <p>UUID: {pb.authStore.model.id}</p>
               <AlternateButton click={() => setUsernameField(true)}>
@@ -428,12 +429,8 @@ function Notitoggle() {
   return (
     <>
       <label className={styles.switch}>
-        <input type="checkbox" checked={push} disabled={pendingPush} onChange={push ? unsubscribeFromPush : subscribeToPush} />
-        <div className={styles.slider} style={{ backgroundColor: pendingPush && '#424242' }}></div>
-        <div className={styles.slidercard}>
-          <div className={`${styles.slidercardface} ${styles.slidercardfront}`}><svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px" ><path d="M0 0h24v24H0V0z" fill="none" /><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm7.29-4.71L18 16v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-1.29 1.29c-.63.63-.19 1.71.7 1.71h13.17c.9 0 1.34-1.08.71-1.71zM14.5 9.33c0 .31-.11.6-.3.84l-2.5 3.03h1.9c.5 0 .9.4.9.9s-.4.9-.9.9h-2.78c-.73 0-1.32-.59-1.32-1.32v-.01c0-.31.11-.6.3-.84l2.5-3.03h-1.9c-.5 0-.9-.4-.9-.9s.4-.9.9-.9h2.78c.73 0 1.32.59 1.32 1.33z" /></svg></div>
-          <div className={`${styles.slidercardface} ${styles.slidercardback}`}><svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px" ><path d="M0 0h24v24H0V0z" fill="none" /><path d="M18 16v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.68-1.5-1.51-1.5S10.5 3.17 10.5 4v.68C7.63 5.36 6 7.92 6 11v5l-1.3 1.29c-.63.63-.19 1.71.7 1.71h13.17c.89 0 1.34-1.08.71-1.71L18 16zm-6.01 6c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zM6.77 4.73c.42-.38.43-1.03.03-1.43-.38-.38-1-.39-1.39-.02C3.7 4.84 2.52 6.96 2.14 9.34c-.09.61.38 1.16 1 1.16.48 0 .9-.35.98-.83.3-1.94 1.26-3.67 2.65-4.94zM18.6 3.28c-.4-.37-1.02-.36-1.4.02-.4.4-.38 1.04.03 1.42 1.38 1.27 2.35 3 2.65 4.94.07.48.49.83.98.83.61 0 1.09-.55.99-1.16-.38-2.37-1.55-4.48-3.25-6.05z" /></svg></div>
-        </div>
+        <input type="checkbox" checked={push} disabled={pendingPush} onChange={push ? unsubscribeFromPush : subscribeToPush}/>
+          <span className={styles.slider}></span>
       </label>
     </>
   )
@@ -451,13 +448,9 @@ function Quotetoggle() {
   }
   return (
     <>
-      <label className={styles.switch}>
-        <input type="checkbox" checked={pb.authStore.model.quotes} disabled={pendingPush} onChange={toggle} />
-        <div className={styles.slider} style={{ backgroundColor: pendingPush && '#424242' }}></div>
-        <div className={styles.slidercard}>
-          <div className={`${styles.slidercardface} ${styles.slidercardfront}`}><svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px" ><path d="M0 0h24v24H0V0z" fill="none" /><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm7.29-4.71L18 16v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-1.29 1.29c-.63.63-.19 1.71.7 1.71h13.17c.9 0 1.34-1.08.71-1.71zM14.5 9.33c0 .31-.11.6-.3.84l-2.5 3.03h1.9c.5 0 .9.4.9.9s-.4.9-.9.9h-2.78c-.73 0-1.32-.59-1.32-1.32v-.01c0-.31.11-.6.3-.84l2.5-3.03h-1.9c-.5 0-.9-.4-.9-.9s.4-.9.9-.9h2.78c.73 0 1.32.59 1.32 1.33z" /></svg></div>
-          <div className={`${styles.slidercardface} ${styles.slidercardback}`}><svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px" ><path d="M0 0h24v24H0V0z" fill="none" /><path d="M18 16v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.68-1.5-1.51-1.5S10.5 3.17 10.5 4v.68C7.63 5.36 6 7.92 6 11v5l-1.3 1.29c-.63.63-.19 1.71.7 1.71h13.17c.89 0 1.34-1.08.71-1.71L18 16zm-6.01 6c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zM6.77 4.73c.42-.38.43-1.03.03-1.43-.38-.38-1-.39-1.39-.02C3.7 4.84 2.52 6.96 2.14 9.34c-.09.61.38 1.16 1 1.16.48 0 .9-.35.98-.83.3-1.94 1.26-3.67 2.65-4.94zM18.6 3.28c-.4-.37-1.02-.36-1.4.02-.4.4-.38 1.04.03 1.42 1.38 1.27 2.35 3 2.65 4.94.07.48.49.83.98.83.61 0 1.09-.55.99-1.16-.38-2.37-1.55-4.48-3.25-6.05z" /></svg></div>
-        </div>
+    <label className={styles.switch}>
+        <input type="checkbox" checked={pb.authStore.model.quotes} disabled={pendingPush} onChange={toggle}/>
+          <span className={styles.slider}></span>
       </label>
     </>
   )
