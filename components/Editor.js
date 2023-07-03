@@ -46,10 +46,7 @@ function Editor({ page, preview }) {
   const [iconModalState, setIconModalState] = useState(false);
   const [currentPageIconValue, setCurrentPageIconValue] = useState("");
   const [chefKey, setChefKey] = useState("");
-  const [isTitleEdit, setIsTitleEdit] = useState(false);
   const [importantNote, setImportantNote] = useState(false)
-
-  const [wasOffline, setWasOffline] = useState(false);
 
   useEffect(() => {
     if (preview === "true") {
@@ -83,6 +80,11 @@ function Editor({ page, preview }) {
 
           formData.append("content", JSON.stringify(articleContent));
           try {
+            if (page === "firstopen") {
+              formData.append("owner", pb.authStore.model.id);
+              const state = await pb.collection("pages").create(formData);
+              return Router.push(`/page/${state.id}`)
+            }
             const state = await pb.collection("pages").update(page, formData);
             console.log("Auto saved successfully!");
           } catch (error) {
@@ -138,9 +140,11 @@ function Editor({ page, preview }) {
       setIsLoading(true);
       async function fetchArticles() {
         if (page === "firstopen") {
+          setEditorData(null)
+          setArticleTitle('Untitled')
+          setArticleHeader(null)
           if (localStorage.getItem('Offlinetime') === 'true') {
             try {
-              setWasOffline(true)
               setEditorData(JSON.parse(localStorage.getItem('Offlinesave')));
               const data = {
                 "content": localStorage.getItem('Offlinesave'),
@@ -429,7 +433,7 @@ function Editor({ page, preview }) {
             editor.destroy();
           } catch (err) {
             console.warn(err);
-            toast.error(`Error: Too fast, reloading editor`);
+            toast.error(`Reloading editor`);
             setIsLoading(true);
             setTimeout(() => {
               window.location.reload();
@@ -458,17 +462,17 @@ function Editor({ page, preview }) {
 
   async function handleDeleteArticle() {
     await pb.collection("pages").delete(page);
-    //router.replace('/');
+    Router.push('/page/firstopen')
   }
 
   async function handleTitleChange() {
-    setIsTitleEdit(false);
     const title = document.getElementById('tit')
     setArticleTitle(title.innerText);
     const newTitle = {
       title: title.innerText
     };
     await pb.collection("pages").update(page, newTitle);
+    setIsSaving(false);
   }
 
   async function handleFileChange(e) {
@@ -620,27 +624,10 @@ function Editor({ page, preview }) {
                 contentEditable
                 type="text"
                 id='tit'
-                onFocus={() => setIsTitleEdit(true)}
+                onBlur={handleTitleChange}
               >
                 {articleTitle ? articleTitle : "Untitled"}
               </div>
-              {isTitleEdit && (
-                <button
-                  onClick={handleTitleChange}
-                  type="button"
-                  className={styles.savetitlebtn}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24px"
-                    viewBox="0 0 24 24"
-                    width="24px"
-                  >
-                    <path d="M0 0h24v24H0V0z" fill="none" />
-                    <path d="M9 16.2l-3.5-3.5c-.39-.39-1.01-.39-1.4 0-.39.39-.39 1.01 0 1.4l4.19 4.19c.39.39 1.02.39 1.41 0L20.3 7.7c.39-.39.39-1.01 0-1.4-.39-.39-1.01-.39-1.4 0L9 16.2z" />
-                  </svg>
-                </button>
-              )}
             </div>
             <div className={styles.title_buttons} id="tut_title_btns_id">
               <ImportantNote classname={styles.title_buttons_btn} importt={importantNote} page={page} />
