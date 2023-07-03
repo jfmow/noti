@@ -62,7 +62,7 @@ export default function Account() {
         <div className={styles.user_account_form_container}>
           <AccManagementForm />
 
-          <div style={{position: 'absolute', bottom: '3dvh'}}>
+          <div style={{position: 'absolute', bottom: '3dvh', left: '0', right: '0'}}>
             <h5>Quick links</h5>
             <h6><Link href='/auth/terms-and-conditions'>Terms & Conditions</Link> | <Link href='/auth/privacy-policy'>Privacy policy</Link></h6>
           </div>
