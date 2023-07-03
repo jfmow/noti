@@ -139,11 +139,12 @@ function Editor({ page, preview }) {
       setError(false);
       setIsLoading(true);
       setIsSaving(false)
+      setEditorData(null)
+      setArticleTitle('Untitled')
+      setArticleHeader(null)
       async function fetchArticles() {
         if (page === "firstopen") {
-          setEditorData(null)
-          setArticleTitle('Untitled')
-          setArticleHeader(null)
+
           if (localStorage.getItem('Offlinetime') === 'true') {
             try {
               setEditorData(JSON.parse(localStorage.getItem('Offlinesave')));

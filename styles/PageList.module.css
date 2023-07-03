@@ -61,7 +61,7 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  color: #668F80;
+  color: var(--big_button_text);;
   padding: 5px;
   /* width: fit-content; */
   border-radius: var(--btn_border_radius);
@@ -75,7 +75,7 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  color: #668F80;
+  color: var(--big_button_text);
   /*padding: 5px;*/
   /* width: fit-content; */
   border-radius: var(--btn_border_radius);
