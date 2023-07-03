@@ -242,6 +242,47 @@
 
 
 
+.acc_button {
+    background: #ffffff;
+    outline: none;
+    border: 2px solid #d0d0d0;
+    border-radius: 20px;
+    padding: 15px 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 5%;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 4px 3px 4px 0px #e8e8e8;
+    font-size: 13px;
+  transition: 0.35s all;
+  
+  color: rgb(31, 31, 31);
+  font-weight: 600;
+  }
+  
+  .acc_button_red {
+    outline: 3px #ff2d2d solid;
+  }
+  .acc_button svg {
+    fill: #9c9c9c;
+    transition: 400ms;
+  }
+  
+  .acc_button:hover {
+    background-color: #000000;
+    color: #fff;
+    /* border-color: #000; */
+    /* border: 1px solid #000;*/
+  }
+  
+  .acc_button:hover svg {
+    fill: #ffffff;
+  }
+  
+
 
 @media (prefers-color-scheme: dark) {
 
@@ -258,6 +299,25 @@
         background: rgb(34, 34, 34);
         color: #ffffff;
     }
+
+    .acc_button {
+        background: #353535;
+        border: 2px solid #4f4f4f;
+        box-shadow: 4px 3px 4px 0px #1c1c1c;
+        color: rgb(149, 149, 149);
+      }
+    
+      .acc_button_red {
+        outline: 3px #ff2d2d solid;
+      }
+    
+      .acc_button .acc_button_text {
+        color: rgb(149, 149, 149);
+      }
+    
+      .acc_button svg {
+        fill: #9c9c9c;
+      }
 
 }
 

@@ -78,7 +78,7 @@ export default function Login() {
     } catch (error) {
       // Handle errors appropriately
       console.log(error);
-      toast.error('Error logging in. Please make sure you have a valid account');
+      toast.error('Failed to login. Invalid email or password.');
       setIsLoading(false)
     }
 
@@ -139,7 +139,7 @@ export default function Login() {
           <p className={styles.title}>Login</p>
           <form className={styles.form}>
             <div className={styles.inputgroup}>
-              <label for="username">Username</label>
+              <label for="username">Email</label>
               <input onChange={event => setEmail(event.target.value)} type="text" name="username" id="username" placeholder="" />
             </div>
             <div className={styles.inputgroup}>

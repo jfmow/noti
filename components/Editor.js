@@ -138,6 +138,7 @@ function Editor({ page, preview }) {
       setLastTypedTimeIdle(true);
       setError(false);
       setIsLoading(true);
+      setIsSaving(false)
       async function fetchArticles() {
         if (page === "firstopen") {
           setEditorData(null)

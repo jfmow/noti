@@ -108,7 +108,7 @@
   width: 100%;
   position: relative;
   height: 40dvh;
-  background: linear-gradient(20deg,#607d8b,#fff,#607d8b);
+  background: linear-gradient(20deg, #607d8b, #fff, #607d8b);
   background-size: 100%;
 }
 
@@ -322,7 +322,8 @@
   background: #fff;
   border: none;
   border-radius: var(--btn_border_radius);
-  padding: 5px 7px;;
+  padding: 5px 7px;
+  ;
   fill: var(--main_btn_color_action);
   cursor: pointer;
 }
@@ -657,23 +658,27 @@
 
 /*Todo check box styles*/
 
-.todo_container{
+.todo_container {
   padding: 10px;
 }
+
 .todolist {
   list-style-type: none;
   display: flex;
   flex-direction: column;
   gap: 3px;
 }
-.todoiteminput{
+
+.todoiteminput {
   border: none;
   padding: 10px;
   border-radius: var(--btn_border_radius);
-  background: #0000004d;
+  background: #00000000;
   color: #fff;
   width: 100%;
   margin: 1em;
+  font-size: 12px;
+  outline: none;
 }
 
 .todolist li {
@@ -690,7 +695,7 @@
   outline: none;
 }
 
-.todolist li span:focus-within{
+.todolist li span:focus-within {
   color: #e4e4e4;
   border: 1px solid #353535;
   border-radius: var(--btn_border_radius);
@@ -747,13 +752,13 @@
   top: 0.25em;
   width: 0.25em;
   height: 0.5em;
-  border-color: #fff0 rgb(0,rgb(0, 0, 0)) white #fff0;
+  border-color: #fff0 rgb(0, rgb(0, 0, 0)) white #fff0;
   border-width: 0 0.15em 0.15em 0;
   border-radius: 0em;
   transform: rotate(45deg);
 }
 
-.tododeletebtn{
+.tododeletebtn {
   border: none;
   color: #a9a9a9;
   border-radius: 3px;
@@ -767,6 +772,7 @@
   fill: #353535;
   transition: 0.2s;
 }
+
 .tododeletebtn:hover svg {
   fill: #ff5555;
 }
@@ -783,6 +789,7 @@
   .create {
     color: #fff;
   }
+
   .todocontainer input:checked~.todocheckmark:after {
     left: 0.45em;
     top: 0.25em;
@@ -793,10 +800,12 @@
     border-radius: 0em;
     transform: rotate(45deg);
   }
-  .title{
+
+  .title {
     background: linear-gradient(20deg, #9E9E9E, #607D8B, #9E9E9E);
   }
-  .titleinput{
+
+  .titleinput {
     color: #fff;
   }
 }

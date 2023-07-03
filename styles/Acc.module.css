@@ -6,7 +6,6 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 2em;
 }
 
 
@@ -19,6 +18,7 @@
   align-items: stretch;
   flex-direction: column;
   flex-wrap: wrap;
+  max-width: 800px;
 }
 
 .user_account_form_container {
@@ -41,7 +41,6 @@
   width: 100%;
   align-self: center;
   height: 100%;
-  max-height: 90vh;
 }
 
 .user_account_form_profile_settings,
@@ -351,20 +350,21 @@ input:checked~.slider {
 }
 
 .acc_button {
+  background: #ffffff;
+  outline: none;
+  border: 2px solid #d0d0d0;
+  border-radius: 20px;
+  padding: 15px 10px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding: 15px 25px;
-  gap: 15px;
-  background-color: #ffffff;
-  outline: 3px #a39c9c solid;
-  outline-offset: -3px;
-  border-radius: var(--btn_border_radius);
-  border: none;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 5%;
+  justify-content: center;
   cursor: pointer;
-  transition: 400ms;
-  box-shadow: 0px 7px 6px 1px #efefef;
-  font-size: 20px;
+  box-shadow: 4px 3px 4px 0px #e8e8e8;
+  font-size: 13px;
+transition: 0.4s all;
 }
 
 .acc_button_red {
@@ -373,8 +373,7 @@ input:checked~.slider {
 
 .acc_button .acc_button_text {
   color: rgb(31, 31, 31);
-  font-weight: 700;
-  font-size: 1em;
+  font-weight: 600;
   transition: 400ms;
 }
 
@@ -386,7 +385,6 @@ input:checked~.slider {
 .acc_button:hover {
   background-color: #000000;
   /* border-color: #000; */
-  outline: 3px solid #000;
   /* border: 1px solid #000;*/
 }
 
@@ -417,7 +415,6 @@ input:checked~.slider {
     height: auto;
     overflow: auto;
     overflow-x: hidden;
-    padding: 2em;
   }
 
   .gridcontainer,
@@ -435,7 +432,6 @@ input:checked~.slider {
   .user_account_form_container {
     grid-template-columns: 1fr;
     margin: 0;
-    padding: 0;
   }
 
   .user_account_form_container>form {
@@ -475,9 +471,9 @@ input:checked~.slider {
 @media (prefers-color-scheme: dark) {
 
   .acc_button {
-    background-color: #181717;
-    outline: 3px #181717 solid;
-    box-shadow: 0px 7px 6px 1px #191919;
+    background: #353535;
+    border: 2px solid #4f4f4f;
+    box-shadow: 4px 3px 4px 0px #1c1c1c;
   }
 
   .default_settings_modal_container_usrname_toggles{
@@ -496,10 +492,6 @@ input:checked~.slider {
     fill: #9c9c9c;
   }
 
-  .acc_button:hover {
-    background: transparent;
-    box-shadow: none;
-  }
 
   .default_settings_modal_container_usrname_block {
     background: #1f1f1f;

@@ -7,7 +7,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Nav from '@/components/Nav';
 import compressImage from '@/lib/CompressImg';
-import { ModalButton, ModalCheckBox, ModalContainer, ModalForm, ModalInput, ModalTitle } from '@/lib/Modal';
+import { AlternateButton, ModalButton, ModalCheckBox, ModalContainer, ModalForm, ModalInput, ModalTitle } from '@/lib/Modal';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
@@ -61,12 +61,13 @@ export default function Account() {
 
         <div className={styles.user_account_form_container}>
           <AccManagementForm />
+
+          <div style={{position: 'absolute', bottom: '3dvh'}}>
+            <h5>Quick links</h5>
+            <h6><Link href='/auth/terms-and-conditions'>Terms & Conditions</Link> | <Link href='/auth/privacy-policy'>Privacy policy</Link></h6>
+          </div>
         </div>
 
-        <div>
-          <h5>Quick links</h5>
-          <h6><Link href='/auth/terms-and-conditions'>Terms & Conditions</Link> | <Link href='/auth/privacy-policy'>Privacy policy</Link></h6>
-        </div>
 
         <button className={styles.logoutBtn} onClick={clearAuthStore}>
 
@@ -242,7 +243,7 @@ function AccManagementForm() {
       }, 2300);
       return
     }
-    
+
 
   }
 
@@ -254,26 +255,26 @@ function AccManagementForm() {
     <>
       <form className={styles.user_account_form_profile_settings}>
         <div className={styles.user_setting_buttons_grid}>
-          <button type='button' className={styles.acc_button} onClick={() => setUserInfoDisplay(true)}>
+          <AlternateButton click={() => setUserInfoDisplay(true)}>
             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0z" fill="none" /><path d="M21 8V7l-3 2-3-2v1l2.72 1.82c.17.11.39.11.55 0L21 8zm1-5H2C.9 3 0 3.9 0 5v14c0 1.1.9 2 2 2h20c1.1 0 1.99-.9 1.99-2L24 5c0-1.1-.9-2-2-2zM8 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H2v-1c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1zm7.5-6h-7c-.28 0-.5-.22-.5-.5v-5c0-.28.22-.5.5-.5h7c.28 0 .5.22.5.5v5c0 .28-.22.5-.5.5z" /></svg>
-            <p className={styles.acc_button_text}>Profile</p>
-          </button>
-          <button className={`${styles.acc_button} ${styles.acc_button_red}`} type="button" onClick={() => setDelAccField(true)}>
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM18 4h-2.5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1z" /></svg>            <p className={styles.acc_button_text}>Delete Account</p>
-          </button>
+            <p>Profile</p>
+          </AlternateButton>
+          <AlternateButton click={() => setDelAccField(true)}>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM18 4h-2.5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1z" /></svg>            <p>Delete Account</p>
+          </AlternateButton>
           {pb.authStore.model.admin && (
-            <button type='button' className={styles.acc_button} onClick={() => window.location.replace('/u/users')}>
+            <AlternateButton click={() => window.location.replace('/u/users')}>
               <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" ><g><rect fill="none" height="24" width="24" /><rect fill="none" height="24" width="24" /></g><g><g><path d="M17,11c0.34,0,0.67,0.04,1,0.09V7.58c0-0.8-0.47-1.52-1.2-1.83l-5.5-2.4c-0.51-0.22-1.09-0.22-1.6,0l-5.5,2.4 C3.47,6.07,3,6.79,3,7.58v3.6c0,4.54,3.2,8.79,7.5,9.82c0.55-0.13,1.08-0.32,1.6-0.55C11.41,19.47,11,18.28,11,17 C11,13.69,13.69,11,17,11z" /><path d="M17,13c-2.21,0-4,1.79-4,4c0,2.21,1.79,4,4,4s4-1.79,4-4C21,14.79,19.21,13,17,13z M17,14.38c0.62,0,1.12,0.51,1.12,1.12 s-0.51,1.12-1.12,1.12s-1.12-0.51-1.12-1.12S16.38,14.38,17,14.38z M17,19.75c-0.93,0-1.74-0.46-2.24-1.17 c0.05-0.72,1.51-1.08,2.24-1.08s2.19,0.36,2.24,1.08C18.74,19.29,17.93,19.75,17,19.75z" /></g></g></svg>
-              <p className={styles.acc_button_text}>Admin</p>
-            </button>
+              <p>Admin</p>
+            </AlternateButton>
           )}
-          <button className={styles.acc_button} type="button" onClick={() => setNotiField(true)}>
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-1.29 1.29c-.63.63-.19 1.71.7 1.71h13.17c.89 0 1.34-1.08.71-1.71L18 16z"/></svg>            <p className={styles.acc_button_text}>Notifications</p>
-          </button>
-          <Link className={styles.acc_button} type="button" href='/u/me/pages'>
-          <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><g><rect fill="none" height="24" width="24"/></g><g><g><path d="M5,11h4c1.1,0,2-0.9,2-2V5c0-1.1-0.9-2-2-2H5C3.9,3,3,3.9,3,5v4C3,10.1,3.9,11,5,11z"/><path d="M5,21h4c1.1,0,2-0.9,2-2v-4c0-1.1-0.9-2-2-2H5c-1.1,0-2,0.9-2,2v4C3,20.1,3.9,21,5,21z"/><path d="M13,5v4c0,1.1,0.9,2,2,2h4c1.1,0,2-0.9,2-2V5c0-1.1-0.9-2-2-2h-4C13.9,3,13,3.9,13,5z"/><path d="M15,21h4c1.1,0,2-0.9,2-2v-4c0-1.1-0.9-2-2-2h-4c-1.1,0-2,0.9-2,2v4C13,20.1,13.9,21,15,21z"/></g></g></svg>
-            <p className={styles.acc_button_text}>Manage pages</p>
-          </Link>
+          <AlternateButton click={() => setNotiField(true)}>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-1.29 1.29c-.63.63-.19 1.71.7 1.71h13.17c.89 0 1.34-1.08.71-1.71L18 16z" /></svg>            <p>Notifications</p>
+          </AlternateButton>
+          <AlternateButton isLink click='/u/me/pages'>
+            <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><g><rect fill="none" height="24" width="24" /></g><g><g><path d="M5,11h4c1.1,0,2-0.9,2-2V5c0-1.1-0.9-2-2-2H5C3.9,3,3,3.9,3,5v4C3,10.1,3.9,11,5,11z" /><path d="M5,21h4c1.1,0,2-0.9,2-2v-4c0-1.1-0.9-2-2-2H5c-1.1,0-2,0.9-2,2v4C3,20.1,3.9,21,5,21z" /><path d="M13,5v4c0,1.1,0.9,2,2,2h4c1.1,0,2-0.9,2-2V5c0-1.1-0.9-2-2-2h-4C13.9,3,13,3.9,13,5z" /><path d="M15,21h4c1.1,0,2-0.9,2-2v-4c0-1.1-0.9-2-2-2h-4c-1.1,0-2,0.9-2,2v4C13,20.1,13.9,21,15,21z" /></g></g></svg>
+            <p>Manage pages</p>
+          </AlternateButton>
         </div>
 
         {userNameField && (
@@ -316,16 +317,15 @@ function AccManagementForm() {
           <ModalContainer events={() => setUserInfoDisplay(false)}>
             <ModalForm>
               <ModalTitle>Account details</ModalTitle>
-              <p>Username: {pb.authStore.model.username}</p>
               <p>Email: {pb.authStore.model.email}</p>
               <p>Joined: {new Date(pb.authStore.model.created).toLocaleString()}</p>
               <p>UUID: {pb.authStore.model.id}</p>
-              <ModalButton events={() => setUsernameField(true)}>
+              <AlternateButton click={() => setUsernameField(true)}>
                 Change username
-              </ModalButton>
-              <ModalButton events={() => setUpdateEmailField(true)}>
+              </AlternateButton>
+              <AlternateButton click={() => setUpdateEmailField(true)}>
                 Update email
-              </ModalButton>
+              </AlternateButton>
             </ModalForm>
           </ModalContainer>
         )}
