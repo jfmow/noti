@@ -463,6 +463,7 @@ function Editor({ page, preview }) {
 
   async function handleDeleteArticle() {
     await pb.collection("pages").delete(page);
+    editor.destroy()
     Router.push('/page/firstopen')
   }
 
