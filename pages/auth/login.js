@@ -22,7 +22,7 @@ export default function Login() {
 
   useEffect(() => {
     if (pb.authStore.isValid) {
-      Router.push("/pages/firstopen")
+      Router.push("/page/firstopen")
       return
     }
   }, []);
