@@ -121,6 +121,10 @@ const MyComponent = ({ currPage }) => {
     const data = {
       parentId: parent,
       owner: pb.authStore.model.id,
+      content: {
+        "time": Date.now(),
+        "blocks": []
+      }
     };
     const record = await pb.collection('pages').create(data);
     router.push(`/page/${record.id}`)
@@ -143,7 +147,7 @@ const MyComponent = ({ currPage }) => {
       console.log(err)
       return
     }
-  } else if (window.localStorage.getItem('_menu') === "open"){
+  } else if (window.localStorage.getItem('_menu') === "open") {
     try {
       document.getElementById('rootitems').classList.remove(styles.dskhidden)
     } catch (err) {
