@@ -444,22 +444,6 @@ function Editor({ page, preview }) {
         }
       });
     }
-
-    return () => {
-      // Cleanup logic
-      if (editor) {
-        try {
-          editor.destroy();
-        } catch (err) {
-          console.warn(err);
-          toast.error(`Error: Too fast, reloading editor`);
-          setIsLoading(true);
-          setTimeout(() => {
-            window.location.reload();
-          }, 1200);
-        }
-      }
-    };
   }, [editorData, page]);
 
   async function handleDeletePage() {
