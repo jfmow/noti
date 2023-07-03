@@ -376,11 +376,6 @@ function Notitoggle() {
         applicationServerKey: urlB64ToUint8Array(VAPID_PUBLIC_KEY)
       });
       postToServer('/api/add-subscription', subscription);
-      const data = {
-        "notis": true
-      };
-
-      await pb.collection('users').update(pb.authStore.model.id, data);
       toast.info('Subscribed to notis')
       setPendingPush(false)
 
@@ -402,11 +397,6 @@ function Notitoggle() {
       endpoint: subscription.endpoint
     });
     await subscription.unsubscribe();
-    const data = {
-      "notis": false
-    };
-
-    await pb.collection('users').update(pb.authStore.model.id, data);
     toast.info('Unsubbed from notis')
     setPendingPush(false)
   }
