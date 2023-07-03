@@ -17,6 +17,7 @@ import { AES, enc } from "crypto-js";
 import compressImage from "@/lib/CompressImg";
 import dynamic from 'next/dynamic';
 import Router from "next/router";
+import { AnimatePresence } from "framer-motion";
 
 const ModalButton = dynamic(() => import('@/lib/Modal').then((module) => module.ModalButton));
 const ModalContainer = dynamic(() => import('@/lib/Modal').then((module) => module.ModalContainer));
@@ -739,6 +740,7 @@ function Editor({ page, preview }) {
           </div>
         </div>
       </div>
+      <AnimatePresence>
       {shareLinkModalState && (
         <>
           <ModalContainer events={() => setShareLinkModalState(false)}>
@@ -761,17 +763,19 @@ function Editor({ page, preview }) {
 
         </>
       )}
+      
       {iconModalState && (
         <>
-          <ModalContainer events={() => setIconModalState(false)}>
-            <ModalForm>
-              <ModalTitle>Page icon</ModalTitle>
-              <ModalInput chngevent={setCurrentPageIconValue} place={"1 emoji only"} type={"text"} />
-              <ModalButton events={handleSetcurrentPageIconValue} classnm={`${styles.buttonred}`}>Change</ModalButton>
-            </ModalForm>
-          </ModalContainer>
+              <ModalContainer events={() => setIconModalState(false)}>
+                <ModalForm>
+                  <ModalTitle>Page icon</ModalTitle>
+                  <ModalInput chngevent={setCurrentPageIconValue} place={"1 emoji only"} type={"text"} />
+                  <ModalButton events={handleSetcurrentPageIconValue} classnm={`${styles.buttonred}`}>Change</ModalButton>
+                </ModalForm>
+              </ModalContainer>
         </>
       )}
+      </AnimatePresence>
       <div className={styles.creategrid}>
         <div className={styles.form}>
           <div className={styles.editor} ref={editorRef}></div>

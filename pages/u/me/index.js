@@ -8,6 +8,7 @@ import Link from 'next/link';
 import Nav from '@/components/Nav';
 import compressImage from '@/lib/CompressImg';
 import { AlternateButton, ModalButton, ModalCheckBox, ModalContainer, ModalForm, ModalInput, ModalTitle } from '@/lib/Modal';
+import { AnimatePresence } from 'framer-motion';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
@@ -277,71 +278,74 @@ function AccManagementForm() {
           </AlternateButton>
         </div>
 
-        {userNameField && (
-          <>
-            <ModalContainer events={() => { setUsernameField(false) }}>
+        <AnimatePresence>
+
+          {userNameField && (
+            <>
+              <ModalContainer events={() => { setUsernameField(false) }}>
+                <ModalForm>
+                  <ModalTitle>Update username</ModalTitle>
+                  <ModalInput chngevent={setNewUsernameData} place={`${pb.authStore.model.username}`} type={"text"} />
+                  <ModalButton events={changeUsername}>Change</ModalButton>
+                </ModalForm>
+              </ModalContainer>
+
+            </>
+          )}
+          {updateEmailField && (
+            <>
+              <ModalContainer events={() => setUpdateEmailField(false)}>
+                <ModalForm>
+                  <ModalTitle>Update email</ModalTitle>
+                  <ModalInput chngevent={setNewEmail} place={`${pb.authStore.model.email}`} type={"email"} />
+                  <ModalButton events={ChangeEmail}>Change</ModalButton>
+                </ModalForm>
+              </ModalContainer>
+
+            </>
+          )}
+
+          {notiField && (
+            <>
+              <ModalContainer events={() => { setNotiField(false) }}>
+                <ModalForm>
+                  <ModalTitle>Notification options</ModalTitle>
+                  <div className={styles.default_settings_modal_container_usrname_toggles}>Global <Notitoggle /></div>
+                  <div className={styles.default_settings_modal_container_usrname_toggles}>Hourly quotes (requires global to be enabled) <Quotetoggle /></div>
+                </ModalForm>
+              </ModalContainer>
+            </>
+          )}
+          {userInfoOpen && !userNameField && !updateEmailField && (
+            <ModalContainer events={() => setUserInfoDisplay(false)}>
               <ModalForm>
-                <ModalTitle>Update username</ModalTitle>
-                <ModalInput chngevent={setNewUsernameData} place={`${pb.authStore.model.username}`} type={"text"} />
-                <ModalButton events={changeUsername}>Change</ModalButton>
+                <ModalTitle>Account details</ModalTitle>
+                <h4>Username: {pb.authStore.model.username}</h4>
+                <h4>Email: {pb.authStore.model.email}</h4>
+                <p>Joined: {new Date(pb.authStore.model.created).toLocaleString()}</p>
+                <p>UUID: {pb.authStore.model.id}</p>
+                <AlternateButton click={() => setUsernameField(true)}>
+                  Change username
+                </AlternateButton>
+                <AlternateButton click={() => setUpdateEmailField(true)}>
+                  Update email
+                </AlternateButton>
               </ModalForm>
             </ModalContainer>
-
-          </>
-        )}
-        {updateEmailField && (
-          <>
-            <ModalContainer events={() => setUpdateEmailField(false)}>
+          )}
+          {delAccField && (
+            <ModalContainer events={() => setDelAccField(false)}>
               <ModalForm>
-                <ModalTitle>Update email</ModalTitle>
-                <ModalInput chngevent={setNewEmail} place={`${pb.authStore.model.email}`} type={"email"} />
-                <ModalButton events={ChangeEmail}>Change</ModalButton>
+                <ModalTitle>Delete account</ModalTitle>
+                <p>By deleting your account, you acknowledge that all of your data linked to this account will be deleted and can NOT be restored. This will have an immediate effect!</p>
+                <ModalCheckBox chngevent={setCheckDel}>Confirm:</ModalCheckBox>
+                <ModalButton classnm={`${styles.buttonred}`} events={deleteAccount}>Delete</ModalButton>
               </ModalForm>
             </ModalContainer>
+          )}
 
-          </>
-        )}
-
-        {notiField && (
-          <>
-            <ModalContainer events={() => { setNotiField(false) }}>
-              <ModalForm>
-                <ModalTitle>Notification options</ModalTitle>
-                <div className={styles.default_settings_modal_container_usrname_toggles}>Global <Notitoggle /></div>
-                <div className={styles.default_settings_modal_container_usrname_toggles}>Hourly quotes (requires global to be enabled) <Quotetoggle /></div>
-              </ModalForm>
-            </ModalContainer>
-          </>
-        )}
-        {userInfoOpen && !userNameField && !updateEmailField && (
-          <ModalContainer events={() => setUserInfoDisplay(false)}>
-            <ModalForm>
-              <ModalTitle>Account details</ModalTitle>
-              <h4>Username: {pb.authStore.model.username}</h4>
-              <h4>Email: {pb.authStore.model.email}</h4>
-              <p>Joined: {new Date(pb.authStore.model.created).toLocaleString()}</p>
-              <p>UUID: {pb.authStore.model.id}</p>
-              <AlternateButton click={() => setUsernameField(true)}>
-                Change username
-              </AlternateButton>
-              <AlternateButton click={() => setUpdateEmailField(true)}>
-                Update email
-              </AlternateButton>
-            </ModalForm>
-          </ModalContainer>
-        )}
-        {delAccField && (
-          <ModalContainer events={() => setDelAccField(false)}>
-            <ModalForm>
-              <ModalTitle>Delete account</ModalTitle>
-              <p>By deleting your account, you acknowledge that all of your data linked to this account will be deleted and can NOT be restored. This will have an immediate effect!</p>
-              <ModalCheckBox chngevent={setCheckDel}>Confirm:</ModalCheckBox>
-              <ModalButton classnm={`${styles.buttonred}`} events={deleteAccount}>Delete</ModalButton>
-            </ModalForm>
-          </ModalContainer>
-        )}
+        </AnimatePresence>
       </form>
-
     </>
   )
 }
@@ -429,8 +433,8 @@ function Notitoggle() {
   return (
     <>
       <label className={styles.switch}>
-        <input type="checkbox" checked={push} disabled={pendingPush} onChange={push ? unsubscribeFromPush : subscribeToPush}/>
-          <span className={styles.slider}></span>
+        <input type="checkbox" checked={push} disabled={pendingPush} onChange={push ? unsubscribeFromPush : subscribeToPush} />
+        <span className={styles.slider}></span>
       </label>
     </>
   )
@@ -448,9 +452,9 @@ function Quotetoggle() {
   }
   return (
     <>
-    <label className={styles.switch}>
-        <input type="checkbox" checked={pb.authStore.model.quotes} disabled={pendingPush} onChange={toggle}/>
-          <span className={styles.slider}></span>
+      <label className={styles.switch}>
+        <input type="checkbox" checked={pb.authStore.model.quotes} disabled={pendingPush} onChange={toggle} />
+        <span className={styles.slider}></span>
       </label>
     </>
   )
