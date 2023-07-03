@@ -480,6 +480,10 @@ input:checked~.slider {
     box-shadow: 0px 7px 6px 1px #191919;
   }
 
+  .default_settings_modal_container_usrname_toggles{
+    color: #fff;
+  }
+
   .acc_button_red {
     outline: 3px #ff2d2d solid;
   }
