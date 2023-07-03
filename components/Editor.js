@@ -273,7 +273,7 @@ function Editor({ page, preview }) {
                         toast.error('File type not supported yet!')
                         return { success: 0 }
                       }
-                      record = await pb.collection("videos").create(formData);
+                      record = await pb.collection("files").create(formData);
                       console.log(record);
 
                     } catch (error) {
@@ -315,9 +315,9 @@ function Editor({ page, preview }) {
                 codepen: true,
                 customPdf: {
                   regex:
-                    /https?:\/\/notidb\.suddsy\.dev\/api\/files\/videos\/([^\/\?\&]*)\/([^\/\?\&]*)\.pdf/,
+                    /https?:\/\/notidb\.suddsy\.dev\/api\/files\/files\/([^\/\?\&]*)\/([^\/\?\&]*)\.pdf/,
                   embedUrl:
-                    "https://notidb.suddsy.dev/api/files/videos/<%= remote_id %>.pdf",
+                    "https://notidb.suddsy.dev/api/files/files/<%= remote_id %>.pdf",
                   html: "<iframe  width='100%' height='500' style='border: none;'></iframe>",
                   height: 300,
                   width: 600,
@@ -325,9 +325,9 @@ function Editor({ page, preview }) {
                 },
                 customDocs: {
                   regex:
-                    /https?:\/\/notidb\.suddsy\.dev\/api\/files\/videos\/([^\/\?\&]*)\/([^\/\?\&]*)\.docx/,
+                    /https?:\/\/notidb\.suddsy\.dev\/api\/files\/files\/([^\/\?\&]*)\/([^\/\?\&]*)\.docx/,
                   embedUrl:
-                    "https://docs.google.com/viewerng/viewer?url=https://notidb.suddsy.dev/api/files/videos/<%= remote_id %>.docx&embedded=true",
+                    "https://docs.google.com/viewerng/viewer?url=https://notidb.suddsy.dev/api/files/files/<%= remote_id %>.docx&embedded=true",
                   html: "<iframe  width='100%' height='500' style='border: none;'></iframe>",
                   height: 300,
                   width: 600,
@@ -354,7 +354,7 @@ function Editor({ page, preview }) {
                     formData.append("file_data", file);
                     formData.append("uploader", pb.authStore.model.id);
                     const response = await toast.promise(
-                      pb.collection("videos").create(formData),
+                      pb.collection("files").create(formData),
                       {
                         pending: "Saving img...",
                         success: "Saved successfully. 📁",
@@ -371,7 +371,7 @@ function Editor({ page, preview }) {
                       success: 1,
                       file: {
                         extension: extension,
-                        url: `${process.env.NEXT_PUBLIC_POCKETURL}/api/files/videos/${response.id}/${response.file_data}`,
+                        url: `${process.env.NEXT_PUBLIC_POCKETURL}/api/files/files/${response.id}/${response.file_data}`,
                       },
                     };
                   }
@@ -907,7 +907,7 @@ class SimpleIframe {
     iframe.style.borderRadius = "5px";
     const fileToken = await pb.files.getToken();
     // retrieve an example protected file url (will be valid ~5min)
-    const record = await pb.collection('videos').getOne(fileId); // Use the fileId to retrieve the record
+    const record = await pb.collection('files').getOne(fileId); // Use the fileId to retrieve the record
     const url = pb.files.getUrl(record, record.file_data, { 'token': fileToken });
     iframe.src = url;
     iframe.setAttribute('fileId', fileId); // Set the fileId as an attribute of the iframe
