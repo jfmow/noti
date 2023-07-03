@@ -296,6 +296,7 @@
   background-color: #f5aeae;
   transition: 0.4s;
   border-radius: 30px;
+  border: 2px solid var(--main_btn_color_action);
 }
 
 .slidercard {
@@ -358,7 +359,7 @@ input:checked~.slider {
   background-color: #ffffff;
   outline: 3px #a39c9c solid;
   outline-offset: -3px;
-  border-radius: 5px;
+  border-radius: var(--btn_border_radius);
   border: none;
   cursor: pointer;
   transition: 400ms;

@@ -14,7 +14,7 @@
   font-size: 200%;
   scroll-snap-align: start;
   position: relative;
-  background: linear-gradient(180deg, #00BCD4 60%, white 20%, white)
+  background: linear-gradient(180deg, var(--main_btn_color_action) 60%, white 20%, white)
 }
 
 
@@ -118,7 +118,7 @@
   overflow: hidden;
   transition-duration: .3s;
   font-size: 20px;
-  border-radius: 5px;
+  border-radius: var(--btn_border_radius);
 }
 
 .svgIcon {
@@ -140,7 +140,7 @@
   top: 0;
   transition-duration: .3s;
   mix-blend-mode: difference;
-  border-radius: 5px;
+  border-radius: var(--btn_border_radius);
 }
 
 .sections {}
@@ -197,7 +197,7 @@
 }
 
 .section3 h2 {
-  background: linear-gradient(to right, #9C27B0, #00BCD4);
+  background: linear-gradient(to right, #9C27B0, var(--main_btn_color_action));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -206,7 +206,7 @@
 }
 
 .section3 p {
-  color: #00BCD4;
+  color: var(--main_btn_color_action);
   font-size: 16px;
   font-weight: 500;
 }

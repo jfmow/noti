@@ -107,7 +107,7 @@
 }
 
 .navlink:hover{
-  color: #9a2ad7;
+  color: var(--main_btn_color_action);
 }
 
 
