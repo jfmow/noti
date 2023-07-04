@@ -490,7 +490,7 @@ function Editor({ page, preview }) {
         //    return toast.error('Compresed file may be too big (>4.5mb)!')
         //}
         await pb.collection("pages").update(page, formData);
-        
+
       } catch (error) {
         toast.error("Error uploading header img", {
           position: toast.POSITION.TOP_LEFT,
@@ -743,40 +743,40 @@ function Editor({ page, preview }) {
         </div>
       </div>
       <AnimatePresence>
-      {shareLinkModalState && (
-        <>
-          <ModalContainer events={() => setShareLinkModalState(false)}>
-            <ModalForm>
-              <ModalTitle>Share page</ModalTitle>
-              <div className={styles.shareModal_link_text}>
-                https://noti.jamesmowat.com/page/view/{page}
-              </div>
-              <ModalButton events={copyToClip}> <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="24"
-                viewBox="0 -960 960 960"
-                width="24"
-              >
-                <path d="M200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-160q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Z" />
-              </svg></ModalButton>
-              <ModalButton classnm={`${styles.buttonred}`} events={unSharePage}>Hide</ModalButton>
-            </ModalForm>
-          </ModalContainer>
+        {shareLinkModalState && (
+          <>
+            <ModalContainer events={() => setShareLinkModalState(false)}>
+              <ModalForm>
+                <ModalTitle>Share page</ModalTitle>
+                <div className={styles.shareModal_link_text}>
+                  https://noti.jamesmowat.com/page/view/{page}
+                </div>
+                <ModalButton events={copyToClip}> <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24"
+                  viewBox="0 -960 960 960"
+                  width="24"
+                >
+                  <path d="M200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-160q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Z" />
+                </svg></ModalButton>
+                <ModalButton classnm={`${styles.buttonred}`} events={unSharePage}>Hide</ModalButton>
+              </ModalForm>
+            </ModalContainer>
 
-        </>
-      )}
-      
-      {iconModalState && (
-        <>
-              <ModalContainer events={() => setIconModalState(false)}>
-                <ModalForm>
-                  <ModalTitle>Page icon</ModalTitle>
-                  <ModalInput chngevent={setCurrentPageIconValue} place={"1 emoji only"} type={"text"} />
-                  <ModalButton events={handleSetcurrentPageIconValue} classnm={`${styles.buttonred}`}>Change</ModalButton>
-                </ModalForm>
-              </ModalContainer>
-        </>
-      )}
+          </>
+        )}
+
+        {iconModalState && (
+          <>
+            <ModalContainer events={() => setIconModalState(false)}>
+              <ModalForm>
+                <ModalTitle>Page icon</ModalTitle>
+                <ModalInput chngevent={setCurrentPageIconValue} place={"1 emoji only"} type={"text"} />
+                <ModalButton events={handleSetcurrentPageIconValue} classnm={`${styles.buttonred}`}>Change</ModalButton>
+              </ModalForm>
+            </ModalContainer>
+          </>
+        )}
       </AnimatePresence>
       <div className={styles.creategrid}>
         <div className={styles.form}>
@@ -845,7 +845,11 @@ class SimpleIframe {
     uploadBtn.style.borderRadius = "5px";
     uploadBtn.style.cursor = "pointer";
     uploadBtn.style.fontWeight = "700";
-    fileInput.click(); //open immediately
+    try {
+      fileInput.click(); //open immediately
+    } catch (err) {
+      console.warn(err)
+    }
     uploadBtn.addEventListener("click", () => fileInput.click());
 
     this.wrapper.appendChild(uploadBtn);
@@ -869,13 +873,15 @@ class SimpleIframe {
 
     fileInput.disabled = false;
     uploadBtn.disabled = false;
-    if (data2.success === 0) {
+    if (data2.success === 1) {
+      await this._createImage(
+        data2.file.recid // Pass the fileId as an argument
+      );
+      this.config.saveData.saveAll()
+    } else {
       return
     }
-    await this._createImage(
-      data2.file.recid // Pass the fileId as an argument
-    );
-    this.config.saveData.saveAll()
+
   }
 
   async _createImage(fileId) {
@@ -897,12 +903,16 @@ class SimpleIframe {
   }
 
   save(blockContent) {
-    const iframe = blockContent.querySelector("iframe");
-    const fileId = iframe.getAttribute('fileId'); // Retrieve the fileId attribute
+    try {
+      const iframe = blockContent.querySelector("iframe");
+      const fileId = iframe.getAttribute('fileId'); // Retrieve the fileId attribute
 
-    return {
-      fileId: fileId // Include the fileId in the saved data
-    };
+      return {
+        fileId: fileId // Include the fileId in the saved data
+      };
+    } catch (err) {
+      console.log(err)
+    }
   }
 }
 
