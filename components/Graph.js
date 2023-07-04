@@ -53,7 +53,7 @@ export default function GraphComponent({ data1, data2 }) {
                         },
                         {
                             label: 'Total size of files per user (MB)',
-                            type: 'pie',
+                            type: 'bar',
                             data: users.map(user => {
                                 const item = sortedData2.find(data => data.user === user);
                                 return item ? item.total_size / (1024 * 1024) : 0; // Convert bytes to megabytes (MB)
