@@ -30,9 +30,9 @@
     justify-content: flex-end;
     color: #000000;
 
-    background: #c5e0e3;
+    background: #ffffff;
     box-shadow: 5px 8px 5px 1px #9d9d9d;
-    border: 2px solid #fff;
+    border: 2px solid #dfdfdf;
     
     position: relative;
 }
@@ -90,11 +90,11 @@
     height: 1.5em;
     width: 1.5em;
     cursor: pointer;
-    fill: #fff;
+    fill: #000000;
 }
 
 .default_settings_modal_container_usrclose_btn svg:hover {
-    fill: #d3d3d3;
+    fill: #333333;
 }
 
 
@@ -319,6 +319,12 @@
       .acc_button svg {
         fill: #9c9c9c;
       }
+      .default_settings_modal_container_usrclose_btn svg{
+        fill: #000;
+      }
+      .default_settings_modal_container_usrclose_btn svg:hover {
+        fill: #d3d3d3;
+    }
 
 }
 

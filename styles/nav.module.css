@@ -14,7 +14,7 @@
   grid-template-columns: 1fr 1fr;
   align-items: center;
   justify-items: center;
-
+  background: #baf7ffa3;
 }
 
 .items h1 {
@@ -109,7 +109,11 @@
 .navlink:hover{
   color: var(--main_btn_color_action);
 }
-
+@media(prefers-color-scheme: dark){
+  .items{
+    background: #030303a3;
+  }
+}
 
 
 @media(max-width: 800px) {
@@ -122,5 +126,7 @@
 
   .items {
     width: 100%;
+    background: none;
   }
 }
+
