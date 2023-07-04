@@ -285,6 +285,7 @@ function Editor({ page, preview }) {
 
                     } catch (error) {
                       console.error(error);
+                      toast.warning('Unable to upload file. It may not be supported yet. Try .pdf or images')
                       return { success: 0 }
                       // Handle error
                     }
