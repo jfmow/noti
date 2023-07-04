@@ -105,10 +105,8 @@ export default function Login() {
                 properties (`pending`, `success`, and `error`) to display different messages based
                 on the status of the email sending process. */
                 await pb.collection('users').requestVerification(email)
-                setTimeout(() => {
-                    toast.dismiss(crateAccProgressToast)
-                    Router.push('/page/firstopen')
-                }, 1000);
+                toast.done(crateAccProgressToast)
+                Router.push('/page/firstopen')
             } catch (error) {
                 console.log(error)
                 setIsLoading(false)

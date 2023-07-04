@@ -233,15 +233,11 @@ function AccManagementForm() {
         }),
       });
       toast.update(updateEmailToastid, { render: `Please check the inbox of ${newEmail} to confirm the change.`, type: "success", isLoading: false });
-      setTimeout(() => {
-        toast.dismiss(updateEmailToastid)
-      }, 2300);
+      toast.done(updateEmailToastid)
     } catch (error) {
       console.log(error)
       toast.update(updateEmailToastid, { render: `Failed to request email change!`, type: "error", isLoading: false });
-      setTimeout(() => {
-        toast.dismiss(updateEmailToastid)
-      }, 2300);
+      toast.done(updateEmailToastid)
       return
     }
 

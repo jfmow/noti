@@ -25,34 +25,43 @@ export default function GraphComponent({ data1, data2 }) {
             const totalSize = sortedData2.reduce((total, item) => total + item.total_size, 0);
             const totalSizeMB = (totalSize / (1024 * 1024)).toFixed(2); // Convert bytes to megabytes (MB) and round to 2 decimal places
             setttsize(totalSizeMB)
+            const colors = [];
+            const opacity = 0.5;
+
+            for (let i = 0; i < users.length; i++) {
+                const red = Math.floor(Math.random() * 256);
+                const green = Math.floor(Math.random() * 256);
+                const blue = Math.floor(Math.random() * 256);
+                const color = `rgba(${red}, ${green}, ${blue}, ${opacity})`;
+                colors.push(color);
+            } // Add more colors if needed
             // Create new chart instance
             chartRef.current.chart = new Chart(ctx, {
-                type: 'bar',
                 data: {
                     labels: users,
                     datasets: [
                         {
-                            label: 'Total Pages',
+                            label: 'Total Pages per user',
+                            type: 'line',
                             data: users.map(user => {
                                 const item = sortedData1.find(data => data.user === user);
                                 return item ? item.total_pages : 0;
                             }),
                             backgroundColor: 'rgba(75, 192, 192, 0.2)',
                             borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1,
-                            barThickness: 20,
+                            borderWidth: 1.5,
                         },
                         {
-                            label: 'Total file size (MB)',
+                            label: 'Total size of files per user (MB)',
+                            type: 'pie',
                             data: users.map(user => {
                                 const item = sortedData2.find(data => data.user === user);
                                 return item ? item.total_size / (1024 * 1024) : 0; // Convert bytes to megabytes (MB)
                             }),
-                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                            borderColor: 'rgba(255, 99, 132, 1)',
+                            backgroundColor: colors.slice(0, users.length),
+                            borderColor: '#fff',
                             borderWidth: 1,
-                            barThickness: 20,
-                        },
+                        }
                     ],
                 },
                 options: {
@@ -70,8 +79,8 @@ export default function GraphComponent({ data1, data2 }) {
 
     return (
         <div style={{ width: '100%' }}>
-            <canvas style={{ maxHeight: '50dvh', padding: '0 2em' }} ref={chartRef} />
-            <h2>Total file size stored on disk: {ttsize}MB</h2>
+            <canvas ref={chartRef} />
+            <span>Total size of files stored on disk: {ttsize}MB</span>
         </div>
     );
 }

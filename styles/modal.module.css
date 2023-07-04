@@ -213,6 +213,7 @@
 
 .chbxcontainer {
     cursor: pointer;
+    display: flex;
 }
 
 .chbxcontainer input {

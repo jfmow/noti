@@ -1,151 +1,215 @@
-import { useState, useEffect } from "react";
-import PocketBase from 'pocketbase';
-import styles from './Admin.module.css';
-import Loader from "@/components/Loader";
-import Link from "next/link";
-import Nav from "@/components/Nav";
+import Head from "next/head";
+import styles from './Ad.module.css'
+import { useEffect, useRef, useState } from "react";
+import PocketBase from 'pocketbase'
 import GraphComponent from "@/components/Graph";
+import Nav from "@/components/Nav";
+import { toast } from "react-toastify";
+import { AlternateButton, ModalCheckBox, ModalContainer, ModalForm, ModalInput, ModalTitle } from "@/lib/Modal";
+const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
+pb.autoCancellation(false)
+export default function Admin() {
+    return (
+        <>
+            <Head>
+                <title>Admin</title>
+            </Head>
+            <Nav />
+            <div className={styles.container}>
+                <Stats />
+                <Users />
+            </div>
+        </>
+    )
+}
 
-const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
-pb.autoCancellation(false);
-
-export default function UserListAdmin() {
-    const [isLoading, setIsLoading] = useState(true);
-    const [userList, setUserList] = useState([]);
+function Users() {
+    const [users, setUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const [loadingUser, setLoadingUser] = useState(null);
-    const [gpdata, setGpData] = useState([])
-    const [gpdata2, setGpData2] = useState([])
+    const [usersList, setUsersList] = useState([])
+    const userContainerRef = useRef(null);
+    const [SendNoti, setSendNoti] = useState(false)
+    const [msg, msgBody] = useState('')
+    const [msgtitle, msgTitle] = useState('')
 
     useEffect(() => {
-        async function getUserList() {
-            const records = await pb.collection('users_admin_list').getFullList({
-                sort: '-created', filter: `username ~ '${searchTerm}'`
-            });
-            setUserList(records)
-        }
-
-        async function getStats(){
-            const records = await pb.collection('Total_pages_per_user').getFullList();
-            console.log(records)
-            setGpData(records)
-            const records2 = await pb.collection('total_files_per_user').getFullList();
-            setGpData2(records2)
-        }
-        getStats()
-
-        
-        async function authUpdate() {
+        async function getUsers() {
             try {
-                const authData = await pb.collection('users').authRefresh();
-                if (!pb.authStore.isValid) {
-                    pb.authStore.clear();
-                    return window.location.replace("/auth/login");
-                }
-                if (!authData.record?.admin) {
-                    return window.location.replace('/')
-                } else {
-                    getUserList()
-                    setIsLoading(false)
-                }
-            } catch (error) {
-                pb.authStore.clear();
-                return window.location.replace('/auth/login');
+                const records = await pb.collection('users_admin_list').getFullList({
+                    sort: '-created', filter: `email ~ '${searchTerm}'`
+                });
+                setUsers(records);
+            } catch (err) {
+                console.error(err);
             }
         }
-
-        authUpdate()
-
-        
+        getUsers();
     }, [searchTerm]);
 
-    const handleSearch = (event) => {
-        setSearchTerm(event.target.value);
-    }
-
-    async function disableUser(user) {
-        setLoadingUser(user.id);
+    async function toggle(user, currentState) {
+        const changeToast = toast.loading(`Updating user's account to ${currentState ? 'enabled' : 'disabled'}`);
         const data = {
-            "disabled": true
+            disabled: currentState ? false : true
         };
-        const record = await pb.collection('users').update(user.id, data);
-        setLoadingUser(null);
-        setUserList(prevUserList => {
-            const updatedUserList = prevUserList.map(u => {
-                if (u.id === user.id) {
-                    return { ...u, disabled: true };
-                }
-                return u;
-            });
-            return updatedUserList;
+
+        // Update the array
+        const updatedUsers = users.map((u) => {
+            if (u.id === user) {
+                return { ...u, ...data };
+            }
+            return u;
         });
+        setUsers(updatedUsers);
+
+        // Update the database
+        await pb.collection('users').update(user, data);
+        toast.done(changeToast);
     }
 
-    async function enableUser(user) {
-        setLoadingUser(user.id);
-        const data = {
-            "disabled": false
-        };
-        const record = await pb.collection('users').update(user.id, data);
-        setLoadingUser(null);
-        setUserList(prevUserList => {
-            const updatedUserList = prevUserList.map(u => {
-                if (u.id === user.id) {
-                    return { ...u, disabled: false };
-                }
-                return u;
-            });
-            return updatedUserList;
-        });
-    }
-
-    if(isLoading){
-        return <Loader/>
+    function scrollToTop() {
+        if (userContainerRef.current) {
+            userContainerRef.current.scrollTop = 0;
+        }
     }
 
     return (
         <>
-        <Nav/>
-            <div className={styles.container}>
-                <div className={styles.header}>
-                    <h1>User list</h1>
-                </div>
-                <GraphComponent data1={gpdata} data2={gpdata2}/>
-                <div className={styles.user_list_container}>
-                    <div className={styles.userlist}>
-                        <div className={styles.filter}>
-                            <input type="text" placeholder="Search by username" value={searchTerm} onChange={handleSearch} />
-                            <Link href='/u/users/noti' className={`${styles.buttondefault}`} >Notify users</Link>
-                            
-                        </div>
-                        <div className={styles.grid_names}>
-                            <h2>Id</h2>
-                            <h2>Username</h2>
-                            <h2>Email</h2>
-                            <h2>Status</h2>
-                        </div>
-                        {userList.length === 0 ? (
-                            <div className={styles.nothing_found}>No results</div>
-                        ) : (
-                            userList.map((user) => (
-                                <div className={styles.user} key={user.id}>
-                                    <h3>{user.id}</h3>
-                                    <h3>@{user.username}</h3>
-                                    <h3>{user.email}</h3>
-                                    {loadingUser === user.id ? (
-                                        <button disabled className={styles.loading_btn}>Loading...</button>
-                                    ) : user.disabled ? (
-                                        <button onClick={() => (enableUser(user))} type="button" className={styles.enable_btn}>Enable account</button>
-                                    ) : (
-                                        <button onClick={() => (disableUser(user))} type="button" className={styles.disabled_btn}>Disable account</button>
-                                    )}
-                                </div>
-                            ))
-                        )}
+            <div ref={userContainerRef} className={styles.users_container}>
+                <input
+                    id="top"
+                    className={styles.filter}
+                    type="text"
+                    placeholder="Search userlist"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <AlternateButton click={() => setSendNoti(true)}>Send notifications</AlternateButton>
+                {users.map((user) => (
+                    <div key={user.id} className={styles.user}>
+                        <span>{user.id}</span>
+                        <span>{user.email}</span>
+                        <span>
+                            <ModalCheckBox checked={usersList.includes(user.id)} chngevent={() => addUser(user.id)} />
+                        </span>
+                        <span>
+                            <label className={styles.switch}>
+                                <input
+                                    type="checkbox"
+                                    checked={user.disabled}
+                                    onChange={() => toggle(user.id, user.disabled)}
+                                />
+                                <span className={styles.slider} title={user.disabled ? ('Enable account') : ('Disable account')}></span>
+                            </label>
+                        </span>
                     </div>
-                </div>
+                ))}
+                <button className={styles.users_top} onClick={scrollToTop}>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px">
+                        <path d="M0 0h24v24H0V0z" fill="none" />
+                        <path d="M13 19V7.83l4.88 4.88c.39.39 1.03.39 1.42 0 .39-.39.39-1.02 0-1.41l-6.59-6.59c-.39-.39-1.02-.39-1.41 0l-6.6 6.58c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0L11 7.83V19c0 .55.45 1 1 1s1-.45 1-1z" />
+                    </svg>
+                </button>
             </div>
-        </>
-    )
-};
+            {SendNoti && (
+                <>
+                    <ModalContainer events={() => setSendNoti(false)}>
+                        <ModalForm>
+<ModalTitle>Notification sender</ModalTitle>
+                            <ModalInput chngevent={msgTitle} place={'Title'} />
+                            <ModalInput chngevent={msgBody} place={'Body'} />
 
+                            <AlternateButton click={postNoti}>Send notification to {usersList.length} user{usersList.length === 1 ? ('') : ('s')}</AlternateButton>
+                            <AlternateButton click={handleSelectAll}>Select all users</AlternateButton>
+                            <p>To send to indivduals click the checkbox next to their emails on the previous screen</p>
+                        </ModalForm>
+                    </ModalContainer>
+                </>
+            )}
+
+        </>
+    );
+
+
+    function addUser(userId) {
+        if (usersList.includes(userId)) {
+            setUsersList(usersList.filter((id) => id !== userId));
+        } else {
+            setUsersList([...usersList, userId]);
+        }
+    }
+
+
+    function handleSelectAll() {
+        const usersListJSON = JSON.stringify(usersList);
+        const usersJSON = JSON.stringify(users.map((user) => user.id));
+
+        if (usersListJSON === usersJSON) {
+            setUsersList([]);
+        } else {
+            const allUserIds = users.map((user) => user.id);
+            setUsersList(allUserIds);
+        }
+    }
+
+    async function postNoti() {
+        if (!msg || !msgtitle) {
+            return toast.warning("Please fill out all inputs!");
+        }
+        if (usersList.length === 0) {
+            return toast.warning("Please select at least one user!");
+        }
+
+        const sendingToastID = toast.loading("Sending please wait...")
+
+        try {
+            const response = await fetch("/api/sendnotif", {
+                method: "POST",
+
+                body: JSON.stringify({
+                    msg: { title: msgtitle, body: msg },
+                    user: { token: pb.authStore.token, id: usersList },
+                }),
+            });
+            if (response.status === 409) {
+                toast.warning('There are no subscribed endpoints to send messages to, yet! (No users have notis on)')
+            }
+            if (response.status !== 200) {
+                return toast.warning("Failed to send!");
+            }
+            msgBody('')
+            msgTitle('')
+            setUsersList([]);
+            toast.update(sendingToastID, { render: "Sent", type: "success", isLoading: false });
+        } catch (err) {
+            console.log(err);
+            toast.error("Failed to send!");
+        }
+        toast.done(sendingToastID)
+
+    }
+
+}
+
+
+function Stats() {
+    const [gpdata, setGpData] = useState([])
+    const [gpdata2, setGpData2] = useState([])
+    useEffect(() => {
+        async function getStats() {
+            try {
+                const records = await pb.collection('Total_pages_per_user').getFullList();
+                setGpData(records)
+                const records2 = await pb.collection('total_files_per_user').getFullList();
+                setGpData2(records2)
+            } catch (err) {
+                console.error(err)
+            }
+        }
+        getStats()
+    }, [])
+    return (
+        <div>
+            <GraphComponent data1={gpdata} data2={gpdata2} />
+        </div>
+    )
+}
