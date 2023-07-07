@@ -15,7 +15,7 @@ export default function Icons({ Select, Selected, Close }) {
     return (
         <ModalContainer events={Close}>
             <ModalForm>
-                <ModalTitle>Click one to set it</ModalTitle>
+                <ModalTitle>Icons</ModalTitle>
                 <div className={styles.emojigrid}>
                     {emojis.map((emoji) => {
                         try {
