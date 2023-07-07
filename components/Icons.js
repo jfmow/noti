@@ -8,8 +8,8 @@ export default function Icons({ Select, Selected, Close }) {
     const [filteredEmojis, setFilteredEmojis] = useState([]);
 
     useEffect(() => {
-        emojis.sort((a, b) => a.category.localeCompare(b.category));
-    }, []);
+        emojis.sort((a, b) => a.sort_order - b.sort_order);
+      }, []);
 
     useEffect(() => {
         const filtered = emojis.filter((emoji) => {
@@ -37,6 +37,7 @@ export default function Icons({ Select, Selected, Close }) {
                                     type="button"
                                     onClick={() => setNewIcon(emoji)}
                                     className={styles.icon}
+                                    title={emoji.short_name}
                                 >
                                     {String.fromCodePoint(`0x${emoji.unified}`)}
                                 </button>
