@@ -17,6 +17,8 @@
     border-radius: 5px;
     padding: 5px;
     cursor: pointer;
+    min-height: 47px;
+    min-height: 47px;
 }
 
 .icon:hover{
