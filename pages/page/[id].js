@@ -3,7 +3,6 @@ import dynamic from 'next/dynamic';
 import PocketBase from 'pocketbase'
 import { useEffect, useState } from 'react';
 import MyComponent from '@/components/Item';
-import Link from 'next/link';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 
@@ -11,7 +10,7 @@ const Editor = dynamic(() => import('../../components/Editor'), {
   ssr: false,
 });
 
-async function ping(){
+async function ping() {
   async function getCurrentDateTime(timeZone) {
     const oneHourAgo = new Date();
 

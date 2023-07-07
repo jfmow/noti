@@ -19,10 +19,10 @@ import dynamic from 'next/dynamic';
 import Router from "next/router";
 import { AnimatePresence } from "framer-motion";
 
+const Icons = dynamic(()=>import("./Icons"))
 const ModalButton = dynamic(() => import('@/lib/Modal').then((module) => module.ModalButton));
 const ModalContainer = dynamic(() => import('@/lib/Modal').then((module) => module.ModalContainer));
 const ModalForm = dynamic(() => import('@/lib/Modal').then((module) => module.ModalForm));
-const ModalInput = dynamic(() => import('@/lib/Modal').then((module) => module.ModalInput));
 const ModalTitle = dynamic(() => import('@/lib/Modal').then((module) => module.ModalTitle));
 
 
@@ -500,13 +500,13 @@ function Editor({ page, preview }) {
     }
   }
 
-  async function handleSetcurrentPageIconValue() {
+  async function handleSetcurrentPageIconValue(e) {
+    setCurrentPageIconValue(e.unified)
     const data = {
-      icon: currentPageIconValue,
+      icon: e.unified,
     };
     //icon.codePointAt(0).toString(16)
     setIconModalState(false);
-
     await pb.collection("pages").update(page, data);
   }
 
@@ -768,13 +768,7 @@ function Editor({ page, preview }) {
 
         {iconModalState && (
           <>
-            <ModalContainer events={() => setIconModalState(false)}>
-              <ModalForm>
-                <ModalTitle>Page icon</ModalTitle>
-                <ModalInput chngevent={setCurrentPageIconValue} place={"1 emoji only"} type={"text"} />
-                <ModalButton events={handleSetcurrentPageIconValue} classnm={`${styles.buttonred}`}>Change</ModalButton>
-              </ModalForm>
-            </ModalContainer>
+            <Icons Select={handleSetcurrentPageIconValue} Close={()=>setIconModalState(false)} Selected={`${currentPageIconValue.toString()}`}/>
           </>
         )}
       </AnimatePresence>

@@ -9,12 +9,14 @@
   --big_button_text: rgb(149, 149, 149);
   --big_button_background: #fff;
   --big_button_background_hover: #000;
+  --big_button_border_hover_alt: #b7b7b7;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --big_button_background: #353535;
     --big_button_border: #4f4f4f;
+    --big_button_border_hover_alt: #2d2d2d;
   }
 }
 

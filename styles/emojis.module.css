@@ -1,0 +1,23 @@
+.emojigrid{
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: scroll;
+    height: 50dvh;
+    
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.icon{
+    font-size: 24px;
+    background: var(--big_button_background);
+    border: 3px solid var(--big_button_border);
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.icon:hover{
+    border: 3px solid var(--big_button_border_hover_alt);
+}
