@@ -11,14 +11,18 @@
 }
 
 .icon{
-    font-size: 24px;
     background: var(--big_button_background);
     border: 3px solid var(--big_button_border);
     border-radius: 5px;
     padding: 5px;
     cursor: pointer;
-    min-height: 48px;
-    min-height: 48px;
+    height: 48px;
+    width: 48px;
+}
+
+.icon img {
+    width: 32px;
+    height: 32px;
 }
 
 .icon:hover{

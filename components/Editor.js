@@ -506,7 +506,7 @@ function Editor({ page, preview }) {
   async function handleSetcurrentPageIconValue(e) {
     setCurrentPageIconValue(e.unified)
     const data = {
-      icon: e.unified,
+      icon: e.image,
     };
     //icon.codePointAt(0).toString(16)
     setIconModalState(false);

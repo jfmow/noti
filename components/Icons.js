@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import emojis from 'emoji-datasource';
+import emojis from 'emoji-datasource-twitter';
 import styles from '@/styles/emojis.module.css';
 import { AlternateButton, ModalContainer, ModalForm, ModalInput, ModalTitle } from "@/lib/Modal";
 
@@ -60,17 +60,20 @@ export default function Icons({ Select, Selected, Close }) {
                 <div className={styles.emojigrid}>
                     {filteredEmojis.map((emoji) => {
                         try {
-                            return (
-                                <button
-                                    key={emoji.unified}
-                                    type="button"
-                                    onClick={() => setNewIcon(emoji)}
-                                    className={styles.icon}
-                                    title={emoji.short_name}
-                                >
-                                    {String.fromCodePoint(`0x${emoji.unified}`)}
-                                </button>
-                            );
+                            if (emoji.has_img_twitter) {
+                                return (
+                                    <button
+                                        key={emoji.unified}
+                                        type="button"
+                                        onClick={() => setNewIcon(emoji)}
+                                        className={styles.icon}
+                                        title={emoji.short_name}
+                                    >
+                                        <img loading="lazy" src={`/emoji/twitter/64/${emoji.image}`} />
+
+                                    </button>
+                                );
+                            }
                         } catch (err) {
                             return null;
                         }

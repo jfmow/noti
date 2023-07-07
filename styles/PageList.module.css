@@ -144,6 +144,11 @@
   transition: 0.1s all ease-in;
 }
 
+.page_icon{
+  width: 16px;
+  height: 16px;
+}
+
 .itemoption svg:hover {
   background: rgb(228, 228, 228);
   border-radius: var(--btn_border_radius);

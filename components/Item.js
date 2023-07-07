@@ -297,7 +297,7 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
           </button>
         )}
 
-        {item.icon && !isNaN(parseInt(item.icon, 16)) && String.fromCodePoint(parseInt(item.icon, 16))}{item.title ? item.title : `Untitled: ${item.id}`}
+        {item.icon && item.icon.includes('.png') ? (<img className={styles.page_icon} src={`/emoji/twitter/64/${item.icon}`}/>) : (!isNaN(parseInt(item.icon, 16)) && String.fromCodePoint(parseInt(item.icon, 16)))}{item.title ? item.title : `Untitled: ${item.id}`}
 
 
         {(expand) && (
