@@ -17,6 +17,14 @@
   background: linear-gradient(180deg, var(--main_btn_color_action) 60%, white 20%, white)
 }
 
+.teaserimg{
+  width: 80%;
+  border: 3px solid #fff;
+  border-radius: 25px;
+  pointer-events: none;
+  user-select: none;
+  user-zoom: fixed;
+}
 
 
 .headerContent {
@@ -143,7 +151,11 @@
   border-radius: var(--btn_border_radius);
 }
 
-.sections {}
+.section1 h2, .section2 h2, .section3 h2 {
+  font-family: "Inter" , -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-weight: 800;
+}
 
 .section1 {
   scroll-snap-align: start;
@@ -370,7 +382,10 @@
     height: 100%;
   }
   .items h1, .headerContent h1{
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  }
+  .headercon_2{
+    display: none;
   }
 }

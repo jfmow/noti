@@ -80,6 +80,12 @@ a {
   src: url('../fonts/MoiraiOne-Regular.ttf');
 }
 
+@font-face {
+  font-family: "Inter";
+  font-display: swap;
+  src: url('../fonts/Inter-VariableFont_slnt\,wght.ttf');
+}
+
 
 /* width */
 ::-webkit-scrollbar {

@@ -48,12 +48,15 @@ export default function Home() {
       <div className={styles.container}>
         <header className={styles.header}>
           <div className={styles.headerContent}>
-            <h3 className={styles.subtitle}>Welcome to</h3>
             <h1 className={styles.title}>Noti</h1>
-            <h5 className={styles.description}>The best note-taking app ever</h5>
+            <h5 className={styles.description}>The best note-taking app ever <br/> - You when you signup</h5>
             <Link href="/auth/signup" className={styles.Btn}>
               Join now
             </Link>
+          </div>
+          <div className={`${styles.headerContent} ${styles.headercon_2}`}>
+            <h5 className={styles.description}>Experence note taking like you have before. Write, save, read & repeat</h5>
+            <img className={styles.teaserimg} loading='lazy' src='/teaser.png'/>
           </div>
         </header>
         <div className={styles.sections}>

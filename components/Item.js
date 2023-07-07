@@ -317,7 +317,7 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
       </div>
       {expand && children.length === 0 && (
         <span className={styles.createpage_txt}>
-          No pages
+          No sub pages
         </span>
       )}
       {children && expand ? <ol className={styles.items2}>{children}</ol> : null}
