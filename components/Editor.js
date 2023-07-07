@@ -23,22 +23,10 @@ import { ModalTempLoader } from "@/lib/Modal";
 const Icons = dynamic(() => import("./Icons"), {
   loading: () => <ModalTempLoader />,
 });
-
-const ModalButton = dynamic(() => import('@/lib/Modal').then((module) => module.ModalButton), {
-  loading: () => <ModalTempLoader />,
-});
-
-const ModalContainer = dynamic(() => import('@/lib/Modal').then((module) => module.ModalContainer), {
-  loading: () => <ModalTempLoader />,
-});
-
-const ModalForm = dynamic(() => import('@/lib/Modal').then((module) => module.ModalForm), {
-  loading: () => <ModalTempLoader />,
-});
-
-const ModalTitle = dynamic(() => import('@/lib/Modal').then((module) => module.ModalTitle), {
-  loading: () => <ModalTempLoader />,
-});
+const ModalButton = dynamic(() => import('@/lib/Modal').then((module) => module.ModalButton));
+const ModalContainer = dynamic(() => import('@/lib/Modal').then((module) => module.ModalContainer));
+const ModalForm = dynamic(() => import('@/lib/Modal').then((module) => module.ModalForm));
+const ModalTitle = dynamic(() => import('@/lib/Modal').then((module) => module.ModalTitle));
 
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
@@ -783,7 +771,7 @@ function Editor({ page, preview }) {
 
         {iconModalState && (
           <>
-            <Icons Select={handleSetcurrentPageIconValue} Close={() => setIconModalState(false)} Selected={`${currentPageIconValue.toString()}`} />
+            <Icons Select={handleSetcurrentPageIconValue} Close={()=>setIconModalState(false)} Selected={`${currentPageIconValue.toString()}`}/>
           </>
         )}
       </AnimatePresence>
