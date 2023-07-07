@@ -297,7 +297,8 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
           </button>
         )}
 
-        {item.icon && String.fromCodePoint(`0x${item.icon}`)}{item.title ? item.title : `Untitled: ${item.id}`}
+{item.icon && !isNaN(parseInt(item.icon, 16)) && String.fromCodePoint(parseInt(item.icon, 16))}{item.title ? item.title : `Untitled: ${item.id}`}
+
 
         {(expand) && (
           <span
