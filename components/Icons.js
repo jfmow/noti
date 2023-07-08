@@ -60,27 +60,37 @@ export default function Icons({ Select, Selected, Close }) {
                 <div className={styles.emojigrid}>
                     {filteredEmojis.map((emoji) => {
                         try {
-                            const { sheet_x, sheet_y } = emoji;
-                            const sheet_size = 32;
-                            const x = (sheet_x * (sheet_size + 2)) + 1;
-                            const y = (sheet_y * (sheet_size + 2)) + 1;
-                            const style = {
-                                backgroundImage: `url(/32.png)`,
-                                backgroundPosition: `-${x}px -${y}px`,
-                            };
 
-                            return (
-                                <div className={styles.icon} onClick={() => setNewIcon(emoji)} 
-                                title={emoji.short_name}>
-                                    <img
-                                        key={emoji.unified}
-                                        type="button"
-                                        className={` ${styles.emojiIcon}`}
-                                        style={style}
-                                        src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
-                                    />
-                                </div>
-                            );
+                            if (emoji.has_img_twitter) {
+                                const { sheet_x, sheet_y } = emoji;
+
+                                const sheet_size = 32;
+
+                                const x = (sheet_x * (sheet_size + 2)) + 1;
+
+                                const y = (sheet_y * (sheet_size + 2)) + 1;
+
+                                const style = {
+
+                                    backgroundImage: `url(/32.png)`,
+
+                                    backgroundPosition: `-${x}px -${y}px`,
+
+                                };
+                                return (
+                                    <div className={styles.icon} onClick={() => setNewIcon(emoji)}
+                                        title={emoji.short_name}>
+                                        <img
+                                            key={emoji.unified}
+                                            type="button"
+                                            className={` ${styles.emojiIcon}`}
+                                            src={`/emoji/twitter/64/${emoji.image}`}
+                                            loading="lazy"
+                                            style={style}
+                                        />
+                                    </div>
+                                );
+                            }
                         } catch (err) {
                             return null;
                         }
@@ -93,3 +103,5 @@ export default function Icons({ Select, Selected, Close }) {
         </ModalContainer>
     );
 }
+
+
