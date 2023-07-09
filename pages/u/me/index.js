@@ -9,6 +9,7 @@ import Nav from '@/components/Nav';
 import compressImage from '@/lib/CompressImg';
 import { AlternateButton, ModalButton, ModalCheckBox, ModalContainer, ModalForm, ModalInput, ModalTitle } from '@/lib/Modal';
 import { AnimatePresence } from 'framer-motion';
+import Rateus from '@/components/Rate';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
@@ -64,8 +65,12 @@ export default function Account() {
           <AccManagementForm />
 
           <div style={{ position: 'absolute', bottom: '3dvh', left: '0', right: '0' }}>
+          <Rateus/>
+          <div>
             <h5>Quick links</h5>
+            
             <h6><Link href='/auth/terms-and-conditions'>Terms & Conditions</Link> | <Link href='/auth/privacy-policy'>Privacy policy</Link></h6>
+            </div>
           </div>
         </div>
 
