@@ -16,7 +16,6 @@ breakdown of what each part of the code does: */
   grid-template-columns: 1fr 1fr;
   align-items: center;
   justify-items: center;
-  background: #baf7ffa3;
 }
 
 .items h1 {
