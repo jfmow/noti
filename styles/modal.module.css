@@ -257,7 +257,7 @@
     gap: 5%;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 4px 3px 4px 0px #e8e8e8;
+    /*box-shadow: 4px 3px 4px 0px #e8e8e8;*/
     font-size: 13px;
   transition: 0.35s all;
   
@@ -278,6 +278,7 @@
     color: #fff;
     /* border-color: #000; */
     /* border: 1px solid #000;*/
+    box-shadow: 0px 0px 20px 0px #e8e8e8;
   }
   
   .acc_button:hover svg {
@@ -305,8 +306,12 @@
     .acc_button {
         background: #353535;
         border: 2px solid #4f4f4f;
-        box-shadow: 4px 3px 4px 0px #1c1c1c;
+        /*box-shadow: 4px 3px 4px 0px #1c1c1c;*/
         color: rgb(149, 149, 149);
+      }
+
+      .acc_button:hover{
+        box-shadow: 0px 0px 20px 0px #1c1c1c;
       }
     
       .acc_button_red {
