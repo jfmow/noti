@@ -117,7 +117,7 @@ export default function BulkManagment() {
                                 {pages.map((page) => (
                                     <div onClick={() => (setSelected(page.id))} key={page.id} className={`${styles.page} ${(deleting && seletedPages.includes(page.id)) && styles.deletingpage} ${seletedPages.includes(page.id) && styles.selected}`}>
                                         <span className={styles.page_title}>{page.title || `Untitled ${page.id}`}</span>
-                                        <span>{page.icon || "📄"}</span>
+                                        <span className={styles.page_icon}>{page.icon && page.icon.includes('.png') ? (<img className={styles.page_icon} src={`/emoji/twitter/64/${page.icon}`}/>) : (!isNaN(parseInt(page.icon, 16)) && String.fromCodePoint(parseInt(page.icon, 16)))}</span>
                                     </div>
                                 ))}
                             </>
