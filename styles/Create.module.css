@@ -322,8 +322,7 @@
   background: #fff;
   border: none;
   border-radius: var(--btn_border_radius);
-  padding: 5px 7px;
-  ;
+  padding: 4px 15px;
   fill: var(--main_btn_color_action);
   cursor: pointer;
 }

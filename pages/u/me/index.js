@@ -383,7 +383,8 @@ function Notitoggle() {
         applicationServerKey: urlB64ToUint8Array(VAPID_PUBLIC_KEY)
       });
       postToServer('/api/add-subscription', subscription);
-      toast.info('Subscribed to notis')
+      toast.info('Notifications enabled!')
+      
       setPendingPush(false)
 
     } catch (err) {
@@ -404,7 +405,7 @@ function Notitoggle() {
       endpoint: subscription.endpoint
     });
     await subscription.unsubscribe();
-    toast.info('Unsubbed from notis')
+    toast.info('Notifications disabled!')
     setPendingPush(false)
   }
 
