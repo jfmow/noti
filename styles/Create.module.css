@@ -45,6 +45,8 @@
   padding: 3em;
   word-break: break-word;
   min-height: 100dvh;
+  
+  background: var(--background);
 }
 
 .header {
