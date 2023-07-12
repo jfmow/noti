@@ -19,6 +19,7 @@ import dynamic from 'next/dynamic';
 import Router from "next/router";
 import { AnimatePresence } from "framer-motion";
 import { ModalTempLoader } from "@/lib/Modal";
+import { createRandomMeshGradients } from "@/lib/randomMeshGradient";
 
 const Icons = dynamic(() => import("./Icons"), {
   loading: () => <ModalTempLoader />,
@@ -201,6 +202,7 @@ function Editor({ page, preview }) {
             );
           } else {
             setArticleHeader(null);
+
           }
           setError(false);
           setIsLoading(false);
@@ -235,6 +237,15 @@ function Editor({ page, preview }) {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [isSaving]);
+
+  useEffect(() => {
+    //set a colorful header
+    const headerbg = createRandomMeshGradients()
+    if (document.getElementById('titlebg') && !articleHeader) {
+      document.getElementById('titlebg').style.backgroundColor = headerbg.bgColor
+      document.getElementById('titlebg').style.backgroundImage = headerbg.bgImage
+    }
+  }, [document.getElementById('titlebg')])
 
   const handleBeforeUnload = (event) => {
     event.preventDefault();
@@ -605,11 +616,11 @@ function Editor({ page, preview }) {
         <title>Page: {articleTitle}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="/favicon.ico" />
-        <link rel="prefetch" href="/32.png"/>
+        <link rel="prefetch" href="/32.png" />
       </Head>
       {isSaving && (<AutoSaveLoader />)}
       <div className={styles.title}>
-        <div className={styles.title}>
+        <div className={styles.title} id="titlebg">
           {articleHeader && <img src={articleHeader} alt="Page header img" />}
           <div className={styles.headerstuff}>
             <div className={styles.titleeditorcontainer}>
@@ -772,7 +783,7 @@ function Editor({ page, preview }) {
 
         {iconModalState && (
           <>
-            <Icons Select={handleSetcurrentPageIconValue} Close={()=>setIconModalState(false)} Selected={`${currentPageIconValue.toString()}`}/>
+            <Icons Select={handleSetcurrentPageIconValue} Close={() => setIconModalState(false)} Selected={`${currentPageIconValue.toString()}`} />
           </>
         )}
       </AnimatePresence>

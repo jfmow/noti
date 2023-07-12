@@ -5,11 +5,11 @@ import { register } from 'next-offline/runtime';
 import { useEffect, useState } from 'react';
 import Nav from '@/components/Nav';
 export default function App({ Component, pageProps }) {
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     //register('https://beta.jamesmowat.com/service-worker.js')
     register(`${process.env.NEXT_PUBLIC_CURRENTURL}/service-worker.js`)
-  })
+  }, [])
   return (
     <>
       <ToastContainer position="top-center" theme='dark' />
