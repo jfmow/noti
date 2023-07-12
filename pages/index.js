@@ -56,7 +56,7 @@ export default function Home() {
           </div>
           <div className={`${styles.headerContent} ${styles.headercon_2}`}>
             <h5 className={styles.description}>Experence note taking like you have before. Write, save, read & repeat</h5>
-            <img className={styles.teaserimg} loading='lazy' src='/teaser.png'/>
+            <img className={styles.teaserimg} src='/teaser.png'/>
           </div>
         </header>
         <div className={styles.sections}>
