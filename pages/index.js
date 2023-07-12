@@ -24,7 +24,7 @@ export default function Home() {
           setIsLoading(false);
           pb.authStore.clear();
         } else {
-          
+
           router.push('/page/firstopen');
         }
       } catch (error) {
@@ -44,54 +44,42 @@ export default function Home() {
       <Head>
         <title>Noti</title>
       </Head>
-      <Nav/>
+      <Nav />
       <div className={styles.container}>
         <header className={styles.header}>
           <div className={styles.headerContent}>
             <h1 className={styles.title}>Noti</h1>
-            <h5 className={styles.description}>The best note-taking app ever <br/> - You when you signup</h5>
+            <h5 className={styles.description}>The best note-taking app ever <br /> - You when you signup</h5>
             <Link href="/auth/signup" className={styles.Btn}>
               Join now
             </Link>
           </div>
           <div className={`${styles.headerContent} ${styles.headercon_2}`}>
             <h5 className={styles.description}>Experence note taking like you have before. Write, save, read & repeat</h5>
-            <img className={styles.teaserimg} src='/teaser.png'/>
+            <img className={styles.teaserimg} src='/static/teaser.png' />
           </div>
         </header>
         <div className={styles.sections}>
           <AnimatePresence>
             {/* Animate the first section */}
-            <AnimatedSection className={styles.section3}>
-              <h2>Get work done quickly and efficiently with fast loading and low data usage.</h2>
-              <img alt="floating notebooks on blue background" loading='lazy' className={styles.bg} src="/static/hmpgimg3.png" />
-            </AnimatedSection>
+
 
             {/* Animate the second section */}
-            <AnimatedSection className={styles.section2}>
+            <AnimatedSection className={styles.section3}>
               <h2>Enjoy new features and updates every week to keep your notes looking fresh.</h2>
-              <div className={styles.stats}>
-                <div className={styles.stat}>
-                  <h1>99% Uptime</h1>
-                  <p>Thats our goal but 100% would be even better!</p>
-                </div>
-                <div className={styles.stat}>
-                  <h1>Latest features</h1>
-                  <p>New features published each week making your notes even better</p>
-                </div>
-                <div className={styles.stat}>
-                  <h1>Fast</h1>
-                  <p>Quick server response times mean you can get to writing even faster</p>
-                </div>
-              </div>
-            </AnimatedSection>
+              <img alt="Icons item selector" loading='lazy' className={styles.bg} style={{ boxShadow: 'none', height: '70%' }} src="/static/icons.png" />
 
+            </AnimatedSection>
+            <AnimatedSection className={styles.section2}>
+              <h2>Get work done quickly and efficiently with fast loading and low data usage.</h2>
+              <img alt="Icons item selector" loading='lazy' className={styles.bg} style={{ boxShadow: 'none', height: '70%' }} src="/static/fast.png" />
+            </AnimatedSection>
             {/* Animate the third section */}
             <AnimatedSection className={styles.section3}>
               <img alt="floating notebook" className={styles.bg} loading='lazy' src="/static/notebookfloating1.jpg" />
               <div>
-              <h2>Just the right amount of features</h2>
-              <p>And just ask if you think theres something more that could be added</p>
+                <h2>Just the right amount of features</h2>
+                <p>And just ask if you think theres something more that could be added</p>
               </div>
             </AnimatedSection>
           </AnimatePresence>
@@ -115,21 +103,21 @@ export default function Home() {
     </>
   );
 }
- 
+
 
 function AnimatedSection({ children, className }) {
-  const [ref, inView] = useInView({ threshold: 0.4 });
+  const [ref, inView] = useInView({ threshold: 0.3 });
 
   return (
-    <motion.section
+    <section
       ref={ref}
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       exit={{ opacity: 0, y: 20 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.3 }}
       className={className}
     >
       {children}
-    </motion.section>
+    </section>
   );
 }
