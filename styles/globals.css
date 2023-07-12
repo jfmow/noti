@@ -87,6 +87,11 @@ a {
   font-display: swap;
   src: url('../fonts/Inter-VariableFont_slnt\,wght.ttf');
 }
+@font-face {
+  font-family: "Gotham";
+  font-display: swap;
+  src: url('../fonts/gotham-bold-webfont.woff');
+}
 
 
 /* width */
