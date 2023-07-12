@@ -64,7 +64,7 @@ export default function Home() {
             {/* Animate the first section */}
             <AnimatedSection className={styles.section3}>
               <h2>Get work done quickly and efficiently with fast loading and low data usage.</h2>
-              <img alt="floating notebooks on blue background" className={styles.bg} src="/static/hmpgimg3.png" />
+              <img alt="floating notebooks on blue background" loading='lazy' className={styles.bg} src="/static/hmpgimg3.png" />
             </AnimatedSection>
 
             {/* Animate the second section */}
@@ -88,7 +88,7 @@ export default function Home() {
 
             {/* Animate the third section */}
             <AnimatedSection className={styles.section3}>
-              <img alt="floating notebook" className={styles.bg} src="/static/notebookfloating1.jpg" />
+              <img alt="floating notebook" className={styles.bg} loading='lazy' src="/static/notebookfloating1.jpg" />
               <div>
               <h2>Just the right amount of features</h2>
               <p>And just ask if you think theres something more that could be added</p>
