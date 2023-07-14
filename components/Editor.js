@@ -23,6 +23,7 @@ import { createRandomMeshGradients } from "@/lib/randomMeshGradient";
 
 const Icons = dynamic(() => import("./Icons"), {
   loading: () => <ModalTempLoader />,
+  ssr: true,
 });
 const ModalButton = dynamic(() => import('@/lib/Modal').then((module) => module.ModalButton));
 const ModalContainer = dynamic(() => import('@/lib/Modal').then((module) => module.ModalContainer));
