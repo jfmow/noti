@@ -212,7 +212,7 @@
   gap: 5em;
 }
 
-.section2_div{
+.section2_div {
   display: flex;
   flex-direction: column;
   gap: 25px;
@@ -285,12 +285,12 @@
   gap: 8px;
 }
 
-.fcard span .fcard_icon{
-    padding: 10px;
-    border-radius: 10px;
-    line-height: 0;
-    background: rgba(186, 66, 255, 0.2);
-    fill: #525252;
+.fcard span .fcard_icon {
+  padding: 10px;
+  border-radius: 10px;
+  line-height: 0;
+  background: rgba(186, 66, 255, 0.2);
+  fill: #525252;
 }
 
 .fcard span {
@@ -301,7 +301,7 @@
   align-items: center;
 }
 
-.fcard .disclamer{
+.fcard .disclamer {
   font-size: 9px;
   text-align: left;
   font-weight: 500;
@@ -329,13 +329,16 @@
   gap: 8px;
 }
 
-.section4 .fcard span, .section4 .fcard p {
+.section4 .fcard span,
+.section4 .fcard p {
   flex-direction: row-reverse;
   text-align: right;
 }
-.section4 .fcard span .fcard_icon{
+
+.section4 .fcard span .fcard_icon {
   background: rgba(66, 214, 255, 0.2);
 }
+
 .img1 {
   position: absolute;
   height: 100dvh;
@@ -389,21 +392,23 @@
 
 @media(max-width: 600px) {
 
-  .section1 h2,
+  .section4 h2,
   .section2 h2,
   .section3 h2 {
     font-size: 25px !important;
   }
 
-  .section1,
+  .section4,
   .section2,
   .section3 {
     padding: 5em 2em;
     max-height: fit-content;
     min-height: 110dvh;
+    margin-right: auto;
   }
 
   .section3,
+  .section4,
   .section2 {
     flex-direction: column;
     gap: 20px;
@@ -432,5 +437,18 @@
 
   .headercon_2 {
     display: none;
+  }
+
+  .section4 .fcard span {
+    justify-content: center;
+  }
+
+  .section4 h2{
+    text-align: center;
+  }
+
+  .section4 .fcard p {
+    text-align: center !important;
+    text-wrap: balance;
   }
 }
