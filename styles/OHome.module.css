@@ -172,7 +172,7 @@
 .section3 {
 
   scroll-snap-align: start;
-  min-height: 120dvh;
+  min-height: 120vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -186,7 +186,7 @@
 .section4 {
 
   scroll-snap-align: start;
-  min-height: 120dvh;
+  min-height: 120vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -199,7 +199,7 @@
 
 .section2 {
   scroll-snap-align: start;
-  min-height: 180dvh;
+  min-height: 180vh;
   display: flex;
   justify-content: center;
   align-items: center;
