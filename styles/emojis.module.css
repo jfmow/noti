@@ -14,12 +14,13 @@
     border-radius: 5px;
     padding: 5px;
     background: var(--big_button_background);
+    cursor: pointer;
 }
 .emojiIcon{
     display: flex;
     cursor: pointer;
-    width: 32px;
-    height: 32px;
+    width: 20px;
+    height: 20px;
     user-select: none;
     pointer-events: none;
     cursor: pointer;
