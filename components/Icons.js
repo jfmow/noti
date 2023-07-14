@@ -80,11 +80,10 @@ export default function Icons({ Select, Selected, Close }) {
                                 return (
                                     <div className={styles.icon} onClick={() => setNewIcon(emoji)}
                                         title={emoji.short_name}>
-                                        <img
+                                        <span
                                             key={emoji.unified}
                                             type="button"
                                             className={` ${styles.emojiIcon}`}
-                                            src={`/emoji/twitter/64/${emoji.image}`}
                                             loading="lazy"
                                             style={style}
                                         />
@@ -104,4 +103,7 @@ export default function Icons({ Select, Selected, Close }) {
     );
 }
 
+
+//                                            src={`data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7`}
+//src={`/emoji/64/${emoji.image}`}
 
