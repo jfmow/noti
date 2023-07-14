@@ -64,7 +64,7 @@ export default function Icons({ Select, Selected, Close }) {
                             if (emoji.has_img_twitter) {
                                 const { sheet_x, sheet_y } = emoji;
 
-                                const sheet_size = 32;
+                                const sheet_size = 64;
 
                                 const x = (sheet_x * (sheet_size + 2)) + 1;
 
@@ -72,7 +72,7 @@ export default function Icons({ Select, Selected, Close }) {
 
                                 const style = {
 
-                                    backgroundImage: `url(/32.png)`,
+                                    backgroundImage: `url(/64.png)`,
 
                                     backgroundPosition: `-${x}px -${y}px`,
 
