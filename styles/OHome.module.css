@@ -184,7 +184,7 @@
 .section3 {
 
   scroll-snap-align: start;
-  min-height: 120vh;
+  min-height: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;
