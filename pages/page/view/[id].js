@@ -1,76 +1,30 @@
 import { useEffect, useState } from "react";
 import PocketBase from "pocketbase";
-import { toast } from "react-toastify";
 import Link from "next/link";
 import styles from '@/styles/Article.module.css'
-import Loader from "@/components/Loader";
 import Image from "next/image";
 import Head from "next/head";
+import { createRandomMeshGradients } from "@/lib/randomMeshGradient";
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 
 export default function Viewer({ arti }) {
-    const [articleData2, setArticleData] = useState([]);
-    const [isError, setError] = useState(false)
-    const [artiArticle, setArticle] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
+
+
     useEffect(() => {
-        async function fetchArticles() {
-            try {
-                const record = await pb.collection('pages').getOne(arti.article);
-                setArticleData(record.content);
-                setArticle(record);
-                setIsLoading(false);
-            } catch (error) {
-                console.log(error);
-                setError(true);
+        if (typeof document !== 'undefined') {
+            // Access the document object here
+            const headerbg = createRandomMeshGradients()
+            if (document.getElementById('titlebg')) {
+                document.getElementById('titlebg').style.backgroundColor = headerbg.bgColor
+                document.getElementById('titlebg').style.backgroundImage = headerbg.bgImage
             }
         }
+        //set a colorful header
+    }, [arti])
 
-        async function authUpdate() {
-            try {
-                const authData = await pb.collection('users').authRefresh();
-                if (!pb.authStore.isValid) {
-                    pb.authStore.clear();
-                }
-            } catch (error) {
-                pb.authStore.clear();
-            }
-            fetchArticles();
-        }
-
-        authUpdate();
-
-
-    }, []);
-
-
-    if (isLoading) {
-        return (<Loader />)
-    }
-
-    if (isError) {
-        return (<div>
-            <Head>
-                <title>Whoops!</title>
-                <link rel="favicon" href="/favicon.ico" />
-                <link rel="preconnect" href="https://fonts.googleapis.com" />
-                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-                <link href="https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap" rel="stylesheet"></link>
-            </Head>
-            <div className={styles.containererror}>
-                <h1>Article not found!</h1>
-                <Link href="/">
-                    <button className={styles.backbutton}>
-                        <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024"><path d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z"></path></svg>
-                        <span>Back</span>
-                    </button></Link>
-            </div>
-        </div>)
-    }
-
-    return <><SavedData savedData={articleData2} articleArti={artiArticle} /></>
+    return <><SavedData savedData={JSON.parse(arti).content} articleArti={JSON.parse(arti)} /></>
 }
 
 const SavedData = ({ savedData, articleArti }) => {
@@ -83,7 +37,7 @@ const SavedData = ({ savedData, articleArti }) => {
                     <meta name="robots" content="noindex, max-snippet:0, noarchive, notranslate, noimageindex, unavailable_after: 2024-01-01"></meta>
 
                 </Head>
-                <div className={styles.title}>
+                <div className={styles.title} id="titlebg">
                     {articleArti.header_img &&
                         <Image width='1500' height='700' src={`${process.env.NEXT_PUBLIC_POCKETURL}/api/files/pages/${articleArti.id}/${articleArti.header_img}`} alt="Article header image" />}
                     <div className={styles.headerstuff}>
@@ -105,7 +59,7 @@ const SavedData = ({ savedData, articleArti }) => {
                 <meta name="robots" content="noindex, max-snippet:0, noarchive, notranslate, noimageindex, unavailable_after: 2024-01-01"></meta>
 
             </Head>
-            <div className={styles.title}>
+            <div className={styles.title} id="titlebg">
                 {articleArti.header_img &&
                     <Image width='1500' height='700' src={`${process.env.NEXT_PUBLIC_POCKETURL}/api/files/pages/${articleArti.id}/${articleArti.header_img}`} alt="Article header image" />}
                 <div className={styles.headerstuff}>
@@ -119,28 +73,28 @@ const SavedData = ({ savedData, articleArti }) => {
                         case "simpleEmbeds":
 
                             return (
-                                <li key={block.id} style={{ width: "100%", display: 'flex', justifyContent: 'center' }}>
-                                    <h5 style={{color: 'rgb(255 140 140)', border: '1px dashed rgb(255 140 140)', padding: '5px'}}>Embed requires permision to view which is not supported yet!</h5>
+                                <li className={styles.block} key={block.id} style={{ width: "100%", display: 'flex', justifyContent: 'center' }}>
+                                    <h5 style={{ color: 'rgb(255 140 140)', border: '1px dashed rgb(255 140 140)', padding: '5px' }}>Embed requires permision to view which is not supported yet!</h5>
                                 </li>
                             );
                         case "paragraph":
                             return (
-                                <li key={block.id}>
+                                <li className={styles.block} key={block.id}>
                                     <span dangerouslySetInnerHTML={{ __html: block.data.text.replace(/&lt;b&gt;/g, "<b>").replace(/&lt;\/b&gt;/g, "</b>") }}></span>
                                 </li>
                             );
                         case "header":
                             const Header = `h${block.data.level}`;
                             return (
-                                <li key={block.id}>
+                                <li className={styles.block} key={block.id}>
                                     <Header>{block.data.text}</Header>
                                 </li>
                             );
                         case "list":
                             return (
-                                <li key={block.id}>
+                                <li className={styles.block} key={block.id}>
                                     {block.data.style === "ordered" ? (
-                                        <ol>
+                                        <ol className={styles.block_ol}>
                                             {block.data.items.map((item, index) => (
                                                 <li key={index}>
                                                     <span dangerouslySetInnerHTML={{ __html: item.replace(/&lt;b&gt;/g, "<b>").replace(/&lt;\/b&gt;/g, "</b>") }}></span>
@@ -148,7 +102,7 @@ const SavedData = ({ savedData, articleArti }) => {
                                             ))}
                                         </ol>
                                     ) : (
-                                        <ul>
+                                        <ul className={styles.block_ul}>
                                             {block.data.items.map((item, index) => (
                                                 <li key={index}>
                                                     <span dangerouslySetInnerHTML={{ __html: item.replace(/&lt;b&gt;/g, "<b>").replace(/&lt;\/b&gt;/g, "</b>") }}></span>
@@ -162,25 +116,25 @@ const SavedData = ({ savedData, articleArti }) => {
                         case "attaches":
                             if (block.data.file.extension == "MP4" || block.data.file.extension == "mp4" || block.data.file.extension == "mov" || block.data.file.extension == "MOV") {
                                 return (
-                                    <li key={block.id} style={{ width: "100%", display: 'flex', justifyContent: 'center' }}>
+                                    <li className={styles.block} key={block.id} style={{ width: "100%", display: 'flex', justifyContent: 'center' }}>
                                         <video controls style={{ width: '50%' }} src={block.data.file.url} alt={block.data.caption} />
                                     </li>
                                 );
                             }
                             return (
-                                <li key={block.id}>
+                                <li className={styles.block} key={block.id}>
                                     <Link style={{ width: '20em' }} href={block.data.file.url} />
                                 </li>
                             );
                         case "quote":
                             return (
-                                <li key={block.id}>
+                                <li className={styles.block} key={block.id}>
                                     <blockquote>{block.data.text}</blockquote>
                                 </li>
                             );
                         case "table":
                             return (
-                                <li key={block.id}>
+                                <li className={styles.block} key={block.id}>
                                     <table style={{ width: '100%' }}>
                                         <thead>
                                             <tr>
@@ -203,16 +157,30 @@ const SavedData = ({ savedData, articleArti }) => {
                             );
                         case "image":
                             return (
-                                <li key={block.id}>
+                                <li className={styles.block} key={block.id}>
                                     <img loading="lazy" className={styles.article_body_img} src={block.data.file.url} alt={block.data.caption} />
                                 </li>
                             );
                         case "embed":
                             return (
-                                <li key={block.id}>
+                                <li className={styles.block} key={block.id}>
                                     <iframe loading="lazy" className={styles.article_body_embed} height={block.data.service === 'customPdf' ? ('500') : (block.data.height)} width='100%' src={block.data.embed} alt={block.data.caption} />
                                 </li>
                             );
+                        case "SimpleTodo":
+                            return (
+                                <ul className={`${styles.block} ${styles.todolist}`} key={block.id}>
+                                    {block.data.items.map((item) => (
+                                        <li className={styles.chkitem}>
+                                            {item.checked ? (<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0V0z" fill="none"/><path d="M9 16.2l-3.5-3.5c-.39-.39-1.01-.39-1.4 0-.39.39-.39 1.01 0 1.4l4.19 4.19c.39.39 1.02.39 1.41 0L20.3 7.7c.39-.39.39-1.01 0-1.4-.39-.39-1.01-.39-1.4 0L9 16.2z"/></svg>) : (
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0V0z" fill="none"/><path d="M18.3 5.71c-.39-.39-1.02-.39-1.41 0L12 10.59 7.11 5.7c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L10.59 12 5.7 16.89c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0L12 13.41l4.89 4.89c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z"/></svg>
+                                            )}
+                                            {item.content}
+
+                                        </li>
+                                    ))}
+                                </ul>
+                            )
                         default:
                             throw new Error('Unable to render component!')
                         //return null;
@@ -226,9 +194,20 @@ const SavedData = ({ savedData, articleArti }) => {
 
 
 export async function getServerSideProps({ params }) {
-    return {
-        props: {
-            arti: { article: params.id },
-        },
-    };
+    try {
+        const record = await pb.collection('pages').getOne(params.id);
+        return {
+            props: {
+                arti: JSON.stringify(record),
+            },
+        };
+    } catch (error) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: "/auth/login"
+            }
+        }
+    }
+
 }
