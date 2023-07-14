@@ -84,7 +84,6 @@ export default function Home() {
             <AnimatedSection className={styles.section2}>
               <div className={styles.section2_div}>
                 <h2>Get work done quickly and efficiently with fast loading and low data usage. </h2>
-                <p>Our platform prioritizes speed and efficiency, allowing users to accomplish tasks swiftly and effectively while minimizing their data usage. By leveraging advanced technologies and optimization techniques, we ensure that your workloads are processed promptly, reducing unnecessary waiting times and maximizing productivity. Experience unparalleled performance and cost-effectiveness as you streamline your workflow with our fast loading and data-efficient solution.</p>
                 <div className={styles.fcards}>
                   <div className={styles.fcard}>
                     <span><div className={styles.fcard_icon}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0z" fill="none" /><path d="M20.38 8.57l-1.23 1.85a8 8 0 0 1-.22 7.58H5.07A8 8 0 0 1 15.58 6.85l1.85-1.23A10 10 0 0 0 3.35 19a2 2 0 0 0 1.72 1h13.85a2 2 0 0 0 1.74-1 10 10 0 0 0-.27-10.44z" /><path d="M10.59 15.41a2 2 0 0 0 2.83 0l5.66-8.49-8.49 5.66a2 2 0 0 0 0 2.83z" /></svg>
