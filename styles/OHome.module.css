@@ -189,7 +189,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  padding: 2em 0em 2em 5em;
+  padding: 0em 0em 0em 5em;
   gap: 5em;
   margin-right: -100px;
   text-align: left;
@@ -233,9 +233,8 @@
 .bg {
   height: 70dvh;
   width: 100%;
-  border-radius: 1em;
   object-fit: cover;
-  box-shadow: 0px 8px 7px 0px #e5e5e5;
+  /*box-shadow: 0px 8px 7px 0px #e5e5e5;*/
   max-width: 30dvw;
 }
 
