@@ -616,7 +616,7 @@ function Editor({ page, preview }) {
         <title>Page: {articleTitle}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="/favicon.ico" />
-        <link rel="prefetch" href="/32.png" />
+        <link rel="prefetch" href="/64.png" />
       </Head>
       {isSaving && (<AutoSaveLoader />)}
       <div className={styles.title}>
