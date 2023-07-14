@@ -54,10 +54,7 @@ export default function Home() {
               Join now
             </Link>
           </div>
-          <div className={`${styles.headerContent} ${styles.headercon_2}`}>
-            <h5 className={styles.description}>Experence note taking like you have before. Write, save, read & repeat</h5>
-            <img className={styles.teaserimg} src='/static/teaser.png' />
-          </div>
+          
         </header>
         <div className={styles.sections}>
           <AnimatePresence>
