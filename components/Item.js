@@ -409,7 +409,7 @@ function MultiEditor({ pagesList }) {
         {selector && (
           <ModalContainer events={() => SetSelector(false)}>
             <ModalForm>
-              <ModalTitle>Select pages (3 max recomended)</ModalTitle>
+              <ModalTitle>Select pages</ModalTitle>
               <div className={styles.multiedit_pages}>
                 {pages.map((page) => (
                   <div className={`${styles.multiedit_page} ${selected4.includes(page.id) ? styles.selected : ''}`} key={page.id} onClick={() => setSelectedPage(page.id)}>        {page.icon && page.icon.includes('.png') ? (<img className={styles.page_icon} src={`/emoji/twitter/64/${page.icon}`} />) : (!isNaN(parseInt(page.icon, 16)) && String.fromCodePoint(parseInt(page.icon, 16)))}{page.title ? page.title : `Untitled: ${page.id}`}
@@ -418,6 +418,7 @@ function MultiEditor({ pagesList }) {
               </div>
               {toomany && ('You have too many pages selected to fit in this size screen!')}
               <AlternateButton click={openPages}>Open</AlternateButton>
+              <p style={{fontSize: '12px'}}>Some users may experience the issue of the page reloading back to the home screen. We sincerely apologize for any inconvenience this may cause. Our team is actively investigating the problem to identify its cause and implement a solution. Thank you for your patience and understanding.</p>
             </ModalForm>
           </ModalContainer>
         )}
