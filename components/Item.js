@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import PocketBase from 'pocketbase';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
-pb.autoCancellation(false);
 import Router, { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { AlternateButton, ModalContainer, ModalForm, ModalTitle } from '@/lib/Modal';
@@ -19,6 +18,7 @@ const MyComponent = ({ currPage }) => {
 
   useEffect(() => {
     async function getData() {
+      try{
       const records = await pb.collection('pages_Bare').getFullList({
         sort: '-created',
       });
@@ -34,7 +34,9 @@ const MyComponent = ({ currPage }) => {
           setHidden(false)
         }
       }
-
+    } catch (err){
+      console.error(err)
+    }
 
     }
     getData();

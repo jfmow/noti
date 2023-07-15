@@ -32,7 +32,6 @@ const ModalTitle = dynamic(() => import('@/lib/Modal').then((module) => module.M
 
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
-pb.autoCancellation(false);
 
 function Editor({ page, preview }) {
   const editorRef = useRef(null);
@@ -97,7 +96,7 @@ function Editor({ page, preview }) {
             toast.error("Could not auto save!", {
               position: toast.POSITION.BOTTOM_LEFT,
             });
-            console.log(error);
+            console.error(error);
           }
           console.log("Auto-save executed.");
         }
@@ -166,7 +165,7 @@ function Editor({ page, preview }) {
               localStorage.setItem('Offlinetime', 'false')
               localStorage.removeItem('Offlinesave');
             } catch (err) {
-              console.log(err)
+              console.error(err)
             }
           }
           setIsLoading(false);
@@ -186,7 +185,7 @@ function Editor({ page, preview }) {
               encryptrec.chef
             ).toString(enc.Utf8);
             setEditorData(JSON.parse(decryptedNote));
-            toast.info("Note no longer encrypted on server.")
+            //toast.info("Note no longer encrypted on server.")
           } catch (error) {
             console.warn(error);
             setEditorData(record.content);
@@ -209,12 +208,9 @@ function Editor({ page, preview }) {
           setIsLoading(false);
         } catch (error) {
           toast.error(
-            "Could not get page data! Please do not attempt to save it",
-            {
-              position: toast.POSITION.TOP_LEFT,
-            }
+            "Error while loading content"
           );
-          console.log(error);
+          console.error(error);
           setError(true);
           setIsLoading(false);
         }
