@@ -32,8 +32,7 @@ function NotionEditor({ pageId }) {
     ping()
     const lastActiveInti = setInterval(async () => {
       ping()
-      //console.log(record)
-    }, 450000);
+    }, 60000);
     return () => {
       clearInterval(lastActiveInti);
     };
@@ -102,6 +101,5 @@ async function ping() {
   const data = {
     "last_active": date
   };
-
   await pb.collection('users').update(pb.authStore.model.id, data);
 }
