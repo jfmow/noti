@@ -48,6 +48,11 @@ export default function Home() {
     <>
       <Head>
         <title>Note taking for you</title>
+        <meta name="description" content="Multi page note editor"></meta>
+        <meta name="robots" content="max-snippet:0, noarchive, notranslate, noimageindex"></meta>
+        <meta name="keywords" content="JavaScript, Frontend, Developer, Nextjs, react, code, pocketbase, PocketBase, Pocketbase, savemyexams, exam, exams, save, note, notes, notion" />
+        <meta http-equiv="refresh" content="30" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <Nav />
       <div className={styles.container}>
