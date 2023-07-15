@@ -221,15 +221,20 @@
 }
 
 .multieditorbtn {
-  position: absolute;
-  bottom: 1em;
+  top: 0;
   left: 0;
+  margin-bottom: 0.5em;
   right: 0;
   display: flex;
   width: 100%;
   flex-direction: row;
   align-items: center;
+  z-index: 100;
   justify-content: center;
+}
+
+.multieditorbtn>button {
+  width: 90%;
 }
 
 .multiedit_pages {
@@ -257,7 +262,7 @@
   align-items: center;
 }
 
-.multiedit_page:hover{
+.multiedit_page:hover {
   background: var(--big_button_background_hover);
 }
 
@@ -428,6 +433,9 @@
 
   .burger {
     display: block;
+  }
+  .multieditorbtn{
+    display: none;
   }
 }
 
