@@ -18,7 +18,7 @@ import compressImage from "@/lib/CompressImg";
 import dynamic from 'next/dynamic';
 import Router from "next/router";
 import { AnimatePresence } from "framer-motion";
-import { ModalTempLoader } from "@/lib/Modal";
+import { AlternateButton, ModalTempLoader } from "@/lib/Modal";
 import { createRandomMeshGradients } from "@/lib/randomMeshGradient";
 
 const Icons = dynamic(() => import("./Icons"), {
@@ -693,15 +693,7 @@ function Editor({ page, preview }) {
                   onClick={handleSharePage}
                   className={styles.title_buttons_btn}
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24px"
-                    viewBox="0 0 24 24"
-                    width="24px"
-                  >
-                    <path d="M0 0h24v24H0V0z" fill="none" />
-                    <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z" />
-                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" ><g><rect fill="none" height="24" width="24" /></g><g><path d="M9,11h6c0.55,0,1,0.45,1,1v0c0,0.55-0.45,1-1,1H9c-0.55,0-1-0.45-1-1v0C8,11.45,8.45,11,9,11z M20.93,12L20.93,12 c0.62,0,1.07-0.59,0.93-1.19C21.32,8.62,19.35,7,17,7h-3.05C13.43,7,13,7.43,13,7.95v0c0,0.52,0.43,0.95,0.95,0.95H17 c1.45,0,2.67,1,3.01,2.34C20.12,11.68,20.48,12,20.93,12z M3.96,11.38C4.24,9.91,5.62,8.9,7.12,8.9l2.93,0 C10.57,8.9,11,8.47,11,7.95v0C11,7.43,10.57,7,10.05,7L7.22,7c-2.61,0-4.94,1.91-5.19,4.51C1.74,14.49,4.08,17,7,17h3.05 c0.52,0,0.95-0.43,0.95-0.95v0c0-0.52-0.43-0.95-0.95-0.95H7C5.09,15.1,3.58,13.36,3.96,11.38z M18,12L18,12c-0.55,0-1,0.45-1,1v2 h-2c-0.55,0-1,0.45-1,1v0c0,0.55,0.45,1,1,1h2v2c0,0.55,0.45,1,1,1h0c0.55,0,1-0.45,1-1v-2h2c0.55,0,1-0.45,1-1v0 c0-0.55-0.45-1-1-1h-2v-2C19,12.45,18.55,12,18,12z" /></g></svg>
                 </button>
               </div>
 
@@ -760,18 +752,22 @@ function Editor({ page, preview }) {
             <ModalContainer events={() => setShareLinkModalState(false)}>
               <ModalForm>
                 <ModalTitle>Share page</ModalTitle>
-                <div className={styles.shareModal_link_text}>
-                  https://noti.jamesmowat.com/page/view/{page}
+                <div className={styles.shareModal_link_alt_text}>
+                  <div className={styles.shareModal_link_text}>
+                    https://noti.jamesmowat.com/page/view/{page}
+
+                  </div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24"
+                    viewBox="0 -960 960 960"
+                    width="24"
+                    onClick={copyToClip}
+                  >
+                    <path d="M200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-160q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Z" />
+                  </svg>
                 </div>
-                <ModalButton events={copyToClip}> <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24"
-                  viewBox="0 -960 960 960"
-                  width="24"
-                >
-                  <path d="M200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-160q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Z" />
-                </svg></ModalButton>
-                <ModalButton classnm={`${styles.buttonred}`} events={unSharePage}>Hide</ModalButton>
+                <AlternateButton click={unSharePage}>Hide</AlternateButton>
               </ModalForm>
             </ModalContainer>
 

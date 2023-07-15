@@ -177,13 +177,8 @@
 
 
 .shareModal_link_text {
-  padding: 1em;
-  background: #ffffff;
-  border-radius: var(--btn_border_radius);
-  box-shadow: inset 0px 0px 10px 2px #ececec;
+  width: 93%;
   overflow-x: scroll;
-  overflow-y: hidden;
-  color: #000;
 }
 
 .shareModal_link_text::-webkit-scrollbar {
@@ -191,6 +186,26 @@
   height: 2px;
 }
 
+.shareModal_link_alt_text{
+  display: flex;
+  flex-direction: row;
+  padding: 1em;
+  background: #ffffff;
+  border-radius: var(--btn_border_radius);
+  box-shadow: inset 0px 0px 10px 2px #ececec;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  color: #000;
+  position: relative;
+  align-items: center;
+}
+
+.shareModal_link_alt_text svg{
+  position: absolute;
+  right: 10px;
+  fill: var(--main_btn_color);
+  cursor: pointer;
+}
 
 
 .buttonred {
