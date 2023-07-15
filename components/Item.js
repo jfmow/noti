@@ -27,7 +27,6 @@ const MyComponent = ({ currPage }) => {
 
       if (!currPage || currPage === "firstopen" && localStorage.getItem('Offlinetime') != "true") {
         const latestRecord = records.filter(record => record.updated)[0];
-        console.log(latestRecord)
         if (latestRecord) {
           router.push(`/page/${latestRecord.id}`)
         }
@@ -166,8 +165,7 @@ const MyComponent = ({ currPage }) => {
       </>
       {!hidden && (<Tut setHidden={setHidden} />)}
       <div className={`${styles.itemroot}`} id='rootitems'>
-      <MultiEditor pagesList={items} />
-
+        <MultiEditor pagesList={items} />
         <button onClick={setVisibleState} className={styles.desktophidemenu}><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px"><g><rect fill="none" height="24" width="24" /><rect fill="none" height="24" width="24" /></g><g><g><path d="M20.08,11.42l-4.04-5.65C15.7,5.29,15.15,5,14.56,5h0c-1.49,0-2.35,1.68-1.49,2.89L16,12l-2.93,4.11 c-0.87,1.21,0,2.89,1.49,2.89h0c0.59,0,1.15-0.29,1.49-0.77l4.04-5.65C20.33,12.23,20.33,11.77,20.08,11.42z" /><path d="M13.08,11.42L9.05,5.77C8.7,5.29,8.15,5,7.56,5h0C6.07,5,5.2,6.68,6.07,7.89L9,12l-2.93,4.11C5.2,17.32,6.07,19,7.56,19h0 c0.59,0,1.15-0.29,1.49-0.77l4.04-5.65C13.33,12.23,13.33,11.77,13.08,11.42z" /></g></g></svg></button>
         <ImportantNotes notes={items} setVisibleState={setVisibleState} />
         <button onClick={setVisibleState} className={styles.hidemenubtn}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0V0z" fill="none" /><path d="M18.3 5.71c-.39-.39-1.02-.39-1.41 0L12 10.59 7.11 5.7c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L10.59 12 5.7 16.89c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0L12 13.41l4.89 4.89c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z" /></svg></button>
@@ -374,7 +372,7 @@ function ImportantNotes({ notes, setVisibleState }) {
 }
 
 
-function MultiEditor({pagesList}) {
+function MultiEditor({ pagesList }) {
   const [selector, SetSelector] = useState(false)
   const [pages, setPagesList] = useState(pagesList)
   const [selected4, setSelected3] = useState([])
@@ -392,8 +390,7 @@ function MultiEditor({pagesList}) {
 
   function openPages() {
     const selectedPath = selected4.join('/');
-    console.log((window.innerWidth - 300) / selected4.length)
-    if((window.innerWidth - 300) / selected4.length < 300){
+    if ((window.innerWidth - 300) / selected4.length < 300) {
       return setTooMany(true)
     }
     setTooMany(false)

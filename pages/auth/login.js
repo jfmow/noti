@@ -44,7 +44,6 @@ export default function Login() {
         sanitizedPassword,
         { '$autoCancel': false },
       );
-      console.log(authData)
       if (authData.record.disabled) {
         pb.authStore.clear()
         return Router.push('/u/disabled')
