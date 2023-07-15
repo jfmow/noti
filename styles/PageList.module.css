@@ -239,6 +239,8 @@
   gap: 10px;
   justify-content: space-around;
   align-items: center;
+  max-height: 50dvh;
+  overflow: scroll;
 }
 
 .multiedit_page {
