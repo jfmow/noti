@@ -228,7 +228,7 @@
 
 .cbxpath {
     fill: none;
-    stroke: white;
+    stroke: rgb(0, 0, 0);
     stroke-width: 6;
     stroke-linecap: round;
     stroke-linejoin: round;
@@ -269,7 +269,7 @@
     outline: 3px #ff2d2d solid;
   }
   .acc_button svg {
-    fill: #9c9c9c;
+    fill: rgb(31, 31, 31);
     transition: 400ms;
   }
   
@@ -289,7 +289,16 @@
 
 @media (prefers-color-scheme: dark) {
 
-
+    .cbxpath {
+        fill: none;
+        stroke: white;
+        stroke-width: 6;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        transition: stroke-dasharray 0.5s ease, stroke-dashoffset 0.5s ease;
+        stroke-dasharray: 241 9999999;
+        stroke-dashoffset: 0;
+    }
 
     .default_settings_modal_container_usrname_block {
         background: #1f1f1f;

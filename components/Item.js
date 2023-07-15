@@ -18,25 +18,25 @@ const MyComponent = ({ currPage }) => {
 
   useEffect(() => {
     async function getData() {
-      try{
-      const records = await pb.collection('pages_Bare').getFullList({
-        sort: '-created',
-      });
-      setItems(records);
-      setIsLoading(false)
+      try {
+        const records = await pb.collection('pages_Bare').getFullList({
+          sort: '-created',
+        });
+        setItems(records);
+        setIsLoading(false)
 
-      if (!currPage || currPage === "firstopen" && localStorage.getItem('Offlinetime') != "true") {
-        const latestRecord = records.filter(record => record.updated)[0];
-        if (latestRecord) {
-          router.push(`/page/${latestRecord.id}`)
+        if (!currPage || currPage === "firstopen" && localStorage.getItem('Offlinetime') != "true") {
+          const latestRecord = records.filter(record => record.updated)[0];
+          if (latestRecord) {
+            router.push(`/page/${latestRecord.id}`)
+          }
+          if (records.length === 0) {
+            setHidden(false)
+          }
         }
-        if (records.length === 0) {
-          setHidden(false)
-        }
+      } catch (err) {
+        console.error(err)
       }
-    } catch (err){
-      console.error(err)
-    }
 
     }
     getData();
@@ -403,7 +403,7 @@ function MultiEditor({ pagesList }) {
   return (
     <div className={styles.multieditorbtn}>
       <AlternateButton click={() => SetSelector(true)}>
-        Open Multi-Editor
+        <svg style={{transform: 'rotate(90deg)'}} xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px"><g><path d="M0,0h24v24H0V0z" fill="none" /></g><g><g><path d="M18,4v5H6V4H18z M18,2H6C4.9,2,4,2.9,4,4v5c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V4C20,2.9,19.1,2,18,2z M18,15v5H6v-5H18z M18,13H6c-1.1,0-2,0.9-2,2v5c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2v-5C20,13.9,19.1,13,18,13z" /></g></g></svg>Open Multi-Editor
       </AlternateButton>
       <>
         {selector && (
@@ -418,7 +418,7 @@ function MultiEditor({ pagesList }) {
               </div>
               {toomany && ('You have too many pages selected to fit in this size screen!')}
               <AlternateButton click={openPages}>Open</AlternateButton>
-              <p style={{fontSize: '12px'}}>Some users may experience the issue of the page reloading back to the home screen. We sincerely apologize for any inconvenience this may cause. Our team is actively investigating the problem to identify its cause and implement a solution. Thank you for your patience and understanding.</p>
+              <p style={{ fontSize: '12px' }}>Some users may experience the issue of the page reloading back to the home screen. We sincerely apologize for any inconvenience this may cause. Our team is actively investigating the problem to identify its cause and implement a solution. Thank you for your patience and understanding.</p>
             </ModalForm>
           </ModalContainer>
         )}
