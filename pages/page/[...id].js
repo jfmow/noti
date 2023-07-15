@@ -10,6 +10,65 @@ const Editor = dynamic(() => import('../../components/Editor'), {
   ssr: false,
 });
 
+function NotionEditor({ pageId }) {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function authUpdate() {
+      try {
+        const authData = await pb.collection('users').authRefresh();
+        if (!pb.authStore.isValid) {
+          pb.authStore.clear();
+          return window.location.replace("/auth/login");
+        }
+        setIsLoading(false)
+      } catch (error) {
+        pb.authStore.clear();
+        return window.location.replace('/auth/login');
+      }
+
+    }
+    authUpdate()
+    ping()
+    const lastActiveInti = setInterval(async () => {
+      ping()
+      //console.log(record)
+    }, 450000);
+    return () => {
+      clearInterval(lastActiveInti);
+    };
+  }, [])
+
+  if (isLoading) {
+    return (<Loader />)
+  }
+
+  return (
+    <div>
+      <div className='main'>
+        <MyComponent currPage={pageId} />
+        {pageId.map((page) => (
+          <Editor page={page} preview='false' />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default NotionEditor;
+
+export async function getServerSideProps({ params }) {
+  return {
+    props: {
+      pageId: params.id,
+    },
+  };
+}
+
+
+
+
+
 async function ping() {
   async function getCurrentDateTime(timeZone) {
     const oneHourAgo = new Date();
@@ -39,43 +98,10 @@ async function ping() {
     return timestamp;
   }
 
-
-
-
-
   const date = await getCurrentDateTime(pb.authStore.model.time_zone);
   const data = {
     "last_active": date
   };
 
-  const record = await pb.collection('users').update(pb.authStore.model.id, data);
-}
-
-function NotionEditor({ pageId }) {
-  const [isLoading, setIsLoading] = useState(false);
-
-
-  if (isLoading) {
-    return (<Loader />)
-  }
-  return (
-    <div>
-      <div className='main'>
-        <MyComponent currPage={pageId} />
-        {pageId.map((page) => (
-          <Editor page={page} preview='false' />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-export default NotionEditor;
-
-export async function getServerSideProps({ params }) {
-  return {
-    props: {
-      pageId: params.id,
-    },
-  };
+  await pb.collection('users').update(pb.authStore.model.id, data);
 }
