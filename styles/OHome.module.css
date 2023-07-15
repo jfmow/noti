@@ -464,4 +464,8 @@
     text-align: center !important;
     text-wrap: balance;
   }
+
+  .title{
+    font-size: 40px;
+  }
 }

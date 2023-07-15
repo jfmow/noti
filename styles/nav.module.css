@@ -129,5 +129,8 @@ breakdown of what each part of the code does: */
     width: 100%;
     background: none;
   }
+  .items h1{
+    font-size: 16px;
+  }
 }
 
