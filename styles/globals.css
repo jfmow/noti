@@ -165,3 +165,7 @@ a {
     border: 2px solid rgb(0, 247, 255);
   }
 }
+
+::selection{
+  background-color: #ff47f3;
+}
