@@ -52,42 +52,19 @@ async function ping() {
 }
 
 function NotionEditor({ pageId }) {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    async function authUpdate() {
-      try {
-        const authData = await pb.collection('users').authRefresh();
-        if (!pb.authStore.isValid) {
-          pb.authStore.clear();
-          return window.location.replace("/auth/login");
-        }
-        setIsLoading(false)
-      } catch (error) {
-        pb.authStore.clear();
-        return window.location.replace('/auth/login');
-      }
 
-    }
-    authUpdate()
-    ping()
-    const lastActiveInti = setInterval(async () => {
-      ping()
-      //console.log(record)
-    }, 450000);
-    return () => {
-      clearInterval(lastActiveInti);
-    };
-  }, [])
   if (isLoading) {
     return (<Loader />)
   }
   return (
     <div>
       <div className='main'>
-
         <MyComponent currPage={pageId} />
-        <Editor page={pageId} preview='false' />
+        {pageId.map((page) => (
+          <Editor page={page} preview='false' />
+        ))}
       </div>
     </div>
   );

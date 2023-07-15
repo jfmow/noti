@@ -6,8 +6,9 @@ import PocketBase from 'pocketbase';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
+import { AlternateButton, ModalContainer, ModalForm, ModalTitle } from '@/lib/Modal';
 const Tut = dynamic(() => import('./Tutorial'));
 
 const MyComponent = ({ currPage }) => {
@@ -202,7 +203,7 @@ const MyComponent = ({ currPage }) => {
           </svg>
           Create page
         </span>
-
+        <MultiEditor pagesList={items} />
       </div>
     </>
   );
@@ -367,6 +368,60 @@ function ImportantNotes({ notes, setVisibleState }) {
           )
         }
       })}
+    </div>
+  )
+}
+
+
+function MultiEditor({pagesList}) {
+  const [selector, SetSelector] = useState(false)
+  const [pages, setPagesList] = useState(pagesList)
+  const [selected4, setSelected3] = useState([])
+  const [toomany, setTooMany] = useState(false)
+
+  function setSelectedPage(page) {
+    if (selected4.includes(page)) {
+      setSelected3(selected4.filter(pages => pages != page))
+    } else if (!selected4) {
+      setSelected3(page);
+    } else {
+      setSelected3(prevPages => [...prevPages, page]);
+    }
+  }
+
+  function openPages() {
+    const selectedPath = selected4.join('/');
+    console.log((window.innerWidth - 300) / selected4.length)
+    if((window.innerWidth - 300) / selected4.length < 300){
+      return setTooMany(true)
+    }
+    setTooMany(false)
+    Router.push(`/page/${selectedPath}`);
+    SetSelector(false)
+  }
+
+  return (
+    <div className={styles.multieditorbtn}>
+      <AlternateButton click={() => SetSelector(true)}>
+        Open Multi-Editor
+      </AlternateButton>
+      <>
+        {selector && (
+          <ModalContainer events={() => SetSelector(false)}>
+            <ModalForm>
+              <ModalTitle>Select pages (3 max recomended)</ModalTitle>
+              <div className={styles.multiedit_pages}>
+                {pages.map((page) => (
+                  <div className={`${styles.multiedit_page} ${selected4.includes(page.id) ? styles.selected : ''}`} key={page.id} onClick={() => setSelectedPage(page.id)}>        {page.icon && page.icon.includes('.png') ? (<img className={styles.page_icon} src={`/emoji/twitter/64/${page.icon}`} />) : (!isNaN(parseInt(page.icon, 16)) && String.fromCodePoint(parseInt(page.icon, 16)))}{page.title ? page.title : `Untitled: ${page.id}`}
+                  </div>
+                ))}
+              </div>
+              {toomany && ('You have too many pages selected to fit in this size screen!')}
+              <AlternateButton click={openPages}>Open</AlternateButton>
+            </ModalForm>
+          </ModalContainer>
+        )}
+      </>
     </div>
   )
 }

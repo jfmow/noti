@@ -489,8 +489,8 @@ function Editor({ page, preview }) {
     reader.readAsDataURL(file);
     let formData = new FormData();
     if (file) {
+      const compressidToast = toast.loading("Compressing image...");
       try {
-        const compressidToast = toast.loading("Compressing image...");
         const compressedBlob = await compressImage(file, 200); // Maximum file size in KB (100KB in this example)
         const compressedFile = new File([compressedBlob], file.name, {
           type: "image/jpeg",

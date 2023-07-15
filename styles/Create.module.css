@@ -44,8 +44,8 @@
   grid-template-columns: 1fr;
   padding: 3em;
   word-break: break-word;
-  min-height: 100dvh;
-  
+  height: 60dvh;
+  overflow: scroll;
   background: var(--background);
 }
 

@@ -12,7 +12,7 @@
   width: 300px;
   opacity: 1;
   position: relative;
-  
+
   box-shadow: 10px 0px 13px 2px #e9e9e9;
   top: 0;
   bottom: 0;
@@ -60,7 +60,8 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  color: var(--big_button_text);;
+  color: var(--big_button_text);
+  ;
   padding: 5px;
   /* width: fit-content; */
   border-radius: var(--btn_border_radius);
@@ -143,7 +144,7 @@
   transition: 0.1s all ease-in;
 }
 
-.page_icon{
+.page_icon {
   width: 16px;
   height: 16px;
 }
@@ -177,7 +178,7 @@
   padding-bottom: 10px;
 }
 
-.pushpinImportantNote{
+.pushpinImportantNote {
   transform: rotate(320deg);
 }
 
@@ -217,6 +218,49 @@
   white-space: nowrap;
   border-right: none;
   box-shadow: none !important;
+}
+
+.multieditorbtn {
+  position: absolute;
+  bottom: 1em;
+  left: 0;
+  right: 0;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.multiedit_pages {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.multiedit_page {
+  padding: 7px;
+  /* box-shadow: 0px 0px 5px #000; */
+  background: var(--big_button_background);
+  border-radius: 5px;
+  cursor: pointer;
+  color: var(--big_button_text);
+  border: var(--big_button_border) 2px solid;
+  gap: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.multiedit_page:hover{
+  background: var(--big_button_background_hover);
+}
+
+.multiedit_pages .selected {
+  background: #4e4e4e;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -275,16 +319,17 @@
   #active {
     background: #2e2e2e6e;
   }
-  @media(max-width: 800px){
-    .itemroot{
+
+  @media(max-width: 800px) {
+    .itemroot {
       background: #242424de !important;
     }
   }
 }
 
-@media(min-width: 801px){
-  .itemroot{
-  transition: 0.5s all ease-in-out;
+@media(min-width: 801px) {
+  .itemroot {
+    transition: 0.5s all ease-in-out;
   }
 }
 
