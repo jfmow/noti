@@ -53,6 +53,7 @@ export default function Home() {
         <meta name="keywords" content="JavaScript, Frontend, Developer, Nextjs, react, code, pocketbase, PocketBase, Pocketbase, savemyexams, exam, exams, save, note, notes, notion" />
         <meta http-equiv="refresh" content="30" />
         <link rel="icon" href="/favicon.ico" />
+      <link rel="canonical" href="https://savemynotes.net/" />
       </Head>
       <Nav />
       <div className={styles.container}>
