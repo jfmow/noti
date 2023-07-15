@@ -79,6 +79,23 @@ const MyComponent = ({ currPage }) => {
 
   }, []);
 
+  useEffect(()=>{
+    if (window.localStorage.getItem('_menu') === 'closed') {
+      try {
+        document.getElementById('rootitems').classList.add(styles.dskhidden)
+      } catch (err) {
+        console.log(err)
+        return
+      }
+    } else if (window.localStorage.getItem('_menu') === "open") {
+      try {
+        document.getElementById('rootitems').classList.remove(styles.dskhidden)
+      } catch (err) {
+        return
+      }
+    }
+  },[document.getElementById('rootitems')])
+
   if (loading) {
     return (
       <div className={`${styles.itemroot}`} id='rootitems'>
@@ -142,20 +159,7 @@ const MyComponent = ({ currPage }) => {
     window.localStorage.setItem('_menu', document.getElementById('rootitems').classList.contains(styles.dskhidden) ? ('closed') : ('open'))
   }
 
-  if (window.localStorage.getItem('_menu') === 'closed') {
-    try {
-      document.getElementById('rootitems').classList.add(styles.dskhidden)
-    } catch (err) {
-      console.log(err)
-      return
-    }
-  } else if (window.localStorage.getItem('_menu') === "open") {
-    try {
-      document.getElementById('rootitems').classList.remove(styles.dskhidden)
-    } catch (err) {
-      return
-    }
-  }
+  
 
   return (
     <>
