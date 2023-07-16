@@ -32,6 +32,7 @@ const ModalTitle = dynamic(() => import('@/lib/Modal').then((module) => module.M
 
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
+pb.autoCancellation(false)
 
 function Editor({ page, preview, multi }) {
   const editorRef = useRef(null);
@@ -894,7 +895,7 @@ class SimpleIframe {
     iframe.style.borderRadius = "5px";
     const fileToken = await pb.files.getToken();
     // retrieve an example protected file url (will be valid ~5min)
-    pb.autoCancellation(false)
+    
     const record = await pb.collection('files').getOne(fileId); // Use the fileId to retrieve the record
     const url = pb.files.getUrl(record, record.file_data, { 'token': fileToken });
     iframe.src = url;
