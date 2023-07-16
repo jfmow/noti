@@ -22,6 +22,7 @@ function NotionEditor({ pageId }) {
           return window.location.replace("/auth/login");
         }
         setIsLoading(false)
+        await pb.send("/ping");
       } catch (error) {
         pb.authStore.clear();
         return window.location.replace('/auth/login');
@@ -29,9 +30,8 @@ function NotionEditor({ pageId }) {
 
     }
     authUpdate()
-    ping()
     const lastActiveInti = setInterval(async () => {
-      ping()
+      await pb.send("/ping");
     }, 60000);
     return () => {
       clearInterval(lastActiveInti);
@@ -64,42 +64,3 @@ export async function getServerSideProps({ params }) {
   };
 }
 
-
-
-
-
-async function ping() {
-  async function getCurrentDateTime(timeZone) {
-    const oneHourAgo = new Date();
-
-    const options = {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: false,
-      timeZone: timeZone
-    };
-
-    const formatter = new Intl.DateTimeFormat('en-US', options);
-    const parts = formatter.formatToParts(oneHourAgo);
-    const year = parts.find(part => part.type === 'year').value;
-    const month = parts.find(part => part.type === 'month').value.padStart(2, '0');
-    const day = parts.find(part => part.type === 'day').value.padStart(2, '0');
-    const hours = parts.find(part => part.type === 'hour').value.padStart(2, '0');
-    const minutes = parts.find(part => part.type === 'minute').value.padStart(2, '0');
-    const seconds = parts.find(part => part.type === 'second').value.padStart(2, '0');
-
-    const timestamp = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-
-    return timestamp;
-  }
-
-  const date = await getCurrentDateTime(pb.authStore.model.time_zone);
-  const data = {
-    "last_active": date
-  };
-  await pb.collection('users').update(pb.authStore.model.id, data);
-}
