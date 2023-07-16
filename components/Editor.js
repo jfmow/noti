@@ -894,6 +894,7 @@ class SimpleIframe {
     iframe.style.borderRadius = "5px";
     const fileToken = await pb.files.getToken();
     // retrieve an example protected file url (will be valid ~5min)
+    pb.autoCancellation(false)
     const record = await pb.collection('files').getOne(fileId); // Use the fileId to retrieve the record
     const url = pb.files.getUrl(record, record.file_data, { 'token': fileToken });
     iframe.src = url;
