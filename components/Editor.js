@@ -33,7 +33,7 @@ const ModalTitle = dynamic(() => import('@/lib/Modal').then((module) => module.M
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 
-function Editor({ page, preview }) {
+function Editor({ page, preview, multi }) {
   const editorRef = useRef(null);
   const [editor, setEditor] = useState(null);
   const [editorData, setEditorData] = useState({});
@@ -779,7 +779,7 @@ function Editor({ page, preview }) {
           </>
         )}
       </AnimatePresence>
-      <div className={styles.creategrid}>
+      <div className={`${styles.creategrid} ${multi && styles.creategrid_lock}`}>
         <div className={styles.form}>
           <div className={styles.editor} ref={editorRef}></div>
         </div>

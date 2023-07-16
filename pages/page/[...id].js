@@ -14,6 +14,7 @@ function NotionEditor({ pageId }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    
     async function authUpdate() {
       try {
         const authData = await pb.collection('users').authRefresh();
@@ -30,6 +31,7 @@ function NotionEditor({ pageId }) {
 
     }
     authUpdate()
+    
     const lastActiveInti = setInterval(async () => {
       await pb.send("/ping");
     }, 60000);
@@ -47,7 +49,7 @@ function NotionEditor({ pageId }) {
       <div className='main'>
         <MyComponent currPage={pageId} />
         {pageId.map((page) => (
-          <Editor page={page} preview='false' />
+          <Editor page={page} multi={pageId.length > 1 && true} preview='false' />
         ))}
       </div>
     </div>

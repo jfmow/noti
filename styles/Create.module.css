@@ -44,9 +44,12 @@
   grid-template-columns: 1fr;
   padding: 3em;
   word-break: break-word;
+  background: var(--background);
+}
+
+.creategrid_lock{
   height: 60dvh;
   overflow: scroll;
-  background: var(--background);
 }
 
 .header {
