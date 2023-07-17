@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import PocketBase from 'pocketbase';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
+pb.autoCancellation(false)
 import Router, { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { AlternateButton, ModalContainer, ModalForm, ModalTitle } from '@/lib/Modal';
@@ -269,41 +270,34 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
     console.log("Dropped item ID:", itemId);
     setHoveredItemId(null);
     console.log(itemParent)
+    //if its on it self or its child
     if (draggedItemId === itemId || itemParent === draggedItemId) {
       return
     }
-    let check1 = true
-    let found = false
-    let checkingItem = itemParent
     try {
-      /* The above code is checking if a record with a specific parentId exists in a collection called
-      'pages'. If it does, it sets the variable 'checkingItem' to the id of that record. Then, it
-      enters a while loop where it retrieves the record with the id stored in 'checkingItem' from a
-      collection called 'pages_Bare'. If the parentId of that record matches the draggedItemId or is
-      null, it sets the variables 'check1' and 'found' to false and true respectively, and breaks
-      out of the loop. If the parentId does not match, it updates 'checkingItem */
       const record1 = await pb.collection('pages_Bare').getFirstListItem(`parentId="${draggedItemId}"`);
-      if (record1.parentId === draggedItemId) {
-        return
-      }
-      checkingItem = record1.id
-      while (check1) {
-        const record = await pb.collection('pages_Bare').getOne(checkingItem);
-        if (record.parentId === draggedItemId || record.parentId === null) {
-          check1 = false
-          found = true
-          break
-        } else {
-          checkingItem = record.id
-          continue
+      if (record1) {
+        let itemCHeckId = record1.id
+        while (true) {
+          try {
+            const record2 = await pb.collection('pages_Bare').getFirstListItem(`parentId="${itemCHeckId}"`);
+            if (record2.id === itemId) {
+              return
+            } else if (record2.id === itemCHeckId) {
+              break
+            } else {
+              itemCHeckId = record2.id
+              continue
+            }
+          } catch (err) {
+            break
+          }
         }
       }
-      if (found) {
-        return
-      }
     } catch (err) {
-      console.error(err)
+      console.log('Should be fineeeee')
     }
+
 
     const data = {
       "parentId": itemId,
