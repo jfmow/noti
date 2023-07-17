@@ -54,6 +54,8 @@ function Editor({ page, preview, multi }) {
   const [chefKey, setChefKey] = useState("");
   const [importantNote, setImportantNote] = useState(false)
 
+  const pagetitleref = useRef(null)
+
   useEffect(() => {
     if (preview === "true") {
       return;
@@ -466,7 +468,7 @@ function Editor({ page, preview, multi }) {
   }
 
   async function handleTitleChange() {
-    const title = document.getElementById('tit')
+    const title = pagetitleref.current
     setArticleTitle(title.innerText);
     const newTitle = {
       title: title.innerText
@@ -625,7 +627,7 @@ function Editor({ page, preview, multi }) {
                 className={styles.titleinput}
                 contentEditable
                 type="text"
-                id='tit'
+                ref={pagetitleref}
                 onBlur={handleTitleChange}
               >
                 {articleTitle ? articleTitle : "Untitled"}
