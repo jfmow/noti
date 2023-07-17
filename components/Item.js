@@ -282,7 +282,7 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
       collection called 'pages_Bare'. If the parentId of that record matches the draggedItemId or is
       null, it sets the variables 'check1' and 'found' to false and true respectively, and breaks
       out of the loop. If the parentId does not match, it updates 'checkingItem */
-      const record1 = await pb.collection('pages').getFirstListItem(`parentId="${draggedItemId}"`);
+      const record1 = await pb.collection('pages_Bare').getFirstListItem(`parentId="${draggedItemId}"`);
       if (record1.parentId === draggedItemId) {
         return
       }
