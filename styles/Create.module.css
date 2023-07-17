@@ -115,6 +115,7 @@
   height: 40dvh;
   background: linear-gradient(20deg, #607d8b, #fff, #607d8b);
   background-size: 100%;
+  box-shadow: 0px 0px 14px 0px #b1b1b1;
 }
 
 .titleeditorcontainer {
@@ -727,6 +728,7 @@
 
   .title {
     background: linear-gradient(20deg, #9E9E9E, #607D8B, #9E9E9E);
+    box-shadow: 0px 0px 14px 0px #0b0b0b;
   }
 
   .titleinput {
