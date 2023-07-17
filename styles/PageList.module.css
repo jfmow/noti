@@ -270,6 +270,10 @@
   background: #4e4e4e;
 }
 
+.hoveringover{
+  background: #526f8f !important;
+}
+
 @media (prefers-color-scheme: dark) {
 
   .itemroot {

@@ -24,8 +24,7 @@ const MyComponent = ({ currPage }) => {
         });
         setItems(records);
         setIsLoading(false)
-
-        if (!currPage || currPage === "firstopen" && localStorage.getItem('Offlinetime') != "true") {
+        if (!currPage || currPage[0] === "firstopen" && localStorage.getItem('Offlinetime') !== "true") {
           const latestRecord = records.filter(record => record.updated)[0];
           if (latestRecord) {
             router.push(`/page/${latestRecord.id}`)
@@ -79,7 +78,7 @@ const MyComponent = ({ currPage }) => {
 
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (window.localStorage.getItem('_menu') === 'closed') {
       try {
         document.getElementById('rootitems').classList.add(styles.dskhidden)
@@ -94,7 +93,7 @@ const MyComponent = ({ currPage }) => {
         return
       }
     }
-  },[document.getElementById('rootitems')])
+  }, [document.getElementById('rootitems')])
 
   if (loading) {
     return (
@@ -159,7 +158,7 @@ const MyComponent = ({ currPage }) => {
     window.localStorage.setItem('_menu', document.getElementById('rootitems').classList.contains(styles.dskhidden) ? ('closed') : ('open'))
   }
 
-  
+
 
   return (
     <>
@@ -236,6 +235,8 @@ const RootParentComponent = ({ item, currPage, createNewPage, children }) => {
 
 const ChildComponent = ({ item, level, children, currPage2, isActive, createNewPage, setVisibleState }) => {
   const [expand, setExpand] = useState(item.expanded);
+  const [hoveredItemId, setHoveredItemId] = useState(null);
+
   const router = useRouter()
   function openPage(e, item) {
     e.preventDefault();
@@ -256,14 +257,50 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
     const record = await pb.collection('pages').update(item, data);
   }
 
+  function handleDragStart(event, itemId) {
+    event.dataTransfer.setData("text/plain", itemId);
+    console.log("Started dragging item with ID:", itemId);
+  }
+
+  async function handleDragEnd(event, itemId) {
+    event.persist();
+    const draggedItemId = event.dataTransfer.getData("text/plain");
+    //console.log("Dragged item ID:", draggedItemId);
+    //console.log("Dropped item ID:", itemId);
+    setHoveredItemId(null);
+    if (draggedItemId === itemId) {
+      return
+    }
+    const data = {
+      "parentId": itemId,
+    };
+
+    await pb.collection('pages').update(draggedItemId, data);
+  }
+
+  function handleDragOver(event, itemId) {
+    event.preventDefault();
+    setHoveredItemId(itemId);
+  }
+
+  function handleDragLeave() {
+    setHoveredItemId(null);
+  }
+
+
 
   return (
     <li>
       <div
-        className={`${styles[`level_${level}`]} ${currPage2 === item.id || isActive ? styles.active : ''
+        className={`${styles[`level_${level}`]} ${currPage2 === item.id || isActive ? styles.active : ''} ${hoveredItemId === item.id ? styles.hoveringover : ''
           } ${styles.itemoption}`}
         id={currPage2 === item.id ? styles.active : 'fake'}
         onClick={(e) => openPage(e, item.id)}
+        onDragOver={(e) => handleDragOver(e, item.id)}
+        onDragLeave={handleDragLeave}
+        onDrop={(e) => handleDragEnd(e, item.id)}
+        onDragStart={(e) => handleDragStart(e, item.id)}
+        draggable
       >
         {expand ? (
           <button
@@ -407,7 +444,7 @@ function MultiEditor({ pagesList }) {
   return (
     <div className={styles.multieditorbtn}>
       <AlternateButton click={() => SetSelector(true)}>
-        <svg style={{transform: 'rotate(90deg)'}} xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px"><g><path d="M0,0h24v24H0V0z" fill="none" /></g><g><g><path d="M18,4v5H6V4H18z M18,2H6C4.9,2,4,2.9,4,4v5c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V4C20,2.9,19.1,2,18,2z M18,15v5H6v-5H18z M18,13H6c-1.1,0-2,0.9-2,2v5c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2v-5C20,13.9,19.1,13,18,13z" /></g></g></svg>Open Multi-Editor
+        <svg style={{ transform: 'rotate(90deg)' }} xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px"><g><path d="M0,0h24v24H0V0z" fill="none" /></g><g><g><path d="M18,4v5H6V4H18z M18,2H6C4.9,2,4,2.9,4,4v5c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V4C20,2.9,19.1,2,18,2z M18,15v5H6v-5H18z M18,13H6c-1.1,0-2,0.9-2,2v5c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2v-5C20,13.9,19.1,13,18,13z" /></g></g></svg>Open Multi-Editor
       </AlternateButton>
       <>
         {selector && (
