@@ -245,11 +245,11 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background: #fff;
+  background: var(--big_button_background);
   border: none;
   border-radius: var(--btn_border_radius);
   padding: 4px 15px;
-  fill: var(--main_btn_color_action);
+  fill: var(--big_button_text);
   cursor: pointer;
 }
 
