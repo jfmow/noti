@@ -262,15 +262,49 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
     console.log("Started dragging item with ID:", itemId);
   }
 
-  async function handleDragEnd(event, itemId) {
+  async function handleDragEnd(event, itemId, itemParent) {
     event.persist();
     const draggedItemId = event.dataTransfer.getData("text/plain");
-    //console.log("Dragged item ID:", draggedItemId);
-    //console.log("Dropped item ID:", itemId);
+    console.log("Dragged item ID:", draggedItemId);
+    console.log("Dropped item ID:", itemId);
     setHoveredItemId(null);
-    if (draggedItemId === itemId) {
+    console.log(itemParent)
+    if (draggedItemId === itemId || itemParent === draggedItemId) {
       return
     }
+    let check1 = true
+    let found = false
+    let checkingItem = itemParent
+    try {
+      /* The above code is checking if a record with a specific parentId exists in a collection called
+      'pages'. If it does, it sets the variable 'checkingItem' to the id of that record. Then, it
+      enters a while loop where it retrieves the record with the id stored in 'checkingItem' from a
+      collection called 'pages_Bare'. If the parentId of that record matches the draggedItemId or is
+      null, it sets the variables 'check1' and 'found' to false and true respectively, and breaks
+      out of the loop. If the parentId does not match, it updates 'checkingItem */
+      const record1 = await pb.collection('pages').getFirstListItem(`parentId="${draggedItemId}"`);
+      if (record1.parentId === draggedItemId) {
+        return
+      }
+      checkingItem = record1.id
+      while (check1) {
+        const record = await pb.collection('pages_Bare').getOne(checkingItem);
+        if (record.parentId === draggedItemId || record.parentId === null) {
+          check1 = false
+          found = true
+          break
+        } else {
+          checkingItem = record.id
+          continue
+        }
+      }
+      if (found) {
+        return
+      }
+    } catch (err) {
+      console.error(err)
+    }
+
     const data = {
       "parentId": itemId,
     };
@@ -298,7 +332,7 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
         onClick={(e) => openPage(e, item.id)}
         onDragOver={(e) => handleDragOver(e, item.id)}
         onDragLeave={handleDragLeave}
-        onDrop={(e) => handleDragEnd(e, item.id)}
+        onDrop={(e) => handleDragEnd(e, item.id, item.parentId)}
         onDragStart={(e) => handleDragStart(e, item.id)}
         draggable
       >
