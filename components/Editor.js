@@ -283,6 +283,7 @@ function Editor({ page, preview, multi }) {
                     const formData = new FormData();
                     formData.append("file_data", file);
                     formData.append("uploader", pb.authStore.model.id);
+                    formData.append('page', page)
                     let record = null
                     try {
                       if (file.size > 5242880) {
@@ -417,6 +418,7 @@ function Editor({ page, preview, multi }) {
                     );
                     formData.append("file_data", compressedFile);
                     formData.append("uploader", pb.authStore.model.id);
+                    formData.append('page', page)
                     const response = await toast.promise(
                       pb.collection("imgs").create(formData),
                       {
