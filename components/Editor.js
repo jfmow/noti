@@ -463,7 +463,9 @@ function Editor({ page, preview, multi }) {
 
   async function handleDeletePage() {
     await pb.collection("pages").delete(page);
-    editor.destroy()
+    await editor.clear()
+    setEditorData(null)
+    editorRef.current = null
     Router.push('/page/firstopen')
   }
 
@@ -897,7 +899,7 @@ class SimpleIframe {
     iframe.style.borderRadius = "5px";
     const fileToken = await pb.files.getToken();
     // retrieve an example protected file url (will be valid ~5min)
-    
+
     const record = await pb.collection('files').getOne(fileId); // Use the fileId to retrieve the record
     const url = pb.files.getUrl(record, record.file_data, { 'token': fileToken });
     iframe.src = url;
