@@ -465,6 +465,8 @@ function Editor({ page, preview, multi }) {
     await pb.collection("pages").delete(page);
     await editor.clear()
     setEditorData(null)
+    setArticleHeader(null)
+    setArticleTitle(null)
     editorRef.current = null
     Router.push('/page/firstopen')
   }
