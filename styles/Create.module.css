@@ -47,7 +47,7 @@
   background: var(--background);
 }
 
-.creategrid_lock{
+.creategrid_lock {
   height: 60dvh;
   overflow: scroll;
 }
@@ -190,7 +190,7 @@
   height: 2px;
 }
 
-.shareModal_link_alt_text{
+.shareModal_link_alt_text {
   display: flex;
   flex-direction: row;
   padding: 1em;
@@ -204,7 +204,7 @@
   align-items: center;
 }
 
-.shareModal_link_alt_text svg{
+.shareModal_link_alt_text svg {
   position: absolute;
   right: 10px;
   fill: var(--main_btn_color);
@@ -237,7 +237,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 0.5em;
+  gap: 15px;
 }
 
 .title_buttons_btn {
@@ -245,11 +245,11 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background: var(--big_button_background);
+  background: none;
   border: none;
   border-radius: var(--btn_border_radius);
-  padding: 4px 15px;
-  fill: var(--big_button_text);
+  padding: 5px;
+  fill: #dae4e5;
   cursor: pointer;
 }
 
@@ -733,5 +733,23 @@
 
   .titleinput {
     color: #fff;
+  }
+}
+
+
+@media(max-width: 600px) {
+  .title_buttons {
+    position: absolute;
+    bottom: 1em;
+    right: 2em;
+    display: grid;
+    flex-direction: row;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    gap: 15px;
+    width: 25%;
+    /* margin: 1em; */
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
