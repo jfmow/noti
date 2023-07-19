@@ -20,8 +20,8 @@ breakdown of what each part of the code does: */
 
 .items h1 {
   font-family: "Mori", -apple-system, BlinkMacSystemFont, system-ui;
-    letter-spacing: 0.388em;
   text-shadow: 0px 0px 10px var(--main_color);
+  color: #767676;
 }
 
 .sign_Button {
@@ -113,6 +113,9 @@ breakdown of what each part of the code does: */
 @media(prefers-color-scheme: dark){
   .items{
     background: none;
+  }
+  .items h1{
+    color: #fff;
   }
 }
 

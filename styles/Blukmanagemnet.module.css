@@ -48,7 +48,9 @@
 .selected{
     border: 2px dashed #ff2f2f !important;
     background: transparent !important;
-    color: #fff !important;
+    color: #000000 !important;
+    transition: 0.2s all;
+    text-decoration: line-through;
 }
 
 .page{
@@ -62,8 +64,8 @@
     padding: 10px;
     border-radius: var(--btn_border_radius);
     border: 2px solid var(--big_button_border);
-    box-shadow: 0px 4px 5px 2px #9d9d9d;
     cursor: pointer;
+    background: var(--big_button_background);
 }
 
 .page_title{
@@ -106,10 +108,14 @@
     .page{
         background: var(--big_button_background);
         color: var(--big_button_text);
-        box-shadow: 0px 4px 5px 2px #171717;
     }
     .pages{
         box-shadow: 0px 0px 7px 3px #1c1c1c;
         background: transparent;
+    }
+
+    .selected{
+        color: #fff !important;;
+        
     }
 }
