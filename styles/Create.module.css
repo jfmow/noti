@@ -262,6 +262,7 @@
 
 .customfileupload span {
   display: flex;
+  cursor: pointer;
 }
 
 .finput {
