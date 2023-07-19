@@ -645,7 +645,7 @@ function Editor({ page, preview, multi }) {
                 <div className={styles.buttonlabel_label}>My account settings</div>
                 <Link
                   href="/u/me"
-                  className={`${styles.title_buttons_btn} ${styles.title_buttons_btn_usrSettings_btn}`}
+                  className={`${styles.title_buttons_btn}`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

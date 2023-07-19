@@ -249,7 +249,7 @@
   border: none;
   border-radius: var(--btn_border_radius);
   padding: 5px;
-  fill: #dae4e5;
+  fill: #fff;
   cursor: pointer;
 }
 
@@ -267,13 +267,6 @@
 .finput {
   display: none;
 }
-
-.title_buttons_btn_usrSettings_btn {
-  fill: #ff6c6c;
-}
-
-
-
 
 
 .autosaveloader {
@@ -330,7 +323,7 @@
 
 .abookmark {
   --icon-size: 24px;
-  --icon-secondary-color: rgb(153, 153, 153);
+  --icon-secondary-color: rgb(255, 255, 255);
   --icon-hover-color: rgb(255, 216, 99);
   --icon-primary-color: gold;
   --icon-circle-border: 1px solid var(--icon-primary-color);
