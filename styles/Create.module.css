@@ -321,6 +321,22 @@
 }
 
 
+.popOutbtn{
+  display: flex;
+    border: none;
+    background: none;
+    outline: none;
+    position: absolute;
+    top: 5px;
+    z-index: 10;
+    right: 5px;
+    cursor: pointer;
+}
+
+.popOutbtn svg {
+  fill: #fff;
+}
+
 
 .abookmark {
   --icon-size: 24px;
@@ -696,7 +712,7 @@
   fill: #ff5555;
 }
 
-.tododeletebtn svg path {
+.tododeletebtn svg path, .popOutbtn svg path {
   stroke: none !important;
 }
 
