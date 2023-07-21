@@ -1188,8 +1188,8 @@ class Image {
     const iframe = document.createElement("img");
     iframe.classList.add(styles.embedIframe);
     iframe.style.width = "100%";
-    iframe.style.height = "70vh";
-    iframe.style.border = "2px solid #c29fff";
+    iframe.style.height = "50vh";
+    iframe.style.objectFit = 'contain';
     iframe.style.borderRadius = "5px";
     const fileToken = await pb.files.getToken();
     // retrieve an example protected file url (will be valid ~5min)
