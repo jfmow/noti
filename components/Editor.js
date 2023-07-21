@@ -7,7 +7,6 @@ import Header from "@editorjs/header";
 import List from "@editorjs/list";
 import Quote from "@editorjs/quote";
 import Table from "@editorjs/table";
-import ImageTool from "@editorjs/image";
 import AttachesTool from "@editorjs/attaches";
 import PocketBase from "pocketbase";
 import styles from "@/styles/Create.module.css";
@@ -85,6 +84,7 @@ function Editor({ page, preview, multi }) {
           //).toString();
 
           // Decrypt the note content
+
 
           formData.append("content", JSON.stringify(articleContent));
           try {
@@ -317,6 +317,7 @@ function Editor({ page, preview, multi }) {
 
             }
           },
+          
           SimpleTodo: {
             class: SimpleTodo,
             config: {
@@ -403,13 +404,21 @@ function Editor({ page, preview, multi }) {
             },
           },
           image: {
-            class: ImageTool,
+            class: Image,
             config: {
-              uploader: {
-                uploadByFile(file) {
-                  // your own uploading logic here
-                  async function upl(file) {
+              saveData: {
+                saveAll() {
+                  setLastTypedTime(Date.now());
+                  setLastTypedTimeIdle(false);
+                  return
+                }
+              },
+              storeFile: {
+                uploadFile(file) {
+                  async function uploadbyFile(file) {
+
                     const formData = new FormData();
+
                     const compressedBlob = await compressImage(file); // Maximum file size in KB (100KB in this example)
                     const compressedFile = new File(
                       [compressedBlob],
@@ -419,30 +428,38 @@ function Editor({ page, preview, multi }) {
                     formData.append("file_data", compressedFile);
                     formData.append("uploader", pb.authStore.model.id);
                     formData.append('page', page)
-                    const response = await toast.promise(
-                      pb.collection("imgs").create(formData),
-                      {
-                        pending: "Saving img...",
-                        success: "Saved successfuly. 📁",
-                        error: "failed 🤯",
+                    let record = null
+                    try {
+                      if (compressedFile.size > 5242880) {
+                        toast.error('File too big. Must be < 5mb')
+                        return { success: 0 }
                       }
-                    );
+                      record = await pb.collection("imgs").create(formData);
+
+                    } catch (error) {
+                      toast.warning('Unable to upload file. It may not be supported yet. Try .pdf or images')
+                      return { success: 0 }
+                    }
+
                     return {
                       success: 1,
                       file: {
-                        url: `${process.env.NEXT_PUBLIC_POCKETURL}/api/files/imgs/${response.id}/${response.file_data}`,
+                        recid: record.id,
                       },
                     };
                   }
-                  return upl(file);
+                  return uploadbyFile(file)
                 },
-              },
+              }
+
             },
+            
           },
           table: Table,
         },
         data: editorData,
         placeholder: "Enter some text...",
+        autofocus: true
       });
 
       setEditor(editorInstance, () => {
@@ -712,7 +729,7 @@ function Editor({ page, preview, multi }) {
                   onClick={() => setIconModalState(true)}
                   className={styles.title_buttons_btn}
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" ><rect fill="none" height="24" width="24"/><path d="M24,4c0,0.55-0.45,1-1,1h-1v1c0,0.55-0.45,1-1,1s-1-0.45-1-1V5h-1c-0.55,0-1-0.45-1-1c0-0.55,0.45-1,1-1h1V2 c0-0.55,0.45-1,1-1s1,0.45,1,1v1h1C23.55,3,24,3.45,24,4z M21.52,8.95C21.83,9.91,22,10.94,22,12c0,5.52-4.48,10-10,10S2,17.52,2,12 C2,6.48,6.48,2,12,2c1.5,0,2.92,0.34,4.2,0.94C16.08,3.27,16,3.62,16,4c0,1.35,0.9,2.5,2.13,2.87C18.5,8.1,19.65,9,21,9 C21.18,9,21.35,8.98,21.52,8.95z M7,9.5C7,10.33,7.67,11,8.5,11S10,10.33,10,9.5S9.33,8,8.5,8S7,8.67,7,9.5z M16.31,14H7.69 c-0.38,0-0.63,0.42-0.44,0.75C8.2,16.39,9.97,17.5,12,17.5s3.8-1.11,4.75-2.75C16.94,14.42,16.7,14,16.31,14z M17,9.5 C17,8.67,16.33,8,15.5,8S14,8.67,14,9.5s0.67,1.5,1.5,1.5S17,10.33,17,9.5z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" ><rect fill="none" height="24" width="24" /><path d="M24,4c0,0.55-0.45,1-1,1h-1v1c0,0.55-0.45,1-1,1s-1-0.45-1-1V5h-1c-0.55,0-1-0.45-1-1c0-0.55,0.45-1,1-1h1V2 c0-0.55,0.45-1,1-1s1,0.45,1,1v1h1C23.55,3,24,3.45,24,4z M21.52,8.95C21.83,9.91,22,10.94,22,12c0,5.52-4.48,10-10,10S2,17.52,2,12 C2,6.48,6.48,2,12,2c1.5,0,2.92,0.34,4.2,0.94C16.08,3.27,16,3.62,16,4c0,1.35,0.9,2.5,2.13,2.87C18.5,8.1,19.65,9,21,9 C21.18,9,21.35,8.98,21.52,8.95z M7,9.5C7,10.33,7.67,11,8.5,11S10,10.33,10,9.5S9.33,8,8.5,8S7,8.67,7,9.5z M16.31,14H7.69 c-0.38,0-0.63,0.42-0.44,0.75C8.2,16.39,9.97,17.5,12,17.5s3.8-1.11,4.75-2.75C16.94,14.42,16.7,14,16.31,14z M17,9.5 C17,8.67,16.33,8,15.5,8S14,8.67,14,9.5s0.67,1.5,1.5,1.5S17,10.33,17,9.5z" /></svg>
                 </button>
               </div>
 
@@ -791,7 +808,7 @@ class SimpleIframe {
   static get toolbox() {
     return {
       title: "Embed",
-      icon: '<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#000"><g><rect fill="none" height="24" width="24"/><rect fill="none" height="24" width="24"/></g><g><g><path d="M20,3H4C2.9,3,2,3.9,2,5v12c0,1.1,0.89,2,2,2h4v1c0,0.55,0.45,1,1,1h6c0.55,0,1-0.45,1-1v-1h4c1.1,0,2-0.9,2-2V5 C22,3.89,21.1,3,20,3z M20,17H4V5h16V17z"/><path d="M6.5,7.5h1.75C8.66,7.5,9,7.16,9,6.75v0C9,6.34,8.66,6,8.25,6H6C5.45,6,5,6.45,5,7v2.25C5,9.66,5.34,10,5.75,10h0 C6.16,10,6.5,9.66,6.5,9.25V7.5z"/><path d="M18.25,12L18.25,12c-0.41,0-0.75,0.34-0.75,0.75v1.75h-1.75c-0.41,0-0.75,0.34-0.75,0.75v0c0,0.41,0.34,0.75,0.75,0.75H18 c0.55,0,1-0.45,1-1v-2.25C19,12.34,18.66,12,18.25,12z"/></g></g></svg>',
+      icon: '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path style="stroke: none;" d="M0 0h24v24H0V0z" fill="none"/><path style="stroke: none;"  d="M8 16h8v2H8zm0-4h8v2H8zm6-10H6c-1.1 0-2 .9-2 2v16c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>',
     };
   }
 
@@ -1054,6 +1071,141 @@ class SimpleTodo {
 
   save() {
     return this.data;
+  }
+}
+
+class Image {
+  static get toolbox() {
+    return {
+      title: "Image",
+      icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><rect width="14" height="14" x="5" y="5" stroke="currentColor" stroke-width="2" rx="4"></rect><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.13968 15.32L8.69058 11.5661C9.02934 11.2036 9.48873 11 9.96774 11C10.4467 11 10.9061 11.2036 11.2449 11.5661L15.3871 16M13.5806 14.0664L15.0132 12.533C15.3519 12.1705 15.8113 11.9668 16.2903 11.9668C16.7693 11.9668 17.2287 12.1705 17.5675 12.533L18.841 13.9634"></path><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.7778 9.33331H13.7867"></path></svg>',
+    };
+  }
+
+  constructor({ data, config }) {
+    this.data = data;
+    this.wrapper = undefined;
+    this.config = config || {};
+  }
+
+  render() {
+    this.wrapper = document.createElement("div");
+    this.wrapper.classList.add("simple-image");
+
+    if (this.data.file?.url) {
+      function extractStringFromURL(url) {
+        const regex = /\/([^/]+)\/[^/]+$/;
+        const match = url.match(regex);
+        if (match) {
+          return match[1];
+        } else {
+          return null; // or you can return an error message or handle the case differently
+        }
+      }
+
+      // Example usage:
+      const url = this.data.file.url
+      const extractedString = extractStringFromURL(url);
+      console.log(extractedString); // Output: t09edrg2ayd247o
+      this._createImage(extractedString);
+      return this.wrapper;
+    }
+
+    if (this.data && this.data.fileId) {
+      //const originalUrl = decodeURIComponent(this.data.url).replace(
+      //  /&amp;/g,
+      //  "&"
+      //);
+      this._createImage(this.data.fileId);
+      return this.wrapper;
+    }
+
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.style.display = "none"; // Set the input display to hidden
+    fileInput.addEventListener("change", this._handleFileSelection.bind(this));
+
+    const uploadBtn = document.createElement("button");
+    uploadBtn.textContent = "Upload image";
+    uploadBtn.classList.add("upload-button"); // Add a class for styling the button
+    uploadBtn.style.background =
+      "linear-gradient(45deg, white 40%, #03A9F4 60%)";
+    uploadBtn.style.color = "#000";
+    uploadBtn.style.border = "none";
+    uploadBtn.style.padding = "1em";
+    uploadBtn.style.width = "100%";
+    uploadBtn.style.borderRadius = "5px";
+    uploadBtn.style.cursor = "pointer";
+    uploadBtn.style.fontWeight = "700";
+    try {
+      fileInput.click(); //open immediately
+    } catch (err) {
+      console.warn(err)
+    }
+    uploadBtn.addEventListener("click", () => fileInput.click());
+
+    this.wrapper.appendChild(uploadBtn);
+    this.wrapper.appendChild(fileInput);
+
+    return this.wrapper;
+  }
+
+  async _handleFileSelection(event) {
+    const file = event.target.files[0];
+    if (!file) {
+      return;
+    }
+
+    const fileInput = this.wrapper.querySelector('input[type="file"]');
+    const uploadBtn = this.wrapper.querySelector("button");
+
+    fileInput.disabled = true;
+    uploadBtn.disabled = true;
+    const data2 = await this.config.storeFile.uploadFile(file)
+
+    fileInput.disabled = false;
+    uploadBtn.disabled = false;
+    if (data2.success === 1) {
+      await this._createImage(
+        data2.file.recid // Pass the fileId as an argument
+      );
+      this.config.saveData.saveAll()
+    } else {
+      return
+    }
+
+  }
+
+  async _createImage(fileId) {
+    const iframe = document.createElement("img");
+    iframe.classList.add(styles.embedIframe);
+    iframe.style.width = "100%";
+    iframe.style.height = "70vh";
+    iframe.style.border = "2px solid #c29fff";
+    iframe.style.borderRadius = "5px";
+    const fileToken = await pb.files.getToken();
+    // retrieve an example protected file url (will be valid ~5min)
+
+    const record = await pb.collection('imgs').getOne(fileId); // Use the fileId to retrieve the record
+    const url = pb.files.getUrl(record, record.file_data, { 'token': fileToken });
+    iframe.src = url;
+    iframe.setAttribute('fileId', fileId); // Set the fileId as an attribute of the iframe
+
+    this.wrapper.innerHTML = "";
+    this.wrapper.appendChild(iframe);
+  }
+
+  save(blockContent) {
+    try {
+      const iframe = blockContent.querySelector("img");
+      const fileId = iframe.getAttribute('fileId'); // Retrieve the fileId attribute
+
+      return {
+        fileId: fileId // Include the fileId in the saved data
+      };
+    } catch (err) {
+      console.log(err)
+    }
   }
 }
 
