@@ -7,11 +7,9 @@ import Header from "@editorjs/header";
 import List from "@editorjs/list";
 import Quote from "@editorjs/quote";
 import Table from "@editorjs/table";
-import AttachesTool from "@editorjs/attaches";
 import PocketBase from "pocketbase";
 import styles from "@/styles/Create.module.css";
 import Loader from "./Loader";
-import Embed from "@editorjs/embed";
 import { createRandomMeshGradients } from "@/lib/randomMeshGradient";
 
 
@@ -107,35 +105,7 @@ function Editor({ page, multi }) {
                         class: SimpleTodo,
 
                     },
-                    embed: {
-                        class: Embed,
-                        config: {
-                            services: {
-                                youtube: true,
-                                codepen: true,
-                                customPdf: {
-                                    regex:
-                                        /https?:\/\/notidb\.suddsy\.dev\/api\/files\/files\/([^\/\?\&]*)\/([^\/\?\&]*)\.pdf/,
-                                    embedUrl:
-                                        "https://notidb.suddsy.dev/api/files/files/<%= remote_id %>.pdf",
-                                    html: "<iframe  width='100%' height='500' style='border: none;'></iframe>",
-                                    height: 300,
-                                    width: 600,
-                                    id: (groups) => groups.join("/"),
-                                },
-                                customDocs: {
-                                    regex:
-                                        /https?:\/\/notidb\.suddsy\.dev\/api\/files\/files\/([^\/\?\&]*)\/([^\/\?\&]*)\.docx/,
-                                    embedUrl:
-                                        "https://docs.google.com/viewerng/viewer?url=https://notidb.suddsy.dev/api/files/files/<%= remote_id %>.docx&embedded=true",
-                                    html: "<iframe  width='100%' height='500' style='border: none;'></iframe>",
-                                    height: 300,
-                                    width: 600,
-                                    id: (groups) => groups.join("/"),
-                                },
-                            },
-                        },
-                    },
+                    
                     list: {
                         class: List,
                         inlineToolbar: true,
@@ -144,46 +114,9 @@ function Editor({ page, multi }) {
                         class: Quote,
                         inlineToolbar: true,
                     },
-                    attaches: {
-                        class: AttachesTool,
-                        config: {
-                            uploader: {
-                                uploadByFile(file) {
-                                    async function upload(file) {
-                                        const formData = new FormData();
-                                        formData.append("file_data", file);
-                                        formData.append("uploader", pb.authStore.model.id);
-                                        const response = await toast.promise(
-                                            pb.collection("files").create(formData),
-                                            {
-                                                pending: "Saving img...",
-                                                success: "Saved successfully. 📁",
-                                                error: "Failed 🤯",
-                                            }
-                                        );
-                                        function getFileExtension(file) {
-                                            const filename = file.name;
-                                            const extension = filename.split(".").pop();
-                                            return extension;
-                                        }
-                                        const extension = getFileExtension(file);
-                                        return {
-                                            success: 1,
-                                            file: {
-                                                extension: extension,
-                                                url: `${process.env.NEXT_PUBLIC_POCKETURL}/api/files/files/${response.id}/${response.file_data}`,
-                                            },
-                                        };
-                                    }
-                                    return upload(file);
-                                },
-                            },
-                        },
-                    },
+                    
                     image: {
                         class: Image,
-
-
                     },
                     table: Table,
                 },
