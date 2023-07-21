@@ -1188,7 +1188,7 @@ class Image {
     const iframe = document.createElement("img");
     iframe.classList.add(styles.embedIframe);
     iframe.style.width = "100%";
-    iframe.style.height = "50vh";
+    iframe.style.maxHeight = "50vh";
     iframe.style.objectFit = 'contain';
     iframe.style.borderRadius = "5px";
     const fileToken = await pb.files.getToken();
