@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styles from '@/styles/PageList.module.css';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -16,6 +16,9 @@ const MyComponent = ({ currPage }) => {
   const [loading, setIsLoading] = useState(true)
   const router = useRouter()
   const [hidden, setHidden] = useState(true);
+  const contextMenu = useRef(null)
+  const [showMultiEditorSelector, setShowMultiEditorSelector] = useState(false)
+
 
   useEffect(() => {
     async function getData() {
@@ -113,7 +116,7 @@ const MyComponent = ({ currPage }) => {
     const children = items.filter((item) => item.parentId === parentId);
 
     return children.map((child) => {
-      const isActive = currPage.includes(child.id) ;
+      const isActive = currPage.includes(child.id);
       const hasActiveChild = renderChildComponents(child.id, level + 1).some(
         (c) => c.props.isActive
       );
@@ -127,6 +130,7 @@ const MyComponent = ({ currPage }) => {
           isActive={isActive || hasActiveChild}
           createNewPage={createNewPage}
           setVisibleState={setVisibleState}
+          setContextMenu={setContextMenu}
         >
           {renderChildComponents(child.id, level + 1)}
         </ChildComponent>
@@ -159,6 +163,31 @@ const MyComponent = ({ currPage }) => {
     window.localStorage.setItem('_menu', document.getElementById('rootitems').classList.contains(styles.dskhidden) ? ('closed') : ('open'))
   }
 
+  function setContextMenu(e, page) {
+    const customContextMenu = contextMenu.current;
+
+    // Set the position of the custom context menu to the right-click location
+    customContextMenu.style.left = e.clientX - 10 + 'px';
+    customContextMenu.style.top = e.clientY - 10 + 'px';
+
+    // Show the custom context menu
+    customContextMenu.style.display = 'flex';
+    customContextMenu.setAttribute('pageid', page)
+  }
+
+  async function contextMenuDeletePage() {
+
+    const customContextMenu = contextMenu.current;
+    const page = customContextMenu.getAttribute('pageid')
+    await pb.collection('pages').delete(page)
+    customContextMenu.style.display = 'none';
+  }
+
+  function hideContextMenu() {
+    const customContextMenu = contextMenu.current;
+    customContextMenu.style.display = 'none';
+  }
+
 
 
   return (
@@ -169,9 +198,19 @@ const MyComponent = ({ currPage }) => {
           <button className={styles.mobile_back_btn} onClick={setVisibleState}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0V0z" fill="none" /><path d="M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zm0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1z" /></svg></button>
         </div>
       </>
+      <div className={styles.contextmenu} onMouseLeave={() => hideContextMenu()} ref={contextMenu}>
+        <div className={styles.contextMenuItem} onClick={() => setShowMultiEditorSelector(true)}>
+          <div className={styles.contextMenuIcon}><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px"><g><path d="M0,0h24v24H0V0z" fill="none" /></g><g><g><path d="M18,4v5H6V4H18z M18,2H6C4.9,2,4,2.9,4,4v5c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V4C20,2.9,19.1,2,18,2z M18,15v5H6v-5H18z M18,13H6c-1.1,0-2,0.9-2,2v5c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2v-5C20,13.9,19.1,13,18,13z" /></g></g></svg></div>
+          <span className={styles.contextMenuTitle}>MultiEditor</span>
+        </div>
+        <div className={styles.contextMenuItem} onClick={() => contextMenuDeletePage()}>
+          <div className={styles.contextMenuIcon}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM9 9h6c.55 0 1 .45 1 1v8c0 .55-.45 1-1 1H9c-.55 0-1-.45-1-1v-8c0-.55.45-1 1-1zm6.5-5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1h-2.5z" /></svg></div>
+          <span className={styles.contextMenuTitle}>Delete page</span>
+        </div>
+      </div>
       {!hidden && (<Tut setHidden={setHidden} />)}
       <div className={`${styles.itemroot}`} id='rootitems'>
-        <MultiEditor pagesList={items} />
+        {showMultiEditorSelector && (<MultiEditor pagesList={items} Close={() => setShowMultiEditorSelector(false)} />)}
         <button onClick={setVisibleState} className={styles.desktophidemenu}><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px"><g><rect fill="none" height="24" width="24" /><rect fill="none" height="24" width="24" /></g><g><g><path d="M20.08,11.42l-4.04-5.65C15.7,5.29,15.15,5,14.56,5h0c-1.49,0-2.35,1.68-1.49,2.89L16,12l-2.93,4.11 c-0.87,1.21,0,2.89,1.49,2.89h0c0.59,0,1.15-0.29,1.49-0.77l4.04-5.65C20.33,12.23,20.33,11.77,20.08,11.42z" /><path d="M13.08,11.42L9.05,5.77C8.7,5.29,8.15,5,7.56,5h0C6.07,5,5.2,6.68,6.07,7.89L9,12l-2.93,4.11C5.2,17.32,6.07,19,7.56,19h0 c0.59,0,1.15-0.29,1.49-0.77l4.04-5.65C13.33,12.23,13.33,11.77,13.08,11.42z" /></g></g></svg></button>
         <ImportantNotes notes={items} setVisibleState={setVisibleState} />
         <button onClick={setVisibleState} className={styles.hidemenubtn}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0V0z" fill="none" /><path d="M18.3 5.71c-.39-.39-1.02-.39-1.41 0L12 10.59 7.11 5.7c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L10.59 12 5.7 16.89c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0L12 13.41l4.89 4.89c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z" /></svg></button>
@@ -189,6 +228,7 @@ const MyComponent = ({ currPage }) => {
                 item={rootParent}
                 currPage={currPage}
                 createNewPage={createNewPage}
+                setContextMenu={setContextMenu}
               >
                 {renderChildComponents(rootParent.id, 0)}
               </RootParentComponent>
@@ -210,11 +250,12 @@ const MyComponent = ({ currPage }) => {
           Create page
         </span>
       </div>
+
     </>
   );
 };
 
-const RootParentComponent = ({ item, currPage, createNewPage, children }) => {
+const RootParentComponent = ({ item, currPage, createNewPage, setContextMenu, children }) => {
   //const [expand, setExpand] = useState(false);
 
   return (
@@ -226,6 +267,7 @@ const RootParentComponent = ({ item, currPage, createNewPage, children }) => {
           currPage2={currPage}
           isActive={currPage.includes(item.id)}
           createNewPage={createNewPage}
+          setContextMenu={setContextMenu}
         >
           {children}
         </ChildComponent>
@@ -234,7 +276,7 @@ const RootParentComponent = ({ item, currPage, createNewPage, children }) => {
   );
 };
 
-const ChildComponent = ({ item, level, children, currPage2, isActive, createNewPage, setVisibleState }) => {
+const ChildComponent = ({ item, level, children, currPage2, isActive, createNewPage, setVisibleState, setContextMenu }) => {
   const [expand, setExpand] = useState(item.expanded);
   const [hoveredItemId, setHoveredItemId] = useState(null);
 
@@ -315,6 +357,12 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
     setHoveredItemId(null);
   }
 
+  function handleRightClick(event, item) {
+    console.log(event, item)
+    event.preventDefault();
+    setContextMenu(event, item)
+  }
+
 
 
   return (
@@ -329,6 +377,7 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
         onDrop={(e) => handleDragEnd(e, item.id, item.parentId)}
         onDragStart={(e) => handleDragStart(e, item.id)}
         draggable
+        onContextMenu={(e) => handleRightClick(e, item.id)}
       >
         {expand ? (
           <button
@@ -443,8 +492,7 @@ function ImportantNotes({ notes, setVisibleState }) {
 }
 
 
-function MultiEditor({ pagesList }) {
-  const [selector, SetSelector] = useState(false)
+function MultiEditor({ pagesList, Close }) {
   const [pages, setPagesList] = useState(pagesList)
   const [selected4, setSelected3] = useState([])
   const [toomany, setTooMany] = useState(false)
@@ -466,17 +514,12 @@ function MultiEditor({ pagesList }) {
     }
     setTooMany(false)
     Router.push(`/page/${selectedPath}`);
-    SetSelector(false)
+    Close()
   }
 
   return (
-    <div className={styles.multieditorbtn}>
-      <AlternateButton click={() => SetSelector(true)}>
-        <svg style={{ transform: 'rotate(90deg)' }} xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px"><g><path d="M0,0h24v24H0V0z" fill="none" /></g><g><g><path d="M18,4v5H6V4H18z M18,2H6C4.9,2,4,2.9,4,4v5c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V4C20,2.9,19.1,2,18,2z M18,15v5H6v-5H18z M18,13H6c-1.1,0-2,0.9-2,2v5c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2v-5C20,13.9,19.1,13,18,13z" /></g></g></svg>Open Multi-Editor
-      </AlternateButton>
       <>
-        {selector && (
-          <ModalContainer events={() => SetSelector(false)}>
+          <ModalContainer events={() => Close()}>
             <ModalForm>
               <ModalTitle>Select pages</ModalTitle>
               <div className={styles.multiedit_pages}>
@@ -490,8 +533,6 @@ function MultiEditor({ pagesList }) {
               <p style={{ fontSize: '12px' }}>Some users may experience the issue of the page reloading back to the home screen. We sincerely apologize for any inconvenience this may cause. Our team is actively investigating the problem to identify its cause and implement a solution. Thank you for your patience and understanding.</p>
             </ModalForm>
           </ModalContainer>
-        )}
       </>
-    </div>
   )
 }
