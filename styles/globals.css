@@ -170,11 +170,3 @@ a {
   background-color: #ff47f3;
 }
 
-.SI-Border{
-  border: 2px solid #fff;
-}
-
-.SI-Stretch{
-  object-fit: cover !important;
-  width: 100% !important;
-}
