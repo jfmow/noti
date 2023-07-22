@@ -113,7 +113,7 @@ const MyComponent = ({ currPage }) => {
     const children = items.filter((item) => item.parentId === parentId);
 
     return children.map((child) => {
-      const isActive = currPage === child.id;
+      const isActive = currPage.includes(child.id) ;
       const hasActiveChild = renderChildComponents(child.id, level + 1).some(
         (c) => c.props.isActive
       );
@@ -224,7 +224,7 @@ const RootParentComponent = ({ item, currPage, createNewPage, children }) => {
           item={item}
           level={0}
           currPage2={currPage}
-          isActive={currPage === item.id}
+          isActive={currPage.includes(item.id)}
           createNewPage={createNewPage}
         >
           {children}
