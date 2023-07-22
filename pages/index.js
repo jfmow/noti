@@ -55,6 +55,7 @@ export default function Home() {
       <link rel="canonical" href="https://savemynotes.net/" />
       </Head>
       <Nav />
+      <p style={{visibility: '0', width: '0', height: '0'}} aria-label='SEO text'>A place to take your notes with only fetures you will use. Explore note taking more simply.</p>
       <div className={styles.container}>
         <header className={styles.header}>
           <div className={styles.headerContent}>
