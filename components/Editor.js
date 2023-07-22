@@ -317,7 +317,7 @@ function Editor({ page, preview, multi }) {
 
             }
           },
-          
+
           SimpleTodo: {
             class: SimpleTodo,
             config: {
@@ -453,7 +453,7 @@ function Editor({ page, preview, multi }) {
               }
 
             },
-            
+
           },
           table: Table,
         },
@@ -847,16 +847,9 @@ class SimpleIframe {
 
     const uploadBtn = document.createElement("button");
     uploadBtn.textContent = "Upload File";
-    uploadBtn.classList.add("upload-button"); // Add a class for styling the button
-    uploadBtn.style.background =
-      "linear-gradient(45deg, white 40%, #03A9F4 60%)";
-    uploadBtn.style.color = "#000";
-    uploadBtn.style.border = "none";
-    uploadBtn.style.padding = "1em";
-    uploadBtn.style.width = "100%";
-    uploadBtn.style.borderRadius = "5px";
-    uploadBtn.style.cursor = "pointer";
-    uploadBtn.style.fontWeight = "700";
+    uploadBtn.classList.add("cdx-button");
+    uploadBtn.style.width = '100%'; // Add a class for styling the button
+
     try {
       fileInput.click(); //open immediately
     } catch (err) {
@@ -1094,11 +1087,23 @@ class Image {
     this.data = data;
     this.wrapper = undefined;
     this.config = config || {};
+    this.settings = [
+      {
+        name: 'SI-Border',
+        icon: `<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path style="stroke: none;" d="M15.8 10.592v2.043h2.35v2.138H15.8v2.232h-2.25v-2.232h-2.4v-2.138h2.4v-2.28h2.25v.237h1.15-1.15zM1.9 8.455v-3.42c0-1.154.985-2.09 2.2-2.09h4.2v2.137H4.15v3.373H1.9zm0 2.137h2.25v3.325H8.3v2.138H4.1c-1.215 0-2.2-.936-2.2-2.09v-3.373zm15.05-2.137H14.7V5.082h-4.15V2.945h4.2c1.215 0 2.2.936 2.2 2.09v3.42z"/></svg>`
+      },
+      {
+        name: 'SI-Stretch',
+        icon: `<svg width="17" height="10" viewBox="0 0 17 10" xmlns="http://www.w3.org/2000/svg"><path style="stroke: none;" d="M13.568 5.925H4.056l1.703 1.703a1.125 1.125 0 0 1-1.59 1.591L.962 6.014A1.069 1.069 0 0 1 .588 4.26L4.38.469a1.069 1.069 0 0 1 1.512 1.511L4.084 3.787h9.606l-1.85-1.85a1.069 1.069 0 1 1 1.512-1.51l3.792 3.791a1.069 1.069 0 0 1-.475 1.788L13.514 9.16a1.125 1.125 0 0 1-1.59-1.591l1.644-1.644z"/></svg>`
+      }
+    ];
   }
 
   render() {
     this.wrapper = document.createElement("div");
-    this.wrapper.classList.add("simple-image");
+    this.wrapper.style.display = 'flex';
+    this.wrapper.style.alignItems = 'center';
+    this.wrapper.style.justifyContent = 'center';
 
     if (this.data.file?.url) {
       function extractStringFromURL(url) {
@@ -1135,16 +1140,8 @@ class Image {
 
     const uploadBtn = document.createElement("button");
     uploadBtn.textContent = "Upload image";
-    uploadBtn.classList.add("upload-button"); // Add a class for styling the button
-    uploadBtn.style.background =
-      "linear-gradient(45deg, white 40%, #03A9F4 60%)";
-    uploadBtn.style.color = "#000";
-    uploadBtn.style.border = "none";
-    uploadBtn.style.padding = "1em";
+    uploadBtn.classList.add("cdx-button");
     uploadBtn.style.width = "100%";
-    uploadBtn.style.borderRadius = "5px";
-    uploadBtn.style.cursor = "pointer";
-    uploadBtn.style.fontWeight = "700";
     try {
       fileInput.click(); //open immediately
     } catch (err) {
@@ -1186,11 +1183,16 @@ class Image {
 
   async _createImage(fileId) {
     const iframe = document.createElement("img");
-    iframe.classList.add(styles.embedIframe);
-    iframe.style.width = "100%";
+    iframe.style.width = "fit-content";
     iframe.style.maxHeight = "50vh";
     iframe.style.objectFit = 'contain';
     iframe.style.borderRadius = "5px";
+    if (this.data.simpleImageBrd) {
+      iframe.classList.add('SI-Border')
+    }
+    if(this.data.simpleImageSt){
+      iframe.classList.add('SI-Stretch')
+    }
     const fileToken = await pb.files.getToken();
     // retrieve an example protected file url (will be valid ~5min)
 
@@ -1203,14 +1205,63 @@ class Image {
     this.wrapper.appendChild(iframe);
   }
 
+  renderSettings() {
+    const wrapper = document.createElement('div');
+
+    this.settings.forEach(tune => {
+      let button = document.createElement('div');
+
+      button.classList.add('ce-popover__items');
+      const buttonIcon = document.createElement('div')
+      buttonIcon.innerHTML = tune.icon
+      buttonIcon.classList.add('ce-popover-item__icon')
+      button.appendChild(buttonIcon)
+      const title = document.createElement('div')
+      title.innerText = tune.name
+      title.classList.add('ce-popover-item__title')
+      button.appendChild(title)
+      button.classList.add('ce-popover-item')
+      wrapper.appendChild(button);
+
+      button.addEventListener('click', () => {
+        this._toggleTune(tune.name);
+        button.classList.toggle('cdx-settings-button--active');
+      });
+    });
+
+    return wrapper;
+  }
+
+  /**
+   * @private
+   * Click on the Settings Button
+   * @param {string} tune — tune name from this.settings
+   */
+  _toggleTune(tune) {
+    console.log(tune)
+    this.data[tune] = !this.data[tune];
+    this._acceptTuneView();
+  }
+
+  /**
+   * Add specified class corresponds with activated tunes
+   * @private
+   */
+  _acceptTuneView() {
+    this.settings.forEach(tune => {
+      this.wrapper.querySelector("img").classList.toggle(tune.name, !!this.data[tune.name]);
+    });
+  }
+
   save(blockContent) {
     try {
       const iframe = blockContent.querySelector("img");
       const fileId = iframe.getAttribute('fileId'); // Retrieve the fileId attribute
 
-      return {
-        fileId: fileId // Include the fileId in the saved data
-      };
+      return Object.assign(this.data, {
+        fileId: fileId,
+        // Include the fileId in the saved data
+      });
     } catch (err) {
       console.log(err)
     }
