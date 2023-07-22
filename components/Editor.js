@@ -1187,10 +1187,10 @@ class Image {
     iframe.style.maxHeight = "50vh";
     iframe.style.objectFit = 'contain';
     iframe.style.borderRadius = "5px";
-    if (this.data.simpleImageBrd) {
+    if (this.data?.simpleImageBrd) {
       iframe.classList.add('SI-Border')
     }
-    if(this.data.simpleImageSt){
+    if(this.data?.simpleImageSt){
       iframe.classList.add('SI-Stretch')
     }
     const fileToken = await pb.files.getToken();
