@@ -5,7 +5,6 @@
 }
 
 .itemroot {
-  background: #ffffff;
   padding: 1em;
   max-height: 100dvh;
   overflow: scroll;
@@ -277,7 +276,6 @@
 @media (prefers-color-scheme: dark) {
 
   .itemroot {
-    background: radial-gradient(#202020, #141414);
     border-right: none;
     box-shadow: 10px 0px 13px 2px #191919;
   }
