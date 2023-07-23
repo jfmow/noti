@@ -882,7 +882,7 @@ class SimpleIframe {
     iframe.style.height = "70vh";
     iframe.style.border = "2px solid #c29fff";
     iframe.style.borderRadius = "5px";
-    iframe.sandbox;
+    iframe.sandbox = '';
     const fileToken = await pb.files.getToken();
     // retrieve an example protected file url (will be valid ~5min)
 
@@ -1301,7 +1301,7 @@ class SimpleIframeWebpage {
     iframe.style.border = "2px solid #c29fff";
     iframe.style.borderRadius = "5px";
     iframe.src = src;
-    iframe.sandbox;
+    iframe.sandbox = '';
 
     this.wrapper.innerHTML = "";
     this.wrapper.appendChild(iframe);
