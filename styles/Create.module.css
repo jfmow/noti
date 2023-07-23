@@ -228,6 +228,9 @@
   .create {
     height: 100%;
   }
+  .creategrid{
+    padding: 1.5em;
+  }
 }
 
 .title_buttons {
