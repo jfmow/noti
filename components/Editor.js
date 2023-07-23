@@ -882,7 +882,6 @@ class SimpleIframe {
     iframe.style.height = "70vh";
     iframe.style.border = "2px solid #c29fff";
     iframe.style.borderRadius = "5px";
-    iframe.sandbox = '';
     const fileToken = await pb.files.getToken();
     // retrieve an example protected file url (will be valid ~5min)
 
