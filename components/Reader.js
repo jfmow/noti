@@ -423,11 +423,11 @@ class Image {
         iframe.style.maxHeight = "50vh";
         iframe.style.objectFit = 'contain';
         iframe.style.borderRadius = "5px";
-        const fileToken = await pb.files.getToken();
+        //const fileToken = await pb.files.getToken();
         // retrieve an example protected file url (will be valid ~5min)
 
         const record = await pb.collection('imgs').getOne(fileId); // Use the fileId to retrieve the record
-        const url = pb.files.getUrl(record, record.file_data, { 'token': fileToken });
+        const url = pb.files.getUrl(record, record.file_data);
         iframe.src = url;
         iframe.setAttribute('fileId', fileId); // Set the fileId as an attribute of the iframe
 
