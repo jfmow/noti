@@ -11,10 +11,11 @@ export default class Image {
     };
   }
 
-  constructor({ data, config }) {
+  constructor({ data, config, }) {
     this.data = data;
     this.wrapper = undefined;
     this.config = config || {};
+    this.currpage = config.currPage
   }
 
   render() {
@@ -35,7 +36,6 @@ export default class Image {
       // Example usage:
       const url = this.data.file.url
       const extractedString = extractStringFromURL(url);
-      console.log(extractedString); // Output: t09edrg2ayd247o
       this._createImage(extractedString);
       return this.wrapper;
     }
@@ -108,7 +108,11 @@ export default class Image {
     // retrieve an example protected file url (will be valid ~5min)
 
     const record = await pb.collection('imgs').getOne(fileId); // Use the fileId to retrieve the record
+    if (record.page === "") {
+      await pb.collection("imgs").update(fileId, { "page": this.currpage })
+    }
     const url = pb.files.getUrl(record, record.file_data, { 'token': fileToken });
+
     iframe.src = url;
     iframe.setAttribute('fileId', fileId); // Set the fileId as an attribute of the iframe
 

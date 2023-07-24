@@ -439,7 +439,8 @@ function Editor({ page, preview, multi }) {
                   }
                   return uploadbyFile(file)
                 },
-              }
+              },
+              currPage: page
 
             },
 
