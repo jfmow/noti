@@ -154,7 +154,7 @@
 }
 
 .itemoption:hover {
-  background: rgb(245, 245, 245);
+  background: rgb(245, 245, 245) !important;
 }
 
 .active {
@@ -313,7 +313,7 @@
   }
 
   .itemoption:hover {
-    background: rgb(0, 0, 0);
+    background: rgb(0, 0, 0) !important;
   }
 
   .hidemenubtn {

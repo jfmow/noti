@@ -364,11 +364,10 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
   }
 
 
-
   return (
-    <li>
+    <li >
       <div
-        className={`${styles[`level_${level}`]} ${currPage2 === item.id || isActive ? styles.active : ''} ${hoveredItemId === item.id ? styles.hoveringover : ''
+        className={` ${currPage2 === item.id || isActive ? styles.active : ''} ${hoveredItemId === item.id ? styles.hoveringover : ''
           } ${styles.itemoption}`}
         id={currPage2 === item.id ? styles.active : 'fake'}
         onClick={(e) => openPage(e, item.id)}
@@ -378,6 +377,7 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
         onDragStart={(e) => handleDragStart(e, item.id)}
         draggable
         onContextMenu={(e) => handleRightClick(e, item.id)}
+        style={{background: item.color}}
       >
         {expand ? (
           <button
