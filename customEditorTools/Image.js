@@ -58,11 +58,7 @@ export default class Image {
     uploadBtn.textContent = "Upload image";
     uploadBtn.classList.add("cdx-button");
     uploadBtn.style.width = "100%";
-    try {
-      fileInput.click(); //open immediately
-    } catch (err) {
-      console.warn(err)
-    }
+    
     uploadBtn.addEventListener("click", () => fileInput.click());
 
     this.wrapper.appendChild(uploadBtn);
@@ -118,6 +114,41 @@ export default class Image {
 
     this.wrapper.innerHTML = "";
     this.wrapper.appendChild(iframe);
+  }
+
+  static get pasteConfig() {
+    return {
+      /**
+       * Paste HTML into Editor
+       */
+
+      /**
+       * Drag n drop file from into the Editor
+       */
+      files: {
+        mimeTypes: ['image/*'],
+      },
+    };
+  }
+
+
+  async onPaste(event) {
+    switch (event.type) {
+      // ... case 'tag'
+      // ... case 'file'
+      case 'file':
+        const file = event.detail.file;
+        const data2 = await this.config.storeFile.uploadFile(file)
+
+        if (data2.success === 1) {
+          await this._createImage(
+            data2.file.recid // Pass the fileId as an argument
+          )
+        } else {
+          return
+        }
+        break;
+    }
   }
 
 
