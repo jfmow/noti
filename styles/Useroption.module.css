@@ -1,0 +1,49 @@
+.container{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    background: #262626;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0em 1em;
+    min-height: 10vh;
+    color: #fff;
+    box-shadow: 0 0 5px #191919;
+    
+}
+
+.icons{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.icons .icon svg{
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    fill: #fff;
+}
+
+.icons .icon{
+    display: flex;
+}
+
+.usricon{
+    display: flex;
+    
+}
+
+.usricon img{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.usricon svg{
+    fill: #fff;
+}
