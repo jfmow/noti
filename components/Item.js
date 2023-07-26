@@ -250,7 +250,7 @@ const MyComponent = ({ currPage }) => {
           </svg>
           Create page
         </span>
-        <UserOptions user={pb.authStore.model} />
+        <UserOptions clss={styles.test1} user={pb.authStore.model} />
 
       </div>
 

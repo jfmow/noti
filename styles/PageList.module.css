@@ -220,6 +220,14 @@
   box-shadow: none !important;
 }
 
+.dskhidden .test1 {
+  width: 0;
+  /* transform: translateX(-100%); */
+  /* opacity: 0; */
+  left: -300px;
+  transition: 0.7s all ease-in-out;
+}
+
 .multieditorbtn {
   top: 0;
   left: 0;
@@ -492,25 +500,25 @@
 
 .contextMenuItem {
   --border-radius: 6px;
-    --icon-size: 20px;
-    --icon-size-mobile: 28px;
-    border-radius: var(--border-radius);
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    padding: 3px;
-    color: var(--color-text-primary);
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    cursor: pointer;
+  --icon-size: 20px;
+  --icon-size-mobile: 28px;
+  border-radius: var(--border-radius);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 3px;
+  color: var(--color-text-primary);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
 }
 
-.contextMenuItem:hover{
+.contextMenuItem:hover {
   background-color: var(--color-background-item-hover);
 }
 
@@ -533,18 +541,18 @@
   margin-right: 10px;
 }
 
-.contextMenuIcon svg{
+.contextMenuIcon svg {
   width: 16px;
   height: 16px;
 }
 
 .contextMenuTitle {
   font-size: 14px;
-    line-height: 20px;
-    font-weight: 500;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  line-height: 20px;
+  font-weight: 500;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 
@@ -557,7 +565,7 @@
   --padding: 6px;
   --offset-from-target: 8px;
   --color-border: #e8e8eb;
-  --color-shadow: rgba(13,20,33,.13);
+  --color-shadow: rgba(13, 20, 33, .13);
   --color-background: white;
   --color-text-primary: black;
   --color-text-secondary: #707684;
