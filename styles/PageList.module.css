@@ -222,10 +222,10 @@
 
 .dskhidden .test1 {
   width: 0;
-  /* transform: translateX(-100%); */
-  /* opacity: 0; */
-  left: -300px;
-  transition: 0.7s all ease-in-out;
+  overflow: hidden;
+  padding: 0;
+  /* left: -300px; */
+  transition: all .5s ease-in-out;
 }
 
 .multieditorbtn {
