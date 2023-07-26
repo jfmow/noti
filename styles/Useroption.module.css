@@ -1,8 +1,8 @@
 .container{
-    position: absolute;
+    position: fixed;
+    width: 300px;
     bottom: 0;
     left: 0;
-    right: 0;
     display: flex;
     background: #262626;
     flex-direction: row;
@@ -46,4 +46,10 @@
 
 .usricon svg{
     fill: #fff;
+}
+
+@media(max-width: 800px){
+    .container{
+        width: 100%;
+    }
 }
