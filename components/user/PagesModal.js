@@ -6,31 +6,14 @@ import PocketBase from 'pocketbase'
 import { ModalButton, ModalCheckBox, ModalContainer, ModalForm, ModalTitle } from "@/lib/Modal";
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 pb.autoCancellation(false)
-export default function BulkManagment() {
+export default function BulkManagment({CloseAcc}) {
     const [pages, setPagesList] = useState([])
     const [seletedPages, setSelectedPages] = useState([])
     const [showWarn, setShowWarning] = useState(false)
     const [reallyConfirm, setConfirm] = useState(false);
     const [deleting, setDeleting] = useState(false)
     useEffect(() => {
-        async function authUpdate() {
-            try {
-                const authData = await pb.collection('users').authRefresh();
-                if (pb.authStore.isValid == false) {
-                    pb.authStore.clear();
-                    return window.location.replace("/auth/login");
-                }
-                if (authData.record.disabled) {
-                    pb.authStore.clear()
-                    return window.location.replace('/u/disabled')
-                }
-
-            } catch (error) {
-                pb.authStore.clear();
-                return window.location.replace('/auth/login');
-            }
-        }
-        authUpdate()
+        
         async function getPagesList() {
             const records = await pb.collection('pages_Bare').getFullList({
                 sort: '-updated',
@@ -81,12 +64,12 @@ export default function BulkManagment() {
             <Head>
                 <title>Bluk managment</title>
             </Head>
-            <div className={styles.container}>
-                <Nav />
-                <div className={styles.header}>
-                    <h1>Manage pages</h1>
+            <ModalContainer events={CloseAcc}>
+                <ModalForm>
+                    <ModalTitle>Manage your pages</ModalTitle>
                     <h3>Total pages: {pages.length <= 0 ? ('Loading...') : (pages.length)}</h3>
-                </div>
+
+                    
                 <div className={styles.page_align_center}>
                     {seletedPages.length > 0 && (
                         <ModalButton classnm={styles.fixeddeletebtn} events={DeleteWarning}>Delete selected pages</ModalButton>
@@ -138,7 +121,8 @@ export default function BulkManagment() {
                         </ModalContainer>
                     </>
                 )}
-            </div>
+                </ModalForm>
+            </ModalContainer>
         </>
     )
 }
