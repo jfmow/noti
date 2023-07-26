@@ -11,6 +11,7 @@ import PocketBase from "pocketbase";
 import styles from "@/styles/Create.module.css";
 import Loader from "./Loader";
 import { createRandomMeshGradients } from "@/lib/randomMeshGradient";
+import NestedList from '@editorjs/nested-list';
 
 
 
@@ -105,7 +106,14 @@ function Editor({ page, multi }) {
                         class: SimpleTodo,
 
                     },
-                    
+                    nestedList: {
+                        class: NestedList,
+                        inlineToolbar: true,
+                        config: {
+                            defaultStyle: 'unordered'
+                        },
+                    },
+
                     list: {
                         class: List,
                         inlineToolbar: true,
@@ -114,7 +122,7 @@ function Editor({ page, multi }) {
                         class: Quote,
                         inlineToolbar: true,
                     },
-                    
+
                     image: {
                         class: Image,
                     },
