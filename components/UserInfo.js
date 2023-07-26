@@ -6,11 +6,11 @@ const AccountSettings = dynamic(() => import("./user/AccountButtons"), {
     loading: ()=><ModalTempLoader/>,
   ssr: true,
 });
-export default function UserOptions({user}) {
+export default function UserOptions({user, clss}) {
     const [accountSettingsModal, setAccountSettingsModal] = useState(false)
     return (
         <>
-            <div className={styles.container}>
+            <div className={`${styles.container} ${clss}`}>
 
                 <div className={styles.usricon}>
                     {user.avatar ? (
