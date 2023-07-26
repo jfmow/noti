@@ -1,4 +1,4 @@
-.container{
+.container {
     position: fixed;
     width: 300px;
     bottom: 0;
@@ -13,44 +13,46 @@
     min-height: 10vh;
     color: #fff;
     box-shadow: 0 0 5px #191919;
-    
-  transition: 0.5s all ease-in-out;
+
+    transition: 0.5s all ease-in-out;
+    overflow: hidden;
 }
 
-.icons{
+.icons {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
 
-.icons .icon svg{
+.icons .icon svg {
     width: 16px;
     height: 16px;
     cursor: pointer;
     fill: #fff;
 }
 
-.icons .icon{
+.icons .icon {
     display: flex;
 }
 
-.usricon{
+.usricon {
     display: flex;
-    
+
 }
 
-.usricon img{
+.usricon img {
     width: 32px;
     height: 32px;
     border-radius: 50%;
 }
 
-.usricon svg{
+.usricon svg {
     fill: #fff;
 }
 
-@media(max-width: 800px){
-    .container{
+@media(max-width: 800px) {
+    .container {
         width: 100%;
+        transition: 0 all;
     }
 }
