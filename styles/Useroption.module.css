@@ -1,0 +1,36 @@
+.container{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    background: #fff;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0em 1em;
+    min-height: 10vh;
+    color: #000;
+    
+}
+
+.icons{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.icons .icon svg{
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.icons .icon{
+    display: flex;
+}
+
+.usricon{
+    display: flex;
+}

@@ -9,6 +9,7 @@ pb.autoCancellation(false)
 import Router, { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { AlternateButton, ModalContainer, ModalForm, ModalTitle } from '@/lib/Modal';
+import UserOptions from './UserInfo';
 const Tut = dynamic(() => import('./Tutorial'));
 
 const MyComponent = ({ currPage }) => {
@@ -249,6 +250,8 @@ const MyComponent = ({ currPage }) => {
           </svg>
           Create page
         </span>
+        <UserOptions />
+
       </div>
 
     </>
@@ -377,7 +380,7 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
         onDragStart={(e) => handleDragStart(e, item.id)}
         draggable
         onContextMenu={(e) => handleRightClick(e, item.id)}
-        style={{background: item.color}}
+        style={{ background: item.color }}
       >
         {expand ? (
           <button
@@ -518,21 +521,21 @@ function MultiEditor({ pagesList, Close }) {
   }
 
   return (
-      <>
-          <ModalContainer events={() => Close()}>
-            <ModalForm>
-              <ModalTitle>Select pages</ModalTitle>
-              <div className={styles.multiedit_pages}>
-                {pages.map((page) => (
-                  <div className={`${styles.multiedit_page} ${selected4.includes(page.id) ? styles.selected : ''}`} key={page.id} onClick={() => setSelectedPage(page.id)}>        {page.icon && page.icon.includes('.png') ? (<img className={styles.page_icon} src={`/emoji/twitter/64/${page.icon}`} />) : (!isNaN(parseInt(page.icon, 16)) && String.fromCodePoint(parseInt(page.icon, 16)))}{page.title ? page.title : `Untitled: ${page.id}`}
-                  </div>
-                ))}
+    <>
+      <ModalContainer events={() => Close()}>
+        <ModalForm>
+          <ModalTitle>Select pages</ModalTitle>
+          <div className={styles.multiedit_pages}>
+            {pages.map((page) => (
+              <div className={`${styles.multiedit_page} ${selected4.includes(page.id) ? styles.selected : ''}`} key={page.id} onClick={() => setSelectedPage(page.id)}>        {page.icon && page.icon.includes('.png') ? (<img className={styles.page_icon} src={`/emoji/twitter/64/${page.icon}`} />) : (!isNaN(parseInt(page.icon, 16)) && String.fromCodePoint(parseInt(page.icon, 16)))}{page.title ? page.title : `Untitled: ${page.id}`}
               </div>
-              {toomany && ('You have too many pages selected to fit in this size screen!')}
-              <AlternateButton click={openPages}>Open</AlternateButton>
-              <p style={{ fontSize: '12px' }}>Some users may experience the issue of the page reloading back to the home screen. We sincerely apologize for any inconvenience this may cause. Our team is actively investigating the problem to identify its cause and implement a solution. Thank you for your patience and understanding.</p>
-            </ModalForm>
-          </ModalContainer>
-      </>
+            ))}
+          </div>
+          {toomany && ('You have too many pages selected to fit in this size screen!')}
+          <AlternateButton click={openPages}>Open</AlternateButton>
+          <p style={{ fontSize: '12px' }}>Some users may experience the issue of the page reloading back to the home screen. We sincerely apologize for any inconvenience this may cause. Our team is actively investigating the problem to identify its cause and implement a solution. Thank you for your patience and understanding.</p>
+        </ModalForm>
+      </ModalContainer>
+    </>
   )
 }
