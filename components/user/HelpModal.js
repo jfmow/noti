@@ -1,8 +1,12 @@
 import { ModalContainer, ModalForm, ModalTitle } from "@/lib/Modal";
 import Link from 'next/link'
+import Head from "next/head";
 export default function UserHelpModal({ CloseHelp }) {
     return (
         <>
+        <Head>
+            <title>Help</title>
+        </Head>
             <ModalContainer events={CloseHelp}>
                 <ModalForm>
                     <ModalTitle>Help</ModalTitle>
