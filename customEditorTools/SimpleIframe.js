@@ -65,7 +65,7 @@ export default class SimpleIframeWebpage {
       iframe.style.border = "2px solid #fff";
       iframe.style.borderRadius = "10px";
       iframe.src = src;
-      iframe.sandbox = 'allow-scripts';
+      iframe.sandbox = 'allow-scripts allow-same-origin';
   
       this.wrapper.innerHTML = "";
       this.wrapper.appendChild(iframe);
