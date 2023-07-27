@@ -1,5 +1,6 @@
 import { ModalContainer, ModalForm, ModalTitle } from '@/lib/Modal';
 import React from 'react';
+import { useState } from 'react';
 
 const colors = [
     '#FF00001a', // Red with opacity 1a
@@ -77,41 +78,69 @@ const colors = [
 
 ];
 
+
 const ColorSelector = ({ onSelectColor, page, close }) => {
+    const [colorsWithBackground, setColorsWithBackground] = useState([]);
+
+    // Function to generate random backgrounds for the colors
+    const generateRandomBackgrounds = () => {
+        const updatedColors = colors.map((color) => {
+          const width = 32 + Math.random() * 41;
+          const bg = color;
+          const linbg = `linear-gradient(45deg, ${color} ${width}%, var(--background) ${100 - width}%)`;
+          return {
+            color: color,
+            background: bg,
+            linearbg: linbg
+          };
+        });
+        setColorsWithBackground(updatedColors);
+      };
+      
+
+    // Initial generation of random backgrounds when the component mounts
+    useState(() => {
+        generateRandomBackgrounds();
+    }, []);
+
     return (
         <ModalContainer events={close} noblur>
             <ModalForm>
                 <ModalTitle>Select page item color</ModalTitle>
-                <div style={{maxHeight: '50vh', overflowY: 'scroll', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly'}}>
-                    {colors.map((color, index) => (
-                        <>
-                        <div
-                            key={index}
-                            style={{
-                                width: '50px',
-                                height: '50px',
-                                background: color,
-                                margin: '10px',
-                                cursor: 'pointer',
-                            }}
-                            onClick={() => onSelectColor(color, page)}
-                        />
-                        <div
-                            key={index}
-                            style={{
-                                width: '50px',
-                                height: '50px',
-                                background: `radial-gradient(${color}, #0c0c0c)`,
-                                margin: '10px',
-                                cursor: 'pointer',
-                            }}
-                            onClick={() => onSelectColor(`radial-gradient(${color}, #0c0c0c)`, page)}
-                        />
-                        </>
-                    ))}
-                </div>
-            </ModalForm>
 
+                <div style={{ maxHeight: '50vh', overflowY: 'scroll', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly' }}>
+                    {colorsWithBackground.map((colorObj, index) => {
+                        return (
+                            <>
+                                <div
+                                    key={index + 'norm'}
+                                    style={{
+                                        width: '50px',
+                                        height: '50px',
+                                        background: colorObj.background,
+                                        margin: '10px',
+                                        cursor: 'pointer',
+                                    }}
+                                    onClick={() => onSelectColor(colorObj.background, page)}
+                                />
+                                <div
+                                    key={index + 'lin'}
+                                    style={{
+                                        width: '50px',
+                                        height: '50px',
+                                        background: colorObj.linearbg,
+                                        margin: '10px',
+                                        cursor: 'pointer',
+                                    }}
+                                    onClick={() => onSelectColor(colorObj.linearbg, page)}
+                                />
+                            </>
+                        );
+                    })}
+                </div>
+                <button className='cdx-button' style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px'}} type='button' onClick={generateRandomBackgrounds}><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><g><path d="M0,0h24v24H0V0z" fill="none" /></g><g><g><path d="M6,13c0-1.65,0.67-3.15,1.76-4.24L6.34,7.34C4.9,8.79,4,10.79,4,13c0,4.08,3.05,7.44,7,7.93v-2.02 C8.17,18.43,6,15.97,6,13z M20,13c0-4.42-3.58-8-8-8c-0.06,0-0.12,0.01-0.18,0.01l1.09-1.09L11.5,2.5L8,6l3.5,3.5l1.41-1.41 l-1.08-1.08C11.89,7.01,11.95,7,12,7c3.31,0,6,2.69,6,6c0,2.97-2.17,5.43-5,5.91v2.02C16.95,20.44,20,17.08,20,13z" /></g></g></svg>Refresh gradients</button>
+
+            </ModalForm>
         </ModalContainer>
     );
 };
