@@ -384,6 +384,7 @@
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     background: #ffffffb8;
+    padding-bottom: 10vh;
   }
 
   .mobilePageNav {
