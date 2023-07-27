@@ -170,3 +170,6 @@ a {
   background-color: #ff47f3;
 }
 
+.Toastify__toast{
+  border-radius: 10px !important;
+}

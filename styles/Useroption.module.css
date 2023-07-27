@@ -53,6 +53,6 @@
 @media(max-width: 800px) {
     .container {
         width: 100%;
-        transition: 0 all;
+        transition: none;
     }
 }

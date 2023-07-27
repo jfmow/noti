@@ -61,9 +61,9 @@ export default class SimpleIframeWebpage {
       const iframe = document.createElement("iframe");
       iframe.classList.add(styles.embedIframe);
       iframe.style.width = "100%";
-      iframe.style.height = "70vh";
-      iframe.style.border = "2px solid #c29fff";
-      iframe.style.borderRadius = "5px";
+      iframe.style.height = "85vh";
+      iframe.style.border = "2px solid #fff";
+      iframe.style.borderRadius = "10px";
       iframe.src = src;
       iframe.sandbox = '';
   
@@ -78,6 +78,10 @@ export default class SimpleIframeWebpage {
       })
       this.wrapper.appendChild(popOutBTN)
     }
+
+    static get isReadOnlySupported() {
+      return true;
+  }
   
     static get pasteConfig() {
       return {
