@@ -199,48 +199,82 @@
     padding-bottom: 10px;
 }
 
-.cbx {
+.cbx{
     display: flex;
     flex-direction: row;
-    gap: 10px;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
+    gap: 10px;
 }
-
-.cbxlabel {
-    font-size: 16px;
-}
-
 
 .chbxcontainer {
     cursor: pointer;
-    display: flex;
-}
-
-.chbxcontainer input {
-    display: none;
-}
-
-.chbxcontainer svg {
-    overflow: visible;
-    height: 1.5em;
-}
-
-.cbxpath {
+    position: relative;
+    margin: 1px;
+    width: 18px;
+    height: 18px;
+    -webkit-tap-highlight-color: transparent;
+    transform: translate3d(0, 0, 0);
+  }
+  
+  .chbxcontainer:before {
+    content: "";
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(34,50,84,0.03);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  
+  .chbxcontainer svg {
+    position: relative;
+    z-index: 1;
     fill: none;
-    stroke: rgb(0, 0, 0);
-    stroke-width: 6;
     stroke-linecap: round;
     stroke-linejoin: round;
-    transition: stroke-dasharray 0.5s ease, stroke-dashoffset 0.5s ease;
-    stroke-dasharray: 241 9999999;
+    stroke: #c8ccd4;
+    stroke-width: 1.5;
+    transform: translate3d(0, 0, 0);
+    transition: all 0.2s ease;
+  }
+  
+  .chbxcontainer svg path {
+    stroke-dasharray: 60;
     stroke-dashoffset: 0;
-}
+  }
+  
+  .chbxcontainer svg polyline {
+    stroke-dasharray: 22;
+    stroke-dashoffset: 66;
+  }
+  
+  .chbxcontainer:hover:before {
+    opacity: 1;
+  }
+  
+  .chbxcontainer:hover svg {
+    stroke: #4285f4;
+  }
+  
+  #cbx:checked + .chbxcontainer svg {
+    stroke: #4285f4;
+  }
+  
+  #cbx:checked + .chbxcontainer svg path {
+    stroke-dashoffset: 60;
+    transition: all 0.3s linear;
+  }
+  
+  #cbx:checked + .chbxcontainer svg polyline {
+    stroke-dashoffset: 42;
+    transition: all 0.2s linear;
+    transition-delay: 0.15s;
+  }
 
-.chbxcontainer input:checked~svg .cbxpath {
-    stroke-dasharray: 70.5096664428711 9999999;
-    stroke-dashoffset: -262.2723388671875;
-}
 
 
 
@@ -290,16 +324,7 @@
 
 @media (prefers-color-scheme: dark) {
 
-    .cbxpath {
-        fill: none;
-        stroke: white;
-        stroke-width: 6;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-        transition: stroke-dasharray 0.5s ease, stroke-dashoffset 0.5s ease;
-        stroke-dasharray: 241 9999999;
-        stroke-dashoffset: 0;
-    }
+    
 
     .default_settings_modal_container_usrname_block {
         background: #1f1f1f;
