@@ -9,6 +9,7 @@ import compressImage from '@/lib/CompressImg';
 import { AlternateButton, AlternateInput, ModalButton, ModalCheckBox, ModalContainer, ModalForm, ModalInput, ModalTitle } from '@/lib/Modal';
 import { AnimatePresence } from 'framer-motion';
 import PagesModal from './PagesModal'
+import Router from 'next/router';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 
@@ -291,7 +292,7 @@ function AccManagementForm({ Close }) {
               )}
 
             </AnimatePresence>
-            <h6><Link href='/auth/terms-and-conditions'>Terms & Conditions</Link> | <Link href='/auth/privacy-policy'>Privacy policy</Link></h6>
+            <h6><Link href='/auth/terms-and-conditions'>Terms & Conditions</Link> | <Link href='/auth/privacy-policy'>Privacy policy</Link> | <span onClick={logout}>Logout</span></h6>
 
           </ModalForm>
         </ModalContainer>
@@ -300,7 +301,10 @@ function AccManagementForm({ Close }) {
   )
 }
 
-
+function logout(){
+  pb.authStore.clear()
+  Router.push('/')
+}
 
 
 
