@@ -11,12 +11,14 @@
     justify-content: space-around;
     padding: 0em 1em;
     min-height: 10vh;
-    color: #fff;
+    color: #9da5b5;
     box-shadow: 0 0 5px #191919;
 
     transition: 0.5s all ease-in-out;
     overflow: hidden;
 }
+
+
 
 .icons {
     display: flex;
@@ -28,7 +30,7 @@
     width: 16px;
     height: 16px;
     cursor: pointer;
-    fill: #fff;
+    fill: #707684;
 }
 
 .icons .icon {
@@ -47,12 +49,25 @@
 }
 
 .usricon svg {
-    fill: #fff;
+    fill: #707684;
 }
 
 @media(max-width: 800px) {
     .container {
         width: 100%;
         transition: none;
+    }
+}
+@media(prefers-color-scheme: light){
+    .container{
+        background: #fff;
+        color: #000;
+        box-shadow: 0 0 5px #d4d4d4;
+    }
+    .usricon svg {
+        fill: #000000;
+    }
+    .icons .icon svg {
+        fill: #000000;
     }
 }

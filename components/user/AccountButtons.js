@@ -169,139 +169,137 @@ function AccManagementForm({ Close }) {
 
   return (
     <>
-        <ModalContainer events={Close}>
-          <ModalForm className={styles.user_account_form_profile_settings}>
-            <ModalTitle>Settings</ModalTitle>
-            <div className={styles.user_setting_buttons_grid}>
-              <AlternateButton click={() => setUserInfoDisplay(true)}>
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0z" fill="none" /><path d="M21 8V7l-3 2-3-2v1l2.72 1.82c.17.11.39.11.55 0L21 8zm1-5H2C.9 3 0 3.9 0 5v14c0 1.1.9 2 2 2h20c1.1 0 1.99-.9 1.99-2L24 5c0-1.1-.9-2-2-2zM8 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H2v-1c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1zm7.5-6h-7c-.28 0-.5-.22-.5-.5v-5c0-.28.22-.5.5-.5h7c.28 0 .5.22.5.5v5c0 .28-.22.5-.5.5z" /></svg>
-                <p>Profile</p>
+      <ModalContainer events={Close}>
+        <ModalForm className={styles.user_account_form_profile_settings}>
+          <ModalTitle>Settings</ModalTitle>
+          <div className={styles.user_setting_buttons_grid}>
+            <AlternateButton click={() => setUserInfoDisplay(true)}>
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0z" fill="none" /><path d="M21 8V7l-3 2-3-2v1l2.72 1.82c.17.11.39.11.55 0L21 8zm1-5H2C.9 3 0 3.9 0 5v14c0 1.1.9 2 2 2h20c1.1 0 1.99-.9 1.99-2L24 5c0-1.1-.9-2-2-2zM8 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H2v-1c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1zm7.5-6h-7c-.28 0-.5-.22-.5-.5v-5c0-.28.22-.5.5-.5h7c.28 0 .5.22.5.5v5c0 .28-.22.5-.5.5z" /></svg>
+              <p>Profile</p>
+            </AlternateButton>
+            <AlternateButton click={() => setAvatarModalDisplay(true)}>
+              <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px"><g><path d="M0,0h24v24H0V0z" fill="none" /></g><g><path d="M10.25,13c0,0.69-0.56,1.25-1.25,1.25S7.75,13.69,7.75,13S8.31,11.75,9,11.75S10.25,12.31,10.25,13z M15,11.75 c-0.69,0-1.25,0.56-1.25,1.25s0.56,1.25,1.25,1.25s1.25-0.56,1.25-1.25S15.69,11.75,15,11.75z M22,12c0,5.52-4.48,10-10,10 S2,17.52,2,12S6.48,2,12,2S22,6.48,22,12z M20,12c0-0.78-0.12-1.53-0.33-2.24C18.97,9.91,18.25,10,17.5,10 c-3.13,0-5.92-1.44-7.76-3.69C8.69,8.87,6.6,10.88,4,11.86C4.01,11.9,4,11.95,4,12c0,4.41,3.59,8,8,8S20,16.41,20,12z" /></g></svg>                <p>Avatar</p>
+            </AlternateButton>
+
+            {pb.authStore.model.admin && (
+              <AlternateButton click={() => window.location.replace('/u/users')}>
+                <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" ><g><rect fill="none" height="24" width="24" /><rect fill="none" height="24" width="24" /></g><g><g><path d="M17,11c0.34,0,0.67,0.04,1,0.09V7.58c0-0.8-0.47-1.52-1.2-1.83l-5.5-2.4c-0.51-0.22-1.09-0.22-1.6,0l-5.5,2.4 C3.47,6.07,3,6.79,3,7.58v3.6c0,4.54,3.2,8.79,7.5,9.82c0.55-0.13,1.08-0.32,1.6-0.55C11.41,19.47,11,18.28,11,17 C11,13.69,13.69,11,17,11z" /><path d="M17,13c-2.21,0-4,1.79-4,4c0,2.21,1.79,4,4,4s4-1.79,4-4C21,14.79,19.21,13,17,13z M17,14.38c0.62,0,1.12,0.51,1.12,1.12 s-0.51,1.12-1.12,1.12s-1.12-0.51-1.12-1.12S16.38,14.38,17,14.38z M17,19.75c-0.93,0-1.74-0.46-2.24-1.17 c0.05-0.72,1.51-1.08,2.24-1.08s2.19,0.36,2.24,1.08C18.74,19.29,17.93,19.75,17,19.75z" /></g></g></svg>
+                <p>Admin</p>
               </AlternateButton>
-              <AlternateButton click={() => setAvatarModalDisplay(true)}>
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0z" fill="none" /><path d="M21 8V7l-3 2-3-2v1l2.72 1.82c.17.11.39.11.55 0L21 8zm1-5H2C.9 3 0 3.9 0 5v14c0 1.1.9 2 2 2h20c1.1 0 1.99-.9 1.99-2L24 5c0-1.1-.9-2-2-2zM8 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H2v-1c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1zm7.5-6h-7c-.28 0-.5-.22-.5-.5v-5c0-.28.22-.5.5-.5h7c.28 0 .5.22.5.5v5c0 .28-.22.5-.5.5z" /></svg>
-                <p>Avatar</p>
-              </AlternateButton>
+            )}
+            <AlternateButton click={() => setNotiField(true)}>
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0V0z" fill="none" /><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-1.29 1.29c-.63.63-.19 1.71.7 1.71h13.17c.89 0 1.34-1.08.71-1.71L18 16z" /></svg>            <p>Notifications</p>
+            </AlternateButton>
+            <AlternateButton click={() => setmanagePagesModal(true)}>
+              <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" ><g><rect fill="none" height="24" width="24" /></g><g><g><path d="M5,11h4c1.1,0,2-0.9,2-2V5c0-1.1-0.9-2-2-2H5C3.9,3,3,3.9,3,5v4C3,10.1,3.9,11,5,11z" /><path d="M5,21h4c1.1,0,2-0.9,2-2v-4c0-1.1-0.9-2-2-2H5c-1.1,0-2,0.9-2,2v4C3,20.1,3.9,21,5,21z" /><path d="M13,5v4c0,1.1,0.9,2,2,2h4c1.1,0,2-0.9,2-2V5c0-1.1-0.9-2-2-2h-4C13.9,3,13,3.9,13,5z" /><path d="M15,21h4c1.1,0,2-0.9,2-2v-4c0-1.1-0.9-2-2-2h-4c-1.1,0-2,0.9-2,2v4C13,20.1,13.9,21,15,21z" /></g></g></svg>
+              <p>Manage pages</p>
+            </AlternateButton>
+            <AlternateButton click={() => setDelAccField(true)}>
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0V0z" fill="none" /><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM18 4h-2.5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1z" /></svg>            <p>Delete Account</p>
+            </AlternateButton>
+          </div>
 
-              {pb.authStore.model.admin && (
-                <AlternateButton click={() => window.location.replace('/u/users')}>
-                  <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" ><g><rect fill="none" height="24" width="24" /><rect fill="none" height="24" width="24" /></g><g><g><path d="M17,11c0.34,0,0.67,0.04,1,0.09V7.58c0-0.8-0.47-1.52-1.2-1.83l-5.5-2.4c-0.51-0.22-1.09-0.22-1.6,0l-5.5,2.4 C3.47,6.07,3,6.79,3,7.58v3.6c0,4.54,3.2,8.79,7.5,9.82c0.55-0.13,1.08-0.32,1.6-0.55C11.41,19.47,11,18.28,11,17 C11,13.69,13.69,11,17,11z" /><path d="M17,13c-2.21,0-4,1.79-4,4c0,2.21,1.79,4,4,4s4-1.79,4-4C21,14.79,19.21,13,17,13z M17,14.38c0.62,0,1.12,0.51,1.12,1.12 s-0.51,1.12-1.12,1.12s-1.12-0.51-1.12-1.12S16.38,14.38,17,14.38z M17,19.75c-0.93,0-1.74-0.46-2.24-1.17 c0.05-0.72,1.51-1.08,2.24-1.08s2.19,0.36,2.24,1.08C18.74,19.29,17.93,19.75,17,19.75z" /></g></g></svg>
-                  <p>Admin</p>
-                </AlternateButton>
-              )}
-              <AlternateButton click={() => setNotiField(true)}>
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-1.29 1.29c-.63.63-.19 1.71.7 1.71h13.17c.89 0 1.34-1.08.71-1.71L18 16z" /></svg>            <p>Notifications</p>
-              </AlternateButton>
-              <AlternateButton click={() => setmanagePagesModal(true)}>
-                <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><g><rect fill="none" height="24" width="24" /></g><g><g><path d="M5,11h4c1.1,0,2-0.9,2-2V5c0-1.1-0.9-2-2-2H5C3.9,3,3,3.9,3,5v4C3,10.1,3.9,11,5,11z" /><path d="M5,21h4c1.1,0,2-0.9,2-2v-4c0-1.1-0.9-2-2-2H5c-1.1,0-2,0.9-2,2v4C3,20.1,3.9,21,5,21z" /><path d="M13,5v4c0,1.1,0.9,2,2,2h4c1.1,0,2-0.9,2-2V5c0-1.1-0.9-2-2-2h-4C13.9,3,13,3.9,13,5z" /><path d="M15,21h4c1.1,0,2-0.9,2-2v-4c0-1.1-0.9-2-2-2h-4c-1.1,0-2,0.9-2,2v4C13,20.1,13.9,21,15,21z" /></g></g></svg>
-                <p>Manage pages</p>
-              </AlternateButton>
-              <AlternateButton click={() => setDelAccField(true)}>
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM18 4h-2.5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1z" /></svg>            <p>Delete Account</p>
-              </AlternateButton>
-            </div>
+          <AnimatePresence>
 
-            <AnimatePresence>
-
-              {userNameField && (
-                <>
-                  <ModalContainer events={() => { setUsernameField(false) }}>
-                    <ModalForm>
-                      <ModalTitle>Update username</ModalTitle>
-                      <ModalInput chngevent={setNewUsernameData} place={`${pb.authStore.model.username}`} type={"text"} />
-                      <ModalButton events={changeUsername}>Change</ModalButton>
-                    </ModalForm>
-                  </ModalContainer>
-
-                </>
-              )}
-              {updateEmailField && (
-                <>
-                  <ModalContainer events={() => setUpdateEmailField(false)}>
-                    <ModalForm>
-                      <ModalTitle>Update email</ModalTitle>
-                      <ModalInput chngevent={setNewEmail} place={`${pb.authStore.model.email}`} type={"email"} />
-                      <ModalButton events={ChangeEmail}>Change</ModalButton>
-                    </ModalForm>
-                  </ModalContainer>
-
-                </>
-              )}
-
-              {notiField && (
-                <>
-                  <ModalContainer events={() => { setNotiField(false) }}>
-                    <ModalForm>
-                      <ModalTitle>Notification options</ModalTitle>
-                      <div className={styles.default_settings_modal_container_usrname_toggles}>Global <Notitoggle /></div>
-                      <div className={styles.default_settings_modal_container_usrname_toggles}>Hourly quotes (requires global to be enabled) <Quotetoggle /></div>
-                    </ModalForm>
-                  </ModalContainer>
-                </>
-              )}
-              {userInfoOpen && !userNameField && !updateEmailField && (
-                <ModalContainer events={() => setUserInfoDisplay(false)}>
+            {userNameField && (
+              <>
+                <ModalContainer events={() => { setUsernameField(false) }}>
                   <ModalForm>
-                    <ModalTitle>Account details</ModalTitle>
-                    <h4>Username: {pb.authStore.model.username}</h4>
-                    <h4>Email: {pb.authStore.model.email}</h4>
-                    <p>Joined: {new Date(pb.authStore.model.created).toLocaleString()}</p>
-                    <p>UUID: {pb.authStore.model.id}</p>
-                    <AlternateButton click={() => setUsernameField(true)}>
-                      Change username
-                    </AlternateButton>
-                    <AlternateButton click={() => setUpdateEmailField(true)}>
-                      Update email
-                    </AlternateButton>
+                    <ModalTitle>Update username</ModalTitle>
+                    <ModalInput chngevent={setNewUsernameData} place={`${pb.authStore.model.username}`} type={"text"} />
+                    <ModalButton events={changeUsername}>Change</ModalButton>
                   </ModalForm>
                 </ModalContainer>
-              )}
-              {delAccField && (
-                <ModalContainer events={() => setDelAccField(false)}>
+
+              </>
+            )}
+            {updateEmailField && (
+              <>
+                <ModalContainer events={() => setUpdateEmailField(false)}>
                   <ModalForm>
-                    <ModalTitle>Delete account</ModalTitle>
-                    <p>By deleting your account, you acknowledge that all of your data linked to this account will be deleted and can NOT be restored. This will have an immediate effect!</p>
-                    <ModalCheckBox chngevent={setCheckDel}>Confirm:</ModalCheckBox>
-                    <AlternateButton click={deleteAccount}>Delete</AlternateButton>
+                    <ModalTitle>Update email</ModalTitle>
+                    <ModalInput chngevent={setNewEmail} place={`${pb.authStore.model.email}`} type={"email"} />
+                    <ModalButton events={ChangeEmail}>Change</ModalButton>
                   </ModalForm>
                 </ModalContainer>
-              )}
 
-              {AvatarModalDisplay && (
-                <ModalContainer events={() => setAvatarModalDisplay(false)}>
+              </>
+            )}
+
+            {notiField && (
+              <>
+                <ModalContainer events={() => { setNotiField(false) }}>
                   <ModalForm>
-                    <ModalTitle>Change avatar</ModalTitle>
-                    <div>
-                      {pb.authStore.model.avatar ? (
-                        <>
-                          {!refreshAvatar && (
-                            <img style={{ width: '64px', height: '64px', objectFit: 'cover', borderRadius: '50%' }} src={`${process.env.NEXT_PUBLIC_POCKETURL}/api/files/users/${pb.authStore.model.id}/${pb.authStore.model.avatar}`} />
-                          )}
-                        </>
-                      ) : (
-                        <svg style={{ width: '64px', height: '64px' }} xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" ><g><rect fill="none" height="24" width="24" /><rect fill="none" height="24" width="24" /></g><g><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm0 14c-2.03 0-4.43-.82-6.14-2.88C7.55 15.8 9.68 15 12 15s4.45.8 6.14 2.12C16.43 19.18 14.03 20 12 20z" /></g></svg>
-                      )}
-                    </div>
-                    <AlternateInput click={setNewAvatar} type={`file`}>Select New</AlternateInput>
-                    <AlternateButton click={rmAvatar}>Clear current</AlternateButton>
+                    <ModalTitle>Notification options</ModalTitle>
+                    <div className={styles.default_settings_modal_container_usrname_toggles}>Global <Notitoggle /></div>
+                    <div className={styles.default_settings_modal_container_usrname_toggles}>Hourly quotes (requires global to be enabled) <Quotetoggle /></div>
                   </ModalForm>
                 </ModalContainer>
-              )}
+              </>
+            )}
+            {userInfoOpen && !userNameField && !updateEmailField && (
+              <ModalContainer events={() => setUserInfoDisplay(false)}>
+                <ModalForm>
+                  <ModalTitle>Account details</ModalTitle>
+                  <h4>Username: {pb.authStore.model.username}</h4>
+                  <h4>Email: {pb.authStore.model.email}</h4>
+                  <p>Joined: {new Date(pb.authStore.model.created).toLocaleString()}</p>
+                  <p>UUID: {pb.authStore.model.id}</p>
+                  <AlternateButton click={() => setUsernameField(true)}>
+                    Change username
+                  </AlternateButton>
+                  <AlternateButton click={() => setUpdateEmailField(true)}>
+                    Update email
+                  </AlternateButton>
+                </ModalForm>
+              </ModalContainer>
+            )}
+            {delAccField && (
+              <ModalContainer events={() => setDelAccField(false)}>
+                <ModalForm>
+                  <ModalTitle>Delete account</ModalTitle>
+                  <p>By deleting your account, you acknowledge that all of your data linked to this account will be deleted and can NOT be restored. This will have an immediate effect!</p>
+                  <ModalCheckBox chngevent={setCheckDel}>Confirm:</ModalCheckBox>
+                  <AlternateButton click={deleteAccount}>Delete</AlternateButton>
+                </ModalForm>
+              </ModalContainer>
+            )}
 
-              {managePagesModal && (
-                <BulkManagment CloseAcc={()=>setmanagePagesModal(false)}/>
-              )}
+            {AvatarModalDisplay && (
+              <ModalContainer events={() => setAvatarModalDisplay(false)}>
+                <ModalForm>
+                  <ModalTitle>Change avatar</ModalTitle>
+                  <div>
+                    {pb.authStore.model.avatar ? (
+                      <>
+                        {!refreshAvatar && (
+                          <img style={{ width: '64px', height: '64px', objectFit: 'cover', borderRadius: '50%' }} src={`${process.env.NEXT_PUBLIC_POCKETURL}/api/files/users/${pb.authStore.model.id}/${pb.authStore.model.avatar}`} />
+                        )}
+                      </>
+                    ) : (
+                      <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" style={{ width: '64px', height: '64px' }}><g><path d="M0,0h24v24H0V0z" fill="none" /></g><g><path d="M10.25,13c0,0.69-0.56,1.25-1.25,1.25S7.75,13.69,7.75,13S8.31,11.75,9,11.75S10.25,12.31,10.25,13z M15,11.75 c-0.69,0-1.25,0.56-1.25,1.25s0.56,1.25,1.25,1.25s1.25-0.56,1.25-1.25S15.69,11.75,15,11.75z M22,12c0,5.52-4.48,10-10,10 S2,17.52,2,12S6.48,2,12,2S22,6.48,22,12z M20,12c0-0.78-0.12-1.53-0.33-2.24C18.97,9.91,18.25,10,17.5,10 c-3.13,0-5.92-1.44-7.76-3.69C8.69,8.87,6.6,10.88,4,11.86C4.01,11.9,4,11.95,4,12c0,4.41,3.59,8,8,8S20,16.41,20,12z" /></g></svg>)}
+                  </div>
+                  <AlternateInput click={setNewAvatar} type={`file`}>Select New</AlternateInput>
+                  <AlternateButton click={rmAvatar}>Clear current</AlternateButton>
+                </ModalForm>
+              </ModalContainer>
+            )}
 
-            </AnimatePresence>
-            <h6><Link href='/auth/terms-and-conditions'>Terms & Conditions</Link> | <Link href='/auth/privacy-policy'>Privacy policy</Link> | <span onClick={logout}>Logout</span></h6>
+            {managePagesModal && (
+              <BulkManagment CloseAcc={() => setmanagePagesModal(false)} />
+            )}
 
-          </ModalForm>
-        </ModalContainer>
+          </AnimatePresence>
+          <h6><Link href='/auth/terms-and-conditions'>Terms & Conditions</Link> | <Link href='/auth/privacy-policy'>Privacy policy</Link> | <span onClick={logout}>Logout</span></h6>
+
+        </ModalForm>
+      </ModalContainer>
 
     </>
   )
 }
 
-function logout(){
+function logout() {
   pb.authStore.clear()
   Router.push('/')
 }

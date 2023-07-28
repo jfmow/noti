@@ -14,7 +14,7 @@
     max-height: 100dvh;
 }
 
-.noblur{
+.noblur {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
 }
@@ -34,7 +34,7 @@
     background: #ffffff;
     box-shadow: 5px 8px 5px 1px #9d9d9d;
     border: 2px solid #dfdfdf;
-    
+
     position: relative;
 }
 
@@ -199,7 +199,7 @@
     padding-bottom: 10px;
 }
 
-.cbx{
+.cbx {
     display: flex;
     flex-direction: row;
     gap: 10px;
@@ -207,7 +207,7 @@
     justify-content: center;
 }
 
-.cbxlabel{
+.cbxlabel {
     font-size: 16px;
 }
 
@@ -247,8 +247,8 @@
 .acc_button {
     background: #ffffff;
     outline: none;
-    border: 2px solid #d0d0d0;
-    border-radius: 20px;
+    border: 1px rgba(201,201,204,.48) solid;
+    border-radius: 10px;
     padding: 15px 10px;
     display: flex;
     align-items: center;
@@ -259,32 +259,33 @@
     cursor: pointer;
     /*box-shadow: 4px 3px 4px 0px #e8e8e8;*/
     font-size: 13px;
-  transition: 0.35s all;
-  
-  color: rgb(31, 31, 31);
-  font-weight: 600;
-  }
-  
-  .acc_button_red {
+    transition: 0.2s all;
+
+    color: #707684;
+    font-weight: 600;
+}
+
+.acc_button_red {
     outline: 3px #ff2d2d solid;
-  }
-  .acc_button svg {
-    fill: rgb(31, 31, 31);
-    transition: 400ms;
-  }
-  
-  .acc_button:hover {
+}
+
+.acc_button:hover {
     background-color: #000000;
     color: #fff;
     /* border-color: #000; */
     /* border: 1px solid #000;*/
     box-shadow: 0px 0px 20px 0px #e8e8e8;
-  }
-  
-  .acc_button:hover svg {
+}
+
+.acc_button svg{
+    transition: 0.2s all;
+    fill: #50545d;
+}
+
+.acc_button:hover svg {
     fill: #ffffff;
-  }
-  
+}
+
 
 
 @media (prefers-color-scheme: dark) {
@@ -314,30 +315,30 @@
 
     .acc_button {
         background: #353535;
-        border: 2px solid #4f4f4f;
-        /*box-shadow: 4px 3px 4px 0px #1c1c1c;*/
-        color: rgb(149, 149, 149);
-      }
+        /* border: 2px solid #4f4f4f; */
+        /* box-shadow: 4px 3px 4px 0px #1c1c1c; */
+        color: #707684;
+        fill: #707684;
+        border: none;
+    }
 
-      .acc_button:hover{
+    .acc_button:hover {
         box-shadow: 0px 0px 20px 0px #1c1c1c;
-      }
-    
-      .acc_button_red {
+    }
+
+    .acc_button_red {
         outline: 3px #ff2d2d solid;
-      }
-    
-      .acc_button .acc_button_text {
+    }
+
+    .acc_button .acc_button_text {
         color: rgb(149, 149, 149);
-      }
-    
-      .acc_button svg {
-        fill: #9c9c9c;
-      }
-      .default_settings_modal_container_usrclose_btn svg{
+    }
+
+    .default_settings_modal_container_usrclose_btn svg {
         fill: #ffffff;
-      }
-      .default_settings_modal_container_usrclose_btn svg:hover {
+    }
+
+    .default_settings_modal_container_usrclose_btn svg:hover {
         fill: #d3d3d3;
     }
 
@@ -363,13 +364,13 @@
 
     }
 
-    .default_settings_modal_container_usrclose_btn{
+    .default_settings_modal_container_usrclose_btn {
         position: absolute;
         top: 2em;
         right: 2em;
     }
 
-    .default_settings_modal_container_usrclose_btn svg{
+    .default_settings_modal_container_usrclose_btn svg {
         width: 2.5em;
         height: 2.5em;
     }
@@ -395,15 +396,15 @@
     left: 0;
     right: 0;
     background: var(--background) !important;
-  }
-  
-  .load1 {
+}
+
+.load1 {
     width: 3.25em;
     transform-origin: center;
     animation: rotate4 2s linear infinite;
-   }
-   
-   .load2 {
+}
+
+.load2 {
     fill: none;
     stroke: hsl(214, 97%, 59%);
     stroke-width: 2;
@@ -411,38 +412,38 @@
     stroke-dashoffset: 0;
     stroke-linecap: round;
     animation: dash4 1.5s ease-in-out infinite;
-   }
-   
-   @keyframes rotate4 {
+}
+
+@keyframes rotate4 {
     100% {
-     transform: rotate(360deg);
+        transform: rotate(360deg);
     }
-   }
-   
-   @keyframes dash4 {
+}
+
+@keyframes dash4 {
     0% {
-     stroke-dasharray: 1, 200;
-     stroke-dashoffset: 0;
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
     }
-   
+
     50% {
-     stroke-dasharray: 90, 200;
-     stroke-dashoffset: -35px;
+        stroke-dasharray: 90, 200;
+        stroke-dashoffset: -35px;
     }
-   
+
     100% {
-     stroke-dashoffset: -125px;
+        stroke-dashoffset: -125px;
     }
-   }
-   
-  
-  @media(max-width: 800px) {
+}
+
+
+@media(max-width: 800px) {
     .loadercontainer {
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 98;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 98;
     }
-  }
+}

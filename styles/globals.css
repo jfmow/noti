@@ -5,8 +5,8 @@
 
   --main_btn_color_action: #15cce4;
 
-  --big_button_border: #d0d0d0;
-  --big_button_text: rgb(149, 149, 149);
+  --big_button_border: rgba(201,201,204,.48);
+  --big_button_text: #707684;
   --big_button_background: #fff;
   --big_button_background_hover: #000;
   --big_button_border_hover_alt: #b7b7b7;
@@ -19,6 +19,7 @@
     --big_button_background: #353535;
     --big_button_border: #4f4f4f;
     --big_button_border_hover_alt: #2d2d2d;
+    --big_button_text: #707684;
   }
 }
 
