@@ -120,7 +120,7 @@ export default class SimpleIframe {
           fileId: fileId // Include the fileId in the saved data
         };
       } catch (err) {
-        console.log(err)
+        console.warn(err)
       }
     }
   }
