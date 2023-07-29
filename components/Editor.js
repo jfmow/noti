@@ -608,9 +608,14 @@ function Editor({ page, preview, multi }) {
     try {
       setShowConvert(true)
 
-      const md = await axios.post('/api/convert-to-md', { body: data, title: articleTitle })
+      const md = await axios.post('/api/convert-to-md', { body: data, title: articleTitle }, {
+        headers: {
+            Authorization: pb.authStore.token,
+        },
+    })
       setConvertedData(md.data)
     } catch (err) {
+      console.log(err)
       return toast.error(err.response.data)
     }
 
@@ -813,8 +818,8 @@ function Editor({ page, preview, multi }) {
           <ModalContainer events={() => setShowConvert(false)}>
             <ModalForm>
               <ModalTitle>Converted MD</ModalTitle>
-              <p>Embeds of file/pages/images will not show up</p>
-              <textarea style={{ height: '50vh', background: 'var(--background)', border: '2px solid var(--big_button_border)', borderRadius: '10px', fontFamily: 'auto', padding: '1em' }} value={convertedMdData} />
+              <p>Embeds of file/pages will not show up. <strong>Images will show up as base64 so do not be alarmed by the big random text</strong></p>
+              <div style={{ height: '50vh', background: 'var(--background)', border: '2px solid var(--big_button_border)', borderRadius: '10px', fontFamily: 'auto', padding: '1em', overflowX: 'hidden', overflowY: 'scroll' }}>{convertedMdData}</div>
             </ModalForm>
           </ModalContainer>
         )}

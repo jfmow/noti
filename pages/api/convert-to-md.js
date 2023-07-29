@@ -1,6 +1,9 @@
+import axios from 'axios'
 import rateLimit from 'express-rate-limit'
 import slowDown from 'express-slow-down'
-
+import PocketBase from "pocketbase";
+const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
+pb.autoCancellation(false)
 
 const applyMiddleware = middleware => (request, response) =>
     new Promise((resolve, reject) => {
@@ -16,7 +19,7 @@ const getIP = request =>
     request.connection.remoteAddress
 
 export const getRateLimitMiddlewares = ({
-    limit = 3,
+    limit = 999,
     windowMs = 60 * 1000,
     delayAfter = Math.round(10 / 2),
     delayMs = 0,
@@ -44,10 +47,11 @@ export default async function handler(request, response) {
     if (request.method != 'POST') {
         return response.status(405).send('Method not allowed');
     }
-    const markdownData = convertToMarkdown(request.body.body, request.body.title);
+    const markdownData = await convertToMarkdown(request.body.body, request.body.title, request.headers.authorization);
+
     response.status(200).send(markdownData)
 }
-function convertToMarkdown(data, title) {
+async function convertToMarkdown(data, title, tok) {
     let md = "";
     let errors = []
 
@@ -77,8 +81,10 @@ function convertToMarkdown(data, title) {
                     md += parseNestedList(block.data.items);
                     md += "\n";
                     break;
-                case "image":
-                    md += `![Image](link-to-your-image/${block.data.fileId})\n\n`;
+                case 'image':
+                    // Fetch the image data and convert it to base64
+                    const base64String = await getImageBase64(block.data.fileId, tok);
+                    md += `![Image](data:image/png;base64,${base64String})\n\n`;
                     break;
                 case "SimpleIframeWebpage":
                     md += `<iframe src="${block.data?.src}" style="width: 100%; height: 70vh;" frameborder="0" allowfullscreen></iframe>\n\n`;
@@ -92,6 +98,7 @@ function convertToMarkdown(data, title) {
                     break;
             }
         } catch (err) {
+            console.log(err)
             errors.push(err.message)
         }
     }
@@ -105,6 +112,45 @@ function parseSimpleTodoList(items) {
         md += `- [${item.checked ? "x" : " "}] ${item.content}\n`;
     }
     return md;
+}
+
+async function getImageBase64(file, tok) {
+
+    // retrieve an example protected file url (will be valid ~5min)
+    try {
+        //console.log('Hi', tok)
+        const fileToken = await axios.post(
+            'https://noti.suddsy.dev/api/files/token',
+            {},
+            {
+                headers: {
+                    Authorization: tok,
+                },
+            }
+        );
+        //console.log(fileToken, 'bb', `https://noti.suddsy.dev/api/collections/imgs/records/${file}`)
+        const respons = await axios.get(`https://noti.suddsy.dev/api/collections/imgs/records/${file}`, {
+            headers: {
+                Authorization: tok,
+            },
+        });
+        // console.log(respons)
+        const response = await axios.get(
+            `https://noti.suddsy.dev/api/files/imgs/${file}/${respons.data.file_data}?token=${fileToken.data.token}`,
+            {
+                headers: {
+                    Authorization: fileToken.data.token,
+                },
+                responseType: 'arraybuffer',
+            }
+        );
+
+        const base64String = Buffer.from(response.data, 'binary').toString('base64');
+        return base64String;
+    } catch (error) {
+        console.error('Error fetching image:', error.message);
+        throw error;
+    }
 }
 
 function parseNestedList(items, depth = 1) {
