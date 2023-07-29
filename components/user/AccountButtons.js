@@ -69,7 +69,7 @@ function AccManagementForm({ Close }) {
       pb.authStore.clear();
       location.replace('/');
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
   async function authUpdate() {
@@ -116,7 +116,7 @@ function AccManagementForm({ Close }) {
       toast.update(updateEmailToastid, { render: `Please check the inbox of ${newEmail} to confirm the change.`, type: "success", isLoading: false });
       toast.done(updateEmailToastid)
     } catch (error) {
-      console.log(error)
+      //console.log(error)
       toast.update(updateEmailToastid, { render: `Failed to request email change!`, type: "error", isLoading: false });
       toast.done(updateEmailToastid)
       return
@@ -145,7 +145,7 @@ function AccManagementForm({ Close }) {
           setrefreshAvatar(false)
         }, 100);
       } catch (error) {
-        console.log(error);
+        //console.log(error);
       }
     }
   }
@@ -163,7 +163,7 @@ function AccManagementForm({ Close }) {
       }, 100);
 
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 
@@ -353,7 +353,7 @@ function BulkManagment({ CloseAcc }) {
 
     for (const page of seletedPages) {
       await pb.collection('pages').delete(page);
-      console.log(page);
+      //console.log(page);
 
       // Remove the deleted page from the state
       setPagesList(prevPages => prevPages.filter(p => p.id !== page));
@@ -464,7 +464,7 @@ function Notitoggle() {
       setPendingPush(false)
 
     } catch (err) {
-      console.log(err)
+      //console.log(err)
       setPush(false)
       setPendingPush(false)
       return toast.error('Permision denied!')

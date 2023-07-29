@@ -410,7 +410,7 @@ class Image {
             // Example usage:
             const url = this.data.file.url
             const extractedString = extractStringFromURL(url);
-            console.log(extractedString); // Output: t09edrg2ayd247o
+            //console.log(extractedString); // Output: t09edrg2ayd247o
             this._createImage(extractedString);
             return this.wrapper;
         }

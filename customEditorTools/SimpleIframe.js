@@ -114,7 +114,7 @@ export default class SimpleIframeWebpage {
           src: src // Include the urlFull in the saved data
         };
       } catch (err) {
-        console.log(err)
+        console.warn(err)
       }
     }
   }

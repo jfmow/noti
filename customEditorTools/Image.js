@@ -58,7 +58,7 @@ export default class Image {
     uploadBtn.textContent = "Upload image";
     uploadBtn.classList.add("cdx-button");
     uploadBtn.style.width = "100%";
-    
+
     uploadBtn.addEventListener("click", () => fileInput.click());
 
     this.wrapper.appendChild(uploadBtn);
@@ -162,7 +162,7 @@ export default class Image {
         fileId: fileId // Include the fileId in the saved data
       };
     } catch (err) {
-      console.log(err)
+      //console.log(err)
     }
   }
 }

@@ -1,7 +1,7 @@
 import { sendNotifications } from "@/lib/sendNotifications";
 export default async function notifAll(req, res) {
   res.status(200);
-  if(JSON.parse(req.body).user.token == undefined){
+  if (JSON.parse(req.body).user.token == undefined) {
     return res.status(429).send('Not allowed!')
   }
   const subs = await fetch(`${process.env.NEXT_PUBLIC_POCKETURL}/api/collections/subscriptions/records`, {
@@ -11,11 +11,11 @@ export default async function notifAll(req, res) {
     }
   });
   const data = await subs.json()
-  console.log(data.items)
+  //console.log(data.items)
   if (data.items.length > 0) {
     try {
       const state = await sendNotifications(data.items, JSON.parse(req.body).msg)
-      console.log(state)
+      //console.log(state)
       res.status(200).send('Success');
     } catch (error) {
       res.status(500).send('error')

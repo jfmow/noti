@@ -40,7 +40,7 @@ export default function Icons({ Select, Selected, Close }) {
             const container = containerRef.current;
             if (container) {
                 const { scrollTop, scrollHeight, clientHeight } = container;
-                //console.log(scrollHeight - scrollTop - 3, clientHeight)
+                ////console.log(scrollHeight - scrollTop - 3, clientHeight)
                 if (scrollHeight - scrollTop - 3 <= clientHeight) {
                     setLoadedIndex((prevIndex) => prevIndex + 250);
                 }
