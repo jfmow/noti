@@ -25,6 +25,7 @@ import Image from "@/customEditorTools/Image";
 import SimpleTodo from "@/customEditorTools/Todo";
 import SimpleIframe from "@/customEditorTools/SimpleEmbed";
 import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
+import axios from "axios";
 const Icons = dynamic(() => import("./Icons"), {
   loading: () => <ModalTempLoader />,
   ssr: true,
@@ -62,6 +63,10 @@ function Editor({ page, preview, multi }) {
   const [importantNote, setImportantNote] = useState(false)
 
   const [ColorSelectorState, setColorSelectorState] = useState(false)
+
+  const [convertedMdData, setConvertedData] = useState('')
+
+  const [convertModalState, setShowConvert] = useState(false)
 
 
   const pagetitleref = useRef(null)
@@ -597,6 +602,19 @@ function Editor({ page, preview, multi }) {
 
     await pb.collection('pages').update(page, data);
   }
+  async function ConvertPageToMD() {
+
+    const data = await editor.save()
+    try {
+      setShowConvert(true)
+
+      const md = await axios.post('/api/convert-to-md', { body: data, title: articleTitle })
+      setConvertedData(md.data)
+    } catch (err) {
+      return toast.error(err.response.data)
+    }
+
+  }
 
   if (isError) {
     return (
@@ -663,7 +681,7 @@ function Editor({ page, preview, multi }) {
             </div>
             <div className={styles.title_buttons} id="tut_title_btns_id">
               <ImportantNote classname={styles.title_buttons_btn} importt={importantNote} page={page} />
-              
+
               <div className={styles.buttonlabel}>
                 <div className={styles.buttonlabel_label}>Set page header image</div>
                 <div className={`${styles.title_buttons_btn}`}>
@@ -700,6 +718,15 @@ function Editor({ page, preview, multi }) {
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" ><g><rect fill="none" height="24" width="24" /></g><g><path d="M9,11h6c0.55,0,1,0.45,1,1v0c0,0.55-0.45,1-1,1H9c-0.55,0-1-0.45-1-1v0C8,11.45,8.45,11,9,11z M20.93,12L20.93,12 c0.62,0,1.07-0.59,0.93-1.19C21.32,8.62,19.35,7,17,7h-3.05C13.43,7,13,7.43,13,7.95v0c0,0.52,0.43,0.95,0.95,0.95H17 c1.45,0,2.67,1,3.01,2.34C20.12,11.68,20.48,12,20.93,12z M3.96,11.38C4.24,9.91,5.62,8.9,7.12,8.9l2.93,0 C10.57,8.9,11,8.47,11,7.95v0C11,7.43,10.57,7,10.05,7L7.22,7c-2.61,0-4.94,1.91-5.19,4.51C1.74,14.49,4.08,17,7,17h3.05 c0.52,0,0.95-0.43,0.95-0.95v0c0-0.52-0.43-0.95-0.95-0.95H7C5.09,15.1,3.58,13.36,3.96,11.38z M18,12L18,12c-0.55,0-1,0.45-1,1v2 h-2c-0.55,0-1,0.45-1,1v0c0,0.55,0.45,1,1,1h2v2c0,0.55,0.45,1,1,1h0c0.55,0,1-0.45,1-1v-2h2c0.55,0,1-0.45,1-1v0 c0-0.55-0.45-1-1-1h-2v-2C19,12.45,18.55,12,18,12z" /></g></svg>
                 </button>
+              </div>
+              <div className={styles.buttonlabel}>
+                <div className={styles.buttonlabel_label}>Convert to md</div>
+                <button
+                  type="button"
+                  onClick={ConvertPageToMD}
+                  className={styles.title_buttons_btn}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px"><rect fill="none" height="24" width="24" /><path d="M3,6C2.45,6,2,5.55,2,5V2c0-0.55,0.45-1,1-1h3c0.55,0,1,0.45,1,1S6.55,3,6,3H4v2C4,5.55,3.55,6,3,6z M17,2 c0,0.55,0.45,1,1,1h2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1h-3C17.45,1,17,1.45,17,2z M3,18c-0.55,0-1,0.45-1,1v3 c0,0.55,0.45,1,1,1h3c0.55,0,1-0.45,1-1c0-0.55-0.45-1-1-1H4v-2C4,18.45,3.55,18,3,18z M17,22c0,0.55,0.45,1,1,1h3 c0.55,0,1-0.45,1-1v-3c0-0.55-0.45-1-1-1s-1,0.45-1,1v2h-2C17.45,21,17,21.45,17,22z M19,18c0,1.1-0.9,2-2,2H7c-1.1,0-2-0.9-2-2V6 c0-1.1,0.9-2,2-2h10c1.1,0,2,0.9,2,2V18z M9,9c0,0.55,0.45,1,1,1h4c0.55,0,1-0.45,1-1c0-0.55-0.45-1-1-1h-4C9.45,8,9,8.45,9,9z M9,12c0,0.55,0.45,1,1,1h4c0.55,0,1-0.45,1-1c0-0.55-0.45-1-1-1h-4C9.45,11,9,11.45,9,12z M9,15c0,0.55,0.45,1,1,1h4 c0.55,0,1-0.45,1-1c0-0.55-0.45-1-1-1h-4C9.45,14,9,14.45,9,15z" /></svg>                </button>
               </div>
 
               <div className={styles.buttonlabel}>
@@ -747,7 +774,7 @@ function Editor({ page, preview, multi }) {
         </div>
       </div>
       {ColorSelectorState && (
-        <ColorSelector onSelectColor={SetPageListColor} page={page} close={()=>setColorSelectorState(false)} />
+        <ColorSelector onSelectColor={SetPageListColor} page={page} close={() => setColorSelectorState(false)} />
       )}
       <AnimatePresence>
         {shareLinkModalState && (
@@ -781,6 +808,15 @@ function Editor({ page, preview, multi }) {
           <>
             <Icons Select={handleSetcurrentPageIconValue} Close={() => setIconModalState(false)} Selected={`${currentPageIconValue.toString()}`} />
           </>
+        )}
+        {convertModalState && (
+          <ModalContainer events={() => setShowConvert(false)}>
+            <ModalForm>
+              <ModalTitle>Converted MD</ModalTitle>
+              <p>Embeds of file/pages/images will not show up</p>
+              <textarea style={{ height: '50vh', background: 'var(--background)', border: '2px solid var(--big_button_border)', borderRadius: '10px', fontFamily: 'auto', padding: '1em' }} value={convertedMdData} />
+            </ModalForm>
+          </ModalContainer>
         )}
       </AnimatePresence>
       <div className={`${styles.creategrid} ${multi && styles.creategrid_lock}`}>
