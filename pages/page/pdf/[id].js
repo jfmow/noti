@@ -16,7 +16,6 @@ export default function Viewer({ docId }) {
     }
     async function GetUrl(url3) {
       const fileToken = await pb.files.getToken();
-      console.log(url3)
       // retrieve an example protected file url (will be valid ~5min)
 
       const record = await pb.collection('files').getOne(url3); // Use the fileId to retrieve the record

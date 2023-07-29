@@ -174,12 +174,9 @@ a {
 .Toastify__toast{
   border-radius: 10px !important;
 }
-
-.react-pdf__Page__textContent, .react-pdf__Page__annotations.annotationLayer{
-  display: none;
+.textLayer span::selection, .textLayer br::selection {
+  background-color: rgba(255, 23, 240, 0.611);
 }
-
-.react-pdf__Page__canvas{
-  width: 100% !important;
-  height: 100% !important;
+.react-pdf__Page__annotations, .annotationLayer{
+  display: none;
 }
