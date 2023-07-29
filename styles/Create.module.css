@@ -585,7 +585,7 @@
 .buttonlabel_label:after {
   content: "";
   position: absolute;
-  bottom: -9.9px;
+  bottom: -9px;
   /* Adjust as needed */
   left: 50%;
   transform: translateX(-50%) rotate(180deg);
