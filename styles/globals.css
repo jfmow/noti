@@ -5,7 +5,7 @@
 
   --main_btn_color_action: #15cce4;
 
-  --big_button_border: rgba(201,201,204,.48);
+  --big_button_border: rgba(201, 201, 204, .48);
   --big_button_text: #707684;
   --big_button_background: #fff;
   --big_button_background_hover: #000;
@@ -88,6 +88,7 @@ a {
   font-display: swap;
   src: url('../fonts/Inter-VariableFont_slnt\,wght.ttf');
 }
+
 @font-face {
   font-family: "Gotham";
   font-display: swap;
@@ -135,12 +136,15 @@ a {
     color-scheme: light;
     color: #000;
   }
-  .ce-toolbar__settings-btn, .ce-toolbar__plus {
+
+  .ce-toolbar__settings-btn,
+  .ce-toolbar__plus {
     color: rgb(124, 124, 124);
   }
+
   .ce-inline-toolbar {
     color: #000;
-}
+  }
 }
 
 
@@ -167,19 +171,26 @@ a {
   }
 }
 
-::selection{
+::selection {
   background-color: #ff47f3;
 }
 
-.Toastify__toast{
+.Toastify__toast {
   border-radius: 10px !important;
 }
 
-.react-pdf__Page__textContent, .react-pdf__Page__annotations.annotationLayer{
+.textLayer span::selection,
+.textLayer br::selection {
+  background-color: rgba(255, 23, 240, 0.611);
+}
+
+.react-pdf__Page__annotations,
+.annotationLayer {
   display: none;
 }
 
-.react-pdf__Page__canvas{
-  width: 100% !important;
-  height: 100% !important;
+.react-pdf__Document {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
