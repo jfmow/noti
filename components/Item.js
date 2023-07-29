@@ -88,7 +88,7 @@ const MyComponent = ({ currPage }) => {
       try {
         document.getElementById('rootitems').classList.add(styles.dskhidden)
       } catch (err) {
-        console.log(err)
+        //console.log(err)
         return
       }
     } else if (window.localStorage.getItem('_menu') === "open") {
@@ -152,7 +152,7 @@ const MyComponent = ({ currPage }) => {
     };
     const record = await pb.collection('pages').create(data);
     router.push(`/page/${record.id}`)
-    //console.log(record.id);
+    ////console.log(record.id);
 
     // Update the items state by adding the new record
     //setItems((prevItems) => [...prevItems, record]);
@@ -305,16 +305,16 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
 
   function handleDragStart(event, itemId) {
     event.dataTransfer.setData("text/plain", itemId);
-    console.log("Started dragging item with ID:", itemId);
+    //console.log("Started dragging item with ID:", itemId);
   }
 
   async function handleDragEnd(event, itemId, itemParent) {
     event.persist();
     const draggedItemId = event.dataTransfer.getData("text/plain");
-    console.log("Dragged item ID:", draggedItemId);
-    console.log("Dropped item ID:", itemId);
+    //console.log("Dragged item ID:", draggedItemId);
+    //console.log("Dropped item ID:", itemId);
     setHoveredItemId(null);
-    console.log(itemParent)
+    //console.log(itemParent)
     //if its on it self or its child
     if (draggedItemId === itemId || itemParent === draggedItemId) {
       return
@@ -340,7 +340,7 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
         }
       }
     } catch (err) {
-      console.log('Should be fineeeee')
+      //console.log('Should be fineeeee')
     }
 
 
@@ -361,7 +361,7 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
   }
 
   function handleRightClick(event, item) {
-    console.log(event, item)
+    //console.log(event, item)
     event.preventDefault();
     setContextMenu(event, item)
   }

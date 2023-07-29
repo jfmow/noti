@@ -23,17 +23,17 @@ const editor = new EditorJS({
                             const data2 = await editor.save();
                             localStorage.setItem("Offlinesave", JSON.stringify(data2));
                             localStorage.setItem('Offlinetime', 'true')
-                            console.log(
-                                JSON.parse(localStorage.getItem("Offlinesave"))
+                            //console.log(
+                            JSON.parse(localStorage.getItem("Offlinesave"))
                             );
                         }
-                        return save();
+return save();
                     },
                 },
             },
         },
     },
-    placeholder: "Enter some text...",
+placeholder: "Enter some text...",
     data: localStorage.getItem('Offlinesave') ? JSON.parse(localStorage.getItem("Offlinesave")) : { "time": 1688257618252, "blocks": [{ "id": "fSS7EY0VOi", "type": "paragraph", "data": { "text": "" } }], "version": "2.27.2" },
 });
 

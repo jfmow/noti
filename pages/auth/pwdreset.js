@@ -14,7 +14,7 @@ export default function PasswordReset() {
         event.preventDefault();
         console.error(pb.autoCancellation)
         if (email.includes('@')) {
-            //console.log(name, email)
+            ////console.log(name, email)
             try {
                 const response = await toast.promise(
                     pb.collection('users').requestPasswordReset(email),

@@ -1,7 +1,7 @@
 
 export default async function unSub(req, res) {
-  console.log(req.body)
-  if(req.body.user.token == undefined){
+  //console.log(req.body)
+  if (req.body.user.token == undefined) {
     return res.status(429).send('Not allowed!')
   }
   try {
@@ -14,7 +14,7 @@ export default async function unSub(req, res) {
     const data = await subs.json()
     const items = data.items.filter(item => item.endpoint.trim() === req.body.data.endpoint.trim());
     items.forEach(async item => {
-      console.log(item);
+      //console.log(item);
       await fetch(`${process.env.NEXT_PUBLIC_POCKETURL}/api/collections/subscriptions/records/${item.id}`, {
         method: "DELETE",
         headers: {

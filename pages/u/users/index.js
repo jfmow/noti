@@ -114,7 +114,7 @@ function Users() {
                 <>
                     <ModalContainer events={() => setSendNoti(false)}>
                         <ModalForm>
-<ModalTitle>Notification sender</ModalTitle>
+                            <ModalTitle>Notification sender</ModalTitle>
                             <ModalInput chngevent={msgTitle} place={'Title'} />
                             <ModalInput chngevent={msgBody} place={'Body'} />
 
@@ -181,7 +181,7 @@ function Users() {
             setUsersList([]);
             toast.update(sendingToastID, { render: "Sent", type: "success", isLoading: false });
         } catch (err) {
-            console.log(err);
+            //console.log(err);
             toast.error("Failed to send!");
         }
         toast.done(sendingToastID)

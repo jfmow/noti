@@ -7,7 +7,7 @@ export default async function addSub(req, res) {
     //    keys: req.body.keys
     //  },
     //})
-    console.log(req.body.data)
+    //console.log(req.body.data)
     await fetch(`${process.env.NEXT_PUBLIC_POCKETURL}/api/collections/subscriptions/records`, {
       method: "POST",
       headers: {
@@ -23,7 +23,7 @@ export default async function addSub(req, res) {
 
     res.status(200).send("Done");
   } catch (error) {
-    console.log(error)
+    //console.log(error)
     res.status(505).send("Failed to sub");
   }
 }

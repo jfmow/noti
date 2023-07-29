@@ -62,7 +62,7 @@ export default async function handler(request, response) {
             };
             return response.status(200).json(response2);
         } catch (error) {
-            console.log(error)
+            //console.log(error)
             return response.status(500).send('Failed to encrypt data');
         }
     } else {

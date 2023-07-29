@@ -43,7 +43,7 @@ export default function Login() {
             if (!agree) {
                 return toast.error('Please agree to the T&Cs to continue', { position: toast.POSITION.TOP_LEFT });
             }
-            //console.log(name, email, mail)
+            ////console.log(name, email, mail)
             if (!email || !password || !name) {
                 return toast.error('Please fill out all fields', { position: toast.POSITION.TOP_LEFT });
             }
@@ -87,10 +87,10 @@ export default function Login() {
                     "chef": encryptionKey,
                     "plate": userAccountData.id
                 };
-                console.log(encData)
+                //console.log(encData)
 
                 const encRec = await pb.collection('cookies').create(encData);
-                console.log(encRec)
+                //console.log(encRec)
                 const newRec = {
                     "meal": encRec.id
                 }
@@ -108,13 +108,13 @@ export default function Login() {
                 toast.done(crateAccProgressToast)
                 Router.push('/page/firstopen')
             } catch (error) {
-                console.log(error)
+                //console.log(error)
                 setIsLoading(false)
                 toast.update(crateAccProgressToast, { render: "Unable to create account!", type: "error", isLoading: false });
             }
         } catch (error) {
             setIsLoading(false)
-            console.log(error)
+            //console.log(error)
             toast.update(crateAccProgressToast, { render: "Unable to create account!", type: "error", isLoading: false });
         }
     }

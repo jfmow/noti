@@ -110,14 +110,14 @@ function Editor({ page, preview, multi }) {
               return Router.push(`/page/${state.id}`)
             }
             const state = await pb.collection("pages").update(page, formData);
-            console.log("Auto saved successfully!");
+            //console.log("Auto saved successfully!");
           } catch (error) {
             toast.error("Could not auto save!", {
               position: toast.POSITION.BOTTOM_LEFT,
             });
             console.error(error);
           }
-          console.log("Auto-save executed.");
+          //console.log("Auto-save executed.");
         }
         setLastTypedTimeIdle(true);
         setIsSaving(false);
@@ -314,7 +314,7 @@ function Editor({ page, preview, multi }) {
                         return { success: 0 }
                       }
                       record = await pb.collection("files").create(formData);
-                      console.log(record);
+                      //console.log(record);
 
                     } catch (error) {
                       console.error(error);
@@ -610,12 +610,12 @@ function Editor({ page, preview, multi }) {
 
       const md = await axios.post('/api/convert-to-md', { body: data, title: articleTitle }, {
         headers: {
-            Authorization: pb.authStore.token,
+          Authorization: pb.authStore.token,
         },
-    })
+      })
       setConvertedData(md.data)
     } catch (err) {
-      console.log(err)
+      //console.log(err)
       return toast.error(err.response.data)
     }
 
@@ -847,7 +847,7 @@ function AutoSaveLoader() {
 function ImportantNote({ classname, importt, page }) {
   const [checked, setChecked] = useState(importt)
   async function Save(e) {
-    console.log(e.target.checked)
+    //console.log(e.target.checked)
     if (checked) {
       const data = {
         "important": false

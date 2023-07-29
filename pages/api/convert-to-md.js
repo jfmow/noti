@@ -98,7 +98,7 @@ async function convertToMarkdown(data, title, tok) {
                     break;
             }
         } catch (err) {
-            console.log(err)
+            //console.log(err)
             errors.push(err.message)
         }
     }
@@ -118,7 +118,7 @@ async function getImageBase64(file, tok) {
 
     // retrieve an example protected file url (will be valid ~5min)
     try {
-        //console.log('Hi', tok)
+        ////console.log('Hi', tok)
         const fileToken = await axios.post(
             'https://noti.suddsy.dev/api/files/token',
             {},
@@ -128,13 +128,13 @@ async function getImageBase64(file, tok) {
                 },
             }
         );
-        //console.log(fileToken, 'bb', `https://noti.suddsy.dev/api/collections/imgs/records/${file}`)
+        ////console.log(fileToken, 'bb', `https://noti.suddsy.dev/api/collections/imgs/records/${file}`)
         const respons = await axios.get(`https://noti.suddsy.dev/api/collections/imgs/records/${file}`, {
             headers: {
                 Authorization: tok,
             },
         });
-        // console.log(respons)
+        // //console.log(respons)
         const response = await axios.get(
             `https://noti.suddsy.dev/api/files/imgs/${file}/${respons.data.file_data}?token=${fileToken.data.token}`,
             {
