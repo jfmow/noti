@@ -47,7 +47,7 @@ export default async function handler(request, response) {
     if (request.method != 'POST') {
         return response.status(405).send('Method not allowed');
     }
-    if(!request.body.body || !request.body.title || !request.headers.authorization){
+    if(!request.body.body.blocks.length <= 0 || !request.body.title || !request.headers.authorization){
         return response.status(400).send('Not enough data');
     }
     const markdownData = await convertToMarkdown(request.body.body, request.body.title, request.headers.authorization);
