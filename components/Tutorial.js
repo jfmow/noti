@@ -14,9 +14,7 @@ export default function Tut({ setHidden }) {
             document.getElementById('createnewpageid').classList.add('tut')
         } else if (currentCardIndex === 2) {
             document.getElementById('createnewpageid').classList.remove('tut')
-            document.getElementById('tut_title_btns_id').classList.add('tut')
         } else if(currentCardIndex === 3){
-            document.getElementById('tut_title_btns_id').classList.remove('tut')
             document.getElementById('tit').classList.add('tut')
         }
     }, [currentCardIndex])
@@ -25,7 +23,6 @@ export default function Tut({ setHidden }) {
         setHidden(true);
         document.getElementById('createnewpageid').classList.remove('tut')
         document.getElementById('tit').classList.remove('tut')
-        document.getElementById('tut_title_btns_id').classList.remove('tut')
     }
     const handleNextCard = () => {
         setCurrentCardIndex((prevIndex) => prevIndex + 1);
