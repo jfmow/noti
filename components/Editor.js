@@ -318,6 +318,10 @@ function Editor({ page, preview, multi }) {
 
                     } catch (error) {
                       console.error(error);
+                      if (error.data.code === 403) {
+                        toast.error(error.data.message)
+                        return { success: 0 }
+                      }
                       toast.warning('Unable to upload file. It may not be supported yet. Try .pdf or images')
                       return { success: 0 }
                       // Handle error
@@ -437,6 +441,10 @@ function Editor({ page, preview, multi }) {
                       record = await pb.collection("imgs").create(formData);
 
                     } catch (error) {
+                      if (error.data.code === 403) {
+                        toast.error(error.data.message)
+                        return { success: 0 }
+                      }
                       toast.warning('Unable to upload file. It may not be supported yet. Try .pdf or images')
                       return { success: 0 }
                     }
@@ -575,7 +583,7 @@ function Editor({ page, preview, multi }) {
 
   function copyToClip(data) {
     var dummyInput = document.createElement("div");
-  
+
     if (data) {
       dummyInput.innerText = `${data}`;
     } else {
@@ -584,24 +592,24 @@ function Editor({ page, preview, multi }) {
         `https://savemynotes.net/page/view/${page}`
       );
     }
-  
+
     // Append it to the body
     document.body.appendChild(dummyInput);
-  
+
     // Select and copy the value of the dummy input
     var range = document.createRange();
     range.selectNode(dummyInput);
     window.getSelection().removeAllRanges();
     window.getSelection().addRange(range);
     document.execCommand("copy");
-  
+
     // Remove the dummy input from the DOM
     document.body.removeChild(dummyInput);
-  
+
     // Optionally, provide visual feedback to the user
     setShareLinkModalState(false);
   }
-  
+
 
   async function SetPageListColor(color, page) {
     const data = {
@@ -830,8 +838,8 @@ function Editor({ page, preview, multi }) {
             <ModalForm>
               <ModalTitle>Converted MD</ModalTitle>
               <p>Embeds of file/pages will not show up. <strong>Images will show up as base64 so do not be alarmed by the big random text</strong></p>
-              <textarea style={{ height: '40vh', background: 'var(--background)', border: '2px solid var(--big_button_border)', borderRadius: '10px', fontFamily: 'auto', padding: '1em', overflowX: 'hidden', overflowY: 'scroll' }} value={convertedMdData}/>
-              <AlternateButton click={()=>copyToClip(convertedMdData)}>Copy MD</AlternateButton>
+              <textarea style={{ height: '40vh', background: 'var(--background)', border: '2px solid var(--big_button_border)', borderRadius: '10px', fontFamily: 'auto', padding: '1em', overflowX: 'hidden', overflowY: 'scroll' }} value={convertedMdData} />
+              <AlternateButton click={() => copyToClip(convertedMdData)}>Copy MD</AlternateButton>
             </ModalForm>
           </ModalContainer>
         )}
