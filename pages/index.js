@@ -3,7 +3,7 @@ import styles from '@/styles/OHome.module.css';
 import Link from 'next/link';
 import PocketBase from 'pocketbase';
 import { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import Head from 'next/head';
 import PlainLoader from '@/components/Loader';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -37,6 +37,7 @@ export default function Home() {
       }
     }
     authUpdate();
+    Router.prefetch('/auth/signup')
   }, []);
 
   if (isLoading) {
@@ -52,18 +53,20 @@ export default function Home() {
         <meta name="keywords" content="JavaScript, Frontend, Developer, Nextjs, react, code, pocketbase, PocketBase, Pocketbase, savemyexams, exam, exams, save, note, notes, notion" />
         <meta http-equiv="refresh" content="30" />
         <link rel="icon" href="/favicon.ico" />
-      <link rel="canonical" href="https://savemynotes.net/" />
+        <link rel="canonical" href="https://savemynotes.net/" />
       </Head>
       <Nav />
-      <p style={{visibility: '0', width: '0', height: '0'}} aria-label='SEO text'>A place to take your notes with only fetures you will use. Explore note taking more simply.</p>
+      <p style={{ visibility: '0', width: '0', height: '0' }} aria-label='SEO text'>A place to take your notes with only fetures you will use. Explore note taking more simply.</p>
       <div className={styles.container}>
         <header className={styles.header}>
           <div className={styles.headerContent}>
             <h1 className={styles.title}>SaveMyNotes</h1>
             <h5 className={styles.description}>The best note-taking app ever <br /> - You when you signup</h5>
-            <Link href="/auth/signup" className={styles.Btn}>
-              Join now
-            </Link>
+            <div style={{zIndex: '2'}}>
+              <button className={styles.Btn} onClick={()=>Router.push('/auth/signup')}>
+                Join now
+              </button>
+            </div>
           </div>
 
         </header>
