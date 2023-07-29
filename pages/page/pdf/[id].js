@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 export default function Viewer({ docId }) {
   const [url, setUrl] = useState(null)
   useEffect(() => {
-    if(!pb.authStore.isValid){
+    if (!pb.authStore.isValid) {
       return Router.push('/auth/login')
     }
     async function GetUrl(url3) {

@@ -573,27 +573,35 @@ function Editor({ page, preview, multi }) {
     toast.success("Page now hidden.");
   }
 
-  function copyToClip() {
-    // Create a dummy input element
-    var dummyInput = document.createElement("input");
-    dummyInput.setAttribute(
-      "value",
-      `https://savemynotes.net/page/view/${page}`
-    );
-
+  function copyToClip(data) {
+    var dummyInput = document.createElement("div");
+  
+    if (data) {
+      dummyInput.innerText = `${data}`;
+    } else {
+      dummyInput.setAttribute(
+        "value",
+        `https://savemynotes.net/page/view/${page}`
+      );
+    }
+  
     // Append it to the body
     document.body.appendChild(dummyInput);
-
+  
     // Select and copy the value of the dummy input
-    dummyInput.select();
+    var range = document.createRange();
+    range.selectNode(dummyInput);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
     document.execCommand("copy");
-
+  
     // Remove the dummy input from the DOM
     document.body.removeChild(dummyInput);
-
+  
     // Optionally, provide visual feedback to the user
     setShareLinkModalState(false);
   }
+  
 
   async function SetPageListColor(color, page) {
     const data = {
@@ -607,6 +615,7 @@ function Editor({ page, preview, multi }) {
     const data = await editor.save()
     try {
       setShowConvert(true)
+      setConvertedData('Loading... please wait')
 
       const md = await axios.post('/api/convert-to-md', { body: data, title: articleTitle }, {
         headers: {
@@ -820,7 +829,8 @@ function Editor({ page, preview, multi }) {
             <ModalForm>
               <ModalTitle>Converted MD</ModalTitle>
               <p>Embeds of file/pages will not show up. <strong>Images will show up as base64 so do not be alarmed by the big random text</strong></p>
-              <div style={{ height: '50vh', background: 'var(--background)', border: '2px solid var(--big_button_border)', borderRadius: '10px', fontFamily: 'auto', padding: '1em', overflowX: 'hidden', overflowY: 'scroll' }}>{convertedMdData}</div>
+              <textarea style={{ height: '40vh', background: 'var(--background)', border: '2px solid var(--big_button_border)', borderRadius: '10px', fontFamily: 'auto', padding: '1em', overflowX: 'hidden', overflowY: 'scroll' }} value={convertedMdData}/>
+              <AlternateButton click={()=>copyToClip(convertedMdData)}>Copy MD</AlternateButton>
             </ModalForm>
           </ModalContainer>
         )}

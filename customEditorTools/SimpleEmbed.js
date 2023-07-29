@@ -109,6 +109,7 @@ export default class SimpleIframe {
         open(`${process.env.NEXT_PUBLIC_CURRENTURL}/page/pdf/${fileId}`, `SaveMyNotes popup`, params);
       })
       this.wrapper.appendChild(popOutBTN)
+      
     }
   
     save(blockContent) {
