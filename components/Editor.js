@@ -64,7 +64,7 @@ function Editor({ page, preview, multi }) {
 
   const [ColorSelectorState, setColorSelectorState] = useState(false)
 
-  const [convertedMdData, setConvertedData] = useState('')
+  const [convertedMdData, setConvertedData] = useState('Loading... please wait')
 
   const [convertModalState, setShowConvert] = useState(false)
 
