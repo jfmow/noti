@@ -689,6 +689,7 @@ function Editor({ page, preview, multi }) {
                 type="text"
                 ref={pagetitleref}
                 onBlur={handleTitleChange}
+                id="tuttitle"
               >
                 {articleTitle ? articleTitle : "Untitled"}
               </div>
