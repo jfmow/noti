@@ -26,9 +26,6 @@ export default function Nav() {
               <Link className={styles.navlink} href='/page/firstopen'>
                 Pages
               </Link>
-              <Link className={styles.navlink} href='/u/me'>
-                Account
-              </Link>
             </div>
           </div>
         </div>
