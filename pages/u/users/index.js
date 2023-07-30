@@ -199,8 +199,55 @@ function Stats() {
             try {
                 const records = await pb.collection('Total_pages_per_user').getFullList();
                 setGpData(records)
-                const records2 = await pb.collection('total_files_per_user').getFullList();
-                setGpData2(records2)
+                const records2 = await pb.collection('Total_img_per_user').getFullList();
+                const records3 = await pb.collection('total_files_per_user').getFullList();
+
+                const combineArrays = (arr1, arr2) => {
+                    // Create a new array to store the combined results
+                    const combinedArray = [];
+
+                    // Helper function to find an item by ID in the combinedArray
+                    const findItemById = (id) => combinedArray.find(item => item.id === id);
+
+                    // Loop through the first array
+                    arr1.forEach(item1 => {
+                        // Find the corresponding item in the second array based on the "id" property
+                        const item2 = arr2.find(item => item.id === item1.id);
+
+                        // If the item is found in the second array, combine the "id" and "total_size" properties
+                        if (item2) {
+                            combinedArray.push({
+                                id: item1.id,
+                                total_size: item1.total_size + item2.total_size,
+                            });
+                        } else {
+                            // If the item is not found in the second array, push it as a separate entry with its own "total_size"
+                            combinedArray.push({
+                                id: item1.id,
+                                total_size: item1.total_size,
+                            });
+                        }
+                    });
+
+                    // Check for items in the second array that are not already included in the combinedArray
+                    arr2.forEach(item2 => {
+                        const existingItem = findItemById(item2.id);
+                        if (!existingItem) {
+                            // If the item is not found in the combinedArray, push it as a separate entry with its own "total_size"
+                            combinedArray.push({
+                                id: item2.id,
+                                total_size: item2.total_size,
+                            });
+                        }
+                    });
+
+                    return combinedArray;
+                };
+
+                // Call the function to combine the arrays
+                const combinedResult = combineArrays(records2, records3);
+                setGpData2(combinedResult)
+
             } catch (err) {
                 console.error(err)
             }
