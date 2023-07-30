@@ -19,8 +19,7 @@ const MyComponent = ({ currPage }) => {
   const [hidden, setHidden] = useState(true);
   const contextMenu = useRef(null)
   const [showMultiEditorSelector, setShowMultiEditorSelector] = useState(false)
-
-
+  const { query } = router;
   useEffect(() => {
     async function getData() {
       try {
@@ -249,7 +248,7 @@ const MyComponent = ({ currPage }) => {
           </svg>
           Create page
         </span>
-        <UserOptions clss={styles.test1} user={pb.authStore.model} />
+        <UserOptions usageOpenDefault={query.usage} clss={styles.test1} user={pb.authStore.model} />
 
       </div>
 

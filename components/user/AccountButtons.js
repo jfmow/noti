@@ -9,10 +9,14 @@ import compressImage from '@/lib/CompressImg';
 import { AlternateButton, AlternateInput, ModalButton, ModalCheckBox, ModalContainer, ModalForm, ModalInput, ModalTitle } from '@/lib/Modal';
 import { AnimatePresence } from 'framer-motion';
 import Router from 'next/router';
+import dynamic from 'next/dynamic';
+const MyUsage = dynamic(() => import("./MyUsageModal"), {
+  ssr: false,
+});
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 
-export default function Account({ Close }) {
+export default function Account({ Close, usageOpenDefault }) {
 
   return (
     <>
@@ -25,7 +29,7 @@ export default function Account({ Close }) {
 
         <div className={styles.user_account_form_container}>
 
-          <AccManagementForm Close={Close} />
+          <AccManagementForm Close={Close} usageOpenDefault={usageOpenDefault} />
         </div>
 
       </div>
@@ -33,7 +37,7 @@ export default function Account({ Close }) {
   )
 }
 
-function AccManagementForm({ Close }) {
+function AccManagementForm({ Close, usageOpenDefault }) {
 
   const [userNameField, setUsernameField] = useState(false);
   const [newUsername, setNewUsernameData] = useState("");
@@ -47,6 +51,7 @@ function AccManagementForm({ Close }) {
   const [AvatarModalDisplay, setAvatarModalDisplay] = useState(false)
   const [refreshAvatar, setrefreshAvatar] = useState(false)
   const [managePagesModal, setmanagePagesModal] = useState(false)
+  const [usageModal, setUsageModal] = useState(usageOpenDefault ? true : false)
 
 
   async function deleteAccount(e) {
@@ -196,6 +201,10 @@ function AccManagementForm({ Close }) {
             <AlternateButton click={() => setDelAccField(true)}>
               <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0V0z" fill="none" /><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM18 4h-2.5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1z" /></svg>            <p>Delete Account</p>
             </AlternateButton>
+            <AlternateButton click={() => setUsageModal(true)}>
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0V0z" fill="none" /><path d="M11 3.18v17.64c0 .64-.59 1.12-1.21.98C5.32 20.8 2 16.79 2 12s3.32-8.8 7.79-9.8c.62-.14 1.21.34 1.21.98zm2.03 0v6.81c0 .55.45 1 1 1h6.79c.64 0 1.12-.59.98-1.22-.85-3.76-3.8-6.72-7.55-7.57-.63-.14-1.22.34-1.22.98zm0 10.83v6.81c0 .64.59 1.12 1.22.98 3.76-.85 6.71-3.82 7.56-7.58.14-.62-.35-1.22-.98-1.22h-6.79c-.56.01-1.01.46-1.01 1.01z" /></svg>
+              <p>Usage</p>
+            </AlternateButton>
           </div>
 
           <AnimatePresence>
@@ -223,6 +232,10 @@ function AccManagementForm({ Close }) {
                 </ModalContainer>
 
               </>
+            )}
+
+            {usageModal && (
+              <MyUsage close={() => setUsageModal(false)} />
             )}
 
             {notiField && (
