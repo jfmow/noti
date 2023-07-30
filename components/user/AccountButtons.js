@@ -8,7 +8,6 @@ import Link from 'next/link';
 import compressImage from '@/lib/CompressImg';
 import { AlternateButton, AlternateInput, ModalButton, ModalCheckBox, ModalContainer, ModalForm, ModalInput, ModalTitle } from '@/lib/Modal';
 import { AnimatePresence } from 'framer-motion';
-import PagesModal from './PagesModal'
 import Router from 'next/router';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
@@ -358,6 +357,7 @@ function BulkManagment({ CloseAcc }) {
       // Remove the deleted page from the state
       setPagesList(prevPages => prevPages.filter(p => p.id !== page));
     }
+    setSelectedPages([])
   }
 
   return (
@@ -372,8 +372,8 @@ function BulkManagment({ CloseAcc }) {
 
 
           <div className={blukstyles.page_align_center}>
-            {seletedPages.length > 0 && (
-              <ModalButton classnm={blukstyles.fixeddeletebtn} events={DeleteWarning}>Delete selected pages</ModalButton>
+            {seletedPages.length >= 1 && (
+              <ModalButton classnm={blukstyles.fixeddeletebtn} events={DeleteWarning}>Delete selected pages{seletedPages.length}</ModalButton>
             )}
             <div className={blukstyles.pages}>
               {pages.length <= 0 ? (

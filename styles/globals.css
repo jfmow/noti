@@ -193,4 +193,14 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 5px;
+}
+.react-pdf__Page__canvas__first .react-pdf__Page__canvas{
+  border-radius: 5px 5px 3px 3px;
+}
+.react-pdf__Page__canvas__last .react-pdf__Page__canvas{
+  border-radius: 3px 3px 5px 5px;
+}
+.react-pdf__Page__canvas{
+  border-radius: 3px;
 }

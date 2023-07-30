@@ -11,7 +11,7 @@ export default function MyPdfViewer({url}) {
     setNumPages(numPages);
   }
   const pageComponents = Array.from(new Array(numPages), (el, index) => (
-    <Page  key={index} pageNumber={index + 1} />
+    <Page  key={index} pageNumber={index + 1} className={index == 0 ? 'react-pdf__Page__canvas__first' : '' + index == numPages - 1 ? 'react-pdf__Page__canvas__last' : ''} />
   ));
 
   return (

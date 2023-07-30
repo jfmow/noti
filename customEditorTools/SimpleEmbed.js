@@ -92,7 +92,7 @@ export default class SimpleIframe {
       const iframe = document.createElement("iframe");
       iframe.classList.add(styles.embedIframe);
       iframe.style.width = "100%";
-      iframe.style.height = "70vh";
+      iframe.style.height = "90vh";
       iframe.style.border = "none";
       iframe.style.borderRadius = "5px";
       
