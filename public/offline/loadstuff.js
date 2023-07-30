@@ -25,15 +25,19 @@ const editor = new EditorJS({
                             localStorage.setItem('Offlinetime', 'true')
                             //console.log(
                             JSON.parse(localStorage.getItem("Offlinesave"))
-                            );
+
                         }
-return save();
+                        return save();
                     },
                 },
             },
         },
+
+        marker: {
+            class: Marker,
+        },
     },
-placeholder: "Enter some text...",
+    placeholder: "Enter some text...",
     data: localStorage.getItem('Offlinesave') ? JSON.parse(localStorage.getItem("Offlinesave")) : { "time": 1688257618252, "blocks": [{ "id": "fSS7EY0VOi", "type": "paragraph", "data": { "text": "" } }], "version": "2.27.2" },
 });
 
@@ -44,4 +48,9 @@ document.getElementById('restbtn').addEventListener('click', () => {
 
 document.getElementById('closepopup').addEventListener('click', () => {
     document.getElementById('popup').style.display = 'none'
+})
+
+window.addEventListener('online', ()=>{
+    save()
+    window.location.reload()
 })

@@ -1,3 +1,4 @@
+
 class SimpleTodo {
     static get toolbox() {
       return {
@@ -16,24 +17,24 @@ class SimpleTodo {
   
     render() {
       this.wrapper = document.createElement("div");
-      this.wrapper.classList.add("todo_container");
+      this.wrapper.classList.add('todo_container');
   
       const list = document.createElement("ul");
-      list.classList.add("todolist");
+      list.classList.add('todolist');
   
       if (this.data && this.data.items) {
         this.data.items.forEach((item, index) => {
           const listItem = document.createElement("li");
   
           const label = document.createElement("label");
-          label.classList.add("todocontainer");
+          label.classList.add('todocontainer');
   
           const checkbox = document.createElement("input");
           checkbox.type = "checkbox";
           checkbox.checked = item.checked;
   
           const checkmark = document.createElement("div");
-          checkmark.classList.add("todocheckmark");
+          checkmark.classList.add('todocheckmark');
   
           label.appendChild(checkbox);
           label.appendChild(checkmark);
@@ -51,7 +52,7 @@ class SimpleTodo {
           listItem.appendChild(content);
   
           const deleteButton = document.createElement("button");
-          deleteButton.classList.add("tododeletebtn")
+          deleteButton.classList.add('tododeletebtn')
           deleteButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM18 4h-2.5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1z"/></svg>`
           deleteButton.addEventListener("click", () => {
             this.data.items.splice(index, 1);
@@ -81,7 +82,7 @@ class SimpleTodo {
       const addItemInput = document.createElement("input");
       addItemInput.type = "text";
       addItemInput.placeholder = "+ Add an item";
-      addItemInput.classList.add("todoiteminput");
+      addItemInput.classList.add('todoiteminput');
       addItemInput.addEventListener("keydown", (event) => {
         if (event.key === "Enter" && addItemInput.value.trim() !== "") {
           const newItem = {
@@ -93,13 +94,13 @@ class SimpleTodo {
           const listItem = document.createElement("li");
   
           const label = document.createElement("label");
-          label.classList.add("todocontainer");
+          label.classList.add('todocontainer');
   
           const checkbox = document.createElement("input");
           checkbox.type = "checkbox";
   
           const checkmark = document.createElement("div");
-          checkmark.classList.add("todocheckmark");
+          checkmark.classList.add('todocheckmark');
   
           label.appendChild(checkbox);
           label.appendChild(checkmark);

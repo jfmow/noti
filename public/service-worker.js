@@ -16,7 +16,8 @@ self.addEventListener('install', (event) => {
           '/offline/table.js',
           '/offline/savestuff.js',
           '/offline/todo.js',
-          '/offline/loadstuff.js'
+          '/offline/loadstuff.js',
+          '/offline/marker.js'
           // Include other static assets such as images, icons, etc.
         ]);
       })
