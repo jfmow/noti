@@ -1,10 +1,10 @@
 .container {
-    height: 90dvh;
+    height: 100dvh;
     overflow: hidden;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    margin-top: 10dvh;
     user-select: none;
+    padding: 2em;
 }
 
 /* The switch - the box around the slider */
@@ -124,6 +124,8 @@ input:checked+.slider:before {
     .container {
         grid-template-columns: 1fr;
         gap: 1em;
+        padding: 0;
+        height: auto;
     }
 
     .users_container .user {
@@ -135,5 +137,6 @@ input:checked+.slider:before {
 
     .users_container {
         width: 100dvw;
+        height: 70vh;
     }
 }

@@ -14,7 +14,7 @@ export default function Admin() {
             <Head>
                 <title>Admin</title>
             </Head>
-            <Nav />
+            <Nav/>
             <div className={styles.container}>
                 <Stats />
                 <Users />

@@ -138,10 +138,10 @@ export default function GraphComponent({ data1, data2 }) {
 
   return (
     <div style={{ width: '100%' }}>
-      <div>
+      <div style={{maxHeight: '40vh'}}>
         <canvas ref={chartRef1} />
       </div>
-      <div>
+      <div style={{maxHeight: '40vh'}}>
         <canvas ref={chartRef2} />
       </div>
       <span>Total size of files stored on disk: {totalSizeMB}MB</span>
