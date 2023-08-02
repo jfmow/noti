@@ -104,8 +104,7 @@ function MyUsagePie() {
             <div>
                 <canvas id="storageChart" width="400" height="400"></canvas>
             </div>
-            <span>Used: {Math.round(usage)}mb | Remaining: {Math.round(10 - usage > 0 ? 10 - usage : 0)}mb</span>
-            <a href="https://www.digitalocean.com/?refcode=950fceae30bf&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge"><img src="https://web-platforms.sfo2.cdn.digitaloceanspaces.com/WWW/Badge%201.svg" alt="DigitalOcean Referral Badge" /></a>
+            <span>Used: {Math.round(usage)}mb | Remaining: {Math.round(10 - usage > 0 ? 10 - usage : 0)}mb</span><br/>            <a  href="https://www.digitalocean.com/?refcode=950fceae30bf&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge"><img style={{marginTop: '1em'}} src="https://web-platforms.sfo2.cdn.digitaloceanspaces.com/WWW/Badge%202.svg" alt="DigitalOcean Referral Badge" /></a>
         </div>
     );
 }
