@@ -25,7 +25,7 @@ export default function Viewer({ docId }) {
     GetUrl(docId)
   }, [docId])
   return (
-    <MyPdfViewer url={url} />
+    <MyPdfViewer url={url} fileId={docId} />
   )
 }
 
