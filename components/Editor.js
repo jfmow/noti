@@ -26,6 +26,7 @@ import SimpleTodo from "@/customEditorTools/Todo";
 import SimpleIframe from "@/customEditorTools/SimpleEmbed";
 import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
 import axios from "axios";
+import Create from "./user/MarkDownViewer";
 const Icons = dynamic(() => import("./Icons"), {
   loading: () => <ModalTempLoader />,
   ssr: true,
@@ -816,7 +817,8 @@ function Editor({ page, preview, multi }) {
             <ModalForm>
               <ModalTitle>Converted MD</ModalTitle>
               <p>Embeds of file/pages will not show up. <strong>Images will show up as base64 so do not be alarmed by the big random text</strong></p>
-              <textarea style={{ height: '40vh', background: 'var(--background)', border: '2px solid var(--big_button_border)', borderRadius: '10px', fontFamily: 'auto', padding: '1em', overflowX: 'hidden', overflowY: 'scroll' }} value={convertedMdData} />
+              <Create markdown={convertedMdData}/>
+              <textarea style={{ height: '20vh', background: 'var(--background)', border: '2px solid var(--big_button_border)', borderRadius: '10px', fontFamily: 'auto', padding: '1em', overflowX: 'hidden', overflowY: 'scroll' }} value={convertedMdData} />
               <AlternateButton click={() => copyToClip(convertedMdData)}>Copy MD</AlternateButton>
             </ModalForm>
           </ModalContainer>

@@ -47,7 +47,7 @@ export default async function handler(request, response) {
     if (request.method != 'POST') {
         return response.status(405).send('Method not allowed');
     }
-    if(request.body.body.blocks.length === 0 || !request.headers.authorization){
+    if (request.body.body.blocks.length === 0 || !request.headers.authorization) {
         return response.status(400).send('Not enough data');
     }
     const markdownData = await convertToMarkdown(request.body.body, request.body.title, request.headers.authorization);
@@ -81,9 +81,19 @@ async function convertToMarkdown(data, title, tok) {
                     md += "\n";
                     break;
                 case "nestedList":
-                    md += parseNestedList(block.data.items);
-                    md += "\n";
-                    break;
+                    switch (block.data.style) {
+                        case "unordered":
+                            md += parseUnorderedNestedList(block.data.items);
+                            md += "\n";
+                            break;
+                        case "ordered":
+                            md += parseNestedList(block.data.items);
+                            md += "\n";
+                            break;
+                        default:
+                            // Handle other styles or raise an error if needed.
+                            break;
+                    }
                 case 'image':
                     // Fetch the image data and convert it to base64
                     const base64String = await getImageBase64(block.data.fileId, tok);
@@ -116,6 +126,23 @@ function parseSimpleTodoList(items) {
     }
     return md;
 }
+function parseNestedList(items) {
+    let md = "";
+    for (let i = 0; i < items.length; i++) {
+      md += parseNestedListItem(items[i], i + 1);
+    }
+    return md;
+  }
+  
+  function parseNestedListItem(item, number) {
+    let md = `${number}. ${item.content}\n\n`;
+    if (item.items && item.items.length > 0) {
+      for (let i = 0; i < item.items.length; i++) {
+        md += parseNestedListItem(item.items[i], `${number}.${i + 1}`);
+      }
+    }
+    return md;
+  }
 
 async function getImageBase64(file, tok) {
 
@@ -156,17 +183,23 @@ async function getImageBase64(file, tok) {
     }
 }
 
-function parseNestedList(items, depth = 1) {
+
+
+
+function parseUnorderedNestedList(items) {
     let md = "";
-    for (const item of items) {
-        md += `${"  ".repeat(depth)}* ${item.content}\n`;
-        if (item.items) {
-            md += parseNestedList(item.items, depth + 1);
-        }
+    for (let i = 0; i < items.length; i++) {
+      md += parseUnorderedNestedListItem(items[i], 1);
     }
     return md;
-}
-
-
-
-
+  }
+  
+  function parseUnorderedNestedListItem(item, level) {
+    let md = `${"  ".repeat(level - 1)}- ${item.content}\n`;
+    if (item.items && item.items.length > 0) {
+      for (let i = 0; i < item.items.length; i++) {
+        md += parseUnorderedNestedListItem(item.items[i], level + 1);
+      }
+    }
+    return md;
+  }
