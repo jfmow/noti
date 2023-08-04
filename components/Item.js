@@ -24,7 +24,7 @@ const MyComponent = ({ currPage }) => {
     async function getData() {
       try {
         const records = await pb.collection('pages_Bare').getFullList({
-          sort: '-created',
+          sort: '-created', skipTotal: true
         });
         setItems(records);
         setIsLoading(false)

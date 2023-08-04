@@ -36,7 +36,7 @@ function Users() {
         async function getUsers() {
             try {
                 const records = await pb.collection('users_admin_list').getFullList({
-                    sort: '-created', filter: `email ~ '${searchTerm}'`
+                    sort: '-created', filter: `email ~ '${searchTerm}'`, skipTotal: true
                 });
                 setUsers(records);
             } catch (err) {
@@ -197,10 +197,10 @@ function Stats() {
     useEffect(() => {
         async function getStats() {
             try {
-                const records = await pb.collection('Total_pages_per_user').getFullList();
+                const records = await pb.collection('Total_pages_per_user').getFullList({skipTotal: true});
                 setGpData(records)
-                const records2 = await pb.collection('Total_img_per_user').getFullList();
-                const records3 = await pb.collection('total_files_per_user').getFullList();
+                const records2 = await pb.collection('Total_img_per_user').getFullList({skipTotal: true});
+                const records3 = await pb.collection('total_files_per_user').getFullList({skipTotal: true});
 
                 const combineArrays = (arr1, arr2) => {
                     // Create a new array to store the combined results

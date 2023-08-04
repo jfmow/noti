@@ -329,7 +329,7 @@ function BulkManagment({ CloseAcc }) {
 
     async function getPagesList() {
       const records = await pb.collection('pages_Bare').getFullList({
-        sort: '-updated',
+        sort: '-updated', skipTotal: true
       });
       setPagesList(records)
     }

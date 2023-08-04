@@ -29,7 +29,7 @@
     "framer-motion": "^10.12.16",
     "next": "13.4.4",
     "next-offline": "^5.0.5",
-    "pocketbase": "^0.15.0",
+    "pocketbase": "^0.16.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-intersection-observer": "^9.5.0",
