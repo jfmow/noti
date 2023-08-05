@@ -4,8 +4,8 @@
     "display": "standalone",
     "scope": "/",
     "start_url": "/",
-    "name": "Noti-jm",
-    "short_name": "Noti",
+    "name": "SaveMyNotes",
+    "short_name": "SaveMyNotes",
     "icons": [
         {
             "src": "/icon-192x192.png",

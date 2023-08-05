@@ -21,7 +21,9 @@ export default function Nav() {
 
         <div className={styles.navcontainer}>
           <div className={styles.items}>
-            <h1>SaveMyNotes</h1>
+            <div>
+              <img src='/Small-banner.svg' height='50' />
+            </div>
             <div className={styles.subitems}>
               <Link className={styles.navlink} href='/page/firstopen'>
                 Pages
@@ -36,7 +38,9 @@ export default function Nav() {
   return (
     <div className={styles.navcontainer}>
       <div className={styles.items}>
-        <h1>SaveMyNotes</h1>
+        <div>
+          <img src='/Small-banner.svg' height='50' />
+        </div>
         <Link href="/auth/login" className={styles.sign_Button}>
           Signup
           <div className={styles.sign_hoverEffect}>
