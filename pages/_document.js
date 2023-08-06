@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <link rel='manifest' href='https://savemynotes.net/manifest.json'/>
+        <link rel='manifest' href={`${process.env.NEXT_PUBLIC_CURRENTURL}/manifest.json`}/>
         </Head>
       <body>
         <Main />
