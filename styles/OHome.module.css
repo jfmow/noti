@@ -140,11 +140,12 @@
   font-weight: 800;
   font-size: 50px !important;
   word-wrap: balance;
+  text-shadow: 0 0 19px #fff;
 }
 
 
 .section3 {
-
+  background: #1e1e1e;
   scroll-snap-align: start;
   min-height: fit-content;
   display: flex;
@@ -180,9 +181,7 @@
   flex-direction: row;
   padding: 2em 5em;
   text-align: left;
-  background-color: rgb(226, 146, 195);
-  background-image: radial-gradient(at 77% 35%, rgb(183, 70, 195) 0px, transparent 50%), radial-gradient(at 46% 27%, rgb(202, 136, 226) 0px, transparent 50%), radial-gradient(at 98% 38%, rgb(247, 244, 197) 0px, transparent 50%), radial-gradient(at 58% 36%, rgb(47, 244, 228) 0px, transparent 50%), radial-gradient(at 59% 71%, rgb(211, 111, 122) 0px, transparent 50%), radial-gradient(at 3% 15%, rgb(232, 48, 198) 0px, transparent 50%), radial-gradient(at 22% 58%, rgb(243, 18, 89) 0px, transparent 50%);
-
+  background: #eeeeee;
   gap: 5em;
 }
 
@@ -190,6 +189,8 @@
   display: flex;
   flex-direction: column;
   gap: 25px;
+  align-items: center;
+  text-align: center;
 }
 
 .bg {
@@ -206,13 +207,12 @@
 }
 
 .section3 p {
-  color: #363636;
+  color: #ffffff;
   font-size: 16px;
   font-weight: 600;
   text-wrap: balance;
   text-align: left;
-  font-family: "Gotham", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: inherit
 }
 
 .section2 p,
@@ -222,16 +222,24 @@
   font-weight: 600;
   text-wrap: balance;
   text-align: left;
-  font-family: "Gotham", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: inherit
 }
 
 
 .section2 h2 {
-  color: #fff;
+  text-align: center;
+  background: radial-gradient(circle, #8e2de2, #7fd6ff);
+  background-size: 200% auto;
+  color: #000;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .fcards {
+
+  width: 70%;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -241,6 +249,12 @@
   gap: 10px;
   user-select: none !important;
   pointer-events: none;
+}
+
+.fcarddual {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
 
 .section2 .fcard {
@@ -355,6 +369,7 @@
   background: radial-gradient(circle farthest-corner at 10% 20%, rgba(255, 94, 247, 1) 17.8%, rgba(2, 245, 255, 1) 100.2%);
   transition: 0.5s;
 }
+
 .Btn:hover {
   background: radial-gradient(circle farthest-corner at 10% 20%, rgba(255, 94, 247, 1) 17.8%, rgba(2, 245, 255, 1) 100.2%);
   transition: 0.5s all;
@@ -400,6 +415,10 @@
   .section2 h2,
   .section3 h2 {
     font-size: 25px !important;
+  }
+
+  .fcarddual {
+    grid-template-columns: 1fr;
   }
 
   .section4,

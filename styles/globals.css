@@ -10,7 +10,7 @@
   --big_button_background: #fff;
   --big_button_background_hover: #000;
   --big_button_border_hover_alt: #b7b7b7;
-  --background: #fff;
+  --background: #eeeeee;
 }
 
 @media (prefers-color-scheme: dark) {
