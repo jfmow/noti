@@ -237,6 +237,8 @@ export default function Login() {
                         <p className={styles.warn} style={{ maxHeight: '40dvh', overflowY: 'scroll', overflowX: 'hidden' }}>
                             Important Notice: Beta App - Data Security and Service Availability.<br /><br />
 
+*** The database now resets every 12 hours so any data uploaded or saved will be deleted after 12 hours ***
+
                             Dear User,
 
                             We would like to inform you about the nature of our platform before you proceed with signing up. Please note that our application is currently in the proof of concept stage, and as such, certain limitations and risks exist that you should be aware of.
