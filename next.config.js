@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['127.0.0.1', 'noti.suddsy.dev', 'proti.suddsy.dev', 'web-platforms.sfo2.cdn.digitaloceanspaces.com'],
+    domains: ['127.0.0.1', 'noti.suddsy.dev', 'proti.suddsy.dev'],
   },
   async headers() {
     if (process.env.PRODUCTION === 'true') {
@@ -12,7 +12,7 @@ const nextConfig = {
           headers: [
             {
               key: 'Content-Security-Policy',
-              value: "default-src 'self' savemynotes.net p.suddsy.dev noti.jamesmowat.com; style-src 'self' 'unsafe-inline'; frame-src *; connect-src 'self' noti.suddsy.dev 'proti.suddsy.dev'; img-src 'self' noti.suddsy.dev 'proti.suddsy.dev data:; worker-src 'self' https://cdn.jsdelivr.net;"
+              value: "default-src 'self' savemynotes.net p.suddsy.dev noti.jamesmowat.com; style-src 'self' 'unsafe-inline'; frame-src *; connect-src 'self' noti.suddsy.dev proti.suddsy.dev; img-src 'self' noti.suddsy.dev proti.suddsy.dev data:; worker-src 'self' https://cdn.jsdelivr.net;"
             },
           ],
           
