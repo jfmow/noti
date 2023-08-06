@@ -14,7 +14,6 @@ export default function UserOptions({ user, clss, usageOpenDefault }) {
     return (
         <>
             <div className={`${styles.container} ${clss}`}>
-
                 <div className={styles.usricon}>
                     {user.avatar ? (
                         <img src={`${process.env.NEXT_PUBLIC_POCKETURL}/api/files/users/${user.id}/${user.avatar}`} />
