@@ -27,6 +27,7 @@ import SimpleIframe from "@/customEditorTools/SimpleEmbed";
 import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
 import axios from "axios";
 import Create from "./user/MarkDownViewer";
+import LineBreak from "@/customEditorTools/LineBreak";
 const Icons = dynamic(() => import("./Icons"), {
   loading: () => <ModalTempLoader />,
   ssr: true,
@@ -480,6 +481,9 @@ function Editor({ page, preview, multi }) {
             class: Table,
             inlineToolbar: true,
           },
+          break: {
+            class: LineBreak,
+          }
         },
         data: editorData,
         placeholder: "Enter some text...",
