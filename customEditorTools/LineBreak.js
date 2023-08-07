@@ -19,6 +19,10 @@ export default class LineBreak {
         return this.wrapper;
     }
 
+    static get isReadOnlySupported() {
+        return true;
+    }
+
 
     _createImage() {
         const iframe = document.createElement('div');

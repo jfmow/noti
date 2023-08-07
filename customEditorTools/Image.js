@@ -151,7 +151,9 @@ export default class Image {
     }
   }
 
-
+  static get isReadOnlySupported() {
+    return true;
+}
 
   save(blockContent) {
     try {
