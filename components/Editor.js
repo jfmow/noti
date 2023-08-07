@@ -26,7 +26,6 @@ import SimpleTodo from "@/customEditorTools/Todo";
 import SimpleIframe from "@/customEditorTools/SimpleEmbed";
 import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
 import axios from "axios";
-import Create from "./user/MarkDownViewer";
 import LineBreak from "@/customEditorTools/LineBreak";
 const Icons = dynamic(() => import("./Icons"), {
   loading: () => <ModalTempLoader />,
@@ -64,7 +63,7 @@ function Editor({ page, preview, multi }) {
 
   const [ColorSelectorState, setColorSelectorState] = useState(false)
 
-  const [convertedMdData, setConvertedData] = useState('Loading... please wait')
+  const [convertedMdData, setConvertedData] = useState('')
 
   const [convertModalState, setShowConvert] = useState(false)
 
@@ -636,7 +635,7 @@ function Editor({ page, preview, multi }) {
     const data = await editor.save()
     try {
       setShowConvert(true)
-      setConvertedData('Loading... please wait')
+      setConvertedData('')
 
       const md = await axios.post('/api/convert-to-md', { body: data, title: articleTitle }, {
         headers: {
@@ -817,8 +816,15 @@ function Editor({ page, preview, multi }) {
             <ModalForm>
               <ModalTitle>Converted MD</ModalTitle>
               <p>Embeds of file/pages will not show up. <strong>Images will show up as base64 so do not be alarmed by the big random text</strong></p>
-              <Create markdown={convertedMdData} />
-              <textarea style={{ height: '20vh', background: 'var(--background)', border: '2px solid var(--big_button_border)', borderRadius: '10px', fontFamily: 'auto', padding: '1em', overflowX: 'hidden', overflowY: 'scroll' }} value={convertedMdData} />
+              {convertedMdData === '' ? (
+                 <div className={styles.loaderLong_con}>
+                 <div className={styles.loaderLong}></div>
+                 </div>
+              ) : (
+                <textarea style={{ height: '20vh', background: 'var(--background)', border: '2px solid var(--big_button_border)', borderRadius: '10px', fontFamily: 'auto', padding: '1em', overflowX: 'hidden', overflowY: 'scroll' }} value={convertedMdData} />
+
+              )}
+             
               <AlternateButton click={() => copyToClip(convertedMdData)}>Copy MD</AlternateButton>
             </ModalForm>
           </ModalContainer>
