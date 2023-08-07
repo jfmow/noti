@@ -150,7 +150,7 @@ async function getImageBase64(file, tok) {
     try {
         ////console.log('Hi', tok)
         const fileToken = await axios.post(
-            'https://noti.suddsy.dev/api/files/token',
+            `${process.env.NEXT_PUBLIC_POCKETURL}/api/files/token`,
             {},
             {
                 headers: {
@@ -158,15 +158,15 @@ async function getImageBase64(file, tok) {
                 },
             }
         );
-        ////console.log(fileToken, 'bb', `https://noti.suddsy.dev/api/collections/imgs/records/${file}`)
-        const respons = await axios.get(`https://noti.suddsy.dev/api/collections/imgs/records/${file}`, {
+        ////console.log(fileToken, 'bb', `${process.env.NEXT_PUBLIC_POCKETURL}/api/collections/imgs/records/${file}`)
+        const respons = await axios.get(`${process.env.NEXT_PUBLIC_POCKETURL}/api/collections/imgs/records/${file}`, {
             headers: {
                 Authorization: tok,
             },
         });
         // //console.log(respons)
         const response = await axios.get(
-            `https://noti.suddsy.dev/api/files/imgs/${file}/${respons.data.file_data}?token=${fileToken.data.token}`,
+            `${process.env.NEXT_PUBLIC_POCKETURL}/api/files/imgs/${file}/${respons.data.file_data}?token=${fileToken.data.token}`,
             {
                 headers: {
                     Authorization: fileToken.data.token,
