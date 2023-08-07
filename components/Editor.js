@@ -476,7 +476,10 @@ function Editor({ page, preview, multi }) {
             },
 
           },
-          table: Table,
+          table: {
+            class: Table,
+            inlineToolbar: true,
+          },
         },
         data: editorData,
         placeholder: "Enter some text...",
@@ -664,7 +667,6 @@ function Editor({ page, preview, multi }) {
         <link rel="icon" href="/favicon.ico" />
         <link rel="prefetch" href="/64.png" />
       </Head>
-      {isSaving && (<AutoSaveLoader />)}
       <div className={styles.title}>
         <div className={styles.title} id="titlebg">
           {articleHeader && <img src={articleHeader} alt="Page header img" />}
@@ -834,13 +836,6 @@ function Editor({ page, preview, multi }) {
 }
 
 export default Editor;
-
-
-function AutoSaveLoader() {
-  return (
-    <div className={styles.autosaveloader}></div>
-  )
-}
 
 //Pin note component
 
