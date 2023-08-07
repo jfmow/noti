@@ -130,7 +130,13 @@ function Editor({ page, multi }) {
                     image: {
                         class: Image,
                     },
-                    table: Table,
+                    table: {
+                        class: Table,
+                        inlineToolbar: true,
+                      },
+                      break: {
+                        class: LineBreak,
+                      }
                 },
                 data: editorData,
                 placeholder: "No content found!",
