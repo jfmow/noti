@@ -13,6 +13,7 @@ import Loader from "./Loader";
 import { createRandomMeshGradients } from "@/lib/randomMeshGradient";
 import NestedList from '@editorjs/nested-list';
 import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
+import LineBreak from "@/customEditorTools/LineBreak";
 
 
 
