@@ -79,8 +79,8 @@ function Editor({ page, preview, multi }) {
       setOffline({ ...offline, state: false, warning: false })
     })
     return () => {
-      window.removeEventListener('online' , () => {return})
-      window.removeEventListener('offline', () => {return})
+      window.removeEventListener('online', () => { return })
+      window.removeEventListener('offline', () => { return })
     }
   }, [])
 
@@ -603,14 +603,8 @@ function Editor({ page, preview, multi }) {
   function copyToClip(data) {
     var dummyInput = document.createElement("div");
 
-    if (data) {
-      dummyInput.innerText = `${data}`;
-    } else {
-      dummyInput.setAttribute(
-        "value",
-        `https://savemynotes.net/page/view/${page}`
-      );
-    }
+    dummyInput.innerText = `${data}`;
+
 
     // Append it to the body
     document.body.appendChild(dummyInput);
@@ -793,7 +787,7 @@ function Editor({ page, preview, multi }) {
                 <ModalTitle>Share page</ModalTitle>
                 <div className={styles.shareModal_link_alt_text}>
                   <div className={styles.shareModal_link_text}>
-                    https://noti.jamesmowat.com/page/view/{page}
+                    {process.env.NEXT_PUBLIC_CURRENTURL}/page/view/{page}
 
                   </div>
                   <svg
@@ -801,7 +795,7 @@ function Editor({ page, preview, multi }) {
                     height="24"
                     viewBox="0 -960 960 960"
                     width="24"
-                    onClick={copyToClip}
+                    onClick={() => copyToClip(`${process.env.NEXT_PUBLIC_CURRENTURL}/page/view/${page}`)}
                   >
                     <path d="M200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-160q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Z" />
                   </svg>
@@ -823,7 +817,7 @@ function Editor({ page, preview, multi }) {
             <ModalForm>
               <ModalTitle>Converted MD</ModalTitle>
               <p>Embeds of file/pages will not show up. <strong>Images will show up as base64 so do not be alarmed by the big random text</strong></p>
-              <Create markdown={convertedMdData}/>
+              <Create markdown={convertedMdData} />
               <textarea style={{ height: '20vh', background: 'var(--background)', border: '2px solid var(--big_button_border)', borderRadius: '10px', fontFamily: 'auto', padding: '1em', overflowX: 'hidden', overflowY: 'scroll' }} value={convertedMdData} />
               <AlternateButton click={() => copyToClip(convertedMdData)}>Copy MD</AlternateButton>
             </ModalForm>
