@@ -695,7 +695,7 @@
 .loaderLong::before {
   content: "";
   position: absolute;
-  background: var(--loader-color);
+  background: var(--big_button_text);
   top: 0;
   left: 0;
   width: 0%;
