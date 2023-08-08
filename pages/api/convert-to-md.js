@@ -135,7 +135,7 @@ function parseNestedList(items) {
   }
   
   function parseNestedListItem(item, number) {
-    let md = `${number}. ${item.content}\n\n`;
+    let md = `${number}. ${item.content}\n`;
     if (item.items && item.items.length > 0) {
       for (let i = 0; i < item.items.length; i++) {
         md += parseNestedListItem(item.items[i], `   ${number}.${i + 1}`);
