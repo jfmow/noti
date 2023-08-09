@@ -1,7 +1,8 @@
+
 .container {
   min-height: 100dvh;
 
-  /*background: radial-gradient(#7a5ad9, #FFF7EA);*/
+  /*background: radial-gradient(var(--color-7a5ad9), var(--color-FFF7EA));*/
 }
 
 .itemroot {
@@ -12,7 +13,7 @@
   opacity: 1;
   position: relative;
 
-  box-shadow: 10px 0px 13px 2px #e9e9e9;
+  box-shadow: 10px 0px 13px 2px var(--color-e9e9e9);
   top: 0;
   bottom: 0;
   padding-bottom: 10vh;
@@ -44,15 +45,14 @@
   border-radius: var(--btn_border_radius);
   outline: none;
   border: none;
-  fill: rgba(55, 53, 47, 0.35);
+  fill: var(--color-rgba555347035);
   display: flex;
-  fill: rgba(55, 53, 47, 0.35);
   align-items: center;
   justify-content: center;
 }
 
 .btn1:hover {
-  background: rgb(228, 228, 228);
+  background: var(--color-rgb228228228);
   cursor: pointer;
 }
 
@@ -86,21 +86,14 @@
 }
 
 .createpage:hover {
-  background: #f4f4f4;
+  background: var(--color-rgb228228228);
 }
 
-.createpage svg:hover {
-  background: rgb(228, 228, 228);
-  border-radius: var(--btn_border_radius);
-  outline: none;
-  border: none;
-  fill: rgba(55, 53, 47, 0.35);
-}
 
 .createpage svg {
   outline: none;
   border: none;
-  fill: rgba(55, 53, 47, 0.35);
+  fill: var(--color-rgba555347035);
 }
 
 .createrootpage {
@@ -136,7 +129,7 @@
   align-items: center;
   justify-content: flex-start;
   border-radius: 10px;
-  color: #19171199;
+  color: var(--color-19171199);
   fill: rgba(55, 53, 47, 0.35);
   gap: 5px;
   cursor: pointer;
@@ -151,21 +144,16 @@
   height: 16px;
 }
 
-.itemoption svg:hover {
-  background: rgb(228, 228, 228);
-  border-radius: var(--btn_border_radius);
-}
-
 .itemoption:hover {
-  background: rgb(245, 245, 245) !important;
+  background: var(--color-rgb245245245) !important;
 }
 
 .active {
-  background: #cecece1a;
+  background: var(--color-cecece1a);
 }
 
 #active {
-  background: #ababab6e;
+  background: var(--color-ababab6e);
 }
 
 
@@ -189,8 +177,8 @@
   top: 10px;
   right: 10px;
   z-index: 5;
-  background: rgb(51, 51, 51);
-  fill: #767676;
+  background: var(--color-rgb515151);
+  fill: var(--color-767676);
   border-radius: var(--btn_border_radius);
   border: 2px solid rgb(51, 51, 51);
   cursor: pointer;
@@ -259,7 +247,7 @@
 
 .multiedit_page {
   padding: 7px;
-  /* box-shadow: 0px 0px 5px #000; */
+  /* box-shadow: 0px 0px 5px var(--color-000); */
   background: var(--big_button_background);
   border-radius: 5px;
   cursor: pointer;
@@ -276,23 +264,23 @@
 }
 
 .multiedit_pages .selected {
-  background: #4e4e4e;
+  background: var(--color-4e4e4e);
 }
 
 .hoveringover {
-  background: #526f8f !important;
+  background: var(--color-526f8f) !important;
 }
 
 @media (prefers-color-scheme: dark) {
 
   .itemroot {
     border-right: none;
-    box-shadow: 10px 0px 13px 2px #191919;
+    box-shadow: 10px 0px 13px 2px var(--color-191919);
   }
 
   .btn1 {
     background: none;
-    fill: rgba(255, 255, 255, 0.35);
+    fill: var(--color-rgba255255255035);
   }
 
   .btn1:hover {
@@ -300,12 +288,7 @@
   }
 
   .createpage:hover {
-    background: #242424;
-  }
-
-  .createpage svg:hover {
-    background: rgb(34, 34, 34);
-    fill: rgba(255, 255, 255, 0.35);
+    background: var(--color-242424);
   }
 
   .createpage svg {
@@ -314,7 +297,7 @@
 
   .itemoption {
     background: inherit;
-    color: #ffffff99;
+    color: var(--color-ffffff99);
     fill: rgba(55, 53, 47, 0.35);
   }
 
@@ -323,7 +306,7 @@
   }
 
   .itemoption:hover {
-    background: rgb(0, 0, 0) !important;
+    background: var(--color-rgb000) !important;
   }
 
   .hidemenubtn {
@@ -332,16 +315,16 @@
   }
 
   .active {
-    background: #0000001a;
+    background: var(--color-0000001a);
   }
 
   #active {
-    background: #2e2e2e6e;
+    background: var(--color-2e2e2e6e);
   }
 
   @media(max-width: 800px) {
     .itemroot {
-      background: #242424de !important;
+      background: var(--color-242424de) !important;
     }
   }
 }
@@ -382,7 +365,7 @@
     align-items: baseline;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    background: #ffffffb8;
+    background: var(--color-ffffffb8);
     padding-bottom: 10vh;
   }
 
@@ -396,7 +379,7 @@
     right: 0;
     z-index: 98;
     height: fit-content;
-    /*background: #1d1d1d83;*/
+    /*background: var(--color-1d1d1d83);*/
     align-items: center;
     justify-content: flex-end;
   }
@@ -438,7 +421,7 @@
     border-radius: var(--btn_border_radius);
     cursor: pointer;
     position: fixed;
-    fill: #03a9f4;
+    fill: var(--color-03a9f4);
     right: 1em;
     top: 1em;
   }
@@ -468,7 +451,7 @@
 
 .load2 {
   fill: none;
-  stroke: hsl(214, 97%, 59%);
+  stroke: var(--color-hsl2149759);
   stroke-width: 2;
   stroke-dasharray: 1, 200;
   stroke-dashoffset: 0;
@@ -529,7 +512,7 @@
   height: 26px;
   -webkit-box-shadow: 0 0 0 1px var(--color-border-icon);
   box-shadow: 0 0 0 1px var(--color-border-icon);
-  background: #fff;
+  background: var(--color-fff);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -565,20 +548,20 @@
   --max-height: 270px;
   --padding: 6px;
   --offset-from-target: 8px;
-  --color-border: #e8e8eb;
-  --color-shadow: rgba(13, 20, 33, .13);
+  --color-border: var(--color-e8e8eb);
+  --color-shadow: var(--color-rgba13203313);
   --color-background: white;
   --color-text-primary: black;
-  --color-text-secondary: #707684;
-  --color-border-icon: rgba(201, 201, 204, .48);
-  --color-border-icon-disabled: #EFF0F1;
-  --color-text-icon-active: #388AE5;
-  --color-background-icon-active: rgba(56, 138, 229, .1);
-  --color-background-item-focus: rgba(34, 186, 255, .08);
-  --color-shadow-item-focus: rgba(7, 161, 227, .08);
-  --color-background-item-hover: #eff2f5;
-  --color-background-item-confirm: #E24A4A;
-  --color-background-item-confirm-hover: #CE4343;
+  --color-text-secondary: var(--color-707684);
+  --color-border-icon: var(--color-rgba20120120448);
+  --color-border-icon-disabled: var(--color-EFF0F1);
+  --color-text-icon-active: var(--color-388AE5);
+  --color-background-icon-active: var(--color-rgba561382291);
+  --color-background-item-focus: var(--color-rgba3418625508);
+  --color-shadow-item-focus: var(--color-rgba716122708);
+  --color-background-item-hover: var(--color-eff2f5);
+  --color-background-item-confirm: var(--color-E24A4A);
+  --color-background-item-confirm-hover: var(--color-CE4343);
   min-width: var(--width);
   width: var(--width);
   max-height: var(--max-height);

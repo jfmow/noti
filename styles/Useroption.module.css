@@ -4,15 +4,15 @@
     bottom: 0;
     left: 0;
     display: flex;
-    background: #262626;
+    background: var(--background);
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
     justify-content: space-around;
     padding: 0em 1em;
     min-height: 10vh;
-    color: #9da5b5;
-    box-shadow: 0 0 5px #191919;
+    color: var(--color-9da5b5);
+    box-shadow: 0 0 5px var(--color-191919);
 
     transition: 0.5s all ease-in-out;
     overflow: hidden;
@@ -30,7 +30,7 @@
     width: 16px;
     height: 16px;
     cursor: pointer;
-    fill: #707684;
+    fill: var(--color-707684);
 }
 
 .icons .icon {
@@ -49,25 +49,12 @@
 }
 
 .usricon svg {
-    fill: #707684;
+    fill: var(--color-707684);
 }
 
 @media(max-width: 800px) {
     .container {
         width: 100%;
         transition: none;
-    }
-}
-@media(prefers-color-scheme: light){
-    .container{
-        background: #fff;
-        color: #000;
-        box-shadow: 0 0 5px #d4d4d4;
-    }
-    .usricon svg {
-        fill: #000000;
-    }
-    .icons .icon svg {
-        fill: #000000;
     }
 }

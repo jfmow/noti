@@ -24,18 +24,18 @@
 
 /* Track */
 .create::-webkit-scrollbar-track {
-  background: #dedede;
+  background: var(--color-dedede);
 }
 
 /* Handle */
 .create::-webkit-scrollbar-thumb {
   border-radius: 1em;
-  background: rgb(52, 228, 255);
+  background: var(--color-rgb52228255);
 }
 
 /* Handle on hover */
 .create::-webkit-scrollbar-thumb:hover {
-  background: rgb(0, 225, 255);
+  background: var(--color-rgb0225255);
 
 }
 
@@ -67,7 +67,7 @@
   resize: none;
   outline: none;
   background-color: transparent;
-  color: #ffffff;
+  color: var(--color-ffffff);
   border: none;
   /* border-radius: 10px; */
   padding: 10px;
@@ -76,8 +76,8 @@
   line-height: 1.5;
   resize: none;
   /*
-  -webkit-text-shadow: 0 0 5px #000000;/*
-  /* text-shadow: 0 0 5px #9f86ff; */
+  -webkit-text-shadow: 0 0 5px var(--color-000000);/*
+  /* text-shadow: 0 0 5px var(--color-9f86ff); */
   text-align: center;
   font-weight: 700;
 }
@@ -88,7 +88,7 @@
 
 .titleinput::placeholder {
   text-shadow: none;
-  color: #8f8f8f;
+  color: var(--color-8f8f8f);
   font-weight: 600;
 }
 
@@ -113,9 +113,9 @@
   width: 100%;
   position: relative;
   height: 40dvh;
-  background: linear-gradient(20deg, #607d8b, #fff, #607d8b);
+  background: linear-gradient(20deg, var(--color-607d8b), var(--color-fff), #607d8b);
   background-size: 100%;
-  box-shadow: 0px 0px 14px 0px #b1b1b1;
+  box-shadow: 0px 0px 14px 0px var(--color-b1b1b1);
 }
 
 .titleeditorcontainer {
@@ -132,7 +132,7 @@
   border: none;
   padding: 5px;
   border-radius: var(--btn_border_radius);
-  fill: #ff6c6c;
+  fill: var(--color-ff6c6c);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -141,7 +141,7 @@
 }
 
 .savetitlebtn:hover {
-  fill: #3bb994;
+  fill: var(--color-3bb994);
 }
 
 .title img {
@@ -171,7 +171,7 @@
   font-size: 4em;
   /* text-align: center; */
   color: white;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  text-shadow: 1px 1px 1px var(--color-rgba00005);
   word-break: break-all;
 
 }
@@ -196,10 +196,10 @@
   padding: 1em;
   background: #ffffff;
   border-radius: var(--btn_border_radius);
-  box-shadow: inset 0px 0px 10px 2px #ececec;
+  box-shadow: inset 0px 0px 10px 2px var(--color-ececec);
   overflow-x: scroll;
   overflow-y: hidden;
-  color: #000;
+  color: var(--color-000);
   position: relative;
   align-items: center;
 }
@@ -254,7 +254,7 @@
   padding: 10px;
   fill: #fff;
   cursor: pointer;
-  background: #ffffff57;
+  background: var(--color-ffffff57);
 }
 
 .customfileupload {
@@ -294,8 +294,8 @@
 
 .abookmark {
   --icon-size: 24px;
-  --icon-secondary-color: rgb(255, 255, 255);
-  --icon-hover-color: rgb(255, 216, 99);
+  --icon-secondary-color: var(--color-rgb255255255);
+  --icon-hover-color: var(--color-rgb25521699);
   --icon-primary-color: gold;
   --icon-circle-border: 1px solid var(--icon-primary-color);
   --icon-circle-size: 35px;
@@ -511,7 +511,7 @@
   position: absolute;
   padding: 5px;
   border-radius: var(--btn_border_radius);
-  background: #0d2342;
+  background: var(--color-0d2342);
   width: -moz-fit-content;
   width: fit-content;
   white-space: nowrap;
@@ -562,7 +562,7 @@
   border: none;
   padding: 10px;
   border-radius: var(--btn_border_radius);
-  background: #00000000;
+  background: var(--color-00000000);
   color: #fff;
   width: 100%;
   margin: 1em;
@@ -585,8 +585,8 @@
 }
 
 .todolist li span:focus-within {
-  color: #e4e4e4;
-  border: 1px solid #353535;
+  color: var(--color-e4e4e4);
+  border: 1px solid var(--color-353535);
   border-radius: var(--btn_border_radius);
 }
 
@@ -611,14 +611,14 @@
   left: 0;
   height: 1.3em;
   width: 1.3em;
-  background-color: #2196F300;
+  background-color: var(--color-2196F300);
   border-radius: 0.25em;
   transition: all 0.25s;
 }
 
 /* When the checkbox is checked, add a blue background */
 .todocontainer input:checked~.todocheckmark {
-  /*background-color: #2196F3;*/
+  /*background-color: var(--color-2196F3);*/
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -641,7 +641,7 @@
   top: 0.25em;
   width: 0.25em;
   height: 0.5em;
-  border-color: #fff0 rgb(0, rgb(0, 0, 0)) white #fff0;
+  border-color: var(--color-fff0) var(--color-rgb0rgb000) white #fff0;
   border-width: 0 0.15em 0.15em 0;
   border-radius: 0em;
   transform: rotate(45deg);
@@ -649,7 +649,7 @@
 
 .tododeletebtn {
   border: none;
-  color: #a9a9a9;
+  color: var(--color-a9a9a9);
   border-radius: 3px;
   cursor: pointer;
   font-weight: 600;
@@ -663,7 +663,7 @@
 }
 
 .tododeletebtn:hover svg {
-  fill: #ff5555;
+  fill: var(--color-ff5555);
 }
 
 .tododeletebtn svg path, .popOutbtn svg path {
@@ -676,11 +676,11 @@
 .loaderLong {
   display: block;
   --height-of-loader: 4px;
-  --loader-color: #0071e2;
+  --loader-color: var(--color-0071e2);
   width: 130px;
   height: var(--height-of-loader);
   border-radius: 30px;
-  background-color: rgba(0,0,0,0.2);
+  background-color: var(--color-rgba00002);
   position: relative;
 }
 
@@ -718,10 +718,9 @@
 }
 
 
-
 @media (prefers-color-scheme: dark) {
   .create {
-    color: #fff;
+    color: var(--color-fff);
   }
 
   .todocontainer input:checked~.todocheckmark:after {
@@ -729,15 +728,15 @@
     top: 0.25em;
     width: 0.25em;
     height: 0.5em;
-    border-color: #fff0 white white #fff0;
+    border-color: var(--color-fff0) white white #fff0;
     border-width: 0 0.15em 0.15em 0;
     border-radius: 0em;
     transform: rotate(45deg);
   }
 
   .title {
-    background: linear-gradient(20deg, #9E9E9E, #607D8B, #9E9E9E);
-    box-shadow: 0px 0px 14px 0px #0b0b0b;
+    background: linear-gradient(20deg, var(--color-9E9E9E), var(--color-607D8B), #9E9E9E);
+    box-shadow: 0px 0px 14px 0px var(--color-0b0b0b);
   }
 
   .titleinput {

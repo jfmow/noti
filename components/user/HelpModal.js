@@ -1,28 +1,28 @@
-import { ModalContainer, ModalForm, ModalTitle } from "@/lib/Modal";
+import { AlternateButton, ModalContainer, ModalForm, ModalTitle } from "@/lib/Modal";
 import Link from 'next/link'
 import Head from "next/head";
+import Router from "next/router";
 export default function UserHelpModal({ CloseHelp }) {
     return (
         <>
         <Head>
-            <title>Help</title>
+            <title>Theme</title>
         </Head>
             <ModalContainer events={CloseHelp}>
                 <ModalForm>
-                    <ModalTitle>Help</ModalTitle>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
-                        <div>
-                            <h4><Link href='/auth/terms-and-conditions'>Terms & Conditions</Link></h4>
-                            <h4><Link href='/auth/privacy-policy'>Privacy policy</Link></h4>
-                            <h4><Link href='/auth/disclamer'>Beta Disclamer</Link></h4>
-                            <h4><Link href='https://dev.jamesmowat.com'>Dev Blog</Link></h4>
-                        </div>
-                        <div>
-                            <h6>Version: beta</h6>
-                            <h6>Creator: James M</h6>
-                            <h6>Cost: free</h6>
-                        </div>
-                    </div>
+                    <ModalTitle>Theme</ModalTitle>
+                    <AlternateButton click={()=>{
+                        window.localStorage.setItem('theme', 'blue')
+                        Router.reload()
+                    }}>Blue</AlternateButton>
+                    <AlternateButton click={()=>{
+                        window.localStorage.setItem('theme', 'purple')
+                        Router.reload()
+                    }}>Purple</AlternateButton>
+                    <AlternateButton click={()=>{
+                        window.localStorage.setItem('theme', '')
+                        Router.reload()
+                    }}>System</AlternateButton>
                 </ModalForm>
             </ModalContainer>
         </>
