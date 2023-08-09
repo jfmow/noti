@@ -103,6 +103,16 @@ export default class SimpleIframe {
       this.wrapper.appendChild(iframe);
       
     }
+
+    removed() {
+      if (this.data.fileId) {
+        console.log(this.data.fileId)
+        async function removeImg(file) {
+          await pb.collection('files').delete(file);
+        }
+        removeImg(this.data.fileId)
+      }
+    }
   
     save(blockContent) {
       try {

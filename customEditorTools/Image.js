@@ -18,6 +18,8 @@ export default class Image {
     this.currpage = config.currPage
   }
 
+
+
   render() {
     this.wrapper = document.createElement("div");
     this.wrapper.classList.add("simple-image");
@@ -153,7 +155,17 @@ export default class Image {
 
   static get isReadOnlySupported() {
     return true;
-}
+  }
+
+  removed() {
+    if (this.data.fileId) {
+      console.log(this.data.fileId)
+      async function removeImg(file) {
+        await pb.collection('imgs').delete(file);
+      }
+      removeImg(this.data.fileId)
+    }
+  }
 
   save(blockContent) {
     try {
