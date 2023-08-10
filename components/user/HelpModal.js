@@ -20,6 +20,10 @@ export default function UserHelpModal({ CloseHelp }) {
                         Router.reload()
                     }}>Purple</AlternateButton>
                     <AlternateButton click={()=>{
+                        window.localStorage.setItem('theme', 'pink')
+                        Router.reload()
+                    }}>Pink</AlternateButton>
+                    <AlternateButton click={()=>{
                         window.localStorage.setItem('theme', '')
                         Router.reload()
                     }}>System</AlternateButton>
