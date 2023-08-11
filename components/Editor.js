@@ -19,7 +19,7 @@ import { AnimatePresence } from "framer-motion";
 import { AlternateButton, ModalTempLoader } from "@/lib/Modal";
 import { createRandomMeshGradients } from "@/lib/randomMeshGradient";
 import NestedList from '@editorjs/nested-list';
-
+import Img from './Img'
 import MarkerTool from "@/customEditorTools/Marker";
 import Image from "@/customEditorTools/Image";
 import SimpleTodo from "@/customEditorTools/Todo";
@@ -69,6 +69,8 @@ function Editor({ page, preview, multi }) {
 
   const [offline, setOffline] = useState({ warning: false, state: false })
   const pagetitleref = useRef(null)
+
+  const [unsplashPicker, setUnsplashPicker] = useState(false)
 
   useEffect(() => {
     window.addEventListener('offline', () => {
@@ -238,7 +240,7 @@ function Editor({ page, preview, multi }) {
               `${process.env.NEXT_PUBLIC_POCKETURL}/api/files/pages/${page}/${record.header_img}`
             );
           } else {
-            setArticleHeader(null);
+            setArticleHeader(record.unsplash);
 
           }
           setIsLoading(false);
@@ -544,6 +546,7 @@ function Editor({ page, preview, multi }) {
           type: "image/jpeg",
         });
         formData.append("header_img", compressedFile);
+        formData.append("unsplash", '');
         toast.update(compressidToast, {
           render: "Done 👍",
           type: "success",
@@ -711,6 +714,17 @@ function Editor({ page, preview, multi }) {
               </div>
 
               <div className={styles.buttonlabel}>
+                <div className={styles.buttonlabel_label}>Set page header img</div>
+                <button
+                  type="button"
+                  onClick={() => setUnsplashPicker(true)}
+                  className={styles.title_buttons_btn}
+                >
+                  <svg width="24" height="24" viewBox="0 0 32 32" version="1.1" aria-labelledby="unsplash-home" aria-hidden="false"><path d="M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z"></path></svg>
+                </button>
+              </div>
+
+              <div className={styles.buttonlabel}>
                 <div className={styles.buttonlabel_label}>Share page</div>
                 <button
                   type="button"
@@ -806,6 +820,10 @@ function Editor({ page, preview, multi }) {
           </>
         )}
 
+        {unsplashPicker && (
+          <Img setArticleHeader={setArticleHeader} page={page} close={() => setUnsplashPicker(false)} />
+        )}
+
         {iconModalState && (
           <>
             <Icons Select={handleSetcurrentPageIconValue} Close={() => setIconModalState(false)} Selected={`${currentPageIconValue.toString()}`} />
@@ -817,14 +835,14 @@ function Editor({ page, preview, multi }) {
               <ModalTitle>Converted MD</ModalTitle>
               <p>Embeds of file/pages will not show up. <strong>Images will show up as base64 so do not be alarmed by the big random text</strong></p>
               {convertedMdData === '' ? (
-                 <div className={styles.loaderLong_con}>
-                 <div className={styles.loaderLong}></div>
-                 </div>
+                <div className={styles.loaderLong_con}>
+                  <div className={styles.loaderLong}></div>
+                </div>
               ) : (
                 <textarea style={{ height: '20vh', background: 'var(--background)', border: '2px solid var(--big_button_border)', borderRadius: '10px', fontFamily: 'auto', padding: '1em', overflowX: 'hidden', overflowY: 'scroll' }} value={convertedMdData} />
 
               )}
-             
+
               <AlternateButton click={() => copyToClip(convertedMdData)}>Copy MD</AlternateButton>
             </ModalForm>
           </ModalContainer>

@@ -40,7 +40,7 @@
 
 
 
-.default_settings_modal_container_usrname_block form {
+.default_settings_modal_container_usrname_block .modalform {
     display: flex;
     flex-direction: column;
     gap: 1.3em;
@@ -55,7 +55,7 @@
     gap: 0.2em;
 }
 
-.default_settings_modal_container_usrname_block form input {
+.default_settings_modal_container_usrname_block .modalform .input {
     border: none;
     padding: 1em;
     border-radius: 0.5em;
@@ -66,11 +66,11 @@
     outline: none;
 }
 
-.default_settings_modal_container_usrname_block form input::placeholder {
+.default_settings_modal_container_usrname_block .modalform .input::placeholder {
     color: #8e8e8eb8;
 }
 
-.default_settings_modal_container_usrname_block form input:focus-visible {
+.default_settings_modal_container_usrname_block .modalform .input:focus-visible {
     outline: 2px solid #4f4f4f;
 }
 
@@ -230,12 +230,12 @@
     z-index: 100;
   }
   
-  .cbx input[type=checkbox]:checked + div {
+  .cbx .input[type=checkbox]:checked + div {
     left: -10px;
     top: -10px;
   }
   
-  .cbx input[type=checkbox] {
+  .cbx .input[type=checkbox] {
     position: absolute;
     left: 50px;
     visibility: hidden;
@@ -304,7 +304,7 @@
         color: #fff;
     }
 
-    .default_settings_modal_container_usrname_block form input {
+    .default_settings_modal_container_usrname_block .modalform .input {
         background: rgb(34, 34, 34);
         color: #ffffff;
     }
