@@ -31,8 +31,10 @@ function Unsplash({ page, setArticleHeader, close }) {
     async function downloadAndCreateFileObjects(data, page) {
         const fullImageUrl = data.urls.full;
         setArticleHeader2(fullImageUrl)
-        await pb.collection("pages").update(page, { "unsplash": `${fullImageUrl}`, header_img: null });
-        await fetch(data.links.download)
+        try {
+            await pb.collection("pages").update(page, { "unsplash": `${fullImageUrl}`, header_img: null });
+            await fetch(data.links.download)
+        } catch (err) { }
         return
     }
 
