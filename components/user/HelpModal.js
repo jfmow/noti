@@ -12,17 +12,9 @@ export default function UserHelpModal({ CloseHelp }) {
                 <ModalForm>
                     <ModalTitle>Theme</ModalTitle>
                     <AlternateButton click={()=>{
-                        window.localStorage.setItem('theme', 'blue')
-                        Router.reload()
-                    }}>Blue</AlternateButton>
-                    <AlternateButton click={()=>{
                         window.localStorage.setItem('theme', 'purple')
                         Router.reload()
                     }}>Purple</AlternateButton>
-                    <AlternateButton click={()=>{
-                        window.localStorage.setItem('theme', 'pink')
-                        Router.reload()
-                    }}>Pink</AlternateButton>
                     <AlternateButton click={()=>{
                         window.localStorage.setItem('theme', '')
                         Router.reload()

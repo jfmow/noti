@@ -1,4 +1,5 @@
 .container {
+    --border_color: #dadada;
     position: fixed;
     width: 300px;
     bottom: 0;
@@ -11,8 +12,8 @@
     justify-content: space-around;
     padding: 0em 1em;
     min-height: 10vh;
-    color: var(--color-9da5b5);
-    box-shadow: 0 0 5px var(--color-191919);
+    color: #9da5b5;
+    border-top: 1px solid var(--border_color);
 
     transition: 0.5s all ease-in-out;
     overflow: hidden;
@@ -30,7 +31,7 @@
     width: 16px;
     height: 16px;
     cursor: pointer;
-    fill: var(--color-707684);
+    fill: #707684;
 }
 
 .icons .icon {
@@ -49,7 +50,13 @@
 }
 
 .usricon svg {
-    fill: var(--color-707684);
+    fill: #707684;
+}
+
+@media(prefers-color-scheme: dark){
+    .container{
+        --border_color: #2d2d2d;
+    }
 }
 
 @media(max-width: 800px) {
