@@ -161,7 +161,7 @@
 }
 
 .hoveringover {
-  background: var(--itemoption_hover_drag);
+  background: var(--itemoption_hover_drag) !important;
 }
 
 .createpage_txt {
