@@ -302,7 +302,7 @@ function AccManagementForm({ Close, usageOpenDefault }) {
             )}
 
           </AnimatePresence>
-          <h6><Link href='/auth/terms-and-conditions'>Terms & Conditions</Link> | <Link href='/auth/privacy-policy'>Privacy policy</Link> | <span onClick={logout}>Logout</span></h6>
+          <h6><Link href='/auth/terms-and-conditions'>Terms & Conditions</Link> | <Link href='/auth/privacy-policy'>Privacy policy</Link> | <span onClick={()=>logout}>Logout</span></h6>
 
         </ModalForm>
       </ModalContainer>

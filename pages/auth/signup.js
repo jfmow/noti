@@ -9,7 +9,6 @@ import Loader from '@/components/Loader'
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { getUserTimeZone } from '@/lib/getUserTimeZone';
-import { createKey } from '@/lib/createEncKey';
 import { ModalButton, ModalCheckBox, ModalContainer, ModalForm, ModalInput, ModalTitle } from '@/lib/Modal';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
@@ -82,21 +81,7 @@ export default function Login() {
                 const userAccountData = await pb.collection('users').create(newAccData)
                 await pb.collection('users').authWithPassword(email, password)
 
-                const encryptionKey = createKey()
-                const encData = {
-                    "chef": encryptionKey,
-                    "plate": userAccountData.id
-                };
-                //console.log(encData)
-
-                const encRec = await pb.collection('cookies').create(encData);
-                //console.log(encRec)
-                const newRec = {
-                    "meal": encRec.id
-                }
-                await pb.collection('users').update(userAccountData.id, newRec)
-                toast.update(crateAccProgressToast, { render: "Created", type: "success", isLoading: false });
-
+                
 
                 /* The code is using the `toast.promise()` method to display a toast message
                 while sending a verification email to a user's email address. The
@@ -137,18 +122,7 @@ export default function Login() {
 
             await pb.collection('users').update(authData.record.id, Data);
         }
-        if (!authData.record.meal) {
-            const encryptionKey = createKey()
-            const encData = {
-                "chef": encryptionKey,
-                "plate": authData.record.id
-            };
-            const encRec = await pb.collection('cookies').create(encData);
-            const usrDataUp = {
-                "meal": encRec.id
-            };
-            await pb.collection('users').update(authData.record.id, usrDataUp);
-        }
+        
         return Router.push('/page/firstopen')
     }
 

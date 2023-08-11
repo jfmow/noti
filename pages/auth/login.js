@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react';
 import PocketBase from 'pocketbase';
 import styles from '@/styles/Auth.module.css'
-import Link from 'next/link'
 import { toast } from 'react-toastify';
 import Head from 'next/head';
 import validator from 'validator';
 import { useRouter } from 'next/router';
 import { getUserTimeZone } from '@/lib/getUserTimeZone';
 import PlainLoader from '@/components/Loader';
-import { createKey } from '@/lib/createEncKey';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false)
 export default function Login() {
@@ -48,20 +46,7 @@ export default function Login() {
         pb.authStore.clear()
         return Router.push('/u/disabled')
       }
-      if (!authData.record.meal) {
-        const encryptionKey = createKey()
-        const encData = {
-          "chef": encryptionKey,
-          "plate": authData.record.id
-        };
-
-        const encRec = await pb.collection('cookies').create(encData);
-        const usrDataUp = {
-          "meal": encRec.id
-        };
-
-        await pb.collection('users').update(authData.record.id, usrDataUp);
-      }
+      
       if (!authData.record.time_zone) {
 
         const userTimeZone = getUserTimeZone();
@@ -97,26 +82,8 @@ export default function Login() {
 
       await pb.collection('users').update(authData.record.id, Data);
     }
-    if (!authData.record.meal) {
-      const encryptionKey = createKey()
-      const encData = {
-        "chef": encryptionKey,
-        "plate": authData.record.id
-      };
-      const encRec = await pb.collection('cookies').create(encData);
-      const usrDataUp = {
-        "meal": encRec.id
-      };
-      await pb.collection('users').update(authData.record.id, usrDataUp);
-    }
+    
     return Router.push('/page/firstopen')
-  }
-
-  async function updateRiskVal() {
-    const data = {
-      "seen_risk_warning": true
-    }
-    await pb.collection('users').update(pb.authStore.model.id, data);
   }
 
 
