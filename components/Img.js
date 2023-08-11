@@ -58,7 +58,7 @@ function Unsplash({ page, setArticleHeader, close }) {
 
                 </div>
                 <div className={styles.imgs}>
-                    {images.map((image) => (
+                    {images?.map((image) => (
                         <img
                             key={image.id}
                             src={image.urls.regular}
