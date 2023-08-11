@@ -192,11 +192,6 @@ const MyComponent = ({ currPage }) => {
 
   return (
     <>
-      <>
-        <div className={styles.mobilePageNav}>
-          <button className={styles.mobile_back_btn} onClick={setVisibleState}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0V0z" fill="none" /><path d="M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zm0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1z" /></svg></button>
-        </div>
-      </>
       <div className={styles.contextmenu} onMouseLeave={() => hideContextMenu()} ref={contextMenu}>
         <div className={styles.contextMenuItem} onClick={() => setShowMultiEditorSelector(true)}>
           <div className={styles.contextMenuIcon}><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px"><g><path d="M0,0h24v24H0V0z" fill="none" /></g><g><g><path d="M18,4v5H6V4H18z M18,2H6C4.9,2,4,2.9,4,4v5c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V4C20,2.9,19.1,2,18,2z M18,15v5H6v-5H18z M18,13H6c-1.1,0-2,0.9-2,2v5c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2v-5C20,13.9,19.1,13,18,13z" /></g></g></svg></div>
@@ -209,10 +204,13 @@ const MyComponent = ({ currPage }) => {
       </div>
       {!hidden && (<Tut setHidden={setHidden} />)}
       <div className={`${styles.itemroot}`} id='rootitems'>
+        
         {showMultiEditorSelector && (<MultiEditor pagesList={items} Close={() => setShowMultiEditorSelector(false)} />)}
-        <button onClick={setVisibleState} className={styles.desktophidemenu}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M24 0v24H0V0h24z" fill="none" opacity=".87"/><path d="M17.7 15.89L13.82 12l3.89-3.89c.39-.39.39-1.02 0-1.41-.39-.39-1.02-.39-1.41 0l-4.59 4.59c-.39.39-.39 1.02 0 1.41l4.59 4.59c.39.39 1.02.39 1.41 0 .38-.38.38-1.02-.01-1.4zM7 6c.55 0 1 .45 1 1v10c0 .55-.45 1-1 1s-1-.45-1-1V7c0-.55.45-1 1-1z"/></svg></button>
+        
+        <button onClick={setVisibleState} className={styles.desktophidemenu}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M24 0v24H0V0h24z" fill="none" opacity=".87" /><path d="M17.7 15.89L13.82 12l3.89-3.89c.39-.39.39-1.02 0-1.41-.39-.39-1.02-.39-1.41 0l-4.59 4.59c-.39.39-.39 1.02 0 1.41l4.59 4.59c.39.39 1.02.39 1.41 0 .38-.38.38-1.02-.01-1.4zM7 6c.55 0 1 .45 1 1v10c0 .55-.45 1-1 1s-1-.45-1-1V7c0-.55.45-1 1-1z" /></svg></button>
+        
         <ImportantNotes notes={items} setVisibleState={setVisibleState} />
-        <button onClick={setVisibleState} className={styles.hidemenubtn}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0V0z" fill="none" /><path d="M18.3 5.71c-.39-.39-1.02-.39-1.41 0L12 10.59 7.11 5.7c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L10.59 12 5.7 16.89c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0L12 13.41l4.89 4.89c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z" /></svg></button>
+                
         <AnimatePresence>
           {rootParents.map((rootParent) => (
             <motion.div
@@ -241,14 +239,14 @@ const MyComponent = ({ currPage }) => {
             createNewPage(e, null);
           }}
           id="createnewpageid"
-          className={`${styles.createpage} ${styles.createrootpage}`}
+          className={`${styles.createrootpage}`}
         >
           <svg xmlns='http://www.w3.org/2000/svg' height='20' viewBox='0 -960 960 960' width='20'>
             <path d='M444-240v-204H240v-72h204v-204h72v204h204v72H516v204h-72Z' />
           </svg>
           Create page
         </span>
-        <UserOptions usageOpenDefault={query.usage} clss={styles.test1} user={pb.authStore.model} />
+        <UserOptions usageOpenDefault={query.usage} clss={styles.test12} user={pb.authStore.model} />
 
       </div>
 

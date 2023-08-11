@@ -8,6 +8,7 @@
   align-items: center;
   pointer-events: none;
   gap: 1dvh;
+  background: var(--background);
 }
 
 .load1 {

@@ -762,7 +762,7 @@
     transform: scale(0.85);
     width: 100%;
     /* margin: 1em; */
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: center;
   }
 }
