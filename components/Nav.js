@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/Link";
 import styles from '@/styles/nav.module.css'
 import PocketBase from 'pocketbase'
 import { useEffect, useState } from 'react';

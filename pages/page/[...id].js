@@ -3,7 +3,6 @@ import dynamic from 'next/dynamic';
 import PocketBase from 'pocketbase'
 import { useEffect, useState } from 'react';
 import MyComponent from '@/components/Item';
-import Router from 'next/router';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 
@@ -43,10 +42,6 @@ function NotionEditor({ pageId }) {
 
   if (isLoading) {
     return (<Loader />)
-  }
-
-  if(!pb.authStore.model.seen12hourwarning){
-    return Router.push('/auth/disclamer')
   }
 
   return (

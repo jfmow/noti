@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Head from "next/head";
-import Link from "next/link";
+import Link from "@/components/Link";
 import { toast } from "react-toastify";
 import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
@@ -134,10 +134,10 @@ function Editor({ page, multi }) {
                     table: {
                         class: Table,
                         inlineToolbar: true,
-                      },
-                      break: {
+                    },
+                    break: {
                         class: LineBreak,
-                      }
+                    }
                 },
                 data: editorData,
                 placeholder: "No content found!",
