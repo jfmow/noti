@@ -16,7 +16,7 @@ import compressImage from "@/lib/CompressImg";
 import dynamic from 'next/dynamic';
 import Router from "next/router";
 import { AnimatePresence } from "framer-motion";
-import { AlternateButton, ModalTempLoader } from "@/lib/Modal";
+import { AlternateButton, CopyPasteTextArea, ModalTempLoader } from "@/lib/Modal";
 import { createRandomMeshGradients } from "@/lib/randomMeshGradient";
 import NestedList from '@editorjs/nested-list';
 import Img from './Img'
@@ -519,7 +519,7 @@ function Editor({ page, preview, multi }) {
     Router.push('/page/firstopen')
   }
 
-  async function handleTitleChange() {
+  async function handlePageTitleChange() {
     const title = pagetitleref.current
     setArticleTitle(title.innerText);
     const newTitle = {
@@ -529,7 +529,7 @@ function Editor({ page, preview, multi }) {
     setIsSaving(false);
   }
 
-  async function handleFileChange(e) {
+  async function handlePageHeaderImageUpload(e) {
     const file = e.target.files[0];
 
     const reader = new FileReader();
@@ -566,7 +566,7 @@ function Editor({ page, preview, multi }) {
     }
   }
 
-  async function handleSetcurrentPageIconValue(e) {
+  async function handlePageDisplayIconChange(e) {
     setCurrentPageIconValue(e.unified)
     const data = {
       icon: e.image,
@@ -577,32 +577,14 @@ function Editor({ page, preview, multi }) {
   }
 
   async function handleSharePage() {
-    if (pageSharedTF) {
-      return setShareLinkModalState(true);
-    } else {
-      const data = {
-        shared: true,
-      };
-
-      const record = await pb.collection("pages").update(page, data);
-      setPageSharedTF(true);
-      setShareLinkModalState(true);
-      toast.success("Page now public for anyone with the link.");
-    }
-  }
-
-  async function unSharePage() {
     const data = {
-      shared: false,
+      shared: !pageSharedTF,
     };
-
+    setPageSharedTF(!pageSharedTF);
     const record = await pb.collection("pages").update(page, data);
-    setPageSharedTF(false);
-    setShareLinkModalState(false);
-    toast.success("Page now hidden.");
   }
 
-  function copyToClip(data) {
+  function handleCopyTextToClipboard(data) {
     var dummyInput = document.createElement("div");
 
     dummyInput.innerText = `${data}`;
@@ -625,7 +607,7 @@ function Editor({ page, preview, multi }) {
     setShareLinkModalState(false);
   }
 
-  async function SetPageListColor(color, page) {
+  async function handleChangePageListDisplayColor(color, page) {
     const data = {
       "color": color
     };
@@ -633,7 +615,7 @@ function Editor({ page, preview, multi }) {
     await pb.collection('pages').update(page, data);
   }
 
-  async function ConvertPageToMD() {
+  async function handleExportPageToMarkdown() {
 
     const data = await editor.save()
     try {
@@ -652,7 +634,6 @@ function Editor({ page, preview, multi }) {
     }
 
   }
-
 
   if (isLoading) {
     return <Loader />;
@@ -677,14 +658,13 @@ function Editor({ page, preview, multi }) {
                 contentEditable
                 type="text"
                 ref={pagetitleref}
-                onBlur={handleTitleChange}
+                onBlur={handlePageTitleChange}
                 id="tuttitle"
               >
                 {articleTitle ? articleTitle : "Untitled"}
               </div>
             </div>
             <div className={styles.title_buttons} id="tut_title_btns_id">
-              <ImportantNote classname={styles.title_buttons_btn} importt={importantNote} page={page} />
 
               <div className={styles.buttonlabel}>
                 <div className={styles.buttonlabel_label}>Set page header image</div>
@@ -696,7 +676,7 @@ function Editor({ page, preview, multi }) {
                       id="fileInput"
                       accept="image/*"
                       className={styles.finput}
-                      onChange={handleFileChange}
+                      onChange={handlePageHeaderImageUpload}
                     />
                     <span>
                       <svg
@@ -714,7 +694,7 @@ function Editor({ page, preview, multi }) {
               </div>
 
               <div className={styles.buttonlabel}>
-                <div className={styles.buttonlabel_label}>Set page header img</div>
+                <div className={styles.buttonlabel_label}>Unsplash images</div>
                 <button
                   type="button"
                   onClick={() => setUnsplashPicker(true)}
@@ -728,17 +708,17 @@ function Editor({ page, preview, multi }) {
                 <div className={styles.buttonlabel_label}>Share page</div>
                 <button
                   type="button"
-                  onClick={handleSharePage}
+                  onClick={() => setShareLinkModalState(true)}
                   className={styles.title_buttons_btn}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" ><g><rect fill="none" height="24" width="24" /></g><g><path d="M9,11h6c0.55,0,1,0.45,1,1v0c0,0.55-0.45,1-1,1H9c-0.55,0-1-0.45-1-1v0C8,11.45,8.45,11,9,11z M20.93,12L20.93,12 c0.62,0,1.07-0.59,0.93-1.19C21.32,8.62,19.35,7,17,7h-3.05C13.43,7,13,7.43,13,7.95v0c0,0.52,0.43,0.95,0.95,0.95H17 c1.45,0,2.67,1,3.01,2.34C20.12,11.68,20.48,12,20.93,12z M3.96,11.38C4.24,9.91,5.62,8.9,7.12,8.9l2.93,0 C10.57,8.9,11,8.47,11,7.95v0C11,7.43,10.57,7,10.05,7L7.22,7c-2.61,0-4.94,1.91-5.19,4.51C1.74,14.49,4.08,17,7,17h3.05 c0.52,0,0.95-0.43,0.95-0.95v0c0-0.52-0.43-0.95-0.95-0.95H7C5.09,15.1,3.58,13.36,3.96,11.38z M18,12L18,12c-0.55,0-1,0.45-1,1v2 h-2c-0.55,0-1,0.45-1,1v0c0,0.55,0.45,1,1,1h2v2c0,0.55,0.45,1,1,1h0c0.55,0,1-0.45,1-1v-2h2c0.55,0,1-0.45,1-1v0 c0-0.55-0.45-1-1-1h-2v-2C19,12.45,18.55,12,18,12z" /></g></svg>
                 </button>
               </div>
               <div className={styles.buttonlabel}>
-                <div className={styles.buttonlabel_label}>Convert to md</div>
+                <div className={styles.buttonlabel_label}>Export to md</div>
                 <button
                   type="button"
-                  onClick={ConvertPageToMD}
+                  onClick={handleExportPageToMarkdown}
                   className={styles.title_buttons_btn}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512"><path d="M475,64H37C16.58,64,0,81.38,0,102.77V409.19C0,430.59,16.58,448,37,448H475c20.38,0,37-17.41,37-38.81V102.77C512,81.38,495.42,64,475,64ZM288,368H224V256l-48,64-48-64V368H64V144h64l48,80,48-80h64Zm96,0L304,256h48.05L352,144h64V256h48Z" /></svg>
@@ -746,7 +726,7 @@ function Editor({ page, preview, multi }) {
               </div>
 
               <div className={styles.buttonlabel}>
-                <div className={styles.buttonlabel_label}>Change page list icon</div>
+                <div className={styles.buttonlabel_label}>Page Icon</div>
                 <button
                   type="button"
                   onClick={() => setIconModalState(true)}
@@ -757,7 +737,7 @@ function Editor({ page, preview, multi }) {
               </div>
 
               <div className={styles.buttonlabel}>
-                <div className={styles.buttonlabel_label}>Change page color</div>
+                <div className={styles.buttonlabel_label}>List Color</div>
                 <button
                   type="button"
                   onClick={() => setColorSelectorState(true)}
@@ -790,7 +770,7 @@ function Editor({ page, preview, multi }) {
         </div>
       </div>
       {ColorSelectorState && (
-        <ColorSelector onSelectColor={SetPageListColor} page={page} close={() => setColorSelectorState(false)} />
+        <ColorSelector onSelectColor={handleChangePageListDisplayColor} page={page} close={() => setColorSelectorState(false)} />
       )}
       <AnimatePresence>
         {shareLinkModalState && (
@@ -798,22 +778,12 @@ function Editor({ page, preview, multi }) {
             <ModalContainer events={() => setShareLinkModalState(false)}>
               <ModalForm>
                 <ModalTitle>Share page</ModalTitle>
-                <div className={styles.shareModal_link_alt_text}>
-                  <div className={styles.shareModal_link_text}>
-                    {process.env.NEXT_PUBLIC_CURRENTURL}/page/view/{page}
-
-                  </div>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24"
-                    viewBox="0 -960 960 960"
-                    width="24"
-                    onClick={() => copyToClip(`${process.env.NEXT_PUBLIC_CURRENTURL}/page/view/${page}`)}
-                  >
-                    <path d="M200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-160q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Z" />
-                  </svg>
-                </div>
-                <AlternateButton click={unSharePage}>Hide</AlternateButton>
+                <CopyPasteTextArea click={() => handleCopyTextToClipboard(`${process.env.NEXT_PUBLIC_CURRENTURL}/page/view/${page}`)}>
+                  {process.env.NEXT_PUBLIC_CURRENTURL}/page/view/{page}
+                </CopyPasteTextArea>
+                <AlternateButton click={handleSharePage}>
+                  {pageSharedTF ? 'Hide' : 'Make public'}
+                </AlternateButton>
               </ModalForm>
             </ModalContainer>
 
@@ -826,7 +796,7 @@ function Editor({ page, preview, multi }) {
 
         {iconModalState && (
           <>
-            <Icons Select={handleSetcurrentPageIconValue} Close={() => setIconModalState(false)} Selected={`${currentPageIconValue.toString()}`} />
+            <Icons Select={handlePageDisplayIconChange} Close={() => setIconModalState(false)} Selected={`${currentPageIconValue.toString()}`} />
           </>
         )}
         {convertModalState && (
@@ -843,7 +813,7 @@ function Editor({ page, preview, multi }) {
 
               )}
 
-              <AlternateButton click={() => copyToClip(convertedMdData)}>Copy MD</AlternateButton>
+              <AlternateButton click={() => handleCopyTextToClipboard(convertedMdData)}>Copy MD</AlternateButton>
             </ModalForm>
           </ModalContainer>
         )}
@@ -858,39 +828,3 @@ function Editor({ page, preview, multi }) {
 }
 
 export default Editor;
-
-//Pin note component
-
-function ImportantNote({ classname, importt, page }) {
-  const [checked, setChecked] = useState(importt)
-  async function Save(e) {
-    //console.log(e.target.checked)
-    if (checked) {
-      const data = {
-        "important": false
-      };
-      setChecked(false)
-      await pb.collection('pages').update(page, data);
-    } else {
-      const data = {
-        "important": true
-      };
-      setChecked(true)
-      await pb.collection('pages').update(page, data);
-    }
-  }
-  return (
-    <div>
-      <label className={styles.abookmark}>
-        <input type="checkbox" onChange={(e) => Save(e)} defaultChecked={checked} />
-        <div className={styles.bookmark}>
-          <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px"><g><rect fill="none" height="24" width="24" /><rect fill="none" height="24" width="24" /></g><g><path d="M19,12.87c0-0.47-0.34-0.85-0.8-0.98C16.93,11.54,16,10.38,16,9V4l1,0 c0.55,0,1-0.45,1-1c0-0.55-0.45-1-1-1H7C6.45,2,6,2.45,6,3c0,0.55,0.45,1,1,1l1,0v5c0,1.38-0.93,2.54-2.2,2.89 C5.34,12.02,5,12.4,5,12.87V13c0,0.55,0.45,1,1,1h4.98L11,21c0,0.55,0.45,1,1,1c0.55,0,1-0.45,1-1l-0.02-7H18c0.55,0,1-0.45,1-1 V12.87z" fill-rule="evenodd" /></g></svg>        </div>
-      </label>
-    </div>
-  )
-}
-
-
-
-
-

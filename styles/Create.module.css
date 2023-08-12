@@ -1,11 +1,22 @@
-
-  
 .container {
   width: 100%;
   min-height: 100dvh;
   margin: 0;
   margin-top: 10dvh;
   padding: 0;
+}
+
+.create {
+  --title_input_color: #ffffff;
+  --title_input_color_plcholder: #8f8f8f;
+  --title_background: linear-gradient(20deg, #607d8b, #fff, #607d8b);
+
+  --title_buttons_fill: #fff;
+  --title_buttons_background: #ffffff57;
+
+  --buttonlabel_label_background: #0d2342;
+  --buttonlabel_label_color: #ffffff;
+
 }
 
 .popOverShare {
@@ -69,7 +80,7 @@
   resize: none;
   outline: none;
   background-color: transparent;
-  color: #ffffff;
+  color: var(--title_input_color);
   border: none;
   /* border-radius: 10px; */
   padding: 10px;
@@ -82,6 +93,7 @@
   /* text-shadow: 0 0 5px #9f86ff; */
   text-align: center;
   font-weight: 700;
+  word-break: break-all;
 }
 
 .titleinput:hover {
@@ -90,7 +102,7 @@
 
 .titleinput::placeholder {
   text-shadow: none;
-  color: #8f8f8f;
+  color: var(--title_input_color_plcholder);
   font-weight: 600;
 }
 
@@ -115,7 +127,7 @@
   width: 100%;
   position: relative;
   height: 40dvh;
-  background: linear-gradient(20deg, #607d8b, #fff, #607d8b);
+  background: var(--title_background);
   background-size: 100%;
   box-shadow: 0px 0px 14px 0px #b1b1b1;
 }
@@ -127,23 +139,6 @@
   max-width: 80%;
   justify-content: center;
 
-}
-
-.savetitlebtn {
-  background: none;
-  border: none;
-  padding: 5px;
-  border-radius: 5px;
-  fill: #ff6c6c;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.savetitlebtn:hover {
-  fill: #3bb994;
 }
 
 .title img {
@@ -168,53 +163,6 @@
 
 }
 
-
-.title h1 {
-  font-size: 4em;
-  /* text-align: center; */
-  color: white;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
-  word-break: break-all;
-
-}
-
-
-
-
-
-.shareModal_link_text {
-  width: 93%;
-  overflow-x: scroll;
-}
-
-.shareModal_link_text::-webkit-scrollbar {
-  width: 1px;
-  height: 2px;
-}
-
-.shareModal_link_alt_text {
-  display: flex;
-  flex-direction: row;
-  padding: 1em;
-  background: #ffffff;
-  border-radius: 5px;
-  box-shadow: inset 0px 0px 10px 2px #ececec;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  color: #000;
-  position: relative;
-  align-items: center;
-}
-
-.shareModal_link_alt_text svg {
-  position: absolute;
-  right: 10px;
-  fill: #00bcd4;
-  cursor: pointer;
-}
-
-
-
 @media(max-width: 900px) {
   .headerstuff {
     padding: 1em;
@@ -230,7 +178,8 @@
   .create {
     height: 100%;
   }
-  .creategrid{
+
+  .creategrid {
     padding: 1.5em;
   }
 }
@@ -254,9 +203,9 @@
   border: none;
   border-radius: 5px;
   padding: 10px;
-  fill: #fff;
+  fill: var(--title_buttons_fill);
   cursor: pointer;
-  background: #ffffff57;
+  background: var(--title_buttons_background);
 }
 
 .customfileupload {
@@ -275,227 +224,25 @@
   display: none;
 }
 
+/*For editor plugin iframe*/
 
-
-.popOutbtn{
+.popOutbtn {
   display: flex;
-    border: none;
-    background: none;
-    outline: none;
-    position: absolute;
-    top: 5px;
-    z-index: 10;
-    right: 5px;
-    cursor: pointer;
+  border: none;
+  background: none;
+  outline: none;
+  position: absolute;
+  top: 5px;
+  z-index: 10;
+  right: 5px;
+  cursor: pointer;
 }
 
 .popOutbtn svg {
   fill: #fff;
 }
 
-
-.abookmark {
-  --icon-size: 24px;
-  --icon-secondary-color: rgb(255, 255, 255);
-  --icon-hover-color: rgb(255, 216, 99);
-  --icon-primary-color: gold;
-  --icon-circle-border: 1px solid var(--icon-primary-color);
-  --icon-circle-size: 35px;
-  --icon-anmt-duration: 0.3s;
-}
-
-.abookmark input {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  display: none;
-}
-
-.abookmark .bookmark {
-  width: var(--icon-size);
-  height: auto;
-  fill: var(--icon-secondary-color);
-  cursor: pointer;
-  -webkit-transition: 0.2s;
-  -o-transition: 0.2s;
-  transition: 0.2s;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  position: relative;
-  -webkit-transform-origin: top;
-  -ms-transform-origin: top;
-  transform-origin: top;
-}
-
-.bookmark::after {
-  content: "";
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  -webkit-box-shadow: 0 30px 0 -4px var(--icon-primary-color),
-    30px 0 0 -4px var(--icon-primary-color),
-    0 -30px 0 -4px var(--icon-primary-color),
-    -30px 0 0 -4px var(--icon-primary-color),
-    -22px 22px 0 -4px var(--icon-primary-color),
-    -22px -22px 0 -4px var(--icon-primary-color),
-    22px -22px 0 -4px var(--icon-primary-color),
-    22px 22px 0 -4px var(--icon-primary-color);
-  box-shadow: 0 30px 0 -4px var(--icon-primary-color),
-    30px 0 0 -4px var(--icon-primary-color),
-    0 -30px 0 -4px var(--icon-primary-color),
-    -30px 0 0 -4px var(--icon-primary-color),
-    -22px 22px 0 -4px var(--icon-primary-color),
-    -22px -22px 0 -4px var(--icon-primary-color),
-    22px -22px 0 -4px var(--icon-primary-color),
-    22px 22px 0 -4px var(--icon-primary-color);
-  border-radius: 50%;
-  -webkit-transform: scale(0);
-  -ms-transform: scale(0);
-  transform: scale(0);
-}
-
-.bookmark::before {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  border: var(--icon-circle-border);
-  opacity: 0;
-}
-
-/* actions */
-
-.abookmark:hover .bookmark {
-  fill: var(--icon-hover-color);
-}
-
-.abookmark input:checked+.bookmark::after {
-  -webkit-animation: circles var(--icon-anmt-duration) cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-  animation: circles var(--icon-anmt-duration) cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-  -webkit-animation-delay: var(--icon-anmt-duration);
-  animation-delay: var(--icon-anmt-duration);
-}
-
-.abookmark input:checked+.bookmark svg {
-  transform: rotate(320deg);
-}
-
-
-.abookmark input:checked+.bookmark {
-  fill: var(--icon-primary-color);
-  -webkit-animation: bookmark var(--icon-anmt-duration) forwards;
-  animation: bookmark var(--icon-anmt-duration) forwards;
-  -webkit-transition-delay: 0.3s;
-  -o-transition-delay: 0.3s;
-  transition-delay: 0.3s;
-}
-
-.abookmark input:checked+.bookmark::before {
-  -webkit-animation: circle var(--icon-anmt-duration) cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-  animation: circle var(--icon-anmt-duration) cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-  -webkit-animation-delay: var(--icon-anmt-duration);
-  animation-delay: var(--icon-anmt-duration);
-}
-
-@-webkit-keyframes bookmark {
-  50% {
-    -webkit-transform: scaleY(0.6);
-    transform: scaleY(0.6);
-  }
-
-  100% {
-    -webkit-transform: scaleY(1);
-    transform: scaleY(1);
-  }
-}
-
-@keyframes bookmark {
-  50% {
-    -webkit-transform: scaleY(0.6);
-    transform: scaleY(0.6);
-  }
-
-  100% {
-    -webkit-transform: scaleY(1);
-    transform: scaleY(1);
-  }
-}
-
-@-webkit-keyframes circle {
-  from {
-    width: 0;
-    height: 0;
-    opacity: 0;
-  }
-
-  90% {
-    width: var(--icon-circle-size);
-    height: var(--icon-circle-size);
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-}
-
-@keyframes circle {
-  from {
-    width: 0;
-    height: 0;
-    opacity: 0;
-  }
-
-  90% {
-    width: var(--icon-circle-size);
-    height: var(--icon-circle-size);
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-}
-
-@-webkit-keyframes circles {
-  from {
-    -webkit-transform: scale(0);
-    transform: scale(0);
-  }
-
-  40% {
-    opacity: 1;
-  }
-
-  to {
-    -webkit-transform: scale(0.8);
-    transform: scale(0.8);
-    opacity: 0;
-  }
-}
-
-@keyframes circles {
-  from {
-    -webkit-transform: scale(0);
-    transform: scale(0);
-  }
-
-  40% {
-    opacity: 1;
-  }
-
-  to {
-    -webkit-transform: scale(0.8);
-    transform: scale(0.8);
-    opacity: 0;
-  }
-}
+/*Others...*/
 
 .buttonlabel {
   position: relative;
@@ -513,11 +260,11 @@
   position: absolute;
   padding: 5px;
   border-radius: 5px;
-  background: #0d2342;
+  background: var(--buttonlabel_label_background);
   width: -moz-fit-content;
   width: fit-content;
   white-space: nowrap;
-  color: #ffffff;
+  color: var(--buttonlabel_label_color);
   font-size: 12px;
   /* font-weight: 100; */
 
@@ -543,7 +290,7 @@
   transform: translateX(-50%) rotate(180deg);
   border-width: 5px;
   border-style: solid;
-  border-color: transparent transparent #0d2342 transparent;
+  border-color: transparent transparent var(--buttonlabel_label_background) transparent;
 }
 
 
@@ -618,11 +365,6 @@
   transition: all 0.25s;
 }
 
-/* When the checkbox is checked, add a blue background */
-.todocontainer input:checked~.todocheckmark {
-  /*background-color: #2196F3;*/
-}
-
 /* Create the checkmark/indicator (hidden when not checked) */
 .todocheckmark:after {
   content: "";
@@ -668,12 +410,14 @@
   fill: #ff5555;
 }
 
-.tododeletebtn svg path, .popOutbtn svg path {
+.tododeletebtn svg path,
+.popOutbtn svg path {
   stroke: none !important;
 }
 
 /*!!END!! todo checkbox styles*/
 
+/*Loader (remove and use component asap)*/
 
 .loaderLong {
   display: block;
@@ -682,11 +426,11 @@
   width: 130px;
   height: var(--height-of-loader);
   border-radius: 30px;
-  background-color: rgba(0,0,0,0.2);
+  background-color: rgba(0, 0, 0, 0.2);
   position: relative;
 }
 
-.loaderLong_con{
+.loaderLong_con {
   display: flex;
   width: 100%;
   justify-content: center;
