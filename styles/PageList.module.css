@@ -14,19 +14,6 @@
   transition: all 0.5s;
 }
 
-.itemroot {
-  --desktophidemenu_bg: #e2e2e2;
-  --desktophidemenu_bg_hover: #c2c2c2;
-  --root_boxshadow: #e5e5e5;
-  --itemoption_hover: #ffffff;
-  --itemoption_active: #cecece1a;
-  --btn1_hover: #eeeeee;
-  --itemoption_hover_drag: #ff7777;
-  --createpage_txt: #3d3d3d;
-  --itemoption_textcolor: #19171199;
-  --itemoption_fillcolor: rgba(55, 53, 47, .35);
-
-}
 
 .mobilePageNav,
 .contextmenu,
@@ -212,22 +199,6 @@
   display: flex;
   border-radius: 5px;
   padding: 3px;
-}
-
-
-@media (prefers-color-scheme: dark) {
-  .itemroot {
-    --desktophidemenu_bg: #464646;
-    --desktophidemenu_bg_hover: #040404;
-    --root_boxshadow: #1d1d1d;
-    --itemoption_hover: #000000;
-    --itemoption_active: #0000001a;
-    --btn1_hover: #282828;
-    --itemoption_hover_drag: #ff7777;
-    --createpage_txt: #3d3d3d;
-    --itemoption_textcolor: #ffffff99;
-    --itemoption_fillcolor: #ffffff99;
-  }
 }
 
 @media(max-width: 800px) {
