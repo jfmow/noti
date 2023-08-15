@@ -6,18 +6,6 @@
   padding: 0;
 }
 
-.create {
-  --title_input_color: #ffffff;
-  --title_input_color_plcholder: #8f8f8f;
-  --title_background: linear-gradient(20deg, #607d8b, #fff, #607d8b);
-
-  --title_buttons_fill: #fff;
-  --title_buttons_background: #ffffff57;
-
-  --buttonlabel_label_background: #0d2342;
-  --buttonlabel_label_color: #ffffff;
-
-}
 
 .popOverShare {
   position: absolute;
@@ -466,7 +454,7 @@
 
 @media (prefers-color-scheme: dark) {
   .create {
-    color: #fff;
+    color: var(--create_text_color);
   }
 
   .todocontainer input:checked~.todocheckmark:after {
