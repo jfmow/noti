@@ -40,6 +40,7 @@ export default function App({ Component, pageProps }) {
           '--modal_color-26-3e9fea21': '#47435f',
           '--modal_color-19-8243e20a': '#ff2d2d',
           '--modal_color-28-8fb448ab': '#d3d3d3',
+          '--modal_color-7-0c0f90f8': '#ebebeb',
           '--modal_button_bg': '#423f59',
           '--modal_button_border': 'none',
           '--modal_button_bg_hover': '#373544',
