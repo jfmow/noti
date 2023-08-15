@@ -33,7 +33,6 @@
     color: var(--modal_color-0-c42e25a8);
 
     background: var(--modal_color-1-ea5ca4f1);
-    box-shadow: 5px 8px 5px 1px var(--modal_color-2-c86cffcc);
     border: 2px solid var(--modal_color-3-42429cc0);
 
     position: relative;
@@ -223,9 +222,9 @@
 
 
 .secondary_modal_button {
-    background: var(--modal_color-1-ea5ca4f1);
+    background: var(--modal_button_bg);
     outline: none;
-    border: 1px rgba(201, 201, 204, .48) solid;
+    border: var(--modal_button_border);
     border-radius: 10px;
     padding: 15px 10px;
     display: flex;
@@ -248,11 +247,11 @@
 }
 
 .secondary_modal_button:hover {
-    background-color: var(--modal_color-0-c42e25a8);
-    color: var(--modal_color-1-ea5ca4f1);
+    background-color: var(--modal_button_bg_hover);
+    color: var(--modal_button_text_hover);
     /* border-color: var(--modal_color-0-c42e25a8); */
     /* border: 1px solid var(--modal_color-0-c42e25a8);*/
-    box-shadow: 0px 0px 20px 0px var(--modal_color-17-4fcbb4ba);
+    box-shadow: 0px 0px 20px 0px var(--modal_button_bxshdw_hover);
 }
 
 .secondary_modal_button svg {
@@ -261,7 +260,7 @@
 }
 
 .secondary_modal_button:hover svg {
-    fill: var(--modal_color-1-ea5ca4f1);
+    fill: var(--modal_button_text_hover);
 }
 
 
@@ -270,46 +269,7 @@
 
 
 
-    .modal_container_layout {
-        background: var(--modal_color-23-7309aa07);
-        border: 3px solid var(--modal_color-0-c42e25a8);
-        box-shadow: 5px 8px 5px 1px var(--modal_color-0-c42e25a8);
-        color: var(--modal_color-1-ea5ca4f1);
-    }
 
-    .modal_container_layout .modalform .input {
-        background: rgb(34, 34, 34);
-        color: var(--modal_color-1-ea5ca4f1);
-    }
-
-    .secondary_modal_button {
-        background: var(--modal_color-25-1133eaba);
-        /* border: 2px solid var(--modal_color-6-42f923f0); */
-        /* box-shadow: 4px 3px 4px 0px var(--modal_color-26-3e9fea21); */
-        color: var(--modal_color-18-c8f98051);
-        fill: var(--modal_color-18-c8f98051);
-        border: none;
-    }
-
-    .secondary_modal_button:hover {
-        box-shadow: 0px 0px 20px 0px var(--modal_color-26-3e9fea21);
-    }
-
-    .acc_button_red {
-        outline: 3px var(--modal_color-19-8243e20a) solid;
-    }
-
-    .secondary_modal_button .acc_button_text {
-        color: rgb(149, 149, 149);
-    }
-
-    .modal_close_button svg {
-        fill: var(--modal_color-1-ea5ca4f1);
-    }
-
-    .modal_close_button svg:hover {
-        fill: var(--modal_color-28-8fb448ab);
-    }
 
     .cbx div {
         background-color: var(--modal_color-1-ea5ca4f1);

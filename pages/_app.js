@@ -33,13 +33,18 @@ export default function App({ Component, pageProps }) {
           '--itemoption_textcolor': '#ffffff99',
           '--itemoption_fillcolor': '#ffffff99',
           '--modal_color-23-7309aa07': '#464457',
-          '--modal_color-0-c42e25a8': '#403d54',
-          '--modal_color-1-ea5ca4f1': '#ffffff',
+          '--modal_color-0-c42e25a8': '#fff',
+          '--modal_color-1-ea5ca4f1': '#373544',
           '--modal_color-25-1133eaba': '#373544',
           '--modal_color-18-c8f98051': '#707684',
           '--modal_color-26-3e9fea21': '#47435f',
           '--modal_color-19-8243e20a': '#ff2d2d',
-          '--modal_color-28-8fb448ab': '#d3d3d3'
+          '--modal_color-28-8fb448ab': '#d3d3d3',
+          '--modal_button_bg': '#423f59',
+          '--modal_button_border': 'none',
+          '--modal_button_bg_hover': '#373544',
+          '--modal_button_text_hover': '#fff',
+          '--modal_button_bxshdw_hover': '#46425e'
         }
         break;
       default:
