@@ -5,10 +5,10 @@ import { register } from 'next-offline/runtime';
 import { useEffect, useState } from 'react';
 export default function App({ Component, pageProps }) {
 
-  //useEffect(() => {
-  //  //register('https://beta.jamesmowat.com/service-worker.js')
-  //  register(`${process.env.NEXT_PUBLIC_CURRENTURL}/service-worker.js`)
-  //}, [])
+  useEffect(() => {
+    //register('https://beta.jamesmowat.com/service-worker.js')
+    register(`${process.env.NEXT_PUBLIC_CURRENTURL}/service-worker-min.js`)
+  }, [])
 
   useEffect(() => {
     const theme = window.localStorage.getItem('theme')
