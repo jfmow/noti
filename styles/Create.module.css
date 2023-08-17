@@ -81,7 +81,7 @@
   /* text-shadow: 0 0 5px #9f86ff; */
   text-align: center;
   font-weight: 700;
-  word-break: break-all;
+  text-wrap: balance;
 }
 
 .titleinput:hover {

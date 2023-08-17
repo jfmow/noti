@@ -102,7 +102,6 @@ const MyComponent = ({ currPage }) => {
   if (loading) {
     return (
       <div className={`${styles.itemroot}`} id='rootitems'>
-        <button onClick={setVisibleState} className={styles.hidemenubtn}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0V0z" fill="none" /><path d="M18.3 5.71c-.39-.39-1.02-.39-1.41 0L12 10.59 7.11 5.7c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L10.59 12 5.7 16.89c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0L12 13.41l4.89 4.89c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z" /></svg></button>
         <div className={styles.load1con}>
           <svg className={styles.load1} viewBox="25 25 50 50">
             <circle className={styles.load2} r="20" cy="50" cx="50"></circle>
@@ -226,6 +225,7 @@ const MyComponent = ({ currPage }) => {
                 currPage={currPage}
                 createNewPage={createNewPage}
                 setContextMenu={setContextMenu}
+                setVisibleState={setVisibleState}
               >
                 {renderChildComponents(rootParent.id, 0)}
               </RootParentComponent>
@@ -254,7 +254,7 @@ const MyComponent = ({ currPage }) => {
   );
 };
 
-const RootParentComponent = ({ item, currPage, createNewPage, setContextMenu, children }) => {
+const RootParentComponent = ({ item, currPage, createNewPage, setContextMenu, setVisibleState, children }) => {
   //const [expand, setExpand] = useState(false);
 
   return (
@@ -266,6 +266,7 @@ const RootParentComponent = ({ item, currPage, createNewPage, setContextMenu, ch
           currPage2={currPage}
           isActive={currPage.includes(item.id)}
           createNewPage={createNewPage}
+          setVisibleState={setVisibleState}
           setContextMenu={setContextMenu}
         >
           {children}
@@ -282,10 +283,8 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
   const router = useRouter()
   function openPage(e, item) {
     e.preventDefault();
-
-    if (window.innerWidth < 800) {
-      // Perform actions for screens less than 800px wide
-      setVisibleState(false);
+    if(window.innerWidth < 800){
+      setVisibleState(false)
     }
     router.push(`/page/${item}`);
   }
