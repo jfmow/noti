@@ -17,6 +17,7 @@
 
     /*transition: 0.5s all ease-in-out;*/
     overflow: hidden;
+    transition: 0.5s width, 0.5s padding, 0.5s overflow;
 }
 
 
