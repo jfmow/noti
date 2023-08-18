@@ -1,5 +1,5 @@
 .container {
-    --border_color: #dadada;
+    
     position: fixed;
     width: 298px;
     bottom: 0;
@@ -12,8 +12,8 @@
     justify-content: space-around;
     padding: 0em 1em;
     min-height: 10vh;
-    color: #9da5b5;
-    border-top: 1px solid var(--border_color);
+    color: var(--user_option_text);
+    border-top: 1px solid var(--useroption_border_color);
 
     /*transition: 0.5s all ease-in-out;*/
     overflow: hidden;
@@ -31,7 +31,7 @@
     width: 16px;
     height: 16px;
     cursor: pointer;
-    fill: #707684;
+    fill: var(--user_option_text);
 }
 
 .icons .icon {
@@ -53,11 +53,6 @@
     fill: #707684;
 }
 
-@media(prefers-color-scheme: dark){
-    .container{
-        --border_color: #2d2d2d;
-    }
-}
 
 @media(max-width: 800px) {
     .container {

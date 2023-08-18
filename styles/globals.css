@@ -62,6 +62,9 @@
   --buttonlabel_label_background: #0d2342;
   --buttonlabel_label_color: #ffffff;
 
+  --user_option_text: #9da5b5;
+  --useroption_border_color: #dadada;
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -110,7 +113,8 @@
     --modal_button_bg_hover: #000;
     --modal_button_text_hover: #fff;
     --modal_button_bxshdw_hover: #1c1c1c;
-
+    
+    --useroption_border_color: #2d2d2d;
   }
 }
 
