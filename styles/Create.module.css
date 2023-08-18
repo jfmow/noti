@@ -494,7 +494,7 @@
     transform: scale(0.85);
     width: 100%;
     /* margin: 1em; */
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
   }
 }
