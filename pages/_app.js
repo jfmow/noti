@@ -117,13 +117,13 @@ export default function App({ Component, pageProps }) {
           '--modal_color-22-a09b1904': '#fff'
         }
         break;
-        case 'relax orange':
-          vars= {
-            '--background': '#e69973',
-'--big_button_background': '#353535',
-'--big_button_border': '#4f4f4f',
+      case 'relax orange':
+        vars = {
+          '--background': '#e69973',
+'--big_button_background': '#d87c4f',
+'--big_button_border': '#d18966',
 '--big_button_border_hover_alt': '#2d2d2d',
-'--big_button_text': '#707684',
+'--big_button_text': '#ffffff',
 '--create_text_color': '#fff',
 '--desktophidemenu_bg': '#464646',
 '--desktophidemenu_bg_hover': '#040404',
@@ -152,9 +152,9 @@ export default function App({ Component, pageProps }) {
 '--modal_button_text_hover': '#dedede',
 '--modal_button_bxshdw_hover': '#2d333a00',
 '--user_option_text': '#fffceb',
-'--useroption_border_color': '#fffceb',
-          }
-          break;
+'--useroption_border_color': '#c8815e'
+        }
+        break;
       default:
         break;
     }
