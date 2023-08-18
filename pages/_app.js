@@ -63,7 +63,7 @@ export default function App({ Component, pageProps }) {
           '--itemoption_active': '#0000001a',
           '--btn1_hover': '#282828',
           '--itemoption_hover_drag': '#ff7777',
-          '--createpage_txt': '#3d3d3d',
+          '--createpage_txt': '#fff',
           '--itemoption_textcolor': '#ffffff99',
           '--itemoption_fillcolor': '#ffffff99',
           '--modal_color-23-7309aa07': '#464457',
