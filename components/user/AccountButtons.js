@@ -111,12 +111,6 @@ function AccManagementForm({ Close, usageOpenDefault }) {
     const updateEmailToastid = toast.loading("Please wait...")
     try {
       await pb.collection('users').requestEmailChange(newEmail);
-      const response = await fetch("/api/user/emailchange", {
-        method: "POST",
-        body: JSON.stringify({
-          user: { token: pb.authStore.token },
-        }),
-      });
       toast.update(updateEmailToastid, { render: `Please check the inbox of ${newEmail} to confirm the change.`, type: "success", isLoading: false });
       toast.done(updateEmailToastid)
     } catch (error) {

@@ -15,6 +15,7 @@
 }
 
 
+
 .mobilePageNav,
 .contextmenu,
 .hidemenubtn {
@@ -190,7 +191,7 @@
   cursor: pointer;
 }
 
-.contextMenuItem:hover{
+.contextMenuItem:hover {
   background: #e0e0e0;
 }
 
