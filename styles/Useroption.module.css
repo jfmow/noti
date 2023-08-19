@@ -1,5 +1,5 @@
 .container {
-    
+
     position: fixed;
     width: 298px;
     bottom: 0;
@@ -11,7 +11,7 @@
     align-items: center;
     justify-content: space-around;
     padding: 0em 1em;
-    min-height: 10vh;
+    height: 70px;
     color: var(--user_option_text);
     border-top: 1px solid var(--useroption_border_color);
 
