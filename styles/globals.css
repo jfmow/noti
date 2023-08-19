@@ -113,7 +113,7 @@
     --modal_button_bg_hover: #000;
     --modal_button_text_hover: #fff;
     --modal_button_bxshdw_hover: #1c1c1c;
-    
+
     --useroption_border_color: #2d2d2d;
   }
 }
@@ -195,6 +195,7 @@ a {
 ::-webkit-scrollbar {
   width: 2px;
   height: 1px;
+  display: none;
 }
 
 /* Track */

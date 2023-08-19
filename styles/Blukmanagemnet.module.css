@@ -1,4 +1,4 @@
-.container{
+.container {
     width: 100%;
     height: 100dvh;
     padding: 0;
@@ -6,7 +6,7 @@
     position: relative;
 }
 
-.header{
+.header {
     width: 100%;
     min-height: 30dvh;
     padding: 2em;
@@ -16,21 +16,20 @@
     align-items: center;
 }
 
-.page_align_center{
+.page_align_center {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.pages{
+
+.pages {
     display: flex;
     flex-direction: row;
     gap: 10px;
     width: -moz-fit-content;
     width: 90%;
     /* min-width: 35%; */
-    box-shadow: 0px 0px 7px 3px #e9e9e9;
     padding: 2em;
-    background: #fff;
     height: -moz-fit-content;
     height: fit-content;
     overflow-y: scroll;
@@ -41,11 +40,11 @@
     justify-content: center;
 }
 
-.deletingpage{
+.deletingpage {
     background: #bababa;
 }
 
-.selected{
+.selected {
     border: 2px dashed #ff2f2f !important;
     background: transparent !important;
     color: #000000 !important;
@@ -53,7 +52,7 @@
     text-decoration: line-through;
 }
 
-.page{
+.page {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -68,18 +67,19 @@
     background: var(--big_button_background);
 }
 
-.page_title{
+.page_title {
     font-weight: 600;
     font-size: 16px;
 }
-.page_icon{
+
+.page_icon {
     width: 32px;
     height: 32px;
     display: flex;
     align-items: center;
-  }
+}
 
-.page_deletebtn{
+.page_deletebtn {
     background: none;
     border: none;
     display: flex;
@@ -93,29 +93,30 @@
     /* height: fit-content;*/
 }
 
-.fixeddeletebtn{
+.fixeddeletebtn {
     position: fixed;
-    bottom:2em;
+    bottom: 2em;
     left: 2em;
     background-color: #f61c1c !important;
 }
 
-.fixeddeletebtn::after{
+.fixeddeletebtn::after {
     background-color: #ff2f2f !important;
 }
 
-@media(prefers-color-scheme: dark){
-    .page{
+@media(prefers-color-scheme: dark) {
+    .page {
         background: var(--big_button_background);
         color: var(--big_button_text);
     }
-    .pages{
-        box-shadow: 0px 0px 7px 3px #1c1c1c;
+
+    .pages {
         background: transparent;
     }
 
-    .selected{
-        color: #fff !important;;
-        
+    .selected {
+        color: #fff !important;
+        ;
+
     }
 }
