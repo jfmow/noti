@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import Head from 'next/head';
 import Link from 'next/link';
 import compressImage from '@/lib/CompressImg';
-import { AlternateButton, AlternateInput, ModalButton, ModalCheckBox, ModalContainer, ModalForm, ModalInput, ModalTitle } from '@/lib/Modal';
+import { AlternateButton, AlternateInput, ModalButton, ModalCheckBox, ModalCheckBoxSlider, ModalContainer, ModalForm, ModalInput, ModalTitle } from '@/lib/Modal';
 import { AnimatePresence } from 'framer-motion';
 import Router from 'next/router';
 import dynamic from 'next/dynamic';
@@ -518,10 +518,7 @@ function Notitoggle() {
 
   return (
     <>
-      <label className={styles.switch}>
-        <input type="checkbox" checked={push} disabled={pendingPush} onChange={push ? unsubscribeFromPush : subscribeToPush} />
-        <span className={styles.slider}></span>
-      </label>
+      <ModalCheckBoxSlider checked={push} chngevent={push ? unsubscribeFromPush : subscribeToPush} />
     </>
   )
 }
@@ -538,10 +535,7 @@ function Quotetoggle() {
   }
   return (
     <>
-      <label className={styles.switch}>
-        <input type="checkbox" checked={pb.authStore.model.quotes} disabled={pendingPush} onChange={toggle} />
-        <span className={styles.slider}></span>
-      </label>
+      <ModalCheckBoxSlider checked={pb.authStore.model.quotes} chngevent={toggle} />
     </>
   )
 }
