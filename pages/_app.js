@@ -158,6 +158,40 @@ export default function App({ Component, pageProps }) {
           '--useroption_border_color': '#c8815e'
         }
         break;
+      case 'pro dark':
+        vars = {
+          '--background': '#000000',
+          '--big_button_background': '#0c0c0c',
+          '--big_button_border': '#000000',
+          '--big_button_border_hover_alt': '#2d2d2d',
+          '--big_button_text': '#7d7d7d',
+          '--create_text_color': '#fff',
+          '--desktophidemenu_bg': '#464646',
+          '--desktophidemenu_bg_hover': '#040404',
+          '--root_boxshadow': '#080808',
+          '--itemoption_hover': '#2b2b2b',
+          '--itemoption_active': '#0000001a',
+          '--btn1_hover': '#383838',
+          '--itemoption_hover_drag': '#ff7777',
+          '--createpage_txt': '#fff',
+          '--itemoption_textcolor': '#ffffff99',
+          '--itemoption_fillcolor': '#ffffff99',
+          '--modal_color-23-7309aa07': '#464457',
+          '--modal_color-0-c42e25a8': '#fff',
+          '--modal_color-1-ea5ca4f1': '#111111',
+          '--modal_color-25-1133eaba': '#373544',
+          '--modal_color-18-c8f98051': '#707684',
+          '--modal_color-26-3e9fea21': '#47435f',
+          '--modal_color-19-8243e20a': '#ff2d2d',
+          '--modal_color-28-8fb448ab': '#d3d3d3',
+          '--modal_color-7-0c0f90f8': '#ebebeb',
+          '--modal_button_bg': '#292929',
+          '--modal_button_border': 'none',
+          '--modal_button_bg_hover': '#2b2b2b',
+          '--modal_button_text_hover': '#fff',
+          '--modal_button_bxshdw_hover': '#000000'
+        }
+        break;
       default:
         break;
     }
