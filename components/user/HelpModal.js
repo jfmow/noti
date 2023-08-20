@@ -28,6 +28,10 @@ export default function UserHelpModal({ CloseHelp }) {
                         Router.reload()
                     }}>Relax orange</AlternateButton>
                     <AlternateButton click={() => {
+                        window.localStorage.setItem('theme', 'pro dark')
+                        Router.reload()
+                    }}>Pro dark</AlternateButton>
+                    <AlternateButton click={() => {
                         window.localStorage.setItem('theme', '')
                         Router.reload()
                     }}>System</AlternateButton>
