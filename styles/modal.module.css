@@ -209,6 +209,9 @@
 
 
 /* checkbox settings 👇 */
+.cbxcon {
+    display: flex;
+}
 
 .modal_checkbox {
     --primary-color: var(--big_button_text);
