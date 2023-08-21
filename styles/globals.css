@@ -58,6 +58,7 @@
 
   --title_buttons_fill: #fff;
   --title_buttons_background: #ffffff57;
+  --create_text_color: #000;
 
   --buttonlabel_label_background: #0d2342;
   --buttonlabel_label_color: #ffffff;
@@ -113,6 +114,7 @@
     --modal_button_bg_hover: #000;
     --modal_button_text_hover: #fff;
     --modal_button_bxshdw_hover: #1c1c1c;
+    --create_text_color: #fff;
 
     --useroption_border_color: #2d2d2d;
   }
@@ -138,7 +140,7 @@ body {
 body {
   color: #000;
   background: var(--background);
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  font-family: Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 

@@ -17,6 +17,7 @@
   overflow-x: hidden;
   overflow-y: scroll;
   flex: 1 1 0%;
+  color: var(--create_text_color);
 }
 
 .create::-webkit-scrollbar {
@@ -47,6 +48,7 @@
   word-break: break-word;
   background: var(--background);
 }
+
 /*
 .creategrid_lock {
   height: 60dvh;

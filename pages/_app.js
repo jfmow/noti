@@ -45,7 +45,9 @@ export default function App({ Component, pageProps }) {
           '--modal_button_border': 'none',
           '--modal_button_bg_hover': '#373544',
           '--modal_button_text_hover': '#fff',
-          '--modal_button_bxshdw_hover': '#46425e'
+          '--modal_button_bxshdw_hover': '#46425e',
+          '--create_text_color': '#fff',
+          '--useroption_border_color': '#3d3d3d',
         }
         break;
       case 'navy blue':
@@ -79,7 +81,9 @@ export default function App({ Component, pageProps }) {
           '--modal_button_border': 'none',
           '--modal_button_bg_hover': '#282d34',
           '--modal_button_text_hover': '#fff',
-          '--modal_button_bxshdw_hover': '#2d333a'
+          '--modal_button_bxshdw_hover': '#2d333a',
+          '--create_text_color': '#fff',
+          '--useroption_border_color': '#404753',
         }
         break;
       case 'pro pink':
@@ -117,7 +121,9 @@ export default function App({ Component, pageProps }) {
           '--modal_color-22-a09b1904': '#fff',
           '--modal_color-3-42429cc0': '#c05ab1',
           '--user_option_text': '#fffceb',
-          '--useroption_border_color': '#c667b8'
+          '--useroption_border_color': '#c667b8',
+          '--create_text_color': '#fff',
+          '--useroption_border_color': '#af63a4',
         }
         break;
       case 'relax orange':
@@ -155,7 +161,9 @@ export default function App({ Component, pageProps }) {
           '--modal_button_text_hover': '#dedede',
           '--modal_button_bxshdw_hover': '#2d333a00',
           '--user_option_text': '#fffceb',
-          '--useroption_border_color': '#c8815e'
+          '--useroption_border_color': '#c8815e',
+          '--create_text_color': '#fff',
+          '--useroption_border_color': '#d58e6b',
         }
         break;
       case 'pro dark':
@@ -189,14 +197,15 @@ export default function App({ Component, pageProps }) {
           '--modal_button_border': 'none',
           '--modal_button_bg_hover': '#2b2b2b',
           '--modal_button_text_hover': '#fff',
-          '--modal_button_bxshdw_hover': '#000000'
+          '--modal_button_bxshdw_hover': '#000000',
+          '--create_text_color': '#fff',
+          '--useroption_border_color': '#141414',
         }
         break;
       default:
         break;
     }
     const r = document.documentElement.style;
-
     for (const variable in vars) {
       r.setProperty(variable, vars[variable]);
     }
