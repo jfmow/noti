@@ -14,6 +14,7 @@ export default function LoginPage() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [loginRunning, setLoginRunning] = useState(false)
+    const [passwordVisible, setPasswordVisible] = useState(false)
 
     async function loginNormal(e) {
         e.preventDefault();
@@ -54,6 +55,13 @@ export default function LoginPage() {
         setLoginRunning(false)
     }
 
+    async function genPassword() {
+        const pwd = await fetch('/api/random-password?length=16')
+        const pwdstring = await pwd.json()
+        setPassword(pwdstring.password)
+        setPasswordVisible(true)
+    }
+
     return (
         <>
 
@@ -79,7 +87,10 @@ export default function LoginPage() {
                             <input type="text" id="username" name="username" placeholder="Enter a username" required="" onChange={(e) => setUsername(e.target.value)} />
 
                             <label for="password">Password</label>
-                            <input type="password" id="password" name="password" placeholder="Enter your password" required="" onChange={(e) => setPassword(e.target.value)} />
+                            <input type={passwordVisible ? 'text' : 'password'} id="password" value={password} name="password" placeholder="Enter your password" required="" onChange={(e) => setPassword(e.target.value)} />
+                            <button type="button" className={`${styles.auth_signuplink} ${styles.auth_link}`} style={{ background: 'none', border: 'none', cursor: 'pointer', marginTop: '10px' }} onClick={() => {
+                                genPassword()
+                            }}>Or Generate password</button>
                         </div>
 
                         <p style={{ margin: '10px 0', wordBreak: 'break-all' }}>Please read the <Link href='/auth/terms-and-conditions' style={{ textDecoration: 'underline' }}>Terms and conditions</Link>, <Link style={{ textDecoration: 'underline' }} href='/auth/privacy-policy'>Privacy policy</Link> and <Link style={{ textDecoration: 'underline' }} href='/auth/disclamer'>Disclamer</Link> before continuing. By continuing you agree to these.</p>
