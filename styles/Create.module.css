@@ -47,11 +47,11 @@
   word-break: break-word;
   background: var(--background);
 }
-
+/*
 .creategrid_lock {
   height: 60dvh;
   overflow: scroll;
-}
+}*/
 
 .header {
   width: 100%;
