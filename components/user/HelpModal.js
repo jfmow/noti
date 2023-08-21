@@ -32,6 +32,10 @@ export default function UserHelpModal({ CloseHelp }) {
                         Router.reload()
                     }}>Pro dark</AlternateButton>
                     <AlternateButton click={() => {
+                        window.localStorage.setItem('theme', 'mid light')
+                        Router.reload()
+                    }}>Mid light</AlternateButton>
+                    <AlternateButton click={() => {
                         window.localStorage.setItem('theme', '')
                         Router.reload()
                     }}>System</AlternateButton>
