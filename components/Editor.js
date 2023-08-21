@@ -241,7 +241,6 @@ function Editor({ page, preview, multi }) {
             );
           } else {
             setArticleHeader(record.unsplash);
-
           }
           setIsLoading(false);
         } catch (error) {

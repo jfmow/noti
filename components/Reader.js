@@ -52,7 +52,7 @@ function Editor({ page, multi }) {
                             `${process.env.NEXT_PUBLIC_POCKETURL}/api/files/pages/${page}/${record.header_img}`
                         );
                     } else {
-                        setArticleHeader(null);
+                        setArticleHeader(record.unsplash);
                     }
                     setError(false);
                     setIsLoading(false);
