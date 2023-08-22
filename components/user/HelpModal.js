@@ -7,8 +7,10 @@ import { useState } from "react";
 export default function UserHelpModal({ CloseHelp }) {
     const [themePicker, setThemePicker] = useState(false)
     function disableCustomTheme() {
-        const customTheme = window.localStorage.getItem('Custom_theme')
-        window.localStorage.setItem('Custom_theme', JSON.stringify({ 'enabled': false, 'data': JSON.parse(customTheme).data }))
+        try {
+            const customTheme = window.localStorage.getItem('Custom_theme')
+            window.localStorage.setItem('Custom_theme', JSON.stringify({ 'enabled': false, 'data': JSON.parse(customTheme).data }))
+        } catch (err) { }
     }
     return (
         <>
