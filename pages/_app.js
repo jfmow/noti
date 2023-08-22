@@ -10,6 +10,7 @@ export default function App({ Component, pageProps }) {
     register(`${process.env.NEXT_PUBLIC_CURRENTURL}/service-worker-min.js`)
   }, [])
 
+
   useEffect(() => {
     const theme = window.localStorage.getItem('theme')
 
