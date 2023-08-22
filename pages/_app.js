@@ -16,7 +16,7 @@ export default function App({ Component, pageProps }) {
     let vars = {}
 
     const customTheme = window.localStorage.getItem('Custom_theme')
-    if (JSON.parse(customTheme).enabled) {
+    if (JSON.parse(customTheme)?.enabled) {
       vars = JSON.parse(customTheme).data
     } else {
       switch (theme) {
