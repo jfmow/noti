@@ -203,13 +203,13 @@ const MyComponent = ({ currPage }) => {
       </div>
       {!hidden && (<Tut setHidden={setHidden} />)}
       <div className={`${styles.itemroot}`} id='rootitems'>
-        
+
         {showMultiEditorSelector && (<MultiEditor pagesList={items} Close={() => setShowMultiEditorSelector(false)} />)}
-        
+
         <button onClick={setVisibleState} className={styles.desktophidemenu}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M24 0v24H0V0h24z" fill="none" opacity=".87" /><path d="M17.7 15.89L13.82 12l3.89-3.89c.39-.39.39-1.02 0-1.41-.39-.39-1.02-.39-1.41 0l-4.59 4.59c-.39.39-.39 1.02 0 1.41l4.59 4.59c.39.39 1.02.39 1.41 0 .38-.38.38-1.02-.01-1.4zM7 6c.55 0 1 .45 1 1v10c0 .55-.45 1-1 1s-1-.45-1-1V7c0-.55.45-1 1-1z" /></svg></button>
-        
+
         <ImportantNotes notes={items} setVisibleState={setVisibleState} />
-                
+
         <AnimatePresence>
           {rootParents.map((rootParent) => (
             <motion.div
@@ -283,7 +283,7 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
   const router = useRouter()
   function openPage(e, item) {
     e.preventDefault();
-    if(window.innerWidth < 800){
+    if (window.innerWidth < 800) {
       setVisibleState(false)
     }
     router.push(`/page/${item}`);
@@ -366,7 +366,7 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
     <li >
       <div
         className={` ${currPage2 === item.id || isActive ? styles.active : ''} ${hoveredItemId === item.id ? styles.hoveringover : ''
-          } ${styles.itemoption}`}
+          } ${styles.page_list_item}`}
         id={currPage2 === item.id ? styles.active : 'fake'}
         onClick={(e) => openPage(e, item.id)}
         onDragOver={(e) => handleDragOver(e, item.id)}
@@ -434,7 +434,7 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
         )}
       </div>
       {expand && children.length === 0 && (
-        <span className={styles.createpage_txt}>
+        <span className={styles.create_new_page_btn_text}>
           No sub pages
         </span>
       )}
@@ -466,7 +466,7 @@ function ImportantNotes({ notes, setVisibleState }) {
             <>
               <li >
                 <div
-                  className={`${styles.itemoption}`}
+                  className={`${styles.page_list_item}`}
 
                   onClick={(e) => openPage(e, note.id)}
                 >

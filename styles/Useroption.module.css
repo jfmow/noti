@@ -13,7 +13,7 @@
     padding: 0em 1em;
     height: 70px;
     color: var(--user_option_text);
-    border-top: 1px solid var(--useroption_border_color);
+    border-top: 1px solid var(--userinfo_section_bordertop);
 
     /*transition: 0.5s all ease-in-out;*/
     overflow: hidden;

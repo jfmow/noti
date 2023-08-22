@@ -14,36 +14,36 @@
 
   --desktophidemenu_bg: #e2e2e2;
   --desktophidemenu_bg_hover: #c2c2c2;
-  --root_boxshadow: #e5e5e5;
-  --itemoption_hover: #ffffff;
-  --itemoption_active: #cecece1a;
-  --btn1_hover: #eeeeee;
-  --itemoption_hover_drag: #ff7777;
-  --createpage_txt: #3d3d3d;
-  --itemoption_textcolor: #19171199;
-  --itemoption_fillcolor: rgba(55, 53, 47, .35);
+  --boxshadow_primary: #e5e5e5;
+  --page_list_item_hover: #ffffff;
+  --page_list_item_active: #cecece1a;
+  --page_list_item_icons_background_hover: #eeeeee;
+  --page_list_item_hover_drag: #ff7777;
+  --create_new_page_btn_text: #3d3d3d;
+  --page_list_item_icons: #19171199;
+  --page_list_item_fillcolor: rgba(55, 53, 47, .35);
 
-  --modal_color-0-c42e25a8: #000000;
-  --modal_color-1-ea5ca4f1: #ffffff;
+  --modal_text_color: #000000;
+  --modal_background: #ffffff;
   --modal_color-2-c86cffcc: #9d9d9d;
   --modal_color-3-42429cc0: #dfdfdf;
   --modal_color-4-8860c804: rgb(227, 227, 227);
   --modal_color-5-32f42df1: #8e8e8e;
   --modal_color-6-42f923f0: #4f4f4f;
-  --modal_color-7-0c0f90f8: #333333;
+  --modal_close_button_hover: #333333;
   --modal_color-13-228c15be: #1899d6;
   --modal_color-14-a7091aca: #1cb0f6;
   --modal_color-16-af97a36b: rgba(201, 201, 204, .48);
   --modal_color-17-4fcbb4ba: #e8e8e8;
-  --modal_color-18-c8f98051: #707684;
+  --modal_button_text: #707684;
   --modal_color-19-8243e20a: #ff2d2d;
-  --modal_color-22-a09b1904: #50545d;
-  --modal_color-23-7309aa07: #1f1f1f;
+  --modal_button_svg: #50545d;
+  --modal_color-23-7309aa07_NOTUSED: #1f1f1f;
   --modal_color-24-3f5683d9: rgb(34, 34, 34);
-  --modal_color-25-1133eaba: #353535;
-  --modal_color-26-3e9fea21: #1c1c1c;
+  --modal_color-25-1133eaba_NOTUSED: #353535;
+  --modal_color-26-3e9fea21_NOTUSED: #1c1c1c;
   --modal_color-27-e4ad4b96: rgb(149, 149, 149);
-  --modal_color-28-8fb448ab: #d3d3d3;
+  --modal_color-28-8fb448ab_NOTUSED: #d3d3d3;
   --modal_color-29-93b283f1: #eeeeee;
   --modal_color-30-88babb29: hsl(214, 97%, 59%);
   --modal_button_bg: none;
@@ -58,13 +58,13 @@
 
   --title_buttons_fill: #fff;
   --title_buttons_background: #ffffff57;
-  --create_text_color: #000;
+  --editor_text: #000;
 
   --buttonlabel_label_background: #0d2342;
   --buttonlabel_label_color: #ffffff;
 
   --user_option_text: #9da5b5;
-  --useroption_border_color: #dadada;
+  --userinfo_section_bordertop: #dadada;
 
 }
 
@@ -75,38 +75,38 @@
     --big_button_border: #4f4f4f;
     --big_button_border_hover_alt: #2d2d2d;
     --big_button_text: #707684;
-    --create_text_color: #fff;
+    --editor_text: #fff;
     --desktophidemenu_bg: #464646;
     --desktophidemenu_bg_hover: #040404;
-    --root_boxshadow: #1d1d1d;
-    --itemoption_hover: #000000;
-    --itemoption_active: #0000001a;
-    --btn1_hover: #282828;
-    --itemoption_hover_drag: #ff7777;
-    --createpage_txt: #3d3d3d;
-    --itemoption_textcolor: #ffffff99;
-    --itemoption_fillcolor: #ffffff99;
-    --modal_color-0-c42e25a8: #ffffff;
-    --modal_color-1-ea5ca4f1: #1f1f1f;
+    --boxshadow_primary: #1d1d1d;
+    --page_list_item_hover: #000000;
+    --page_list_item_active: #0000001a;
+    --page_list_item_icons_background_hover: #282828;
+    --page_list_item_hover_drag: #ff7777;
+    --create_new_page_btn_text: #3d3d3d;
+    --page_list_item_icons: #ffffff99;
+    --page_list_item_fillcolor: #ffffff99;
+    --modal_text_color: #ffffff;
+    --modal_background: #1f1f1f;
     --modal_color-2-c86cffcc: #9d9d9d;
     --modal_color-3-42429cc0: #000000;
     --modal_color-4-8860c804: rgb(227, 227, 227);
     --modal_color-5-32f42df1: #8e8e8e;
     --modal_color-6-42f923f0: #4f4f4f;
-    --modal_color-7-0c0f90f8: #333333;
+    --modal_close_button_hover: #333333;
     --modal_color-13-228c15be: #1899d6;
     --modal_color-14-a7091aca: #1cb0f6;
     --modal_color-16-af97a36b: rgba(201, 201, 204, .48);
     --modal_color-17-4fcbb4ba: #e8e8e8;
-    --modal_color-18-c8f98051: #707684;
+    --modal_button_text: #707684;
     --modal_color-19-8243e20a: #ff2d2d;
-    --modal_color-22-a09b1904: #50545d;
-    --modal_color-23-7309aa07: #1f1f1f;
+    --modal_button_svg: #50545d;
+    --modal_color-23-7309aa07_NOTUSED: #1f1f1f;
     --modal_color-24-3f5683d9: rgb(34, 34, 34);
-    --modal_color-25-1133eaba: #353535;
-    --modal_color-26-3e9fea21: #1c1c1c;
+    --modal_color-25-1133eaba_NOTUSED: #353535;
+    --modal_color-26-3e9fea21_NOTUSED: #1c1c1c;
     --modal_color-27-e4ad4b96: rgb(149, 149, 149);
-    --modal_color-28-8fb448ab: #d3d3d3;
+    --modal_color-28-8fb448ab_NOTUSED: #d3d3d3;
     --modal_color-29-93b283f1: #eeeeee;
     --modal_color-30-88babb29: hsl(214, 97%, 59%);
     --modal_button_bg: #353535;
@@ -114,9 +114,9 @@
     --modal_button_bg_hover: #000;
     --modal_button_text_hover: #fff;
     --modal_button_bxshdw_hover: #1c1c1c;
-    --create_text_color: #fff;
+    --editor_text: #fff;
 
-    --useroption_border_color: #2d2d2d;
+    --userinfo_section_bordertop: #2d2d2d;
   }
 }
 

@@ -10,7 +10,7 @@
   flex-direction: column;
   border: none;
   background: var(--background);
-  box-shadow: 8px 0px 3px 0px var(--root_boxshadow);
+  box-shadow: 8px 0px 3px 0px var(--boxshadow_primary);
   transition: all 0.5s;
 }
 
@@ -35,7 +35,7 @@
   padding: 5px;
   border-radius: 5px;
   z-index: 3;
-  fill: var(--itemoption_fillcolor);
+  fill: var(--page_list_item_fillcolor);
   cursor: pointer;
 }
 
@@ -69,7 +69,7 @@
   list-style-type: none;
 }
 
-.itemoption,
+.page_list_item,
 .btn1,
 .createpage,
 .createrootpage {
@@ -81,14 +81,14 @@
 }
 
 .createrootpage svg {
-  fill: var(--itemoption_fillcolor);
+  fill: var(--page_list_item_fillcolor);
   display: flex;
   width: 16px;
   height: 16px;
 }
 
 
-.itemoption,
+.page_list_item,
 .createrootpage {
   display: flex;
   flex-direction: row;
@@ -98,14 +98,14 @@
   list-style-type: none;
   gap: 5px;
   border-radius: 10px;
-  color: var(--itemoption_textcolor);
+  color: var(--page_list_item_icons);
   font-size: 16px;
   margin: 3px 1px;
 
 }
 
-.itemoption svg {
-  fill: var(--itemoption_fillcolor);
+.page_list_item svg {
+  fill: var(--page_list_item_fillcolor);
   display: flex;
   width: 24px;
   height: 24px;
@@ -125,12 +125,12 @@
   margin-left: 10px;
 }
 
-.itemoption:hover {
-  background: var(--itemoption_hover) !important;
+.page_list_item:hover {
+  background: var(--page_list_item_hover) !important;
 }
 
-.itemoption .btn1,
-.itemoption .createpage {
+.page_list_item .btn1,
+.page_list_item .createpage {
   display: flex;
   background: none;
   border-radius: 5px;
@@ -138,23 +138,23 @@
   cursor: pointer;
 }
 
-.itemoption .btn1:hover,
-.itemoption .createpage:hover,
+.page_list_item .btn1:hover,
+.page_list_item .createpage:hover,
 .createrootpage:hover {
-  background: var(--btn1_hover);
+  background: var(--page_list_item_icons_background_hover);
 }
 
 .active {
-  background: var(--itemoption_active);
+  background: var(--page_list_item_active);
 }
 
 .hoveringover {
-  background: var(--itemoption_hover_drag) !important;
+  background: var(--page_list_item_hover_drag) !important;
 }
 
-.createpage_txt {
+.create_new_page_btn_text {
   font-size: 12px;
-  color: var(--createpage_txt);
+  color: var(--create_new_page_btn_text);
   user-select: none;
   pointer-events: none;
   margin-left: 10px;
