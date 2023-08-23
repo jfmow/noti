@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styles from '@/styles/PageList.module.css';
-import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import PocketBase from 'pocketbase';
 
@@ -11,6 +10,7 @@ import dynamic from 'next/dynamic';
 import { AlternateButton, ModalContainer, ModalForm, ModalTitle } from '@/lib/Modal';
 import UserOptions from './UserInfo';
 const Tut = dynamic(() => import('./Tutorial'));
+const Icons = dynamic(() => import('./Icons'));
 
 const MyComponent = ({ currPage }) => {
   const [items, setItems] = useState([]);
@@ -280,6 +280,8 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
   const [expand, setExpand] = useState(item.expanded);
   const [hoveredItemId, setHoveredItemId] = useState(null);
 
+  const [iconModalState, setIconModalState] = useState(false)
+
   const router = useRouter()
   function openPage(e, item) {
     e.preventDefault();
@@ -361,86 +363,100 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
     setContextMenu(event, item)
   }
 
+  async function changePageIcon(e) {
+    const data = {
+      icon: e.image,
+    };
+    //icon.codePointAt(0).toString(16)
+    setIconModalState(false);
+    await pb.collection("pages").update(item.id, data);
+  }
+
 
   return (
-    <li >
-      <div
-        className={` ${currPage2 === item.id || isActive ? styles.active : ''} ${hoveredItemId === item.id ? styles.hoveringover : ''
-          } ${styles.page_list_item}`}
-        id={currPage2 === item.id ? styles.active : 'fake'}
-        onClick={(e) => openPage(e, item.id)}
-        onDragOver={(e) => handleDragOver(e, item.id)}
-        onDragLeave={handleDragLeave}
-        onDrop={(e) => handleDragEnd(e, item.id, item.parentId)}
-        onDragStart={(e) => handleDragStart(e, item.id)}
-        draggable
-        onContextMenu={(e) => handleRightClick(e, item.id)}
-        style={{ background: item.color }}
-      >
-        {expand ? (
-          <button
-            title='un-expand'
-            className={styles.btn1}
-            onClick={(e) => {
-              e.stopPropagation();
-              handleSetExpand(e, item.id, false);
-            }}
-          >
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              height='24'
-              viewBox='0 -960 960 960'
-              width='24'
+    <>
+      <li >
+        <div
+          className={` ${currPage2 === item.id || isActive ? styles.active : ''} ${hoveredItemId === item.id ? styles.hoveringover : ''
+            } ${styles.page_list_item}`}
+          id={currPage2 === item.id ? styles.active : 'fake'}
+          onClick={(e) => openPage(e, item.id)}
+          onDragOver={(e) => handleDragOver(e, item.id)}
+          onDragLeave={handleDragLeave}
+          onDrop={(e) => handleDragEnd(e, item.id, item.parentId)}
+          onDragStart={(e) => handleDragStart(e, item.id)}
+          draggable
+          onContextMenu={(e) => handleRightClick(e, item.id)}
+          style={{ background: item.color }}
+        >
+          {expand ? (
+            <button
+              title='un-expand'
+              className={styles.btn1}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleSetExpand(e, item.id, false);
+              }}
             >
-              <path d='M480-345 240-585l56-56 184 184 184-184 56 56-240 240Z' />
-            </svg>
-          </button>
-        ) : (
-          <button
-            title='expand'
-            className={styles.btn1}
-            onClick={(e) => {
-              e.stopPropagation();
-              handleSetExpand(e, item.id, true);
-            }}
-          >
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              height='24'
-              viewBox='0 -960 960 960'
-              width='24'
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                height='24'
+                viewBox='0 -960 960 960'
+                width='24'
+              >
+                <path d='M480-345 240-585l56-56 184 184 184-184 56 56-240 240Z' />
+              </svg>
+            </button>
+          ) : (
+            <button
+              title='expand'
+              className={styles.btn1}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleSetExpand(e, item.id, true);
+              }}
             >
-              <path d='m376-240-56-56 184-184-184-184 56-56 240 240-240 240Z' />
-            </svg>
-          </button>
-        )}
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                height='24'
+                viewBox='0 -960 960 960'
+                width='24'
+              >
+                <path d='m376-240-56-56 184-184-184-184 56-56 240 240-240 240Z' />
+              </svg>
+            </button>
+          )}
+          <div style={{ display: 'flex' }} onClick={() => {
+            setIconModalState(true)
+          }}>
+            {item.icon && item.icon.includes('.png') ? (<img className={styles.page_icon} src={`/emoji/twitter/64/${item.icon}`} />) : (!isNaN(parseInt(item.icon, 16)) && String.fromCodePoint(parseInt(item.icon, 16)))}</div>{item.title ? item.title : `Untitled: ${item.id}`}
 
-        {item.icon && item.icon.includes('.png') ? (<img className={styles.page_icon} src={`/emoji/twitter/64/${item.icon}`} />) : (!isNaN(parseInt(item.icon, 16)) && String.fromCodePoint(parseInt(item.icon, 16)))}{item.title ? item.title : `Untitled: ${item.id}`}
-
-
-        {(expand) && (
-          <span
-            title='New page'
-            onClick={(e) => {
-              e.stopPropagation();
-              createNewPage(e, item.id);
-            }}
-            className={styles.createpage}
-          >
-            <svg xmlns='http://www.w3.org/2000/svg' height='20' viewBox='0 -960 960 960' width='20'>
-              <path d='M444-240v-204H240v-72h204v-204h72v204h204v72H516v204h-72Z' />
-            </svg>
+          {(expand) && (
+            <span
+              title='New page'
+              onClick={(e) => {
+                e.stopPropagation();
+                createNewPage(e, item.id);
+              }}
+              className={styles.createpage}
+            >
+              <svg xmlns='http://www.w3.org/2000/svg' height='20' viewBox='0 -960 960 960' width='20'>
+                <path d='M444-240v-204H240v-72h204v-204h72v204h204v72H516v204h-72Z' />
+              </svg>
+            </span>
+          )}
+        </div>
+        {expand && children.length === 0 && (
+          <span className={styles.create_new_page_btn_text}>
+            No sub pages
           </span>
         )}
-      </div>
-      {expand && children.length === 0 && (
-        <span className={styles.create_new_page_btn_text}>
-          No sub pages
-        </span>
+        {children && expand ? <ol className={styles.items2}>{children}</ol> : null}
+      </li>
+      {iconModalState && (
+        <Icons Close={() => setIconModalState(false)} Select={changePageIcon} Selected={item.icon} />
       )}
-      {children && expand ? <ol className={styles.items2}>{children}</ol> : null}
-    </li>
-
+    </>
   );
 };
 
