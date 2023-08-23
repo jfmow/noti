@@ -639,7 +639,7 @@ function Editor({ page, preview, multi }) {
   return (
     <div className={styles.create}>
       <Head>
-        <title>Page: {articleTitle}</title>
+        <title>{articleTitle}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="prefetch" href="/64.png" />
