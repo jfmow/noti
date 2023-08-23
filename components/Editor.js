@@ -26,7 +26,7 @@ import SimpleTodo from "@/customEditorTools/Todo";
 import SimpleIframe from "@/customEditorTools/SimpleEmbed";
 import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
 import LineBreak from "@/customEditorTools/LineBreak";
-const convertToMarkdown = dynamic(() => import("@/lib/ConvertToMD"),);
+import convertToMarkdown from '@/lib/ConvertToMD'
 const Icons = dynamic(() => import("./Icons"), {
   loading: () => <ModalTempLoader />,
   ssr: true,
@@ -622,10 +622,11 @@ function Editor({ page, preview, multi }) {
       setConvertedData('')
 
       const md = await convertToMarkdown(data, articleTitle, pb.authStore.token)
-      setConvertedData(md.data)
+
+      setConvertedData(md)
     } catch (err) {
-      //console.log(err)
-      return toast.error(err.response.data)
+      console.log(err)
+      return toast.error(err)
     }
 
   }
