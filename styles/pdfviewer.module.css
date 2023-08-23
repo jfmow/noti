@@ -9,7 +9,7 @@
     border: none;
     cursor: pointer;
     justify-content: center;
-    fill: #343434;
+    fill: var(--modal_button_text);
     padding: 3px 5px;
     border-radius: 5px;
 }
@@ -26,13 +26,13 @@
 }
 .items{
     padding: 0.5em 2em;
-    border-radius: 25px;
+    border-radius: 15px;
     display: flex;
     flex-direction: row;
     width: 150px;
     min-width: fit-content;
     gap: 5px;
-    background: #fff;
+    background: var(--modal_button_bg);
     box-shadow: 0px 0px 5px 0px #939393;
     align-items: center;
     justify-content: space-evenly;
