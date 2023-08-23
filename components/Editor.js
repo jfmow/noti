@@ -25,8 +25,8 @@ import Image from "@/customEditorTools/Image";
 import SimpleTodo from "@/customEditorTools/Todo";
 import SimpleIframe from "@/customEditorTools/SimpleEmbed";
 import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
-import axios from "axios";
 import LineBreak from "@/customEditorTools/LineBreak";
+const convertToMarkdown = dynamic(() => import("@/lib/ConvertToMD"),);
 const Icons = dynamic(() => import("./Icons"), {
   loading: () => <ModalTempLoader />,
   ssr: true,
@@ -621,11 +621,7 @@ function Editor({ page, preview, multi }) {
       setShowConvert(true)
       setConvertedData('')
 
-      const md = await axios.post('/api/convert-to-md', { body: data, title: articleTitle }, {
-        headers: {
-          Authorization: pb.authStore.token,
-        },
-      })
+      const md = await convertToMarkdown(data, articleTitle, pb.authStore.token)
       setConvertedData(md.data)
     } catch (err) {
       //console.log(err)
