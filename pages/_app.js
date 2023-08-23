@@ -224,7 +224,7 @@ export default function App({ Component, pageProps }) {
             '--page_list_item_active': '#00000029',
             '--page_list_item_icons_background_hover': '#c4c4c4',
             '--page_list_item_hover_drag': '#ff7777',
-            '--create_new_page_btn_text': '#fff',
+            '--create_new_page_btn_text': '#929292',
             '--page_list_item_icons': '#00000099',
             '--page_list_item_fillcolor': '#00000099',
             '--modal_color-23-7309aa07_NOTUSED': '#464457',
