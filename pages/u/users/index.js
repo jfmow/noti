@@ -9,12 +9,18 @@ import { AlternateButton, ModalCheckBox, ModalContainer, ModalForm, ModalInput, 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 pb.autoCancellation(false)
 export default function Admin() {
+
+    useEffect(() => {
+        if (!pb.authStore.model.admin) {
+            window.location.replace('/page/firstopen')
+        }
+    })
     return (
         <>
             <Head>
                 <title>Admin</title>
             </Head>
-            <Nav/>
+            <Nav />
             <div className={styles.container}>
                 <Stats />
                 <Users />
@@ -197,10 +203,10 @@ function Stats() {
     useEffect(() => {
         async function getStats() {
             try {
-                const records = await pb.collection('Total_pages_per_user').getFullList({skipTotal: true});
+                const records = await pb.collection('Total_pages_per_user').getFullList({ skipTotal: true });
                 setGpData(records)
-                const records2 = await pb.collection('Total_img_per_user').getFullList({skipTotal: true});
-                const records3 = await pb.collection('total_files_per_user').getFullList({skipTotal: true});
+                const records2 = await pb.collection('Total_img_per_user').getFullList({ skipTotal: true });
+                const records3 = await pb.collection('total_files_per_user').getFullList({ skipTotal: true });
 
                 const combineArrays = (arr1, arr2) => {
                     // Create a new array to store the combined results
