@@ -122,7 +122,6 @@ export default function Icons({ Select, Selected, Close }) {
                         }
                     })}
                 </div>
-                <AlternateButton click={Close}>Close</AlternateButton>
             </ModalForm>
         </ModalContainer>
     );

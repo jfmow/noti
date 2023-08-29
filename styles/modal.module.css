@@ -55,8 +55,8 @@
     border: none;
     padding: 1em;
     border-radius: 0.5em;
-    background: rgb(227, 227, 227);
-    color: var(--modal_text_color);
+    background: var(--modal_button_bg);
+    color: var(--modal_button_text);
     width: 100%;
     height: 100%;
     outline: none;
@@ -66,9 +66,6 @@
     color: var(--modal_color-5-32f42df1) b8;
 }
 
-.modal_container_layout .modalform .input:focus-visible {
-    outline: 2px solid var(--modal_color-6-42f923f0);
-}
 
 .default_settings_modal_container_userinfopannel .modal_container_layout {
     margin: 0;

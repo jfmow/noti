@@ -1,24 +1,26 @@
-.emojigrid{
+.emojigrid {
     position: relative;
     display: flex;
     flex-wrap: wrap;
     overflow: scroll;
     height: 35dvh;
-    
+
     /*gap: 10px;*/
     justify-content: space-between;
     align-items: center;
 }
+
 .icon {
-    border: 3px solid var(--big_button_border);
+    border: none;
     border-radius: 5px;
     padding: 5px;
-    background: var(--big_button_background);
+    background: none;
     cursor: pointer;
     transform: scale(0.5);
     margin: -15px;
 }
-.emojiIcon{
+
+.emojiIcon {
     display: flex;
     cursor: pointer;
     width: 64px;
@@ -30,26 +32,22 @@
 
 
 
-.icon:hover{
-    border: 3px solid var(--big_button_border_hover_alt);
-}
-
-.categories{
+.categories {
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
     align-items: center;
 }
 
-.categoryButton{
-    background: var(--big_button_background);
-    padding: 5px;
+.categoryButton {
+    background: var(--modal_button_bg);
+    padding: 7px;
     border-radius: 7px;
-    border: 2px solid var(--big_button_border);
+    border: 2px solid var(--modal_button_border);
     cursor: pointer;
-    color: var(--big_button_text);
+    color: var(--modal_button_text);
 }
 
-.active{
-    background: var(--big_button_border_hover_alt);
+.active {
+    background: var(--modal_button_bg_hover);
 }

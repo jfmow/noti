@@ -806,7 +806,7 @@ function Editor({ page, preview, multi }) {
                   <div className={styles.loaderLong}></div>
                 </div>
               ) : (
-                <textarea style={{ height: '20vh', background: 'var(--background)', border: '2px solid var(--big_button_border)', borderRadius: '10px', fontFamily: 'auto', padding: '1em', overflowX: 'hidden', overflowY: 'scroll' }} value={convertedMdData} />
+                <textarea onChange={() => { return }} style={{ height: '20vh', background: 'var(--modal_button_bg)', border: '2px solid var(--modal_button_border)', borderRadius: '10px', fontFamily: 'auto', padding: '1em', overflowX: 'hidden', overflowY: 'scroll', color: 'var(--modal_button_text)' }} value={convertedMdData} />
 
               )}
 
