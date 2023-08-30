@@ -37,7 +37,7 @@ export default function PasswordReset() {
         <div>
             <Head>
                 <title>Reset password</title>
-                <link rel="favicon" href="/favicon.ico" />
+                <link rel="favicon" href="/Favicon.png" />
                 <meta name="robots" content="noindex"></meta>
             </Head>
             <div className={styles.login_box}>

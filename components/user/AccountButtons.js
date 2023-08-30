@@ -23,7 +23,7 @@ export default function Account({ Close, usageOpenDefault }) {
       <div className={styles.container}>
         <Head>
           <title>Settings: {pb.authStore.model?.username}</title>
-          <link rel="favicon" href="/favicon.ico" />
+          <link rel="favicon" href="/Favicon.png" />
           <meta name="robots" content="noindex"></meta>
         </Head>
 

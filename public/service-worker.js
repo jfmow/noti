@@ -6,7 +6,7 @@ self.addEventListener('install', (event) => {
       .then((cache) => {
         return cache.addAll([
           '/', // Add the URLs of your static assets here
-          '/favicon.ico',
+          '/Favicon.png',
           '/manifest.json',
           '/offline/offline.html',
           '/offline/editor.js',
