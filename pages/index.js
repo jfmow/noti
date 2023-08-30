@@ -15,8 +15,14 @@ export default function Home() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [mobile, setMobile] = useState(false);
+  const [bg, setBg] = useState(false)
 
   useEffect(() => {
+    const bgval = Math.random().toPrecision()
+    console.log(bgval)
+    if (bgval > 0.5) {
+      setBg(true)
+    }
 
     if (window.innerWidth < 800) {
       setMobile(true)
@@ -56,7 +62,7 @@ export default function Home() {
       <p style={{ visibility: '0', width: '0', height: '0' }} aria-label='SEO text'>A place to take your notes with only fetures you will use. Explore note taking more simply.</p>
       <div className={styles.container}>
         <header className={styles.header}>
-          <div className={styles.headerContent}>
+          <div className={`${styles.headerContent} ${bg && styles.bgalt}`}>
             <img loading='egar' height='60' className={styles.title} src='/name.png' />
 
             <span className={styles.header_text}>All your <span className={styles.header_underline}>notes</span> together in one place</span>

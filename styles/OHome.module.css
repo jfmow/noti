@@ -18,6 +18,11 @@
   background-image: radial-gradient(at 3% 65%, rgb(236, 167, 188) 0px, transparent 50%), radial-gradient(at 45% 10%, rgb(245, 209, 218) 0px, transparent 50%), radial-gradient(at 31% 47%, rgb(252, 105, 235) 0px, transparent 50%), radial-gradient(at 32% 29%, rgb(250, 153, 250) 0px, transparent 50%), radial-gradient(at 18% 80%, rgb(165, 60, 211) 0px, transparent 50%), radial-gradient(at 55% 53%, rgb(154, 239, 229) 0px, transparent 50%), radial-gradient(at 46% 11%, rgb(230, 205, 239) 0px, transparent 50%);
 }
 
+.bgalt {
+  background-color: rgb(191, 179, 239);
+  background-image: radial-gradient(at 28% 50%, rgb(245, 122, 220) 0px, transparent 50%), radial-gradient(at 71% 59%, rgb(69, 24, 251) 0px, transparent 50%), radial-gradient(at 34% 45%, rgb(225, 196, 243) 0px, transparent 50%), radial-gradient(at 64% 68%, rgb(224, 218, 251) 0px, transparent 50%), radial-gradient(at 47% 38%, rgb(223, 83, 92) 0px, transparent 50%), radial-gradient(at 73% 41%, rgb(250, 214, 219) 0px, transparent 50%), radial-gradient(at 53% 27%, rgb(231, 148, 249) 0px, transparent 50%);
+}
+
 
 
 
