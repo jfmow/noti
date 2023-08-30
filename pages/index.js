@@ -51,7 +51,7 @@ export default function Home() {
         <meta name="robots" content="max-snippet:0, noarchive, notranslate, noimageindex"></meta>
         <meta name="keywords" content="JavaScript, Frontend, Developer, Nextjs, react, code, pocketbase, PocketBase, Pocketbase, savemyexams, exam, exams, save, note, notes, notion" />
         <meta http-equiv="refresh" content="30" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/Favicon.png" />
         <link rel="canonical" href="https://savemynotes.net/" />
       </Head>
       <Nav />
@@ -59,11 +59,13 @@ export default function Home() {
       <div className={styles.container}>
         <header className={styles.header}>
           <div className={styles.headerContent}>
-            <h1 className={styles.title}>SaveMyNotes</h1>
-            <h5 className={styles.description}>The best note-taking app ever <br /> - You when you signup</h5>
+            <img loading='egar' height='60' className={styles.title} src='/name.png' />
+
+            <span className={styles.header_text}>All your <span className={styles.header_underline}>notes</span> together in one place</span>
+
             <div style={{ zIndex: '2' }}>
               <button className={styles.Btn} onClick={() => Router.push('/auth/signup')}>
-                Join now
+                Start writing now <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M16.01 11H5c-.55 0-1 .45-1 1s.45 1 1 1h11.01v1.79c0 .45.54.67.85.35l2.78-2.79c.19-.2.19-.51 0-.71l-2.78-2.79c-.31-.32-.85-.09-.85.35V11z" /></svg>
               </button>
             </div>
           </div>
@@ -100,7 +102,7 @@ export default function Home() {
                 </div>
               </div>
             </AnimatedSection>
-            
+
           </AnimatePresence>
         </div>
         <div className={styles.footer}>

@@ -192,6 +192,12 @@ a {
   src: url('../fonts/gotham-bold-webfont.woff');
 }
 
+@font-face {
+  font-family: "mons";
+  font-display: swap;
+  src: url('../fonts/Montserrat-VariableFont_wght.ttf');
+}
+
 
 /* width */
 ::-webkit-scrollbar {

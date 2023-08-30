@@ -1,7 +1,7 @@
 /* OHome.module.css */
 .container {
   width: 100%;
-  background: #fff;
+  background: #eeeeee;
 }
 
 /* Header styles */
@@ -14,10 +14,13 @@
   font-size: 200%;
   scroll-snap-align: start;
   position: relative;
-  background-color: rgb(70, 55, 235);
-  background-image: radial-gradient(at 99% 9%, rgb(243, 175, 225) 0px, transparent 50%), radial-gradient(at 36% 99%, rgb(249, 221, 241) 0px, transparent 50%), radial-gradient(at 51% 88%, rgb(237, 197, 151) 0px, transparent 50%), radial-gradient(at 34% 39%, rgb(210, 70, 105) 0px, transparent 50%), radial-gradient(at 54% 32%, rgb(52, 229, 134) 0px, transparent 50%), radial-gradient(at 41% 26%, rgb(238, 210, 195) 0px, transparent 50%), radial-gradient(at 47% 32%, rgb(251, 243, 251) 0px, transparent 50%);
-  background-size: 600%;
+  background-color: rgb(159, 64, 196);
+  background-image: radial-gradient(at 3% 65%, rgb(236, 167, 188) 0px, transparent 50%), radial-gradient(at 45% 10%, rgb(245, 209, 218) 0px, transparent 50%), radial-gradient(at 31% 47%, rgb(252, 105, 235) 0px, transparent 50%), radial-gradient(at 32% 29%, rgb(250, 153, 250) 0px, transparent 50%), radial-gradient(at 18% 80%, rgb(165, 60, 211) 0px, transparent 50%), radial-gradient(at 55% 53%, rgb(154, 239, 229) 0px, transparent 50%), radial-gradient(at 46% 11%, rgb(230, 205, 239) 0px, transparent 50%);
 }
+
+
+
+
 
 @keyframes moveBackground {
 
@@ -45,92 +48,29 @@
 .headerContent {
   text-align: center;
   height: 100%;
-  gap: 10px;
+  gap: 20px;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-shadow: 0px 0px 15px #fff;
 
 }
 
-.headerContent h1 {
-  font-family: "Mori", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  text-shadow: 0px 0px 10px var(--main_color);
-  display: inline-block;
+
+
+.header_text {
+  font-family: "mons", "Inter", "Gotham", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-weight: 200;
+  text-wrap: balance;
+  font-size: 25px;
 }
 
-@keyframes rainbowAnimation {
-
-  0%,
-  100% {
-    text-shadow: 0 0 3px red;
-  }
-
-  7%,
-  93% {
-    text-shadow: 5px 0 3px orange;
-  }
-
-  14%,
-  86% {
-    text-shadow: 10px 0 3px yellow;
-  }
-
-  21%,
-  79% {
-    text-shadow: 15px 0 3px green;
-  }
-
-  28%,
-  71% {
-    text-shadow: 20px 0 3px blue;
-  }
-
-  35%,
-  64% {
-    text-shadow: 25px 0 3px indigo;
-  }
-
-  42%,
-  57% {
-    text-shadow: 30px 0 3px violet;
-  }
-
-  50% {
-    text-shadow: 35px 0 3px red;
-  }
+.header_underline {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  font-weight: 500;
 }
-
-
-
-
-.subtitle {
-  margin-bottom: 10px;
-}
-
-
-
-.title {
-  margin-bottom: 10px;
-}
-
-.description {
-  font-size: 18px;
-  font-style: italic;
-}
-
-
-.svgIcon {
-  width: 16px;
-}
-
-.svgIcon path {
-  fill: white;
-}
-
 
 .section2 h2,
 .section4 h2,
@@ -181,7 +121,6 @@
   flex-direction: row;
   padding: 2em 5em;
   text-align: left;
-  background: #eeeeee;
   gap: 5em;
 }
 
@@ -339,40 +278,42 @@
 }
 
 .Btn {
-  width: 165px;
-  height: 62px;
-  cursor: pointer;
-  color: #fff;
-  font-size: 17px;
-  border-radius: 1rem;
   border: none;
-  position: relative;
-  background: #100720;
-  transition: 0.5s all;
-}
-
-.Btn::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  background-image: radial-gradient(circle farthest-corner at 10% 20%, rgba(255, 94, 247, 1) 17.8%, rgba(2, 245, 255, 1) 100.2%);
-  filter: blur(15px);
-  z-index: -1;
-  position: absolute;
-  left: 0;
-  top: 0;
-  transition: 0.5s all;
-}
-
-.Btn:active {
-  transform: scale(0.9) rotate(3deg);
-  background: radial-gradient(circle farthest-corner at 10% 20%, rgba(255, 94, 247, 1) 17.8%, rgba(2, 245, 255, 1) 100.2%);
-  transition: 0.5s;
+  color: #fff;
+  background-image: linear-gradient(30deg, #ff00bf, #be4cf7);
+  border-radius: 20px;
+  background-size: 100% auto;
+  font-family: inherit;
+  font-size: 17px;
+  padding: 0.6em 1.5em;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: all 0.5s;
+  font-weight: 600;
 }
 
 .Btn:hover {
-  background: radial-gradient(circle farthest-corner at 10% 20%, rgba(255, 94, 247, 1) 17.8%, rgba(2, 245, 255, 1) 100.2%);
-  transition: 0.5s all;
+  background-position: right center;
+  background-size: 200% auto;
+  -webkit-animation: pulse 2s infinite;
+  animation: pulse512 1.5s infinite;
+  gap: 10px;
+}
+
+@keyframes pulse512 {
+  0% {
+    box-shadow: 0 0 0 0 #af05da66;
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgb(218 103 68 / 0%);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgb(218 103 68 / 0%);
+  }
 }
 
 
@@ -410,6 +351,11 @@
 
 
 @media(max-width: 600px) {
+
+  .title {
+    height: auto;
+    width: 80%;
+  }
 
   .section4 h2,
   .section2 h2,
@@ -473,9 +419,5 @@
   .section4 .fcard p {
     text-align: center !important;
     text-wrap: balance;
-  }
-
-  .title {
-    font-size: 40px;
   }
 }
