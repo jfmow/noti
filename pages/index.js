@@ -19,7 +19,6 @@ export default function Home() {
 
   useEffect(() => {
     const bgval = Math.random().toPrecision()
-    console.log(bgval)
     if (bgval > 0.5) {
       setBg(true)
     }
