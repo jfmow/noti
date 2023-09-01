@@ -8,15 +8,18 @@ import Head from 'next/head';
 import PlainLoader from '@/components/Loader';
 import Nav from '@/components/Nav';
 import { useInView } from 'react-intersection-observer';
-import { motion, stagger } from 'framer-motion'
+import { motion, useScroll } from 'framer-motion'
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
+
+import Paralax from '@/components/Paralax'
 
 export default function Home() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [mobile, setMobile] = useState(false);
   const [bg, setBg] = useState(false)
+  const { scrollYProgress } = useScroll();
 
   useEffect(() => {
     const bgval = Math.random().toPrecision()
@@ -81,9 +84,13 @@ export default function Home() {
 
         </header>
         <div className={styles.sections}>
+          <motion.div
+            className={styles.progressbar}
+            style={{ scaleX: scrollYProgress }}
+          />
           {/* Animate the second section */}
           <AnimatedSection className={styles.section2}>
-            <div className={styles.section2_div}>
+            <div className={styles.section2_div} id='features'>
               <h2>Get work done quickly and efficiently</h2>
               <div className={styles.fcards}>
                 <div className={styles.fcarddual}>
@@ -118,6 +125,8 @@ export default function Home() {
               </div>
             </div>
           </AnimatedSection>
+
+          <Paralax />
 
           <AnimatedSection className={styles.section} >
             <div>
