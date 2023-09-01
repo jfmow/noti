@@ -7,7 +7,8 @@ import Router, { useRouter } from 'next/router';
 import Head from 'next/head';
 import PlainLoader from '@/components/Loader';
 import Nav from '@/components/Nav';
-
+import { useInView } from 'react-intersection-observer';
+import { motion } from 'framer-motion'
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 
@@ -81,7 +82,7 @@ export default function Home() {
         </header>
         <div className={styles.sections}>
           {/* Animate the second section */}
-          <div className={styles.section2}>
+          <AnimatedSection className={styles.section2}>
             <div className={styles.section2_div}>
               <h2>Get work done quickly and efficiently</h2>
               <div className={styles.fcards}>
@@ -107,18 +108,18 @@ export default function Home() {
             </div>
 
 
-          </div>
+          </AnimatedSection>
 
-          <div className={styles.section}>
+          <AnimatedSection className={styles.section}>
             <div>
               <span className={styles.s2_question}>So why use this?</span>
               <div>
                 <span className={styles.s2_title}>Because why not!</span>
               </div>
             </div>
-          </div>
+          </AnimatedSection>
 
-          <div className={styles.section} >
+          <AnimatedSection className={styles.section} >
             <div>
               <span className={styles.s2_title}>Free and open source</span>
             </div>
@@ -150,11 +151,11 @@ export default function Home() {
                 </svg></div></Link>
               </div>
             </div>
-          </div>
+          </AnimatedSection>
 
 
 
-          <div className={styles.section}>
+          <AnimatedSection className={styles.section}>
             <div>
               <span className={styles.s2_question}>What happens to my data?</span>
               <div>
@@ -177,7 +178,7 @@ export default function Home() {
                 <p>Host it on your own server and when you delete something, you know it's very very gone.</p>
               </div>
             </div>
-          </div>
+          </AnimatedSection>
         </div>
         <div className={styles.footer}>
           <h3>Made with 💖 by James M</h3>
@@ -196,5 +197,23 @@ export default function Home() {
         </div>
       </div>
     </>
+  );
+}
+
+
+function AnimatedSection({ children, className }) {
+  const [ref, inView] = useInView({ threshold: 0.3 });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      exit={{ opacity: 0, y: -50 }}
+      transition={{ duration: 0.5 }}
+      className={className}
+    >
+      {children}
+    </motion.div>
   );
 }
