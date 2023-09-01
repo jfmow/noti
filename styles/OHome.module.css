@@ -50,6 +50,7 @@
   width: 128px;
   height: 128px;
   animation: bounce 3s infinite;
+  animation-delay: 1s;
 }
 
 .floatimg4 {
@@ -59,6 +60,7 @@
   width: 128px;
   height: 128px;
   animation: bounce 3s infinite;
+  animation-delay: 1.5s;
 }
 
 .floatimg5 {
@@ -68,6 +70,7 @@
   width: 128px;
   height: 128px;
   animation: bounce 3s infinite;
+  animation-delay: 0.7s;
 }
 
 @keyframes bounce {
