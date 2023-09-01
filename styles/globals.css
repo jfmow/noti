@@ -310,3 +310,16 @@ a {
 .react-pdf__Page__canvas {
   border-radius: 3px;
 }
+
+
+@media print {
+  .ce-toolbar__content {
+    display: none;
+  }
+
+  :root {
+    --background: #ffffff !important;
+    --editor_text: #000 !important;
+    --boxshadow_primary: #f3f3f39e !important;
+  }
+}

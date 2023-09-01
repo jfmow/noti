@@ -60,8 +60,13 @@ export default function Home() {
       <Nav />
       <p style={{ visibility: '0', width: '0', height: '0' }} aria-label='SEO text'>A place to take your notes with only fetures you will use. Explore note taking more simply.</p>
       <div className={styles.container}>
-        <header className={styles.header}>
-          <div className={`${styles.headerContent} ${bg && styles.bgalt}`}>
+        <header className={`${styles.header} ${bg && styles.bgalt}`}>
+          <div className={`${styles.headerContent}`}>
+            <img src='/float1.png' className={styles.floatimg1} />
+            <img src='/float2.png' className={styles.floatimg2} />
+            <img src='/float3.png' className={styles.floatimg3} />
+            <img src='/float4.png' className={styles.floatimg4} />
+            <img src='/float5.png' className={styles.floatimg5} />
             <img loading='egar' height='60' className={styles.title} src='/name.png' />
 
             <span className={styles.header_text}>All your <span className={styles.header_underline}>notes</span> together in one place</span>

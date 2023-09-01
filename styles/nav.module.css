@@ -1,5 +1,3 @@
-/* The CSS code you provided defines the styles for a navigation container and its items. Here is a
-breakdown of what each part of the code does: */
 .navcontainer {
   position: fixed;
   z-index: 99;
@@ -7,116 +5,70 @@ breakdown of what each part of the code does: */
   left: 0;
   right: 0;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1em;
 }
 
 .items {
   height: fit-content;
-  padding: 1em;
+  padding: 0.5em 1em;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
   justify-items: center;
+  background: #be4cf74e;
+  backdrop-filter: blur(10px);
+  width: 60%;
+  border-radius: 15px;
+  border: 1px solid #be4cf78d;
+  box-shadow: -6px 5px 8px 0px #be4cf74e;
+}
+
+.links {
+
+  font-family: "mons", "Inter", "Gotham", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  cursor: pointer;
+  width: 100%;
+}
+
+.link {
+  position: relative;
+  color: #ffffff;
+  font-weight: 400;
+}
+
+.link:hover::after {
+  content: '';
+  background: #be4cf7;
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  animation: expandin 0.5s 1 ease;
+
+}
+
+@keyframes expandin {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 100%;
+  }
 }
 
 .items h1 {
   font-family: "Mori", -apple-system, BlinkMacSystemFont, system-ui;
   text-shadow: 0px 0px 10px var(--main_color);
   color: #767676;
-}
-
-.sign_Button {
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 15px 30px;
-  border: 0;
-  position: relative;
-  overflow: hidden;
-  border-radius: 10rem;
-  transition: all 0.2s;
-  font-weight: bold;
-  color: rgb(236, 236, 236);
-  z-index: 0;
-  box-shadow: 0 0px 7px -5px rgba(0, 0, 0, 0.5);
-}
-
-.sign_Button:hover {
-  background: rgb(193, 228, 248);
-  color: rgb(33, 0, 85);
-  border-radius: 1em;
-}
-
-.sign_Button:active {
-  transform: scale(0.97);
-}
-
-.sign_hoverEffect {
-  position: absolute;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
-}
-
-.sign_hoverEffect div {
-  background: rgb(222, 0, 75);
-  background: linear-gradient(90deg, #0a70c482, #ae3bd74d, #35a7db66);
-  border-radius: 40rem;
-  width: 10rem;
-  height: 10rem;
-  transition: 0.4s;
-  filter: blur(20px);
-  animation: effect infinite 3s linear;
-  opacity: 0.5;
-}
-
-.sign_Button:hover .sign_hoverEffect div {
-  width: 8rem;
-  height: 8rem;
-}
-
-@keyframes effect {
-
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-
-
-.navlink{
-  font-weight: 400;
-  font-size: 16px;
-  transition: 0.2s all;
-}
-
-.subitems{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  width: 100%;
-  align-items: center;
-}
-
-.navlink:hover{
-  color: var(--main_btn_color_action);
-}
-@media(prefers-color-scheme: dark){
-  .items{
-    background: none;
-  }
-  .items h1{
-    color: #fff;
-  }
 }
 
 
@@ -128,12 +80,16 @@ breakdown of what each part of the code does: */
     top: 0;
   }
 
+  .navcontainer {
+    margin-top: 0;
+  }
+
   .items {
     width: 100%;
-    background: none;
-  }
-  .items h1{
-    font-size: 16px;
+    margin-top: 0;
+    border: none;
+    border-radius: 0;
+    grid-template-columns: 2fr 1fr;
+    padding: 1em;
   }
 }
-

@@ -500,3 +500,21 @@
     justify-content: center;
   }
 }
+
+
+
+@media print {
+
+  .title_buttons {
+    display: none;
+  }
+
+  .titleinput {
+    font-size: 24px;
+  }
+
+  .create {
+    font-size: 70% !important;
+  }
+
+}

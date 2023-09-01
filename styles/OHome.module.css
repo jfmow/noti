@@ -24,6 +24,67 @@
 }
 
 
+.floatimg1 {
+  position: absolute;
+  top: -100px;
+  left: -45px;
+  width: 128px;
+  height: 128px;
+  animation: bounce 3s infinite;
+  animation-delay: 1.2s;
+}
+
+.floatimg2 {
+  position: absolute;
+  bottom: -80px;
+  right: -20px;
+  width: 128px;
+  height: 128px;
+  animation: bounce 3s infinite;
+}
+
+.floatimg3 {
+  position: absolute;
+  top: -125px;
+  right: -250px;
+  width: 128px;
+  height: 128px;
+  animation: bounce 3s infinite;
+}
+
+.floatimg4 {
+  position: absolute;
+  bottom: -145px;
+  left: -200px;
+  width: 128px;
+  height: 128px;
+  animation: bounce 3s infinite;
+}
+
+.floatimg5 {
+  position: absolute;
+  bottom: 0;
+  right: -200px;
+  width: 128px;
+  height: 128px;
+  animation: bounce 3s infinite;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+
 
 
 
@@ -52,14 +113,14 @@
 
 .headerContent {
   text-align: center;
-  height: 100%;
+  height: fit-content;
   gap: 20px;
-  width: 100%;
+  width: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
+  position: relative;
 }
 
 
