@@ -308,8 +308,6 @@
   background: #4e4e4e;
 }
 
-
-
 @media print {
   .itemroot {
     display: none;
