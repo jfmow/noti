@@ -8,7 +8,7 @@ import Head from 'next/head';
 import PlainLoader from '@/components/Loader';
 import Nav from '@/components/Nav';
 import { useInView } from 'react-intersection-observer';
-import { motion } from 'framer-motion'
+import { motion, stagger } from 'framer-motion'
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 
@@ -124,7 +124,7 @@ export default function Home() {
               <span className={styles.s2_title}>Free and open source</span>
             </div>
             <div className={styles.s2_cards} style={{ justifyContent: 'center', flexDirection: 'row' }}>
-              <div className={styles.s2_card} >
+              <AnimatedCard delay={0} className={styles.s2_card} >
                 <span className={styles.s2_card_title}>Explore on github</span>
                 <Link href='https://github.com/jfmow/noti'><div className={styles.s2_card_img}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 98 96">
                   <path
@@ -133,12 +133,12 @@ export default function Home() {
                     d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"
                   />
                 </svg></div></Link>
-              </div>
-              <div className={styles.s2_card}>
+              </AnimatedCard>
+              <AnimatedCard delay={0.4} className={styles.s2_card}>
                 <span className={styles.s2_card_title}>Self host</span>
                 <Link href='https://docker.com/'><div className={styles.s2_card_img}><svg xmlns="http://www.w3.org/2000/svg" aria-label="Docker" role="img" viewBox="0 0 512 512"><rect width="512" height="512" rx="15%" fill="#ffffff" /><path stroke="#066da5" stroke-width="38" d="M296 226h42m-92 0h42m-91 0h42m-91 0h41m-91 0h42m8-46h41m8 0h42m7 0h42m-42-46h42" /><path fill="#066da5" d="m472 228s-18-17-55-11c-4-29-35-46-35-46s-29 35-8 74c-6 3-16 7-31 7H68c-5 19-5 145 133 145 99 0 173-46 208-130 52 4 63-39 63-39" /></svg></div></Link>
-              </div>
-              <div className={styles.s2_card}>
+              </AnimatedCard>
+              <AnimatedCard delay={0.8} className={styles.s2_card}>
                 <span className={styles.s2_card_title}>Open source backend</span>
                 <Link href='https://pocketbase.io/'><div className={styles.s2_card_img}><svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <rect x="25.536" y="13.4861" width="1.71467" height="16.7338" transform="rotate(45.9772 25.536 13.4861)" fill="white" />
@@ -149,7 +149,7 @@ export default function Home() {
                   <path d="M10 20C9.44772 20 9 19.5523 9 19V8C9 7.44772 9.44772 7 10 7H13.7531C14.4801 7 15.1591 7.07311 15.7901 7.21932C16.4348 7.35225 16.9904 7.58487 17.4568 7.91718C17.9369 8.2362 18.3141 8.6682 18.5885 9.21319C18.8628 9.74489 19 10.4029 19 11.1871C19 11.9448 18.856 12.6028 18.5679 13.161C18.2936 13.7193 17.9163 14.1779 17.4362 14.5368C16.9561 14.8957 16.4005 15.1616 15.7695 15.3344C15.1385 15.5072 14.4664 15.5936 13.7531 15.5936H13.0247C12.4724 15.5936 12.0247 16.0413 12.0247 16.5936V19C12.0247 19.5523 11.577 20 11.0247 20H10ZM12.0247 12.2607C12.0247 12.813 12.4724 13.2607 13.0247 13.2607H13.5679C15.214 13.2607 16.037 12.5695 16.037 11.1871C16.037 10.5092 15.8244 10.0307 15.3992 9.75153C14.9877 9.47239 14.3772 9.33282 13.5679 9.33282H13.0247C12.4724 9.33282 12.0247 9.78054 12.0247 10.3328V12.2607Z" fill="#16161a" />
                   <path d="M22 33C21.4477 33 21 32.5523 21 32V21C21 20.4477 21.4477 20 22 20H25.4877C26.1844 20 26.8265 20.0532 27.4139 20.1595C28.015 20.2526 28.5342 20.4254 28.9713 20.6779C29.4085 20.9305 29.75 21.2628 29.9959 21.6748C30.2555 22.0869 30.3852 22.6053 30.3852 23.2301C30.3852 23.5225 30.3374 23.8149 30.2418 24.1074C30.1598 24.3998 30.0232 24.6723 29.832 24.9248C29.6407 25.1774 29.4016 25.4034 29.1148 25.6028C28.837 25.7958 28.5081 25.939 28.1279 26.0323C28.1058 26.0378 28.0902 26.0575 28.0902 26.0802V26.0802C28.0902 26.1039 28.1073 26.1242 28.1306 26.1286C29.0669 26.3034 29.7774 26.6332 30.2623 27.1181C30.7541 27.6099 31 28.2945 31 29.1718C31 29.8364 30.8702 30.408 30.6107 30.8865C30.3511 31.365 29.9891 31.7638 29.5246 32.0828C29.0601 32.3885 28.5137 32.6212 27.8852 32.7807C27.2705 32.9269 26.6011 33 25.8771 33H22ZM24.0123 24.2239C24.0123 24.7762 24.46 25.2239 25.0123 25.2239H25.3443C26.082 25.2239 26.6148 25.0844 26.9426 24.8052C27.2705 24.5261 27.4344 24.1339 27.4344 23.6288C27.4344 23.1503 27.2637 22.8113 26.9221 22.612C26.5943 22.3993 26.0751 22.2929 25.3648 22.2929H25.0123C24.46 22.2929 24.0123 22.7407 24.0123 23.2929V24.2239ZM24.0123 29.7071C24.0123 30.2593 24.46 30.7071 25.0123 30.7071H25.6311C27.2432 30.7071 28.0492 30.1222 28.0492 28.9525C28.0492 28.3809 27.8511 27.9688 27.4549 27.7163C27.0724 27.4637 26.4645 27.3374 25.6311 27.3374H25.0123C24.46 27.3374 24.0123 27.7851 24.0123 28.3374V29.7071Z" fill="#16161a" />
                 </svg></div></Link>
-              </div>
+              </AnimatedCard>
             </div>
           </AnimatedSection>
 
@@ -163,20 +163,20 @@ export default function Home() {
               </div>
             </div>
             <div className={styles.s2_cards}>
-              <div className={styles.s2_simple_card}>
+              <AnimatedCard className={styles.s2_simple_card}>
                 <div className={styles.s2_simple_card_icon}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path d="m11.19 1.36-7 3.11C3.47 4.79 3 5.51 3 6.3V11c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V6.3c0-.79-.47-1.51-1.19-1.83l-7-3.11c-.51-.23-1.11-.23-1.62 0zM12 11.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" /></svg>
                   <span>Safe and secure</span>
                 </div>
                 <p>It's your data so if you self host it's yours to look at not us. And even then if you don't it's still your data and not for us to go touchy looky at.</p>
-              </div>
-              <div className={styles.s2_simple_card}>
+              </AnimatedCard>
+              <AnimatedCard className={styles.s2_simple_card}>
                 <div className={styles.s2_simple_card_icon}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" ><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zm5.65-8.65c.2-.2.51-.2.71 0L16 14h-2v4h-4v-4H8l3.65-3.65zM15.5 4l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1h-2.5z" /></svg>
                   <span>Kept how you like it</span>
                 </div>
                 <p>Host it on your own server and when you delete something, you know it's very very gone.</p>
-              </div>
+              </AnimatedCard>
             </div>
           </AnimatedSection>
         </div>
@@ -211,6 +211,22 @@ function AnimatedSection({ children, className }) {
       animate={inView ? { opacity: 1, y: 0 } : {}}
       exit={{ opacity: 0, y: -50 }}
       transition={{ duration: 0.5 }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+function AnimatedCard({ children, className, delay }) {
+  const [ref, inView] = useInView({ threshold: 0.3 });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={inView ? { opacity: 1, scale: 1 } : {}}
+      exit={{ opacity: 0, scale: 1.5 }}
+      transition={{ duration: 0.5, delay: delay ? delay : Math.random() - 0.3 }}
       className={className}
     >
       {children}
