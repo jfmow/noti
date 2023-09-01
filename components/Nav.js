@@ -19,7 +19,7 @@ export default function Nav() {
           <Link className={styles.link} href='https://github.com/jfmow/noti/blob/master/README.md'>About</Link>
           <Link className={styles.link} href='https://github.com/jfmow/noti'>Self-host</Link>
         </div>
-        <Link className={styles.link} href='/auth/signup'>
+        <Link className={styles.link} href='/auth/login'>
           Login
         </Link>
       </div>
