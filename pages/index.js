@@ -108,7 +108,17 @@ export default function Home() {
 
 
           </div>
-          <div className={styles.section} style={{ background: 'linear-gradient(#000 30%, #000 30%, #000 60%, transparent 60%)' }}>
+
+          <div className={styles.section}>
+            <div>
+              <span className={styles.s2_question}>So why use this?</span>
+              <div>
+                <span className={styles.s2_title}>Because why not!</span>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.section} >
             <div>
               <span className={styles.s2_title}>Free and open source</span>
             </div>
@@ -142,14 +152,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className={styles.section}>
-            <div>
-              <span className={styles.s2_question}>So why use this?</span>
-              <div>
-                <span className={styles.s2_title}>Because why not!</span>
-              </div>
-            </div>
-          </div>
+
 
           <div className={styles.section}>
             <div>
