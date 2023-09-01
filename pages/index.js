@@ -126,7 +126,8 @@ export default function Home() {
             </div>
           </AnimatedSection>
 
-          <Paralax />
+          <img className={styles.alone_img} src={`/feature2.png`} alt="A cool feature image" />
+
 
           <AnimatedSection className={styles.section} >
             <div>

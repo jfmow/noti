@@ -422,6 +422,15 @@
 }
 
 
+.alone_img {
+  width: 100%;
+  /* padding: 1em; */
+  height: fit-content;
+  border-radius: 15px;
+  object-fit: contain;
+  box-shadow: 0 0 8px 2px #e5e5e5c4;
+}
+
 
 .section {
   height: 100dvh;
@@ -542,6 +551,10 @@
 
 
 @media(max-width: 600px) {
+
+  .alone_img {
+    display: none;
+  }
 
   .s2_card {
     transform: scale(0.6) !important;

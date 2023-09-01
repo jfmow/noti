@@ -15,7 +15,7 @@ function useParallax(value, distance) {
 function Image({ id, desc }) {
     const ref = useRef(null);
     const { scrollYProgress } = useScroll({ target: ref });
-    const y = useParallax(scrollYProgress, 320);
+    const y = useParallax(scrollYProgress, 300);
 
     return (
         <section className={styles.section}>
