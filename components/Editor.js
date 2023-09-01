@@ -11,7 +11,6 @@ import AttachesTool from "@editorjs/attaches";
 import PocketBase from "pocketbase";
 import styles from "@/styles/Create.module.css";
 import Loader from "./Loader";
-import { AES, enc } from "crypto-js";
 import compressImage from "@/lib/CompressImg";
 import dynamic from 'next/dynamic';
 import Router from "next/router";
@@ -58,7 +57,6 @@ function Editor({ page, preview, multi }) {
   const [shareLinkModalState, setShareLinkModalState] = useState(false);
   const [iconModalState, setIconModalState] = useState(false);
   const [currentPageIconValue, setCurrentPageIconValue] = useState("");
-  const [chefKey, setChefKey] = useState("");
   const [importantNote, setImportantNote] = useState(false)
 
   const [ColorSelectorState, setColorSelectorState] = useState(false)
@@ -215,14 +213,6 @@ function Editor({ page, preview, multi }) {
           const record = await pb.collection("pages").getOne(page);
           //encryption
           try {
-            const encryptrec = await pb
-              .collection("cookies")
-              .getOne(pb.authStore.model.meal);
-            setChefKey(encryptrec.chef);
-            const decryptedNote = AES.decrypt(
-              record.content,
-              encryptrec.chef
-            ).toString(enc.Utf8);
             setEditorData(JSON.parse(decryptedNote));
             //toast.info("Note no longer encrypted on server.")
           } catch (error) {
