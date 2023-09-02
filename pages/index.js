@@ -153,7 +153,9 @@ export default function Home() {
 
           </AnimatedSection>
 
-          <AnimatedSection className={styles.section}>
+          <AnimatedSection className={`${styles.section} ${styles.section_algin}`}>
+            <img className={styles.alone_img} src={`/feature2.png`} alt="A cool feature image" />
+
             <AnimatedSlideIn>
               <span className={styles.s2_question}>So why use this?</span>
               <div>
@@ -163,7 +165,6 @@ export default function Home() {
             </AnimatedSlideIn>
           </AnimatedSection>
 
-          <img className={styles.alone_img} src={`/feature2.png`} alt="A cool feature image" />
 
 
           <AnimatedSection className={styles.section} >
@@ -212,22 +213,55 @@ export default function Home() {
               </div>
             </div>
             <div className={styles.s2_cards}>
-              <AnimatedCard className={styles.s2_simple_card}>
+              <AnimatedCardPopIn className={styles.s2_simple_card}>
                 <div className={styles.s2_simple_card_icon}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path d="m11.19 1.36-7 3.11C3.47 4.79 3 5.51 3 6.3V11c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V6.3c0-.79-.47-1.51-1.19-1.83l-7-3.11c-.51-.23-1.11-.23-1.62 0zM12 11.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" /></svg>
                   <span>Safe and secure</span>
                 </div>
                 <p>It's your data so if you self host it's yours to look at not us. And even then if you don't it's still your data and not for us to go touchy looky at.</p>
-              </AnimatedCard>
-              <AnimatedCard className={styles.s2_simple_card}>
+              </AnimatedCardPopIn>
+              <AnimatedCardPopIn className={styles.s2_simple_card}>
                 <div className={styles.s2_simple_card_icon}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" ><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zm5.65-8.65c.2-.2.51-.2.71 0L16 14h-2v4h-4v-4H8l3.65-3.65zM15.5 4l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1h-2.5z" /></svg>
                   <span>Kept how you like it</span>
                 </div>
                 <p>Host it on your own server and when you delete something, you know it's very very gone.</p>
-              </AnimatedCard>
+              </AnimatedCardPopIn>
             </div>
           </AnimatedSection>
+
+          <AnimatedSection className={styles.section2}>
+            <div className={styles.section2_div}>
+              <AnimatedSlideIn>
+                <h2>World class ui</h2>
+              </AnimatedSlideIn>
+              <div className={styles.fcards}>
+                <div className={styles.fcarddual}>
+                  <div className={styles.fcards}>
+                    <AnimatedCardPopIn className={styles.fcard}>
+                      <span><div className={styles.fcard_icon}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" ><circle cx="14.5" cy="10.5" r="1.25" /><circle cx="9.5" cy="10.5" r="1.25" /><path d="M16.1 14H7.9c-.19 0-.32.2-.23.37C8.5 15.94 10.13 17 12 17s3.5-1.06 4.33-2.63a.262.262 0 0 0-.23-.37zm6.84-2.66a4.008 4.008 0 0 0-2.81-3.17 9.114 9.114 0 0 0-2.19-2.91C16.36 3.85 14.28 3 12 3s-4.36.85-5.94 2.26c-.92.81-1.67 1.8-2.19 2.91a3.994 3.994 0 0 0-2.81 3.17c-.04.21-.06.43-.06.66 0 .23.02.45.06.66a4.008 4.008 0 0 0 2.81 3.17 8.977 8.977 0 0 0 2.17 2.89C7.62 20.14 9.71 21 12 21s4.38-.86 5.97-2.28c.9-.8 1.65-1.79 2.17-2.89a3.998 3.998 0 0 0 2.8-3.17c.04-.21.06-.43.06-.66 0-.23-.02-.45-.06-.66zM19 14c-.1 0-.19-.02-.29-.03-.2.67-.49 1.29-.86 1.86C16.6 17.74 14.45 19 12 19s-4.6-1.26-5.85-3.17c-.37-.57-.66-1.19-.86-1.86-.1.01-.19.03-.29.03-1.1 0-2-.9-2-2s.9-2 2-2c.1 0 .19.02.29.03.2-.67.49-1.29.86-1.86C7.4 6.26 9.55 5 12 5s4.6 1.26 5.85 3.17c.37.57.66 1.19.86 1.86.1-.01.19-.03.29-.03 1.1 0 2 .9 2 2s-.9 2-2 2z" /></svg>
+                      </div>Simple</span>
+                      <p>Simple and accessible ui so you can get your notes down faster and better.</p>
+                    </AnimatedCardPopIn>
+                    <AnimatedCardPopIn className={styles.fcard}>
+                      <span><div className={styles.fcard_icon}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0 0 18c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" /></svg>
+                      </div>Playfull</span>
+                      <p>Lots of color to make sure your notes stand out! Customisable icons and notes so you can easily find them.</p>
+                    </AnimatedCardPopIn>
+                  </div>
+                  <AnimatedCardPopIn className={styles.fcard}>
+                    <span><div className={styles.fcard_icon}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" ><circle cx="12" cy="16" r="1" /><path d="M12 13c.55 0 1-.45 1-1V8c0-.55-.45-1-1-1s-1 .45-1 1v4c0 .55.45 1 1 1z" /><path d="M17 1H7c-1.1 0-1.99.9-1.99 2v18c0 1.1.89 2 1.99 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm0 17H7V6h10v12z" /></svg>
+                    </div>Robust</span>
+                    <p>With a large market of devices we have made it so you can use savemynotes on your phone, laptop, tablet etc easily and with a consistant look between them all.</p>
+                  </AnimatedCardPopIn>
+                </div>
+
+              </div>
+            </div>
+
+
+          </AnimatedSection>
+
         </div>
         <div className={styles.footer}>
           <h3>Made with 💖 by James M</h3>
@@ -276,6 +310,22 @@ function AnimatedSlideIn({ children, className }) {
       animate={inView ? { opacity: 1, x: 0 } : {}}
       exit={{ opacity: 0, x: 0 }}
       transition={{ duration: 2 }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+function AnimatedCardPopIn({ children, className }) {
+  const [ref, inView] = useInView({ threshold: 0.2 });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, scale: 0 }}
+      animate={inView ? { opacity: 1, scale: 1 } : {}}
+      exit={{ opacity: 0, scale: 1.5 }}
+      transition={{ duration: 0.4 }}
       className={className}
     >
       {children}

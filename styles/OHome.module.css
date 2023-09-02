@@ -430,6 +430,7 @@
   height: fit-content;
   border-radius: 15px;
   object-fit: contain;
+  padding: 2em;
   box-shadow: 0 0 8px 2px #e5e5e5c4;
 }
 
@@ -445,6 +446,12 @@
   position: relative;
   overflow: hidden;
   margin: 20px 0;
+}
+
+.section_algin {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
 }
 
 .s2_title {
@@ -554,8 +561,14 @@
 
 @media(max-width: 600px) {
 
+  .section_algin {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
   .alone_img {
-    display: none;
+    padding: 5px;
   }
 
   .s2_card {
@@ -564,9 +577,11 @@
   }
 
   .section {
-    min-height: 40dvh;
+    min-height: 60dvh;
     height: fit-content;
+    gap: 20px;
   }
+
 
   .s2_cards {
 
