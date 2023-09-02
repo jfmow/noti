@@ -280,6 +280,8 @@ export default function Home() {
 }
 
 
+
+
 function AnimatedSection({ children, className }) {
   const [ref, inView] = useInView({ threshold: 0.2 });
 
