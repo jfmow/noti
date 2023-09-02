@@ -58,10 +58,10 @@ export default function LoginPage() {
           <form className={styles.auth_form} onSubmit={(e) => loginNormal(e)}>
             <div className={styles.auth_formgroup}>
               <label for="email">Email/Username</label>
-              <input type="text" id="email" name="email" placeholder="me@example.com" required="" onChange={(e) => setUsername(e.target.value)} />
+              <input type="text" id="email" name="email" autoComplete="current-email" placeholder="me@example.com" required="" onChange={(e) => setUsername(e.target.value)} />
 
               <label for="password">Password</label>
-              <input type="password" id="password" name="password" placeholder="Enter your password" required="" onChange={(e) => setPassword(e.target.value)} />
+              <input type="password" autoComplete="current-password" id="password" name="password" placeholder="Enter your password" required="" onChange={(e) => setPassword(e.target.value)} />
             </div>
 
             <button className={styles.auth_formsubmitbtn} disabled={loginRunning} type="submit">{loginRunning ? (<>

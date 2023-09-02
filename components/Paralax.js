@@ -32,6 +32,9 @@ export default function App() {
     return (
         <>
             <Image id={'feature2'} desc={'Easy to use ui with 3rd party tools for more support'} />
+            <Image id={'feature2'} desc={'Easy to use ui with 3rd party tools for more support'} />
+            <Image id={'feature2'} desc={'Easy to use ui with 3rd party tools for more support'} />
+            <Image id={'feature2'} desc={'Easy to use ui with 3rd party tools for more support'} />
         </>
     );
 }

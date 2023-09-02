@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styles from '@/styles/OHome.module.css';
 import Link from 'next/link';
 import PocketBase from 'pocketbase';
@@ -8,27 +8,62 @@ import Head from 'next/head';
 import PlainLoader from '@/components/Loader';
 import Nav from '@/components/Nav';
 import { useInView } from 'react-intersection-observer';
-import { motion, useScroll } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 
-import Paralax from '@/components/Paralax'
+function mapValue(inputValue, inputRange, outputRange) {
+  const [inputMin, inputMax] = inputRange;
+  const [outputMin, outputMax] = outputRange;
+
+  // Ensure the inputValue is within the input range
+  const clampedInputValue = Math.min(Math.max(inputValue, inputMin), inputMax);
+
+  // Map the clamped input value to the output range
+  const mappedValue = ((clampedInputValue - inputMin) / (inputMax - inputMin)) * (outputMax - outputMin) + outputMin;
+
+  return mappedValue;
+}
 
 export default function Home() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
-  const [mobile, setMobile] = useState(false);
   const [bg, setBg] = useState(false)
-  const { scrollYProgress } = useScroll();
+  const [scrollYProgress, setScrollYProgress] = useState(0);
+  const [scrollYProgress1, setScrollYProgress1] = useState(0);
+  const [scrollYProgress2, setScrollYProgress2] = useState(1);
+
+  const floatImgYPos = scrollYProgress1
+  const floatImgScale = scrollYProgress2
+
+
+  useEffect(() => {
+
+    //Manualy doing the values because framer-motion is too dumb on page load for some reason??
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollPosition / maxScroll;
+      const scrollYProgress = progress; // Replace with your actual value
+      setScrollYProgress(progress)
+      const mappedValue1 = mapValue(scrollYProgress, [0, 1], [0, 500]);
+      const mappedValue2 = mapValue(scrollYProgress, [0, 1], [1, 10]);
+      setScrollYProgress1(mappedValue1)
+      setScrollYProgress2(mappedValue2)
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    // Cleanup the event listener on unmount
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     const bgval = Math.random().toPrecision()
     if (bgval > 0.5) {
       setBg(true)
-    }
-
-    if (window.innerWidth < 800) {
-      setMobile(true)
     }
     async function authUpdate() {
       try {
@@ -43,6 +78,7 @@ export default function Home() {
         pb.authStore.clear();
       }
     }
+
     authUpdate();
   }, []);
 
@@ -63,15 +99,15 @@ export default function Home() {
       </Head>
       <Nav />
       <p style={{ visibility: '0', width: '0', height: '0' }} aria-label='SEO text'>A place to take your notes with only fetures you will use. Explore note taking more simply.</p>
-      <div className={styles.container}>
-        <header className={`${styles.header} ${bg && styles.bgalt}`}>
+      <div className={styles.container} id='top'>
+        <div className={`${styles.header} ${bg && styles.bgalt}`}>
           <div className={`${styles.headerContent}`}>
-            <img src='/float1.png' className={styles.floatimg1} />
-            <img src='/float2.png' className={styles.floatimg2} />
-            <img src='/float3.png' className={styles.floatimg3} />
-            <img src='/float4.png' className={styles.floatimg4} />
-            <img src='/float5.png' className={styles.floatimg5} />
-            <img loading='egar' height='60' className={styles.title} src='/name.png' />
+            <motion.img src='/float1.png' className={styles.floatimg1} style={{ floatImgYPos, scale: floatImgScale }} />
+            <motion.img src='/float2.png' className={styles.floatimg2} style={{ floatImgYPos, scale: floatImgScale }} />
+            <motion.img src='/float3.png' className={styles.floatimg3} style={{ floatImgYPos }} />
+            <motion.img src='/float4.png' className={styles.floatimg4} style={{ floatImgYPos, scale: floatImgScale }} />
+            <motion.img src='/float5.png' className={styles.floatimg5} style={{ floatImgYPos }} />
+            <motion.img loading='egar' height='60' className={styles.title} src='/name.png' />
 
             <span className={styles.header_text}>All your <span className={styles.header_underline}>notes</span> together in one place</span>
 
@@ -82,7 +118,7 @@ export default function Home() {
             </div>
           </div>
 
-        </header>
+        </div>
         <div className={styles.sections}>
           <motion.div
             className={styles.progressbar}
@@ -91,7 +127,7 @@ export default function Home() {
           {/* Animate the second section */}
           <AnimatedSection className={styles.section2}>
             <div className={styles.section2_div} id='features'>
-              <h2>Get work done quickly and efficiently</h2>
+              <h2 >Get work done quickly and efficiently</h2>
               <div className={styles.fcards}>
                 <div className={styles.fcarddual}>
                   <div className={styles.fcard}>
@@ -118,12 +154,13 @@ export default function Home() {
           </AnimatedSection>
 
           <AnimatedSection className={styles.section}>
-            <div>
+            <AnimatedSlideIn>
               <span className={styles.s2_question}>So why use this?</span>
               <div>
+
                 <span className={styles.s2_title}>Because why not!</span>
               </div>
-            </div>
+            </AnimatedSlideIn>
           </AnimatedSection>
 
           <img className={styles.alone_img} src={`/feature2.png`} alt="A cool feature image" />
@@ -131,7 +168,7 @@ export default function Home() {
 
           <AnimatedSection className={styles.section} >
             <div>
-              <span className={styles.s2_title}>Free and open source</span>
+              <span className={styles.s2_title} style={{ textShadow: 'black -3px -5px, 8px 5px #d47eff' }}>Free and open source</span>
             </div>
             <div className={styles.s2_cards} style={{ justifyContent: 'center', flexDirection: 'row' }}>
               <AnimatedCard delay={0} className={styles.s2_card} >
@@ -167,7 +204,9 @@ export default function Home() {
 
           <AnimatedSection className={styles.section}>
             <div>
-              <span className={styles.s2_question}>What happens to my data?</span>
+              <AnimatedSlideIn>
+                <span className={styles.s2_question}>What happens to my data?</span>
+              </AnimatedSlideIn>
               <div>
                 <span className={styles.s2_title}>It's yours!</span>
               </div>
@@ -221,6 +260,22 @@ function AnimatedSection({ children, className }) {
       animate={inView ? { opacity: 1, y: 0 } : {}}
       exit={{ opacity: 0, y: -50 }}
       transition={{ duration: 0.5 }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+function AnimatedSlideIn({ children, className }) {
+  const [ref, inView] = useInView({ threshold: 0.2 });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, x: -50 }}
+      animate={inView ? { opacity: 1, x: 0 } : {}}
+      exit={{ opacity: 0, x: 0 }}
+      transition={{ duration: 2 }}
       className={className}
     >
       {children}

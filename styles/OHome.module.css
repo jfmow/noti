@@ -79,7 +79,7 @@
   animation-delay: 0.7s;
 }
 
-@keyframes bounce {
+@keyframes bounce2 {
   0% {
     transform: translateY(0);
   }
@@ -154,6 +154,8 @@
   font-weight: 800;
   font-size: clamp(32px, 8vw, 120px) !important;
   word-wrap: balance;
+
+  text-shadow: 5px 4px black;
 }
 
 
@@ -252,7 +254,7 @@
 
 .fcards {
 
-  width: 70%;
+  width: 95%;
   display: flex;
   flex-direction: row;
   justify-content: space-around;

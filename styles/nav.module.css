@@ -11,7 +11,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 1em;
+  padding: 1em 3em;
   background: #ffffff;
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
