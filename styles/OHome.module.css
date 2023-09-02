@@ -1,7 +1,6 @@
-/* OHome.module.css */
 .container {
   width: 100%;
-  background: #000000;
+  background: #ffffff;
   position: relative;
 }
 
@@ -179,7 +178,7 @@
 }
 
 .section2 p {
-  color: #787878;
+  color: #363636;
   font-size: 16px;
   font-weight: 600;
   text-wrap: balance;
@@ -244,7 +243,6 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  background: #060606;
 }
 
 .fcard span .fcard_icon {
@@ -252,7 +250,7 @@
   border-radius: 10px;
   line-height: 0;
   background: rgba(186, 66, 255, 0.2);
-  fill: #787878;
+  fill: #525252;
 }
 
 .fcard span {
@@ -261,7 +259,6 @@
   display: flex;
   gap: 10px;
   align-items: center;
-  color: #787878;
 }
 
 .fcard .disclamer {
@@ -451,7 +448,7 @@
 .s2_card {
   height: 300px;
   width: 250px;
-  background: radial-gradient(#1b1b1b, rgb(6, 6, 6));
+  background: radial-gradient(#f8f8f8, white);
   border-radius: 25px;
   box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, .1), 0 0 0 1px rgba(10, 10, 10, .02);
   display: flex;
@@ -459,14 +456,14 @@
   align-items: center;
   justify-content: space-evenly;
   padding: 15px;
-  border: 1px solid #000000;
+  border: 1px solid #fff;
   margin: -20px;
 }
 
 
 
 .s2_card_title {
-  color: #ffffff;
+  color: #000000;
   font-weight: 900;
   font-family: "mons", "Inter", "Gotham", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-size: 20px;
@@ -477,7 +474,6 @@
 .s2_card_img {
   width: 128px;
   height: 128px;
-  fill: #fff;
 }
 
 .s2_simple_card {

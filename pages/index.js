@@ -203,7 +203,7 @@ export default function Home() {
 
 
 
-          <AnimatedSection className={styles.section} dark={true}>
+          <AnimatedSection className={styles.section}>
             <AnimatedTextPopIn>
               <div>
                 <span className={styles.s2_question}>What happens to my data?</span>
@@ -284,6 +284,7 @@ export default function Home() {
 
 function AnimatedSection({ children, className }) {
   const [ref, inView] = useInView({ threshold: 0.2 });
+
   return (
     <motion.div
       ref={ref}
