@@ -17,6 +17,48 @@
 
 }
 
+
+.customdivider {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.customdivider svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 50px;
+}
+
+.customdivider .customdivider_shapefill {
+  fill: #FFFFFF;
+}
+
+.customdivider_wave_bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.customdivider_wave_bottom svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 62px;
+}
+
+.customdivider_wave_bottom .customdivider_wave_bottom_shapefill {
+  fill: #FFFFFF;
+}
+
 .progressbar {
   position: fixed;
   top: 0;
@@ -396,12 +438,31 @@
   position: relative;
   overflow: hidden;
   margin: 20px 0;
+  z-index: 2;
 }
 
 .section_algin {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 50px;
+  position: relative;
+  padding-top: 60px !important;
+  background: #fbf7ff;
+  padding-bottom: 70px !important;
+  height: 150dvh;
+}
+
+.section_line_bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  z-index: -1;
+  transform: scale(1.1);
 }
 
 .s2_title {
@@ -416,8 +477,31 @@
   font-family: "Inter", "Gotham", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-weight: 800;
-  font-size: clamp(32px, 8vw, 120px) !important;
+  font-size: 56px;
   word-wrap: balance;
+  z-index: 3;
+}
+
+.s2_title_large {
+  font-size: 80px;
+  text-align: center;
+  width: 100%;
+  display: block;
+}
+
+.s2_answer_img {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2em;
+}
+
+.s2_answer_img img {
+  width: 60%;
+  object-fit: cover;
+  border-radius: 9px;
+  box-shadow: 0 0 7px #e7e7e7;
 }
 
 .s2_question {
@@ -434,6 +518,10 @@
   font-weight: 800;
   font-size: clamp(32px, 3vw, 30px) !important;
   word-wrap: balance;
+  z-index: 3;
+  text-align: center;
+  width: 100%;
+  display: block;
 }
 
 .s2_cards {
@@ -443,6 +531,7 @@
   align-items: center;
   justify-content: space-evenly;
   width: 100%;
+  z-index: 3;
 }
 
 .s2_card {
