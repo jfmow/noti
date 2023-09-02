@@ -427,16 +427,15 @@
 .alone_img {
   width: 100%;
   /* padding: 1em; */
-  height: fit-content;
+  height: 100%;
   border-radius: 15px;
-  object-fit: contain;
-  padding: 2em;
   box-shadow: 0 0 8px 2px #e5e5e5c4;
+  object-fit: cover;
 }
 
 
 .section {
-  height: 100dvh;
+  height: 130dvh;
   width: 100%;
   padding: 2em;
   display: flex;
@@ -661,5 +660,9 @@
   .section4 .fcard p {
     text-align: center !important;
     text-wrap: balance;
+  }
+
+  .fcards {
+    width: 100%;
   }
 }
