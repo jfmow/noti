@@ -6,7 +6,7 @@ import { ModalContainer, ModalForm, ModalTitle } from '@/lib/Modal';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 function Unsplash({ page, setArticleHeader, close }) {
     const [images, setImages] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('earth')
+    const [searchTerm, setSearchTerm] = useState('')
     const [currentPageNumber, setPageNumber] = useState(1)
 
     useEffect(() => {
@@ -51,7 +51,7 @@ function Unsplash({ page, setArticleHeader, close }) {
                     <div className={styles.search}>
                         <input onChange={(e) => {
                             setSearchTerm(e.target.value)
-                        }} type="text" className={styles.search__input} placeholder="Search..." />
+                        }} type="text" value={searchTerm} className={styles.search__input} placeholder="Search..." />
                         <button className={styles.search__button} type='button' onClick={fetchImages}>
                             <svg className={styles.search__icon} aria-hidden="true" viewBox="0 0 24 24">
                                 <g>
