@@ -8,6 +8,7 @@ function Unsplash({ page, setArticleHeader, close }) {
     const [images, setImages] = useState([]);
     const [searchTerm, setSearchTerm] = useState('')
     const [currentPageNumber, setPageNumber] = useState(1)
+    const [totalpages, setTotalPages] = useState(-1)
 
     useEffect(() => {
         fetchImages();
@@ -15,7 +16,7 @@ function Unsplash({ page, setArticleHeader, close }) {
 
     async function fetchImages() {
         try {
-            if (currentPageNumber > 10) {
+            if (currentPageNumber >= totalpages && totalpages !== -1) {
                 return
             }
             const response = await fetch(
@@ -23,6 +24,7 @@ function Unsplash({ page, setArticleHeader, close }) {
             );
             const data = await response.json();
             setImages(data.results);
+            setTotalPages(data.total_pages)
         } catch (error) {
             console.error('Error fetching images:', error);
         }
