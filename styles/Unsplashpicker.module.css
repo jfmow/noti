@@ -56,7 +56,7 @@
     fill: #b4b4b4;
 }
 
-.imgs{
+.imgs {
     height: 50vh;
     overflow: scroll;
     display: flex;
@@ -72,4 +72,31 @@
     border-radius: 5px !important;
     cursor: pointer;
     object-fit: cover;
+}
+
+.pagebtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 30px;
+    border-radius: 9px;
+    border: none;
+    cursor: pointer;
+    background: var(--modal_button_bg);
+    color: var(--modal_button_text);
+}
+
+.pagebtn:disabled {
+    background: none;
+}
+
+.pagebtn:active {
+    background: var(--modal_button_bg_hover);
+}
+
+@media(max-width: 600px) {
+    .img {
+        max-width: 150px !important;
+    }
 }

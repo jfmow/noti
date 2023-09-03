@@ -7,15 +7,19 @@ const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 function Unsplash({ page, setArticleHeader, close }) {
     const [images, setImages] = useState([]);
     const [searchTerm, setSearchTerm] = useState('earth')
+    const [currentPageNumber, setPageNumber] = useState(1)
 
     useEffect(() => {
         fetchImages();
-    }, []);
+    }, [currentPageNumber]);
 
     async function fetchImages() {
         try {
+            if (currentPageNumber > 10) {
+                return
+            }
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_CURRENTURL}/api/getunsplash?type=${searchTerm}`
+                `${process.env.NEXT_PUBLIC_CURRENTURL}/api/getunsplash?type=${searchTerm}&page=${currentPageNumber}`
             );
             const data = await response.json();
             setImages(data.results);
@@ -72,6 +76,8 @@ function Unsplash({ page, setArticleHeader, close }) {
                             }}
                         />
                     ))}
+                    <button className={styles.pagebtn} type='button' onClick={() => { setPageNumber(prev => prev - 1) }} disabled={currentPageNumber <= 1}>Back</button>
+                    <button className={styles.pagebtn} type='button' onClick={() => { setPageNumber(prev => prev + 1) }}>Next</button>
                 </div>
             </ModalForm>
         </ModalContainer >

@@ -49,10 +49,16 @@ export default async function handler(request, response) {
     }
     try {
         const { type } = request.query;
+        const { page } = request.query;
 
         // Sanitize and validate the 'type' parameter
-        const validType = validator.escape(String(type));
-        console.log(validType)
+        const validSearchText = validator.escape(String(type));
+        const validPageNumber = validator.escape(page);
+
+        if (!validator.isNumeric(validPageNumber)) {
+            return response.status(400).send('Invalid input parameter');
+
+        }
 
         // Define a custom validation function to allow spaces and disallow certain characters
         const isSafeType = (input) => {
@@ -61,16 +67,17 @@ export default async function handler(request, response) {
             return pattern.test(input);
         };
 
-        if (!isSafeType(validType)) {
+        if (!isSafeType(validSearchText)) {
             // Handle invalid input (e.g., respond with an error)
-            return response.status(400).send('Invalid input for "type" parameter');
+            return response.status(400).send('Invalid input parameter');
         }
 
         // Validate and convert the 'type' parameter to a string
-        const data = await fetch(`https://api.unsplash.com/search/photos?query=${validType}&client_id=${process.env.UNSPLASH_APIKEY}&per_page=200&orientation=landscape`)
+        const data = await fetch(`https://api.unsplash.com/search/photos?query=${validSearchText}&client_id=${process.env.UNSPLASH_APIKEY}&per_page=200&orientation=landscape&page=${validPageNumber}`)
         const data2 = await data.json()
         response.status(200).json(data2)
     } catch (err) {
+        console.log(err)
         response.status(500).send('Something went wrong!')
     }
 }
