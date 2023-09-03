@@ -52,8 +52,16 @@ export default async function handler(request, response) {
 
         // Sanitize and validate the 'type' parameter
         const validType = validator.escape(String(type));
+        console.log(validType)
 
-        if (!validator.isAlphanumeric(validType)) {
+        // Define a custom validation function to allow spaces and disallow certain characters
+        const isSafeType = (input) => {
+            // Define a regular expression pattern to allow spaces and disallow problematic characters
+            const pattern = /^[a-zA-Z0-9\s-]+$/;
+            return pattern.test(input);
+        };
+
+        if (!isSafeType(validType)) {
             // Handle invalid input (e.g., respond with an error)
             return response.status(400).send('Invalid input for "type" parameter');
         }
