@@ -1,5 +1,6 @@
 import rateLimit from 'express-rate-limit'
 import slowDown from 'express-slow-down'
+import validator from 'validator';
 import PocketBase from "pocketbase";
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
@@ -49,8 +50,15 @@ export default async function handler(request, response) {
     try {
         const { type } = request.query;
 
+        // Sanitize and validate the 'type' parameter
+        const validType = validator.escape(String(type));
+
+        if (!validator.isAlphanumeric(validType)) {
+            // Handle invalid input (e.g., respond with an error)
+            return response.status(400).send('Invalid input for "type" parameter');
+        }
+
         // Validate and convert the 'type' parameter to a string
-        const validType = String(type);
         const data = await fetch(`https://api.unsplash.com/search/photos?query=${validType}&client_id=${process.env.UNSPLASH_APIKEY}&per_page=200&orientation=landscape`)
         const data2 = await data.json()
         response.status(200).json(data2)
