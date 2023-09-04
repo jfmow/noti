@@ -26,7 +26,6 @@ import SimpleIframe from "@/customEditorTools/SimpleEmbed";
 import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
 import LineBreak from "@/customEditorTools/LineBreak";
 import convertToMarkdown from '@/lib/ConvertToMD'
-import { debounce } from "lodash";
 const Icons = dynamic(() => import("./Icons"), {
   loading: () => <ModalTempLoader />,
   ssr: true,
@@ -50,6 +49,10 @@ function Editor({ page, preview, multi }) {
   const [articleHeader, setArticleHeader] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const [lastTypedTime, setLastTypedTime] = useState(Date.now());
+  const [lastTypedTimeIdle, setLastTypedTimeIdle] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+
   const [pageSharedTF, setPageSharedTF] = useState(false);
   const [shareLinkModalState, setShareLinkModalState] = useState(false);
   const [iconModalState, setIconModalState] = useState(false);
@@ -62,14 +65,122 @@ function Editor({ page, preview, multi }) {
 
   const [convertModalState, setShowConvert] = useState(false)
 
+  const [offline, setOffline] = useState({ warning: false, state: false })
   const pagetitleref = useRef(null)
 
   const [unsplashPicker, setUnsplashPicker] = useState(false)
 
+  useEffect(() => {
+    window.addEventListener('offline', () => {
+      setOffline({ ...offline, state: true })
+    })
+    window.addEventListener('online', () => {
+      setOffline({ ...offline, state: false, warning: false })
+    })
+    return () => {
+      window.removeEventListener('online', () => { return })
+      window.removeEventListener('offline', () => { return })
+    }
+  }, [])
+
+  useEffect(() => {
+    if (preview === "true") {
+      return;
+    }
+    let timer;
+
+    // Function to save the article after the specified delay
+    const saveArticle = async () => {
+      const currentTime = Date.now();
+      const elapsedTime = currentTime - lastTypedTime;
+
+      if (elapsedTime >= 500 && !lastTypedTimeIdle) {
+        // Auto-save 3 seconds after the user stops typing
+        setLastTypedTimeIdle(true);
+        setIsSaving(true);
+        if (editor) {
+          if (offline.state) {
+            setOffline({ ...offline, warning: true })
+            if (!offline.warning) {
+              toast.error("Looks like your offline. Your work is currenly unsaved!")
+            }
+            return
+          }
+          const articleContent = await editor.saver.save();
+          let formData = new FormData();
+
+          formData.append("title", articleTitle);
+          // Encrypt the note content
+          // Replace with the user's encryption key
+
+          //const encryptedNote = AES.encrypt(
+          //  JSON.stringify(articleContent),
+          //  chefKey
+          //).toString();
+
+          // Decrypt the note content
+
+
+          formData.append("content", JSON.stringify(articleContent));
+          try {
+            if (page === "firstopen") {
+              formData.append("owner", pb.authStore.model.id);
+              const state = await pb.collection("pages").create(formData);
+              return Router.push(`/page/${state.id}`)
+            }
+            const state = await pb.collection("pages").update(page, formData);
+            //console.log("Auto saved successfully!");
+          } catch (error) {
+            toast.error("Could not auto save!", {
+              position: toast.POSITION.BOTTOM_LEFT,
+            });
+            console.error(error);
+          }
+          //console.log("Auto-save executed.");
+        }
+        setLastTypedTimeIdle(true);
+        setIsSaving(false);
+      }
+    };
+
+    // Function to update the last typing timestamp
+    const updateLastTypedTime = () => {
+      setLastTypedTime(Date.now());
+    };
+
+    // Event listener for detecting user typing
+    const typingEventListener = () => {
+      updateLastTypedTime();
+      setLastTypedTimeIdle(false);
+    };
+
+    // Event listener for detecting mouse movement
+    //const mouseMovementEventListener = () => {
+    //  updateLastTypedTime();
+    //};
+
+    // Attach event listeners
+    window.addEventListener("keydown", typingEventListener);
+    //window.addEventListener("mousemove", mouseMovementEventListener);
+
+    // Start the auto-save timer
+    timer = setTimeout(() => {
+      saveArticle();
+    }, 500); // Initial auto-save 3 seconds after component mount
+
+    return () => {
+      // Clean up the event listeners and timer on component unmount
+      window.removeEventListener("keydown", typingEventListener);
+      //window.removeEventListener("mousemove", mouseMovementEventListener);
+      clearTimeout(timer);
+    };
+  }, [lastTypedTime]);
 
   useEffect(() => {
     if (page) {
-      setIsLoading(true)
+      setLastTypedTimeIdle(true);
+      setIsLoading(true);
+      setIsSaving(false)
       setEditorData(null)
       setArticleTitle('Untitled')
       setArticleHeader(null)
@@ -134,6 +245,17 @@ function Editor({ page, preview, multi }) {
     }
   }, [page]);
 
+  useEffect(() => {
+    if (isSaving) {
+      window.addEventListener("beforeunload", handleBeforeUnload);
+    } else {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    }
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [isSaving]);
 
   useEffect(() => {
     //set a colorful header
@@ -144,30 +266,11 @@ function Editor({ page, preview, multi }) {
     }
   }, [document.getElementById('titlebg')])
 
-  async function save() {
-    if (editor) {
-      console.log('Hi')
-      const articleContent = await editor.saver.save();
-      let formData = new FormData();
-
-      formData.append("title", articleTitle);
-      formData.append("content", JSON.stringify(articleContent));
-      try {
-        if (page === "firstopen") {
-          formData.append("owner", pb.authStore.model.id);
-          const state = await pb.collection("pages").create(formData);
-          return Router.push(`/page/${state.id}`)
-        }
-        const state = await pb.collection("pages").update(page, formData);
-        //console.log("Auto saved successfully!");
-      } catch (error) {
-        toast.error("Could not auto save!", {
-          position: toast.POSITION.BOTTOM_LEFT,
-        });
-        console.error(error);
-      }
-    }
-  }
+  const handleBeforeUnload = (event) => {
+    event.preventDefault();
+    event.returnValue = "";
+    return "Page currently saving. Are your sure you want to continue";
+  };
 
   useEffect(() => {
     if (
@@ -190,7 +293,8 @@ function Editor({ page, preview, multi }) {
             config: {
               saveData: {
                 saveAll() {
-                  save()
+                  setLastTypedTime(Date.now());
+                  setLastTypedTimeIdle(false);
                   return
                 }
               },
@@ -255,7 +359,8 @@ function Editor({ page, preview, multi }) {
             config: {
               saveData: {
                 saveAll() {
-                  save()
+                  setLastTypedTime(Date.now());
+                  setLastTypedTimeIdle(false);
                   return
                 }
               },
@@ -310,7 +415,8 @@ function Editor({ page, preview, multi }) {
             config: {
               saveData: {
                 saveAll() {
-                  save()
+                  setLastTypedTime(Date.now());
+                  setLastTypedTimeIdle(false);
                   return
                 }
               },
@@ -374,14 +480,6 @@ function Editor({ page, preview, multi }) {
         autofocus: true
       });
 
-
-
-      const editorDebounce = debounce(save, 500)
-
-      editorRef.current.addEventListener('keyup', () => {
-        editorDebounce()
-      })
-
       setEditor(editorInstance, () => {
         // Cleanup logic
         if (editor) {
@@ -417,6 +515,7 @@ function Editor({ page, preview, multi }) {
       title: title.innerText
     };
     await pb.collection("pages").update(page, newTitle);
+    setIsSaving(false);
   }
 
   async function handlePageHeaderImageUpload(e) {
