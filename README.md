@@ -11,11 +11,12 @@ It is basically plug and play,
 
 1. just clone the repo and deploy it to where ever you can host nextjs
 
-2. Download the PockeBase exe to a server and (prefered) use docker and make sure to expose port 443 or which ever you set docker to expose
+2. Download the PockeBase exe to a server and (prefered) use docker and make sure to expose port 443 or which ever you set docker to expose.
+   2.2 https://github.com/jfmow/pocketbase go to the examples/base/main.go and build it for what your hosting it on and thats it.
 
-3. And that's it.
+4. And that's it.
 
-4. Create an admin and paste in the schema in the PocketBase import section of settings.
+5. Create an admin and paste in the schema in the PocketBase import section of settings.
 
 > # ALERT!
 >
