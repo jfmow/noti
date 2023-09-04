@@ -4,13 +4,9 @@ import Head from "next/head";
 import Router from "next/router";
 import CustomThemePicker from "./CustomTheme";
 import { useState } from "react";
-export default function UserHelpModal({ CloseHelp }) {
-    const [themePicker, setThemePicker] = useState(false)
-    const storageEvent = new Event('storage');
 
-    // Set the event key and newValue properties
-    Object.defineProperty(storageEvent, 'key', { value: 'theme' });
-    Object.defineProperty(storageEvent, 'newValue', { value: 'new_theme_value' });
+export default function UserHelpModal({ CloseHelp }) {
+    const [themePicker, setThemePicker] = useState(false);
 
     function disableCustomTheme() {
         try {
@@ -18,6 +14,18 @@ export default function UserHelpModal({ CloseHelp }) {
             window.localStorage.setItem('Custom_theme', JSON.stringify({ 'enabled': false, 'data': JSON.parse(customTheme).data }))
         } catch (err) { }
     }
+
+    function updateTheme(theme) {
+        disableCustomTheme();
+        window.localStorage.setItem('theme', theme);
+
+        // Create a storage event and dispatch it
+        const storageEvent = new Event('storage');
+        storageEvent.key = 'theme';
+        storageEvent.newValue = theme;
+        window.dispatchEvent(storageEvent);
+    }
+
     return (
         <>
             <Head>
@@ -30,39 +38,25 @@ export default function UserHelpModal({ CloseHelp }) {
                     )}
                     <ModalTitle>Theme</ModalTitle>
                     <AlternateButton click={() => {
-                        window.localStorage.setItem('theme', 'purple')
-                        disableCustomTheme()
-                        window.dispatchEvent(storageEvent);
+                        updateTheme('purple')
                     }}>Purple</AlternateButton>
                     <AlternateButton click={() => {
-                        window.localStorage.setItem('theme', 'navy blue')
-                        disableCustomTheme()
-                        window.dispatchEvent(storageEvent);
+                        updateTheme('navy blue')
                     }}>Navy blue</AlternateButton>
                     <AlternateButton click={() => {
-                        window.localStorage.setItem('theme', 'pro pink')
-                        disableCustomTheme()
-                        window.dispatchEvent(storageEvent);
+                        updateTheme('pro pink')
                     }}>Pro pink</AlternateButton>
                     <AlternateButton click={() => {
-                        window.localStorage.setItem('theme', 'relax orange')
-                        disableCustomTheme()
-                        window.dispatchEvent(storageEvent);
+                        updateTheme('relax orange')
                     }}>Relax orange</AlternateButton>
                     <AlternateButton click={() => {
-                        window.localStorage.setItem('theme', 'pro dark')
-                        disableCustomTheme()
-                        window.dispatchEvent(storageEvent);
+                        updateTheme('pro dark')
                     }}>Pro dark</AlternateButton>
                     <AlternateButton click={() => {
-                        window.localStorage.setItem('theme', 'mid light')
-                        disableCustomTheme()
-                        window.dispatchEvent(storageEvent);
+                        updateTheme('mid light')
                     }}>Mid light</AlternateButton>
                     <AlternateButton click={() => {
-                        window.localStorage.setItem('theme', '')
-                        disableCustomTheme()
-                        window.dispatchEvent(storageEvent);
+                        updateTheme('')
                     }}>System</AlternateButton>
                     <AlternateButton click={() => {
                         setThemePicker(true)

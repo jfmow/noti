@@ -12,11 +12,10 @@ export default function App({ Component, pageProps }) {
 
 
   useEffect(() => {
+    let vars = {}
+
     function applyTheme() {
       const theme = window.localStorage.getItem('theme')
-
-      let vars = {}
-
       const customTheme = window.localStorage.getItem('Custom_theme')
       if (JSON.parse(customTheme)?.enabled) {
         vars = JSON.parse(customTheme).data
@@ -263,6 +262,10 @@ export default function App({ Component, pageProps }) {
     window.addEventListener('storage', (e) => {
       if (e.key === 'theme') {
         // Theme property has changed, apply the new theme
+        const r = document.documentElement.style;
+        for (const variable in vars) {
+          r.removeProperty(variable);
+        }
         applyTheme();
       }
     });
