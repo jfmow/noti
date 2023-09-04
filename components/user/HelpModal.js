@@ -6,6 +6,12 @@ import CustomThemePicker from "./CustomTheme";
 import { useState } from "react";
 export default function UserHelpModal({ CloseHelp }) {
     const [themePicker, setThemePicker] = useState(false)
+    const storageEvent = new Event('storage');
+
+    // Set the event key and newValue properties
+    Object.defineProperty(storageEvent, 'key', { value: 'theme' });
+    Object.defineProperty(storageEvent, 'newValue', { value: 'new_theme_value' });
+
     function disableCustomTheme() {
         try {
             const customTheme = window.localStorage.getItem('Custom_theme')
@@ -26,37 +32,37 @@ export default function UserHelpModal({ CloseHelp }) {
                     <AlternateButton click={() => {
                         window.localStorage.setItem('theme', 'purple')
                         disableCustomTheme()
-                        Router.reload()
+                        window.dispatchEvent(storageEvent);
                     }}>Purple</AlternateButton>
                     <AlternateButton click={() => {
                         window.localStorage.setItem('theme', 'navy blue')
                         disableCustomTheme()
-                        Router.reload()
+                        window.dispatchEvent(storageEvent);
                     }}>Navy blue</AlternateButton>
                     <AlternateButton click={() => {
                         window.localStorage.setItem('theme', 'pro pink')
                         disableCustomTheme()
-                        Router.reload()
+                        window.dispatchEvent(storageEvent);
                     }}>Pro pink</AlternateButton>
                     <AlternateButton click={() => {
                         window.localStorage.setItem('theme', 'relax orange')
                         disableCustomTheme()
-                        Router.reload()
+                        window.dispatchEvent(storageEvent);
                     }}>Relax orange</AlternateButton>
                     <AlternateButton click={() => {
                         window.localStorage.setItem('theme', 'pro dark')
                         disableCustomTheme()
-                        Router.reload()
+                        window.dispatchEvent(storageEvent);
                     }}>Pro dark</AlternateButton>
                     <AlternateButton click={() => {
                         window.localStorage.setItem('theme', 'mid light')
                         disableCustomTheme()
-                        Router.reload()
+                        window.dispatchEvent(storageEvent);
                     }}>Mid light</AlternateButton>
                     <AlternateButton click={() => {
                         window.localStorage.setItem('theme', '')
                         disableCustomTheme()
-                        Router.reload()
+                        window.dispatchEvent(storageEvent);
                     }}>System</AlternateButton>
                     <AlternateButton click={() => {
                         setThemePicker(true)
