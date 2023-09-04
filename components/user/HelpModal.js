@@ -7,6 +7,7 @@ import { useState } from "react";
 
 export default function UserHelpModal({ CloseHelp }) {
     const [themePicker, setThemePicker] = useState(false);
+    const themes = [{ displayName: 'Purple', key: 'purple' }, { displayName: 'Navy blue', key: 'navy blue' }, { displayName: 'Pro pink', key: 'pro pink' }, { displayName: 'Relax orange', key: 'relax orange' }, { displayName: 'Pro dark', key: 'pro dark' }, { displayName: 'Mid light', key: 'mid light' }, { displayName: 'System', key: '' }]
 
     function disableCustomTheme() {
         try {
@@ -37,27 +38,11 @@ export default function UserHelpModal({ CloseHelp }) {
                         <CustomThemePicker close={() => setThemePicker(false)} />
                     )}
                     <ModalTitle>Theme</ModalTitle>
-                    <AlternateButton click={() => {
-                        updateTheme('purple')
-                    }}>Purple</AlternateButton>
-                    <AlternateButton click={() => {
-                        updateTheme('navy blue')
-                    }}>Navy blue</AlternateButton>
-                    <AlternateButton click={() => {
-                        updateTheme('pro pink')
-                    }}>Pro pink</AlternateButton>
-                    <AlternateButton click={() => {
-                        updateTheme('relax orange')
-                    }}>Relax orange</AlternateButton>
-                    <AlternateButton click={() => {
-                        updateTheme('pro dark')
-                    }}>Pro dark</AlternateButton>
-                    <AlternateButton click={() => {
-                        updateTheme('mid light')
-                    }}>Mid light</AlternateButton>
-                    <AlternateButton click={() => {
-                        updateTheme('')
-                    }}>System</AlternateButton>
+                    {themes.map((theme) => (
+                        <AlternateButton click={() => {
+                            updateTheme(theme.key)
+                        }}>{theme.displayName}</AlternateButton>
+                    ))}
                     <AlternateButton click={() => {
                         setThemePicker(true)
                     }}>Create a theme</AlternateButton>
