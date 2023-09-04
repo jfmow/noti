@@ -61,6 +61,9 @@ export default function UserHelpModal({ CloseHelp }) {
                     <AlternateButton click={() => {
                         setThemePicker(true)
                     }}>Create a theme</AlternateButton>
+                    <AlternateButton click={() => {
+                        Router.push('/draw')
+                    }}>Drawing pad</AlternateButton>
                 </ModalForm>
             </ModalContainer>
         </>
