@@ -7,7 +7,7 @@ import { useState } from "react";
 
 export default function UserHelpModal({ CloseHelp }) {
     const [themePicker, setThemePicker] = useState(false);
-    const themes = [{ displayName: 'Purple', key: 'purple' }, { displayName: 'Navy blue', key: 'navy blue' }, { displayName: 'Pro pink', key: 'pro pink' }, { displayName: 'Relax orange', key: 'relax orange' }, { displayName: 'Pro dark', key: 'pro dark' }, { displayName: 'Mid light', key: 'mid light' }, { displayName: 'System', key: '' }]
+    const themes = [{ displayName: 'Purple', key: 'purple' }, { displayName: 'Navy blue', key: 'navy blue' }, { displayName: 'Pro pink', key: 'pro pink' }, { displayName: 'Relax orange', key: 'relax orange' }, { displayName: 'Pro dark', key: 'pro dark' }, { displayName: 'Mid light', key: 'mid light' }, { displayName: 'System', key: 'system' }]
 
     function disableCustomTheme() {
         try {

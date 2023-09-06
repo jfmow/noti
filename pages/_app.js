@@ -247,7 +247,11 @@ export default function App({ Component, pageProps }) {
               '--user_option_text': '#464646'
             }
             break;
+          case 'system':
+            vars = { '': '' }
+            break;
           default:
+            vars = { '': '' }
             break;
         }
       }
