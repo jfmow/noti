@@ -15,7 +15,7 @@ import compressImage from "@/lib/CompressImg";
 import dynamic from 'next/dynamic';
 import Router from "next/router";
 import { AnimatePresence } from "framer-motion";
-import { AlternateButton, CopyPasteTextArea, ModalTempLoader } from "@/lib/Modal";
+import { AlternateButton, CopyPasteTextArea } from "@/lib/Modal";
 import { createRandomMeshGradients } from "@/lib/randomMeshGradient";
 import NestedList from '@editorjs/nested-list';
 import Img from './Img'
@@ -27,7 +27,6 @@ import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
 import LineBreak from "@/customEditorTools/LineBreak";
 import convertToMarkdown from '@/lib/ConvertToMD'
 const Icons = dynamic(() => import("./Icons"), {
-  loading: () => <ModalTempLoader />,
   ssr: true,
 });
 const ColorSelector = dynamic(() => import("./ColorSelector"), {
