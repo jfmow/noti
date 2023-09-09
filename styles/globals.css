@@ -5,7 +5,7 @@
 
   --main_btn_color_action: #15cce4;
 
-  --big_button_border: rgba(201, 201, 204, .48);
+  --big_button_border: rgba(201, 201, 204, 0.48);
   --big_button_text: #707684;
   --big_button_background: #fff;
   --big_button_background_hover: #000;
@@ -21,33 +21,26 @@
   --page_list_item_hover_drag: #ff7777;
   --create_new_page_btn_text: #3d3d3d;
   --page_list_item_icons: #19171199;
-  --page_list_item_fillcolor: rgba(55, 53, 47, .35);
+  --page_list_item_fillcolor: rgba(55, 53, 47, 0.35);
 
   --modal_text_color: #000000;
   --modal_background: #ffffff;
-  --modal_color-2-c86cffcc: #9d9d9d;
-  --modal_color-3-42429cc0: #dfdfdf;
-  --modal_color-4-8860c804: rgb(227, 227, 227);
-  --modal_color-5-32f42df1: #8e8e8e;
-  --modal_color-6-42f923f0: #4f4f4f;
+
+  --modal_border_color: #dfdfdf;
+
+  --modal_input_placeholder_color: #8e8e8e;
+
   --modal_close_button_hover: #333333;
-  --modal_color-13-228c15be: #1899d6;
-  --modal_color-14-a7091aca: #1cb0f6;
-  --modal_color-16-af97a36b: rgba(201, 201, 204, .48);
-  --modal_color-17-4fcbb4ba: #e8e8e8;
+
+  --modal_s2ndry_btn_bxshdw_unused: #e8e8e8;
   --modal_button_text: #707684;
-  --modal_color-19-8243e20a: #ff2d2d;
+
   --modal_button_svg: #50545d;
-  --modal_color-23-7309aa07_NOTUSED: #1f1f1f;
-  --modal_color-24-3f5683d9: rgb(34, 34, 34);
-  --modal_color-25-1133eaba_NOTUSED: #353535;
-  --modal_color-26-3e9fea21_NOTUSED: #1c1c1c;
-  --modal_color-27-e4ad4b96: rgb(149, 149, 149);
-  --modal_color-28-8fb448ab_NOTUSED: #d3d3d3;
-  --modal_color-29-93b283f1: #eeeeee;
-  --modal_color-30-88babb29: hsl(214, 97%, 59%);
+
+  --modal_temp_loader_bg: #eeeeee;
+
   --modal_button_bg: none;
-  --modal_button_border: 1px rgba(201, 201, 204, .48) solid;
+  --modal_button_border: 1px rgba(201, 201, 204, 0.48) solid;
   --modal_button_bg_hover: #000;
   --modal_button_text_hover: #ffffff;
   --modal_button_bxshdw_hover: transparent;
@@ -65,17 +58,18 @@
 
   --user_option_text: #9da5b5;
   --userinfo_section_bordertop: #dadada;
-
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
+    /*Main page*/
     --background: #202020;
+    /*Modal btn 1 (Redundant)*/
     --big_button_background: #353535;
     --big_button_border: #4f4f4f;
     --big_button_border_hover_alt: #2d2d2d;
     --big_button_text: #707684;
-    --editor_text: #fff;
+    /*Page selector (item.js)*/
     --desktophidemenu_bg: #464646;
     --desktophidemenu_bg_hover: #040404;
     --boxshadow_primary: #1d1d1d;
@@ -83,39 +77,27 @@
     --page_list_item_active: #0000001a;
     --page_list_item_icons_background_hover: #282828;
     --page_list_item_hover_drag: #ff7777;
-    --create_new_page_btn_text: #3d3d3d;
+    --create_new_page_btn_text: #989898;
     --page_list_item_icons: #ffffff99;
     --page_list_item_fillcolor: #ffffff99;
+    /*Modal*/
     --modal_text_color: #ffffff;
     --modal_background: #1f1f1f;
-    --modal_color-2-c86cffcc: #9d9d9d;
-    --modal_color-3-42429cc0: #000000;
-    --modal_color-4-8860c804: rgb(227, 227, 227);
-    --modal_color-5-32f42df1: #8e8e8e;
-    --modal_color-6-42f923f0: #4f4f4f;
+    --modal_border_color: #000000;
+    --modal_input_placeholder_color: #8e8e8e;
     --modal_close_button_hover: #333333;
-    --modal_color-13-228c15be: #1899d6;
-    --modal_color-14-a7091aca: #1cb0f6;
-    --modal_color-16-af97a36b: rgba(201, 201, 204, .48);
-    --modal_color-17-4fcbb4ba: #e8e8e8;
+    --modal_s2ndry_btn_bxshdw_unused: #e8e8e8;
     --modal_button_text: #707684;
-    --modal_color-19-8243e20a: #ff2d2d;
     --modal_button_svg: #50545d;
-    --modal_color-23-7309aa07_NOTUSED: #1f1f1f;
-    --modal_color-24-3f5683d9: rgb(34, 34, 34);
-    --modal_color-25-1133eaba_NOTUSED: #353535;
-    --modal_color-26-3e9fea21_NOTUSED: #1c1c1c;
-    --modal_color-27-e4ad4b96: rgb(149, 149, 149);
-    --modal_color-28-8fb448ab_NOTUSED: #d3d3d3;
-    --modal_color-29-93b283f1: #eeeeee;
-    --modal_color-30-88babb29: hsl(214, 97%, 59%);
+    --modal_temp_loader_bg: #eeeeee;
     --modal_button_bg: #353535;
     --modal_button_border: none;
     --modal_button_bg_hover: #000;
     --modal_button_text_hover: #fff;
     --modal_button_bxshdw_hover: #1c1c1c;
+    /*Editor*/
     --editor_text: #fff;
-
+    /*User profile thing*/
     --userinfo_section_bordertop: #2d2d2d;
   }
 }
@@ -134,14 +116,13 @@ body {
 
 .main {
   display: flex;
-
 }
 
 body {
   color: #000;
   background: var(--background);
-  font-family: Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans,
+    Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
@@ -149,55 +130,51 @@ a {
   text-decoration: none;
 }
 
-
-
-@media(max-width: 800px) {
+@media (max-width: 800px) {
   .main {
     display: flex;
     flex-direction: column;
-
   }
 }
 
 @font-face {
   font-family: "Anton";
-  src: url('../fonts/Anton-Regular.ttf');
+  src: url("../fonts/Anton-Regular.ttf");
 }
 
 @font-face {
   font-family: "Ab";
-  src: url('../fonts/Abelone-FREE.otf');
+  src: url("../fonts/Abelone-FREE.otf");
 }
 
 @font-face {
   font-family: "Chairbomb";
-  src: url('../fonts/CherryBombOne-Regular.ttf');
+  src: url("../fonts/CherryBombOne-Regular.ttf");
 }
 
 @font-face {
   font-family: "Mori";
   font-display: swap;
-  src: url('../fonts/MoiraiOne-Regular.ttf');
+  src: url("../fonts/MoiraiOne-Regular.ttf");
 }
 
 @font-face {
   font-family: "Inter";
   font-display: swap;
-  src: url('../fonts/Inter-VariableFont_slnt\,wght.ttf');
+  src: url("../fonts/Inter-VariableFont_slnt\,wght.ttf");
 }
 
 @font-face {
   font-family: "Gotham";
   font-display: swap;
-  src: url('../fonts/gotham-bold-webfont.woff');
+  src: url("../fonts/gotham-bold-webfont.woff");
 }
 
 @font-face {
   font-family: "mons";
   font-display: swap;
-  src: url('../fonts/Montserrat-VariableFont_wght.ttf');
+  src: url("../fonts/Montserrat-VariableFont_wght.ttf");
 }
-
 
 /* width */
 ::-webkit-scrollbar {
@@ -220,7 +197,6 @@ a {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(0, 225, 255);
-
 }
 
 @media (prefers-color-scheme: dark) {
@@ -250,7 +226,6 @@ a {
     color: #000;
   }
 }
-
 
 .tut {
   animation: tutbounce 1.5s ease-in-out infinite;
@@ -310,7 +285,6 @@ a {
 .react-pdf__Page__canvas {
   border-radius: 3px;
 }
-
 
 @media print {
   .ce-toolbar__content {

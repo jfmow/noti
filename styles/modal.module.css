@@ -31,7 +31,7 @@
     color: var(--modal_text_color);
 
     background: var(--modal_background);
-    border: 2px solid var(--modal_color-3-42429cc0);
+    border: 2px solid var(--modal_border_color);
 
     position: relative;
 }
@@ -63,7 +63,7 @@
 }
 
 .modal_container_layout .modalform .input::placeholder {
-    color: var(--modal_color-5-32f42df1) b8;
+    color: var(--modal_input_placeholder_color);
 }
 
 
@@ -94,74 +94,6 @@
     overflow: hidden;
 }
 
-.default_modal_button {
-    appearance: button;
-    background-color: var(--modal_color-13-228c15be);
-    border: solid transparent;
-    border-radius: 16px;
-    border-width: 0 0 4px;
-    box-sizing: border-box;
-    color: var(--modal_background);
-    cursor: pointer;
-    display: inline-block;
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 0.8px;
-    line-height: 20px;
-    margin: 0;
-    outline: none;
-    overflow: visible;
-    padding: 13px 19px;
-    text-align: center;
-    text-transform: uppercase;
-    touch-action: manipulation;
-    transform: translateZ(0);
-    transition: filter 0.2s, transform 0.3s;
-    user-select: none;
-    -webkit-user-select: none;
-    vertical-align: middle;
-    white-space: nowrap;
-    min-width: 200px;
-}
-
-.default_modal_button:after {
-    background-clip: padding-box;
-    background-color: var(--modal_color-14-a7091aca);
-    border: solid transparent;
-    border-radius: 16px;
-    border-width: 0 0 4px;
-    bottom: -4px;
-    content: "";
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    z-index: -1;
-}
-
-.default_modal_button:main,
-.default_modal_button:focus {
-    user-select: auto;
-}
-
-.default_modal_button:hover:not(:disabled) {
-    filter: brightness(1.1);
-    transform: scale(1.02);
-}
-
-.default_modal_button:disabled {
-    cursor: not-allowed;
-}
-
-.default_modal_button:active:after {
-    border-width: 0 0 0px;
-}
-
-.default_modal_button:active {
-    padding-bottom: 10px;
-}
-
-
 .secondary_modal_button {
     background: var(--modal_button_bg);
     outline: none;
@@ -175,16 +107,12 @@
     gap: 5%;
     justify-content: center;
     cursor: pointer;
-    /*box-shadow: 4px 3px 4px 0px var(--modal_color-17-4fcbb4ba);*/
+    /*box-shadow: 4px 3px 4px 0px var(--modal_s2ndry_btn_bxshdw_unused);*/
     font-size: 13px;
     transition: 0.2s all;
 
     color: var(--modal_button_text);
     font-weight: 600;
-}
-
-.acc_button_red {
-    outline: 3px var(--modal_color-19-8243e20a) solid;
 }
 
 .secondary_modal_button:hover {
@@ -461,7 +389,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: var(--modal_color-29-93b283f1) !important;
+    background: var(--modal_temp_loader_bg) !important;
 }
 
 .load1 {
