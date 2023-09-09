@@ -1,4 +1,4 @@
-import { ModalContainer, ModalForm, ModalTitle, ModalButton } from "@/lib/Modal"
+import { ModalContainer, ModalForm, ModalTitle, ModalButton, AlternateButton } from "@/lib/Modal"
 import { useEffect, useState } from "react"
 import styles from '@/styles/Auth.module.css'
 export default function Tut({ setHidden }) {
@@ -15,7 +15,7 @@ export default function Tut({ setHidden }) {
         } else if (currentCardIndex === 2) {
             document.getElementById('createnewpageid').classList.remove('tut')
             document.getElementById('tut_title_btns_id').classList.add('tut')
-        } else if(currentCardIndex === 3){
+        } else if (currentCardIndex === 3) {
             document.getElementById('tut_title_btns_id').classList.remove('tut')
             document.getElementById('tuttitle').classList.add('tut')
         }
@@ -47,7 +47,7 @@ export default function Tut({ setHidden }) {
                     <p className={styles.warn} style={{ maxHeight: '40dvh', overflowY: 'scroll', overflowX: 'hidden' }}>
                         {currentCard.info}
                     </p>
-                    <ModalButton events={isLastCard ? (Hide) : (handleNextCard)}>{isLastCard ? ('Close') : ('Next')}</ModalButton>
+                    <AlternateButton click={isLastCard ? (Hide) : (handleNextCard)}>{isLastCard ? ('Close') : ('Next')}</AlternateButton>
                 </ModalForm>
             </ModalContainer>
         </>
