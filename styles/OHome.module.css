@@ -247,27 +247,27 @@
 
 .fcards {
 
-  width: 95%;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
   text-align: center;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 40px;
   user-select: none !important;
   pointer-events: none;
   z-index: 2;
+  max-width: 1500px;
 }
 
 .fcarddual {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 40px;
 }
 
 .fcard {
-  padding: 20px;
   border-radius: 5px;
   cursor: pointer;
   position: relative;
@@ -275,16 +275,17 @@
   border: 1px solid transparent;
   transition: all 0.3s;
   background-color: #fff;
-  border-radius: 6px;
+  border-radius: 1rem;
   box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, .1), 0 0 0 1px rgba(10, 10, 10, .02);
   color: #4a4a4a;
   display: block;
-  padding: 1.25rem;
+  padding: 40px;
   min-width: 200px;
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  justify-content: center;
 }
 
 .fcard span .fcard_icon {
@@ -296,11 +297,15 @@
 }
 
 .fcard span {
-  font-size: 16.8px;
+  font-size: clamp(16.8px, 4vw, 30px);
   font-weight: 700;
   display: flex;
   gap: 10px;
   align-items: center;
+}
+
+.fcard p {
+  font-size: clamp(16px, 2vw, 20px);
 }
 
 .fcard .disclamer {
@@ -450,6 +455,8 @@
   background: #fbf7ff;
   padding-bottom: 70px !important;
   height: 150dvh;
+
+  text-align: center;
 }
 
 .section_line_bg {
@@ -477,16 +484,12 @@
   font-family: "Inter", "Gotham", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-weight: 800;
-  font-size: 56px;
+  font-size: clamp(56px, 6vw, 100px);
   word-wrap: balance;
   z-index: 3;
-}
-
-.s2_title_large {
-  font-size: 80px;
   text-align: center;
-  width: 100%;
   display: block;
+  width: 100%;
 }
 
 .s2_answer_img {
@@ -608,6 +611,10 @@
     justify-content: center;
   }
 
+  .customdivider svg {
+    height: 20px;
+  }
+
   .alone_img {
     padding: 5px;
   }
@@ -618,9 +625,17 @@
   }
 
   .section {
-    min-height: 60dvh;
+    min-height: 100dvh;
     height: fit-content;
     gap: 20px;
+    overflow: hidden;
+  }
+
+
+  .s2_answer_img {
+    width: 600px;
+    padding: 0;
+    overflow: hidden;
   }
 
 
