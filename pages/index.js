@@ -95,7 +95,11 @@ export default function Home() {
         <meta name="keywords" content="JavaScript, Frontend, Developer, Nextjs, react, code, pocketbase, PocketBase, Pocketbase, savemyexams, exam, exams, save, note, notes, notion" />
 
         <link rel="icon" href="/Favicon.png" />
-        <link rel="canonical" href="https://savemynotes.net/" />
+        <link rel="canonical" href="https://note.suddsy.dev/" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@800&display=swap" rel="stylesheet" />
+
       </Head>
       <Nav />
       <p style={{ visibility: '0', width: '0', height: '0' }} aria-label='SEO text'>A place to take your notes with only fetures you will use. Explore note taking more simply.</p>
@@ -157,11 +161,9 @@ export default function Home() {
             <img className={styles.alone_img} src={`/feature.png`} alt="A cool feature image" />
 
             <div>
-              <span className={styles.s2_question}>What does it look like?</span>
-              <div>
-
-                <span className={styles.s2_title}>Simple colorfull calm</span>
-              </div>
+              <span className={`${styles.s2_title} ${styles.mobile_s2_title_sml}`}>Simple</span>
+              <span className={`${styles.s2_title} ${styles.mobile_s2_title_sml}`}>Colorfull</span>
+              <span className={`${styles.s2_title} ${styles.mobile_s2_title_sml}`}>Calm</span>
             </div>
             <div className={styles.customdivider_wave_bottom}>
               <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
@@ -191,7 +193,7 @@ export default function Home() {
               </svg>
             </div>
             <div className={styles.section2_div}>
-              <h2>Simple ui<img width='48' height='48' style={{ marginLeft: '5px' }} src='/emoji/twitter/64/1f5a5-fe0f.png' /></h2>
+              <span className={styles.s2_title}>Simple ui</span>
               <div className={styles.fcards}>
                 <div className={styles.fcarddual}>
                   <div className={styles.fcards}>

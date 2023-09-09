@@ -159,6 +159,12 @@ a {
 }
 
 @font-face {
+  font-family: "Inter Tight";
+  font-display: swap;
+  src: url("../fonts/InterTight-VariableFont_wght.ttf");
+}
+
+@font-face {
   font-family: "Inter";
   font-display: swap;
   src: url("../fonts/Inter-VariableFont_slnt\,wght.ttf");
