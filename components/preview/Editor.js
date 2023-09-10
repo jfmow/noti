@@ -10,7 +10,7 @@ import Table from "@editorjs/table";
 import AttachesTool from "@editorjs/attaches";
 import PocketBase from "pocketbase";
 import styles from "@/styles/Create.module.css";
-import Loader from "./Loader";
+import Loader from "@/components/Loader";
 import compressImage from "@/lib/CompressImg";
 import dynamic from 'next/dynamic';
 import Router from "next/router";
@@ -18,7 +18,7 @@ import { AnimatePresence } from "framer-motion";
 import { AlternateButton, CopyPasteTextArea } from "@/lib/Modal";
 import { createRandomMeshGradients } from "@/lib/randomMeshGradient";
 import NestedList from '@editorjs/nested-list';
-import Img from './Img'
+import Img from '@/components/Img'
 import MarkerTool from "@/customEditorTools/Marker";
 import Image from "@/customEditorTools/Image";
 import SimpleTodo from "@/customEditorTools/Todo";
@@ -26,10 +26,10 @@ import SimpleIframe from "@/customEditorTools/SimpleEmbed";
 import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
 import LineBreak from "@/customEditorTools/LineBreak";
 import convertToMarkdown from '@/lib/ConvertToMD'
-const Icons = dynamic(() => import("./Icons"), {
+const Icons = dynamic(() => import("@/components/Icons"), {
   ssr: true,
 });
-const ColorSelector = dynamic(() => import("./ColorSelector"), {
+const ColorSelector = dynamic(() => import("@/components/ColorSelector"), {
   ssr: true,
 });
 const ModalContainer = dynamic(() => import('@/lib/Modal').then((module) => module.ModalContainer));
@@ -64,113 +64,13 @@ function Editor({ page, multi }) {
 
   const [convertModalState, setShowConvert] = useState(false)
 
-  const [offline, setOffline] = useState({ warning: false, state: false })
   const pagetitleref = useRef(null)
 
   const [unsplashPicker, setUnsplashPicker] = useState(false)
 
-  useEffect(() => {
-    window.addEventListener('offline', () => {
-      setOffline({ ...offline, state: true })
-    })
-    window.addEventListener('online', () => {
-      setOffline({ ...offline, state: false, warning: false })
-    })
-    return () => {
-      window.removeEventListener('online', () => { return })
-      window.removeEventListener('offline', () => { return })
-    }
-  }, [])
-
-  useEffect(() => {
-    let timer;
-
-    // Function to save the article after the specified delay
-    const saveArticle = async () => {
-      const currentTime = Date.now();
-      const elapsedTime = currentTime - lastTypedTime;
-
-      if (elapsedTime >= 500 && !lastTypedTimeIdle) {
-        // Auto-save 3 seconds after the user stops typing
-        setLastTypedTimeIdle(true);
-        setIsSaving(true);
-        if (editor) {
-          if (offline.state) {
-            setOffline({ ...offline, warning: true })
-            if (!offline.warning) {
-              toast.error("Looks like your offline. Your work is currenly unsaved!")
-            }
-            return
-          }
-          const articleContent = await editor.saver.save();
-          let formData = new FormData();
-
-          formData.append("title", articleTitle);
-          // Encrypt the note content
-          // Replace with the user's encryption key
-
-          //const encryptedNote = AES.encrypt(
-          //  JSON.stringify(articleContent),
-          //  chefKey
-          //).toString();
-
-          // Decrypt the note content
 
 
-          formData.append("content", JSON.stringify(articleContent));
-          try {
-            if (page === "firstopen") {
-              formData.append("owner", pb.authStore.model.id);
-              const state = await pb.collection("pages").create(formData);
-              return Router.push(`/page/${state.id}`)
-            }
-            const state = await pb.collection("pages").update(page, formData);
-            //console.log("Auto saved successfully!");
-          } catch (error) {
-            toast.error("Could not auto save!", {
-              position: toast.POSITION.BOTTOM_LEFT,
-            });
-            console.error(error);
-          }
-          //console.log("Auto-save executed.");
-        }
-        setLastTypedTimeIdle(true);
-        setIsSaving(false);
-      }
-    };
 
-    // Function to update the last typing timestamp
-    const updateLastTypedTime = () => {
-      setLastTypedTime(Date.now());
-    };
-
-    // Event listener for detecting user typing
-    const typingEventListener = () => {
-      updateLastTypedTime();
-      setLastTypedTimeIdle(false);
-    };
-
-    // Event listener for detecting mouse movement
-    //const mouseMovementEventListener = () => {
-    //  updateLastTypedTime();
-    //};
-
-    // Attach event listeners
-    window.addEventListener("keydown", typingEventListener);
-    //window.addEventListener("mousemove", mouseMovementEventListener);
-
-    // Start the auto-save timer
-    timer = setTimeout(() => {
-      saveArticle();
-    }, 500); // Initial auto-save 3 seconds after component mount
-
-    return () => {
-      // Clean up the event listeners and timer on component unmount
-      window.removeEventListener("keydown", typingEventListener);
-      //window.removeEventListener("mousemove", mouseMovementEventListener);
-      clearTimeout(timer);
-    };
-  }, [lastTypedTime]);
 
   useEffect(() => {
     if (page) {
@@ -181,32 +81,9 @@ function Editor({ page, multi }) {
       setArticleTitle('Untitled')
       setArticleHeader(null)
       async function fetchArticles() {
-        if (page === "firstopen") {
-
-          if (localStorage.getItem('Offlinetime') === 'true') {
-            try {
-              setEditorData(JSON.parse(localStorage.getItem('Offlinesave')));
-              const data = {
-                "content": localStorage.getItem('Offlinesave'),
-                "owner": pb.authStore.model.id,
-                "title": `Migrated offline page ${Date.now()}`
-              }
-              pb.autoCancellation(true)
-
-              const state = await pb.collection("pages").create(data);
-              Router.push(`/page/${state.id}`)
-              localStorage.setItem('Offlinetime', 'false')
-              localStorage.removeItem('Offlinesave');
-            } catch (err) {
-              console.error(err)
-            }
-          }
-          setIsLoading(false);
-          return;
-        }
 
         try {
-          const record = await pb.collection("pages").getOne(page);
+          const record = await pb.collection("preview_pages").getOne(page);
           //encryption
           try {
             setEditorData(JSON.parse(decryptedNote));
@@ -241,17 +118,7 @@ function Editor({ page, multi }) {
     }
   }, [page]);
 
-  useEffect(() => {
-    if (isSaving) {
-      window.addEventListener("beforeunload", handleBeforeUnload);
-    } else {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    }
 
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [isSaving]);
 
   useEffect(() => {
     //set a colorful header
@@ -262,11 +129,7 @@ function Editor({ page, multi }) {
     }
   }, [document.getElementById('titlebg')])
 
-  const handleBeforeUnload = (event) => {
-    event.preventDefault();
-    event.returnValue = "";
-    return "Page currently saving. Are your sure you want to continue";
-  };
+
 
   useEffect(() => {
     if (
@@ -495,23 +358,11 @@ function Editor({ page, multi }) {
   }, [editorData, page]);
 
   async function handleDeletePage() {
-    await pb.collection("pages").delete(page);
-    await editor.clear()
-    setEditorData(null)
-    setArticleHeader(null)
-    setArticleTitle(null)
-    editorRef.current = null
-    Router.push('/page/firstopen')
+    return
   }
 
   async function handlePageTitleChange() {
-    const title = pagetitleref.current
-    setArticleTitle(title.innerText);
-    const newTitle = {
-      title: title.innerText
-    };
-    await pb.collection("pages").update(page, newTitle);
-    setIsSaving(false);
+    return
   }
 
   async function handlePageHeaderImageUpload(e) {
@@ -522,51 +373,17 @@ function Editor({ page, multi }) {
       setArticleHeader(event.target.result);
     };
     reader.readAsDataURL(file);
-    let formData = new FormData();
-    if (file) {
-      const compressidToast = toast.loading("Compressing image...");
-      try {
-        const compressedBlob = await compressImage(file, 200); // Maximum file size in KB (100KB in this example)
-        const compressedFile = new File([compressedBlob], file.name, {
-          type: "image/jpeg",
-        });
-        formData.append("header_img", compressedFile);
-        formData.append("unsplash", '');
-        toast.update(compressidToast, {
-          render: "Done 👍",
-          type: "success",
-          isLoading: false,
-        });
-        //if (compressedFile.size > 4547000) {
-        //    return toast.error('Compresed file may be too big (>4.5mb)!')
-        //}
-        await pb.collection("pages").update(page, formData);
 
-      } catch (error) {
-        toast.error("Error uploading header img", {
-          position: toast.POSITION.TOP_LEFT,
-        });
-      }
-      toast.done(compressidToast);
-    }
   }
 
   async function handlePageDisplayIconChange(e) {
     setCurrentPageIconValue(`${e.unified}.png`)
-    const data = {
-      icon: e.image,
-    };
-    //icon.codePointAt(0).toString(16)
-    setIconModalState(false);
-    await pb.collection("pages").update(page, data);
+    setIconModalState(false)
+    return
   }
 
   async function handleSharePage() {
-    const data = {
-      shared: !pageSharedTF,
-    };
-    setPageSharedTF(!pageSharedTF);
-    const record = await pb.collection("pages").update(page, data);
+    return
   }
 
   function handleCopyTextToClipboard(data) {
@@ -593,11 +410,7 @@ function Editor({ page, multi }) {
   }
 
   async function handleChangePageListDisplayColor(color, page) {
-    const data = {
-      "color": color
-    };
-
-    await pb.collection('pages').update(page, data);
+    return
   }
 
   async function handleExportPageToMarkdown() {

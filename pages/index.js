@@ -111,7 +111,7 @@ export default function Home() {
             <motion.img src='/float3.png' className={styles.floatimg3} style={{ floatImgYPos }} />
             <motion.img src='/float4.png' className={styles.floatimg4} style={{ floatImgYPos, scale: floatImgScale }} />
             <motion.img src='/float5.png' className={styles.floatimg5} style={{ floatImgYPos }} />
-            <motion.img loading='egar' height='60' className={styles.title} src='/name.png' />
+            <img loading='egar' height='60' className={styles.title} src='/name.png' />
 
             <span className={styles.header_text}>All your <span className={styles.header_underline}>notes</span> together in one place</span>
 

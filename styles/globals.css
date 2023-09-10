@@ -292,6 +292,24 @@ a {
   border-radius: 3px;
 }
 
+.previewarning {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background: var(--background);
+  font-weight: 600;
+  position: fixed;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 0.7;
+  user-select: none;
+  pointer-events: none;
+}
+
 @media print {
   .ce-toolbar__content {
     display: none;
