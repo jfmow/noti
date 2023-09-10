@@ -6,6 +6,9 @@ export default function Nav() {
       <Link href='#features'>
         Features
       </Link>
+      <Link href='/preview'>
+        Preview app
+      </Link>
       <Link target='blank' href='https://github.com/jfmow/noti'>
         Selfhost
       </Link>
