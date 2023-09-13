@@ -217,6 +217,39 @@ export default function App({ Component, pageProps }) {
               '--user_option_text': '#464646'
             }
             break;
+          case 'cool gray':
+            vars = {
+              '--background': '#dbdada',
+              '--big_button_background': '#f2f2f2',
+              '--big_button_border': '#d5d5d5',
+              '--big_button_border_hover_alt': '#a8a8a8',
+              '--big_button_text': '#7d7d7d',
+              '--editor_text': '#000',
+              '--desktophidemenu_bg': '#ffffff',
+              '--desktophidemenu_bg_hover': '#c0c0c0',
+              '--boxshadow_primary': '#d0d0d09c',
+              '--page_list_item_hover': '#d8d8d8',
+              '--page_list_item_active': '#00000029',
+              '--page_list_item_icons_background_hover': '#c4c4c4',
+              '--page_list_item_hover_drag': '#ff7777',
+              '--create_new_page_btn_text': '#929292',
+              '--page_list_item_icons': '#00000099',
+              '--page_list_item_fillcolor': '#00000099',
+              '--modal_text_color': '#000',
+              '--modal_button_svg': '#707684',
+              '--modal_background': '#e7e7e7',
+              '--modal_button_text': '#707684',
+              '--modal_close_button_hover': '#000000',
+              '--modal_button_bg': '#ffffff',
+              '--modal_button_border': 'none',
+              '--modal_button_bg_hover': '#cdcdcd',
+              '--modal_border_color': 'transparent',
+              '--modal_button_text_hover': '#393939',
+              '--modal_button_bxshdw_hover': '#e2e2e2',
+              '--userinfo_section_bordertop': '#b8b8b8',
+              '--user_option_text': '#464646'
+            }
+            break;
           case 'system':
             vars = { '': '' }
             break;
