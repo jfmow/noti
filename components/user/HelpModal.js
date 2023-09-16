@@ -1,4 +1,4 @@
-import { AlternateButton, ModalContainer, ModalForm, ModalTitle } from "@/lib/Modal";
+import { AlternateButton, ModalContainer, ModalForm, ModalOverflowBlock, ModalTitle } from "@/lib/Modal";
 import Link from 'next/link'
 import Head from "next/head";
 import Router from "next/router";
@@ -38,11 +38,13 @@ export default function UserHelpModal({ CloseHelp }) {
                         <CustomThemePicker close={() => setThemePicker(false)} />
                     )}
                     <ModalTitle>Theme</ModalTitle>
-                    {themes.map((theme) => (
-                        <AlternateButton click={() => {
-                            updateTheme(theme.key)
-                        }}>{theme.displayName}</AlternateButton>
-                    ))}
+                    <ModalOverflowBlock>
+                        {themes.map((theme) => (
+                            <AlternateButton click={() => {
+                                updateTheme(theme.key)
+                            }}>{theme.displayName}</AlternateButton>
+                        ))}
+                    </ModalOverflowBlock>
                     <AlternateButton click={() => {
                         setThemePicker(true)
                     }}>Create a theme</AlternateButton>

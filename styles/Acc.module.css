@@ -231,7 +231,7 @@
   flex-direction: row;
   width: 100%;
   align-items: center;
-  color: #000000;
+  color: var(--modal_button_text);
   font-weight: 500;
   flex-wrap: wrap;
   align-content: center;
@@ -300,39 +300,32 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
+.pages {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+}
 
-  .acc_button {
-    background: var(--big_button_background);
-    border: 2px solid var(--big_button_border);
-    /*box-shadow: 4px 3px 4px 0px #1c1c1c;*/
-  }
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  border-radius: 6px;
+  background: var(--modal_button_bg);
+  cursor: pointer;
+  color: var(--modal_button_text);
+}
 
-  .acc_button:hover {
-    box-shadow: 0px 0px 20px 0px #1c1c1c;
-  }
+.page .pageTitle {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-  .default_settings_modal_container_usrname_toggles {
-    color: #fff;
-  }
-
-  .acc_button_red {
-    outline: 3px #ff2d2d solid;
-  }
-
-  .acc_button .acc_button_text {
-    color: rgb(149, 149, 149);
-  }
-
-  .acc_button svg {
-    fill: #9c9c9c;
-  }
-
-
-  .default_settings_modal_container_usrname_block {
-    background: #1f1f1f;
-    border: 3px solid #000;
-    box-shadow: 5px 8px 5px 1px #000;
-  }
-
+.pageSelected {
+  background: rgb(255, 71, 71);
+  color: #fff;
 }

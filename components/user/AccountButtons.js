@@ -1,12 +1,11 @@
 import styles from '@/styles/Acc.module.css';
-import blukstyles from '@/styles/Blukmanagemnet.module.css'
 import { useState, useEffect, useRef } from 'react';
 import PocketBase from 'pocketbase';
 import { toast } from 'react-toastify';
 import Head from 'next/head';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import compressImage from '@/lib/CompressImg';
-import { AlternateButton, AlternateInput, ModalButton, ModalCheckBox, ModalCheckBoxSlider, ModalContainer, ModalForm, ModalInput, ModalTitle } from '@/lib/Modal';
+import { AlternateButton, AlternateInput, ModalButton, ModalCheckBox, ModalCheckBoxSlider, ModalContainer, ModalForm, ModalInput, ModalOverflowBlock, ModalTitle } from '@/lib/Modal';
 import { AnimatePresence } from 'framer-motion';
 import Router from 'next/router';
 import dynamic from 'next/dynamic';
@@ -209,7 +208,7 @@ function AccManagementForm({ Close, usageOpenDefault }) {
                   <ModalForm>
                     <ModalTitle>Update username</ModalTitle>
                     <ModalInput chngevent={setNewUsernameData} place={`${pb.authStore.model.username}`} type={"text"} />
-                    <ModalButton events={changeUsername}>Change</ModalButton>
+                    <AlternateButton click={changeUsername}>Change</AlternateButton>
                   </ModalForm>
                 </ModalContainer>
 
@@ -221,7 +220,7 @@ function AccManagementForm({ Close, usageOpenDefault }) {
                   <ModalForm>
                     <ModalTitle>Update email</ModalTitle>
                     <ModalInput chngevent={setNewEmail} place={`${pb.authStore.model.email}`} type={"email"} />
-                    <ModalButton events={ChangeEmail}>Change</ModalButton>
+                    <AlternateButton click={ChangeEmail}>Change</AlternateButton>
                   </ModalForm>
                 </ModalContainer>
 
@@ -292,11 +291,11 @@ function AccManagementForm({ Close, usageOpenDefault }) {
             )}
 
             {managePagesModal && (
-              <BulkManagment CloseAcc={() => setmanagePagesModal(false)} />
+              <ManagePagesModal close={() => setmanagePagesModal(false)} />
             )}
 
           </AnimatePresence>
-          <h6><Link href='/auth/terms-and-conditions'>Terms & Conditions</Link> | <Link href='/auth/privacy-policy'>Privacy policy</Link> | <span onClick={logout}>Logout</span></h6>
+          <h6><Link href='/auth/terms-and-conditions'>Terms & Conditions</Link> | <Link href='/auth/privacy-policy'>Privacy policy</Link> | <Link><span onClick={logout}>Logout</span></Link></h6>
 
         </ModalForm>
       </ModalContainer>
@@ -308,131 +307,6 @@ function AccManagementForm({ Close, usageOpenDefault }) {
 function logout() {
   pb.authStore.clear()
   Router.push('/')
-}
-
-
-
-
-function BulkManagment({ CloseAcc }) {
-  const [pages, setPagesList] = useState([])
-  const [seletedPages, setSelectedPages] = useState([])
-  const [showWarn, setShowWarning] = useState(false)
-  const [reallyConfirm, setConfirm] = useState(false);
-  const [deleting, setDeleting] = useState(false)
-  useEffect(() => {
-
-    async function getPagesList() {
-      const records = await pb.collection('pages_Bare').getFullList({
-        sort: '-updated', skipTotal: true
-      });
-      setPagesList(records)
-    }
-    getPagesList()
-  }, [])
-
-  function setSelected(page) {
-    if (seletedPages.includes(page)) {
-      setSelectedPages(seletedPages.filter(pages => pages != page))
-    } else if (!seletedPages) {
-      setSelectedPages(page);
-    } else {
-      setSelectedPages(prevPages => [...prevPages, page]);
-    }
-  }
-
-  function DeleteWarning() {
-    if (seletedPages.length === 0) {
-      return
-    }
-    setShowWarning(true)
-    setConfirm(false)
-  }
-
-  async function DeleteSelected() {
-    if (!reallyConfirm || seletedPages.length === 0) {
-      return;
-    }
-
-    setShowWarning(false);
-    setConfirm(false);
-    setDeleting(true);
-
-    for (const page of seletedPages) {
-      await pb.collection('pages').delete(page);
-      //console.log(page);
-
-      // Remove the deleted page from the state
-      setPagesList(prevPages => prevPages.filter(p => p.id !== page));
-    }
-    setSelectedPages([])
-  }
-
-  return (
-    <>
-      <Head>
-        <title>Bluk managment</title>
-      </Head>
-      <ModalContainer events={CloseAcc}>
-        <ModalForm>
-          <ModalTitle>Manage your pages</ModalTitle>
-          <h3>Total pages: {pages.length <= 0 ? ('Loading...') : (pages.length)}</h3>
-
-
-          <div className={blukstyles.page_align_center}>
-            {seletedPages.length >= 1 && (
-              <ModalButton classnm={blukstyles.fixeddeletebtn} events={DeleteWarning}>Delete selected pages{seletedPages.length}</ModalButton>
-            )}
-            <div className={blukstyles.pages}>
-              {pages.length <= 0 ? (
-                <>
-                  <div className={`${blukstyles.page}  `}>
-                    <span className={blukstyles.page_title}>Loading...</span>
-                    <span>📄</span>
-                  </div>
-                  <div className={`${blukstyles.page}  `}>
-                    <span className={blukstyles.page_title}>Loading...</span>
-                    <span>📄</span>
-                  </div>
-                  <div className={`${blukstyles.page}  `}>
-                    <span className={blukstyles.page_title}>Loading...</span>
-                    <span>📄</span>
-                  </div>
-                  <div className={`${blukstyles.page}  `}>
-                    <span className={blukstyles.page_title}>Loading...</span>
-                    <span>📄</span>
-                  </div>
-
-                </>
-              ) : (
-                <>
-                  {pages.map((page) => (
-                    <div onClick={() => (setSelected(page.id))} key={page.id} className={`${blukstyles.page} ${(deleting && seletedPages.includes(page.id)) && blukstyles.deletingpage} ${seletedPages.includes(page.id) && blukstyles.selected}`}>
-                      <span className={blukstyles.page_title}>{page.title || `Untitled ${page.id}`}</span>
-                      <span className={blukstyles.page_icon}>{page.icon && page.icon.includes('.png') ? (<img className={blukstyles.page_icon} src={`/emoji/twitter/64/${page.icon}`} />) : (!isNaN(parseInt(page.icon, 16)) && String.fromCodePoint(parseInt(page.icon, 16)))}</span>
-                    </div>
-                  ))}
-                </>
-              )}
-            </div>
-          </div>
-          {showWarn && (
-            <>
-              <ModalContainer events={() => setShowWarning(false)}>
-                <ModalForm>
-                  <ModalTitle>
-                    Warning
-                  </ModalTitle>
-                  <p>This action cannot be undone! By continuing you will delete {seletedPages.length} pages.</p>
-                  <ModalCheckBox chngevent={() => setConfirm(true)}>Confirm</ModalCheckBox>
-                  <ModalButton events={DeleteSelected}>Delete</ModalButton>
-                </ModalForm>
-              </ModalContainer>
-            </>
-          )}
-        </ModalForm>
-      </ModalContainer>
-    </>
-  )
 }
 
 
@@ -540,3 +414,53 @@ function Quotetoggle() {
   )
 }
 
+function ManagePagesModal({ close }) {
+  const [pages, setPages] = useState([])
+  const [pagesSelected, setSelectedPages] = useState([])
+  useEffect(() => {
+    async function getPages() {
+      const resultList = await pb.collection('pages_Bare').getFullList();
+      setPages(resultList)
+    }
+    getPages()
+  }, [])
+
+  async function deletePage(page) {
+    await pb.collection('pages').delete(page);
+  }
+
+  async function DeletePages() {
+    let newPages = pages
+    pagesSelected.map((page) => {
+      deletePage(page)
+      newPages = newPages.filter((pagesCurrent) => pagesCurrent.id !== page)
+      setPages(newPages)
+    })
+    setSelectedPages([])
+  }
+
+  return (
+    <>
+      <ModalContainer events={close}>
+        <ModalForm>
+          <ModalTitle>Manage Pages</ModalTitle>
+          <ModalOverflowBlock className={styles.pages}>
+            {pages.map((page) => (
+              <div onClick={() => {
+                if (pagesSelected.includes(page.id)) {
+                  setSelectedPages(pagesSelected.filter((page2) => page2 !== page.id))
+                } else {
+                  setSelectedPages([...pagesSelected, page.id])
+                }
+              }} className={`${styles.page} ${pagesSelected.includes(page.id) && styles.pageSelected}`} key={page.id}>
+                <div className={styles.pageTitle}>{page.title ? page.title : 'Untitled'}</div>
+                <div>Public: {page.shared ? 'true' : 'false'}</div>
+              </div>
+            ))}
+          </ModalOverflowBlock>
+          <AlternateButton click={() => DeletePages()}>Delete selected pages</AlternateButton>
+        </ModalForm>
+      </ModalContainer>
+    </>
+  )
+}
