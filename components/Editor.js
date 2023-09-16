@@ -156,7 +156,11 @@ function Editor({ page, multi }) {
     //};
 
     // Attach event listeners
-    window.addEventListener("keydown", typingEventListener);
+    if(editorRef){
+      try{
+    editorRef.current.addEventListener("keyup", typingEventListener);
+      }catch{}
+    }
     //window.addEventListener("mousemove", mouseMovementEventListener);
 
     // Start the auto-save timer
@@ -166,11 +170,15 @@ function Editor({ page, multi }) {
 
     return () => {
       // Clean up the event listeners and timer on component unmount
-      window.removeEventListener("keydown", typingEventListener);
+      if(editorRef){
+        try{
+      editorRef.current.removeEventListener("keyup", typingEventListener);
+    }catch{}
+  }
       //window.removeEventListener("mousemove", mouseMovementEventListener);
       clearTimeout(timer);
     };
-  }, [lastTypedTime]);
+  }, [lastTypedTime, editorRef.current]);
 
   useEffect(() => {
     if (page) {
