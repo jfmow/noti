@@ -48,6 +48,7 @@ export default function Home2() {
           <FeatureCardsSection />
           <CompBanner />
           <BigTextSection1 />
+          <OpenSourseSection />
 
         </div>
 
@@ -222,6 +223,33 @@ function BigTextSection1() {
         <h2 className={styles.BigTextSection1_title}>Create Notes Faster</h2>
         <p className={styles.BigTextSection1_text}>Create notes from anywhere. With small components our app is able to load with minimal data usage</p>
         <Link className={styles.button_s1_invert} href='/auth/signup'>Start creating now!</Link>
+      </div>
+    </div>
+  )
+}
+
+function OpenSourseSection() {
+  return (
+    <div className={styles.OpenSourseSection}>
+      <h2 className={styles.OpenSourseSection_title}>Made with open source tools</h2>
+      <div className={styles.OpenSourseSection_cards}>
+        <div className={styles.OpenSourseSection_card}>
+          <div className={styles.OpenSourseSection_card_title}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path d="M12 12.75c1.63 0 3.07.39 4.24.9 1.08.48 1.76 1.56 1.76 2.73V17c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1v-.61c0-1.18.68-2.26 1.76-2.73 1.17-.52 2.61-.91 4.24-.91zM4 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm1.13 1.1c-.37-.06-.74-.1-1.13-.1-.99 0-1.93.21-2.78.58A2.01 2.01 0 0 0 0 16.43V17c0 .55.45 1 1 1h3.5v-1.61c0-.83.23-1.61.63-2.29zM20 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm4 3.43c0-.81-.48-1.53-1.22-1.85A6.95 6.95 0 0 0 20 14c-.39 0-.76.04-1.13.1.4.68.63 1.46.63 2.29V18H23c.55 0 1-.45 1-1v-.57zM12 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z" /></svg>
+            <h4>Free to use</h4>
+          </div>
+          <p className={styles.OpenSourseSection_card_description}>
+            Our app can be download and hosted by anyone with ease. It's open source too so you can customise it however you like.
+          </p>
+        </div>
+        <div className={styles.OpenSourseSection_card}>
+          <div className={styles.OpenSourseSection_card_title}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" ><path d="M16.01 7 16 4c0-.55-.45-1-1-1s-1 .45-1 1v3h-4V4c0-.55-.45-1-1-1s-1 .45-1 1v3h-.01C6.9 7 6 7.9 6 8.99v4.66c0 .53.21 1.04.58 1.41L9.5 18v2c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-2l2.92-2.92c.37-.38.58-.89.58-1.42V8.99C18 7.89 17.11 7 16.01 7z" /></svg>            <h4>Community powered</h4>
+          </div>
+          <p className={styles.OpenSourseSection_card_description}>
+            Built with open-source tools and packages you know how everything works and know nothing sneaky is going on.
+          </p>
+        </div>
       </div>
     </div>
   )

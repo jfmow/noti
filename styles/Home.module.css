@@ -202,13 +202,7 @@
 
 .s2_title {
     text-align: center;
-    background: radial-gradient(circle, #e22d2d, #fe7fff);
-    background-size: 200% auto;
-    color: #000;
-    background-clip: text;
-    text-fill-color: transparent;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #2a2a2a;
     font-family: "Inter Tight", "Inter", "Gotham", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
         Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     font-weight: 800;
@@ -265,13 +259,7 @@
 
 .s2_question {
     text-align: center;
-    background: radial-gradient(circle, #2d72e2, #fd7fff);
-    background-size: 200% auto;
     color: #000;
-    background-clip: text;
-    text-fill-color: transparent;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     font-family: "Inter Tight", "Inter", "Gotham", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
         Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     font-weight: 800;
@@ -434,7 +422,74 @@
     text-wrap: balance;
 }
 
+/* OpenSourseSection */
+.OpenSourseSection {
+    width: 100%;
+    min-height: 100vh;
+    padding: 2em;
+    margin: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+    align-items: center;
+    padding-top: calc(2em + 40px);
+}
 
+.OpenSourseSection_title {
+    text-align: left;
+    color: #2a2a2a;
+    font-family: "Inter Tight", "Inter", "Gotham", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    font-weight: 800;
+    font-size: clamp(48px, 4vw, 80px);
+    word-wrap: balance;
+    z-index: 3;
+    width: 100%;
+    display: block;
+    text-wrap: balance;
+    text-align: center;
+}
+
+
+.OpenSourseSection_cards {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 15px;
+    max-width: 1024px;
+}
+
+.OpenSourseSection_card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 300px;
+    min-height: 200px;
+    padding: 1.8em;
+    border-radius: 15px;
+    max-width: 320px;
+}
+
+.OpenSourseSection_card_title {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+.OpenSourseSection_card_title svg {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+}
+
+.OpenSourseSection_card_title h4 {
+    font-size: 20px;
+}
 
 
 
