@@ -30,91 +30,27 @@ export default function Home2() {
           <Nav />
         )}
         <Section1 />
-        <div className={`${styles.section}`}>
-          <div className={styles.s2_answer_img} >
-            <img src='/pagepreview.png' />
-          </div>
-          <div>
-            <span className={`${styles.s2_title}`}>Stand out from the rest</span>
-          </div>
-          <div>
-            <span className={styles.s2_question}>And create notes like a pro.</span>
-          </div>
+        <div>
 
-
-        </div>
-        <div className={`${styles.section} ${styles.section_algin}`}>
-          <div className={styles.customdivider}>
-            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-              <path d="M0,0V7.23C0,65.52,268.63,112.77,600,112.77S1200,65.52,1200,7.23V0Z" className={styles.customdivider_shapefill}></path>
-            </svg>
-          </div>
-          <img className={styles.alone_img} src={`/feature.png`} alt="A cool feature image" />
-
-          <div>
-            <span className={`${styles.s2_title} ${styles.mobile_s2_title_sml}`}>Fast</span>
-            <span className={`${styles.s2_title} ${styles.mobile_s2_title_sml}`}>Simple</span>
-            <span className={`${styles.s2_title} ${styles.mobile_s2_title_sml}`}>Easy to use</span>
-          </div>
-          <div className={styles.customdivider_wave_bottom}>
-            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-              <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" className={styles.customdivider_wave_bottom_shapefill}></path>
-            </svg>
-          </div>
-
-        </div>
-        <div className={styles.section}>
-          <div>
+          <div className={`${styles.section}`}>
+            <div className={styles.s2_answer_img} >
+              <img src='/pagepreview.png' />
+            </div>
             <div>
-              <span className={styles.s2_title}>It's your data!</span>
+              <span className={`${styles.s2_title}`}>Stand out from the rest</span>
             </div>
-          </div>
-          <div className={styles.s2_cards} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-            <div style={{ height: '100%' }} className={styles.fcard}>
-              <span><div className={styles.fcard_icon}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" ><path d="m11.19 1.36-7 3.11C3.47 4.79 3 5.51 3 6.3V11c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V6.3c0-.79-.47-1.51-1.19-1.83l-7-3.11c-.51-.23-1.11-.23-1.62 0zM12 11.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" /></svg>
-              </div>Safe and secure</span>
-              <p>It's your data so if you self host it's yours to look at not us. And even then if you don't it's still your data and not for us to go touchy looky at.</p>
-            </div>
-            <div style={{ height: '100%' }} className={styles.fcard}>
-              <span><div className={styles.fcard_icon}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" /></svg>
-              </div>Kept how you like it</span>
-              <p>Host it on your own server and when you delete something, you know it's very very gone.</p>
-            </div>
-          </div>
-        </div>
-        <div className={styles.section2} style={{ background: 'rgb(247 238 255)' }}>
-          <div className={styles.customdivider}>
-            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-              <path d="M0,0V7.23C0,65.52,268.63,112.77,600,112.77S1200,65.52,1200,7.23V0Z" className={styles.customdivider_shapefill}></path>
-            </svg>
-          </div>
-          <div className={styles.section2_div}>
-            <span className={styles.s2_title}>Simple ui</span>
-            <div className={styles.fcards}>
-              <div className={styles.fcarddual}>
-                <div className={styles.fcards}>
-                  <div className={styles.fcard}>
-                    <span><div className={styles.fcard_icon}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" ><circle cx="14.5" cy="10.5" r="1.25" /><circle cx="9.5" cy="10.5" r="1.25" /><path d="M16.1 14H7.9c-.19 0-.32.2-.23.37C8.5 15.94 10.13 17 12 17s3.5-1.06 4.33-2.63a.262.262 0 0 0-.23-.37zm6.84-2.66a4.008 4.008 0 0 0-2.81-3.17 9.114 9.114 0 0 0-2.19-2.91C16.36 3.85 14.28 3 12 3s-4.36.85-5.94 2.26c-.92.81-1.67 1.8-2.19 2.91a3.994 3.994 0 0 0-2.81 3.17c-.04.21-.06.43-.06.66 0 .23.02.45.06.66a4.008 4.008 0 0 0 2.81 3.17 8.977 8.977 0 0 0 2.17 2.89C7.62 20.14 9.71 21 12 21s4.38-.86 5.97-2.28c.9-.8 1.65-1.79 2.17-2.89a3.998 3.998 0 0 0 2.8-3.17c.04-.21.06-.43.06-.66 0-.23-.02-.45-.06-.66zM19 14c-.1 0-.19-.02-.29-.03-.2.67-.49 1.29-.86 1.86C16.6 17.74 14.45 19 12 19s-4.6-1.26-5.85-3.17c-.37-.57-.66-1.19-.86-1.86-.1.01-.19.03-.29.03-1.1 0-2-.9-2-2s.9-2 2-2c.1 0 .19.02.29.03.2-.67.49-1.29.86-1.86C7.4 6.26 9.55 5 12 5s4.6 1.26 5.85 3.17c.37.57.66 1.19.86 1.86.1-.01.19-.03.29-.03 1.1 0 2 .9 2 2s-.9 2-2 2z" /></svg>
-                    </div>Simple</span>
-                    <p>Simple and accessible ui so you can get your notes down faster and better.</p>
-                  </div>
-                  <div className={styles.fcard}>
-                    <span><div className={styles.fcard_icon}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0 0 18c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" /></svg>
-                    </div>Playfull</span>
-                    <p>Lots of color to make sure your notes stand out! Customisable icons and notes so you can easily find them.</p>
-                  </div>
-                </div>
-                <div className={styles.fcard}>
-                  <span><div className={styles.fcard_icon}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" ><circle cx="12" cy="16" r="1" /><path d="M12 13c.55 0 1-.45 1-1V8c0-.55-.45-1-1-1s-1 .45-1 1v4c0 .55.45 1 1 1z" /><path d="M17 1H7c-1.1 0-1.99.9-1.99 2v18c0 1.1.89 2 1.99 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm0 17H7V6h10v12z" /></svg>
-                  </div>Robust</span>
-                  <p>With a large market of devices we have made it so you can use savemynotes on your phone, laptop, tablet etc easily and with a consistant look between them all.</p>
-                </div>
-              </div>
-
+            <div>
+              <span className={styles.s2_question}>And create notes like a pro.</span>
             </div>
 
+
           </div>
+          <FeatureCardsSection />
+          <CompBanner />
+          <BigTextSection1 />
+
         </div>
+
         <div className={styles.footer}>
           <h3>Made with <img src='/emoji/twitter/64/1f496.png' width='16' height='16' /> by James M</h3>
           <h5>
@@ -191,6 +127,101 @@ function Nav2() {
             </div>
           </div>
         )}
+      </div>
+    </div>
+  )
+}
+
+function FeatureCardsSection() {
+  return (
+    <div className={styles.FeatureCardsSection}>
+      <h2 className={styles.FeatureCardsSection_title}>Everything you could need to create Your notes</h2>
+      <div className={styles.FeatureCardsSection_cards}>
+        <div className={styles.FeatureCardsSection_card}>
+          <div className={styles.FeatureCardsSection_card_title}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24">
+              <path d="M19.46 10a1 1 0 0 0-.07 1 7.55 7.55 0 0 1 .52 1.81 8 8 0 0 1-.69 4.73 1 1 0 0 1-.89.53H5.68a1 1 0 0 1-.89-.54A8 8 0 0 1 13 6.06a7.69 7.69 0 0 1 2.11.56 1 1 0 0 0 1-.07 1 1 0 0 0-.17-1.76A10 10 0 0 0 3.35 19a2 2 0 0 0 1.72 1h13.85a2 2 0 0 0 1.74-1 10 10 0 0 0 .55-8.89 1 1 0 0 0-1.75-.11z" />
+              <path d="M10.59 12.59a2 2 0 0 0 2.83 2.83l5.66-8.49z" />
+            </svg>
+            <h4>Fast</h4>
+          </div>
+          <p className={styles.FeatureCardsSection_card_description}>
+            Our app is designed to be lightning fast, ensuring you can create, edit, and access your notes without any delays. Say goodbye to waiting around for your notes to load.
+          </p>
+        </div>
+
+        <div className={styles.FeatureCardsSection_card}>
+          <div className={styles.FeatureCardsSection_card_title}>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M3.72 6.04c.47.46 1.21.48 1.71.06.37-.32.69-.51.87-.43.5.2 0 1.03-.3 1.52-.25.42-2.86 3.89-2.86 6.31 0 1.28.48 2.34 1.34 2.98.75.56 1.74.73 2.64.46 1.07-.31 1.95-1.4 3.06-2.77 1.21-1.49 2.83-3.44 4.08-3.44 1.63 0 1.65 1.01 1.76 1.79-3.78.64-5.38 3.67-5.38 5.37 0 1.7 1.44 3.09 3.21 3.09 1.63 0 4.29-1.33 4.69-6.1h1.21c.69 0 1.25-.56 1.25-1.25s-.56-1.25-1.25-1.25h-1.22c-.15-1.65-1.09-4.2-4.03-4.2-2.25 0-4.18 1.91-4.94 2.84-.58.73-2.06 2.48-2.29 2.72-.25.3-.68.84-1.11.84-.45 0-.72-.83-.36-1.92.35-1.09 1.4-2.86 1.85-3.52.78-1.14 1.3-1.92 1.3-3.28C8.95 3.69 7.31 3 6.44 3c-1.09 0-2.04.63-2.7 1.22-.53.48-.53 1.32-.02 1.82zm10.16 12.51c-.31 0-.74-.26-.74-.72 0-.6.73-2.2 2.87-2.76-.3 2.69-1.43 3.48-2.13 3.48z" /></svg>
+            <h4>Easy to Use</h4>
+          </div>
+          <p className={styles.FeatureCardsSection_card_description}>
+            Our user-friendly interface makes creating and managing notes a breeze. Whether you're tech-savvy or new to note-taking apps, you'll find our app intuitive and easy to navigate.
+          </p>
+        </div>
+
+        <div className={styles.FeatureCardsSection_card}>
+          <div className={styles.FeatureCardsSection_card_title}>
+            <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px"><g><rect fill="none" height="24" width="24" /></g><g><g><path d="M8.79,9.24V5.5c0-1.38,1.12-2.5,2.5-2.5s2.5,1.12,2.5,2.5v3.74c1.21-0.81,2-2.18,2-3.74c0-2.49-2.01-4.5-4.5-4.5 s-4.5,2.01-4.5,4.5C6.79,7.06,7.58,8.43,8.79,9.24z M14.29,11.71c-0.28-0.14-0.58-0.21-0.89-0.21h-0.61v-6 c0-0.83-0.67-1.5-1.5-1.5s-1.5,0.67-1.5,1.5v10.74l-3.44-0.72c-0.37-0.08-0.76,0.04-1.03,0.31c-0.43,0.44-0.43,1.14,0,1.58 l4.01,4.01C9.71,21.79,10.22,22,10.75,22h6.1c1,0,1.84-0.73,1.98-1.72l0.63-4.47c0.12-0.85-0.32-1.69-1.09-2.07L14.29,11.71z" /></g></g></svg>
+            <h4>Intuitive</h4>
+          </div>
+          <p className={styles.FeatureCardsSection_card_description}>
+            Our app's intuitive design ensures that you can start using it right away. No steep learning curve - just open and start creating your notes effortlessly.
+          </p>
+        </div>
+
+        <div className={styles.FeatureCardsSection_card}>
+          <div className={styles.FeatureCardsSection_card_title}>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M10.59 4.59C10.21 4.21 9.7 4 9.17 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-1.41-1.41z" /></svg>
+            <h4>Organized</h4>
+          </div>
+          <p className={styles.FeatureCardsSection_card_description}>
+            Keep your notes neatly organized with our app. Create folders, categorize your notes, and search effortlessly (coming soon) to find what you need when you need it.
+          </p>
+        </div>
+
+        <div className={styles.FeatureCardsSection_card}>
+          <div className={styles.FeatureCardsSection_card_title}>
+            <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px"><g><rect fill="none" height="24" width="24" x="0" /></g><g><g><path d="M19.46,8l0.79-1.75L22,5.46c0.39-0.18,0.39-0.73,0-0.91l-1.75-0.79L19.46,2c-0.18-0.39-0.73-0.39-0.91,0l-0.79,1.75 L16,4.54c-0.39,0.18-0.39,0.73,0,0.91l1.75,0.79L18.54,8C18.72,8.39,19.28,8.39,19.46,8z M11.5,9.5L9.91,6 C9.56,5.22,8.44,5.22,8.09,6L6.5,9.5L3,11.09c-0.78,0.36-0.78,1.47,0,1.82l3.5,1.59L8.09,18c0.36,0.78,1.47,0.78,1.82,0l1.59-3.5 l3.5-1.59c0.78-0.36,0.78-1.47,0-1.82L11.5,9.5z M18.54,16l-0.79,1.75L16,18.54c-0.39,0.18-0.39,0.73,0,0.91l1.75,0.79L18.54,22 c0.18,0.39,0.73,0.39,0.91,0l0.79-1.75L22,19.46c0.39-0.18,0.39-0.73,0-0.91l-1.75-0.79L19.46,16 C19.28,15.61,18.72,15.61,18.54,16z" /></g></g></svg>
+            <h4>Customizable</h4>
+          </div>
+          <p className={styles.FeatureCardsSection_card_description}>
+            Tailor the app to your needs. Customize themes and layouts to create a note-taking environment that suits your style and preferences.
+          </p>
+        </div>
+
+        <div className={styles.FeatureCardsSection_card}>
+          <div className={styles.FeatureCardsSection_card_title}>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0V0z" fill="none" /><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" /></svg>
+            <h4>Open Source</h4>
+          </div>
+          <p className={styles.FeatureCardsSection_card_description}>
+            We believe in transparency and community collaboration. Our app is open source, allowing developers to contribute, improve, and customize it to their liking. Join the open-source community and be a part of our app's evolution.
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function CompBanner() {
+  return (
+    <div className={styles.CompBanner}>
+      <h3>Made by a student, for students, for the community</h3>
+      <div className={styles.CompBanner_logos}>
+        <Link href='https://github.com/jfmow/noti'><img src='GitHub_Logo.png' /></Link>
+      </div>
+    </div>
+  )
+}
+
+function BigTextSection1() {
+  return (
+    <div className={styles.BigTextSection1}>
+      <div className={styles.BigTextSection1_box}>
+        <h2 className={styles.BigTextSection1_title}>Create Notes Faster</h2>
+        <p className={styles.BigTextSection1_text}>Create notes from anywhere. With small components our app is able to load with minimal data usage</p>
+        <Link className={styles.button_s1_invert} href='/auth/signup'>Start creating now!</Link>
       </div>
     </div>
   )
