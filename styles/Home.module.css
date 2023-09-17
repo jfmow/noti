@@ -31,7 +31,8 @@
     max-width: 1320px;
     padding-left: 1rem;
     padding-right: 1rem;
-    height: 100px;
+    min-height: 70px;
+    max-height: 100px;
 }
 
 .nav_links {
@@ -43,7 +44,7 @@
 .nav_links a {
     font-weight: 600;
     font-size: 16px;
-    padding: 0.75rem 0.5rem;
+    padding: 0 0.5rem;
     font-family: "Heebo";
 
 }
@@ -88,7 +89,7 @@
 
 .section1 .title {
     font-family: "Signika";
-    font-size: 48px;
+    font-size: clamp(3vw, 48px, 8vw);
     font-weight: 700;
     line-height: 1.25;
     margin-bottom: 16px;
@@ -502,13 +503,42 @@
     align-items: center;
     justify-content: center;
     padding: 2em;
+    position: relative;
+}
+
+.s2_answer_img::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    border-radius: 1em 1em 0.3em 0.3em;
+    height: 70%;
+    background: #fff;
+    z-index: -1;
+    box-shadow: 0 0 7px #efefef;
+}
+
+.s2_answer_img::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 9px;
+    height: 40%;
+    background: linear-gradient(180deg, white 30%, #ffffff00 90%);
+    z-index: -1;
+    /* box-shadow: 0 0 7px #ebebeb; */
+    opacity: 0.8;
 }
 
 .s2_answer_img img {
-    width: 60%;
+    width: 100%;
     object-fit: cover;
     border-radius: 9px;
-    box-shadow: 0 0 7px #e7e7e7;
+    position: relative;
+    z-index: 3;
 }
 
 .s2_question {
