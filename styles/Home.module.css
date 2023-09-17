@@ -76,6 +76,8 @@
 }
 
 
+
+
 .section1 {
     padding-top: 50px;
     display: flex;
@@ -663,9 +665,16 @@
         backdrop-filter: none;
     }
 
-    .title {
+    .section1 .center {
+        width: 100%;
+        padding: 16px;
+    }
+
+    .section1 .title {
         height: auto;
-        width: 80%;
+        width: 100%;
+        text-align: center;
+        font-size: 38px !important;
     }
 
     .section4 h2,
@@ -734,5 +743,49 @@
 
     .fcards {
         width: 100%;
+    }
+
+    .nav {
+        flex-direction: column;
+        min-height: 78px;
+        height: auto;
+    }
+
+    .nav_mobile_menu {
+        background: none;
+        border: none;
+    }
+
+    .nav_links {
+        gap: 10px;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .nav_mobile_menu svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .nav_items_mobile {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .nav_dropDown {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: fit-content;
+        padding: 10px;
+        background: #fff;
+    }
+
+    .nav_dropDown .nav_links {
+        display: flex;
+        flex-direction: column;
     }
 }

@@ -1,10 +1,11 @@
 import Link from '@/components/Link'
 import styles from '@/styles/Home.module.css'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import PocketBase from 'pocketbase'
 import Router from 'next/router'
-const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
+//const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 export default function Home2() {
+  const [windowWidth, setWindowWidth] = useState(false)
   useEffect(() => {
     try {
       if (pb.authStore.isValid) {
@@ -12,10 +13,22 @@ export default function Home2() {
       }
     } catch { }
   }, [])
+  useEffect(() => {
+    if (window) {
+      if (window.innerWidth < 600) {
+        setWindowWidth(true)
+      }
+    }
+  }, [])
   return (
     <>
       <div className={styles.container}>
-        <Nav />
+        {windowWidth ? (
+          <Nav2 />
+
+        ) : (
+          <Nav />
+        )}
         <Section1 />
         <div className={`${styles.section}`}>
           <div className={styles.s2_answer_img} >
@@ -126,7 +139,7 @@ function Section1() {
   return (
     <div className={styles.section1}>
       <div className={styles.center}>
-        <h1 className={styles.title}>The Ultimate Note App To Elevate Your Note-Taking Experience</h1>
+        <h1 className={styles.title}>The Ultimate Note App To Elevate Your Note Taking Experience</h1>
         <p className={styles.subtitle}>SaveMyNotes is a complimentary starter template created using NextJS and PocketBase, equipped with all the essentials to kickstart your note taking and streamline your workflow.</p>
         <Link className={styles.button_s1} href='/auth/signup'>Get Started For Free</Link>
       </div>
@@ -148,6 +161,36 @@ function Nav() {
         <div className={styles.nav_buttons}>
           <Link href='/auth/signup' className={styles.nav_button_main}>Get started</Link>
         </div>
+      </div>
+    </div>
+  )
+}
+function Nav2() {
+  const [state, setState] = useState(false)
+  return (
+    <div className={styles.sticky}>
+      <div className={styles.nav}>
+        <div className={styles.nav_items_mobile}>
+          <div><img width='200' src='/name.png' /></div>
+          <button className={styles.nav_mobile_menu} type='button' onClick={() => setState(!state)}>{state ? (
+            <svg id="hide-button" class="h-6 fill-current hidden" viewBox="0 0 20 20"><title>Menu Close</title><polygon points="11 9 22 9 22 11 11 11 11 22 9 22 9 11 -2 11 -2 9 9 9 9 -2 11 -2" transform="rotate(45 10 10)"></polygon></svg>
+          ) : (
+            <svg id="show-button" class="h-6 fill-current block" viewBox="0 0 20 20"><title>Menu Open</title><path d="M0 3h20v2H0V3z m0 6h20v2H0V9z m0 6h20v2H0V0z"></path></svg>
+          )}</button>
+        </div>
+        {state && (
+          <div className={styles.nav_dropDown}>
+            <div className={styles.nav_links}>
+              <Link href='/'>Homfe</Link>
+              <Link href='/preview'>Preview</Link>
+              <Link href='https://github.com/jfmow/noti'>Selfhost</Link>
+              <Link href='/auth/login'>Login</Link>
+            </div>
+            <div className={styles.nav_buttons}>
+              <Link href='/auth/signup' className={styles.nav_button_main}>Get started</Link>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
