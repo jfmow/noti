@@ -19,8 +19,8 @@
 .nav {
     display: flex;
     flex-direction: row;
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
     position: relative;
     display: flex;
     flex-wrap: wrap;
@@ -31,7 +31,7 @@
     max-width: 1320px;
     padding-left: 1rem;
     padding-right: 1rem;
-    min-height: 70px;
+    min-height: 60px;
     max-height: 100px;
 }
 
@@ -42,7 +42,8 @@
 }
 
 .nav_links a {
-    font-weight: 600;
+    font-weight: 500;
+    color: #2e2e2e;
     font-size: 16px;
     padding: 0 0.5rem;
     font-family: "Heebo";
@@ -779,6 +780,7 @@
         flex-direction: column;
         min-height: 78px;
         height: auto;
+        max-height: none;
     }
 
     .nav_mobile_menu {
