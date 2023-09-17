@@ -181,7 +181,7 @@ function Nav2() {
         {state && (
           <div className={styles.nav_dropDown}>
             <div className={styles.nav_links}>
-              <Link href='/'>Homfe</Link>
+              <Link href='/'>Home</Link>
               <Link href='/preview'>Preview</Link>
               <Link href='https://github.com/jfmow/noti'>Selfhost</Link>
               <Link href='/auth/login'>Login</Link>
