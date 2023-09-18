@@ -209,7 +209,6 @@ function Editor({ page, multi }) {
                 <title>Page: {articleTitle}</title>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <link rel="icon" href="/Favicon.png" />
-                <link rel="prefetch" href="/64.png" />
             </Head>
             <div className={styles.title}>
                 <div className={styles.title} id="titlebg">
