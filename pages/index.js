@@ -88,7 +88,7 @@ function Nav() {
   return (
     <div className={styles.sticky}>
       <div className={styles.nav}>
-        <div><img width='200' src='/name.png' /></div>
+        <div><img width='200' src='/name-new.png' /></div>
         <div className={styles.nav_links}>
           <Link href='/'>Home</Link>
           <Link href='/preview'>Preview</Link>
