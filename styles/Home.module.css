@@ -216,14 +216,16 @@
     color: #2a2a2a;
     font-family: "Inter Tight", "Inter", "Gotham", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
         Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    font-weight: 800;
-    font-size: clamp(56px, 6vw, 100px);
+    font-weight: 700;
+    font-size: clamp(20px, 3vw, 40px);
     word-wrap: balance;
     z-index: 3;
     text-align: center;
     display: block;
     width: 100%;
     text-wrap: balance;
+    font-style: italic;
+
 }
 
 .s2_answer_img {
@@ -235,6 +237,7 @@
     position: relative;
 }
 
+/*
 .s2_answer_img::before {
     content: '';
     position: absolute;
@@ -246,7 +249,8 @@
     background: #fff;
     box-shadow: 0 0 7px #efefef;
 }
-
+*/
+/*
 .s2_answer_img::after {
     content: '';
     position: absolute;
@@ -256,9 +260,10 @@
     border-radius: 9px;
     height: 40%;
     background: linear-gradient(180deg, white 30%, #ffffff00 90%);
-    /* box-shadow: 0 0 7px #ebebeb; */
+    /* box-shadow: 0 0 7px #ebebeb; 
     opacity: 0.8;
-}
+}*/
+
 
 .s2_answer_img img {
     width: 100%;
@@ -266,6 +271,9 @@
     border-radius: 9px;
     position: relative;
     z-index: 3;
+    max-height: 600px;
+    overflow: hidden;
+    object-fit: contain;
 }
 
 .s2_question {

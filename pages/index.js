@@ -35,14 +35,9 @@ export default function Home2() {
           <Section1 />
 
           <div className={`${styles.section}`}>
+
             <div className={styles.s2_answer_img} >
-              <img src='/pagepreview.png' />
-            </div>
-            <div>
-              <span className={`${styles.s2_title}`}>Stand out from the rest</span>
-            </div>
-            <div>
-              <span className={styles.s2_question}>And create notes like a pro.</span>
+              <img src='/ban.svg' />
             </div>
 
 
