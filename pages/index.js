@@ -3,7 +3,7 @@ import styles from '@/styles/Home.module.css'
 import { useEffect, useState } from 'react'
 import PocketBase from 'pocketbase'
 import Router from 'next/router'
-//const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
+const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 export default function Home2() {
   const [windowWidth, setWindowWidth] = useState(false)
   useEffect(() => {
