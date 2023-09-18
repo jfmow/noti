@@ -136,7 +136,7 @@ function Nav2() {
 function FeatureCardsSection() {
   return (
     <div className={styles.FeatureCardsSection}>
-      <h2 className={styles.FeatureCardsSection_title}>Everything You Could Need To Create Your Notes</h2>
+      <h2 className={styles.FeatureCardsSection_title}>Always One Step Ahead</h2>
       <div className={styles.FeatureCardsSection_cards}>
         <div className={styles.FeatureCardsSection_card}>
           <div className={styles.FeatureCardsSection_card_title}>
@@ -211,6 +211,7 @@ function CompBanner() {
       <h3>Made by a student, for students, for the community</h3>
       <div className={styles.CompBanner_logos}>
         <Link href='https://github.com/jfmow/noti'><img src='GitHub_Logo.png' /></Link>
+        <Link href='https://jamesmowat.com'><img src='jamesmowat.svg' /></Link>
       </div>
     </div>
   )
