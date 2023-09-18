@@ -4,7 +4,17 @@
     background: #fff;
     color: #000;
     position: relative;
-    overflow: scroll;
+    overflow-y: scroll;
+    display: grid;
+    /* flex-direction: column; */
+    justify-items: center;
+}
+
+.sections {
+    max-width: 1500px;
+    position: relative;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 .sticky {
@@ -14,6 +24,7 @@
     right: 0;
     z-index: 30;
     background: #fff;
+    width: 100%;
 }
 
 .nav {
@@ -336,6 +347,7 @@
     height: 24px;
     display: flex;
     align-items: center;
+    fill: #ffd700;
 }
 
 .FeatureCardsSection_card_title h4 {
@@ -492,6 +504,157 @@
 }
 
 
+/* BuiltByAStudentSection */
+
+.BuiltByAStudentSection {
+    min-height: 100vh;
+    width: 100%;
+    padding: 2em;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+
+}
+
+.BuiltByAStudentSection_title {
+    text-align: left;
+    color: #2a2a2a;
+    font-family: "Inter Tight", "Inter", "Gotham", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    font-weight: 800;
+    font-size: clamp(48px, 4vw, 80px);
+    word-wrap: balance;
+    z-index: 3;
+    width: 100%;
+    display: block;
+    text-wrap: balance;
+    text-align: center;
+}
+
+.BuiltByAStudentSection_text {
+    font-family: "Heebo";
+    color: #444444;
+    font-weight: 400;
+    line-height: 1.625;
+    margin-bottom: 32px;
+    font-size: 18px;
+}
+
+.BuiltByAStudentSection_pics {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 35px;
+    width: 100%;
+    max-width: 1324px;
+}
+
+.BuiltByAStudentSection_pics_card {
+    width: 400px;
+    height: 220px;
+    padding: 2em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    gap: 10px;
+    box-shadow: 0 0 7px #efefef;
+    font-family: "Inter Tight", "Inter", "Gotham", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    position: relative;
+}
+
+
+.BuiltByAStudentSection_pics_card_img {
+    width: calc(100% - 2em);
+    height: calc(100% - 2em);
+    position: absolute;
+    user-select: none;
+    pointer-events: none;
+}
+
+.BuiltByAStudentSection_pics_card_text {
+    width: calc(100% - 2em);
+    height: calc(100% - 2em);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 20px;
+    text-wrap: balance;
+    text-align: center;
+}
+
+.BuiltByAStudentSection_pics_card_text span {
+    background: #ffffff75;
+    border-radius: 9px;
+    padding: 3px 5px;
+}
+
+.BuiltByAStudentSection_pics_card_ref {
+    position: absolute;
+    bottom: 1em;
+    left: 0;
+    right: 0;
+    opacity: 0.5;
+    font-size: 6px;
+    text-align: center;
+    user-select: none;
+}
+
+
+/* BigInspSection */
+.BigInspSection {
+    min-height: 100vh;
+    width: 100%;
+    padding: 2em;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    font-family: "Inter Tight", "Inter", "Gotham", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+.BigInspSection_title {
+    text-align: right;
+    color: #2a2a2a;
+    font-weight: 800;
+    font-size: clamp(48px, 4vw, 80px);
+    word-wrap: balance;
+    z-index: 3;
+    width: 100%;
+    display: block;
+    text-wrap: balance;
+}
+
+.BigInspSection_content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.BigInspSection_text {
+    font-size: 18px;
+    line-height: 2.225;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.BigInspSection_img {
+    width: 100%;
+    height: 100%;
+}
+
+
 
 @media(max-width: 600px) {
 
@@ -577,6 +740,18 @@
         flex-direction: column;
     }
 
+    .FeatureCardsSection {
+        padding: 1em;
+    }
+
+    .BigTextSection1 {
+        padding: calc(2em + 40px) 0;
+    }
+
+    .BigTextSection1_box {
+        border-radius: 0;
+    }
+
     .CompBanner {
         text-align: center;
         ;
@@ -584,5 +759,18 @@
 
     .BigTextSection1_text {
         text-align: center;
+    }
+
+
+    .BuiltByAStudentSection_text {
+        text-align: center;
+    }
+
+    .BigInspSection_content {
+        grid-template-columns: 1fr;
+    }
+
+    .BigInspSection_text {
+        font-size: 16px;
     }
 }
