@@ -14,6 +14,7 @@ const Icons = dynamic(() => import('./Icons'));
 
 const MyComponent = ({ currPage }) => {
   const [items, setItems] = useState([]);
+  const [SearchActive, setSearchActive] = useState(false)
   const [loading, setIsLoading] = useState(true)
   const router = useRouter()
   const [hidden, setHidden] = useState(true);
@@ -193,7 +194,7 @@ const MyComponent = ({ currPage }) => {
     <>
       <div className={styles.contextmenu} onMouseLeave={() => hideContextMenu()} ref={contextMenu}>
         <div className={styles.contextMenuItem} onClick={() => setShowMultiEditorSelector(true)}>
-          <div className={styles.contextMenuIcon}><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px"><g><path d="M0,0h24v24H0V0z" fill="none" /></g><g><g><path d="M18,4v5H6V4H18z M18,2H6C4.9,2,4,2.9,4,4v5c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V4C20,2.9,19.1,2,18,2z M18,15v5H6v-5H18z M18,13H6c-1.1,0-2,0.9-2,2v5c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2v-5C20,13.9,19.1,13,18,13z" /></g></g></svg></div>
+          <div className={styles.contextMenuIcon}><svg xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px"><g><path d="M0,0h24v24H0V0z" fill="none" /></g><g><g><path d="M18,4v5H6V4H18z M18,2H6C4.9,2,4,2.9,4,4v5c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V4C20,2.9,19.1,2,18,2z M18,15v5H6v-5H18z M18,13H6c-1.1,0-2,0.9-2,2v5c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2v-5C20,13.9,19.1,13,18,13z" /></g></g></svg></div>
           <span className={styles.contextMenuTitle}>MultiEditor</span>
         </div>
         <div className={styles.contextMenuItem} onClick={() => contextMenuDeletePage()}>
@@ -206,46 +207,44 @@ const MyComponent = ({ currPage }) => {
 
         {showMultiEditorSelector && (<MultiEditor pagesList={items} Close={() => setShowMultiEditorSelector(false)} />)}
 
-        <button onClick={setVisibleState} className={styles.desktophidemenu}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M24 0v24H0V0h24z" fill="none" opacity=".87" /><path d="M17.7 15.89L13.82 12l3.89-3.89c.39-.39.39-1.02 0-1.41-.39-.39-1.02-.39-1.41 0l-4.59 4.59c-.39.39-.39 1.02 0 1.41l4.59 4.59c.39.39 1.02.39 1.41 0 .38-.38.38-1.02-.01-1.4zM7 6c.55 0 1 .45 1 1v10c0 .55-.45 1-1 1s-1-.45-1-1V7c0-.55.45-1 1-1z" /></svg></button>
-
+        <SearchBar setVisibleState={setVisibleState} setItems={setItems} items={items} setSearchActive={setSearchActive} SearchActive={SearchActive} />
         <ImportantNotes notes={items} setVisibleState={setVisibleState} />
+        {!SearchActive && (
+          <>
 
-        <AnimatePresence>
-          {rootParents.map((rootParent) => (
-            <motion.div
-              key={rootParent.id}
-              className={styles.itemscon}
-              initial={{ opacity: 0, y: -20, scale: 1.3 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 1 }}
-            >
-              <RootParentComponent
-                item={rootParent}
-                currPage={currPage}
-                createNewPage={createNewPage}
-                setContextMenu={setContextMenu}
-                setVisibleState={setVisibleState}
+            {rootParents.map((rootParent) => (
+              <div
+                key={rootParent.id}
+                className={styles.itemscon}
               >
-                {renderChildComponents(rootParent.id, 0)}
-              </RootParentComponent>
-            </motion.div>
-          ))}
-        </AnimatePresence>
-        <span
-          title='New page'
-          onClick={(e) => {
-            e.stopPropagation();
-            createNewPage(e, null);
-          }}
-          id="createnewpageid"
-          className={`${styles.createrootpage}`}
-        >
-          <svg xmlns='http://www.w3.org/2000/svg' height='20' viewBox='0 -960 960 960' width='20'>
-            <path d='M444-240v-204H240v-72h204v-204h72v204h204v72H516v204h-72Z' />
-          </svg>
-          Create page
-        </span>
+                <RootParentComponent
+                  item={rootParent}
+                  currPage={currPage}
+                  createNewPage={createNewPage}
+                  setContextMenu={setContextMenu}
+                  setVisibleState={setVisibleState}
+                >
+                  {renderChildComponents(rootParent.id, 0)}
+                </RootParentComponent>
+              </div>
+            ))}
+            <span
+              title='New page'
+              onClick={(e) => {
+                e.stopPropagation();
+                createNewPage(e, null);
+              }}
+              id="createnewpageid"
+              className={`${styles.createrootpage}`}
+            >
+              <svg xmlns='http://www.w3.org/2000/svg' height='20' viewBox='0 -960 960 960' width='20'>
+                <path d='M444-240v-204H240v-72h204v-204h72v204h204v72H516v204h-72Z' />
+              </svg>
+              Create page
+            </span>
+          </>
+        )}
+
         <UserOptions usageOpenDefault={query.usage} clss={styles.test12} user={pb.authStore.model} />
 
       </div>
@@ -446,7 +445,7 @@ const ChildComponent = ({ item, level, children, currPage2, isActive, createNewP
             </span>
           )}
         </div>
-        {expand && children.length === 0 && (
+        {expand && children?.length === 0 && (
           <span className={styles.create_new_page_btn_text}>
             No sub pages
           </span>
@@ -489,7 +488,7 @@ function ImportantNotes({ notes, setVisibleState }) {
                   <button
                     className={styles.btn1}
                   >
-                    <svg className={styles.pushpinImportantNote} xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 20 20" height="18px" viewBox="0 0 20 20" width="18px" ><g><rect fill="none" height="20" width="20" /></g><g><g><path d="M15,10.47c0-0.26-0.19-0.46-0.44-0.52C13.67,9.75,13,8.95,13,8V4h0.5C13.78,4,14,3.78,14,3.5C14,3.22,13.78,3,13.5,3h-7 C6.22,3,6,3.22,6,3.5C6,3.78,6.22,4,6.5,4H7v4c0,0.95-0.67,1.75-1.56,1.95C5.19,10.01,5,10.21,5,10.47v0C5,10.76,5.24,11,5.53,11 H9.5v5.5c0,0.28,0.22,0.5,0.5,0.5h0c0.28,0,0.5-0.22,0.5-0.5V11h3.97C14.76,11,15,10.76,15,10.47L15,10.47z" /></g></g></svg>
+                    <svg className={styles.pushpinImportantNote} xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 20 20" height="18px" viewBox="0 0 20 20" width="18px" ><g><rect fill="none" height="20" width="20" /></g><g><g><path d="M15,10.47c0-0.26-0.19-0.46-0.44-0.52C13.67,9.75,13,8.95,13,8V4h0.5C13.78,4,14,3.78,14,3.5C14,3.22,13.78,3,13.5,3h-7 C6.22,3,6,3.22,6,3.5C6,3.78,6.22,4,6.5,4H7v4c0,0.95-0.67,1.75-1.56,1.95C5.19,10.01,5,10.21,5,10.47v0C5,10.76,5.24,11,5.53,11 H9.5v5.5c0,0.28,0.22,0.5,0.5,0.5h0c0.28,0,0.5-0.22,0.5-0.5V11h3.97C14.76,11,15,10.76,15,10.47L15,10.47z" /></g></g></svg>
                   </button>
 
                   {note.icon && note.icon.includes('.png') ? (<img className={styles.page_icon} src={`/emoji/twitter/64/${note.icon}`} />) : (!isNaN(parseInt(note.icon, 16)) && String.fromCodePoint(parseInt(note.icon, 16)))}
@@ -547,6 +546,78 @@ function MultiEditor({ pagesList, Close }) {
           <p style={{ fontSize: '12px' }}>Some users may experience the issue of the page reloading back to the home screen. We sincerely apologize for any inconvenience this may cause. Our team is actively investigating the problem to identify its cause and implement a solution. Thank you for your patience and understanding.</p>
         </ModalForm>
       </ModalContainer>
+    </>
+  )
+}
+
+
+function SearchBar({ setItems, items, setSearchActive, SearchActive, setVisibleState }) {
+
+  const [filteredItems, setFilteredItems] = useState([])
+  const [advancedMenu, setAdvancedMenu] = useState(false)
+  const [contentSearch, setContentSearch] = useState(false)
+
+  async function GetContentSearch(text) {
+    const records = await pb.collection('pages').getFullList({
+      sort: '-created', filter: `content ~ '${text.trim()}'`
+    });
+    setFilteredItems(records)
+  }
+
+  function FIlter(text) {
+    if (!text || text.length <= 0) {
+      setSearchActive(false)
+      setFilteredItems([])
+      setContentSearch(false)
+      return
+    }
+    if (contentSearch) {
+      GetContentSearch(text)
+    }
+    setSearchActive(true)
+    setFilteredItems(items.filter((item) => item.title.trim().toUpperCase().includes(text.trim().toUpperCase())))
+  }
+
+  return (
+    <>
+      <div className={styles.searchandhide}>
+        <div className={styles.search}>
+          <div className={styles.searchgroup}>
+            <svg className={styles.searchicon} aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
+            <input placeholder="Search" onChange={(e) => FIlter(e.target.value)} type="text" className={styles.searchinput} />
+            <svg onClick={() => setAdvancedMenu(!advancedMenu)} className={styles.searchFiltersIcon} xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M3 18c0 .55.45 1 1 1h5v-2H4c-.55 0-1 .45-1 1zM3 6c0 .55.45 1 1 1h9V5H4c-.55 0-1 .45-1 1zm10 14v-1h7c.55 0 1-.45 1-1s-.45-1-1-1h-7v-1c0-.55-.45-1-1-1s-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1zM7 10v1H4c-.55 0-1 .45-1 1s.45 1 1 1h3v1c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1s-1 .45-1 1zm14 2c0-.55-.45-1-1-1h-9v2h9c.55 0 1-.45 1-1zm-5-3c.55 0 1-.45 1-1V7h3c.55 0 1-.45 1-1s-.45-1-1-1h-3V4c0-.55-.45-1-1-1s-1 .45-1 1v4c0 .55.45 1 1 1z" /></svg>
+          </div>
+          {advancedMenu && (
+            <div className={styles.searchAdvancedMenu}>
+              <span className={`${styles.searchAdvancedMenuItem} ${contentSearch && styles.searchAdvancedMenuItemActive}`} onClick={() => setContentSearch(!contentSearch)}> <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M13 17H5c-.55 0-1 .45-1 1s.45 1 1 1h8c.55 0 1-.45 1-1s-.45-1-1-1zm6-8H5c-.55 0-1 .45-1 1s.45 1 1 1h14c.55 0 1-.45 1-1s-.45-1-1-1zM5 15h14c.55 0 1-.45 1-1s-.45-1-1-1H5c-.55 0-1 .45-1 1s.45 1 1 1zM4 6c0 .55.45 1 1 1h14c.55 0 1-.45 1-1s-.45-1-1-1H5c-.55 0-1 .45-1 1z" /></svg> Content search</span>
+            </div>
+          )}
+        </div>
+        <button onClick={setVisibleState} className={styles.desktophidemenu}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M24 0v24H0V0h24z" fill="none" opacity=".87" /><path d="M17.7 15.89L13.82 12l3.89-3.89c.39-.39.39-1.02 0-1.41-.39-.39-1.02-.39-1.41 0l-4.59 4.59c-.39.39-.39 1.02 0 1.41l4.59 4.59c.39.39 1.02.39 1.41 0 .38-.38.38-1.02-.01-1.4zM7 6c.55 0 1 .45 1 1v10c0 .55-.45 1-1 1s-1-.45-1-1V7c0-.55.45-1 1-1z" /></svg></button>
+      </div>
+      {SearchActive && (
+        <div>
+          <ol className={styles.items}>
+            {filteredItems.length <= 0 ? (
+              <>
+                <div className={styles.searchLoaderCon}>
+                  <div className={styles.searchloader}></div>
+                </div>
+              </>
+            ) : (
+              <>
+                {filteredItems.map((item) => (
+                  <ChildComponent
+                    item={item}
+                    level={0}
+                  >
+                  </ChildComponent>
+                ))}</>
+            )}
+          </ol>
+        </div>
+      )}
+
     </>
   )
 }
