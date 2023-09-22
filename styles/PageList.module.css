@@ -11,7 +11,8 @@
   border: none;
   background: var(--background);
   box-shadow: 8px 0px 3px 0px var(--boxshadow_primary);
-  transition: all 0.5s;
+  --min_width: 300px;
+  animation: hidea3 1s ease;
 }
 
 
@@ -37,7 +38,7 @@
   align-items: center;
 
   width: 100%;
-  height: 100%;
+  height: 40px;
   justify-content: center;
 }
 
@@ -45,11 +46,87 @@
   background: var(--modal_button_bg_hover);
 }
 
-.dskhidden,
-.dskhidden .test12 {
-  width: 0 !important;
-  padding: 0 !important;
+
+.dskhidden {
+  width: 0;
+  padding: 0;
   overflow: hidden !important;
+  animation: hidea 1s ease;
+  padding-top: 1em;
+}
+
+.test12 {
+  animation: hidea22 1s ease;
+}
+
+.dskhidden .test12 {
+  width: 0;
+  padding: 0;
+  overflow: hidden !important;
+  animation: hidea2 1s ease;
+  min-width: 0;
+}
+
+@keyframes hidea3 {
+
+
+  0% {
+    width: 0px;
+    padding-top: 1em;
+    white-space: nowrap;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  100% {
+    width: var(--min_width);
+    white-space: nowrap;
+    padding: 1em;
+  }
+}
+
+@keyframes hidea {
+  0% {
+    width: var(--min_width);
+    white-space: nowrap;
+    padding: 1em;
+  }
+
+  100% {
+    width: 0px;
+    padding-top: 1em;
+    white-space: nowrap;
+  }
+}
+
+@keyframes hidea2 {
+  0% {
+    width: var(--min_width);
+    white-space: nowrap;
+    padding: 0em 1em;
+  }
+
+  100% {
+    width: 0px;
+    white-space: nowrap;
+    min-width: 0;
+  }
+}
+
+@keyframes hidea22 {
+
+
+  0% {
+    width: 0px;
+    white-space: nowrap;
+    min-width: 0;
+  }
+
+  100% {
+    width: var(--min_width);
+    white-space: nowrap;
+    padding: 0em 1em;
+  }
 }
 
 
@@ -105,6 +182,7 @@
   color: var(--page_list_item_icons);
   font-size: 16px;
   margin: 3px 1px;
+  min-width: calc(var(--min_width) - 2em);
 
 }
 
@@ -140,6 +218,7 @@
   border-radius: 5px;
   border: none;
   cursor: pointer;
+
 }
 
 .page_list_item .btn1:hover,
@@ -220,6 +299,12 @@
 
   .dskhidden {
     height: 0 !important;
+    animation: none !important;
+    padding-top: 0;
+  }
+
+  .dskhidden .test12 {
+    animation: none !important;
   }
 }
 
@@ -315,10 +400,12 @@
 .searchandhide {
   display: grid;
   flex-direction: row;
+  min-width: calc(var(--min_width) - 2em);
   width: 100%;
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
   grid-template-columns: 6fr 1fr;
+
 }
 
 
@@ -343,7 +430,7 @@
   outline: none;
   background: var(--modal_button_bg);
   color: var(--modal_button_text);
-  transition: .3s ease;
+  transition: .3s ease border-color, .3s ease box-shadow;
 }
 
 .searchinput::placeholder {
@@ -380,16 +467,17 @@
 }
 
 .searchgroup:has(+ .searchAdvancedMenu)>.searchinput {
-  border-radius: 8px 8px 0 0;
+  border-radius: 8px 0px 0 0;
 }
 
 .searchAdvancedMenu {
   width: 100%;
-  height: 40px;
+  min-height: 40px;
+  height: fit-content;
   line-height: 28px;
   padding: 0 1rem;
   border: 2px solid transparent;
-  border-radius: 0 0 8px 8px;
+  border-radius: 0px 0px 8px 8px;
   outline: none;
   background: var(--modal_button_bg);
   color: var(--modal_button_text);
