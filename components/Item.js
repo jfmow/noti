@@ -556,6 +556,9 @@ function SearchBar({ setItems, items, setSearchActive, SearchActive, setVisibleS
   const [filteredItems, setFilteredItems] = useState([])
   const [advancedMenu, setAdvancedMenu] = useState(false)
   const [contentSearch, setContentSearch] = useState(false)
+  const [word, setWord] = useState('')
+
+  const Router = useRouter()
 
   async function GetContentSearch(text) {
     const records = await pb.collection('pages').getFullList({
@@ -571,12 +574,54 @@ function SearchBar({ setItems, items, setSearchActive, SearchActive, setVisibleS
       setContentSearch(false)
       return
     }
+    setWord(text)
     if (contentSearch) {
       GetContentSearch(text)
     }
     setSearchActive(true)
     setFilteredItems(items.filter((item) => item.title.trim().toUpperCase().includes(text.trim().toUpperCase())))
   }
+
+  useEffect(() => {
+    function highlightWord() {
+      // Get the user input
+      if (word.length <= 0) return;
+      var textToHighlight = word.toLowerCase().trim(); // Convert the input to lowercase
+
+      // Get all elements with contenteditable="true"
+      var editableElements = document.querySelectorAll('[contenteditable="true"]');
+
+      // Loop through editable elements
+      editableElements.forEach(function (element) {
+        // Remove all existing <span> elements with the "highlighted" class
+        var highlightedElements = element.querySelectorAll('span.highlighted');
+        highlightedElements.forEach(function (highlightedElement) {
+          var text = highlightedElement.textContent;
+          var parent = highlightedElement.parentNode;
+          parent.replaceChild(document.createTextNode(text), highlightedElement);
+        });
+
+        var html = element.innerHTML;
+        var newText = html.toLowerCase(); // Convert the element's HTML to lowercase
+
+        // Use a regular expression to find all occurrences of the text
+        var regex = new RegExp(textToHighlight, 'g');
+        newText = newText.replace(regex, '<span class="highlighted">$&</span>');
+
+        // Set the element's HTML with the highlighted text
+        element.innerHTML = newText;
+      });
+    }
+    if (contentSearch) {
+      highlightWord();
+    }
+  }, [word, Router.pathname]);
+
+
+
+
+
+
 
   return (
     <>

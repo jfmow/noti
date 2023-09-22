@@ -156,10 +156,10 @@ function Editor({ page, multi }) {
     //};
 
     // Attach event listeners
-    if(editorRef){
-      try{
-    editorRef.current.addEventListener("keyup", typingEventListener);
-      }catch{}
+    if (editorRef) {
+      try {
+        editorRef.current.addEventListener("keyup", typingEventListener);
+      } catch { }
     }
     //window.addEventListener("mousemove", mouseMovementEventListener);
 
@@ -170,11 +170,11 @@ function Editor({ page, multi }) {
 
     return () => {
       // Clean up the event listeners and timer on component unmount
-      if(editorRef){
-        try{
-      editorRef.current.removeEventListener("keyup", typingEventListener);
-    }catch{}
-  }
+      if (editorRef) {
+        try {
+          editorRef.current.removeEventListener("keyup", typingEventListener);
+        } catch { }
+      }
       //window.removeEventListener("mousemove", mouseMovementEventListener);
       clearTimeout(timer);
     };
@@ -811,7 +811,7 @@ function Editor({ page, multi }) {
       </AnimatePresence>
       <div className={`${styles.creategrid} ${multi && styles.creategrid_lock}`}>
         <div className={styles.form}>
-          <div className={styles.editor} ref={editorRef}></div>
+          <div className={styles.editor} ref={editorRef} id="content"></div>
         </div>
       </div>
     </div>

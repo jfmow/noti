@@ -345,3 +345,7 @@ a {
     --boxshadow_primary: #f3f3f39e !important;
   }
 }
+
+.highlighted {
+  background-color: yellow;
+}
