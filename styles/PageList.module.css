@@ -287,7 +287,7 @@
 
 @media(max-width: 800px) {
   .itemroot {
-    width: 100%;
+    width: 300px;
     z-index: 3;
     position: fixed;
     top: 0;
