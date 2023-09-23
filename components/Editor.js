@@ -26,6 +26,7 @@ import SimpleIframe from "@/customEditorTools/SimpleEmbed";
 import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
 import LineBreak from "@/customEditorTools/LineBreak";
 import convertToMarkdown from '@/lib/ConvertToMD'
+import { handleBlurHashChange, handleCreateBlurHash } from '@/lib/idk'
 const Icons = dynamic(() => import("./Icons"), {
   ssr: true,
 });
@@ -436,6 +437,9 @@ function Editor({ page, multi }) {
                       file.name,
                       { type: "image/jpeg" }
                     );
+                    const result = await handleCreateBlurHash(compressedFile);
+                    console.log("Result:", result); // Access result.hash, result.width, and result.height
+
                     formData.append("file_data", compressedFile);
                     formData.append("uploader", pb.authStore.model.id);
                     formData.append('page', page)
@@ -459,7 +463,8 @@ function Editor({ page, multi }) {
                     return {
                       success: 1,
                       file: {
-                        recid: record.id,
+                        fileId: record.id,
+                        blurHashData: result
                       },
                     };
                   }

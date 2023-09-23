@@ -2,6 +2,7 @@ import PocketBase from "pocketbase";
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false)
 import styles from "@/styles/Create.module.css";
+import { handleBlurHashChange, handleCreateBlurHash } from '@/lib/idk'
 
 export default class Image {
   static get toolbox() {
@@ -47,7 +48,7 @@ export default class Image {
       //  /&amp;/g,
       //  "&"
       //);
-      this._createImage(this.data.fileId);
+      this._createImage(this.data);
       return this.wrapper;
     }
 
@@ -86,7 +87,7 @@ export default class Image {
     uploadBtn.disabled = false;
     if (data2.success === 1) {
       await this._createImage(
-        data2.file.recid // Pass the fileId as an argument
+        data2.file // Pass the fileId as an argument
       );
       this.config.saveData.saveAll()
     } else {
@@ -95,27 +96,44 @@ export default class Image {
 
   }
 
-  async _createImage(fileId) {
+  async _createImage(file) {
     const iframe = document.createElement("img");
     iframe.classList.add(styles.embedIframe);
     iframe.style.width = "100%";
     iframe.style.maxHeight = "50vh";
     iframe.style.objectFit = 'contain';
     iframe.style.borderRadius = "5px";
-    const fileToken = await pb.files.getToken();
-    // retrieve an example protected file url (will be valid ~5min)
+    if (file.blurHashData) {
+      const blurHash = handleBlurHashChange(file.blurHashData)
+      iframe.src = blurHash
+      this.wrapper.innerHTML = "";
+      this.wrapper.appendChild(iframe);
+      const fileToken = await pb.files.getToken();
+      // retrieve an example protected file url (will be valid ~5min)
+      const record = await pb.collection('imgs').getOne(file.fileId); // Use the fileId to retrieve the record
+      if (record.page === "") {
+        await pb.collection("imgs").update(file.fileId, { "page": this.currpage })
+      }
+      const url = pb.files.getUrl(record, record.file_data, { 'token': fileToken });
 
-    const record = await pb.collection('imgs').getOne(fileId); // Use the fileId to retrieve the record
-    if (record.page === "") {
-      await pb.collection("imgs").update(fileId, { "page": this.currpage })
+      iframe.src = url;
+      iframe.setAttribute('fileId', file.fileId); // Set the fileId as an attribute of the iframe
+      iframe.setAttribute('blurHashDataAtt', JSON.stringify(file.blurHashData))
+    } else {
+      const fileToken = await pb.files.getToken();
+      // retrieve an example protected file url (will be valid ~5min)
+      const record = await pb.collection('imgs').getOne(file.fileId); // Use the fileId to retrieve the record
+      if (record.page === "") {
+        await pb.collection("imgs").update(file.fileId, { "page": this.currpage })
+      }
+      const url = pb.files.getUrl(record, record.file_data, { 'token': fileToken });
+
+      iframe.src = url;
+      iframe.setAttribute('fileId', file.fileId); // Set the fileId as an attribute of the iframe
+      this.wrapper.innerHTML = "";
+      this.wrapper.appendChild(iframe);
     }
-    const url = pb.files.getUrl(record, record.file_data, { 'token': fileToken });
 
-    iframe.src = url;
-    iframe.setAttribute('fileId', fileId); // Set the fileId as an attribute of the iframe
-
-    this.wrapper.innerHTML = "";
-    this.wrapper.appendChild(iframe);
   }
 
   static get pasteConfig() {
@@ -144,7 +162,7 @@ export default class Image {
 
         if (data2.success === 1) {
           await this._createImage(
-            data2.file.recid // Pass the fileId as an argument
+            data2.file.fileId // Pass the fileId as an argument
           )
         } else {
           return
@@ -171,9 +189,11 @@ export default class Image {
     try {
       const iframe = blockContent.querySelector("img");
       const fileId = iframe.getAttribute('fileId'); // Retrieve the fileId attribute
+      const fileBlurHash = iframe.getAttribute('blurHashDataAtt'); // Retrieve the fileId attribute
 
       return {
-        fileId: fileId // Include the fileId in the saved data
+        fileId: fileId, // Include the fileId in the saved data
+        blurHashData: JSON.parse(fileBlurHash)
       };
     } catch (err) {
       //console.log(err)

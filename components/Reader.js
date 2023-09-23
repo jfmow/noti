@@ -15,6 +15,8 @@ import NestedList from '@editorjs/nested-list';
 import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
 import LineBreak from "@/customEditorTools/LineBreak";
 
+import { handleBlurHashChange } from '@/lib/idk'
+
 
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
@@ -426,7 +428,7 @@ class Image {
             //  /&amp;/g,
             //  "&"
             //);
-            this._createImage(this.data.fileId);
+            this._createImage(this.data);
             return this.wrapper;
         }
 
@@ -434,22 +436,29 @@ class Image {
     }
 
 
-    async _createImage(fileId) {
+    async _createImage(file) {
         const iframe = document.createElement("img");
         iframe.classList.add(styles.embedIframe);
         iframe.style.width = "100%";
         iframe.style.maxHeight = "50vh";
         iframe.style.objectFit = 'contain';
         iframe.style.borderRadius = "5px";
+        if (file.blurHashData) {
+            const blurHash = handleBlurHashChange(file.blurHashData)
+            iframe.src = blurHash
+            this.wrapper.innerHTML = "";
+        }
         //const fileToken = await pb.files.getToken();
         // retrieve an example protected file url (will be valid ~5min)
-
-        const record = await pb.collection('imgs').getOne(fileId); // Use the fileId to retrieve the record
-        const url = pb.files.getUrl(record, record.file_data);
-        iframe.src = url;
-        iframe.setAttribute('fileId', fileId); // Set the fileId as an attribute of the iframe
-
-        this.wrapper.innerHTML = "";
+        try {
+            const record = await pb.collection('imgs').getOne(file.fileId); // Use the fileId to retrieve the record
+            const url = pb.files.getUrl(record, record.file_data);
+            iframe.src = url;
+            iframe.setAttribute('fileId', file.fileId); // Set the fileId as an attribute of the iframe
+            this.wrapper.innerHTML = "";
+        } catch (err) {
+            this.wrapper.innerText = `Cannot display image here.`;
+        }
         this.wrapper.appendChild(iframe);
     }
 
