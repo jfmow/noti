@@ -182,8 +182,6 @@
   color: var(--page_list_item_icons);
   font-size: 16px;
   margin: 3px 1px;
-  min-width: calc(var(--min_width) - 2em);
-
 }
 
 .page_list_item svg {
