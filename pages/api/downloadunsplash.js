@@ -49,19 +49,10 @@ export default async function handler(request, response) {
         return response.status(405).send('Method not allowed');
     }
     try {
-        const type = JSON.parse(request.body).query
-        const page = JSON.parse(request.body).page
+        const link = JSON.parse(request.body).image
 
         // Sanitize and validate the 'type' parameter
-        const validSearchText = validator.escape(String(type));
-        const validPageNumber = page
-
-        if (validSearchText === "*rand**") {
-            const data = await fetch(`https://api.unsplash.com/photos/random?count=24&client_id=${process.env.UNSPLASH_APIKEY}`)
-            //const data = await fetch(`https://api.unsplash.com/search/photos?query=potato&client_id=${process.env.UNSPLASH_APIKEY}&per_page=200&orientation=landscape&page=${validPageNumber}`)
-            const data2 = await data.json()
-            return response.status(200).json({ "total": -1, "total_pages": -1, "results": data2 })
-        }
+        const validSearchText = validator.escape(String(link));
 
         const isSafeType = (input) => {
             // Define a regular expression pattern to allow spaces and disallow problematic characters
@@ -74,14 +65,12 @@ export default async function handler(request, response) {
             return response.status(400).send('Invalid input parameter');
         }
 
-        if (!isNumber(validPageNumber)) {
-            return response.status(400).send('Invalid input parameter');
-
+        const data = await fetch(`https://unsplash.com/photos/${validSearchText}/download?client_id=${process.env.UNSPLASH_APIKEY}}`)
+        if (data.status === 200) {
+            return response.status(200).json({ message: "Success", code: 0 })
         }
+        return response.status(501).json({ message: "Fail", code: 1 })
 
-        const data = await fetch(`https://api.unsplash.com/search/photos?query=${validSearchText}&client_id=${process.env.UNSPLASH_APIKEY}&per_page=200&orientation=landscape&page=${validPageNumber}`)
-        const data2 = await data.json()
-        return response.status(200).json(data2)
     } catch (err) {
         console.log(err)
         response.status(500).send('Something went wrong!')
