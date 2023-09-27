@@ -1,0 +1,91 @@
+.PopCard {
+    position: fixed;
+    background: #ffffff;
+    box-shadow: 0px 36px 89px rgb(0 0 0/4%), 0px 23.3333px 52.1227px rgba(0, 0, 0, .03), 0px 13.8667px 28.3481px rgba(0, 0, 0, .024), 0px 7.2px 14.4625px rgb(0 0 0/2%), 0px 2.93333px 7.25185px rgba(0, 0, 0, .016), 0px 0.666667px 3.50231px rgba(0, 0, 0, .01);
+
+    z-index: 10;
+    border-width: 1px;
+    border-radius: calc(0.5rem + 4px);
+    padding: 1.5rem;
+    animation: popin 0.35s 1 ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+
+@keyframes popin {
+    0% {
+        opacity: 0;
+        transform: scale(0.65);
+        box-shadow: none;
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+        box-shadow: 0px 36px 89px rgb(0 0 0/4%), 0px 23.3333px 52.1227px rgba(0, 0, 0, .03), 0px 13.8667px 28.3481px rgba(0, 0, 0, .024), 0px 7.2px 14.4625px rgb(0 0 0/2%), 0px 2.93333px 7.25185px rgba(0, 0, 0, .016), 0px 0.666667px 3.50231px rgba(0, 0, 0, .01);
+
+    }
+}
+
+@keyframes popout {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+        box-shadow: 0px 36px 89px rgb(0 0 0/4%), 0px 23.3333px 52.1227px rgba(0, 0, 0, .03), 0px 13.8667px 28.3481px rgba(0, 0, 0, .024), 0px 7.2px 14.4625px rgb(0 0 0/2%), 0px 2.93333px 7.25185px rgba(0, 0, 0, .016), 0px 0.666667px 3.50231px rgba(0, 0, 0, .01);
+
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0.65);
+        box-shadow: none;
+    }
+
+
+}
+
+.PopCardTitle {
+    display: flex;
+}
+
+.PopCardTitle_text {
+    font-size: 18px;
+    font-family: "Special", "Inter";
+    font-weight: 600;
+    letter-spacing: -.025em;
+    line-height: 1;
+}
+
+.PopCardSubTitle {
+    display: flex;
+    margin-top: 7px;
+}
+
+.PopCardSubTitle_text {
+    margin: 0;
+    font-size: 14px;
+    font-family: "Special", "Inter";
+    font-weight: 400;
+    letter-spacing: -.025em;
+    line-height: 1.25rem;
+    color: #a2a2a2;
+}
+
+.PopCardScrollCon {
+    height: 100%;
+    max-height: 270px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+@media(max-width: 600px) {
+    .PopCard {
+        height: 400px !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+    }
+}

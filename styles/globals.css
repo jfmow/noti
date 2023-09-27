@@ -206,6 +206,12 @@ a {
   src: url("../fonts/Nunito-VariableFont_wght.ttf");
 }
 
+@font-face {
+  font-family: "Special";
+  font-display: swap;
+  src: url("../fonts/specialfont.woff2");
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 2px;

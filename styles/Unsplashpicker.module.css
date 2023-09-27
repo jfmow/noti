@@ -57,14 +57,14 @@
 }
 
 .imgs {
-    height: 50vh;
+    height: 300px;
     overflow: scroll;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 5px;
     justify-content: center;
-    width: calc(400px + (6px * 8));
+    width: 100%;
 }
 
 .img {
@@ -72,15 +72,19 @@
     width: 106px;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .img img {
-    display: block;
     object-fit: cover;
     border-radius: 3px;
-    width: 100%;
+    width: 106px;
     height: 64px;
     object-position: center 0%;
+    position: relative;
+    top: auto;
+    left: auto;
+    z-index: auto;
 }
 
 .pagebtn {
@@ -123,6 +127,8 @@
 .sinputcontainer {
     position: relative;
     width: 100%;
+    margin-top: 5px;
+    margin-bottom: 7px;
 }
 
 

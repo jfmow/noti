@@ -10,7 +10,6 @@ const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 
 export default function Unsplash({ page, setArticleHeader, close }) {
     const [images, setImages] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
     const [currentPageNumber, setPageNumber] = useState(1);
     const [totalPages, setTotalPages] = useState(-1);
 
@@ -19,6 +18,7 @@ export default function Unsplash({ page, setArticleHeader, close }) {
     }, [currentPageNumber]);
 
     async function fetchImages() {
+        const searchTerm = document.getElementsByClassName(`.${styles.sinput}`)
         try {
             if (currentPageNumber >= totalPages && totalPages !== -1) {
                 return;
@@ -70,11 +70,9 @@ export default function Unsplash({ page, setArticleHeader, close }) {
                             downloadAndCreateFileObjects(image, setArticleHeader);
                             close();
                         }}
-                        style={{ width: 0, height: 0 }}
+                        style={loading ? ({ width: 0, height: 0 }) : (null)}
                         onLoad={(e) => {
                             setLoading(false)
-                            e.currentTarget.style.width = '100%';
-                            e.currentTarget.style.height = '64px';
                         }}
                         loading='lazy'
                     />
@@ -90,34 +88,31 @@ export default function Unsplash({ page, setArticleHeader, close }) {
 
 
     return (
-        <ModalContainer events={close}>
-            <ModalForm>
-                <ModalTitle>Unsplash</ModalTitle>
-                <div className={styles.sinputcontainer}>
-                    <input placeholder="Search for a image..." onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                            fetchImages()
-                        }
-                    }} onChange={(e) => setSearchTerm(e.target.value)} type="text" className={styles.sinput} />
-                    <div className={styles.sunderline}></div>
-                </div>
-                <div className={styles.imgs}>
-                    {
-                        images?.map((image) => (
-                            <>
-                                <Image image={image} close={close} />
-                            </>
-                        ))
+        <>
+            <div className={styles.sinputcontainer}>
+                <input placeholder="Search for a image..." onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                        fetchImages()
                     }
-                </div>
-                <div className={styles.buttons}>
+                }} type="text" className={styles.sinput} />
+                <div className={styles.sunderline}></div>
+            </div>
+            <div className={styles.imgs}>
+                {
+                    images?.map((image) => (
+                        <>
+                            <Image image={image} close={close} />
+                        </>
+                    ))
+                }
+            </div>
+            <div className={styles.buttons}>
 
-                    <button className={styles.pagebtn} type='button' onClick={() => { setPageNumber((prev) => prev - 1); }} disabled={currentPageNumber <= 1}>Back</button>
-                    <button className={styles.pagebtn} type='button' onClick={() => { setPageNumber((prev) => prev + 1); }} disabled={totalPages === -1}>Next</button>
+                <button className={styles.pagebtn} type='button' onClick={() => { setPageNumber((prev) => prev - 1); }} disabled={currentPageNumber <= 1}>Back</button>
+                <button className={styles.pagebtn} type='button' onClick={() => { setPageNumber((prev) => prev + 1); }} disabled={totalPages === -1}>Next</button>
 
-                </div>
+            </div>
 
-            </ModalForm>
-        </ModalContainer>
+        </>
     );
 }
