@@ -75,16 +75,21 @@
     position: relative;
 }
 
+.loading {
+    opacity: 0.5;
+}
+
 .img img {
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 3px;
-    width: 106px;
+    width: 100%;
     height: 64px;
     object-position: center 0%;
     position: relative;
     top: auto;
     left: auto;
     z-index: auto;
+    cursor: pointer;
 }
 
 .pagebtn {

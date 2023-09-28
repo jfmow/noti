@@ -27,8 +27,14 @@
     }
 }
 
+.hidden {
+    display: none;
+    animation: popout 0.35s 1 ease-in-out;
+}
+
 @keyframes popout {
     0% {
+        display: flex;
         opacity: 1;
         transform: scale(1);
         box-shadow: 0px 36px 89px rgb(0 0 0/4%), 0px 23.3333px 52.1227px rgba(0, 0, 0, .03), 0px 13.8667px 28.3481px rgba(0, 0, 0, .024), 0px 7.2px 14.4625px rgb(0 0 0/2%), 0px 2.93333px 7.25185px rgba(0, 0, 0, .016), 0px 0.666667px 3.50231px rgba(0, 0, 0, .01);
@@ -36,9 +42,11 @@
     }
 
     100% {
+        display: flex;
         opacity: 0;
-        transform: scale(0.65);
+        transform: scale(0.9);
         box-shadow: none;
+        transform: translateY(30px);
     }
 
 

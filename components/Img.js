@@ -72,14 +72,18 @@ export default function Unsplash({ page, setArticleHeader, close }) {
         const [loading, setLoading] = useState(true)
         return (
             <>
-                <div className={styles.img}>
+                <div className={`${!loading && styles.loading} ${styles.img}`}>
                     <img
                         key={image.id}
                         src={image.urls.raw + '?q=65&w=200'}
                         alt={image.alt_description}
                         onClick={() => {
-                            downloadAndCreateFileObjects(image, setArticleHeader);
-                            close();
+                            async function Down() {
+                                setLoading(false)
+                                await downloadAndCreateFileObjects(image, setArticleHeader);
+                                setLoading(true)
+                            }
+                            Down()
                         }}
                     //style={loading ? ({ width: 0, height: 0 }) : (null)}
                     //onLoad={(e) => {

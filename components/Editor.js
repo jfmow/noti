@@ -27,7 +27,7 @@ import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
 import LineBreak from "@/customEditorTools/LineBreak";
 import convertToMarkdown from '@/lib/ConvertToMD'
 import { handleBlurHashChange, handleCreateBlurHash } from '@/lib/idk'
-import PopCard, { PopCardSubTitle, PopCardTitle } from "@/lib/PopCard";
+import PopCard, { PopCardCorner, PopCardSubTitle, PopCardTitle } from "@/lib/PopCard";
 const Icons = dynamic(() => import("./Icons"), {
   ssr: true,
 });
@@ -182,14 +182,30 @@ function Editor({ page, multi }) {
     };
   }, [lastTypedTime, editorRef.current]);
 
+  function ResetUseStateVars() {
+    setEditor(null);
+    setEditorData({});
+    setArticleTitle("");
+    setArticleHeader(null);
+    setIsLoading(true);
+    setLastTypedTime(Date.now());
+    setLastTypedTimeIdle(true);
+    setIsSaving(false);
+    setPageSharedTF(false);
+    setShareLinkModalState(false);
+    setIconModalState(false);
+    setCurrentPageIconValue("");
+    setImportantNote(false);
+    setColorSelectorState(false);
+    setConvertedData("");
+    setShowConvert(false);
+    setOffline({ warning: false, state: false });
+    setpopUpClickEvent(null);
+  }
+
   useEffect(() => {
     if (page) {
-      setLastTypedTimeIdle(true);
-      setIsLoading(true);
-      setIsSaving(false)
-      setEditorData(null)
-      setArticleTitle('Untitled')
-      setArticleHeader(null)
+      ResetUseStateVars()
       async function fetchArticles() {
         if (page === "firstopen") {
 
@@ -700,12 +716,12 @@ function Editor({ page, multi }) {
                 >
                   <svg width="24" height="24" viewBox="0 0 32 32" version="1.1" aria-labelledby="unsplash-home" aria-hidden="false"><path d="M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z"></path></svg>
                 </button>
-                <PopCard event={popUpClickEvent} className={styles.title_buttons_btn}>
+                <PopCardCorner event={popUpClickEvent} className={styles.title_buttons_btn}>
                   <PopCardTitle>Unsplash</PopCardTitle>
                   <PopCardSubTitle>Choose a cover image for your page.</PopCardSubTitle>
                   <Img setArticleHeader={setArticleHeader} page={page} />
 
-                </PopCard>
+                </PopCardCorner>
               </div>
 
               <div className={styles.buttonlabel}>
