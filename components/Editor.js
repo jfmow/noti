@@ -18,7 +18,6 @@ import { AnimatePresence } from "framer-motion";
 import { AlternateButton, CopyPasteTextArea } from "@/lib/Modal";
 import { createRandomMeshGradients } from "@/lib/randomMeshGradient";
 import NestedList from '@editorjs/nested-list';
-import Img from './Img'
 import MarkerTool from "@/customEditorTools/Marker";
 import Image from "@/customEditorTools/Image";
 import SimpleTodo from "@/customEditorTools/Todo";
@@ -31,6 +30,12 @@ const PopCardCorner = dynamic(() => import('@/lib/PopCard').then((module) => mod
 const PopCardSubTitle = dynamic(() => import('@/lib/PopCard').then((module) => module.PopCardSubTitle));
 const PopCardTitle = dynamic(() => import('@/lib/PopCard').then((module) => module.PopCardTitle));
 
+const Gradient = dynamic(() => import("@/components/Gradient"), {
+  ssr: true,
+});
+const Img = dynamic(() => import("@/components/Img"), {
+  ssr: true,
+});
 const Icons = dynamic(() => import("./Icons"), {
   ssr: true,
 });
@@ -72,7 +77,8 @@ function Editor({ page, multi }) {
   const [offline, setOffline] = useState({ warning: false, state: false })
   const pagetitleref = useRef(null)
 
-  const [popUpClickEvent, setpopUpClickEvent] = useState(null)
+  const [popUpClickEventUnsplash, setpopUpClickEventUnsplash] = useState(null)
+  const [popUpClickEventGradient, setpopUpClickEventGradient] = useState(null)
 
   useEffect(() => {
     window.addEventListener('offline', () => {
@@ -203,7 +209,8 @@ function Editor({ page, multi }) {
     setConvertedData("");
     setShowConvert(false);
     setOffline({ warning: false, state: false });
-    setpopUpClickEvent(null);
+    setpopUpClickEventUnsplash(null);
+    setpopUpClickEventGradient(null)
   }
 
   useEffect(() => {
@@ -684,7 +691,7 @@ function Editor({ page, multi }) {
             <div className={styles.title_buttons} id="tut_title_btns_id">
 
               <div className={styles.buttonlabel}>
-                <div className={styles.buttonlabel_label}>Set page header image</div>
+                <div className={styles.buttonlabel_label}>Custom cover image</div>
                 <div className={`${styles.title_buttons_btn}`}>
                   <label className={styles.customfileupload} >
                     <input
@@ -711,18 +718,38 @@ function Editor({ page, multi }) {
               </div>
 
               <div className={styles.buttonlabel}>
-                <div className={styles.buttonlabel_label}>Unsplash</div>
+                <div className={styles.buttonlabel_label}>Unsplash cover</div>
                 <button
                   type="button"
-                  onClick={(e) => setpopUpClickEvent(e)}
+                  onClick={(e) => setpopUpClickEventUnsplash(e)}
                   className={styles.title_buttons_btn}
                 >
                   <svg width="24" height="24" viewBox="0 0 32 32" version="1.1" aria-labelledby="unsplash-home" aria-hidden="false"><path d="M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z"></path></svg>
                 </button>
-                <PopCardCorner event={popUpClickEvent} className={styles.title_buttons_btn}>
+                <PopCardCorner event={popUpClickEventUnsplash} className={styles.title_buttons_btn}>
                   <PopCardTitle>Unsplash</PopCardTitle>
                   <PopCardSubTitle>Choose a cover image for your page.</PopCardSubTitle>
-                  <Img setArticleHeader={setArticleHeader} page={page} />
+                  {popUpClickEventUnsplash && (
+                    <Img setArticleHeader={setArticleHeader} page={page} />
+                  )}
+
+                </PopCardCorner>
+              </div>
+
+              <div className={styles.buttonlabel}>
+                <div className={styles.buttonlabel_label}>Gradient cover</div>
+                <button
+                  type="button"
+                  onClick={(e) => setpopUpClickEventGradient(e)}
+                  className={styles.title_buttons_btn}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0z" fill="none" /><path d="M11 9h2v2h-2V9zm-2 2h2v2H9v-2zm4 0h2v2h-2v-2zm2-2h2v2h-2V9zM7 9h2v2H7V9zm12-6H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 18H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm2-7h-2v2h2v2h-2v-2h-2v2h-2v-2h-2v2H9v-2H7v2H5v-2h2v-2H5V6c0-.55.45-1 1-1h12c.55 0 1 .45 1 1v5z" /></svg>                </button>
+                <PopCardCorner event={popUpClickEventGradient} className={styles.title_buttons_btn}>
+                  <PopCardTitle>Gradients</PopCardTitle>
+                  <PopCardSubTitle>Choose a gradient cover for your page.</PopCardSubTitle>
+                  {popUpClickEventGradient && (
+                    <Gradient setArticleHeader={setArticleHeader} page={page} />
+                  )}
 
                 </PopCardCorner>
               </div>
