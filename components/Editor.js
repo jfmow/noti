@@ -667,7 +667,7 @@ function Editor({ page, multi }) {
 
       <div className={styles.title}>
         <div className={styles.title} id="titlebg">
-          {articleHeader && <img src={articleHeader} alt="Page header img" />}
+          {articleHeader && <img className={styles.articleTitle_img} src={articleHeader} alt="Page header img" />}
           <div className={styles.headerstuff}>
             <div className={styles.titleeditorcontainer}>
               <div
