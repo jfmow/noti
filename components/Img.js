@@ -19,7 +19,10 @@ export default function Unsplash({ page, setArticleHeader, close }) {
 
     useEffect(() => {
         debouncedSearch()
-    }, [currentPageNumber, searchTerm]);
+    }, [searchTerm]);
+    useEffect(() => {
+        fetchImages()
+    }, [currentPageNumber])
 
     // Create a debounced version of handleSearch
 
@@ -99,6 +102,16 @@ export default function Unsplash({ page, setArticleHeader, close }) {
         )
     }
 
+    async function RemoveCover() {
+        const data = {
+            "unsplash": "",
+            "header_img": null
+        };
+
+        const record = await pb.collection('pages').update(page, data);
+        setArticleHeader(null)
+    }
+
 
 
     return (
@@ -131,7 +144,8 @@ export default function Unsplash({ page, setArticleHeader, close }) {
             <div className={styles.buttons}>
 
                 <button className={styles.pagebtn} type='button' onClick={() => { setPageNumber((prev) => prev - 1); }} disabled={currentPageNumber <= 1}>Back</button>
-                <button className={styles.pagebtn} type='button' onClick={() => { setPageNumber((prev) => prev + 1); }} disabled={totalPages === -1}>Next</button>
+                <button className={styles.pagebtn} type='button' onClick={() => { setPageNumber((prev) => prev + 1); }} disabled={currentPageNumber >= totalPages || totalPages == -1}>Next</button>
+                <button className={`${styles.pagebtn} ${styles.pagebtn_dark}`} type='button' onClick={() => RemoveCover()}>Remove cover</button>
 
             </div>
 

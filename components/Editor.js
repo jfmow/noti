@@ -27,7 +27,10 @@ import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
 import LineBreak from "@/customEditorTools/LineBreak";
 import convertToMarkdown from '@/lib/ConvertToMD'
 import { handleBlurHashChange, handleCreateBlurHash } from '@/lib/idk'
-import PopCard, { PopCardCorner, PopCardSubTitle, PopCardTitle } from "@/lib/PopCard";
+const PopCardCorner = dynamic(() => import('@/lib/PopCard').then((module) => module.PopCardCorner));
+const PopCardSubTitle = dynamic(() => import('@/lib/PopCard').then((module) => module.PopCardSubTitle));
+const PopCardTitle = dynamic(() => import('@/lib/PopCard').then((module) => module.PopCardTitle));
+
 const Icons = dynamic(() => import("./Icons"), {
   ssr: true,
 });
