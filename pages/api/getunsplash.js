@@ -20,7 +20,7 @@ const getIP = request =>
     request.connection.remoteAddress
 
 export const getRateLimitMiddlewares = ({
-    limit = 20,
+    limit = 200,
     windowMs = 60 * 1000,
     delayAfter = Math.round(10 / 2),
     delayMs = 0,
