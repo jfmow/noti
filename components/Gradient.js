@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PocketBase from 'pocketbase';
 import styles from '@/styles/Unsplashpicker.module.css';
 import Link from './Link';
+import compressImage from '@/lib/CompressImg';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 
 export default function Gradient({ page, setArticleHeader, close }) {
@@ -88,7 +89,8 @@ export default function Gradient({ page, setArticleHeader, close }) {
 
     async function getFile(data) {
         const blob = dataURItoBlob(data)
-        const file = new File([blob], 'generated-gradient.png', { type: blob.type });
+        const compressedBlob = await compressImage(blob, 200); // Maximum file size in KB (100KB in this example)
+        const file = new File([compressedBlob], 'generated-gradient.png', { type: blob.type });
         console.log(file);
         const reader = new FileReader();
         reader.onload = () => {
