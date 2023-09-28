@@ -637,7 +637,7 @@ function Editor({ page, multi }) {
 
 
   return (
-    <div className={styles.create}>
+    <div className={styles.create} id="createcon">
       <Head>
         <title>{articleTitle}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

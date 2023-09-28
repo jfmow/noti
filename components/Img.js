@@ -5,6 +5,7 @@ import styles from '@/styles/Unsplashpicker.module.css';
 import { ModalContainer, ModalForm, ModalTitle } from '@/lib/Modal';
 import { handleBlurHashChange } from '@/lib/idk';
 import Link from './Link';
+import debounce from 'lodash/debounce'; // Import the debounce function from Lodash
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 
@@ -12,20 +13,24 @@ export default function Unsplash({ page, setArticleHeader, close }) {
     const [images, setImages] = useState([]);
     const [currentPageNumber, setPageNumber] = useState(1);
     const [totalPages, setTotalPages] = useState(-1);
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const debouncedSearch = debounce(handleSearch, 500); // Adjust the debounce delay as needed
 
     useEffect(() => {
-        fetchImages();
-    }, [currentPageNumber]);
+        debouncedSearch()
+    }, [currentPageNumber, searchTerm]);
+
+    // Create a debounced version of handleSearch
 
     async function fetchImages() {
-        const searchTerm = document.getElementsByClassName(`.${styles.sinput}`)
         try {
             if (currentPageNumber >= totalPages && totalPages !== -1) {
                 return;
             }
             const response = await fetch(`${process.env.NEXT_PUBLIC_CURRENTURL}/api/getunsplash`, {
-                method: "POST", // Use POST method for sending form data
-                body: JSON.stringify({ "query": searchTerm || "*rand**", "page": currentPageNumber }),   // Send the FormData object as the request body
+                method: 'POST',
+                body: JSON.stringify({ query: searchTerm || '*rand**', page: currentPageNumber }),
             });
 
             const data = await response.json();
@@ -34,6 +39,12 @@ export default function Unsplash({ page, setArticleHeader, close }) {
         } catch (error) {
             console.error('Error fetching images:', error);
         }
+    }
+
+    // Use the debouncedSearch function instead of handleSearch
+    function handleSearch() {
+        setPageNumber(1);
+        fetchImages();
     }
 
 
@@ -70,15 +81,14 @@ export default function Unsplash({ page, setArticleHeader, close }) {
                             downloadAndCreateFileObjects(image, setArticleHeader);
                             close();
                         }}
-                        style={loading ? ({ width: 0, height: 0 }) : (null)}
-                        onLoad={(e) => {
-                            setLoading(false)
-                        }}
-                        loading='lazy'
+                    //style={loading ? ({ width: 0, height: 0 }) : (null)}
+                    //onLoad={(e) => {
+                    //    setLoading(false)
+                    //}}
                     />
-                    {loading && (
+                    {/*{loading && (
                         <img src={handleBlurHashChange({ hash: image.blur_hash, width: 200, height: 64 })} />
-                    )}
+                    )}*/}
                     <Link href={image.user.links.html + `?utm_source=${process.env.NEXT_PUBLIC_CURRENTURL}`} className={styles.author}>Photo by: <span className={styles.author_name}>{image.user.name}</span></Link>
                 </div>
             </>
@@ -90,13 +100,21 @@ export default function Unsplash({ page, setArticleHeader, close }) {
     return (
         <>
             <div className={styles.sinputcontainer}>
-                <input placeholder="Search for a image..." onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                        fetchImages()
-                    }
-                }} type="text" className={styles.sinput} />
+                <input
+                    placeholder="Search for an image..."
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            debouncedSearch(); // Call the debouncedSearch function on Enter key press
+                        }
+                    }}
+                    type="text"
+                    className={styles.sinput}
+                    id={styles.sinput}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
                 <div className={styles.sunderline}></div>
             </div>
+
             <div className={styles.imgs}>
                 {
                     images?.map((image) => (

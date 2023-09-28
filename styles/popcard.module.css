@@ -1,6 +1,6 @@
 .PopCard {
     position: fixed;
-    background: #ffffff;
+    background: var(--modal_background);
     box-shadow: 0px 36px 89px rgb(0 0 0/4%), 0px 23.3333px 52.1227px rgba(0, 0, 0, .03), 0px 13.8667px 28.3481px rgba(0, 0, 0, .024), 0px 7.2px 14.4625px rgb(0 0 0/2%), 0px 2.93333px 7.25185px rgba(0, 0, 0, .016), 0px 0.666667px 3.50231px rgba(0, 0, 0, .01);
 
     z-index: 10;
@@ -54,6 +54,7 @@
     font-weight: 600;
     letter-spacing: -.025em;
     line-height: 1;
+    color: var(--modal_text_color);
 }
 
 .PopCardSubTitle {
@@ -68,7 +69,8 @@
     font-weight: 400;
     letter-spacing: -.025em;
     line-height: 1.25rem;
-    color: #a2a2a2;
+    color: var(--modal_text_color);
+    opacity: 0.8;
 }
 
 .PopCardScrollCon {
@@ -79,6 +81,14 @@
     position: relative;
     display: flex;
     flex-direction: column;
+}
+
+.closebtn {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    fill: var(--modal_close_button_hover);
+    cursor: pointer;
 }
 
 @media(max-width: 600px) {
