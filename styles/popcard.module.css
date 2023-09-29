@@ -3,13 +3,14 @@
     background: var(--modal_background);
     box-shadow: 0px 36px 89px rgb(0 0 0/4%), 0px 23.3333px 52.1227px rgba(0, 0, 0, .03), 0px 13.8667px 28.3481px rgba(0, 0, 0, .024), 0px 7.2px 14.4625px rgb(0 0 0/2%), 0px 2.93333px 7.25185px rgba(0, 0, 0, .016), 0px 0.666667px 3.50231px rgba(0, 0, 0, .01);
 
-    z-index: 10;
+    z-index: 12;
     border-width: 1px;
     border-radius: calc(0.5rem + 4px);
     padding: 1.5rem;
     animation: popin 0.35s 1 ease-in-out;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 @keyframes popin {
@@ -45,6 +46,7 @@
     bottom: 0;
     width: 100%;
     height: 100%;
+    z-index: 11;
 }
 
 @keyframes popout {
@@ -121,4 +123,80 @@
         left: 0 !important;
         width: 100% !important;
     }
+}
+
+
+
+.PopCardDropMenu {
+    display: flex;
+    width: calc(200px);
+    flex-direction: column;
+    position: fixed;
+    background: var(--modal_background);
+    --tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1), 0 2px 4px -2px rgba(0, 0, 0, .1);
+    --tw-ring-offset-shadow: 0 0 #0000;
+    --tw-ring-shadow: 0 0 #0000;
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    border-radius: calc(0.5rem - 2px);
+    border: 1px solid #e5e7eb;
+    z-index: 12;
+    animation: dropmenuin 0.25s 1 ease-in-out;
+}
+
+@keyframes dropmenuin {
+    0% {
+        opacity: 0;
+        transform: translateY(40px), scale(0.4);
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0), scale(1);
+    }
+}
+
+.PopCardDropMenuSection {
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+    width: 100%;
+    height: fit-content;
+    padding: 4px;
+    font-family: "Special";
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.PopCardDropMenuSectionItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 6px 8px;
+    cursor: default;
+}
+
+.PopCardDropMenuSectionItem:hover {
+    border-radius: calc(0.5rem - 4px);
+    background: #e5e7eb;
+}
+
+.PopCardDropMenuSectionItem>a,
+.PopCardDropMenuSectionItem>p,
+.PopCardDropMenuSectionItem>button {}
+
+.PopCardDropMenuSectionItem svg {
+    width: 16px;
+    height: 16px;
+    margin-right: 0.5rem;
+    display: flex;
+}
+
+.PopCardDropMenuSectionTitle {
+    font-family: "Special";
+    font-weight: 600;
+    font-size: 14px;
+    padding: 1rem;
 }
