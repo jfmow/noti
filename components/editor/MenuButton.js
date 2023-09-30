@@ -171,6 +171,10 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
             async function getPageData() {
                 const record = await pb.collection('pages').getOne(page);
                 function calculateWordCount(input) {
+                    function removeHtmlTags(text) {
+                        return text.replace(/<[^>]*>/g, '');
+                    }
+
                     function extractWords(text) {
                         return text.match(/\b\w+\b/g) || [];
                     }
@@ -179,7 +183,7 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
                         let words = [];
                         items.forEach(item => {
                             if (item.content) {
-                                words = words.concat(extractWords(item.content));
+                                words = words.concat(extractWords(removeHtmlTags(item.content)));
                             }
                             if (item.items && item.items.length > 0) {
                                 words = words.concat(processNestedList(item.items));
@@ -197,7 +201,7 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
                                 case "paragraph":
                                 case "quote":
                                     if (block.data && block.data.text) {
-                                        words = words.concat(extractWords(block.data.text));
+                                        words = words.concat(extractWords(removeHtmlTags(block.data.text)));
                                     }
                                     break;
                                 case "nestedList":
@@ -210,7 +214,7 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
                                     if (block.data && block.data.content && Array.isArray(block.data.content)) {
                                         block.data.content.forEach(row => {
                                             row.forEach(cell => {
-                                                words = words.concat(extractWords(cell));
+                                                words = words.concat(extractWords(removeHtmlTags(cell)));
                                             });
                                         });
                                     }
