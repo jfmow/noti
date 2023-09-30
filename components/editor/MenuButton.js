@@ -169,8 +169,64 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
     useEffect(() => {
         if (showPageInfo) {
             async function getPageData() {
-                const record = await pb.collection('pages_Bare').getOne(page);
-                setPageInfo(record)
+                const record = await pb.collection('pages').getOne(page);
+                function calculateWordCount(input) {
+                    function extractWords(text) {
+                        return text.match(/\b\w+\b/g) || [];
+                    }
+
+                    function processNestedList(items) {
+                        let words = [];
+                        items.forEach(item => {
+                            if (item.content) {
+                                words = words.concat(extractWords(item.content));
+                            }
+                            if (item.items && item.items.length > 0) {
+                                words = words.concat(processNestedList(item.items));
+                            }
+                        });
+                        return words;
+                    }
+
+                    let words = [];
+
+                    if (input && input.blocks && Array.isArray(input.blocks)) {
+                        input.blocks.forEach(block => {
+                            switch (block.type) {
+                                case "header":
+                                case "paragraph":
+                                case "quote":
+                                    if (block.data && block.data.text) {
+                                        words = words.concat(extractWords(block.data.text));
+                                    }
+                                    break;
+                                case "nestedList":
+                                case "orderedList":
+                                    if (block.data && block.data.items && Array.isArray(block.data.items)) {
+                                        words = words.concat(processNestedList(block.data.items));
+                                    }
+                                    break;
+                                case "table":
+                                    if (block.data && block.data.content && Array.isArray(block.data.content)) {
+                                        block.data.content.forEach(row => {
+                                            row.forEach(cell => {
+                                                words = words.concat(extractWords(cell));
+                                            });
+                                        });
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
+                        });
+                    }
+
+                    return words;
+                }
+                const input = record.content
+                const words = calculateWordCount(input);
+                //console.log(words, words.length)
+                setPageInfo({ ...record, wordCount: words.length })
             }
             getPageData()
         }
@@ -300,7 +356,7 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
                         <PopCardDropMenuSectionItem onClick={() => setShowPageInfo(!showPageInfo)} onHover={() => {
                             //set everything false
                             setSharePageInfo(false);
-                            setShowPageInfo(false);
+                            setShowPageInfo(true);
                             setpopUpClickEventPageOptions(false);
                             setpopUpClickEventMarkdown(null)
                         }}>
@@ -330,6 +386,10 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
                                     <p>Title: {pageInfo.title}</p>
                                 </PopCardDropMenuSectionItem>
                                 <PopCardDropMenuSectionItem>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-z-a"><path d="m3 8 4-4 4 4" /><path d="M7 4v16" /><path d="M15 4h5l-5 6h5" /><path d="M15 20v-3.5a2.5 2.5 0 0 1 5 0V20" /><path d="M20 18h-5" /></svg>
+                                    <p>Word Count: {pageInfo.wordCount}</p>
+                                </PopCardDropMenuSectionItem>
+                                <PopCardDropMenuSectionItem>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-clock"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5" /><path d="M16 2v4" /><path d="M8 2v4" /><path d="M3 10h5" /><path d="M17.5 17.5 16 16.25V14" /><path d="M22 16a6 6 0 1 1-12 0 6 6 0 0 1 12 0Z" /></svg>
                                     <p>Created: {new Date(pageInfo.created).toLocaleString()}</p>
                                 </PopCardDropMenuSectionItem>
@@ -339,7 +399,7 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
                                 </PopCardDropMenuSectionItem>
                                 <PopCardDropMenuSectionItem>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-view"><path d="M5 12s2.545-5 7-5c4.454 0 7 5 7 5s-2.546 5-7 5c-4.455 0-7-5-7-5z" /><path d="M12 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" /><path d="M21 17v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2" /><path d="M21 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2" /></svg>
-                                    <p>Shared: {pageInfo.shared ? 'true' : 'false'}</p>
+                                    <p style={{ display: "flex", gap: '5px' }}>Shared: {pageInfo.shared ? (<p style={{ color: 'green' }}>true</p>) : (<p style={{ color: 'red' }}>false</p>)}</p>
                                 </PopCardDropMenuSectionItem>
                                 <PopCardDropMenuSectionItem>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-party-popper"><path d="M5.8 11.3 2 22l10.7-3.79" /><path d="M4 3h.01" /><path d="M22 8h.01" /><path d="M15 2h.01" /><path d="M22 20h.01" /><path d="m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12v0c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10" /><path d="m22 13-.82-.33c-.86-.34-1.82.2-1.98 1.11v0c-.11.7-.72 1.22-1.43 1.22H17" /><path d="m11 2 .33.82c.34.86-.2 1.82-1.11 1.98v0C9.52 4.9 9 5.52 9 6.23V7" /><path d="M11 13c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z" /></svg>
