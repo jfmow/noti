@@ -5,10 +5,8 @@ import Router from "next/router";
 import { AnimatePresence } from "framer-motion";
 import styles from "@/styles/Create.module.css";
 import compressImage from "@/lib/CompressImg";
-import { AlternateButton, CopyPasteTextArea } from "@/lib/Modal";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-
 const PopCardCorner = dynamic(() => import('@/lib/PopCard').then((module) => module.PopCardCorner));
 const PopCardSubTitle = dynamic(() => import('@/lib/PopCard').then((module) => module.PopCardSubTitle));
 const PopCardTitle = dynamic(() => import('@/lib/PopCard').then((module) => module.PopCardTitle));
@@ -25,9 +23,6 @@ const Icons = dynamic(() => import("@/components/Icons"), {
 const ColorSelector = dynamic(() => import("@/components/ColorSelector"), {
     ssr: true,
 });
-const ModalContainer = dynamic(() => import('@/lib/Modal').then((module) => module.ModalContainer));
-const ModalForm = dynamic(() => import('@/lib/Modal').then((module) => module.ModalForm));
-const ModalTitle = dynamic(() => import('@/lib/Modal').then((module) => module.ModalTitle));
 
 
 export default function MenuButtons({ pb, page, editor, clearStates, editorRef, articleTitle, currentPageIconValue, setArticleHeader, setPageSharedTF, setCurrentPageIconValue, pageSharedTF }) {
@@ -351,7 +346,7 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
                         </PopDropMenuStatic>
                     )}
                     {sharePageInfo && (
-                        <PopDropMenuStatic style={{ width: '200px', minHeight: '100px', position: 'absolute', zIndex: '13', left: `-198px`, top: '50px' }}>
+                        <PopDropMenuStatic style={{ width: '200px', minHeight: '100px', position: 'absolute', zIndex: '13', left: `-198px`, top: '20px' }}>
                             <PopCardDropMenuSectionTitle>
                                 Share
                             </PopCardDropMenuSectionTitle>
