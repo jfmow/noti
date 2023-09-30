@@ -193,7 +193,7 @@
   border: none;
   border-radius: 5px;
   padding: 10px;
-  fill: var(--title_buttons_fill);
+  color: var(--title_buttons_fill);
   cursor: pointer;
   background: var(--title_buttons_background);
 }
