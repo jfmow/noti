@@ -1,4 +1,4 @@
-import { PopCardDropMenu, PopCardDropMenuSection, PopCardDropMenuSectionItem, PopCardDropMenuSectionTitle, PopDropMenuStatic } from "@/lib/PopDropMenu";
+import { PopCardDropMenu, PopCardDropMenuSection, PopCardDropMenuSectionItem, PopCardDropMenuSectionTitle, PopCardDropMenuStaticPos, PopDropMenuStatic } from "@/lib/PopDropMenu";
 import convertToMarkdown from '@/lib/ConvertToMD'
 import dynamic from 'next/dynamic';
 import Router from "next/router";
@@ -248,7 +248,7 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wallpaper"><circle cx="8" cy="9" r="2" /><path d="m9 17 6.1-6.1a2 2 0 0 1 2.81.01L22 15V5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2" /><path d="M8 21h8" /><path d="M12 17v4" /></svg>
                 </button>
 
-                <PopCardDropMenu event={popUpClickEventPageCoverOptions} className={styles.title_buttons_btn}>
+                <PopCardDropMenuStaticPos style={{ position: 'absolute', right: '0', top: '50px' }} event={popUpClickEventPageCoverOptions} className={styles.title_buttons_btn}>
                     <PopCardDropMenuSectionTitle>
                         Page cover
                     </PopCardDropMenuSectionTitle>
@@ -279,7 +279,7 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
                         </PopCardDropMenuSectionItem>
                     </PopCardDropMenuSection>
 
-                </PopCardDropMenu>
+                </PopCardDropMenuStaticPos>
                 <PopCardCorner event={popUpClickEventUnsplash} className={styles.title_buttons_btn}>
                     <PopCardTitle>Unsplash</PopCardTitle>
                     <PopCardSubTitle>Choose a cover image for your page.</PopCardSubTitle>
@@ -322,7 +322,7 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
             </div>
 
 
-            <div className={styles.buttonlabel}>
+            <div className={styles.buttonlabel} style={{ position: 'relative' }}>
                 <div className={styles.buttonlabel_label}>Settings</div>
                 <button
                     type="button"
@@ -330,7 +330,7 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
                     className={styles.title_buttons_btn}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings-2"><path d="M20 7h-9" /><path d="M14 17H5" /><circle cx="17" cy="17" r="3" /><circle cx="7" cy="7" r="3" /></svg>                </button>
-                <PopCardDropMenu event={popUpClickEventPageOptions} className={styles.title_buttons_btn}>
+                <PopCardDropMenuStaticPos style={{ position: 'absolute', right: 0, top: '50px' }} event={popUpClickEventPageOptions} className={styles.title_buttons_btn}>
                     <PopCardDropMenuSectionTitle>
                         Page options
                     </PopCardDropMenuSectionTitle>
@@ -459,7 +459,7 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
                         <PopCardSubTitle>{`Please select the text manualy for best copy paste result`}</PopCardSubTitle>
                         <button className={`${styles.pagebtn} ${styles.pagebtn_dark}`} type='button' onClick={(e) => handleCopyTextToClipboard(convertedMdData, e)}>Copy {`(not prefered)`}</button>
                     </PopCardCorner>
-                </PopCardDropMenu >
+                </PopCardDropMenuStaticPos >
             </div >
 
 
