@@ -40,7 +40,6 @@
         opacity: 0;
         transform: translateY(-5px) scale(0.7);
         overflow: hidden;
-        height: 0;
     }
 
     50% {
