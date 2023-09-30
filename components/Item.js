@@ -9,6 +9,7 @@ import Router, { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { AlternateButton, ModalContainer, ModalForm, ModalTitle } from '@/lib/Modal';
 import UserOptions from './UserInfo';
+import { ContextMenuDropMenu, ContextMenuDropMenuSection, ContextMenuDropMenuSectionItem } from '@/lib/ContextMenu';
 const Tut = dynamic(() => import('./Tutorial'));
 const Icons = dynamic(() => import('./Icons'));
 
@@ -18,9 +19,9 @@ const MyComponent = ({ currPage }) => {
   const [loading, setIsLoading] = useState(true)
   const router = useRouter()
   const [hidden, setHidden] = useState(true);
-  const contextMenu = useRef(null)
   const [showMultiEditorSelector, setShowMultiEditorSelector] = useState(false)
   const { query } = router;
+  const [contextMenuEvent, setContextMenuEvent] = useState(null)
   useEffect(() => {
     async function getData() {
       try {
@@ -164,44 +165,29 @@ const MyComponent = ({ currPage }) => {
   }
 
   function setContextMenu(e, page) {
-    const customContextMenu = contextMenu.current;
-
-    // Set the position of the custom context menu to the right-click location
-    customContextMenu.style.left = e.clientX - 10 + 'px';
-    customContextMenu.style.top = e.clientY - 10 + 'px';
-
-    // Show the custom context menu
-    customContextMenu.style.display = 'flex';
-    customContextMenu.setAttribute('pageid', page)
+    setContextMenuEvent({ eventData: e, data: [{ key: 'pageid', value: page }] })
   }
 
-  async function contextMenuDeletePage() {
-
-    const customContextMenu = contextMenu.current;
-    const page = customContextMenu.getAttribute('pageid')
+  async function contextMenuDeletePage(page) {
     await pb.collection('pages').delete(page)
-    customContextMenu.style.display = 'none';
-  }
-
-  function hideContextMenu() {
-    const customContextMenu = contextMenu.current;
-    customContextMenu.style.display = 'none';
   }
 
 
 
   return (
     <>
-      <div className={styles.contextmenu} onMouseLeave={() => hideContextMenu()} ref={contextMenu}>
-        <div className={styles.contextMenuItem} onClick={() => setShowMultiEditorSelector(true)}>
-          <div className={styles.contextMenuIcon}><svg xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px"><g><path d="M0,0h24v24H0V0z" fill="none" /></g><g><g><path d="M18,4v5H6V4H18z M18,2H6C4.9,2,4,2.9,4,4v5c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V4C20,2.9,19.1,2,18,2z M18,15v5H6v-5H18z M18,13H6c-1.1,0-2,0.9-2,2v5c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2v-5C20,13.9,19.1,13,18,13z" /></g></g></svg></div>
-          <span className={styles.contextMenuTitle}>MultiEditor</span>
-        </div>
-        <div className={styles.contextMenuItem} onClick={() => contextMenuDeletePage()}>
-          <div className={styles.contextMenuIcon}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM9 9h6c.55 0 1 .45 1 1v8c0 .55-.45 1-1 1H9c-.55 0-1-.45-1-1v-8c0-.55.45-1 1-1zm6.5-5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1h-2.5z" /></svg></div>
-          <span className={styles.contextMenuTitle}>Delete page</span>
-        </div>
-      </div>
+      <ContextMenuDropMenu event={contextMenuEvent}>
+        <ContextMenuDropMenuSection>
+          <ContextMenuDropMenuSectionItem onClick={() => setShowMultiEditorSelector(true)}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-columns"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><line x1="12" x2="12" y1="3" y2="21" /></svg>
+            <p>Multieditor</p>
+          </ContextMenuDropMenuSectionItem>
+          <ContextMenuDropMenuSectionItem onClick={() => contextMenuDeletePage(contextMenuEvent.data.filter(item => item.key === 'pageid')[0].value)}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" /><line x1="10" x2="10" y1="11" y2="17" /><line x1="14" x2="14" y1="11" y2="17" /></svg>
+            <p>Delete page</p>
+          </ContextMenuDropMenuSectionItem>
+        </ContextMenuDropMenuSection>
+      </ContextMenuDropMenu>
       {!hidden && (<Tut setHidden={setHidden} />)}
       <div className={`${styles.itemroot}`} id='rootitems'>
 
@@ -543,7 +529,6 @@ function MultiEditor({ pagesList, Close }) {
           </div>
           {toomany && ('You have too many pages selected to fit in this size screen!')}
           <AlternateButton click={openPages}>Open</AlternateButton>
-          <p style={{ fontSize: '12px' }}>Some users may experience the issue of the page reloading back to the home screen. We sincerely apologize for any inconvenience this may cause. Our team is actively investigating the problem to identify its cause and implement a solution. Thank you for your patience and understanding.</p>
         </ModalForm>
       </ModalContainer>
     </>
