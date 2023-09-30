@@ -10,6 +10,8 @@
 }
 
 
+
+
 .PopCardDropMenu {
     display: flex;
     width: calc(200px);
@@ -21,15 +23,23 @@
     --tw-ring-shadow: 0 0 #0000;
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
     border-radius: calc(0.5rem - 2px);
-    border: 1px solid #e5e7eb;
+    border: 1px solid #e5e7eb6e;
     z-index: 12;
-    animation: dropmenuin 0.25s 1 ease-in-out;
+    animation: dropmenuin 0.2s 1 ease-in-out;
+}
+
+.hidden {
+    display: none;
+    animation: dropmenuout 0.2s 1 ease-in-out;
+
 }
 
 @keyframes dropmenuin {
     0% {
         opacity: 0;
-        transform: translateY(40px), scale(0.4);
+        transform: translateY(-5px) scale(0.7);
+        overflow: hidden;
+        height: 0;
     }
 
     50% {
@@ -38,13 +48,35 @@
 
     100% {
         opacity: 1;
+        transform: translateY(0) scale(1);
+        overflow: hidden;
+        height: fit-content;
+    }
+}
+
+@keyframes dropmenuout {
+    0% {
+        display: flex;
+        opacity: 1;
         transform: translateY(0), scale(1);
+    }
+
+    50% {
+        display: flex;
+        opacity: 1;
+    }
+
+
+    100% {
+        display: flex;
+        opacity: 0;
+        transform: translateY(40px), scale(0.4);
     }
 }
 
 .PopCardDropMenuSection {
-    border-top: 1px solid #e5e7eb;
-    border-bottom: 1px solid #e5e7eb;
+    border-top: 1px solid #e5e7eb6e;
+    border-bottom: 1px solid #e5e7eb6e;
     width: 100%;
     height: fit-content;
     padding: 4px;
@@ -59,11 +91,12 @@
     align-items: center;
     padding: 6px 8px;
     cursor: default;
+    color: var(--modal_text_color);
 }
 
 .PopCardDropMenuSectionItem:hover {
     border-radius: calc(0.5rem - 4px);
-    background: #e5e7eb;
+    background: var(--modal_button_bg);
 }
 
 .PopCardDropMenuSectionItem>a,
@@ -82,4 +115,5 @@
     font-weight: 600;
     font-size: 14px;
     padding: 1rem;
+    color: var(--modal_text_color);
 }
