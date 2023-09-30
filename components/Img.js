@@ -15,16 +15,19 @@ export default function Unsplash({ page, setArticleHeader, close }) {
     const [totalPages, setTotalPages] = useState(-1);
     const [searchTerm, setSearchTerm] = useState('');
 
-    const debouncedSearch = debounce(handleSearch, 500); // Adjust the debounce delay as needed
+    const debouncedSearch = debounce(() => {
+        debouncedSearch.cancel()
+        setPageNumber(1);
+        fetchImages();
+    }, 500); // Adjust the debounce delay as needed
 
     useEffect(() => {
-        debouncedSearch()
+        debouncedSearch();
     }, [searchTerm]);
-    useEffect(() => {
-        fetchImages()
-    }, [currentPageNumber])
 
-    // Create a debounced version of handleSearch
+    useEffect(() => {
+        fetchImages();
+    }, [currentPageNumber]);
 
     async function fetchImages() {
         try {
@@ -121,7 +124,7 @@ export default function Unsplash({ page, setArticleHeader, close }) {
                     placeholder="Search for an image..."
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') {
-                            debouncedSearch(); // Call the debouncedSearch function on Enter key press
+                            debouncedSearch();
                         }
                     }}
                     type="text"
@@ -133,22 +136,21 @@ export default function Unsplash({ page, setArticleHeader, close }) {
             </div>
 
             <div className={styles.imgs}>
-                {
-                    images?.map((image) => (
-                        <>
-                            <Image image={image} close={close} />
-                        </>
-                    ))
-                }
+                {images?.map((image) => (
+                    <Image key={image.id} image={image} close={close} />
+                ))}
             </div>
             <div className={styles.buttons}>
-
-                <button className={styles.pagebtn} type='button' onClick={() => { setPageNumber((prev) => prev - 1); }} disabled={currentPageNumber <= 1}>Back</button>
-                <button className={styles.pagebtn} type='button' onClick={() => { setPageNumber((prev) => prev + 1); }} disabled={currentPageNumber >= totalPages || totalPages == -1}>Next</button>
-                <button className={`${styles.pagebtn} ${styles.pagebtn_dark}`} type='button' onClick={() => RemoveCover()}>Remove cover</button>
-
+                <button className={styles.pagebtn} type="button" onClick={() => setPageNumber((prev) => prev - 1)} disabled={currentPageNumber <= 1}>
+                    Back
+                </button>
+                <button className={styles.pagebtn} type="button" onClick={() => setPageNumber((prev) => prev + 1)} disabled={currentPageNumber >= totalPages || totalPages === -1}>
+                    Next
+                </button>
+                <button className={`${styles.pagebtn} ${styles.pagebtn_dark}`} type="button" onClick={() => RemoveCover()}>
+                    Remove cover
+                </button>
             </div>
-
         </>
     );
 }
