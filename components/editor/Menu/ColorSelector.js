@@ -1,5 +1,5 @@
 import { AlternateButton, ModalContainer, ModalForm, ModalTitle } from '@/lib/Modal';
-import { PopCardsGlobalButton } from '@/lib/PopCard';
+import { PopCardsGlobalButton } from '@/lib/Pop-Cards/PopCard';
 import React from 'react';
 import { useState } from 'react';
 

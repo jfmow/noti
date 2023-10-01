@@ -10,7 +10,7 @@ import Table from "@editorjs/table";
 import AttachesTool from "@editorjs/attaches";
 import PocketBase from "pocketbase";
 import styles from "@/styles/Create.module.css";
-import Loader from "./Loader";
+import Loader from "../Loader";
 import compressImage from "@/lib/CompressImg";
 import dynamic from 'next/dynamic';
 import Router from "next/router";
@@ -25,7 +25,7 @@ import SimpleIframe from "@/customEditorTools/SimpleEmbed";
 import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
 import LineBreak from "@/customEditorTools/LineBreak";
 import { handleBlurHashChange, handleCreateBlurHash } from '@/lib/idk'
-import MenuButtons from "./editor/MenuButton";
+import MenuButtons from "./Menu/MenuButton";
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false)

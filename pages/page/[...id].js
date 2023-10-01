@@ -6,7 +6,7 @@ import MyComponent from '@/components/Item';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 
-const Editor = dynamic(() => import('../../components/Editor'), {
+const Editor = dynamic(() => import('../../components/editor/Editor'), {
   ssr: false,
 });
 

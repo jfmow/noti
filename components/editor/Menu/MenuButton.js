@@ -1,4 +1,4 @@
-import { PopCardDropMenuSection, PopCardDropMenuSectionItem, PopCardDropMenuSectionTitle, PopCardDropMenuStaticPos, PopDropMenuStatic } from "@/lib/PopDropMenu";
+import { PopCardDropMenuSection, PopCardDropMenuSectionItem, PopCardDropMenuSectionTitle, PopCardDropMenuStaticPos, PopDropMenuStatic } from "@/lib/Pop-Cards/PopDropMenu";
 import convertToMarkdown from '@/lib/ConvertToMD'
 import dynamic from 'next/dynamic';
 import Router from "next/router";
@@ -7,27 +7,27 @@ import compressImage from "@/lib/CompressImg";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-const PopTabsDropMenuItem = dynamic(() => import('@/lib/PopTabs').then((module) => module.PopTabsDropMenuItem));
-const PopTabsDropMenuItemSurround = dynamic(() => import('@/lib/PopTabs').then((module) => module.PopTabsDropMenuItemSurround));
-const PopTabsDropMenuSelectorOptions = dynamic(() => import('@/lib/PopTabs').then((module) => module.PopTabsDropMenuSelectorOptions));
-const PopTabsDropMenuStaticPos = dynamic(() => import('@/lib/PopTabs').then((module) => module.PopTabsDropMenuStaticPos));
-const PopTabsDropMenuStaticPosSelectorSurround = dynamic(() => import('@/lib/PopTabs').then((module) => module.PopTabsDropMenuStaticPosSelectorSurround));
+const PopTabsDropMenuItem = dynamic(() => import('@/lib/Pop-Cards/PopTabs').then((module) => module.PopTabsDropMenuItem));
+const PopTabsDropMenuItemSurround = dynamic(() => import('@/lib/Pop-Cards/PopTabs').then((module) => module.PopTabsDropMenuItemSurround));
+const PopTabsDropMenuSelectorOptions = dynamic(() => import('@/lib/Pop-Cards/PopTabs').then((module) => module.PopTabsDropMenuSelectorOptions));
+const PopTabsDropMenuStaticPos = dynamic(() => import('@/lib/Pop-Cards/PopTabs').then((module) => module.PopTabsDropMenuStaticPos));
+const PopTabsDropMenuStaticPosSelectorSurround = dynamic(() => import('@/lib/Pop-Cards/PopTabs').then((module) => module.PopTabsDropMenuStaticPosSelectorSurround));
 
 
-const PopCardCorner = dynamic(() => import('@/lib/PopCard').then((module) => module.PopCardCorner));
-const PopCardSubTitle = dynamic(() => import('@/lib/PopCard').then((module) => module.PopCardSubTitle));
-const PopCardTitle = dynamic(() => import('@/lib/PopCard').then((module) => module.PopCardTitle));
+const PopCardCorner = dynamic(() => import('@/lib/Pop-Cards/PopCard').then((module) => module.PopCardCorner));
+const PopCardSubTitle = dynamic(() => import('@/lib/Pop-Cards/PopCard').then((module) => module.PopCardSubTitle));
+const PopCardTitle = dynamic(() => import('@/lib/Pop-Cards/PopCard').then((module) => module.PopCardTitle));
 
-const Gradient = dynamic(() => import("@/components/Gradient"), {
+const Gradient = dynamic(() => import("@/components/editor/Menu/Gradient"), {
     ssr: true,
 });
-const Icons = dynamic(() => import("@/components/Icons"), {
+const Icons = dynamic(() => import("@/components/editor/Menu/Icons"), {
     ssr: true,
 });
-const Img = dynamic(() => import("@/components/Img"), {
+const Img = dynamic(() => import("@/components/editor/Menu/Img"), {
     ssr: true,
 });
-const ColorSelector = dynamic(() => import("@/components/ColorSelector"), {
+const ColorSelector = dynamic(() => import("@/components/editor/Menu/ColorSelector"), {
     ssr: true,
 });
 

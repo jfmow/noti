@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PocketBase from 'pocketbase';
 import compressImage from "@/lib/CompressImg";
-import styles from '@/styles/Unsplashpicker.module.css';
+import styles from '@/styles/Single/Unsplashpicker.module.css';
 import { ModalContainer, ModalForm, ModalTitle } from '@/lib/Modal';
 import { handleBlurHashChange } from '@/lib/idk';
-import Link from './Link';
+import Link from '../../Link';
 import debounce from 'lodash/debounce'; // Import the debounce function from Lodash
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);

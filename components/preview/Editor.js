@@ -18,7 +18,7 @@ import { AnimatePresence } from "framer-motion";
 import { AlternateButton, CopyPasteTextArea } from "@/lib/Modal";
 import { createRandomMeshGradients } from "@/lib/randomMeshGradient";
 import NestedList from '@editorjs/nested-list';
-import Img from '@/components/Img'
+import Img from '@/components/editor/Menu/Img'
 import MarkerTool from "@/customEditorTools/Marker";
 import Image from "@/customEditorTools/Image";
 import SimpleTodo from "@/customEditorTools/Todo";
@@ -26,10 +26,10 @@ import SimpleIframe from "@/customEditorTools/SimpleEmbed";
 import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
 import LineBreak from "@/customEditorTools/LineBreak";
 import convertToMarkdown from '@/lib/ConvertToMD'
-const Icons = dynamic(() => import("@/components/Icons"), {
+const Icons = dynamic(() => import("@/components/editor/Menu/Icons"), {
   ssr: true,
 });
-const ColorSelector = dynamic(() => import("@/components/ColorSelector"), {
+const ColorSelector = dynamic(() => import("@/components/editor/Menu/ColorSelector"), {
   ssr: true,
 });
 const ModalContainer = dynamic(() => import('@/lib/Modal').then((module) => module.ModalContainer));

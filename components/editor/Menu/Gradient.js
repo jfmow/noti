@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PocketBase from 'pocketbase';
-import styles from '@/styles/Unsplashpicker.module.css';
-import Link from './Link';
+import styles from '@/styles/Single/Unsplashpicker.module.css';
+import Link from '../../Link';
 import compressImage from '@/lib/CompressImg';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 

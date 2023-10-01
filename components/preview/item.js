@@ -7,14 +7,12 @@ pb.autoCancellation(false)
 import Router, { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { AlternateButton, ModalContainer, ModalForm, ModalTitle } from '@/lib/Modal';
-const Tut = dynamic(() => import('@/components/Tutorial'));
-const Icons = dynamic(() => import('@/components/Icons'));
+const Icons = dynamic(() => import('@/components/editor/Menu/Icons'));
 
 const MyComponent = ({ currPage }) => {
     const [items, setItems] = useState([]);
     const [loading, setIsLoading] = useState(true)
     const router = useRouter()
-    const [hidden, setHidden] = useState(true);
     const contextMenu = useRef(null)
     const [showMultiEditorSelector, setShowMultiEditorSelector] = useState(false)
     useEffect(() => {
@@ -149,7 +147,6 @@ const MyComponent = ({ currPage }) => {
                     <span className={styles.contextMenuTitle}>Delete page</span>
                 </div>
             </div>
-            {!hidden && (<Tut setHidden={setHidden} />)}
             <div className={`${styles.itemroot}`} id='rootitems'>
 
                 {showMultiEditorSelector && (<MultiEditor pagesList={items} Close={() => setShowMultiEditorSelector(false)} />)}

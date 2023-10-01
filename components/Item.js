@@ -10,7 +10,7 @@ import dynamic from 'next/dynamic';
 import { AlternateButton, ModalContainer, ModalForm, ModalTitle } from '@/lib/Modal';
 import UserOptions from './UserInfo';
 import { ContextMenuDropMenu, ContextMenuDropMenuSection, ContextMenuDropMenuSectionItem } from '@/lib/ContextMenu';
-const Icons = dynamic(() => import('./Icons'));
+const Icons = dynamic(() => import('./editor/Menu/Icons'));
 
 const MyComponent = ({ currPage }) => {
   const [items, setItems] = useState([]);

@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import emojis from 'emoji-datasource-twitter';
-import styles from '@/styles/emojis.module.css';
+import styles from '@/styles/Single/emojis.module.css';
 
 export default function Icons({ Select, Selected, Close }) {
     const [searchTerm, setSearchTerm] = useState('');
