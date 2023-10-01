@@ -8,6 +8,8 @@ import List from "@editorjs/list";
 import Quote from "@editorjs/quote";
 import Table from "@editorjs/table";
 import PocketBase from "pocketbase";
+import Checklist from "@editorjs/checklist";
+import InlineCode from "@editorjs/inline-code";
 import styles from "@/styles/Create.module.css";
 import Loader from "./Loader";
 import { createRandomMeshGradients } from "@/lib/randomMeshGradient";
@@ -110,9 +112,14 @@ function Editor({ page, multi }) {
                         class: SimpleIframeWebpage
                     },
 
-                    SimpleTodo: {
-                        class: SimpleTodo,
+                    CheckList: {
+                        class: Checklist,
+                        inlineToolbar: true,
+                    },
 
+                    InlineCode: {
+                        class: InlineCode,
+                        shortcut: 'CMD+SHIFT+M',
                     },
                     nestedList: {
                         class: NestedList,
