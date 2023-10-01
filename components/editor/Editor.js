@@ -519,7 +519,6 @@ function Editor({ page, multi }) {
         <title>{articleTitle}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href={currentPageIconValue ? (`/emoji/twitter/64/${currentPageIconValue}`) : '/Favicon.png'} />
-        <link rel="prefetch" href="/64.png" />
 
       </Head>
 
