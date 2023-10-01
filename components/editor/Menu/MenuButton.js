@@ -43,7 +43,7 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
     const [showPageInfo, setShowPageInfo] = useState(false)
     const [sharePageInfo, setSharePageInfo] = useState(false)
 
-    const [popUpEmojiState, setPopUpEmojiState] = useState({ activeItem: 'Icons' })
+    const [popUpEmojiState, setPopUpEmojiState] = useState({ activeItem: 'Icons', active: false })
 
     //PopUps
     const [popUpClickEventUnsplash, setpopUpClickEventUnsplash] = useState(null)
@@ -328,7 +328,15 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
                     </PopTabsDropMenuStaticPosSelectorSurround >
                     <PopTabsDropMenuItemSurround>
                         <PopTabsDropMenuItem active={popUpEmojiState.activeItem === 'Icons'}>
-                            <Icons Select={handlePageDisplayIconChange} Selected={`${currentPageIconValue.toString()}`} />
+                            {popUpEmojiState.activeItem === 'Icons' && popUpClickEventEmoji !== null ? (
+                                <>
+                                    <Icons Select={handlePageDisplayIconChange} Selected={`${currentPageIconValue.toString()}`} />
+                                </>
+                            ) : (
+                                <div className={styles.LongBarLoaderDiv}>
+                                    <div className={styles.LongBarLoader}></div>
+                                </div>
+                            )}
                         </PopTabsDropMenuItem>
                         <PopTabsDropMenuItem active={popUpEmojiState.activeItem === 'Color'}>
                             <ColorSelector onSelectColor={handleChangePageListDisplayColor} page={page} />
