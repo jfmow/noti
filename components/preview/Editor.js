@@ -21,11 +21,12 @@ import NestedList from '@editorjs/nested-list';
 import Img from '@/components/editor/Menu/Img'
 import MarkerTool from "@/customEditorTools/Marker";
 import Image from "@/customEditorTools/Image";
-import SimpleTodo from "@/customEditorTools/Todo";
 import SimpleIframe from "@/customEditorTools/SimpleEmbed";
 import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
 import LineBreak from "@/customEditorTools/LineBreak";
 import convertToMarkdown from '@/lib/ConvertToMD'
+import Checklist from "@editorjs/checklist";
+
 const Icons = dynamic(() => import("@/components/editor/Menu/Icons"), {
   ssr: true,
 });
@@ -213,17 +214,9 @@ function Editor({ page, multi }) {
               defaultStyle: 'unordered'
             },
           },
-          SimpleTodo: {
-            class: SimpleTodo,
-            config: {
-              saveData: {
-                saveAll() {
-                  setLastTypedTime(Date.now());
-                  setLastTypedTimeIdle(false);
-                  return
-                }
-              },
-            }
+          CheckList: {
+            class: Checklist,
+            inlineToolbar: true,
           },
           list: {
             class: List,
