@@ -10,7 +10,6 @@ import dynamic from 'next/dynamic';
 import { AlternateButton, ModalContainer, ModalForm, ModalTitle } from '@/lib/Modal';
 import UserOptions from './UserInfo';
 import { ContextMenuDropMenu, ContextMenuDropMenuSection, ContextMenuDropMenuSectionItem } from '@/lib/ContextMenu';
-const Tut = dynamic(() => import('./Tutorial'));
 const Icons = dynamic(() => import('./Icons'));
 
 const MyComponent = ({ currPage }) => {
@@ -18,7 +17,6 @@ const MyComponent = ({ currPage }) => {
   const [SearchActive, setSearchActive] = useState(false)
   const [loading, setIsLoading] = useState(true)
   const router = useRouter()
-  const [hidden, setHidden] = useState(true);
   const [showMultiEditorSelector, setShowMultiEditorSelector] = useState(false)
   const { query } = router;
   const [contextMenuEvent, setContextMenuEvent] = useState(null)
@@ -34,9 +32,6 @@ const MyComponent = ({ currPage }) => {
           const latestRecord = records.filter(record => record.updated)[0];
           if (latestRecord) {
             router.push(`/page/${latestRecord.id}`)
-          }
-          if (records.length === 0) {
-            setHidden(false)
           }
         }
       } catch (err) {
@@ -188,7 +183,6 @@ const MyComponent = ({ currPage }) => {
           </ContextMenuDropMenuSectionItem>
         </ContextMenuDropMenuSection>
       </ContextMenuDropMenu>
-      {!hidden && (<Tut setHidden={setHidden} />)}
       <div className={`${styles.itemroot}`} id='rootitems'>
 
         {showMultiEditorSelector && (<MultiEditor pagesList={items} Close={() => setShowMultiEditorSelector(false)} />)}
