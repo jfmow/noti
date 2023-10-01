@@ -7,6 +7,7 @@ import styles from "@/styles/Create.module.css";
 import compressImage from "@/lib/CompressImg";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { PopTabsDropMenuItem, PopTabsDropMenuItemSurround, PopTabsDropMenuSelectorOptions, PopTabsDropMenuStaticPos, PopTabsDropMenuStaticPosSelectorSurround } from "@/lib/PopTabs";
 const PopCardCorner = dynamic(() => import('@/lib/PopCard').then((module) => module.PopCardCorner));
 const PopCardSubTitle = dynamic(() => import('@/lib/PopCard').then((module) => module.PopCardSubTitle));
 const PopCardTitle = dynamic(() => import('@/lib/PopCard').then((module) => module.PopCardTitle));
@@ -14,10 +15,10 @@ const PopCardTitle = dynamic(() => import('@/lib/PopCard').then((module) => modu
 const Gradient = dynamic(() => import("@/components/Gradient"), {
     ssr: true,
 });
-const Img = dynamic(() => import("@/components/Img"), {
+const Icons = dynamic(() => import("@/components/Icons"), {
     ssr: true,
 });
-const Icons = dynamic(() => import("@/components/Icons"), {
+const Img = dynamic(() => import("@/components/Img"), {
     ssr: true,
 });
 const ColorSelector = dynamic(() => import("@/components/ColorSelector"), {
@@ -36,10 +37,13 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
     const [showPageInfo, setShowPageInfo] = useState(false)
     const [sharePageInfo, setSharePageInfo] = useState(false)
 
+    const [popUpEmojiState, setPopUpEmojiState] = useState({ activeItem: 'Icons' })
+
     //PopUps
     const [popUpClickEventUnsplash, setpopUpClickEventUnsplash] = useState(null)
     const [popUpClickEventGradient, setpopUpClickEventGradient] = useState(null)
     const [popUpClickEventMarkdown, setpopUpClickEventMarkdown] = useState(null)
+    const [popUpClickEventEmoji, setpopUpClickEventEmoji] = useState(null)
     const [popUpClickEventPageOptions, setpopUpClickEventPageOptions] = useState(null)
     const [popUpClickEventPageCoverOptions, setpopUpClickEventPageCoverOptions] = useState(null)
 
@@ -299,28 +303,33 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
             </div>
 
             <div className={styles.buttonlabel}>
-                <div className={styles.buttonlabel_label}>Page Icon</div>
+                <div className={styles.buttonlabel_label}>Customise page</div>
                 <button
                     type="button"
-                    onClick={() => setIconModalState(true)}
-                    className={styles.title_buttons_btn}
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smile-plus"><path d="M22 11v1a10 10 0 1 1-9-10" /><path d="M8 14s1.5 2 4 2 4-2 4-2" /><line x1="9" x2="9.01" y1="9" y2="9" /><line x1="15" x2="15.01" y1="9" y2="9" /><path d="M16 5h6" /><path d="M19 2v6" /></svg>
-                </button>
-            </div>
-
-
-            <div className={styles.buttonlabel}>
-                <div className={styles.buttonlabel_label}>List Color</div>
-                <button
-                    type="button"
-                    onClick={() => setColorSelectorState(true)}
+                    onClick={(e) => setpopUpClickEventEmoji(e)}
                     className={styles.title_buttons_btn}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-palette"><circle cx="13.5" cy="6.5" r=".5" /><circle cx="17.5" cy="10.5" r=".5" /><circle cx="8.5" cy="7.5" r=".5" /><circle cx="6.5" cy="12.5" r=".5" /><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" /></svg>
                 </button>
+                <PopTabsDropMenuStaticPos event={popUpClickEventEmoji} style={{ position: 'absolute', right: 0, top: '50px' }}>
+                    <PopTabsDropMenuStaticPosSelectorSurround>
+                        <PopTabsDropMenuSelectorOptions active={popUpEmojiState.activeItem === 'Icons'} click={() => setPopUpEmojiState({ ...popUpEmojiState, activeItem: 'Icons' })}>
+                            Page Icon
+                        </PopTabsDropMenuSelectorOptions>
+                        <PopTabsDropMenuSelectorOptions active={popUpEmojiState.activeItem === 'Color'} click={() => setPopUpEmojiState({ ...popUpEmojiState, activeItem: 'Color' })}>
+                            Color
+                        </PopTabsDropMenuSelectorOptions>
+                    </PopTabsDropMenuStaticPosSelectorSurround >
+                    <PopTabsDropMenuItemSurround>
+                        <PopTabsDropMenuItem active={popUpEmojiState.activeItem === 'Icons'}>
+                            <Icons Select={handlePageDisplayIconChange} Selected={`${currentPageIconValue.toString()}`} />
+                        </PopTabsDropMenuItem>
+                        <PopTabsDropMenuItem active={popUpEmojiState.activeItem === 'Color'}>
+                            <ColorSelector onSelectColor={handleChangePageListDisplayColor} page={page} />
+                        </PopTabsDropMenuItem>
+                    </PopTabsDropMenuItemSurround>
+                </PopTabsDropMenuStaticPos>
             </div>
-
 
             <div className={styles.buttonlabel} style={{ position: 'relative' }}>
                 <div className={styles.buttonlabel_label}>Settings</div>
@@ -461,21 +470,6 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
                     </PopCardCorner>
                 </PopCardDropMenuStaticPos >
             </div >
-
-
-            {ColorSelectorState && (
-                <ColorSelector onSelectColor={handleChangePageListDisplayColor} page={page} close={() => setColorSelectorState(false)} />
-            )
-            }
-            <AnimatePresence>
-
-                {iconModalState && (
-                    <>
-                        <Icons Select={handlePageDisplayIconChange} Close={() => setIconModalState(false)} Selected={`${currentPageIconValue.toString()}`} />
-                    </>
-                )}
-
-            </AnimatePresence>
         </>
     )
 }

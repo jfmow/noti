@@ -1,4 +1,5 @@
 import { AlternateButton, ModalContainer, ModalForm, ModalTitle } from '@/lib/Modal';
+import { PopCardsGlobalButton } from '@/lib/PopCard';
 import React from 'react';
 import { useState } from 'react';
 
@@ -104,43 +105,39 @@ const ColorSelector = ({ onSelectColor, page, close }) => {
     }, []);
 
     return (
-        <ModalContainer events={close} noblur>
-            <ModalForm>
-                <ModalTitle>Select page item color</ModalTitle>
-
-                <div style={{ maxHeight: '50vh', overflowY: 'scroll', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly' }}>
-                    {colorsWithBackground.map((colorObj, index) => {
-                        return (
-                            <>
-                                <div
-                                    key={index + 'norm'}
-                                    style={{
-                                        width: '50px',
-                                        height: '50px',
-                                        background: colorObj.background,
-                                        margin: '10px',
-                                        cursor: 'pointer',
-                                    }}
-                                    onClick={() => onSelectColor(colorObj.background, page)}
-                                />
-                                <div
-                                    key={index + 'lin'}
-                                    style={{
-                                        width: '50px',
-                                        height: '50px',
-                                        background: colorObj.linearbg,
-                                        margin: '10px',
-                                        cursor: 'pointer',
-                                    }}
-                                    onClick={() => onSelectColor(colorObj.linearbg, page)}
-                                />
-                            </>
-                        );
-                    })}
-                </div>
-                <AlternateButton click={generateRandomBackgrounds}>Refresh gradients</AlternateButton>
-            </ModalForm>
-        </ModalContainer>
+        <>
+            <div style={{ height: '100%', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly' }}>
+                {colorsWithBackground.map((colorObj, index) => {
+                    return (
+                        <>
+                            <div
+                                key={index + 'norm'}
+                                style={{
+                                    width: '50px',
+                                    height: '50px',
+                                    background: colorObj.background,
+                                    margin: '10px',
+                                    cursor: 'pointer',
+                                }}
+                                onClick={() => onSelectColor(colorObj.background, page)}
+                            />
+                            <div
+                                key={index + 'lin'}
+                                style={{
+                                    width: '50px',
+                                    height: '50px',
+                                    background: colorObj.linearbg,
+                                    margin: '10px',
+                                    cursor: 'pointer',
+                                }}
+                                onClick={() => onSelectColor(colorObj.linearbg, page)}
+                            />
+                        </>
+                    );
+                })}
+            </div>
+            <PopCardsGlobalButton style={{ width: '100%', margin: '5px' }} click={generateRandomBackgrounds}>Refresh gradients</PopCardsGlobalButton>
+        </>
     );
 };
 

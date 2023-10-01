@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import emojis from 'emoji-datasource-twitter';
 import styles from '@/styles/emojis.module.css';
-import { AlternateButton, ModalContainer, ModalForm, ModalInput, ModalTitle } from "@/lib/Modal";
 
 export default function Icons({ Select, Selected, Close }) {
     const [searchTerm, setSearchTerm] = useState('');
@@ -68,61 +67,72 @@ export default function Icons({ Select, Selected, Close }) {
     }
 
     return (
-        <ModalContainer events={Close}>
-            <ModalForm>
-                <ModalTitle>Icons</ModalTitle>
-                <ModalInput chngevent={setSearchTerm} place={"Search by name..."}></ModalInput>
-                <div className={styles.categories}>
-                    <button
-                        type="button"
-                        className={`${styles.categoryButton}`}
-                        onClick={() => handleCategoryClick('')}
-                    >All</button>
-                    {categories.map((category) => (
-                        <button
-                            key={category}
-                            type="button"
-                            className={`${styles.categoryButton} ${selectedCategory === category ? styles.active : ''
-                                }`}
-                            onClick={() => handleCategoryClick(category)}
-                        >
-                            {category}
-                        </button>
-                    ))}
-                </div>
-                <div className={styles.emojigrid} ref={containerRef}>
-                    {visibleEmojis.map((emoji) => {
-                        try {
-                            if (emoji.has_img_twitter) {
-                                const { sheet_x, sheet_y } = emoji;
-                                const sheet_size = 64;
-                                const x = (sheet_x * (sheet_size + 2)) + 1;
-                                const y = (sheet_y * (sheet_size + 2)) + 1;
-                                const style = {
-                                    backgroundImage: `url(/64.png)`,
-                                    backgroundPosition: `-${x}px -${y}px`,
-                                };
-                                return (
-                                    <div
-                                        key={emoji.unified}
-                                        className={styles.icon}
-                                        onClick={() => setNewIcon(emoji)}
-                                        title={emoji.short_name}
-                                    >
-                                        <span
-                                            className={` ${styles.emojiIcon}`}
-                                            loading="lazy"
-                                            style={style}
-                                        />
-                                    </div>
-                                );
-                            }
-                        } catch (err) {
-                            return null;
+        <>
+            <div className={styles.sinputcontainer}>
+                <input
+                    placeholder="Search for a emoji"
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            debouncedSearch();
                         }
-                    })}
-                </div>
-            </ModalForm>
-        </ModalContainer>
+                    }}
+                    type="text"
+                    className={styles.sinput}
+                    id={styles.sinput}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <div className={styles.sunderline}></div>
+            </div>
+            <div className={styles.categories}>
+                <button
+                    type="button"
+                    className={`${styles.categoryButton}`}
+                    onClick={() => handleCategoryClick('')}
+                >All</button>
+                {categories.map((category) => (
+                    <button
+                        key={category}
+                        type="button"
+                        className={`${styles.categoryButton} ${selectedCategory === category ? styles.active : ''
+                            }`}
+                        onClick={() => handleCategoryClick(category)}
+                    >
+                        {category}
+                    </button>
+                ))}
+            </div>
+            <div className={styles.emojigrid} ref={containerRef}>
+                {visibleEmojis.map((emoji) => {
+                    try {
+                        if (emoji.has_img_twitter) {
+                            const { sheet_x, sheet_y } = emoji;
+                            const sheet_size = 64;
+                            const x = (sheet_x * (sheet_size + 2)) + 1;
+                            const y = (sheet_y * (sheet_size + 2)) + 1;
+                            const style = {
+                                backgroundImage: `url(/64.png)`,
+                                backgroundPosition: `-${x}px -${y}px`,
+                            };
+                            return (
+                                <div
+                                    key={emoji.unified}
+                                    className={styles.icon}
+                                    onClick={() => setNewIcon(emoji)}
+                                    title={emoji.short_name}
+                                >
+                                    <span
+                                        className={` ${styles.emojiIcon}`}
+                                        loading="lazy"
+                                        style={style}
+                                    />
+                                </div>
+                            );
+                        }
+                    } catch (err) {
+                        return null;
+                    }
+                })}
+            </div>
+        </>
     );
 }
