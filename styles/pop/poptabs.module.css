@@ -80,7 +80,7 @@
     justify-content: center;
     width: 100%;
     height: fit-content;
-    background: #f7f7f7;
+    background: var(--modal_button_bg);
     gap: 7px;
     padding: 8px;
     border-radius: 7px 7px 0 0;
@@ -92,21 +92,22 @@
     background: none;
     border-radius: calc(0.5rem - 4px);
     border: none;
-    color: #000;
+    color: var(--modal_button_text);
     cursor: pointer;
     font-family: "Special";
     font-weight: 500;
 }
 
 .PopTabsDropMenuSelectorOptionsActive {
-    background: #e5e5e5;
+    background: var(--modal_button_bg_hover);
+    color: var(--modal_button_text_hover);
     cursor: default;
     font-weight: 600;
 }
 
 .PopTabsDropMenuItemSurround {
     height: 300px;
-    background: #fff;
+    background: var(--modal_background);
     padding: 1em;
     overflow-x: hidden;
     overflow-y: scroll;
