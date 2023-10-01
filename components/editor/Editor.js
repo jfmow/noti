@@ -534,6 +534,7 @@ function Editor({ page, multi }) {
                 ref={pagetitleref}
                 onBlur={handlePageTitleChange}
                 id="tuttitle"
+                aria-label="Page title"
               >
                 {articleTitle ? articleTitle : "Untitled"}
               </div>

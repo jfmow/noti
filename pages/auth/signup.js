@@ -69,7 +69,7 @@ export default function LoginPage() {
                 <title>Signup</title>
             </Head>
 
-            <button className={styles.back} onClick={() => Router.back()}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0V0z" fill="none" /><path d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /></svg></button>
+            <button aria-label="Back" className={styles.back} onClick={() => Router.back()}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0V0z" fill="none" /><path d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /></svg></button>
 
 
             <div className={styles.container}>
@@ -81,13 +81,13 @@ export default function LoginPage() {
                     <form aria-label="Signup form" className={styles.auth_form} onSubmit={(e) => loginNormal(e)}>
                         <div className={styles.auth_formgroup}>
                             <label for="email">Email</label>
-                            <input aria-label="Email input" type="email" id="email" name="email" placeholder="me@example.com" required="" onChange={(e) => setEmail(e.target.value)} />
+                            <input aria-required aria-label="Email input" type="email" id="email" name="email" placeholder="me@example.com" required="" onChange={(e) => setEmail(e.target.value)} />
 
                             <label for="username">Username</label>
-                            <input aria-label="Username input" type="text" id="username" name="username" placeholder="Enter a username" required="" onChange={(e) => setUsername(e.target.value)} />
+                            <input aria-required aria-label="Username input" type="text" id="username" name="username" placeholder="Enter a username" required="" onChange={(e) => setUsername(e.target.value)} />
 
                             <label for="password">Password</label>
-                            <input aria-label="Password input (One and only)" type={passwordVisible ? 'text' : 'password'} id="password" value={password} name="password" placeholder="Enter your password" required="" onChange={(e) => setPassword(e.target.value)} />
+                            <input aria-required aria-label="Password input (One and only)" type={passwordVisible ? 'text' : 'password'} id="password" value={password} name="password" placeholder="Enter your password" required="" onChange={(e) => setPassword(e.target.value)} />
                             <button aria-label="Password generator button (Not required if using own password)" type="button" className={`${styles.auth_signuplink} ${styles.auth_link}`} style={{ background: 'none', border: 'none', cursor: 'pointer', marginTop: '10px' }} onClick={() => {
                                 genPassword()
                             }}>Or Generate password</button>

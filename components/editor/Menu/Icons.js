@@ -91,6 +91,7 @@ export default function Icons({ Select, Selected, Close }) {
                 >All</button>
                 {categories.map((category) => (
                     <button
+                        aria-label={`${category} category filter button`}
                         key={category}
                         type="button"
                         className={`${styles.categoryButton} ${selectedCategory === category ? styles.active : ''

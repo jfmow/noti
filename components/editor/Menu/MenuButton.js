@@ -251,6 +251,7 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
             <div className={styles.buttonlabel}>
                 <div className={styles.buttonlabel_label}>Cover options</div>
                 <button
+                    aria-label="Page cover options"
                     type="button"
                     onClick={(e) => setpopUpClickEventPageCoverOptions(e)}
                     className={styles.title_buttons_btn}
@@ -311,6 +312,7 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
             <div className={styles.buttonlabel}>
                 <div className={styles.buttonlabel_label}>Customise page</div>
                 <button
+                    aria-label="Customise page menu opener"
                     type="button"
                     onClick={(e) => setpopUpClickEventEmoji(e)}
                     className={styles.title_buttons_btn}
@@ -350,6 +352,7 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
             <div className={styles.buttonlabel} style={{ position: 'relative' }}>
                 <div className={styles.buttonlabel_label}>Settings</div>
                 <button
+                    aria-label="Page settings"
                     type="button"
                     onClick={(e) => setpopUpClickEventPageOptions(e)}
                     className={styles.title_buttons_btn}

@@ -159,7 +159,7 @@ export default function Gradient({ page, setArticleHeader, close }) {
                 }
             </div>
             <div className={styles.buttons}>
-                <button className={`${styles.pagebtn}`} type='button' onClick={() => fetchImages()}>Refresh {`(make more)`}</button>
+                <button aria-label='Refresh gradient images' className={`${styles.pagebtn}`} type='button' onClick={() => fetchImages()}>Refresh {`(make more)`}</button>
                 <button className={`${styles.pagebtn} ${styles.pagebtn_dark}`} type='button' onClick={() => RemoveCover()}>Remove cover</button>
             </div>
         </>
