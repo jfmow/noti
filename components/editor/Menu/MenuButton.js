@@ -118,7 +118,7 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
         const record = await pb.collection("pages").update(page, data);
     }
 
-    function handleCopyTextToClipboard(data, e) {
+    async function handleCopyTextToClipboard(data, e) {
         var dummyInput = document.createElement("div");
         dummyInput.innerText = `${data}`;
 
@@ -131,24 +131,23 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
         window.getSelection().removeAllRanges();
         window.getSelection().addRange(range);
         document.execCommand("copy");
-
         // Remove the dummy input from the DOM
         document.body.removeChild(dummyInput);
 
         // Create a new div element for mouse position feedback
-        var mouseFeedbackDiv = document.createElement("div");
-        mouseFeedbackDiv.innerText = "Text copied!";
-        mouseFeedbackDiv.style.position = "absolute";
-        mouseFeedbackDiv.style.left = e.pageX + "px";
-        mouseFeedbackDiv.style.top = e.pageY + "px";
-        mouseFeedbackDiv.classList.add(styles.copypopconf)
-        document.body.appendChild(mouseFeedbackDiv);
-
-        // Optionally, set a timeout to remove the feedback after a certain duration
-        setTimeout(function () {
-            document.body.removeChild(mouseFeedbackDiv);
-            // Optionally, provide visual feedback to the user
-        }, 1000); // 2000 milliseconds (2 seconds) in this example, adjust as needed
+        //var mouseFeedbackDiv = document.createElement("div");
+        //mouseFeedbackDiv.innerText = "Text copied!";
+        //mouseFeedbackDiv.style.position = "absolute";
+        //mouseFeedbackDiv.style.left = e.pageX + "px";
+        //mouseFeedbackDiv.style.top = e.pageY + "px";
+        //mouseFeedbackDiv.classList.add(styles.copypopconf)
+        //document.body.appendChild(mouseFeedbackDiv);
+        //
+        //// Optionally, set a timeout to remove the feedback after a certain duration
+        //setTimeout(function () {
+        //    document.body.removeChild(mouseFeedbackDiv);
+        //    // Optionally, provide visual feedback to the user
+        //}, 1000); // 2000 milliseconds (2 seconds) in this example, adjust as needed
     }
 
 
@@ -453,8 +452,21 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
                                 </PopCardDropMenuSectionItem>
                                 {pageSharedTF ? (
                                     <>
-                                        <PopCardDropMenuSectionItem onClick={(e) => handleCopyTextToClipboard(`${process.env.NEXT_PUBLIC_CURRENTURL}/page/view/${page}`, e)}>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></svg>
+                                        <PopCardDropMenuSectionItem onClick={(e) => {
+                                            async function CopyStuff() {
+                                                await handleCopyTextToClipboard(`${process.env.NEXT_PUBLIC_CURRENTURL}/page/view/${page}`, e)
+                                                const icondiv = document.getElementById('copyicon')
+                                                const oldIcon = icondiv.innerHTML
+                                                icondiv.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check"><polyline points="20 6 9 17 4 12"/></svg>'
+                                                setTimeout(() => {
+                                                    icondiv.innerHTML = oldIcon
+                                                }, 1000);
+                                            }
+                                            CopyStuff()
+                                        }}>
+                                            <div id="copyicon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></svg>
+                                            </div>
                                             <p>Copy to clipboard</p>
                                         </PopCardDropMenuSectionItem>
                                         <PopCardDropMenuSectionItem onClick={handleSharePage}>

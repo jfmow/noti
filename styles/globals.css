@@ -1,63 +1,43 @@
 :root {
-  --main_color: #00bcd4;
-  --btn_border_radius: 5px;
-  --main_btn_color: #00bcd4;
 
-  --main_btn_color_action: #15cce4;
-
-  --big_button_border: rgba(201, 201, 204, 0.48);
-  --big_button_text: #707684;
-  --big_button_background: #fff;
-  --big_button_background_hover: #000;
-  --big_button_border_hover_alt: #b7b7b7;
-  --background: #eeeeee;
-
-  --desktophidemenu_bg: #e2e2e2;
-  --desktophidemenu_bg_hover: #c2c2c2;
-  --boxshadow_primary: #e5e5e5;
-  --page_list_item_hover: #ffffff;
-  --page_list_item_active: #cecece1a;
-  --page_list_item_icons_background_hover: #eeeeee;
+  --background: #f9f9f9;
+  --big_button_background: #f2f2f2;
+  --big_button_border: #d5d5d5;
+  --big_button_border_hover_alt: #a8a8a8;
+  --big_button_text: #7d7d7d;
+  --desktophidemenu_bg: #ffffff;
+  --desktophidemenu_bg_hover: #c0c0c0;
+  --boxshadow_primary: #f3f3f39e;
+  --page_list_item_hover: #d8d8d8;
+  --page_list_item_active: #00000029;
+  --page_list_item_icons_background_hover: #c4c4c4;
   --page_list_item_hover_drag: #ff7777;
-  --create_new_page_btn_text: #3d3d3d;
-  --page_list_item_icons: #19171199;
-  --page_list_item_fillcolor: rgba(55, 53, 47, 0.35);
-
-  --modal_text_color: #000000;
+  --create_new_page_btn_text: #929292;
+  --page_list_item_icons: #00000099;
+  --page_list_item_fillcolor: #00000099;
+  --modal_text_color: #000;
+  --modal_button_svg: #707684;
   --modal_background: #ffffff;
-
-  --modal_border_color: #dfdfdf;
-
-  --modal_input_placeholder_color: #8e8e8e;
-
-  --modal_close_button_hover: #333333;
-
-  --modal_s2ndry_btn_bxshdw_unused: #e8e8e8;
   --modal_button_text: #707684;
+  --modal_close_button_hover: #000000;
+  --modal_border_color: #fff;
+  --modal_button_bg: #eaeaea;
+  --modal_button_border: none;
+  --modal_button_bg_hover: #000000;
+  --modal_button_text_hover: #fff;
+  --modal_button_bxshdw_hover: #e2e2e2;
+  --userinfo_section_bordertop: #b8b8b8;
+  --user_option_text: #464646;
 
-  --modal_button_svg: #50545d;
-
-  --modal_temp_loader_bg: #eeeeee;
-
-  --modal_button_bg: none;
-  --modal_button_border: 1px rgba(201, 201, 204, 0.48) solid;
-  --modal_button_bg_hover: #000;
-  --modal_button_text_hover: #ffffff;
-  --modal_button_bxshdw_hover: transparent;
 
   --title_input_color: #ffffff;
   --title_input_color_plcholder: #8f8f8f;
   --title_background: linear-gradient(20deg, #607d8b, #fff, #607d8b);
-
   --title_buttons_fill: #fff;
   --title_buttons_background: #ffffff57;
   --editor_text: #000;
-
   --buttonlabel_label_background: #0d2342;
   --buttonlabel_label_color: #ffffff;
-
-  --user_option_text: #9da5b5;
-  --userinfo_section_bordertop: #dadada;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -99,6 +79,8 @@
     --editor_text: #fff;
     /*User profile thing*/
     --userinfo_section_bordertop: #2d2d2d;
+
+    --user_option_text: #868686;
   }
 }
 
