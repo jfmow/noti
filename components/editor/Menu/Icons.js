@@ -8,7 +8,7 @@ export default function Icons({ Select, Selected, Close }) {
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [visibleEmojis, setVisibleEmojis] = useState([]);
-    const [loadedIndex, setLoadedIndex] = useState(250);
+    const [loadedIndex, setLoadedIndex] = useState(-1);
     const containerRef = useRef(null);
 
     useEffect(() => {
@@ -26,37 +26,19 @@ export default function Icons({ Select, Selected, Close }) {
             );
         });
         setFilteredEmojis(filtered);
-        setLoadedIndex(250);
+        //setLoadedIndex(250);
     }, [searchTerm, selectedCategory]);
 
     useEffect(() => {
+        if (loadedIndex === -1) {
+            const emojisToDisplay = filteredEmojis
+            setVisibleEmojis(emojisToDisplay)
+            return
+        }
         const emojisToDisplay = filteredEmojis.slice(0, loadedIndex);
         setVisibleEmojis(emojisToDisplay);
     }, [filteredEmojis, loadedIndex]);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const container = containerRef.current;
-            if (container) {
-                const { scrollTop, scrollHeight, clientHeight } = container;
-                ////console.log(scrollHeight - scrollTop - 3, clientHeight)
-                if (scrollHeight - scrollTop - 3 <= clientHeight) {
-                    setLoadedIndex((prevIndex) => prevIndex + 250);
-                }
-            }
-        };
-
-        const container = containerRef.current;
-        if (container) {
-            container.addEventListener('scroll', handleScroll);
-        }
-
-        return () => {
-            if (container) {
-                container.removeEventListener('scroll', handleScroll);
-            }
-        };
-    }, []);
 
     const handleCategoryClick = (category) => {
         setSelectedCategory(category);
@@ -123,7 +105,6 @@ export default function Icons({ Select, Selected, Close }) {
                                 >
                                     <span
                                         className={` ${styles.emojiIcon}`}
-                                        loading="lazy"
                                         style={style}
                                     />
                                 </div>
