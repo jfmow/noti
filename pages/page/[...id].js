@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import PocketBase from 'pocketbase'
 import { useEffect, useState } from 'react';
 import MyComponent from '@/components/Item';
+import TabBar from '@/components/editor/TabBar';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 
@@ -315,9 +316,14 @@ function NotionEditor({ pageId }) {
     <div>
       <div className='main'>
         <MyComponent currPage={pageId} />
-        {pageId.map((page) => (
-          <Editor page={page} multi={pageId.length > 1 && true} preview='false' />
-        ))}
+        <div style={{ flex: '1 1 0%', position: 'relative' }}>
+          {window.innerWidth > 600 && (
+            <TabBar pb={pb} page={pageId[0]} />
+          )}
+          {pageId.map((page) => (
+            <Editor hasTabBar={window.innerWidth > 600} page={page} multi={pageId.length > 1 && true} preview='false' />
+          ))}
+        </div>
       </div>
     </div>
   );

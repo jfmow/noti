@@ -31,7 +31,7 @@ import MenuButtons from "./Menu/MenuButton";
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false)
 
-function Editor({ page, multi }) {
+function Editor({ page, multi, hasTabBar }) {
   const editorRef = useRef(null);
   const [editor, setEditor] = useState(null);
   const [editorData, setEditorData] = useState({});
@@ -514,7 +514,7 @@ function Editor({ page, multi }) {
 
 
   return (
-    <div className={styles.create} id="createcon">
+    <div className={styles.create} style={hasTabBar && { paddingTop: '45px' }} id="createcon">
       <Head>
         <title>{articleTitle}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

@@ -139,6 +139,7 @@
   transform: rotate(180deg);
   height: fit-content;
   background: none;
+  top: 50px;
 }
 
 
