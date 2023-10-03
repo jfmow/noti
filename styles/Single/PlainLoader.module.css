@@ -1,7 +1,7 @@
 .loadercontainer {
   flex: 1 1 0%;
   height: 100dvh;
-  z-index: 999;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -15,9 +15,9 @@
   width: 3.25em;
   transform-origin: center;
   animation: rotate4 2s linear infinite;
- }
- 
- .load2 {
+}
+
+.load2 {
   fill: none;
   stroke: hsl(214, 97%, 59%);
   stroke-width: 2;
@@ -25,30 +25,30 @@
   stroke-dashoffset: 0;
   stroke-linecap: round;
   animation: dash4 1.5s ease-in-out infinite;
- }
- 
- @keyframes rotate4 {
+}
+
+@keyframes rotate4 {
   100% {
-   transform: rotate(360deg);
+    transform: rotate(360deg);
   }
- }
- 
- @keyframes dash4 {
+}
+
+@keyframes dash4 {
   0% {
-   stroke-dasharray: 1, 200;
-   stroke-dashoffset: 0;
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
   }
- 
+
   50% {
-   stroke-dasharray: 90, 200;
-   stroke-dashoffset: -35px;
+    stroke-dasharray: 90, 200;
+    stroke-dashoffset: -35px;
   }
- 
+
   100% {
-   stroke-dashoffset: -125px;
+    stroke-dashoffset: -125px;
   }
- }
- 
+}
+
 
 @media(max-width: 800px) {
   .loadercontainer {
@@ -62,7 +62,7 @@
 }
 
 .title {
-font-size: 30px;
+  font-size: 30px;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }

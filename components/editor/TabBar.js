@@ -100,10 +100,6 @@ function TabBarItem({ name, icon, active, id, RemoveTabItem, onDragStart, onDrag
     const selfRef = useRef(null);
     const [contextMenuEvent, setContextMenuEvent] = useState(null)
 
-    function openContextMenu(e, id) {
-
-    }
-
     return (
         <>
 
