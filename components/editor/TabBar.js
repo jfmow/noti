@@ -120,10 +120,12 @@ function TabBarItem({ name, icon, active, id, RemoveTabItem, onDragStart, onDrag
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-app-window"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="M10 4v4" /><path d="M2 8h20" /><path d="M6 4v4" /></svg>
                         <p>Open in new tab</p>
                     </ContextMenuDropMenuSectionItem>
-                    <ContextMenuDropMenuSectionItem onClick={() => Router.push(`/page/${Router.asPath.split('/page/')[1]}/${id}`)}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-columns"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><line x1="12" x2="12" y1="3" y2="21" /></svg>
-                        <p>Open in split view</p>
-                    </ContextMenuDropMenuSectionItem>
+                    {!active && (
+                        <ContextMenuDropMenuSectionItem onClick={() => Router.push(`/page/${Router.asPath.split('/page/')[1]}/${id}`)}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-columns"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><line x1="12" x2="12" y1="3" y2="21" /></svg>
+                            <p>Open in split view</p>
+                        </ContextMenuDropMenuSectionItem>
+                    )}
                 </ContextMenuDropMenuSection>
             </ContextMenuDropMenu>
             <div
