@@ -1,3 +1,4 @@
+import { ContextMenuDropMenu, ContextMenuDropMenuSection, ContextMenuDropMenuSectionItem } from '@/lib/ContextMenu';
 import styles from '@/styles/TabBar.module.css';
 import Router from 'next/router';
 import { useEffect, useRef, useState } from 'react';
@@ -25,7 +26,10 @@ export default function TabBar({ pb, page }) {
             //console.log(tabBarStore)
             let tempArrayItem = []
             const updatedItems = await JSON.parse(tabBarStore).map((item) => {
-                tempArrayItem.push(records.filter(rec => rec.id === item.id)[0])
+                const toPush = records.filter(rec => rec.id === item.id)[0]
+                if (toPush) {
+                    tempArrayItem.push(toPush)
+                }
             });
             setTabBarItems(tempArrayItem);
 
@@ -53,6 +57,7 @@ export default function TabBar({ pb, page }) {
     function onDrop(e, id) {
         e.preventDefault();
         const updatedItems = tabBarItems.slice();
+        console.log(updatedItems)
         const draggedItemIndex = updatedItems.findIndex((item) => item.id === draggedItemId);
         const dropItemIndex = updatedItems.findIndex((item) => item.id === id);
         [updatedItems[draggedItemIndex], updatedItems[dropItemIndex]] = [
@@ -91,51 +96,67 @@ export default function TabBar({ pb, page }) {
 
 function TabBarItem({ name, icon, active, id, RemoveTabItem, onDragStart, onDragOver, onDrop }) {
     const selfRef = useRef(null);
+    const [contextMenuEvent, setContextMenuEvent] = useState(null)
+
+    function openContextMenu(e, id) {
+
+    }
 
     return (
-        <div
-            ref={selfRef}
-            className={`${active && styles.tabbaritem_active} ${styles.tabbaritem}`}
-            onClick={() => {
-                Router.push(`/page/${id}`);
-            }}
-            draggable
-            onDragStart={(e) => onDragStart(e, id)}
-            onDragOver={(e) => onDragOver(e)}
-            onDrop={(e) => onDrop(e, id)}
-        >
-            <div className={styles.tabbaritememoji}>
-                {selfRef.current?.clientWidth > 90 && (
-                    <>
-                        {icon && icon.includes('.png') ? (
-                            <img className={styles.page_icon} src={`/emoji/twitter/64/${icon}`} alt={name} />
-                        ) : (
-                            !isNaN(parseInt(icon, 16)) && String.fromCodePoint(parseInt(icon, 16))
-                        )}
-                    </>
-                )}
-            </div>
+        <>
 
-            <div className={styles.tabbaritemname}>{name || id}</div>
-            <div className={styles.tabbaritemicon}>
-                {active && (
-                    <svg
-                        onClick={() => RemoveTabItem(id)}
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                    >
-                        <path d="M18 6 6 18" />
-                        <path d="m6 6 12 12" />
-                    </svg>
-                )}
+            <ContextMenuDropMenu event={contextMenuEvent}>
+                <ContextMenuDropMenuSection>
+                    <ContextMenuDropMenuSectionItem onClick={() => RemoveTabItem(contextMenuEvent.data.filter(item => item.key === 'pageId')[0].value)}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minus-square"><rect width="18" height="18" x="3" y="3" rx="2" /><path d="M8 12h8" /></svg>
+                        <p>Remove item</p>
+                    </ContextMenuDropMenuSectionItem>
+                </ContextMenuDropMenuSection>
+            </ContextMenuDropMenu>
+            <div
+                ref={selfRef}
+                onContextMenu={(e) => {
+                    e.preventDefault()
+                    setContextMenuEvent({ eventData: e, data: [{ key: "pageId", value: id }] })
+                }}
+                className={`${active && styles.tabbaritem_active} ${styles.tabbaritem}`}
+                onClick={() => {
+                    Router.push(`/page/${id}`);
+                }}
+                draggable
+                onDragStart={(e) => onDragStart(e, id)}
+                onDragOver={(e) => onDragOver(e)}
+                onDrop={(e) => onDrop(e, id)}
+            >
+                <div className={styles.tabbaritememoji}>
+                    {icon && icon.includes('.png') ? (
+                        <img className={styles.page_icon} src={`/emoji/twitter/64/${icon}`} alt={name} />
+                    ) : (
+                        !isNaN(parseInt(icon, 16)) && String.fromCodePoint(parseInt(icon, 16))
+                    )}
+                </div>
+
+                <div className={styles.tabbaritemname}>{name || id}</div>
+                <div className={styles.tabbaritemicon}>
+                    {active && (
+                        <svg
+                            onClick={() => RemoveTabItem(id)}
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        >
+                            <path d="M18 6 6 18" />
+                            <path d="m6 6 12 12" />
+                        </svg>
+                    )}
+                </div>
             </div>
-        </div>
+        </>
     );
 }
