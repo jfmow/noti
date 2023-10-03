@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import emojis from 'emoji-datasource-twitter';
 import styles from '@/styles/Single/emojis.module.css';
+import { PopCardsGlobalButton } from "@/lib/Pop-Cards/PopCard";
 
 export default function Icons({ Select, Selected, Close }) {
     const [searchTerm, setSearchTerm] = useState('');
@@ -8,7 +9,7 @@ export default function Icons({ Select, Selected, Close }) {
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [visibleEmojis, setVisibleEmojis] = useState([]);
-    const [loadedIndex, setLoadedIndex] = useState(-1);
+    const [loadedIndex, setLoadedIndex] = useState(250);
     const containerRef = useRef(null);
 
     useEffect(() => {
@@ -26,7 +27,7 @@ export default function Icons({ Select, Selected, Close }) {
             );
         });
         setFilteredEmojis(filtered);
-        //setLoadedIndex(250);
+        setLoadedIndex(250);
     }, [searchTerm, selectedCategory]);
 
     useEffect(() => {
@@ -115,6 +116,7 @@ export default function Icons({ Select, Selected, Close }) {
                     }
                 })}
             </div>
+            <PopCardsGlobalButton disabled={loadedIndex >= filteredEmojis.length} style={{ width: '100%', marginTop: '15px', marginBottom: '15px' }} click={() => setLoadedIndex(loadedIndex + 250)}>Load more</PopCardsGlobalButton>
         </>
     );
 }
