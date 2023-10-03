@@ -75,8 +75,8 @@
 }
 
 .ContextMenuDropMenuSection {
-    /*border-top: 1px solid #e5e7eb6e;
-    border-bottom: 1px solid #e5e7eb6e;*/
+    border-top: 1px solid #e5e7eb6e;
+    border-bottom: 1px solid #e5e7eb6e;
     width: 100%;
     height: fit-content;
     padding: 4px;

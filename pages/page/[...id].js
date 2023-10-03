@@ -316,7 +316,7 @@ function NotionEditor({ pageId }) {
     <div>
       <div className='main'>
         <MyComponent currPage={pageId} />
-        <div style={{ flex: '1 1 0%', position: 'relative' }}>
+        <div style={{ flex: '1 1 0%', position: 'relative', display: 'flex' }}>
           {window.innerWidth > 600 && (
             <TabBar pb={pb} page={pageId[0]} />
           )}

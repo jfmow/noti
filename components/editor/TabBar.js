@@ -81,12 +81,13 @@ export default function TabBar({ pb, page }) {
                             key={item.id}
                             name={item.title}
                             icon={item.icon}
-                            active={page === item.id}
+                            active={Router.asPath.split('/page/')[1].includes(item.id)}
                             id={item.id}
                             RemoveTabItem={RemoveTabItem}
                             onDragStart={onDragStart}
                             onDragOver={onDragOver}
                             onDrop={onDrop}
+                            page={page}
                         />
                     );
                 })}
@@ -95,7 +96,7 @@ export default function TabBar({ pb, page }) {
     );
 }
 
-function TabBarItem({ name, icon, active, id, RemoveTabItem, onDragStart, onDragOver, onDrop }) {
+function TabBarItem({ name, icon, active, id, RemoveTabItem, onDragStart, onDragOver, onDrop, page }) {
     const selfRef = useRef(null);
     const [contextMenuEvent, setContextMenuEvent] = useState(null)
 
@@ -107,10 +108,21 @@ function TabBarItem({ name, icon, active, id, RemoveTabItem, onDragStart, onDrag
         <>
 
             <ContextMenuDropMenu event={contextMenuEvent}>
-                <ContextMenuDropMenuSection>
+                <ContextMenuDropMenuSection style={{ borderTop: 'none' }}>
                     <ContextMenuDropMenuSectionItem onClick={() => RemoveTabItem(contextMenuEvent.data.filter(item => item.key === 'pageId')[0].value)}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minus-square"><rect width="18" height="18" x="3" y="3" rx="2" /><path d="M8 12h8" /></svg>
                         <p>Remove item</p>
+                    </ContextMenuDropMenuSectionItem>
+
+                </ContextMenuDropMenuSection>
+                <ContextMenuDropMenuSection style={{ borderBottom: 'none' }}>
+                    <ContextMenuDropMenuSectionItem onClick={() => window.open(`${process.env.NEXT_PUBLIC_CURRENTURL}/page/${id}`, '_blank')}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-app-window"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="M10 4v4" /><path d="M2 8h20" /><path d="M6 4v4" /></svg>
+                        <p>Open in new tab</p>
+                    </ContextMenuDropMenuSectionItem>
+                    <ContextMenuDropMenuSectionItem onClick={() => Router.push(`/page/${Router.asPath.split('/page/')[1]}/${id}`)}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-columns"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><line x1="12" x2="12" y1="3" y2="21" /></svg>
+                        <p>Open in split view</p>
                     </ContextMenuDropMenuSectionItem>
                 </ContextMenuDropMenuSection>
             </ContextMenuDropMenu>
