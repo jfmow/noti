@@ -1,8 +1,8 @@
 import '@/styles/globals.css'
 import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
 import { register } from 'next-offline/runtime';
 import { useEffect, useState } from 'react';
+import { Toaster } from 'sonner'
 export default function App({ Component, pageProps }) {
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
-      <ToastContainer position="top-center" theme='dark' />
+      <Toaster richColors />
       <Component {...pageProps} />
     </>
   )

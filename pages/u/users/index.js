@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import PocketBase from 'pocketbase'
 import GraphComponent from "@/components/Graph";
 import Nav from "@/components/Nav";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { AlternateButton, ModalCheckBox, ModalContainer, ModalForm, ModalInput, ModalTitle } from "@/lib/Modal";
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 pb.autoCancellation(false)
@@ -53,7 +53,7 @@ function Users() {
     }, [searchTerm]);
 
     async function toggle(user, currentState) {
-        const changeToast = toast.loading(`Updating user's account to ${currentState ? 'enabled' : 'disabled'}`);
+        const changeToast = toast(`Updating user's account to ${currentState ? 'enabled' : 'disabled'}`);
         const data = {
             disabled: currentState ? false : true
         };
@@ -69,7 +69,6 @@ function Users() {
 
         // Update the database
         await pb.collection('users').update(user, data);
-        toast.done(changeToast);
     }
 
     function scrollToTop() {
@@ -159,13 +158,13 @@ function Users() {
 
     async function postNoti() {
         if (!msg || !msgtitle) {
-            return toast.warning("Please fill out all inputs!");
+            return toast.error("Please fill out all inputs!");
         }
         if (usersList.length === 0) {
-            return toast.warning("Please select at least one user!");
+            return toast.error("Please select at least one user!");
         }
 
-        const sendingToastID = toast.loading("Sending please wait...")
+        const sendingToastID = toast("Sending please wait...")
 
         try {
             const response = await fetch("/api/sendnotif", {
@@ -177,20 +176,19 @@ function Users() {
                 }),
             });
             if (response.status === 409) {
-                toast.warning('There are no subscribed endpoints to send messages to, yet! (No users have notis on)')
+                toast.error('There are no subscribed endpoints to send messages to, yet! (No users have notis on)')
             }
             if (response.status !== 200) {
-                return toast.warning("Failed to send!");
+                return toast.error("Failed to send!");
             }
             msgBody('')
             msgTitle('')
             setUsersList([]);
-            toast.update(sendingToastID, { render: "Sent", type: "success", isLoading: false });
+            toast.success('Sent!');
         } catch (err) {
             //console.log(err);
             toast.error("Failed to send!");
         }
-        toast.done(sendingToastID)
 
     }
 

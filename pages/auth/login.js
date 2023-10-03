@@ -2,7 +2,7 @@ import { useState } from "react"
 import PocketBase from 'pocketbase'
 import Head from "next/head"
 import styles from '@/styles/Auth-new.module.css'
-import { toast } from "react-toastify"
+import { toast } from "sonner"
 import Router from "next/router"
 import Link from "@/components/Link"
 
@@ -23,7 +23,7 @@ export default function LoginPage() {
       );
       Router.push('/page/firstopen')
     } catch (err) {
-      toast.warning('Invalid username/email or password')
+      toast.error('Invalid username/email or password')
     }
     setLoginRunning(false)
   }
@@ -34,7 +34,7 @@ export default function LoginPage() {
       await pb.collection('users').authWithOAuth2({ provider: provider });
       Router.push('/page/firstopen')
     } catch (error) {
-      toast.warning(`Unable to login with ${provider}`)
+      toast.error(`Unable to login with ${provider}`)
     }
     setLoginRunning(false)
   }

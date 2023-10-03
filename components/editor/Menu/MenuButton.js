@@ -5,7 +5,7 @@ import Router from "next/router";
 import styles from "@/styles/Create.module.css";
 import compressImage from "@/lib/CompressImg";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 const PopTabsDropMenuItem = dynamic(() => import('@/lib/Pop-Cards/PopTabs').then((module) => module.PopTabsDropMenuItem));
 const PopTabsDropMenuItemSurround = dynamic(() => import('@/lib/Pop-Cards/PopTabs').then((module) => module.PopTabsDropMenuItemSurround));
@@ -73,7 +73,7 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
         reader.readAsDataURL(file);
         let formData = new FormData();
         if (file) {
-            const compressidToast = toast.loading("Compressing image...");
+
             try {
                 const compressedBlob = await compressImage(file, 200); // Maximum file size in KB (100KB in this example)
                 const compressedFile = new File([compressedBlob], file.name, {
@@ -81,22 +81,14 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
                 });
                 formData.append("header_img", compressedFile);
                 formData.append("unsplash", '');
-                toast.update(compressidToast, {
-                    render: "Done 👍",
-                    type: "success",
-                    isLoading: false,
-                });
                 //if (compressedFile.size > 4547000) {
                 //    return toast.error('Compresed file may be too big (>4.5mb)!')
                 //}
                 await pb.collection("pages").update(page, formData);
 
             } catch (error) {
-                toast.error("Error uploading header img", {
-                    position: toast.POSITION.TOP_LEFT,
-                });
+                toast.error("Error uploading header img");
             }
-            toast.done(compressidToast);
         }
     }
 

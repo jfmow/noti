@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Head from "next/head";
 import Link from "@/components/Link";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import Checklist from "@editorjs/checklist";
@@ -324,7 +324,7 @@ function Editor({ page, multi, hasTabBar }) {
                         toast.error(error.data.message)
                         return { success: 0 }
                       }
-                      toast.warning('Unable to upload file. It may not be supported yet. Try .pdf or images')
+                      toast.error('Unable to upload file. It may not be supported yet. Try .pdf or images')
                       return { success: 0 }
                     }
 
@@ -393,7 +393,7 @@ function Editor({ page, multi, hasTabBar }) {
                         toast.error(error.data.message)
                         return { success: 0 }
                       }
-                      toast.warning('Unable to upload file. It may not be supported yet. Try .pdf or images')
+                      toast.error('Unable to upload file. It may not be supported yet. Try .pdf or images')
                       return { success: 0 }
                       // Handle error
                     }

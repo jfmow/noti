@@ -2,7 +2,7 @@ import { useState } from "react"
 import PocketBase from 'pocketbase'
 import Head from "next/head"
 import styles from '@/styles/Auth-new.module.css'
-import { toast } from "react-toastify"
+import { toast } from "sonner";
 import Router from "next/router"
 import { ModalCheckBox } from "@/lib/Modal"
 import { getUserTimeZone } from '@/lib/getUserTimeZone';
@@ -39,7 +39,7 @@ export default function LoginPage() {
             await pb.collection('users').authWithPassword(username, password);
             Router.push('/page/firstopen')
         } catch (err) {
-            toast.warning('Failed to create an account! Please try again or check if you already have one!')
+            toast.error('Failed to create an account! Please try again or check if you already have one!')
         }
         setLoginRunning(false)
     }
@@ -50,7 +50,7 @@ export default function LoginPage() {
             await pb.collection('users').authWithOAuth2({ provider: provider });
             Router.push('/page/firstopen')
         } catch (error) {
-            toast.warning(`Unable to login with ${provider}`)
+            toast.error(`Unable to login with ${provider}`)
         }
         setLoginRunning(false)
     }

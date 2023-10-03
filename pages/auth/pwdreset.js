@@ -27,7 +27,7 @@ export default function PasswordReset() {
                 //console.error(authData)
 
             } catch (error) {
-                toast.warning('Failed to send reset email');
+                toast.error('Failed to send reset email');
             }
         } else {
             return

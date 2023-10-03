@@ -1,7 +1,7 @@
 import styles from '@/styles/Acc.module.css';
 import { useState, useEffect, useRef } from 'react';
 import PocketBase from 'pocketbase';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 import Head from 'next/head';
 import Link from '@/components/Link';
 import compressImage from '@/lib/CompressImg';
@@ -92,7 +92,7 @@ function AccManagementForm({ Close, usageOpenDefault }) {
     e.preventDefault()
 
     if (newUsername.length <= 2) {
-      return toast.warning('Must be longer than 3 char');
+      return toast.error('Must be longer than 3 char');
 
     }
     const data = {
@@ -107,17 +107,22 @@ function AccManagementForm({ Close, usageOpenDefault }) {
 
   async function ChangeEmail() {
     setUpdateEmailField(false);
-    const updateEmailToastid = toast.loading("Please wait...")
     try {
       await pb.collection('users').requestEmailChange(newEmail);
-      toast.update(updateEmailToastid, { render: `Please check the inbox of ${newEmail} to confirm the change.`, type: "success", isLoading: false });
-      toast.done(updateEmailToastid)
+      toast('Email change request sent! 👍')
+      return
     } catch (error) {
       //console.log(error)
-      toast.update(updateEmailToastid, { render: `Failed to request email change!`, type: "error", isLoading: false });
-      toast.done(updateEmailToastid)
+      toast.error('Failed to send email change request!', {
+        action: {
+          label: 'Retry',
+          onClick: () => ChangeEmail()
+        },
+      })
       return
     }
+
+
 
 
   }
