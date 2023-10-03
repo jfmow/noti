@@ -66,6 +66,7 @@ export default function TabBar({ pb, page }) {
         ];
         setTabBarItems(updatedItems);
         setDraggedItemId(null);
+        window.localStorage.setItem('_tabbar', JSON.stringify(updatedItems))
     }
 
     return (
