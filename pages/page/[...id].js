@@ -321,7 +321,7 @@ function NotionEditor({ pageId }) {
             <TabBar pb={pb} page={pageId[0]} />
           )}
           {pageId.map((page) => (
-            <Editor hasTabBar={window.innerWidth > 600} page={page} multi={pageId.length > 1 && true} preview='false' />
+            <Editor hasTabBar={window.innerWidth > 600 ? { paddingTop: '45px' } : { paddingTop: '0px' }} page={page} multi={pageId.length > 1 && true} preview='false' />
           ))}
         </div>
       </div>
