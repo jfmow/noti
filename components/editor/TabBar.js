@@ -57,7 +57,7 @@ export default function TabBar({ pb, page }) {
     function onDrop(e, id) {
         e.preventDefault();
         const updatedItems = tabBarItems.slice();
-        console.log(updatedItems)
+        //console.log(updatedItems)
         const draggedItemIndex = updatedItems.findIndex((item) => item.id === draggedItemId);
         const dropItemIndex = updatedItems.findIndex((item) => item.id === id);
         [updatedItems[draggedItemIndex], updatedItems[dropItemIndex]] = [
