@@ -210,7 +210,7 @@ function Editor({ page, multi, hasTabBar }) {
           //encryption
           try {
             setEditorData(JSON.parse(decryptedNote));
-            //toast.info("Note no longer encrypted on server.")
+            //toast("Note no longer encrypted on server.")
           } catch (error) {
             console.warn(error);
             setEditorData(record.content);
