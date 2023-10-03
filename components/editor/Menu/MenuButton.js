@@ -387,7 +387,7 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
                         <PopCardDropMenuSectionItem onClick={() => setShowPageInfo(!showPageInfo)} onHover={() => {
                             //set everything false
                             setSharePageInfo(false);
-                            setShowPageInfo(true);
+                            //setShowPageInfo(true);
                             setpopUpClickEventPageOptions(false);
                             setpopUpClickEventMarkdown(null)
                         }}>
