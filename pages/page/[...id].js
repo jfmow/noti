@@ -13,6 +13,7 @@ const Editor = dynamic(() => import('../../components/editor/Editor'), {
 
 function NotionEditor({ pageId }) {
   const [isLoading, setIsLoading] = useState(true);
+  const [tabBarHidden, setTabBarHidden] = useState(false)
 
   useEffect(() => {
 
@@ -316,13 +317,13 @@ function NotionEditor({ pageId }) {
     <div>
       <div className='main'>
         <MyComponent currPage={pageId} />
-        <div style={{ flex: '1 1 0%', position: 'relative', display: 'flex' }}>
-          {window.innerWidth > 600 && (
-            <TabBar pb={pb} page={pageId[0]} />
-          )}
-          {pageId.map((page) => (
-            <Editor hasTabBar={window.innerWidth > 600 ? { paddingTop: '45px' } : { paddingTop: '0px' }} page={page} multi={pageId.length > 1 && true} preview='false' />
-          ))}
+        <div style={{ flex: '1 1 0%', position: 'relative', display: 'flex', height: '100vh', flexDirection: 'column' }}>
+          <TabBar pb={pb} page={pageId[0]} />
+          <div style={{ display: 'flex', height: '100%', overflow: 'hidden' }}>
+            {pageId.map((page) => (
+              <Editor page={page} multi={pageId.length > 1 && true} preview='false' />
+            ))}
+          </div>
         </div>
       </div>
     </div>

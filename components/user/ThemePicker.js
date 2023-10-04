@@ -5,6 +5,7 @@ import Router from "next/router";
 import CustomThemePicker from "./CustomTheme";
 import { useState } from "react";
 import { PopCardDropMenuSection, PopCardDropMenuSectionItem } from "@/lib/Pop-Cards/PopDropMenu";
+import { ShowTabBar } from "../editor/TabBar";
 
 export default function UserHelpModal({ CloseHelp }) {
     const [themePicker, setThemePicker] = useState(false);
@@ -40,10 +41,20 @@ export default function UserHelpModal({ CloseHelp }) {
                     </PopCardDropMenuSectionItem>
                 ))}
             </PopCardDropMenuSection>
-            <PopCardDropMenuSection style={{ borderBottom: 'none' }}>
+            <PopCardDropMenuSection >
                 <PopCardDropMenuSectionItem click={() => {
                     setThemePicker(true)
                 }}>Create a theme</PopCardDropMenuSectionItem>
+            </PopCardDropMenuSection>
+            <PopCardDropMenuSection s>
+                <PopCardDropMenuSectionItem onClick={() => {
+                    if (window.localStorage.getItem('_tabbar') === 'hidden') {
+                        ShowTabBar()
+                    }
+                }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-top"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><line x1="3" x2="21" y1="9" y2="9" /></svg>
+                    <p>Show tab bar</p>
+                </PopCardDropMenuSectionItem>
             </PopCardDropMenuSection>
         </>
     )

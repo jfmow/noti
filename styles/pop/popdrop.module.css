@@ -28,6 +28,14 @@
     animation: dropmenuin 0.2s 1 ease-in-out;
 }
 
+.PopCardDropMenu :first-child {
+    border-top: none;
+}
+
+.PopCardDropMenu :last-child {
+    border-bottom: none;
+}
+
 .hidden {
     display: none;
     animation: dropmenuout 0.2s 1 ease-in-out;

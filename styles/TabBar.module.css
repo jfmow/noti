@@ -1,10 +1,10 @@
 .tabbar {
     height: 45px;
-    position: absolute;
+    position: sticky;
     top: 0;
     left: 0;
     right: 0;
-    width: 100%;
+    width: calc(100vw - 300px);
     background: var(--modal_background);
     z-index: 11;
     overflow-x: scroll;
@@ -110,4 +110,21 @@
     overflow: hidden;
     text-overflow: ellipsis;
     text-wrap: nowrap;
+}
+
+.newPageDropButton {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: none;
+    color: #000;
+    cursor: pointer;
+}
+
+.newPageDropButton svg {
+    width: 16px;
+    height: 16px;
 }
