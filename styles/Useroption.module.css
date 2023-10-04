@@ -17,7 +17,7 @@
     border-top: 1px solid var(--userinfo_section_bordertop);
 
     /*transition: 0.5s all ease-in-out;*/
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 
@@ -28,6 +28,7 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
+    position: relative;
 }
 
 .icons .icon svg {
