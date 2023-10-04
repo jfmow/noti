@@ -105,6 +105,7 @@ function MyUsagePie() {
                 <canvas id="storageChart" width="400" height="400"></canvas>
             </div>
             <span>Used: {Math.round(usage)}mb | Remaining: {Math.round(10 - usage > 0 ? 10 - usage : 0)}mb</span><br />
+            <p>This is <strong>not</strong> page usage this is only for uploaded files, not including covers</p>
         </div>
     );
 }
