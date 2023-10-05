@@ -274,231 +274,236 @@ function Editor({ page, multi }) {
   };
 
   useEffect(() => {
-    if (
-      editorRef.current &&
-      (editorData == null || Object.keys(editorData).length > 0)
-    ) {
-      const editorInstance = new EditorJS({
-        holder: editorRef.current,
-        tools: {
-          header: {
-            class: Header,
-            inlineToolbar: true,
-          },
-          marker: {
-            class: MarkerTool,
-          },
-          image: {
-            class: Image,
-            config: {
-              saveData: {
-                saveAll() {
-                  setLastTypedTime(Date.now());
-                  setLastTypedTimeIdle(false);
-                  return
-                }
-              },
-              storeFile: {
-                uploadFile(file) {
-                  async function uploadbyFile(file) {
-
-                    const formData = new FormData();
-
-                    const compressedBlob = await compressImage(file); // Maximum file size in KB (100KB in this example)
-                    const compressedFile = new File(
-                      [compressedBlob],
-                      file.name,
-                      { type: "image/jpeg" }
-                    );
-                    const result = await handleCreateBlurHash(compressedFile);
-                    console.log("Result:", result); // Access result.hash, result.width, and result.height
-
-                    formData.append("file_data", compressedFile);
-                    formData.append("uploader", pb.authStore.model.id);
-                    formData.append('page', page)
-                    let record = null
-                    try {
-                      if (compressedFile.size > 5242880) {
-                        toast.error('File too big. Must be < 5mb')
-                        return { success: 0 }
-                      }
-                      record = await pb.collection("imgs").create(formData);
-
-                    } catch (error) {
-                      if (error.data.code === 403) {
-                        toast.error(error.data.message)
-                        return { success: 0 }
-                      }
-                      toast.error('Unable to upload file. It may not be supported yet. Try .pdf or images')
-                      return { success: 0 }
-                    }
-
-                    return {
-                      success: 1,
-                      file: {
-                        fileId: record.id,
-                        blurHashData: result
-                      },
-                    };
+    try {
+      if (
+        editorRef.current &&
+        (editorData == null || Object.keys(editorData).length > 0)
+      ) {
+        const editorInstance = new EditorJS({
+          holder: editorRef.current,
+          tools: {
+            header: {
+              class: Header,
+              inlineToolbar: true,
+            },
+            marker: {
+              class: MarkerTool,
+            },
+            image: {
+              class: Image,
+              config: {
+                saveData: {
+                  saveAll() {
+                    setLastTypedTime(Date.now());
+                    setLastTypedTimeIdle(false);
+                    return
                   }
-                  return uploadbyFile(file)
                 },
+                storeFile: {
+                  uploadFile(file) {
+                    async function uploadbyFile(file) {
+
+                      const formData = new FormData();
+
+                      const compressedBlob = await compressImage(file); // Maximum file size in KB (100KB in this example)
+                      const compressedFile = new File(
+                        [compressedBlob],
+                        file.name,
+                        { type: "image/jpeg" }
+                      );
+                      const result = await handleCreateBlurHash(compressedFile);
+                      console.log("Result:", result); // Access result.hash, result.width, and result.height
+
+                      formData.append("file_data", compressedFile);
+                      formData.append("uploader", pb.authStore.model.id);
+                      formData.append('page', page)
+                      let record = null
+                      try {
+                        if (compressedFile.size > 5242880) {
+                          toast.error('File too big. Must be < 5mb')
+                          return { success: 0 }
+                        }
+                        record = await pb.collection("imgs").create(formData);
+
+                      } catch (error) {
+                        if (error.data.code === 403) {
+                          toast.error(error.data.message)
+                          return { success: 0 }
+                        }
+                        toast.error('Unable to upload file. It may not be supported yet. Try .pdf or images')
+                        return { success: 0 }
+                      }
+
+                      return {
+                        success: 1,
+                        file: {
+                          fileId: record.id,
+                          blurHashData: result
+                        },
+                      };
+                    }
+                    return uploadbyFile(file)
+                  },
+                },
+                currPage: page
+
               },
-              currPage: page
 
             },
-
-          },
-          nestedList: {
-            class: NestedList,
-            inlineToolbar: true,
-            config: {
-              defaultStyle: 'unordered'
-            },
-          },
-          CheckList: {
-            class: Checklist,
-            inlineToolbar: true,
-          },
-          simpleEmbeds: {
-            class: SimpleIframe,
-            inlineToolbar: true,
-            config: {
-              saveData: {
-                saveAll() {
-                  setLastTypedTime(Date.now());
-                  setLastTypedTimeIdle(false);
-                  return
-                }
+            nestedList: {
+              class: NestedList,
+              inlineToolbar: true,
+              config: {
+                defaultStyle: 'unordered'
               },
-              storeFile: {
-                uploadFile(file) {
-                  async function uploadbyFile(file) {
-
-                    const formData = new FormData();
-                    formData.append("file_data", file);
-                    formData.append("uploader", pb.authStore.model.id);
-                    formData.append('page', page)
-                    let record = null
-                    try {
-                      if (file.size > 5242880) {
-                        toast.error('File too big. Must be < 5mb')
-                        return { success: 0 }
-                      }
-                      if (file.name.endsWith(".docx") || file.name.endsWith(".docx/")) {
-                        toast.error('File type not supported yet!')
-                        return { success: 0 }
-                      }
-                      record = await pb.collection("files").create(formData);
-                      //console.log(record);
-
-                    } catch (error) {
-                      console.error(error);
-                      if (error.data.code === 403) {
-                        toast.error(error.data.message)
-                        return { success: 0 }
-                      }
-                      toast.error('Unable to upload file. It may not be supported yet. Try .pdf or images')
-                      return { success: 0 }
-                      // Handle error
-                    }
-
-                    return {
-                      success: 1,
-                      file: {
-                        recid: record.id,
-                      },
-                    };
+            },
+            CheckList: {
+              class: Checklist,
+              inlineToolbar: true,
+            },
+            simpleEmbeds: {
+              class: SimpleIframe,
+              inlineToolbar: true,
+              config: {
+                saveData: {
+                  saveAll() {
+                    setLastTypedTime(Date.now());
+                    setLastTypedTimeIdle(false);
+                    return
                   }
-                  return uploadbyFile(file)
                 },
+                storeFile: {
+                  uploadFile(file) {
+                    async function uploadbyFile(file) {
+
+                      const formData = new FormData();
+                      formData.append("file_data", file);
+                      formData.append("uploader", pb.authStore.model.id);
+                      formData.append('page', page)
+                      let record = null
+                      try {
+                        if (file.size > 5242880) {
+                          toast.error('File too big. Must be < 5mb')
+                          return { success: 0 }
+                        }
+                        if (file.name.endsWith(".docx") || file.name.endsWith(".docx/")) {
+                          toast.error('File type not supported yet!')
+                          return { success: 0 }
+                        }
+                        record = await pb.collection("files").create(formData);
+                        //console.log(record);
+
+                      } catch (error) {
+                        console.error(error);
+                        if (error.data.code === 403) {
+                          toast.error(error.data.message)
+                          return { success: 0 }
+                        }
+                        toast.error('Unable to upload file. It may not be supported yet. Try .pdf or images')
+                        return { success: 0 }
+                        // Handle error
+                      }
+
+                      return {
+                        success: 1,
+                        file: {
+                          recid: record.id,
+                        },
+                      };
+                    }
+                    return uploadbyFile(file)
+                  },
+                }
+
               }
+            },
+            table: {
+              class: Table,
+              inlineToolbar: true,
+            },
+            SimpleIframeWebpage: {
+              class: SimpleIframeWebpage,
 
-            }
-          },
-          table: {
-            class: Table,
-            inlineToolbar: true,
-          },
-          SimpleIframeWebpage: {
-            class: SimpleIframeWebpage,
-
-          },
-          InlineCode: {
-            class: InlineCode,
-            shortcut: 'CMD+SHIFT+M',
-          },
+            },
+            InlineCode: {
+              class: InlineCode,
+              shortcut: 'CMD+SHIFT+M',
+            },
 
 
-          quote: {
-            class: Quote,
-            inlineToolbar: true,
-          },
-          attaches: {
-            class: AttachesTool,
-            config: {
-              uploader: {
-                uploadByFile(file) {
-                  async function upload(file) {
-                    const formData = new FormData();
-                    formData.append("file_data", file);
-                    formData.append("uploader", pb.authStore.model.id);
-                    const response = await toast.promise(
-                      pb.collection("files").create(formData),
-                      {
-                        pending: "Saving img...",
-                        success: "Saved successfully. 📁",
-                        error: "Failed 🤯",
+            quote: {
+              class: Quote,
+              inlineToolbar: true,
+            },
+            attaches: {
+              class: AttachesTool,
+              config: {
+                uploader: {
+                  uploadByFile(file) {
+                    async function upload(file) {
+                      const formData = new FormData();
+                      formData.append("file_data", file);
+                      formData.append("uploader", pb.authStore.model.id);
+                      const response = await toast.promise(
+                        pb.collection("files").create(formData),
+                        {
+                          pending: "Saving img...",
+                          success: "Saved successfully. 📁",
+                          error: "Failed 🤯",
+                        }
+                      );
+                      function getFileExtension(file) {
+                        const filename = file.name;
+                        const extension = filename.split(".").pop();
+                        return extension;
                       }
-                    );
-                    function getFileExtension(file) {
-                      const filename = file.name;
-                      const extension = filename.split(".").pop();
-                      return extension;
+                      const extension = getFileExtension(file);
+                      return {
+                        success: 1,
+                        file: {
+                          extension: extension,
+                          url: `${process.env.NEXT_PUBLIC_POCKETURL}/api/files/files/${response.id}/${response.file_data}`,
+                        },
+                      };
                     }
-                    const extension = getFileExtension(file);
-                    return {
-                      success: 1,
-                      file: {
-                        extension: extension,
-                        url: `${process.env.NEXT_PUBLIC_POCKETURL}/api/files/files/${response.id}/${response.file_data}`,
-                      },
-                    };
-                  }
-                  return upload(file);
+                    return upload(file);
+                  },
                 },
               },
             },
-          },
 
-          break: {
-            class: LineBreak,
+            break: {
+              class: LineBreak,
+            },
+            list: {
+              class: List,
+              inlineToolbar: true,
+            },
           },
-          list: {
-            class: List,
-            inlineToolbar: true,
-          },
-        },
-        data: editorData,
-        placeholder: "Enter some text...",
-        //autofocus: true,
-      });
+          data: editorData,
+          placeholder: "Enter some text...",
+          autofocus: editorData?.blocks[0]?.type === 'image' ? false : true,
+        });
 
-      setEditor(editorInstance, () => {
-        // Cleanup logic
-        if (editor) {
-          try {
-            editor.destroy();
-          } catch (err) {
-            console.warn(err);
-            toast.error(`Reloading editor`);
-            setIsLoading(true);
-            setTimeout(() => {
-              window.location.reload();
-            }, 1200);
+        setEditor(editorInstance, () => {
+          // Cleanup logic
+          if (editor) {
+            try {
+              editor.destroy();
+            } catch (err) {
+              console.warn(err);
+              toast.error(`Reloading editor`);
+              setIsLoading(true);
+              setTimeout(() => {
+                window.location.reload();
+              }, 1200);
+            }
           }
-        }
-      });
+        });
+      }
+    } catch (error) {
+      console.error(error)
+      toast.error(`Editor not ready! Saving may not work.`);
     }
   }, [editorData, page]);
 
