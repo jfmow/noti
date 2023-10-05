@@ -33,9 +33,6 @@ export default function Unsplash({ page, setArticleHeader, close }) {
 
     async function fetchImages() {
         try {
-            if (currentPageNumber >= totalPages && totalPages !== -1) {
-                return;
-            }
             const response = await fetch(`${process.env.NEXT_PUBLIC_CURRENTURL}/api/getunsplash`, {
                 method: 'POST',
                 body: JSON.stringify({ query: searchTerm || '*rand**', page: currentPageNumber }),
