@@ -9,7 +9,7 @@ import { ShowTabBar } from "../editor/TabBar";
 
 export default function UserHelpModal({ CloseHelp }) {
     //const [themePicker, setThemePicker] = useState(false);
-    const themes = [{ displayName: 'Purple', key: 'purple', color: '#373544' }, { displayName: 'Navy blue', key: 'navy blue', color: '#353b44' }, { displayName: 'Pro pink', key: 'pro pink', color: '#e3abdb' }, { displayName: 'Relax orange', key: 'relax orange', color: '#e69973' }, { displayName: 'Pro dark', key: 'pro dark', color: '#000000' }, { displayName: 'Mid light', key: 'mid light', color: '#f9f9f9' }, { displayName: 'Cool Gray', key: 'cool gray', color: '#dbdada' }, { displayName: 'System', key: 'system' }]
+    const themes = [{ displayName: 'Purple', key: 'purple', color: '#373544' }, { displayName: 'Navy blue', key: 'navy blue', color: '#353b44' }, { displayName: 'Pro pink', key: 'pro pink', color: '#e3abdb' }, { displayName: 'Relax orange', key: 'relax orange', color: '#e69973' }, { displayName: 'Teal green', key: 'light teal green', color: '#e0f2f1' }, { displayName: 'Pro dark', key: 'pro dark', color: '#000000' }, { displayName: 'Mid light', key: 'mid light', color: '#f9f9f9' }, { displayName: 'Cool Gray', key: 'cool gray', color: '#dbdada' }, { displayName: 'System', key: 'system' }]
 
     function disableCustomTheme() {
         try {

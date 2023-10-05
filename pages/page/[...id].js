@@ -281,6 +281,38 @@ function NotionEditor({ pageId }) {
               '--user_option_text': '#464646'
             }
             break;
+          case 'light teal green':
+            vars = {
+              '--background': '#e0f2f1',
+              '--big_button_background': '#4db6ac',
+              '--big_button_border': '#009688',
+              '--big_button_border_hover_alt': '#00796b',
+              '--big_button_text': '#ffffff',
+              '--editor_text': '#000000',
+              '--desktophidemenu_bg': '#26a69a',
+              '--desktophidemenu_bg_hover': '#00796b',
+              '--boxshadow_primary': '#004d40',
+              '--page_list_item_hover': '#80cbc4',
+              '--page_list_item_active': '#b2dfdb',
+              '--page_list_item_icons_background_hover': '#009688',
+              '--page_list_item_hover_drag': '#ff7777',
+              '--create_new_page_btn_text': '#ffffff',
+              '--page_list_item_icons': '#ffffff',
+              '--page_list_item_fillcolor': '#ffffff',
+              '--modal_text_color': '#000000',
+              '--modal_button_svg': '#009688',
+              '--modal_background': '#b2dfdb',
+              '--modal_button_text': '#ffffff',
+              '--modal_close_button_hover': '#e0f2f1',
+              '--modal_button_bg': '#4db6ac',
+              '--modal_button_border': 'none',
+              '--modal_button_bg_hover': '#00796b',
+              '--modal_button_text_hover': '#ffffff',
+              '--modal_button_bxshdw_hover': '#004d40',
+              '--userinfo_section_bordertop': '#009688',
+              '--user_option_text': '#000000'
+            }
+            break;
           case 'system':
             vars = { '': '' }
             break;
