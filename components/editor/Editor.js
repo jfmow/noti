@@ -482,7 +482,7 @@ function Editor({ page, multi }) {
           },
           data: editorData,
           placeholder: "Enter some text...",
-          autofocus: editorData?.blocks[0]?.type === 'image' ? false : true,
+          autofocus: editorData?.blocks?.length > 1 && editorData?.blocks[0]?.type === 'image' ? false : true,
         });
 
         setEditor(editorInstance, () => {
