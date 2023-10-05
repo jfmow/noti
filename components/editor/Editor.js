@@ -481,7 +481,7 @@ function Editor({ page, multi }) {
         },
         data: editorData,
         placeholder: "Enter some text...",
-        autofocus: true,
+        //autofocus: true,
       });
 
       setEditor(editorInstance, () => {
