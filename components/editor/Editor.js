@@ -302,7 +302,7 @@ function Editor({ page, multi }) {
                 storeFile: {
                   uploadFile(file) {
                     async function uploadbyFile(file) {
-
+                      const loadingToast = toast.loading("Uploading...")
                       const formData = new FormData();
 
                       const compressedBlob = await compressImage(file); // Maximum file size in KB (100KB in this example)
@@ -324,8 +324,10 @@ function Editor({ page, multi }) {
                           return { success: 0 }
                         }
                         record = await pb.collection("imgs").create(formData);
-
+                        toast.dismiss(loadingToast)
+                        toast.success("Image uploaded successfully!")
                       } catch (error) {
+                        toast.dismiss(loadingToast)
                         if (error.data.code === 403) {
                           toast.error(error.data.message)
                           return { success: 0 }
@@ -375,7 +377,7 @@ function Editor({ page, multi }) {
                 storeFile: {
                   uploadFile(file) {
                     async function uploadbyFile(file) {
-
+                      const loadingToast = toast.loading("Uploading...")
                       const formData = new FormData();
                       formData.append("file_data", file);
                       formData.append("uploader", pb.authStore.model.id);
@@ -392,8 +394,11 @@ function Editor({ page, multi }) {
                         }
                         record = await pb.collection("files").create(formData);
                         //console.log(record);
+                        toast.dismiss(loadingToast)
+                        toast.success("File uploaded successfully!")
 
                       } catch (error) {
+                        toast.dismiss(loadingToast)
                         console.error(error);
                         if (error.data.code === 403) {
                           toast.error(error.data.message)
@@ -482,7 +487,7 @@ function Editor({ page, multi }) {
           },
           data: editorData,
           placeholder: "Enter some text...",
-          autofocus: editorData?.blocks?.length > 1 && editorData?.blocks[0]?.type === 'image' ? false : true,
+          autofocus: editorData?.blocks?.length >= 1 && editorData?.blocks[0]?.type === 'image' ? false : true,
         });
 
         setEditor(editorInstance, () => {

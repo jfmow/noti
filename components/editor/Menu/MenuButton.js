@@ -64,6 +64,8 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
     }
 
     async function handlePageHeaderImageUpload(e) {
+        const loadingToast = toast.loading("Uploading...")
+
         const file = e.target.files[0];
 
         const reader = new FileReader();
@@ -86,7 +88,11 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
                 //}
                 await pb.collection("pages").update(page, formData);
 
+                toast.dismiss(loadingToast)
+                toast.success("Image uploaded successfully!")
+
             } catch (error) {
+                toast.dismiss(loadingToast)
                 toast.error("Error uploading header img");
             }
         }

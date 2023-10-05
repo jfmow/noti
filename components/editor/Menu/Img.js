@@ -3,6 +3,7 @@ import PocketBase from 'pocketbase';
 import debounce from 'lodash/debounce';
 import Link from '../../Link';
 import styles from '@/styles/Single/Unsplashpicker.module.css'
+import { toast } from 'sonner';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 
@@ -48,6 +49,8 @@ export default function Unsplash({ page, setArticleHeader, close }) {
     }
 
     async function downloadAndCreateFileObjects(data) {
+        const loadingToast = toast.loading("Setting cover...")
+
         const fullImageUrl = data.urls.full;
         setLoading(data.id);
         setArticleHeader(fullImageUrl);
@@ -66,6 +69,8 @@ export default function Unsplash({ page, setArticleHeader, close }) {
             console.error('Error downloading and creating file objects:', err);
             // Handle the error, e.g., set an error state or show an error message
         } finally {
+            toast.dismiss(loadingToast)
+            toast.success("Cover set successfully!")
             setLoading(null);
         }
     }
