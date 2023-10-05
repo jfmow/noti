@@ -12,6 +12,7 @@ import Table from "@editorjs/table";
 import AttachesTool from "@editorjs/attaches";
 import PocketBase from "pocketbase";
 import styles from "@/styles/Create.module.css";
+import Video from '@/customEditorTools/Video'
 import Loader from "../Loader";
 import compressImage from "@/lib/CompressImg";
 import dynamic from 'next/dynamic';
@@ -428,7 +429,9 @@ function Editor({ page, multi }) {
             },
             SimpleIframeWebpage: {
               class: SimpleIframeWebpage,
-
+            },
+            Video: {
+              class: Video
             },
             InlineCode: {
               class: InlineCode,
@@ -487,7 +490,7 @@ function Editor({ page, multi }) {
           },
           data: editorData,
           placeholder: "Enter some text...",
-          autofocus: editorData?.blocks?.length >= 1 && editorData?.blocks[0]?.type === 'image' ? false : true,
+          autofocus: editorData?.blocks?.length >= 1 && (editorData?.blocks[0]?.type === 'image' || editorData?.blocks[0]?.type === 'Video') ? false : true,
         });
 
         setEditor(editorInstance, () => {
