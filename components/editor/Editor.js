@@ -98,7 +98,7 @@ function Editor({ page, multi }) {
               }
               return
             }
-            const articleContent = await editor.saver.save();
+            const articleContent = await editor.save();
             let formData = new FormData();
 
             formData.append("title", articleTitle);
