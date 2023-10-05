@@ -1,5 +1,5 @@
 import { AlternateButton, ModalContainer, ModalForm, ModalTitle } from '@/lib/Modal';
-import { PopCardsGlobalButton } from '@/lib/Pop-Cards/PopCard';
+import { PopUpCardsGlobalButton } from '@/lib/Pop-Cards/PopUpCard';
 import React from 'react';
 import { useState } from 'react';
 
@@ -136,7 +136,7 @@ const ColorSelector = ({ onSelectColor, page, close }) => {
                     );
                 })}
             </div>
-            <PopCardsGlobalButton style={{ width: '100%', margin: '5px' }} click={generateRandomBackgrounds}>Refresh gradients</PopCardsGlobalButton>
+            <PopUpCardsGlobalButton style={{ width: '100%', margin: '5px' }} click={generateRandomBackgrounds}>Refresh gradients</PopUpCardsGlobalButton>
         </>
     );
 };

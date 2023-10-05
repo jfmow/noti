@@ -12,7 +12,7 @@
 
 
 
-.PopTabsDropMenu {
+.TabbedDropMenu {
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -73,7 +73,7 @@
 
 
 
-.PopTabsDropMenuSelectorSurround {
+.TabbedDropMenuSelectorSurround {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -86,7 +86,7 @@
     border-radius: 7px 7px 0 0;
 }
 
-.PopTabsDropMenuSelectorOptions {
+.TabbedDropMenuSelectorOptions {
     width: 100%;
     height: 32px;
     background: none;
@@ -98,14 +98,14 @@
     font-weight: 500;
 }
 
-.PopTabsDropMenuSelectorOptionsActive {
+.TabbedDropMenuSelectorOptionsActive {
     background: var(--modal_button_bg_hover);
     color: var(--modal_button_text_hover);
     cursor: default;
     font-weight: 600;
 }
 
-.PopTabsDropMenuItemSurround {
+.TabbedDropMenuItemSurround {
     height: 300px;
     background: var(--modal_background);
     padding: 1em;
@@ -114,11 +114,11 @@
     padding-bottom: 0;
 }
 
-.PopTabsDropMenuItem h1 {
+.TabbedDropMenuItem h1 {
     font-size: 16px;
     font-weight: 500;
 }
 
-.PopTabsDropMenuItem {
+.TabbedDropMenuItem {
     font-size: 14px;
 }

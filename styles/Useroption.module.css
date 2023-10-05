@@ -60,7 +60,7 @@
 
 @media(max-width: 800px) {
     .container {
-        width: 100%;
+        width: 300px;
         transition: none;
     }
 }

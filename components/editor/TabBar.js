@@ -1,5 +1,5 @@
 import { ContextMenuDropMenu, ContextMenuDropMenuSection, ContextMenuDropMenuSectionItem, PopDropMenuStatic } from '@/lib/ContextMenu';
-import { PopCardDropMenu, PopCardDropMenuSection, PopCardDropMenuSectionItem, PopCardDropMenuSectionTitle, PopCardDropMenuStaticPos } from '@/lib/Pop-Cards/PopDropMenu';
+import { PopUpCardDropMenu, PopUpCardDropMenuSection, PopUpCardDropMenuSectionItem, PopUpCardDropMenuSectionTitle, PopUpCardDropMenuStaticPos } from '@/lib/Pop-Cards/PopDropMenu';
 import styles from '@/styles/TabBar.module.css';
 import Router from 'next/router';
 import { useEffect, useRef, useState } from 'react';
@@ -138,19 +138,19 @@ export default function TabBar({ pb, page, }) {
                         );
                     })}
                     <button className={styles.newPageDropButton} onClick={(e) => setNewPageDropEvent(e)} type='button'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14" /><path d="M12 5v14" /></svg></button>
-                    <PopCardDropMenu event={newPageDropEvent} minGap={3}>
-                        <PopCardDropMenuSectionTitle>
+                    <PopUpCardDropMenu event={newPageDropEvent} minGap={3}>
+                        <PopUpCardDropMenuSectionTitle>
                             Pages
-                        </PopCardDropMenuSectionTitle>
-                        <PopCardDropMenuSection>
-                            <PopCardDropMenuSectionItem onClick={() => {
+                        </PopUpCardDropMenuSectionTitle>
+                        <PopUpCardDropMenuSection>
+                            <PopUpCardDropMenuSectionItem onClick={() => {
 
                                 CreateANewPage()
                             }}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-plus"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" /><polyline points="14 2 14 8 20 8" /><line x1="12" x2="12" y1="18" y2="12" /><line x1="9" x2="15" y1="15" y2="15" /></svg>
                                 <p>Create new page</p>
-                            </PopCardDropMenuSectionItem>
-                            <PopCardDropMenuSectionItem onClick={() => {
+                            </PopUpCardDropMenuSectionItem>
+                            <PopUpCardDropMenuSectionItem onClick={() => {
                                 //setAddPageDropMenuEvent(!addPageDropMenuEvent)
                                 toast('Comming soon!')
                             }} >
@@ -158,33 +158,33 @@ export default function TabBar({ pb, page, }) {
                                 <p>Add page</p>
                                 {addPageDropMenuEvent && (
                                     <PopDropMenuStatic style={{ width: '200px', minHeight: '100px', position: 'absolute', zIndex: '13', left: `-198px`, top: '40px' }}>
-                                        <PopCardDropMenuSection>
-                                            <PopCardDropMenuSectionItem>
+                                        <PopUpCardDropMenuSection>
+                                            <PopUpCardDropMenuSectionItem>
                                                 test
-                                            </PopCardDropMenuSectionItem>
-                                        </PopCardDropMenuSection>
+                                            </PopUpCardDropMenuSectionItem>
+                                        </PopUpCardDropMenuSection>
                                     </PopDropMenuStatic>
                                 )}
 
-                            </PopCardDropMenuSectionItem>
-                        </PopCardDropMenuSection>
-                        <PopCardDropMenuSectionTitle>
+                            </PopUpCardDropMenuSectionItem>
+                        </PopUpCardDropMenuSection>
+                        <PopUpCardDropMenuSectionTitle>
                             TabBar
-                        </PopCardDropMenuSectionTitle>
-                        <PopCardDropMenuSection>
-                            <PopCardDropMenuSectionItem onClick={() => hideTabBar()}>
+                        </PopUpCardDropMenuSectionTitle>
+                        <PopUpCardDropMenuSection>
+                            <PopUpCardDropMenuSectionItem onClick={() => hideTabBar()}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-off"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" /><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" /><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" /><line x1="2" x2="22" y1="2" y2="22" /></svg>
                                 <p>Hide</p>
-                            </PopCardDropMenuSectionItem>
-                            <PopCardDropMenuSectionItem onClick={() => {
+                            </PopUpCardDropMenuSectionItem>
+                            <PopUpCardDropMenuSectionItem onClick={() => {
                                 window.localStorage.setItem('_tabbar', JSON.stringify([]))
                                 setTabBarItems([])
                             }}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rotate-ccw"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /></svg>
                                 <p>Clear</p>
-                            </PopCardDropMenuSectionItem>
-                        </PopCardDropMenuSection>
-                    </PopCardDropMenu>
+                            </PopUpCardDropMenuSectionItem>
+                        </PopUpCardDropMenuSection>
+                    </PopUpCardDropMenu>
 
                 </div>
             )}

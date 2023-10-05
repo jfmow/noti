@@ -1,4 +1,4 @@
-.PopCard {
+.PopUpCard {
     position: fixed;
     background: var(--modal_background);
     box-shadow: 0px 36px 89px rgb(0 0 0/4%), 0px 23.3333px 52.1227px rgba(0, 0, 0, .03), 0px 13.8667px 28.3481px rgba(0, 0, 0, .024), 0px 7.2px 14.4625px rgb(0 0 0/2%), 0px 2.93333px 7.25185px rgba(0, 0, 0, .016), 0px 0.666667px 3.50231px rgba(0, 0, 0, .01);
@@ -69,11 +69,11 @@
 
 }
 
-.PopCardTitle {
+.PopUpCardTitle {
     display: flex;
 }
 
-.PopCardTitle_text {
+.PopUpCardTitle_text {
     font-size: 18px;
     font-family: "Special", "Inter";
     font-weight: 600;
@@ -82,12 +82,12 @@
     color: var(--modal_text_color);
 }
 
-.PopCardSubTitle {
+.PopUpCardSubTitle {
     display: flex;
     margin-top: 7px;
 }
 
-.PopCardSubTitle_text {
+.PopUpCardSubTitle_text {
     margin: 0;
     font-size: 14px;
     font-family: "Special", "Inter";
@@ -98,7 +98,7 @@
     opacity: 0.8;
 }
 
-.PopCardScrollCon {
+.PopUpCardScrollCon {
     height: 100%;
     max-height: 270px;
     overflow-y: scroll;
@@ -117,7 +117,7 @@
 }
 
 @media(max-width: 600px) {
-    .PopCard {
+    .PopUpCard {
         height: 400px !important;
         top: 0 !important;
         left: 0 !important;

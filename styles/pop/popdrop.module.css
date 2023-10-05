@@ -12,7 +12,7 @@
 
 
 
-.PopCardDropMenu {
+.PopUpCardDropMenu {
     display: flex;
     width: calc(200px);
     flex-direction: column;
@@ -28,11 +28,11 @@
     animation: dropmenuin 0.2s 1 ease-in-out;
 }
 
-.PopCardDropMenu :first-child {
+.PopUpCardDropMenu :first-child {
     border-top: none;
 }
 
-.PopCardDropMenu :last-child {
+.PopUpCardDropMenu :last-child {
     border-bottom: none;
 }
 
@@ -81,7 +81,7 @@
     }
 }
 
-.PopCardDropMenuSection {
+.PopUpCardDropMenuSection {
     border-top: 1px solid #e5e7eb6e;
     border-bottom: 1px solid #e5e7eb6e;
     width: 100%;
@@ -92,7 +92,7 @@
     font-weight: 500;
 }
 
-.PopCardDropMenuSectionItem {
+.PopUpCardDropMenuSectionItem {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -101,23 +101,23 @@
     color: var(--modal_text_color);
 }
 
-.PopCardDropMenuSectionItem:hover {
+.PopUpCardDropMenuSectionItem:hover {
     border-radius: calc(0.5rem - 4px);
     background: var(--modal_button_bg);
 }
 
-.PopCardDropMenuSectionItem>a,
-.PopCardDropMenuSectionItem>p,
-.PopCardDropMenuSectionItem>button {}
+.PopUpCardDropMenuSectionItem>a,
+.PopUpCardDropMenuSectionItem>p,
+.PopUpCardDropMenuSectionItem>button {}
 
-.PopCardDropMenuSectionItem svg {
+.PopUpCardDropMenuSectionItem svg {
     width: 16px;
     height: 16px;
     margin-right: 0.5rem;
     display: flex;
 }
 
-.PopCardDropMenuSectionTitle {
+.PopUpCardDropMenuSectionTitle {
     font-family: "Special";
     font-weight: 600;
     font-size: 14px;
