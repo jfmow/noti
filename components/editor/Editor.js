@@ -89,48 +89,53 @@ function Editor({ page, multi }) {
         // Auto-save 3 seconds after the user stops typing
         setLastTypedTimeIdle(true);
         setIsSaving(true);
-        if (editor) {
-          if (offline.state) {
-            setOffline({ ...offline, warning: true })
-            if (!offline.warning) {
-              toast.error("Looks like your offline. Your work is currenly unsaved!")
+        try {
+          if (editor) {
+            if (offline.state) {
+              setOffline({ ...offline, warning: true })
+              if (!offline.warning) {
+                toast.error("Looks like your offline. Your work is currenly unsaved!")
+              }
+              return
             }
-            return
-          }
-          const articleContent = await editor.saver.save();
-          let formData = new FormData();
+            const articleContent = await editor.saver.save();
+            let formData = new FormData();
 
-          formData.append("title", articleTitle);
-          // Encrypt the note content
-          // Replace with the user's encryption key
+            formData.append("title", articleTitle);
+            // Encrypt the note content
+            // Replace with the user's encryption key
 
-          //const encryptedNote = AES.encrypt(
-          //  JSON.stringify(articleContent),
-          //  chefKey
-          //).toString();
+            //const encryptedNote = AES.encrypt(
+            //  JSON.stringify(articleContent),
+            //  chefKey
+            //).toString();
 
-          // Decrypt the note content
+            // Decrypt the note content
 
 
-          formData.append("content", JSON.stringify(articleContent));
-          try {
-            if (page === "firstopen") {
-              formData.append("owner", pb.authStore.model.id);
-              const state = await pb.collection("pages").create(formData);
-              return Router.push(`/page/${state.id}`)
+            formData.append("content", JSON.stringify(articleContent));
+            try {
+              if (page === "firstopen") {
+                formData.append("owner", pb.authStore.model.id);
+                const state = await pb.collection("pages").create(formData);
+                return Router.push(`/page/${state.id}`)
+              }
+              const state = await pb.collection("pages").update(page, formData);
+              //console.log("Auto saved successfully!");
+            } catch (error) {
+              toast.error("Could not auto save!", {
+                position: toast.POSITION.BOTTOM_LEFT,
+              });
+              console.error(error);
             }
-            const state = await pb.collection("pages").update(page, formData);
-            //console.log("Auto saved successfully!");
-          } catch (error) {
-            toast.error("Could not auto save!", {
-              position: toast.POSITION.BOTTOM_LEFT,
-            });
-            console.error(error);
+            //console.log("Auto-save executed.");
           }
-          //console.log("Auto-save executed.");
+          setLastTypedTimeIdle(true);
+          setIsSaving(false);
+        } catch (error) {
+          console.log(error)
+          toast.error("Could not auto save!")
         }
-        setLastTypedTimeIdle(true);
-        setIsSaving(false);
       }
     };
 
