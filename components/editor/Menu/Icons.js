@@ -90,11 +90,11 @@ export default function Icons({ Select, Selected, Close }) {
                     try {
                         if (emoji.has_img_twitter) {
                             const { sheet_x, sheet_y } = emoji;
-                            const sheet_size = 64;
+                            const sheet_size = 32;
                             const x = (sheet_x * (sheet_size + 2)) + 1;
                             const y = (sheet_y * (sheet_size + 2)) + 1;
                             const style = {
-                                backgroundImage: `url(/64.png)`,
+                                backgroundImage: `url(/32.png)`,
                                 backgroundPosition: `-${x}px -${y}px`,
                             };
                             return (
