@@ -35,7 +35,7 @@
     width: 16px;
     height: 16px;
     cursor: pointer;
-    fill: var(--user_option_text);
+    color: var(--user_option_text);
 }
 
 .icons .icon {
@@ -54,7 +54,7 @@
 }
 
 .usricon svg {
-    fill: #707684;
+    color: #707684;
 }
 
 
