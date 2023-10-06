@@ -162,7 +162,7 @@ export default class Image {
 
         if (data2.success === 1) {
           await this._createImage(
-            data2.file.fileId // Pass the fileId as an argument
+            { fileId: data2.file.fileId, blurHashData: data2.file.blurHashData } // Pass the fileId as an argument
           )
         } else {
           return
