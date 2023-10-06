@@ -5,7 +5,7 @@ import Router from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
-export default function TabBar({ pb, page, }) {
+export default function TabBar({ pb, page, plVisible, setplVisible }) {
     const [tabBarItems, setTabBarItems] = useState([]);
     const [draggedItemId, setDraggedItemId] = useState(null);
     const [newPageDropEvent, setNewPageDropEvent] = useState(null)
@@ -19,7 +19,7 @@ export default function TabBar({ pb, page, }) {
                 setTabBarHidden(false)
             }
         });
-        if (window.localStorage.getItem('_tabbar') === 'hidden' || window.innerWidth < 600) {
+        if (window.localStorage.getItem('_tabbar') === 'hidden') {
             setTabBarHidden(true)
             return
         }
@@ -113,11 +113,19 @@ export default function TabBar({ pb, page, }) {
         Router.push(`/page/${record.id}`)
     }
 
+    function setPageListVisible() {
+        setplVisible(true)
+        window.localStorage.setItem('menu', 'true')
+    }
+
 
     return (
         <>
             {!tabBarHidden && (
-                <div className={styles.tabbar}>
+                <div className={styles.tabbar} style={!plVisible ? { width: '100%' } : {}}>
+                    {!plVisible && (
+                        <button className={styles.newPageDropButton} onClick={() => setPageListVisible()} type='button'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-left-open"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><path d="M9 3v18" /><path d="m14 9 3 3-3 3" /></svg></button>
+                    )}
                     {tabBarItems.map((item) => {
                         if (item === undefined) {
                             return <></>;

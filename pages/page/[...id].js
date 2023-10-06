@@ -14,6 +14,7 @@ const Editor = dynamic(() => import('../../components/editor/Editor'), {
 function NotionEditor({ pageId }) {
   const [isLoading, setIsLoading] = useState(true);
   const [tabBarHidden, setTabBarHidden] = useState(false)
+  const [visible, setVisible] = useState(true)
 
   useEffect(() => {
 
@@ -348,9 +349,9 @@ function NotionEditor({ pageId }) {
   return (
     <div>
       <div className='main'>
-        <MyComponent currPage={pageId} />
+        <MyComponent visible={visible} setVisible={setVisible} currentPage={pageId} />
         <div style={{ flex: '1 1 0%', position: 'relative', display: 'flex', height: '100vh', flexDirection: 'column' }}>
-          <TabBar pb={pb} page={pageId[0]} />
+          <TabBar plVisible={visible} setplVisible={setVisible} pb={pb} page={pageId[0]} />
           <div style={{ display: 'flex', height: '100%', overflow: 'hidden' }}>
             {pageId.map((page) => (
               <Editor page={page} multi={pageId.length > 1 && true} preview='false' />
