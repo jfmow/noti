@@ -250,13 +250,13 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
                 <button
                     aria-label="Page cover options"
                     type="button"
-                    onClick={(e) => popUpClickEventPageCoverOptions ? setpopUpClickEventPageCoverOptions(null) : setpopUpClickEventPageCoverOptions(e)}
+                    onClick={(e) => setpopUpClickEventPageCoverOptions(e)}
                     className={styles.title_buttons_btn}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wallpaper"><circle cx="8" cy="9" r="2" /><path d="m9 17 6.1-6.1a2 2 0 0 1 2.81.01L22 15V5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2" /><path d="M8 21h8" /><path d="M12 17v4" /></svg>
                 </button>
 
-                <PopUpCardDropMenuStaticPos mobilepos={{
+                <PopUpCardDropMenuStaticPos animationOrgin={'top right'} mobilepos={{
                     top: `70px`,
                     left: `0`,
                     width: `200px`,
@@ -317,7 +317,7 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
                 <button
                     aria-label="Customise page menu opener"
                     type="button"
-                    onClick={(e) => popUpClickEventEmoji ? setpopUpClickEventEmoji(null) : setpopUpClickEventEmoji(e)}
+                    onClick={(e) => setpopUpClickEventEmoji(e)}
                     className={styles.title_buttons_btn}
                     onMouseOver={() => setPopUpEmojiState({ ...popUpEmojiState, active: true })
                     }
@@ -361,11 +361,11 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
                 <button
                     aria-label="Page settings"
                     type="button"
-                    onClick={(e) => popUpClickEventPageOptions ? setpopUpClickEventPageOptions(null) : setpopUpClickEventPageOptions(e)}
+                    onClick={(e) => setpopUpClickEventPageOptions(e)}
                     className={styles.title_buttons_btn}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings-2"><path d="M20 7h-9" /><path d="M14 17H5" /><circle cx="17" cy="17" r="3" /><circle cx="7" cy="7" r="3" /></svg>                </button>
-                <PopUpCardDropMenuStaticPos mobilepos={{
+                <PopUpCardDropMenuStaticPos animationOrgin={'top right'} mobilepos={{
                     top: `70px`,
                     right: `0`,
                     width: `200px`,
