@@ -27,22 +27,24 @@
 
     100% {
         display: flex;
-        width: 0;
+        width: 300px;
         white-space: nowrap;
         overflow: hidden;
-        padding-left: 0;
-        padding-right: 0;
+        padding: 1em;
+        transform: translateX(-100%);
+        margin-right: -300px;
     }
 }
 
 @keyframes container_enter {
     0% {
         display: flex;
-        width: 0;
+        width: 300px;
         white-space: nowrap;
         overflow: hidden;
-        padding-left: 0;
-        padding-right: 0;
+        padding: 1em;
+        transform: translateX(-100%);
+        margin-right: -300px;
     }
 
     100% {
@@ -50,6 +52,8 @@
         width: 300px;
         white-space: nowrap;
         overflow: hidden;
+        transform: translateX(0);
+        margin-right: 0;
     }
 
 }
