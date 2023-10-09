@@ -490,7 +490,7 @@ function Editor({ page, multi }) {
           },
           data: editorData,
           placeholder: "Enter some text...",
-          autofocus: editorData?.blocks?.length >= 1 && (editorData?.blocks[0]?.type === 'image' || editorData?.blocks[0]?.type === 'Video') ? false : true,
+          autofocus: editorData?.blocks?.length >= 1 && (editorData?.blocks[0]?.type === 'image' || editorData?.blocks[0]?.type === 'Video' || editorData?.blocks[0]?.type === 'simpleEmbeds') ? false : true,
         });
 
         setEditor(editorInstance, () => {
