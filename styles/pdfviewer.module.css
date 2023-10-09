@@ -1,19 +1,23 @@
-.button:hover{
+.button:hover {
     background: #00000024;
 }
-.button{
-    display: flex;
-    flex-direction: row;
+
+.button {
     align-items: center;
     background: none;
     border: none;
     cursor: pointer;
-    justify-content: center;
-    fill: var(--modal_button_text);
+    color: #292929;
     padding: 3px 5px;
     border-radius: 5px;
 }
-.itemcon{
+
+.button svg {
+    width: 16px;
+    height: 16px;
+}
+
+.itemcon {
     display: flex;
     flex-direction: row;
     position: fixed;
@@ -24,23 +28,26 @@
     width: 100%;
     justify-content: center;
 }
-.items{
-    padding: 0.5em 2em;
-    border-radius: 15px;
+
+.items {
+    /* transform: scale(100%); */
+    padding: .5em 1em;
+    border-radius: 0.5rem;
     display: flex;
     flex-direction: row;
-    width: 150px;
+    width: fit-content;
+    min-width: -moz-fit-content;
     min-width: fit-content;
     gap: 5px;
-    background: var(--modal_button_bg);
-    box-shadow: 0px 0px 5px 0px #939393;
+    background: #fffffffa;
+    box-shadow: 0 36px 89px rgb(0 0 0/4%), 0 23.3333px 52.1227px rgba(0, 0, 0, .03), 0 13.8667px 28.3481px rgba(0, 0, 0, .024), 0 7.2px 14.4625px rgb(0 0 0/2%), 0 2.93333px 7.25185px rgba(0, 0, 0, .016), 0 0.666667px 3.50231px rgba(0, 0, 0, .01);
     align-items: center;
     justify-content: space-evenly;
 }
 
-.itembreak{
+.itembreak {
     width: 2px;
-    height: 70%;
-    background: #343434;
+    height: 16px;
+    background: #ebebeb;
     margin: 0 5px;
 }
