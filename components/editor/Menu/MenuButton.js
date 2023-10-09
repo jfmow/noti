@@ -6,6 +6,7 @@ import styles from "@/styles/Create.module.css";
 import compressImage from "@/lib/CompressImg";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import Alert from "./Alert";
 
 const TabbedDropMenuItem = dynamic(() => import('@/lib/Pop-Cards/Tabbed').then((module) => module.TabbedDropMenuItem));
 const TabbedDropMenuItemSurround = dynamic(() => import('@/lib/Pop-Cards/Tabbed').then((module) => module.TabbedDropMenuItemSurround));
@@ -42,6 +43,8 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
     const [iconModalState, setIconModalState] = useState(false);
     const [showPageInfo, setShowPageInfo] = useState(false)
     const [sharePageInfo, setSharePageInfo] = useState(false)
+    const [DeletePageAlert, setDeletePageAlert] = useState(false)
+
 
     const [popUpEmojiState, setPopUpEmojiState] = useState({ activeItem: 'Icons', active: false })
 
@@ -406,7 +409,7 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
                             <p>Page info</p>
                         </PopUpCardDropMenuSectionItem>
                         <PopUpCardDropMenuSectionItem
-                            onClick={handleDeletePage} onHover={() => {
+                            onClick={setDeletePageAlert} onHover={() => {
                                 //set everything false
                                 setSharePageInfo(false);
                                 setShowPageInfo(false);
@@ -416,6 +419,10 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
                             <p >Delete page</p>
                         </PopUpCardDropMenuSectionItem>
                     </PopUpCardDropMenuSection>
+
+                    {DeletePageAlert && (
+                        <Alert func={handleDeletePage} close={() => setDeletePageAlert(false)} />
+                    )}
                     {showPageInfo && (
                         <PopDropMenuStatic style={{ width: '200px', minHeight: '100px', position: 'absolute', zIndex: '13', left: `-198px`, top: '50px' }}>
                             <PopUpCardDropMenuSectionTitle>

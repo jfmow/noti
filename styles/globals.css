@@ -194,6 +194,12 @@ a {
   src: url("../fonts/specialfont.woff2");
 }
 
+@font-face {
+  font-family: "Int";
+  font-display: swap;
+  src: url("../fonts/int.woff2");
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 2px;

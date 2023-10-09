@@ -8,7 +8,7 @@ import UserOptions from './UserInfo';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 pb.autoCancellation(false)
 
-export default function App({ currentPage, visible, setVisible }) {
+export default function PageList({ currentPage, visible, setVisible }) {
   const [treeData, setTreeData] = useState([])
   const [contextMenuEvent, setContextMenuEvent] = useState(null)
   const [SearchActive, setSearchActive] = useState(false)
@@ -210,6 +210,8 @@ export default function App({ currentPage, visible, setVisible }) {
 
     return (
       <>
+
+
         <li
           style={{ background: currentPage.includes(item.id) ? `var(--page_list_item_active)` : hoveredItemId === item.id ? 'rgba(99, 223, 225, 0.638)' : item.color }}
           className={`${styles.item}`}
