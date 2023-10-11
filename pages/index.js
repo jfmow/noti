@@ -34,14 +34,7 @@ export default function Home2() {
 
           <Section1 />
 
-          <div className={`${styles.section}`}>
 
-            <div className={styles.s2_answer_img} >
-              <img src='/ban.svg' />
-            </div>
-
-
-          </div>
           <FeatureCardsSection />
           <CompBanner />
           <BigTextSection1 />
@@ -77,6 +70,8 @@ function Section1() {
     <div className={styles.section1}>
       <div className={styles.center}>
         <h1 className={styles.title}>The Ultimate Note App To Elevate Your Note Taking Experience</h1>
+        <img className={styles.section1_bannerimg} src='/bannera.jpg' />
+
         <p className={styles.subtitle}>SaveMyNotes is a complimentary starter template created using NextJS and PocketBase, equipped with all the essentials to kickstart your note taking and streamline your workflow.</p>
         <Link className={styles.button_s1} href='/auth/signup'>Get Started For Free</Link>
       </div>
