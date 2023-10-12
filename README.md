@@ -35,7 +35,6 @@ We opted for our own custom solution to prevent random redirects and ensure a se
 I've poured my dedication into making this website incredibly accessible. While I strive for perfection, there might be areas that need a little extra love. Your feedback is invaluable!
 
 - **Awesome Icons:** [Lucide](https://lucide.dev/)
-- **Stunning Image Assets:** [unDraw](https://undraw.co/illustrations)
 - **Powerful DB/Backend:** [PocketBase](https://pocketbase.io/)
 
 **Disclaimer**:
