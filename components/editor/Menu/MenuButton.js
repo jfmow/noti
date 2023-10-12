@@ -6,7 +6,7 @@ import styles from "@/styles/Create.module.css";
 import compressImage from "@/lib/CompressImg";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import Alert from "./Alert";
+import { AlertButton, AlertButtons, AlertContainer } from "@/lib/Alert";
 
 const TabbedDropMenuItem = dynamic(() => import('@/lib/Pop-Cards/Tabbed').then((module) => module.TabbedDropMenuItem));
 const TabbedDropMenuItemSurround = dynamic(() => import('@/lib/Pop-Cards/Tabbed').then((module) => module.TabbedDropMenuItemSurround));
@@ -60,6 +60,7 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
 
     async function handleDeletePage() {
         await pb.collection("pages").delete(page);
+        toast.success(`${articleTitle || 'Untitled'} deleted`)
         await editor.clear()
         clearStates()
         editorRef.current = null
@@ -409,7 +410,7 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
                             <p>Page info</p>
                         </PopUpCardDropMenuSectionItem>
                         <PopUpCardDropMenuSectionItem
-                            onClick={setDeletePageAlert} onHover={() => {
+                            onClick={() => setDeletePageAlert(true)} onHover={() => {
                                 //set everything false
                                 setSharePageInfo(false);
                                 setShowPageInfo(false);
@@ -421,7 +422,14 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
                     </PopUpCardDropMenuSection>
 
                     {DeletePageAlert && (
-                        <Alert func={handleDeletePage} close={() => setDeletePageAlert(false)} />
+                        <AlertContainer>
+                            <h1>Delete {articleTitle || 'Untitled'}</h1>
+                            <p>Are you sure you want to delete {articleTitle || 'Untitled'}?</p>
+                            <AlertButtons>
+                                <AlertButton onClick={() => handleDeletePage()} disabled={'delay'}>Continue</AlertButton>
+                                <AlertButton onClick={() => setDeletePageAlert(false)}>Cancel</AlertButton>
+                            </AlertButtons>
+                        </AlertContainer>
                     )}
                     {showPageInfo && (
                         <PopDropMenuStatic style={{ width: '200px', minHeight: '100px', position: 'absolute', zIndex: '13', left: `-198px`, top: '50px' }}>

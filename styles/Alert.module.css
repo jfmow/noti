@@ -58,7 +58,7 @@
     font-size: 14px;
     font-family: "Int";
     font-weight: 300;
-    color: #71717A;
+    color: var(--modal_button_text_hover);
 }
 
 .alertbuttons {
