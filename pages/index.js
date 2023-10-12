@@ -66,7 +66,7 @@ function Section1() {
       <div className={styles.section1}>
         <Particles quantity={300} className={styles.part} />
         <div className={styles.center}>
-          <img className={styles.section1_bannerimg} src='/8Bit/banner2.jpg' />
+          <img className={styles.section1_bannerimg} src='/8Bit/banner2.png' />
           <h1 className={styles.title}>The <span className={styles.section1_title_bg}>Ultimate</span> Notes App</h1>
           <p className={styles.subtitle}>Elevate your Note taking experience to make your notes better.</p>
           <Link className={styles.button_s1} href='/auth/signup'>Get Started</Link>

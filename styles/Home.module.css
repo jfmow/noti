@@ -641,6 +641,9 @@
     }
 
 
+    .section1 {
+        height: 100vh;
+    }
 
     .section1 .center {
         width: 100%;
@@ -654,9 +657,13 @@
         font-size: 38px !important;
     }
 
+    .nav_mobile_menu {
+        fill: #fff;
+    }
 
-
-
+    .sticky {
+        position: fixed;
+    }
 
     .nav {
         flex-direction: column;
@@ -703,7 +710,7 @@
         align-items: center;
         height: fit-content;
         padding: 10px;
-        background: #fff;
+        background: #000000;
     }
 
     .nav_dropDown .nav_links {
