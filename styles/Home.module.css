@@ -92,11 +92,12 @@
 
 
 .section1 {
-    padding-top: 50px;
+    /* padding-top: 50px; */
     display: flex;
     width: 100%;
     justify-content: center;
     align-items: center;
+    height: calc(100dvh - 100px);
 }
 
 .section1_bannerimg {
@@ -111,11 +112,22 @@
 }
 
 .section1 .title {
-    font-family: "Signika";
-    font-size: clamp(3vw, 48px, 8vw);
-    font-weight: 700;
+    font-family: "Inter";
+    font-size: clamp(48px, 4vw, 80px);
+
+    font-weight: 800;
     line-height: 1.25;
     margin-bottom: 16px;
+}
+
+.section1_title_bg {
+    background: radial-gradient(circle, #8e2de2, #7fd6ff);
+    background-size: 200% auto;
+    color: #000;
+    background-clip: text;
+    text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .section1 .center {
@@ -123,6 +135,9 @@
     text-align: center;
     padding: 10px;
     max-width: 738px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .section1 .subtitle {
@@ -143,6 +158,16 @@
     font-family: "Heebo";
     border: 1px solid #000;
 
+}
+
+.button_s1_subtitle {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: capitalize;
+    border-radius: 6px;
+    font-family: "Heebo";
+    margin-top: 7px;
+    color: #424242;
 }
 
 .button_s1_invert {
@@ -530,118 +555,13 @@
 }
 
 
-/* BuiltByAStudentSection */
-
-.BuiltByAStudentSection {
-    min-height: 100vh;
-    width: 100%;
-    padding: 2em;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
-
-}
-
-.BuiltByAStudentSection_title {
-    text-align: left;
-    color: #2a2a2a;
-    font-family: "Inter Tight", "Inter", "Gotham", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    font-weight: 800;
-    font-size: clamp(48px, 4vw, 80px);
-    word-wrap: balance;
-    z-index: 3;
-    width: 100%;
-    display: block;
-    text-wrap: balance;
-    text-align: center;
-}
-
-.BuiltByAStudentSection_text {
-    font-family: "Heebo";
-    color: #444444;
-    font-weight: 400;
-    line-height: 1.625;
-    margin-bottom: 32px;
-    font-size: 18px;
-}
-
-.BuiltByAStudentSection_pics {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 35px;
-    width: 100%;
-    max-width: 1324px;
-}
-
-.BuiltByAStudentSection_pics_card {
-    width: 400px;
-    height: 220px;
-    padding: 2em;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    gap: 10px;
-    box-shadow: 0px 36px 89px rgb(0 0 0/4%), 0px 23.3333px 52.1227px rgba(0, 0, 0, .03), 0px 13.8667px 28.3481px rgba(0, 0, 0, .024), 0px 7.2px 14.4625px rgb(0 0 0/2%), 0px 2.93333px 7.25185px rgba(0, 0, 0, .016), 0px 0.666667px 3.50231px rgba(0, 0, 0, .01);
-    font-family: "Inter Tight", "Inter", "Gotham", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    position: relative;
-
-}
-
-
-.BuiltByAStudentSection_pics_card_img {
-    width: calc(100% - 2em);
-    height: calc(100% - 2em);
-    position: absolute;
-    user-select: none;
-    pointer-events: none;
-}
-
-.BuiltByAStudentSection_pics_card_text {
-    width: calc(100% - 2em);
-    height: calc(100% - 2em);
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 20px;
-    text-wrap: balance;
-    text-align: center;
-}
-
-.BuiltByAStudentSection_pics_card_text span {
-    background: #ffffff75;
-    border-radius: 9px;
-    padding: 3px 5px;
-}
-
-.BuiltByAStudentSection_pics_card_ref {
-    position: absolute;
-    bottom: 1em;
-    left: 0;
-    right: 0;
-    opacity: 0.5;
-    font-size: 6px;
-    text-align: center;
-    user-select: none;
-}
-
-
 /* BigInspSection */
 .BigInspSection {
     min-height: 100vh;
     width: 100%;
     padding: 2em;
     margin: 0;
+    margin-top: 2em;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -665,7 +585,9 @@
 
 .BigInspSection_content {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+        "A A A B B B"
+        "C C D D E E";
     gap: 30px;
 }
 
@@ -679,6 +601,9 @@
 .BigInspSection_img {
     width: 100%;
     height: 100%;
+    border-radius: 0.5rem;
+    max-height: 400px;
+    object-fit: cover;
 }
 
 
@@ -729,6 +654,10 @@
         max-height: none;
     }
 
+    .nav img {
+        display: none;
+    }
+
     .nav_mobile_menu {
         background: none;
         border: none;
@@ -752,6 +681,10 @@
         width: 100%;
     }
 
+    .nav_button_main {
+        display: none;
+    }
+
     .nav_dropDown {
         display: flex;
         flex-direction: column;
@@ -772,7 +705,8 @@
     }
 
     .BigTextSection1 {
-        padding: calc(2em + 40px) 0;
+        padding: 0;
+        padding-top: 2em;
     }
 
     .BigTextSection1_box {
@@ -789,15 +723,22 @@
     }
 
 
-    .BuiltByAStudentSection_text {
-        text-align: center;
-    }
 
     .BigInspSection_content {
-        grid-template-columns: 1fr;
+        grid-template-areas:
+            "A"
+            "B"
+            "C"
+            "D"
+            "E";
     }
 
     .BigInspSection_text {
         font-size: 16px;
     }
+
+    .BigInspSection_title {
+        text-align: center;
+    }
+
 }

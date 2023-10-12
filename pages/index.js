@@ -38,7 +38,6 @@ export default function Home2() {
           <FeatureCardsSection />
           <CompBanner />
           <BigTextSection1 />
-          <BuiltByAStudentSection />
           <BigInspSection />
 
           <div className={styles.footer}>
@@ -69,11 +68,11 @@ function Section1() {
   return (
     <div className={styles.section1}>
       <div className={styles.center}>
-        <h1 className={styles.title}>The Ultimate Note App To Elevate Your Note Taking Experience</h1>
         <img className={styles.section1_bannerimg} src='/bannera.jpg' />
-
-        <p className={styles.subtitle}>SaveMyNotes is a complimentary starter template created using NextJS and PocketBase, equipped with all the essentials to kickstart your note taking and streamline your workflow.</p>
-        <Link className={styles.button_s1} href='/auth/signup'>Get Started For Free</Link>
+        <h1 className={styles.title}>The <span className={styles.section1_title_bg}>Ultimate</span> Note App</h1>
+        <p className={styles.subtitle}>Elevate your <span className={styles.section1_title_bg}>Note</span> taking experience to make your notes better.</p>
+        <Link className={styles.button_s1} href='/auth/signup'>Get Started</Link>
+        <span className={styles.button_s1_subtitle}>{`(It's freee)`}</span>
       </div>
     </div>
   )
@@ -251,44 +250,15 @@ function OpenSourseSection() {
   )
 }
 
-function BuiltByAStudentSection() {
-  return (
-    <div className={styles.BuiltByAStudentSection}>
-      <div>
-        <h2 className={styles.BuiltByAStudentSection_title}>Built By A Student</h2>
-        <p className={styles.BuiltByAStudentSection_text}>And created for you!</p>
-      </div>
-      <div className={styles.BuiltByAStudentSection_pics}>
-        <div className={styles.BuiltByAStudentSection_pics_card}>
-          <img className={styles.BuiltByAStudentSection_pics_card_img} src='/bbas1.svg' />
-          <div className={styles.BuiltByAStudentSection_pics_card_text}>
-            <span >Created with simplicty in mind</span>
-          </div>
-        </div>
-        <div className={styles.BuiltByAStudentSection_pics_card}>
-          <img className={styles.BuiltByAStudentSection_pics_card_img} src='/bbas2.svg' />
-          <div className={styles.BuiltByAStudentSection_pics_card_text}>
-            <span >Built with reliablity in mind</span>
-          </div>
-        </div>
-        <div className={styles.BuiltByAStudentSection_pics_card}>
-          <img className={styles.BuiltByAStudentSection_pics_card_img} src='/bbas3.svg' />
-          <div className={styles.BuiltByAStudentSection_pics_card_text}>
-            <span>Used with ideas in mind</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 function BigInspSection() {
   return (
     <div className={styles.BigInspSection}>
-      <h2 className={styles.BigInspSection_title}>Creativity Comes First!</h2>
       <div className={styles.BigInspSection_content}>
-        <img className={styles.BigInspSection_img} src='/bis1.svg' />
-        <span className={styles.BigInspSection_text}>We believe that when you let your imagination run wild and soak up knowledge like a sponge, amazing things can happen. Our note-taking app is designed to be your trusty sidekick on your journey of discovery. With colorful highlighting, sweet colors, and loads of other features, you can let your creativity flow freely while taking notes. Plus, our user-friendly interface makes learning a breeze. So, whether you're a student, a writer, or just someone who loves to explore, we've got you covered. Come join us, and let your creativity and learning soar to new heights! 🚀📚🎨</span>
+        <img className={styles.BigInspSection_img} style={{ gridArea: 'A' }} src='/8Bit/pinkgirl8bit.jpg' />
+        <img className={styles.BigInspSection_img} style={{ gridArea: 'B' }} src='/8Bit/pop8bitboy.jpg' />
+        <img className={styles.BigInspSection_img} style={{ gridArea: 'C' }} src='/8Bit/pinkgirl8bit.jpg' />
+        <img className={styles.BigInspSection_img} style={{ gridArea: 'D' }} src='/8Bit/boywalking.jpg' />
+        <img className={styles.BigInspSection_img} style={{ gridArea: 'E' }} src='/8Bit/boydeskreading8bit.jpg' />
       </div>
     </div>
   )
