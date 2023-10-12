@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import PocketBase from 'pocketbase'
 import Router from 'next/router'
 import { GitHubCat } from '@/lib/Logos'
+import Particles from '@/lib/part'
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 export default function Home2() {
   const [windowWidth, setWindowWidth] = useState(false)
@@ -61,15 +62,18 @@ export default function Home2() {
 
 function Section1() {
   return (
-    <div className={styles.section1}>
-      <div className={styles.center}>
-        <img className={styles.section1_bannerimg} src='/8Bit/banner2.jpg' />
-        <h1 className={styles.title}>The <span className={styles.section1_title_bg}>Ultimate</span> Notes App</h1>
-        <p className={styles.subtitle}>Elevate your Note taking experience to make your notes better.</p>
-        <Link className={styles.button_s1} href='/auth/signup'>Get Started</Link>
-        <span className={styles.button_s1_subtitle}>{`(It's freee)`}</span>
+    <>
+      <div className={styles.section1}>
+        <Particles quantity={300} className={styles.part} />
+        <div className={styles.center}>
+          <img className={styles.section1_bannerimg} src='/8Bit/banner2.jpg' />
+          <h1 className={styles.title}>The <span className={styles.section1_title_bg}>Ultimate</span> Notes App</h1>
+          <p className={styles.subtitle}>Elevate your Note taking experience to make your notes better.</p>
+          <Link className={styles.button_s1} href='/auth/signup'>Get Started</Link>
+          <span className={styles.button_s1_subtitle}>{`(It's freee)`}</span>
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 
