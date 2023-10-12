@@ -1,7 +1,7 @@
 .container {
     width: 100%;
     height: 100dvh;
-    background: #fcfefd;
+    background: #000;
     color: #000;
     position: relative;
     overflow-y: scroll;
@@ -23,7 +23,7 @@
     left: 0;
     right: 0;
     z-index: 30;
-    background: #fff;
+    background: #000000;
     width: 100%;
 }
 
@@ -54,23 +54,24 @@
 
 .nav_links a {
     font-weight: 500;
-    color: #2e2e2e;
+    color: #efefef;
     font-size: 16px;
     padding: 0 0.5rem;
     font-family: "Heebo";
+    transition: 0.2s all;
 
 }
 
 .nav_links a:hover {
-    color: #141414;
+    color: #d1d1d1;
 }
 
 .nav_button_main {
     border-radius: 4px;
     background: transparent;
-    border: 1px solid #000;
+    border: 1px solid #ffffff;
     padding: 0.375rem 1rem;
-    color: #000;
+    color: #ffffff;
     font-size: 14px;
     line-height: 1.25rem;
     font-weight: 600;
@@ -84,8 +85,8 @@
 }
 
 .nav_button_main:hover {
-    background: #000;
-    color: #fff;
+    background: #ffffff;
+    color: #000000;
 }
 
 
@@ -101,9 +102,9 @@
 }
 
 .section1_bannerimg {
-    height: 245px;
-    margin-top: 10px;
-    margin-bottom: 15px;
+    height: 330px;
+    margin-top: -100px;
+    margin-bottom: -20px;
     display: flex;
     width: 100%;
     align-items: center;
@@ -113,11 +114,13 @@
 
 .section1 .title {
     font-family: "Inter";
-    font-size: clamp(48px, 4vw, 80px);
+    font-size: clamp(48px, 6vw, 80px);
 
     font-weight: 800;
     line-height: 1.25;
     margin-bottom: 16px;
+    color: #2f2f2f;
+    text-shadow: 5px 6px 0px #121212;
 }
 
 .section1_title_bg {
@@ -128,13 +131,15 @@
     text-fill-color: transparent;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    text-shadow: -2px -6px white;
 }
 
+
 .section1 .center {
-    width: 58%;
+    width: 100%;
+    max-width: 1000px;
     text-align: center;
     padding: 10px;
-    max-width: 738px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -149,15 +154,15 @@
 }
 
 .button_s1 {
-    background: #000;
-    color: #fff;
+    background: #ffffff;
+    color: #000000;
     padding: 10px 1.25rem;
     font-weight: 600;
     text-transform: capitalize;
     border-radius: 6px;
     font-family: "Heebo";
     border: 1px solid #000;
-
+    min-width: 200px;
 }
 
 .button_s1_subtitle {
@@ -211,7 +216,7 @@
     justify-content: center;
     gap: 10px;
     scroll-snap-align: start;
-    color: #202020;
+    color: #d1d1d1;
     font-family: "Heebo";
 }
 
@@ -220,15 +225,6 @@
     flex-direction: row;
     justify-content: center;
     gap: 5px;
-}
-
-.githublogo {
-    width: 20px;
-    height: 20px;
-}
-
-.githublogo path {
-    fill: #000;
 }
 
 
@@ -377,6 +373,7 @@
     padding: 1.8em;
     border-radius: 15px;
     max-width: 320px;
+    color: #707070;
 }
 
 .FeatureCardsSection_card_title {
@@ -384,6 +381,7 @@
     flex-direction: row;
     gap: 10px;
     align-items: center;
+    color: #585858;
 }
 
 .FeatureCardsSection_card_title svg {
@@ -391,7 +389,7 @@
     height: 24px;
     display: flex;
     align-items: center;
-    fill: #ffd700;
+    fill: #efefef;
 }
 
 .FeatureCardsSection_card_title h4 {
@@ -450,7 +448,7 @@
 }
 
 .BigTextSection1_box {
-    background: #000;
+    background: linear-gradient(45deg, #bb7fff, #7f88ff);
     width: 100%;
     padding: 4em 2em;
     display: flex;
@@ -465,7 +463,7 @@
 
 .BigTextSection1_title {
     text-align: center;
-    color: #ffffff;
+    color: #000000;
     font-family: "Inter Tight", "Inter", "Gotham", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
         Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     font-weight: 800;
@@ -481,7 +479,7 @@
     font-size: 16px;
     font-family: "Inter Tight", "Inter", "Gotham", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
         Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    color: #ebeaff;
+    color: #2e2e2e;
     text-wrap: balance;
 }
 
