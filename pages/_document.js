@@ -5,7 +5,7 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <link rel='manifest' href={`${process.env.NEXT_PUBLIC_CURRENTURL}/manifest.json`} />
-        <link rel='icon' href={`${process.env.NEXT_PUBLIC_CURRENTURL}/favicon.png`} />
+        <link rel='icon' href={`${process.env.NEXT_PUBLIC_CURRENTURL}/Favicon.png`} />
       </Head>
       <body>
         <Main />
