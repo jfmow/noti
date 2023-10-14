@@ -31,9 +31,6 @@ export default function PageList({ currentPage, visible, setVisible }) {
   }
 
   useEffect(() => {
-    if (window.localStorage.getItem('menu') === 'false') {
-      setVisibleState(false)
-    }
     getUserPages()
     pb.collection('pages').subscribe('*', function (e) {
       const updatedRecord = e.record;
@@ -70,7 +67,6 @@ export default function PageList({ currentPage, visible, setVisible }) {
   }, [])
 
   function setVisibleState() {
-    window.localStorage.setItem('menu', visible ? 'false' : 'true')
     setVisible(!visible)
   }
 
