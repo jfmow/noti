@@ -11,6 +11,36 @@
     overflow-y: hidden;
     display: flex;
     flex-direction: row;
+    animation-name: none;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease;
+    animation-play-state: paused;
+    max-width: 100vw;
+}
+
+@keyframes comein {
+    0% {
+        width: calc(100vw - 300px);
+        align-self: flex-end;
+    }
+
+    100% {
+        width: 100vw;
+        align-self: flex-end;
+    }
+}
+
+@keyframes goout {
+    0% {
+        width: 100vw;
+        align-self: flex-end;
+    }
+
+    100% {
+        width: calc(100vw - 300px);
+        align-self: flex-end;
+    }
 }
 
 .tabbaritem {
