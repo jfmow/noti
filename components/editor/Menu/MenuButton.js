@@ -19,7 +19,7 @@ const PopUpCardCorner = dynamic(() => import('@/lib/Pop-Cards/PopUpCard').then((
 const PopUpCardSubTitle = dynamic(() => import('@/lib/Pop-Cards/PopUpCard').then((module) => module.PopUpCardSubTitle));
 const PopUpCardTitle = dynamic(() => import('@/lib/Pop-Cards/PopUpCard').then((module) => module.PopUpCardTitle));
 
-const Gradient = dynamic(() => import("@/components/editor/Menu/Gradient"), {
+const Gradient = dynamic(() => import("@/components/editor/Menu/gradient/adient"), {
     ssr: true,
 });
 const Icons = dynamic(() => import("@/components/editor/Menu/Icons"), {
@@ -310,7 +310,7 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
                     <PopUpCardTitle>Gradients</PopUpCardTitle>
                     <PopUpCardSubTitle>Choose a gradient cover for your page.</PopUpCardSubTitle>
                     {popUpClickEventGradient && (
-                        <Gradient setArticleHeader={setArticleHeader} page={page} />
+                        <Gradient setArticleHeader={setArticleHeader} page={page} pb={pb} />
                     )}
 
                 </PopUpCardCorner>
