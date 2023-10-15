@@ -26,6 +26,17 @@ export default function Gradient({ setArticleHeader, page, pb }) {
     };
 
     async function getCanvas() {
+        const canvasEl = document.getElementById("gradient-canvas");
+        const width = 1920
+        const height = 1080
+        //@ts-ignore
+        canvasEl.width = width;
+        //@ts-ignore
+        canvasEl.height = height;
+
+        gradient.setCanvasSize(width, height, false);
+        gradient.reGenerateCanvas();
+        setTimeout(() => { }, 100);
         const canvas = canvasRef.current;
         const blob = await new Promise(resolve => {
             canvas.toBlob(resolve);
