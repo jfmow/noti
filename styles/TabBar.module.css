@@ -143,11 +143,14 @@
 }
 
 .tabbaritemname {
-    width: 100%;
-    /*
+    width: 13ch;
+    /* text-overflow: ellipsis; */
+    /* overflow: auto; */
+    /* white-space: normal; */
+    display: inline-block;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    text-wrap: nowrap;*/
 }
 
 .newPageDropButton {
