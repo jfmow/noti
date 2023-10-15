@@ -41,6 +41,8 @@
 
 .canvas>canvas {
     width: 100%;
+    box-shadow: 2.8px 2.8px 2.2px -19px rgba(0, 0, 0, 0.07), 6.7px 6.7px 5.3px -19px rgba(0, 0, 0, 0.05), 12.5px 12.5px 10px -19px rgba(0, 0, 0, 0.042), 22.3px 22.3px 17.9px -19px rgba(0, 0, 0, 0.035), 41.8px 41.8px 33.4px -19px rgba(0, 0, 0, 0.028), 100px 100px 80px -19px rgba(0, 0, 0, 0.02);
+    border-radius: 0.5rem;
 }
 
 .colorpickerwrapper {
