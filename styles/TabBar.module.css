@@ -7,16 +7,22 @@
     width: calc(100vw - 300px);
     background: var(--modal_background);
     z-index: 11;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    display: flex;
-    flex-direction: row;
     animation-name: none;
     animation-duration: 1s;
     animation-iteration-count: 1;
     animation-timing-function: ease;
     animation-play-state: paused;
     max-width: 100vw;
+    display: flex;
+}
+
+.tabbar .items {
+    display: flex;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: row;
+    height: 45px;
 }
 
 @keyframes comein {
@@ -56,7 +62,8 @@
     align-items: center;
     cursor: pointer;
     gap: 3px;
-    overflow: hidden;
+    /*overflow: hidden;*/
+    white-space: nowrap;
 }
 
 .tabbaritem_active {
@@ -137,9 +144,10 @@
 
 .tabbaritemname {
     width: 100%;
+    /*
     overflow: hidden;
     text-overflow: ellipsis;
-    text-wrap: nowrap;
+    text-wrap: nowrap;*/
 }
 
 .newPageDropButton {
@@ -152,6 +160,7 @@
     background: none;
     color: #000;
     cursor: pointer;
+    padding: 10px;
 }
 
 .newPageDropButton svg {

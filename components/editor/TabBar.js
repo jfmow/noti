@@ -126,74 +126,76 @@ export default function TabBar({ pb, page, plVisible, setplVisible }) {
                     {!plVisible && (
                         <button className={styles.newPageDropButton} onClick={() => setPageListVisible()} type='button'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-left-open"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><path d="M9 3v18" /><path d="m14 9 3 3-3 3" /></svg></button>
                     )}
-                    {tabBarItems.map((item) => {
-                        if (item === undefined) {
-                            return <></>;
-                        }
-                        return (
-                            <TabBarItem
-                                key={item.id}
-                                name={item.title}
-                                icon={item.icon}
-                                active={Router.asPath.split('/page/')[1].includes(item.id)}
-                                id={item.id}
-                                RemoveTabItem={RemoveTabItem}
-                                onDragStart={onDragStart}
-                                onDragOver={onDragOver}
-                                onDrop={onDrop}
-                                page={page}
-                            />
-                        );
-                    })}
                     <button className={styles.newPageDropButton} onClick={(e) => setNewPageDropEvent(e)} type='button'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14" /><path d="M12 5v14" /></svg></button>
-                    <PopUpCardDropMenu event={newPageDropEvent} minGap={3}>
-                        <PopUpCardDropMenuSectionTitle>
-                            Pages
-                        </PopUpCardDropMenuSectionTitle>
-                        <PopUpCardDropMenuSection>
-                            <PopUpCardDropMenuSectionItem onClick={() => {
 
-                                CreateANewPage()
-                            }}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-plus"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" /><polyline points="14 2 14 8 20 8" /><line x1="12" x2="12" y1="18" y2="12" /><line x1="9" x2="15" y1="15" y2="15" /></svg>
-                                <p>Create new page</p>
-                            </PopUpCardDropMenuSectionItem>
-                            <PopUpCardDropMenuSectionItem onClick={() => {
-                                //setAddPageDropMenuEvent(!addPageDropMenuEvent)
-                                toast('Comming soon!')
-                            }} >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mouse-pointer-square"><path d="M21 11V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6" /><path d="m12 12 4 10 1.7-4.3L22 16Z" /></svg>
-                                <p>Add page</p>
-                                {addPageDropMenuEvent && (
-                                    <PopDropMenuStatic style={{ width: '200px', minHeight: '100px', position: 'absolute', zIndex: '13', left: `-198px`, top: '40px' }}>
-                                        <PopUpCardDropMenuSection>
-                                            <PopUpCardDropMenuSectionItem>
-                                                test
-                                            </PopUpCardDropMenuSectionItem>
-                                        </PopUpCardDropMenuSection>
-                                    </PopDropMenuStatic>
-                                )}
+                    <div className={styles.items}>
+                        {tabBarItems.map((item) => {
+                            if (item === undefined) {
+                                return <></>;
+                            }
+                            return (
+                                <TabBarItem
+                                    key={item.id}
+                                    name={item.title}
+                                    icon={item.icon}
+                                    active={Router.asPath.split('/page/')[1].includes(item.id)}
+                                    id={item.id}
+                                    RemoveTabItem={RemoveTabItem}
+                                    onDragStart={onDragStart}
+                                    onDragOver={onDragOver}
+                                    onDrop={onDrop}
+                                    page={page}
+                                />
+                            );
+                        })}
+                        <PopUpCardDropMenu event={newPageDropEvent} minGap={3} animationOrgin={'top left'}>
+                            <PopUpCardDropMenuSectionTitle>
+                                Pages
+                            </PopUpCardDropMenuSectionTitle>
+                            <PopUpCardDropMenuSection>
+                                <PopUpCardDropMenuSectionItem onClick={() => {
 
-                            </PopUpCardDropMenuSectionItem>
-                        </PopUpCardDropMenuSection>
-                        <PopUpCardDropMenuSectionTitle>
-                            TabBar
-                        </PopUpCardDropMenuSectionTitle>
-                        <PopUpCardDropMenuSection>
-                            <PopUpCardDropMenuSectionItem onClick={() => hideTabBar()}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-off"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" /><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" /><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" /><line x1="2" x2="22" y1="2" y2="22" /></svg>
-                                <p>Hide</p>
-                            </PopUpCardDropMenuSectionItem>
-                            <PopUpCardDropMenuSectionItem onClick={() => {
-                                window.localStorage.setItem('_tabbar', JSON.stringify([]))
-                                setTabBarItems([])
-                            }}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rotate-ccw"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /></svg>
-                                <p>Clear</p>
-                            </PopUpCardDropMenuSectionItem>
-                        </PopUpCardDropMenuSection>
-                    </PopUpCardDropMenu>
+                                    CreateANewPage()
+                                }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-plus"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" /><polyline points="14 2 14 8 20 8" /><line x1="12" x2="12" y1="18" y2="12" /><line x1="9" x2="15" y1="15" y2="15" /></svg>
+                                    <p>Create new page</p>
+                                </PopUpCardDropMenuSectionItem>
+                                <PopUpCardDropMenuSectionItem onClick={() => {
+                                    //setAddPageDropMenuEvent(!addPageDropMenuEvent)
+                                    toast('Comming soon!')
+                                }} >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mouse-pointer-square"><path d="M21 11V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6" /><path d="m12 12 4 10 1.7-4.3L22 16Z" /></svg>
+                                    <p>Add page</p>
+                                    {addPageDropMenuEvent && (
+                                        <PopDropMenuStatic style={{ width: '200px', minHeight: '100px', position: 'absolute', zIndex: '13', left: `-198px`, top: '40px' }}>
+                                            <PopUpCardDropMenuSection>
+                                                <PopUpCardDropMenuSectionItem>
+                                                    test
+                                                </PopUpCardDropMenuSectionItem>
+                                            </PopUpCardDropMenuSection>
+                                        </PopDropMenuStatic>
+                                    )}
 
+                                </PopUpCardDropMenuSectionItem>
+                            </PopUpCardDropMenuSection>
+                            <PopUpCardDropMenuSectionTitle>
+                                TabBar
+                            </PopUpCardDropMenuSectionTitle>
+                            <PopUpCardDropMenuSection>
+                                <PopUpCardDropMenuSectionItem onClick={() => hideTabBar()}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-off"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" /><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" /><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" /><line x1="2" x2="22" y1="2" y2="22" /></svg>
+                                    <p>Hide</p>
+                                </PopUpCardDropMenuSectionItem>
+                                <PopUpCardDropMenuSectionItem onClick={() => {
+                                    window.localStorage.setItem('_tabbar', JSON.stringify([]))
+                                    setTabBarItems([])
+                                }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rotate-ccw"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /></svg>
+                                    <p>Clear</p>
+                                </PopUpCardDropMenuSectionItem>
+                            </PopUpCardDropMenuSection>
+                        </PopUpCardDropMenu>
+                    </div>
                 </div>
             )}
         </>
