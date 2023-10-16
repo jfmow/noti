@@ -4,10 +4,35 @@ import { pdfjs } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 pdfjs.GlobalWorkerOptions.workerSrc = '/pdfworker.min.js';
 import styles from '@/styles/pdfviewer.module.css'
+import { debounce } from 'lodash';
 export default function MyPdfViewer({ url, fileId }) {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [scale, setScale] = useState(1.0); // Default scale is 100% (no zoom)
+
+  useEffect(() => {
+    function scrollZoom(e) {
+      //console.log(e.deltaY, e.deltaX, e.wheelDelta, e.wheelDeltaY)
+      if (e.deltaX > 0 || e.deltaX < 0) {
+        return
+      } else {
+        if (e.deltaY >= 0.5 && e.wheelDeltaY <= -150 && e.wheelDelta <= -150) {
+          e.preventDefault();
+          handleZoomOut('small');
+        } else if (e.deltaY <= -0.5 && e.wheelDeltaY >= 150 && e.wheelDelta >= 150) {
+          e.preventDefault();
+          handleZoomIn('small');
+        } else {
+          return
+        }
+      }
+    }
+
+    window.document.querySelector(".react-pdf__Document").addEventListener('wheel', (e) => scrollZoom(e), { passive: false })
+    return () => {
+      window.document.querySelector(".react-pdf__Document").removeEventListener('wheel', (e) => scrollZoom(e), { passive: false })
+    }
+  }, [])
 
   const containerRef = useRef(null);
   const scaleRef = useRef(1.0);
@@ -17,15 +42,25 @@ export default function MyPdfViewer({ url, fileId }) {
     setNumPages(numPages);
   }
 
-  function handleZoomIn() {
+  function handleZoomIn(type) {
     if (scaleRef.current < 4) {
+      if (type === 'small') {
+        scaleRef.current = Math.min(scaleRef.current + 0.01, 4);
+        setScale(scaleRef.current);
+        return
+      }
       scaleRef.current = Math.min(scaleRef.current + 0.1, 4);
       setScale(scaleRef.current);
     }
   }
 
-  function handleZoomOut() {
+  function handleZoomOut(type) {
     if (scaleRef.current > 0.1) {
+      if (type === 'small') {
+        scaleRef.current = Math.min(scaleRef.current - 0.01, 4);
+        setScale(scaleRef.current);
+        return
+      }
       scaleRef.current = Math.max(scaleRef.current - 0.1, 0.1);
       setScale(scaleRef.current);
     }
