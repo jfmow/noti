@@ -49,7 +49,6 @@ function AccManagementForm({ Close, usageOpenDefault }) {
 
   const [AvatarModalDisplay, setAvatarModalDisplay] = useState(false)
   const [refreshAvatar, setrefreshAvatar] = useState(false)
-  const [managePagesModal, setmanagePagesModal] = useState(false)
   const [usageModal, setUsageModal] = useState(usageOpenDefault ? true : false)
 
 
@@ -188,13 +187,6 @@ function AccManagementForm({ Close, usageOpenDefault }) {
                 <p>Admin</p>
               </AlternateButton>
             )}
-            <AlternateButton click={() => setNotiField(true)}>
-              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0V0z" fill="none" /><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-1.29 1.29c-.63.63-.19 1.71.7 1.71h13.17c.89 0 1.34-1.08.71-1.71L18 16z" /></svg>            <p>Notifications</p>
-            </AlternateButton>
-            <AlternateButton click={() => setmanagePagesModal(true)}>
-              <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" ><g><rect fill="none" height="24" width="24" /></g><g><g><path d="M5,11h4c1.1,0,2-0.9,2-2V5c0-1.1-0.9-2-2-2H5C3.9,3,3,3.9,3,5v4C3,10.1,3.9,11,5,11z" /><path d="M5,21h4c1.1,0,2-0.9,2-2v-4c0-1.1-0.9-2-2-2H5c-1.1,0-2,0.9-2,2v4C3,20.1,3.9,21,5,21z" /><path d="M13,5v4c0,1.1,0.9,2,2,2h4c1.1,0,2-0.9,2-2V5c0-1.1-0.9-2-2-2h-4C13.9,3,13,3.9,13,5z" /><path d="M15,21h4c1.1,0,2-0.9,2-2v-4c0-1.1-0.9-2-2-2h-4c-1.1,0-2,0.9-2,2v4C13,20.1,13.9,21,15,21z" /></g></g></svg>
-              <p>Manage pages</p>
-            </AlternateButton>
             <AlternateButton click={() => setDelAccField(true)}>
               <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0V0z" fill="none" /><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM18 4h-2.5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1z" /></svg>            <p>Delete Account</p>
             </AlternateButton>
@@ -235,17 +227,6 @@ function AccManagementForm({ Close, usageOpenDefault }) {
               <MyUsage close={() => setUsageModal(false)} />
             )}
 
-            {notiField && (
-              <>
-                <ModalContainer events={() => { setNotiField(false) }}>
-                  <ModalForm>
-                    <ModalTitle>Notification options</ModalTitle>
-                    <div className={styles.default_settings_modal_container_usrname_toggles}>Global <Notitoggle /></div>
-                    <div className={styles.default_settings_modal_container_usrname_toggles}>Hourly quotes (requires global to be enabled) <Quotetoggle /></div>
-                  </ModalForm>
-                </ModalContainer>
-              </>
-            )}
             {userInfoOpen && !userNameField && !updateEmailField && (
               <ModalContainer events={() => setUserInfoDisplay(false)}>
                 <ModalForm>
@@ -294,10 +275,6 @@ function AccManagementForm({ Close, usageOpenDefault }) {
               </ModalContainer>
             )}
 
-            {managePagesModal && (
-              <ManagePagesModal close={() => setmanagePagesModal(false)} />
-            )}
-
           </AnimatePresence>
           <h6><Link href='/auth/terms-and-conditions'>Terms & Conditions</Link> | <Link href='/auth/privacy-policy'>Privacy policy</Link> | <Link><span onClick={logout}>Logout</span></Link></h6>
 
@@ -313,8 +290,19 @@ function logout() {
   Router.push('/')
 }
 
+/*{notiField && (
+              <>
+                <ModalContainer events={() => { setNotiField(false) }}>
+                  <ModalForm>
+                    <ModalTitle>Notification options</ModalTitle>
+                    <div className={styles.default_settings_modal_container_usrname_toggles}>Global <Notitoggle /></div>
+                    <div className={styles.default_settings_modal_container_usrname_toggles}>Hourly quotes (requires global to be enabled) <Quotetoggle /></div>
+                  </ModalForm>
+                </ModalContainer>
+              </>
+            )}*/
 
-
+/*
 function Notitoggle() {
   const [push, setPush] = useState(false);
   const [pendingPush, setPendingPush] = useState(false);
@@ -416,55 +404,4 @@ function Quotetoggle() {
       <ModalCheckBoxSlider checked={pb.authStore.model.quotes} chngevent={toggle} />
     </>
   )
-}
-
-function ManagePagesModal({ close }) {
-  const [pages, setPages] = useState([])
-  const [pagesSelected, setSelectedPages] = useState([])
-  useEffect(() => {
-    async function getPages() {
-      const resultList = await pb.collection('pages_Bare').getFullList();
-      setPages(resultList)
-    }
-    getPages()
-  }, [])
-
-  async function deletePage(page) {
-    await pb.collection('pages').delete(page);
-  }
-
-  async function DeletePages() {
-    let newPages = pages
-    pagesSelected.map((page) => {
-      deletePage(page)
-      newPages = newPages.filter((pagesCurrent) => pagesCurrent.id !== page)
-      setPages(newPages)
-    })
-    setSelectedPages([])
-  }
-
-  return (
-    <>
-      <ModalContainer events={close}>
-        <ModalForm>
-          <ModalTitle>Manage Pages</ModalTitle>
-          <ModalOverflowBlock className={styles.pages}>
-            {pages.map((page) => (
-              <div onClick={() => {
-                if (pagesSelected.includes(page.id)) {
-                  setSelectedPages(pagesSelected.filter((page2) => page2 !== page.id))
-                } else {
-                  setSelectedPages([...pagesSelected, page.id])
-                }
-              }} className={`${styles.page} ${pagesSelected.includes(page.id) && styles.pageSelected}`} key={page.id}>
-                <div className={styles.pageTitle}>{page.title ? page.title : 'Untitled'}</div>
-                <div>Public: {page.shared ? 'true' : 'false'}</div>
-              </div>
-            ))}
-          </ModalOverflowBlock>
-          <AlternateButton click={() => DeletePages()}>Delete selected pages</AlternateButton>
-        </ModalForm>
-      </ModalContainer>
-    </>
-  )
-}
+}*/
