@@ -99,6 +99,7 @@
     padding: 6px 8px;
     cursor: default;
     color: var(--modal_text_color);
+    word-break: break-word;
 }
 
 .PopUpCardDropMenuSectionItem:hover {

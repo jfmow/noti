@@ -18,6 +18,7 @@
 
     /*transition: 0.5s all ease-in-out;*/
     /*overflow: hidden;*/
+    z-index: 2;
 }
 
 

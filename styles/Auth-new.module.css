@@ -156,7 +156,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 15px;
 }
 
 .oauth2 .oauth2_btns .github_btn {
