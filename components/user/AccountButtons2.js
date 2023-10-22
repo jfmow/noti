@@ -27,14 +27,16 @@ export default function AccountButtons({ event, setpopUpClickEventSettingsModal 
         let filesSize = 0
         let imagesSize = 0
         try {
-            filesSize = await pb.collection('total_files_per_user').getOne(pb.authStore.model.id);
+            const record = await pb.collection('total_files_per_user').getOne(pb.authStore.model.id);
+            filesSize = record.total_size;
+            //console.log(filesSize)
         } catch { }
         try {
-            imagesSize = await pb.collection('Total_img_per_user').getOne(pb.authStore.model.id);
+            const record = await pb.collection('Total_img_per_user').getOne(pb.authStore.model.id);
+            imagesSize = record.total_size;
+            //console.log(imagesSize)
         } catch { }
-        setTotalUsage((filesSize.total_size
-            + imagesSize.total_size
-        ) / 1000000)
+        setTotalUsage(Math.round(Math.max((filesSize + imagesSize) / 1000000)))
     }
     async function authUpdate() {
         try {
@@ -56,7 +58,7 @@ export default function AccountButtons({ event, setpopUpClickEventSettingsModal 
         }
 
         try {
-            const response = await toast.promise(
+            const response = toast.promise(
                 pb.collection('users').delete(pb.authStore.model.id),
                 {
                     pending: 'Deleting account...',
@@ -111,13 +113,13 @@ export default function AccountButtons({ event, setpopUpClickEventSettingsModal 
                 <title>Settings</title>
             </Head>
 
-            <PopUpCardDropMenuStaticPos animationOrgin={'bottom right'} mobilepos={{
+            <PopUpCardDropMenuStaticPos animationOrgin={'bottom left'} mobilepos={{
                 bottom: `30px`,
                 right: `20px`,
                 width: `200px`,
                 position: 'absolute',
                 zIndex: '5',
-            }} style={{ position: 'absolute', right: '0', bottom: '20px', zIndex: 999 }} event={event}>
+            }} style={{ position: 'absolute', left: '0', bottom: '20px', zIndex: 999 }} event={event}>
                 <PopUpCardDropMenuSectionTitle>
                     Settings
                 </PopUpCardDropMenuSectionTitle>
@@ -136,6 +138,7 @@ export default function AccountButtons({ event, setpopUpClickEventSettingsModal 
                                     <PopUpCardDropMenuSectionItem>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-form-input"><rect width="20" height="12" x="2" y="6" rx="2" /><path d="M12 12h.01" /><path d="M17 12h.01" /><path d="M7 12h.01" /></svg>
                                         Username: {pb.authStore.model.username}
+
                                     </PopUpCardDropMenuSectionItem>
                                     <PopUpCardDropMenuSectionItem>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-at-sign"><circle cx="12" cy="12" r="4" /><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8" /></svg>
@@ -181,6 +184,9 @@ export default function AccountButtons({ event, setpopUpClickEventSettingsModal 
                                     <PopUpCardDropMenuSectionItem>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-database"><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5V19A9 3 0 0 0 21 19V5" /><path d="M3 12A9 3 0 0 0 21 12" /></svg>
                                         {totalUsage}MB
+                                    </PopUpCardDropMenuSectionItem>
+                                    <PopUpCardDropMenuSectionItem>
+                                        Limit: 10MB
                                     </PopUpCardDropMenuSectionItem>
                                 </PopUpCardDropMenuSection>
                             </PopDropMenuStatic>

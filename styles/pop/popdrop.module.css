@@ -38,7 +38,7 @@
 
 .hidden {
     display: none;
-    animation: dropmenuout 0.2s 1 ease-in-out;
+    animation: dropmenuout 0.15s 1 ease-in-out;
 
 }
 
@@ -68,16 +68,11 @@
         transform: translateY(0), scale(1);
     }
 
-    50% {
-        display: flex;
-        opacity: 1;
-    }
-
 
     100% {
         display: flex;
         opacity: 0;
-        transform: translateY(40px), scale(0.4);
+        transform: translateY(-5px) scale(0.7);
     }
 }
 
@@ -87,7 +82,7 @@
     width: 100%;
     height: fit-content;
     padding: 4px;
-    font-family: "Special";
+    font-family: "Inter";
     font-size: 14px;
     font-weight: 500;
 }
@@ -119,7 +114,7 @@
 }
 
 .PopUpCardDropMenuSectionTitle {
-    font-family: "Special";
+    font-family: "Inter";
     font-weight: 600;
     font-size: 14px;
     padding: 1rem;
