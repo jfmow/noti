@@ -111,7 +111,9 @@ export default function PageList({ currentPage, visible, setVisible, listedPageI
       if (window.innerWidth < 800) {
         setVisibleState(false)
       }
+      console.log('')
       router.push(`/page/${item}`);
+      console.log('')
     }
 
     async function handleSetExpand(e, item) {
@@ -120,7 +122,26 @@ export default function PageList({ currentPage, visible, setVisible, listedPageI
       const data = {
         "expanded": !expand
       };
+      setListedPageItems(prevItems => {
+        // Remove any previous item with the same ID
+        const oldItem = listedPageItems.filter((item3) => item3.id === item)[0]
+        const filteredItems = prevItems.filter(item3 => item3.id !== oldItem.id);
+
+        // Add the new record at the appropriate position based on its created date
+        let insertIndex = filteredItems.findIndex(item3 => item3.created < oldItem.created);
+        if (insertIndex === -1) {
+          insertIndex = filteredItems.length;
+        }
+
+        return [
+          ...filteredItems.slice(0, insertIndex),
+          { ...oldItem, expanded: !expand },
+          ...filteredItems.slice(insertIndex)
+        ];
+        //return [...prevItems.filter(item => item.id !== page), { ...oldItem, icon: `${e.unified}.png` }]
+      })
       setExpand(!expand);
+
       await pb.collection('pages').update(item, data);
     }
 

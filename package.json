@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "ibs": "npm i && next build && next start"
   },
   "dependencies": {
     "@editorjs/attaches": "^1.3.0",
