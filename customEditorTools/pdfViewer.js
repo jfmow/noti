@@ -70,12 +70,8 @@ export default function MyPdfViewer({ url, fileId }) {
   useEffect(() => {
     const container = containerRef.current;
     container.addEventListener('wheel', handleWheelZoom);
-    window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('keyup', handleKeyUp);
     return () => {
       container.removeEventListener('wheel', handleWheelZoom);
-      window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('keyup', handleKeyUp);
     };
   }, []);
 
@@ -95,18 +91,6 @@ export default function MyPdfViewer({ url, fileId }) {
     }
   }
 
-  function handleKeyDown(event) {
-    if ((event.ctrlKey || event.metaKey) && !event.shiftKey) {
-      ctrlKeyRef.current = true;
-    }
-  }
-
-  function handleKeyUp(event) {
-    if (!event.ctrlKey && !event.metaKey) {
-      ctrlKeyRef.current = false;
-    }
-  }
-
   function openInNewTab() {
     let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=600,height=600,left=10,top=10`;
     open(`${process.env.NEXT_PUBLIC_CURRENTURL}/page/pdf/${fileId}`, `SaveMyNotes popup`, params);
@@ -122,6 +106,33 @@ export default function MyPdfViewer({ url, fileId }) {
     />
   ));
 
+  async function downloadPDF() { // Replace this with the actual file ID
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/pdf', // Set the content type to indicate that you expect a PDF response
+        },
+      });
+
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `file-${self.crypto.randomUUID()}.pdf`; // Specify the name for the downloaded file
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+      } else {
+        console.error('Failed to download PDF');
+      }
+    } catch (error) {
+      console.error('Error downloading PDF', error);
+    }
+  }
+
+
   return (
     <>
       <div className={styles.itemcon}>
@@ -130,6 +141,7 @@ export default function MyPdfViewer({ url, fileId }) {
           <button aria-label='Zoom out' className={styles.button} title='CTRL/CMD + scroll to zoom' onClick={handleZoomOut}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zoom-out"><circle cx="11" cy="11" r="8" /><line x1="21" x2="16.65" y1="21" y2="16.65" /><line x1="8" x2="14" y1="11" y2="11" /></svg></button>
           <span className={styles.itembreak} />
           <button aria-label='Open pdf in popout window' className={styles.button} onClick={openInNewTab}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-picture-in-picture"><path d="M8 4.5v5H3m-1-6 6 6m13 0v-3c0-1.16-.84-2-2-2h-7m-9 9v2c0 1.05.95 2 2 2h3" /><rect width="10" height="7" x="12" y="13.5" ry="2" /></svg></button>
+          <button aria-label='Download pdf' className={styles.button} onClick={downloadPDF}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" x2="12" y1="15" y2="3" /></svg></button>
         </div>
       </div>
       <div style={{ overflow: 'scroll', display: 'grid', gridTemplateColumns: '1fr', justifyItems: 'center' }} ref={containerRef}>
