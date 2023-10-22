@@ -8,8 +8,7 @@ import UserOptions from './UserInfo';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 pb.autoCancellation(false)
 
-export default function PageList({ currentPage, visible, setVisible }) {
-  const [treeData, setTreeData] = useState([])
+export default function PageList({ currentPage, visible, setVisible, listedPageItems, setListedPageItems }) {
   const [contextMenuEvent, setContextMenuEvent] = useState(null)
   const [SearchActive, setSearchActive] = useState(false)
   const router = useRouter()
@@ -21,7 +20,7 @@ export default function PageList({ currentPage, visible, setVisible }) {
         sort: '-created', skipTotal: true
       });
       //console.log(records)
-      setTreeData(records)
+      setListedPageItems(records)
       if (!currentPage || (currentPage[0] === 'firstopen' && records.length >= 1)) {
         Router.push(`/page/${records.filter(record => record.updated)[0].id}`)
       }
@@ -32,38 +31,6 @@ export default function PageList({ currentPage, visible, setVisible }) {
 
   useEffect(() => {
     getUserPages()
-    pb.collection('pages').subscribe('*', function (e) {
-      const updatedRecord = e.record;
-      if (e.action === 'delete') {
-        setTreeData(prevItems => {
-          // Remove any previous item with the same ID
-          const filteredItems = prevItems.filter(item => item.id !== updatedRecord.id);
-
-
-          return [
-            ...filteredItems
-          ];
-        })
-      } else {
-        setTreeData(prevItems => {
-          // Remove any previous item with the same ID
-          const filteredItems = prevItems.filter(item => item.id !== updatedRecord.id);
-
-          // Add the new record at the appropriate position based on its created date
-          let insertIndex = filteredItems.findIndex(item => item.created < updatedRecord.created);
-          if (insertIndex === -1) {
-            insertIndex = filteredItems.length;
-          }
-
-          return [
-            ...filteredItems.slice(0, insertIndex),
-            updatedRecord,
-            ...filteredItems.slice(insertIndex)
-          ];
-        });
-      }
-
-    });
   }, [])
 
   function setVisibleState() {
@@ -82,6 +49,22 @@ export default function PageList({ currentPage, visible, setVisible }) {
     };
     const record = await pb.collection('pages').create(data);
     router.push(`/page/${record.id}`)
+    setListedPageItems(prevItems => {
+      // Remove any previous item with the same ID
+      const filteredItems = prevItems.filter(item => item.id !== record.id);
+
+      // Add the new record at the appropriate position based on its created date
+      let insertIndex = filteredItems.findIndex(item => item.created < record.created);
+      if (insertIndex === -1) {
+        insertIndex = filteredItems.length;
+      }
+
+      return [
+        ...filteredItems.slice(0, insertIndex),
+        record,
+        ...filteredItems.slice(insertIndex)
+      ];
+    });
     ////console.log(record.id);
 
     // Update the items state by adding the new record
@@ -181,6 +164,25 @@ export default function PageList({ currentPage, visible, setVisible }) {
         //console.log('Should be fineeeee')
       }
 
+      setListedPageItems(prevItems => {
+        // Remove any previous item with the same ID
+        const oldItem = listedPageItems.filter((item) => item.id === draggedItemId)[0]
+        const filteredItems = prevItems.filter(item => item.id !== oldItem.id);
+
+        // Add the new record at the appropriate position based on its created date
+        let insertIndex = filteredItems.findIndex(item => item.created < oldItem.created);
+        if (insertIndex === -1) {
+          insertIndex = filteredItems.length;
+        }
+
+        return [
+          ...filteredItems.slice(0, insertIndex),
+          { ...oldItem, parentId: itemId },
+          ...filteredItems.slice(insertIndex)
+        ];
+        //return [...prevItems.filter(item => item.id !== page), { ...oldItem, icon: `${e.unified}.png` }]
+      })
+
 
       const data = {
         "parentId": itemId,
@@ -256,7 +258,7 @@ export default function PageList({ currentPage, visible, setVisible }) {
   return (
 
     <>
-      <ContextMenuDropMenu event={contextMenuEvent}>
+      {/*<ContextMenuDropMenu event={contextMenuEvent}>
         <ContextMenuDropMenuSection>
           {/*<ContextMenuDropMenuSectionItem onClick={() => {
             setShowMultiEditorSelector(true)
@@ -265,7 +267,7 @@ export default function PageList({ currentPage, visible, setVisible }) {
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-columns"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><line x1="12" x2="12" y1="3" y2="21" /></svg>
             <p>Multieditor</p>
         </ContextMenuDropMenuSectionItem>*/}
-          <ContextMenuDropMenuSectionItem onClick={() => {
+      {/*<ContextMenuDropMenuSectionItem onClick={() => {
             contextMenuDeletePage(contextMenuEvent.data.filter(item => item.key === 'pageid')[0].value)
             setContextMenuEvent(null)
           }}>
@@ -274,11 +276,12 @@ export default function PageList({ currentPage, visible, setVisible }) {
           </ContextMenuDropMenuSectionItem>
         </ContextMenuDropMenuSection>
       </ContextMenuDropMenu>
+      */}
       <div className={`${!visible && styles.hidden} ${styles.container}`}>
-        <SearchBar setVisibleState={setVisibleState} items={treeData} setSearchActive={setSearchActive} SearchActive={SearchActive} />
+        <SearchBar setVisibleState={setVisibleState} items={listedPageItems} setSearchActive={setSearchActive} SearchActive={SearchActive} />
         {!SearchActive && (
           <>
-            {renderTree(treeData)}
+            {renderTree(listedPageItems)}
             < li type='button' className={`${styles.item} ${styles.createnewpage_btn}`} onClick={() => createNewPage('')}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14" /><path d="M12 5v14" /></svg> Create a new page</li>
           </>
         )}

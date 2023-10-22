@@ -33,7 +33,7 @@ const ColorSelector = dynamic(() => import("@/components/editor/Menu/ColorSelect
 });
 
 
-export default function MenuButtons({ pb, page, editor, clearStates, editorRef, articleTitle, currentPageIconValue, setArticleHeader, setPageSharedTF, setCurrentPageIconValue, pageSharedTF }) {
+export default function MenuButtons({ listedPageItems, setListedPageItems, pb, page, editor, clearStates, editorRef, articleTitle, currentPageIconValue, setArticleHeader, setPageSharedTF, setCurrentPageIconValue, pageSharedTF }) {
     //Changing data
     const [convertedMdData, setConvertedData] = useState('')
 
@@ -65,6 +65,15 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
         clearStates()
         editorRef.current = null
         Router.push('/page/firstopen')
+        setListedPageItems(prevItems => {
+            // Remove any previous item with the same ID
+            const filteredItems = prevItems.filter(item => item.id !== page);
+
+
+            return [
+                ...filteredItems
+            ];
+        })
     }
 
     async function handlePageHeaderImageUpload(e) {
@@ -110,6 +119,24 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
         //icon.codePointAt(0).toString(16)
         setIconModalState(false);
         await pb.collection("pages").update(page, data);
+        setListedPageItems(prevItems => {
+            // Remove any previous item with the same ID
+            const oldItem = listedPageItems.filter((item) => item.id === page)[0]
+            const filteredItems = prevItems.filter(item => item.id !== oldItem.id);
+
+            // Add the new record at the appropriate position based on its created date
+            let insertIndex = filteredItems.findIndex(item => item.created < oldItem.created);
+            if (insertIndex === -1) {
+                insertIndex = filteredItems.length;
+            }
+
+            return [
+                ...filteredItems.slice(0, insertIndex),
+                { ...oldItem, icon: `${e.unified}.png` },
+                ...filteredItems.slice(insertIndex)
+            ];
+            //return [...prevItems.filter(item => item.id !== page), { ...oldItem, icon: `${e.unified}.png` }]
+        })
     }
 
     async function handleSharePage() {
@@ -154,6 +181,24 @@ export default function MenuButtons({ pb, page, editor, clearStates, editorRef, 
 
 
     async function handleChangePageListDisplayColor(color, page) {
+        setListedPageItems(prevItems => {
+            // Remove any previous item with the same ID
+            const oldItem = listedPageItems.filter((item) => item.id === page)[0]
+            const filteredItems = prevItems.filter(item => item.id !== oldItem.id);
+
+            // Add the new record at the appropriate position based on its created date
+            let insertIndex = filteredItems.findIndex(item => item.created < oldItem.created);
+            if (insertIndex === -1) {
+                insertIndex = filteredItems.length;
+            }
+
+            return [
+                ...filteredItems.slice(0, insertIndex),
+                { ...oldItem, color: color },
+                ...filteredItems.slice(insertIndex)
+            ];
+            //return [...prevItems.filter(item => item.id !== page), { ...oldItem, icon: `${e.unified}.png` }]
+        })
         const data = {
             "color": color
         };

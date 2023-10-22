@@ -32,7 +32,7 @@ import MenuButtons from "./Menu/MenuButton";
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false)
 
-function Editor({ page, multi }) {
+function Editor({ page, multi, setListedPageItems, listedPageItems }) {
   const editorRef = useRef(null);
   const [editor, setEditor] = useState(null);
   const [editorData, setEditorData] = useState({});
@@ -518,6 +518,24 @@ function Editor({ page, multi }) {
   async function handlePageTitleChange() {
     const title = pagetitleref.current
     setArticleTitle(title.innerText);
+    setListedPageItems(prevItems => {
+      // Remove any previous item with the same ID
+      const oldItem = listedPageItems.filter((item) => item.id === page)[0]
+      const filteredItems = prevItems.filter(item => item.id !== oldItem.id);
+
+      // Add the new record at the appropriate position based on its created date
+      let insertIndex = filteredItems.findIndex(item => item.created < oldItem.created);
+      if (insertIndex === -1) {
+        insertIndex = filteredItems.length;
+      }
+
+      return [
+        ...filteredItems.slice(0, insertIndex),
+        { ...oldItem, title: title.innerText },
+        ...filteredItems.slice(insertIndex)
+      ];
+      //return [...prevItems.filter(item => item.id !== page), { ...oldItem, icon: `${e.unified}.png` }]
+    })
     const newTitle = {
       title: title.innerText
     };
@@ -559,7 +577,7 @@ function Editor({ page, multi }) {
             </div>
             <div className={styles.title_buttons} id="tut_title_btns_id">
 
-              <MenuButtons pb={pb} page={page} editor={editor} editorRef={editorRef} articleTitle={articleTitle} clearStates={ResetUseStateVars} currentPageIconValue={currentPageIconValue} setArticleHeader={setArticleHeader} pageSharedTF={pageSharedTF} setCurrentPageIconValue={setCurrentPageIconValue} setPageSharedTF={setPageSharedTF} />
+              <MenuButtons listedPageItems={listedPageItems} setListedPageItems={setListedPageItems} pb={pb} page={page} editor={editor} editorRef={editorRef} articleTitle={articleTitle} clearStates={ResetUseStateVars} currentPageIconValue={currentPageIconValue} setArticleHeader={setArticleHeader} pageSharedTF={pageSharedTF} setCurrentPageIconValue={setCurrentPageIconValue} setPageSharedTF={setPageSharedTF} />
 
             </div>
           </div>
