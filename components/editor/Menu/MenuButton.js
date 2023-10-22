@@ -132,7 +132,7 @@ export default function MenuButtons({ listedPageItems, setListedPageItems, pb, p
 
             return [
                 ...filteredItems.slice(0, insertIndex),
-                { ...oldItem, icon: `${e.unified}.png` },
+                { ...oldItem, icon: `${e.unified.toLowerCase()}.png` },
                 ...filteredItems.slice(insertIndex)
             ];
             //return [...prevItems.filter(item => item.id !== page), { ...oldItem, icon: `${e.unified}.png` }]
