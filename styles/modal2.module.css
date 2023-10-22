@@ -16,7 +16,8 @@
 
 .modalContent {
     display: flex;
-    min-width: 40%;
+    min-width: 448px;
+    max-width: 99vw;
     flex-direction: column;
     position: fixed;
     background: #ffffff;
