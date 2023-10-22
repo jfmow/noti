@@ -32,7 +32,9 @@ export default function AccountButtons({ event, setpopUpClickEventSettingsModal 
         try {
             imagesSize = await pb.collection('Total_img_per_user').getOne(pb.authStore.model.id);
         } catch { }
-        setTotalUsage((filesSize + imagesSize) / 1000000)
+        setTotalUsage((filesSize.total_size
+            + imagesSize.total_size
+        ) / 1000000)
     }
     async function authUpdate() {
         try {
