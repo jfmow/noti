@@ -94,12 +94,11 @@
 
 
 .section1 {
-    padding-top: 50px;
     display: flex;
     width: 100%;
     justify-content: center;
     align-items: center;
-    height: calc(100dvh - 100px);
+    height: 100dvh;
 }
 
 .section1_bannerimg {
