@@ -59,10 +59,10 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    border-radius: calc(0.5rem - 4px);
-    background: #1e1e1e;
+    border-radius: calc(0.5rem);
+    background: #3d7eff;
     color: #f0f0f0;
-    padding: 0.5em;
+    padding: 0.7em 0.5em;
     border: 2px solid transparent;
     cursor: pointer;
     font-weight: 500;
@@ -77,9 +77,9 @@
 }
 
 .button:hover {
-    background: transparent;
-    border: 2px solid #000;
-    color: #000;
+    background: #3d7eff1f;
+    border: 2px solid #4b87ff;
+    color: #3d7eff;
 }
 
 .button:active {
@@ -162,5 +162,12 @@
 
     100% {
         transform: rotate(360deg);
+    }
+}
+
+
+@media(max-width: 600px) {
+    .modalContent {
+        width: 96%;
     }
 }
