@@ -46,7 +46,7 @@ export default function Terminal({ pages, pb, setListedPageItems }) {
             pagesCopy = pagesCopy.filter(page => page.shared);
         }
         if (filters.title) {
-            pagesCopy = pagesCopy.filter((page) => page.title.includes(filters.title))
+            pagesCopy = pagesCopy.filter((page) => page.title.toLowerCase().includes(filters.title.toLowerCase())
         }
         setFilteredPages(pagesCopy);
     }, [filters, pages]);
