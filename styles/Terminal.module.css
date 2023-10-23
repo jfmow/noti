@@ -13,12 +13,17 @@
 
 .hidden {
     display: none;
-    animation: terminalfallin 0.4s 1 ease reverse;
+    animation: terminalfallin 0.2s 1 ease;
+    -webkit-animation-direction: reverse;
+    animation-direction: reverse;
 }
 
 .terminal {
     --text: #1b1b1b;
     color: var(--text);
+    min-width: 500px;
+    min-height: 300px;
+    max-height: calc(98vh - 1em);
     width: 600px;
     height: 350px;
     background: #ffffffdb;
@@ -33,29 +38,32 @@
         22.3px 22.3px 17.9px -54px rgba(0, 0, 0, 0.035),
         41.8px 41.8px 33.4px -54px rgba(0, 0, 0, 0.028),
         100px 100px 80px -54px rgba(0, 0, 0, 0.02);
-    animation: terminalfallin 0.5s 1 ease;
+    animation: terminalfallin 0.3s 1 ease;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     pointer-events: auto;
     user-select: auto;
+    resize: both;
 
 }
 
 @keyframes terminalfallin {
     0% {
-        transform-origin: top center;
-        transform: translateY(calc(-100% - 1em));
+        transform-origin: center;
+        transform: scale(0);
         opacity: 0.3;
         overflow: hidden;
         display: flex;
+        border-radius: 0;
     }
 
     100% {
-        transform: translateY(0);
+        transform: scale(1);
         opacity: 1;
         overflow: hidden;
         display: flex;
+        border-radius: 0.5rem;
     }
 }
 

@@ -1,11 +1,5 @@
-import { AlternateButton, ModalContainer, ModalForm, ModalOverflowBlock, ModalTitle } from "@/lib/Modal";
-import Link from 'next/link'
-import Head from "next/head";
-import Router from "next/router";
-import CustomThemePicker from "./CustomTheme";
-import { useState } from "react";
 import { PopUpCardDropMenuSection, PopUpCardDropMenuSectionItem } from "@/lib/Pop-Cards/PopDropMenu";
-import { ShowTabBar } from "../editor/TabBar";
+import { ToggleTabBar } from "../editor/TabBar";
 
 export default function UserHelpModal({ CloseHelp }) {
     //const [themePicker, setThemePicker] = useState(false);
@@ -42,11 +36,7 @@ export default function UserHelpModal({ CloseHelp }) {
                 ))}
             </PopUpCardDropMenuSection>
             <PopUpCardDropMenuSection>
-                <PopUpCardDropMenuSectionItem onClick={() => {
-                    if (window.localStorage.getItem('_tabbar') === 'hidden') {
-                        ShowTabBar()
-                    }
-                }}>
+                <PopUpCardDropMenuSectionItem onClick={() => ToggleTabBar()}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-top"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><line x1="3" x2="21" y1="9" y2="9" /></svg>
                     <p>Show tab bar</p>
                 </PopUpCardDropMenuSectionItem>

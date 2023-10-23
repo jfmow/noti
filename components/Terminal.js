@@ -2,6 +2,7 @@ import styles from '@/styles/Terminal.module.css'
 import { useState, useEffect, useRef } from 'react';
 import Link from '@/components/Link';
 import Router from 'next/router';
+import { ToggleTabBar } from './editor/TabBar';
 export default function Terminal({ pages, pb, setListedPageItems }) {
     const [visible, setVisible] = useState(false);
     const [filters, setFilters] = useState({ created: false, shared: false, title: '' })
@@ -106,6 +107,10 @@ export default function Terminal({ pages, pb, setListedPageItems }) {
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
                             Create new page
                         </div>
+                        <div className={`${styles.quickmenuItem}`} onClick={() => ToggleTabBar()}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-stack"><path d="M16 2v5h5" /><path d="M21 6v6.5c0 .8-.7 1.5-1.5 1.5h-7c-.8 0-1.5-.7-1.5-1.5v-9c0-.8.7-1.5 1.5-1.5H17l4 4z" /><path d="M7 8v8.8c0 .3.2.6.4.8.2.2.5.4.8.4H15" /><path d="M3 12v8.8c0 .3.2.6.4.8.2.2.5.4.8.4H11" /></svg>
+                            Toggle tab bar
+                        </div>
                         <div className={`${styles.quickmenuItem} ${filters.shared && styles.quickmenuItem_selected}`} onClick={() => setFilters({ ...filters, shared: !filters.shared })}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-waypoints"><circle cx="12" cy="4.5" r="2.5" /><path d="m10.2 6.3-3.9 3.9" /><circle cx="4.5" cy="12" r="2.5" /><path d="M7 12h10" /><circle cx="19.5" cy="12" r="2.5" /><path d="m13.8 17.7 3.9-3.9" /><circle cx="12" cy="19.5" r="2.5" /></svg>
                             Shared
@@ -120,6 +125,7 @@ export default function Terminal({ pages, pb, setListedPageItems }) {
 
                             )}
                         </div>
+
                     </div>
                     <div className={styles.terminalBody}>
                         {filteredPages.map((page => (

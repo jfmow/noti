@@ -15,8 +15,14 @@ export default function TabBar({ pb, page, plVisible, setplVisible }) {
     useEffect(() => {
         window.addEventListener('storage', (e) => {
             if (e.key === 'tabbarstate') {
-                window.localStorage.setItem('_tabbar', JSON.stringify([]))
-                setTabBarHidden(false)
+                if (e.value === "true") {
+                    window.localStorage.setItem('_tabbar', JSON.stringify([]))
+                    setTabBarHidden(false)
+                } else if (e.value === "false") {
+                    window.localStorage.setItem('_tabbar', 'hidden')
+                    setTabBarHidden(true)
+                }
+
             }
         });
         if (window.localStorage.getItem('_tabbar') === 'hidden') {
@@ -282,5 +288,19 @@ export function ShowTabBar() {
 
     const storageEvent = new Event('storage');
     storageEvent.key = 'tabbarstate';
+    storageEvent.value = 'true';
     window.dispatchEvent(storageEvent);
+    //console.log(storageEvent)
+}
+
+export function ToggleTabBar() {
+    const storageEvent = new Event('storage');
+    storageEvent.key = 'tabbarstate';
+    if (window.localStorage.getItem('_tabbar') === 'hidden') {
+        storageEvent.value = 'true';
+    } else {
+        storageEvent.value = 'false';
+    }
+    window.dispatchEvent(storageEvent);
+    //console.log(storageEvent)
 }
