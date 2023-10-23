@@ -28,7 +28,7 @@
     border-radius: calc(0.5rem - 2px);
     color: #000;
     padding: 2em;
-    font-family: "Inter", sans-serif;
+    font-family: sans-serif;
 }
 
 .modalContent h1 {
@@ -67,13 +67,13 @@
     border: 2px solid transparent;
     cursor: pointer;
     font-weight: 500;
-    font-family: "Inter", sans-serif;
+    font-family: sans-serif;
     font-size: 14px;
     text-wrap: balance;
     margin-top: 5px;
     margin-bottom: 5px;
     transition: all 0.2s ease;
-    font-family: "Inter", sans-serif;
+    font-family: sans-serif;
 
 }
 
@@ -108,7 +108,7 @@
     border: 2px solid #000;
     cursor: pointer;
     font-weight: 500;
-    font-family: "Inter", sans-serif;
+    font-family: sans-serif;
     font-size: 14px;
     text-wrap: balance;
     margin-top: 5px;
