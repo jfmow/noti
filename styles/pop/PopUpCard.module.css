@@ -75,7 +75,7 @@
 
 .PopUpCardTitle_text {
     font-size: 18px;
-    font-family: "Special", "Inter";
+    font-family: sans-serif;
     font-weight: 600;
     letter-spacing: -.025em;
     line-height: 1;
@@ -90,7 +90,7 @@
 .PopUpCardSubTitle_text {
     margin: 0;
     font-size: 14px;
-    font-family: "Special", "Inter";
+    font-family: sans-serif;
     font-weight: 400;
     letter-spacing: -.025em;
     line-height: 1.25rem;
@@ -141,7 +141,7 @@
     color: #09090B;
     padding: 8px 16px;
     font-weight: 500;
-    font-family: "Special", "Inter";
+    font-family: sans-serif;
 }
 
 .pagebtn_dark {
