@@ -75,7 +75,7 @@
 
 .terminalHeader span {
     color: var(--text);
-    font-family: "Inter", sans-serif;
+    font-family: sans-serif;
     font-size: 18px;
     font-weight: 700;
 
@@ -89,7 +89,7 @@
     color: #202020;
     outline: none;
     font-size: 14px;
-    font-family: "Inter", sans-serif;
+    font-family: sans-serif;
 }
 
 .close {
@@ -145,7 +145,7 @@
     padding: 10px 12px;
     color: var(--item_text);
     font-size: 14px;
-    font-family: "Inter", sans-serif;
+    font-family: sans-serif;
     font-weight: 600;
     gap: 5px;
     position: relative;
@@ -189,7 +189,7 @@
 }
 
 .quickmenuItem {
-    font-family: "Inter", sans-serif;
+    font-family: sans-serif;
     transition: background 20ms ease-in 0s;
     cursor: pointer;
     font-size: 14px;
