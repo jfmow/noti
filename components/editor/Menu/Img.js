@@ -59,7 +59,7 @@ export default function Unsplash({ page, setArticleHeader, close }) {
             await pb.collection("pages").update(page, { "unsplash": fullImageUrl, header_img: null });
             const response = await fetch(`${process.env.NEXT_PUBLIC_CURRENTURL}/api/downloadunsplash`, {
                 method: "POST",
-                body: JSON.stringify({ "image": data.id }),
+                body: JSON.stringify({ "image": data.links.download_location }),
             });
             const state = await response.json();
             if (state.code !== 0) {

@@ -49,26 +49,28 @@ export default async function handler(request, response) {
         return response.status(405).send('Method not allowed');
     }
     try {
+        //console.log(request.body)
         const link = JSON.parse(request.body).image
+        //console.log(link)
 
         // Sanitize and validate the 'type' parameter
-        const validSearchText = validator.escape(String(link));
-
         const isSafeType = (input) => {
-            // Define a regular expression pattern to allow spaces and disallow problematic characters
-            const pattern = /^[a-zA-Z0-9\s-]+$/;
+            // Define a regular expression pattern to match strings from api.unsplash.com
+            const pattern = /^https:\/\/api\.unsplash\.com\/.*$/;
             return pattern.test(input);
         };
 
-        if (!isSafeType(validSearchText)) {
+
+        if (!isSafeType(link)) {
             // Handle invalid input (e.g., respond with an error)
             return response.status(400).send('Invalid input parameter');
         }
 
-        const data = await fetch(`https://unsplash.com/photos/${validSearchText}/download?client_id=${process.env.UNSPLASH_APIKEY}}`)
+        const data = await fetch(`${link}&client_id=${process.env.UNSPLASH_APIKEY}`)
         if (data.status === 200) {
             return response.status(200).json({ message: "Success", code: 0 })
         }
+        //console.log(data)
         return response.status(501).json({ message: "Fail", code: 1 })
 
     } catch (err) {
