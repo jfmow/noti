@@ -1,22 +1,28 @@
-import '@/styles/globals.css'
+import '@/styles/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
-import { register } from 'next-offline/runtime';
-import { useEffect, useState } from 'react';
-import { Toaster } from 'sonner'
+import { useEffect } from 'react';
+import { Toaster } from 'sonner';
+import Router from 'next/router';
+
 export default function App({ Component, pageProps }) {
-
   useEffect(() => {
-    //register('https://beta.jamesmowat.com/service-worker.js')
-    register(`${process.env.NEXT_PUBLIC_CURRENTURL}/service-worker-min.js`)
-  }, [])
-
-
-
+    if (Router.pathname === '/') {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register(`${process.env.NEXT_PUBLIC_CURRENTURL}/service-worker-min.js`)
+          .then(registration => {
+            console.log('Service Worker registered with scope:', registration.scope);
+          })
+          .catch(error => {
+            console.error('Service Worker registration failed:', error);
+          });
+      }
+    }
+  }, []);
 
   return (
     <>
       <Toaster richColors />
       <Component {...pageProps} />
     </>
-  )
+  );
 }

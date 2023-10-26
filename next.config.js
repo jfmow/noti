@@ -24,6 +24,6 @@ const nextConfig = {
   },
 }
 
-const withOffline = require('next-offline');
+//const withOffline = require('next-offline');
 
-module.exports = withOffline(nextConfig);
+module.exports = nextConfig;
