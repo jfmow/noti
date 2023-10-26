@@ -56,20 +56,18 @@ export default function AccountButtons({ event, setpopUpClickEventSettingsModal 
         if (!window.confirm('Are you sure you want to delete your account?')) {
             return
         }
+        const toastA = toast.loading('Deleting account...')
 
         try {
-            const response = toast.promise(
-                await pb.collection('users').delete(pb.authStore.model.id),
-                {
-                    loading: 'Deleting account...',
-                    success: 'Account deleted successfuly. 👌',
-                    error: 'Failed to delete account 🤯'
-                }
-            );
+            await pb.collection('users').delete(pb.authStore.model.id)
+            toast.dismiss(toastA)
+            toast.success('Deleted account')
 
             pb.authStore.clear();
             location.replace('/');
         } catch (error) {
+            toast.dismiss(toastA)
+            toast.error('Error while deleting account')
             //console.log(error);
         }
     }
