@@ -59,9 +59,9 @@ export default function AccountButtons({ event, setpopUpClickEventSettingsModal 
 
         try {
             const response = toast.promise(
-                pb.collection('users').delete(pb.authStore.model.id),
+                await pb.collection('users').delete(pb.authStore.model.id),
                 {
-                    pending: 'Deleting account...',
+                    loading: 'Deleting account...',
                     success: 'Account deleted successfuly. 👌',
                     error: 'Failed to delete account 🤯'
                 }
