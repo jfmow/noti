@@ -168,7 +168,7 @@ export default function TabBar({ pb, page, plVisible, setplVisible }) {
                                 </PopUpCardDropMenuSectionItem>
                                 <PopUpCardDropMenuSectionItem onClick={() => {
                                     //setAddPageDropMenuEvent(!addPageDropMenuEvent)
-                                    toast('Comming soon!')
+                                    toaster.toast('Comming soon!')
                                 }} >
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mouse-pointer-square"><path d="M21 11V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6" /><path d="m12 12 4 10 1.7-4.3L22 16Z" /></svg>
                                     <p>Add page</p>
