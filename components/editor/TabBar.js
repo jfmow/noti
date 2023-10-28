@@ -3,7 +3,7 @@ import { PopUpCardDropMenu, PopUpCardDropMenuSection, PopUpCardDropMenuSectionIt
 import styles from '@/styles/TabBar.module.css';
 import Router from 'next/router';
 import { useEffect, useRef, useState } from 'react';
-import { toast } from 'sonner';
+import { toaster } from "@/components/toasty";
 
 export default function TabBar({ pb, page, plVisible, setplVisible }) {
     const [tabBarItems, setTabBarItems] = useState([]);
@@ -101,11 +101,11 @@ export default function TabBar({ pb, page, plVisible, setplVisible }) {
         window.localStorage.setItem('_tabbar', 'hidden')
         setTabBarHidden(true)
         setNewPageDropEvent(null)
-        toast.success('Tab bar hidden! Go to your theme setting to get it back.')
+        toaster.toast('Tab bar hidden! Go to your theme setting to get it back.', "success")
     }
 
     async function CreateANewPage() {
-        const loadingToast = toast.loading('Creating page...')
+        toaster.toast('Creating page...', "loading", { id: "loadingtoast" })
         const data = {
             "parentId": "",
             "owner": pb.authStore.model.id,
@@ -114,8 +114,8 @@ export default function TabBar({ pb, page, plVisible, setplVisible }) {
 
         const record = await pb.collection('pages').create(data);
         setNewPageDropEvent(null)
-        toast.dismiss(loadingToast)
-        toast.success('Page created successfully!')
+        toaster.dismiss("loadingtoast")
+        toaster.toast('Page created successfully!', "success")
         Router.push(`/page/${record.id}`)
     }
 

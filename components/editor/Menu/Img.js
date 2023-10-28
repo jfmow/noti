@@ -3,8 +3,7 @@ import PocketBase from 'pocketbase';
 import debounce from 'lodash/debounce';
 import Link from '../../Link';
 import styles from '@/styles/Single/Unsplashpicker.module.css'
-import { toast } from 'sonner';
-import { toaster } from '@/components/Dommanager';
+import { toaster } from '@/components/toasty';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 
@@ -50,7 +49,7 @@ export default function Unsplash({ page, setArticleHeader, close }) {
     }
 
     async function downloadAndCreateFileObjects(data) {
-        const loadingToast = toaster.toast("Setting cover...", "info", { id: "LoadingToast" })
+        toaster.toast("Setting cover...", "loading", { id: "LoadingToast" })
 
         const fullImageUrl = data.urls.full;
         setLoading(data.id);
@@ -61,8 +60,7 @@ export default function Unsplash({ page, setArticleHeader, close }) {
             const response = await fetch(data.links.download_location + `?client_id=${process.env.NEXT_PUBLIC_UNSPLASH}`, {
                 method: "GET",
             });
-            const state = await response.json();
-            if (state.code !== 0) {
+            if (!response.ok) {
                 throw new Error("Download API error");
             }
         } catch (err) {

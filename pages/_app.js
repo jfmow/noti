@@ -3,6 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useEffect } from 'react';
 import { Toaster } from 'sonner';
 import Router from 'next/router';
+import '@/components/toast.css'
 
 export default function App({ Component, pageProps }) {
   useEffect(() => {

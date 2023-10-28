@@ -7,6 +7,7 @@ import compressImage from "@/lib/CompressImg";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { AlertButton, AlertButtons, AlertContainer } from "@/lib/Alert";
+import { toaster } from "@/components/toasty";
 
 const TabbedDropMenuItem = dynamic(() => import('@/lib/Pop-Cards/Tabbed').then((module) => module.TabbedDropMenuItem));
 const TabbedDropMenuItemSurround = dynamic(() => import('@/lib/Pop-Cards/Tabbed').then((module) => module.TabbedDropMenuItemSurround));
@@ -60,7 +61,7 @@ export default function MenuButtons({ listedPageItems, setListedPageItems, pb, p
 
     async function handleDeletePage() {
         await pb.collection("pages").delete(page);
-        toast.success(`${articleTitle || 'Untitled'} deleted`)
+        toaster.toast(`${articleTitle || 'Untitled'} deleted`, "success")
         await editor.clear()
         clearStates()
         editorRef.current = null
@@ -77,7 +78,7 @@ export default function MenuButtons({ listedPageItems, setListedPageItems, pb, p
     }
 
     async function handlePageHeaderImageUpload(e) {
-        const loadingToast = toast.loading("Uploading...")
+        toaster.toast("Uploading...", "loading", { id: "upload" })
 
         const file = e.target.files[0];
 
@@ -101,12 +102,12 @@ export default function MenuButtons({ listedPageItems, setListedPageItems, pb, p
                 //}
                 await pb.collection("pages").update(page, formData);
 
-                toast.dismiss(loadingToast)
-                toast.success("Image uploaded successfully!")
+                toaster.dismiss("upload")
+                toaster.toast("Image uploaded successfully!", "success")
 
             } catch (error) {
-                toast.dismiss(loadingToast)
-                toast.error("Error uploading header img");
+                toaster.dismiss("upload")
+                toaster.toast("Error uploading header img", "error");
             }
         }
     }
@@ -217,7 +218,7 @@ export default function MenuButtons({ listedPageItems, setListedPageItems, pb, p
             setConvertedData(md)
         } catch (err) {
             console.log(err)
-            return toast.error(err)
+            return toaster.toast(err, "error")
         }
 
     }

@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import Head from "next/head";
-import Link from "@/components/Link";
-import { toast } from "sonner";
 import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import Checklist from "@editorjs/checklist";
@@ -9,16 +7,12 @@ import InlineCode from "@editorjs/inline-code";
 import List from "@editorjs/list";
 import Quote from "@editorjs/quote";
 import Table from "@editorjs/table";
-import AttachesTool from "@editorjs/attaches";
 import PocketBase from "pocketbase";
 import styles from "@/styles/Create.module.css";
 import Video from '@/customEditorTools/Video'
 import Loader from "../Loader";
 import compressImage from "@/lib/CompressImg";
-import dynamic from 'next/dynamic';
 import Router from "next/router";
-import { AnimatePresence } from "framer-motion";
-import { AlternateButton, CopyPasteTextArea } from "@/lib/Modal";
 import { createRandomMeshGradients } from "@/lib/randomMeshGradient";
 import NestedList from '@editorjs/nested-list';
 import MarkerTool from "@/customEditorTools/Marker";
@@ -26,8 +20,9 @@ import Image from "@/customEditorTools/Image";
 import SimpleIframe from "@/customEditorTools/SimpleEmbed";
 import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
 import LineBreak from "@/customEditorTools/LineBreak";
-import { handleBlurHashChange, handleCreateBlurHash } from '@/lib/idk'
+import { handleCreateBlurHash } from '@/lib/idk'
 import MenuButtons from "./Menu/MenuButton";
+import { toaster } from "../toasty";
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false)
@@ -95,7 +90,7 @@ function Editor({ page, multi, setListedPageItems, listedPageItems }) {
             if (offline.state) {
               setOffline({ ...offline, warning: true })
               if (!offline.warning) {
-                toast.error("Looks like your offline. Your work is currenly unsaved!")
+                toaster.toast("Looks like your offline. Your work is currenly unsaved!", "error")
               }
               return
             }
@@ -124,9 +119,7 @@ function Editor({ page, multi, setListedPageItems, listedPageItems }) {
               const state = await pb.collection("pages").update(page, formData);
               //console.log("Auto saved successfully!");
             } catch (error) {
-              toast.error("Could not auto save!", {
-                position: toast.POSITION.BOTTOM_LEFT,
-              });
+              toaster.toast("Could not auto save!", "error");
               console.error(error);
             }
             //console.log("Auto-save executed.");
@@ -135,7 +128,7 @@ function Editor({ page, multi, setListedPageItems, listedPageItems }) {
           setIsSaving(false);
         } catch (error) {
           console.log(error)
-          toast.error("Could not auto save!")
+          toaster.toast("Could not auto save!", "error")
         }
       }
     };
@@ -236,8 +229,8 @@ function Editor({ page, multi, setListedPageItems, listedPageItems }) {
           }
           setIsLoading(false);
         } catch (error) {
-          toast.error(
-            "Error while loading content"
+          toaster.toast(
+            "Error while loading content", "error"
           );
           console.error(error);
         }
@@ -303,7 +296,7 @@ function Editor({ page, multi, setListedPageItems, listedPageItems }) {
                 storeFile: {
                   uploadFile(file) {
                     async function uploadbyFile(file) {
-                      const loadingToast = toast.loading("Uploading...")
+                      toaster.toast("Uploading...", "loading", { id: "uploadToast" })
                       const formData = new FormData();
 
                       const compressedBlob = await compressImage(file); // Maximum file size in KB (100KB in this example)
@@ -325,15 +318,15 @@ function Editor({ page, multi, setListedPageItems, listedPageItems }) {
                           return { success: 0 }
                         }
                         record = await pb.collection("imgs").create(formData);
-                        toast.dismiss(loadingToast)
-                        toast.success("Image uploaded successfully!")
+                        toaster.dismiss("uploadToast")
+                        toaster.toast("Image uploaded successfully!", "success")
                       } catch (error) {
-                        toast.dismiss(loadingToast)
+                        toaster.dismiss("uploadToast")
                         if (error.data.code === 403) {
-                          toast.error(error.data.message)
+                          toaster.toast(error.data.message, "error")
                           return { success: 0 }
                         }
-                        toast.error('Unable to upload file. It may not be supported yet. Try .pdf or images')
+                        toaster.toast('Unable to upload file', "error")
                         return { success: 0 }
                       }
 
@@ -378,7 +371,7 @@ function Editor({ page, multi, setListedPageItems, listedPageItems }) {
                 storeFile: {
                   uploadFile(file) {
                     async function uploadbyFile(file) {
-                      const loadingToast = toast.loading("Uploading...")
+                      const loadingToast = toaster.toast("Uploading...", "loading", { id: "uploadToast" })
                       const formData = new FormData();
                       formData.append("file_data", file);
                       formData.append("uploader", pb.authStore.model.id);
@@ -395,17 +388,17 @@ function Editor({ page, multi, setListedPageItems, listedPageItems }) {
                         }
                         record = await pb.collection("files").create(formData);
                         //console.log(record);
-                        toast.dismiss(loadingToast)
-                        toast.success("File uploaded successfully!")
+                        toaster.dismiss("uploadToast")
+                        toaster.toast("File uploaded successfully!", "success")
 
                       } catch (error) {
                         toast.dismiss(loadingToast)
                         console.error(error);
                         if (error.data.code === 403) {
-                          toast.error(error.data.message)
+                          toaster.toast(error.data.message, "error")
                           return { success: 0 }
                         }
-                        toast.error('Unable to upload file. It may not be supported yet. Try .pdf or images')
+                        toaster.toast('Unable to upload file. It may not be supported yet. Try .pdf or images', "error")
                         return { success: 0 }
                         // Handle error
                       }
@@ -443,42 +436,6 @@ function Editor({ page, multi, setListedPageItems, listedPageItems }) {
               class: Quote,
               inlineToolbar: true,
             },
-            attaches: {
-              class: AttachesTool,
-              config: {
-                uploader: {
-                  uploadByFile(file) {
-                    async function upload(file) {
-                      const formData = new FormData();
-                      formData.append("file_data", file);
-                      formData.append("uploader", pb.authStore.model.id);
-                      const response = await toast.promise(
-                        pb.collection("files").create(formData),
-                        {
-                          pending: "Saving img...",
-                          success: "Saved successfully. 📁",
-                          error: "Failed 🤯",
-                        }
-                      );
-                      function getFileExtension(file) {
-                        const filename = file.name;
-                        const extension = filename.split(".").pop();
-                        return extension;
-                      }
-                      const extension = getFileExtension(file);
-                      return {
-                        success: 1,
-                        file: {
-                          extension: extension,
-                          url: `${process.env.NEXT_PUBLIC_POCKETURL}/api/files/files/${response.id}/${response.file_data}`,
-                        },
-                      };
-                    }
-                    return upload(file);
-                  },
-                },
-              },
-            },
 
             break: {
               class: LineBreak,
@@ -500,7 +457,7 @@ function Editor({ page, multi, setListedPageItems, listedPageItems }) {
               editor.destroy();
             } catch (err) {
               console.warn(err);
-              toast.error(`Reloading editor`);
+              toaster.toast(`Reloading editor`, "error");
               setIsLoading(true);
               setTimeout(() => {
                 window.location.reload();
@@ -511,7 +468,7 @@ function Editor({ page, multi, setListedPageItems, listedPageItems }) {
       }
     } catch (error) {
       console.error(error)
-      toast.error(`Editor not ready! Saving may not work.`);
+      toaster.toast(`Editor not ready! Saving may not work.`, "error");
     }
   }, [editorData, page]);
 

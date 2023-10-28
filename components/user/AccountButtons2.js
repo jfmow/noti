@@ -2,7 +2,6 @@ import { Modal, ModalButton, ModalLoader } from '@/lib/Modals/Modal';
 import styles from '@/styles/Acc.module.css';
 import { useState, useEffect, useRef } from 'react';
 import PocketBase from 'pocketbase';
-import { toast } from 'sonner';
 import Head from 'next/head';
 import Link from '@/components/Link';
 import compressImage from '@/lib/CompressImg';
@@ -10,6 +9,7 @@ import Router from 'next/router';
 import dynamic from 'next/dynamic';
 import { PopDropMenuStatic, PopUpCardDropMenuSection, PopUpCardDropMenuSectionItem, PopUpCardDropMenuSectionTitle, PopUpCardDropMenuStaticPos } from '@/lib/Pop-Cards/PopDropMenu';
 import AvatarModal from './AvatarModal';
+import { toaster } from "@/components/toasty";
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 export default function AccountButtons({ event, setpopUpClickEventSettingsModal }) {
@@ -56,18 +56,18 @@ export default function AccountButtons({ event, setpopUpClickEventSettingsModal 
         if (!window.confirm('Are you sure you want to delete your account?')) {
             return
         }
-        const toastA = toast.loading('Deleting account...')
+        const toastA = toaster.toast('Deleting account...', "loading", { id: "deleteaccount" })
 
         try {
             await pb.collection('users').delete(pb.authStore.model.id)
-            toast.dismiss(toastA)
-            toast.success('Deleted account')
+            toaster.dismiss("deleteaccount")
+            toaster.toast('Deleted account', "success")
 
             pb.authStore.clear();
             location.replace('/');
         } catch (error) {
-            toast.dismiss(toastA)
-            toast.error('Error while deleting account')
+            toaster.dismiss("deleteaccount")
+            toaster.toast('Error while deleting account', "error")
             //console.log(error);
         }
     }
@@ -77,30 +77,24 @@ export default function AccountButtons({ event, setpopUpClickEventSettingsModal 
         try {
             await pb.collection('users').requestEmailChange(newEmail);
             toast('Email change request sent! 👍')
+            toaster.toast("Please check your email (new) for a request form.", "success")
             return
         } catch (error) {
             //console.log(error)
-            toast.error('Failed to send email change request!', {
-                action: {
-                    label: 'Retry',
-                    onClick: () => ChangeEmail()
-                },
-            })
+            toaster.toast("Failed to request email change, please try again.", "error")
             return
         }
     }
     async function changeUsername() {
         const newUsername = prompt('Enter a new username', pb.authStore.model.username)
-
         if (newUsername.length <= 2) {
-            return toast.error('Must be longer than 3 char');
-
+            return toaster.toast('Must be longer than 3 letters/numbers', "error");
         }
         const data = {
             "username": newUsername
         };
         await pb.collection('users').update(pb.authStore.model.id, data);
-        toast.success(`Username updated to ${newUsername} 👍`)
+        toaster.toast(`Your username has been updated: ${newUsername}`, "success")
         return authUpdate();
 
     }
