@@ -57,7 +57,7 @@ export default async function handler(request, response) {
         const validPageNumber = page
 
         if (validSearchText === "*rand**") {
-            const data = await fetch(`https://api.unsplash.com/photos/random?count=24&client_id=${process.env.UNSPLASH_APIKEY}&orientation=landscape`)
+            const data = await fetch(`https://api.unsplash.com/photos/random?count=24&client_id=${process.env.NEXT_PUBLIC_UNSPLASH}&orientation=landscape`)
             //const data = await fetch(`https://api.unsplash.com/search/photos?query=potato&client_id=${process.env.UNSPLASH_APIKEY}&per_page=200&orientation=landscape&page=${validPageNumber}`)
             const data2 = await data.json()
             return response.status(200).json({ "total": -1, "total_pages": -1, "results": data2 })

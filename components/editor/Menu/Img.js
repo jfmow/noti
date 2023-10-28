@@ -4,6 +4,7 @@ import debounce from 'lodash/debounce';
 import Link from '../../Link';
 import styles from '@/styles/Single/Unsplashpicker.module.css'
 import { toast } from 'sonner';
+import { toaster } from '@/components/Dommanager';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 
@@ -49,7 +50,7 @@ export default function Unsplash({ page, setArticleHeader, close }) {
     }
 
     async function downloadAndCreateFileObjects(data) {
-        const loadingToast = toast.loading("Setting cover...")
+        const loadingToast = toaster.toast("Setting cover...", "info", { id: "LoadingToast" })
 
         const fullImageUrl = data.urls.full;
         setLoading(data.id);
@@ -57,9 +58,8 @@ export default function Unsplash({ page, setArticleHeader, close }) {
 
         try {
             await pb.collection("pages").update(page, { "unsplash": fullImageUrl, header_img: null });
-            const response = await fetch(`${process.env.NEXT_PUBLIC_CURRENTURL}/api/downloadunsplash`, {
-                method: "POST",
-                body: JSON.stringify({ "image": data.links.download_location }),
+            const response = await fetch(data.links.download_location + `?client_id=${process.env.NEXT_PUBLIC_UNSPLASH}`, {
+                method: "GET",
             });
             const state = await response.json();
             if (state.code !== 0) {
@@ -69,8 +69,8 @@ export default function Unsplash({ page, setArticleHeader, close }) {
             console.error('Error downloading and creating file objects:', err);
             // Handle the error, e.g., set an error state or show an error message
         } finally {
-            toast.dismiss(loadingToast)
-            toast.success("Cover set successfully!")
+            toaster.dismiss("LoadingToast")
+            toaster.toast("Cover set successfully!", "success")
             setLoading(null);
         }
     }
@@ -117,7 +117,7 @@ export default function Unsplash({ page, setArticleHeader, close }) {
                             onClick={() => !loading && downloadAndCreateFileObjects(image)}
                             onLoad={() => setLoading(false)}
                         />
-                        <Link href={image.user.links.html + `?utm_source=${process.env.NEXT_PUBLIC_CURRENTURL}`} className={styles.author}>
+                        <Link href={image.user.links.html + `?utm_source=note.suddsy.dev&utm_medium=referral`} className={styles.author}>
                             Photo by: <span className={styles.author_name}>{image.user.name}</span>
                         </Link>
                     </div>
