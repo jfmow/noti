@@ -99,10 +99,12 @@ export const toaster = {
             // Automatically remove the toast after 3 seconds
             if (!nodelay) {
                 setTimeout(() => {
-                    toastElement.style.animationName = "exit"
-                    toastElement.addEventListener("animationend", () => {
-                        document.body.removeChild(toastElement);
-                    });
+                    if (open) {
+                        toastElement.style.animationName = "exit"
+                        toastElement.addEventListener("animationend", () => {
+                            document.body.removeChild(toastElement);
+                        });
+                    }
                 }, options?.delay || 3000);
             }
 
