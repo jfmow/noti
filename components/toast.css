@@ -224,6 +224,6 @@
 
     .toast {
         max-width: 100%;
-        word-break: break-all;
+        overflow-wrap: anywhere;
     }
 }
