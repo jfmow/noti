@@ -83,6 +83,8 @@ async function toast(text, type, options) {
 
     function removeToast() {
         try {
+            open = false;
+            nodelay = true;
             const toastHeight = toastElement.clientHeight;
             //get the index of the toast in the toastcontainer
             const index = Array.from(container.children).indexOf(toastElement);
