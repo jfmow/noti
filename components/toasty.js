@@ -152,7 +152,7 @@ async function toast(text, type, options) {
 
 /**
  * @typedef {Object} Toaster
- * @property {(text: string, type: string, options?: ToastOptions) => void} toast - Function to display a toast message.
+ * @property {(text: string, type: string, options?: ToastOptions) => void} toast - !Deprecated! Function to display a toast message. 
  * @property {(toast: any) => void} dismiss - Function to dismiss a toast message.
  * @property {(text: string, options?: ToastOptions) => void} success - Function to display a success toast message.
  * @property {(text: string, options?: ToastOptions) => void} error - Function to display an error toast message.
