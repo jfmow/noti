@@ -145,7 +145,6 @@ async function toast(text, type, options) {
                     toastElement.style.animationName = "exit"
                     toastElement.classList.add("exit")
                     toastElement.addEventListener("animationend", () => {
-                        console.log('C')
                         removeToast()
                     });
                 }
