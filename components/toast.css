@@ -28,6 +28,10 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.exit {
+    transform: translateX(200%);
+}
+
 @keyframes shrink {
     0% {
         margin-top: var(--margin_toast);

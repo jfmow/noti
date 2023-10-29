@@ -18,7 +18,8 @@ async function toast(text, type, options) {
         if (e.value === options?.id && e.key === "toastDis") {
             if (open) {
                 open = false;
-                toastElement.style.animationName = "exit";
+                toastElement.style.animationName = "exit"
+                toastElement.classList.add("exit")
                 toastElement.addEventListener("animationend", () => {
                     try {
                         container.removeChild(toastElement);
@@ -78,22 +79,26 @@ async function toast(text, type, options) {
             `
             break;
     }
+    const toastHeight = toastElement.clientHeight;
+    const index = Array.from(container.children).indexOf(toastElement);
+
     toastElement.style.animationName = "exit"
     toastElement.style.animationDirection = "reverse"
 
     function removeToast() {
         try {
+            container.removeChild(toastElement);
+
             open = false;
             nodelay = true;
-            const toastHeight = toastElement.clientHeight;
+
             //get the index of the toast in the toastcontainer
-            const index = Array.from(container.children).indexOf(toastElement);
+
             //get the index of the next item in the toast container
             const nextElementIndex = index + 1;
             //select it
             const nextElement = container.children[nextElementIndex];
             //remove the toast
-            container.removeChild(toastElement);
             //if the nextElement is not there (cause its the last item in the container) do the first thing in the if
             if (!nextElement) {
                 document.documentElement.style.setProperty('--margin_toast', toastHeight + 20 + 'px')
@@ -114,6 +119,7 @@ async function toast(text, type, options) {
         //set the open to false to prevent the timeout
         open = false;
         toastElement.style.animationName = "exit"
+        toastElement.classList.add("exit")
         toastElement.addEventListener("animationend", () => {
             removeToast()
         });
@@ -124,10 +130,12 @@ async function toast(text, type, options) {
         toastElement.addEventListener("animationend", () => {
             toastElement.style.animationName = ""
             toastElement.style.animationDirection = ""
+            toastElement.removeEventListener("animationend", () => {
+                toastElement.style.animationName = ""
+                toastElement.style.animationDirection = ""
+            })
         });
-        toastElement.removeEventListener("animationend", () => {
-            toastElement.style.animationName = ""
-        })
+
 
 
         // Automatically remove the toast after 3 seconds
@@ -135,7 +143,9 @@ async function toast(text, type, options) {
             setTimeout(() => {
                 if (open) {
                     toastElement.style.animationName = "exit"
+                    toastElement.classList.add("exit")
                     toastElement.addEventListener("animationend", () => {
+                        console.log('C')
                         removeToast()
                     });
                 }
