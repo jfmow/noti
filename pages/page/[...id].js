@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import MyComponent from '@/components/Item';
 import TabBar from '@/components/editor/TabBar';
 import Terminal from '@/components/Terminal';
-import { toaster } from '@/components/toasty';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 

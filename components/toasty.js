@@ -144,26 +144,74 @@ async function toast(text, type, options) {
 }
 
 //Helpers
+/**
+ * @typedef {Object} ToastOptions
+ * @property {number} [delay] - Time in seconds to set toast timeout.
+ * @property {string} [id] - Toast ID used to dismiss the toast message.
+ */
+
+/**
+ * @typedef {Object} Toaster
+ * @property {(text: string, type: string, options?: ToastOptions) => void} toast - Function to display a toast message.
+ * @property {(toast: any) => void} dismiss - Function to dismiss a toast message.
+ * @property {(text: string, options?: ToastOptions) => void} success - Function to display a success toast message.
+ * @property {(text: string, options?: ToastOptions) => void} error - Function to display an error toast message.
+ * @property {(text: string, options?: ToastOptions) => void} info - Function to display an info toast message.
+ * @property {(text: string, options?: ToastOptions) => void} loading - Function to display a loading toast message.
+ */
+
+/**
+ * @type {Toaster}
+ */
 export const toaster = {
+    /**
+     * Displays a toast message.
+     * @param {string} text - The text to be displayed in the toast message.
+     * @param {string} type - Type of the toast message (e.g., 'success', 'error', 'info', 'loading').
+     * @param {ToastOptions} [options] - Additional options for the toast message.
+     */
     async toast(text, type, options) {
         toast(text, type, options || {})
     },
+    /**
+     * Dismisses a toast message.
+     * @param {any} toast - The toast message to be dismissed.
+     */
     async dismiss(toast) {
         const event2 = new Event('CustomEvent')
         event2.key = "toastDis"
         event2.value = toast
         window.dispatchEvent(event2)
     },
-
+    /**
+     * Displays a success toast message.
+     * @param {string} text - The text to be displayed in the toast message.
+     * @param {ToastOptions} [options] - Additional options for the toast message.
+     */
     async success(text, options) {
         toast(text, 'success', options || {})
     },
+    /**
+    * Displays an error toast message.
+    * @param {string} text - The text to be displayed in the toast message.
+    * @param {ToastOptions} [options] - Additional options for the toast message.
+    */
     async error(text, options) {
         toast(text, 'error', options || {})
     },
+    /**
+     * Displays an info toast message.
+     * @param {string} text - The text to be displayed in the toast message.
+     * @param {ToastOptions} [options] - Additional options for the toast message.
+     */
     async info(text, options) {
         toast(text, 'info', options || {})
     },
+    /**
+     * Displays a loading toast message.
+     * @param {string} text - The text to be displayed in the toast message.
+     * @param {ToastOptions} [options] - Additional options for the toast message.
+     */
     async loading(text, options) {
         toast(text, 'loading', options || {})
     },
