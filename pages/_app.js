@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { Toaster } from 'sonner';
 import Router from 'next/router';
 import '@/components/toast.css'
+import { ToastContainer } from '@/components/toasty';
 
 export default function App({ Component, pageProps }) {
   useEffect(() => {
@@ -22,6 +23,7 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
+      <ToastContainer />
       <Toaster richColors />
       <Component {...pageProps} />
     </>

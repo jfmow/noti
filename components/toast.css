@@ -1,23 +1,51 @@
-.toast {
+#toast_container {
     position: fixed;
+    z-index: 999999;
     bottom: 20px;
     right: 20px;
+}
+
+.toast {
+    margin-top: 20px;
+    --conheight: 200%;
+    position: relative;
     background-color: rgb(255, 255, 255);
     color: rgb(0, 0, 0);
     padding: 16px;
     border-radius: 0.5rem;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-    z-index: 9999;
     font-size: 14px;
-    font-family: sans-serif;
     animation-duration: 0.8s;
     animation-iteration-count: 1;
-    animation-timing-function: ease;
+    animation-timing-function: ease-in-out;
     width: 356px;
     display: flex;
     gap: 8px;
-    align-items: flex-end;
+    align-items: center;
     cursor: pointer;
+    transition: 0.3s all;
+    font-weight: 500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+@keyframes shrink {
+    0% {
+        margin-top: var(--margin_toast);
+    }
+
+    100% {
+        margin-top: 20px;
+    }
+}
+
+@keyframes shrink-bottom {
+    0% {
+        margin-bottom: var(--margin_toast);
+    }
+
+    100% {
+        margin-bottom: 0px;
+    }
 }
 
 .loading {
@@ -30,31 +58,27 @@
 }
 
 .success {
-    background: hsl(143, 85%, 96%);
-    border: 0.5px solid hsl(145, 92%, 91%);
-    color: hsl(140, 100%, 27%);
+    background: #4ee062;
+    color: #fff;
 }
 
 .error {
-    background: hsl(359, 100%, 97%);
-    border: 0.5px solid hsl(359, 100%, 94%);
-    color: hsl(360, 100%, 45%);
+    background: #EF665B;
+    color: hsl(0, 0%, 100%);
 }
 
 .info {
-    background: hsl(208, 100%, 97%);
-    border: 0.5px solid hsl(221, 91%, 91%);
-    color: hsl(210, 92%, 45%);
-
+    background: #5bbbef;
+    color: #ffffff;
 }
 
 @keyframes exit {
     0% {
-        transform: translateY(0);
+        transform: translateX(0);
     }
 
     100% {
-        transform: translateY(200%);
+        transform: translateX(var(--conheight));
         opacity: 0.8;
     }
 }
@@ -185,5 +209,21 @@
 
     100% {
         background-color: transparent;
+    }
+}
+
+@media(max-width: 500px) {
+    #toast_container {
+        left: 0;
+        right: 0;
+        bottom: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        width: 100%;
+    }
+
+    .toast {
+        max-width: 100%;
+        word-break: break-all;
     }
 }
