@@ -111,7 +111,11 @@ export default function AccountButtons({ event, setpopUpClickEventSettingsModal 
                 width: `200px`,
                 position: 'absolute',
                 zIndex: '5',
-            }} style={{ position: 'absolute', left: '0', bottom: '20px', zIndex: 999 }} event={event}>
+            }} style={{ position: 'absolute', left: '0', bottom: '20px', zIndex: 999 }} event={event} onClose={() => {
+                setAvatarModal(false)
+                setUsageModal(false)
+                setUserInfoModal(false)
+            }}>
                 <PopUpCardDropMenuSectionTitle>
                     Settings
                 </PopUpCardDropMenuSectionTitle>
