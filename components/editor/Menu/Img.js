@@ -57,7 +57,7 @@ export default function Unsplash({ page, setArticleHeader, close }) {
 
         try {
             await pb.collection("pages").update(page, { "unsplash": fullImageUrl, header_img: null });
-            const response = await fetch(data.links.download_location + `?client_id=${process.env.NEXT_PUBLIC_UNSPLASH}`, {
+            const response = await fetch(data.links.download_location + `&client_id=${process.env.NEXT_PUBLIC_UNSPLASH}`, {
                 method: "GET",
             });
             if (!response.ok) {
