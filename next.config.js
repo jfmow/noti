@@ -12,7 +12,7 @@ const nextConfig = {
           headers: [
             {
               key: 'Content-Security-Policy',
-              value: "default-src 'self' savemynotes.net p.suddsy.dev noti.jamesmowat.com; style-src 'self' 'unsafe-inline'; frame-src *; connect-src 'self' unsplash.com noti.suddsy.dev proti.suddsy.dev; img-src 'self' noti.suddsy.dev proti.suddsy.dev images.unsplash.com unsplash.com data:; worker-src 'self' https://cdn.jsdelivr.net;"
+              value: "default-src 'self' savemynotes.net p.suddsy.dev noti.jamesmowat.com; style-src 'self' 'unsafe-inline'; frame-src *; connect-src 'self' unsplash.com api.unsplash.com images.unsplash.com noti.suddsy.dev proti.suddsy.dev; img-src 'self' noti.suddsy.dev proti.suddsy.dev images.unsplash.com unsplash.com data:; worker-src 'self' https://cdn.jsdelivr.net;"
             },
           ],
 
