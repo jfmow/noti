@@ -39,7 +39,7 @@
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
     border-radius: calc(0.5rem - 2px);
     border: 1px solid #e5e7eb6e;
-    z-index: 12;
+    z-index: 12 !important;
     animation: dropmenuin 0.2s 1 ease-in-out;
 }
 
