@@ -1,10 +1,9 @@
 .container {
 
-    position: fixed;
-    min-width: 300px;
+    position: relative;
     width: 300px;
-    bottom: 0;
-    left: 0;
+    /* bottom: 0px;
+    left: 0;*/
     display: flex;
     background: var(--background);
     flex-direction: row;
@@ -18,7 +17,7 @@
 
     /*transition: 0.5s all ease-in-out;*/
     /*overflow: hidden;*/
-    z-index: 2;
+    /*z-index: 2;*/
 }
 
 
@@ -62,6 +61,5 @@
 @media(max-width: 800px) {
     .container {
         width: 100%;
-        transition: none;
     }
 }

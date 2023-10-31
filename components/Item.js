@@ -1,7 +1,7 @@
 import styles from '@/styles/ItemList.module.css'
 import Router, { useRouter } from 'next/router';
 import PocketBase from 'pocketbase'
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { ContextMenuDropMenu, ContextMenuDropMenuSection, ContextMenuDropMenuSectionItem } from '@/lib/ContextMenu';
 import UserOptions from './UserInfo';
@@ -12,6 +12,7 @@ export default function PageList({ currentPage, visible, setVisible, listedPageI
   const [contextMenuEvent, setContextMenuEvent] = useState(null)
   const [SearchActive, setSearchActive] = useState(false)
   const router = useRouter()
+  const shrinkcontainerRef = useRef(null)
   const { query } = router;
 
   async function getUserPages() {
@@ -32,6 +33,43 @@ export default function PageList({ currentPage, visible, setVisible, listedPageI
   useEffect(() => {
     getUserPages()
   }, [])
+
+  useEffect(() => {
+    const containerWidthMax = window.innerWidth <= 600 ? '100%' : '300px'
+    const isMobile = window.innerWidth <= 600
+    if (!visible) {
+      shrinkcontainerRef.current.style.width = 0
+      shrinkcontainerRef.current.style.overflow = 'hidden'
+      shrinkcontainerRef.current.animate(
+        [
+          // keyframes
+          { width: containerWidthMax, overflow: isMobile ? 'hidden' : 'visible' },
+          { width: "0px", overflow: isMobile ? 'hidden' : 'visible' },
+        ],
+        {
+          // timing options
+          duration: 500,
+          iterations: 1,
+          easing: "ease-in-out"
+        },
+      );
+    } else if (visible) {
+      shrinkcontainerRef.current.style.width = containerWidthMax
+      shrinkcontainerRef.current.animate(
+        [
+          // keyframes
+          { width: "0px" },
+          { width: containerWidthMax },
+        ],
+        {
+          // timing options
+          duration: 500,
+          iterations: 1,
+          easing: "ease-in-out"
+        },
+      );
+    }
+  }, [visible])
 
   function setVisibleState() {
     setVisible(!visible)
@@ -298,16 +336,18 @@ export default function PageList({ currentPage, visible, setVisible, listedPageI
         </ContextMenuDropMenuSection>
       </ContextMenuDropMenu>
       */}
-      <div className={`${!visible && styles.hidden} ${styles.container}`}>
-        <SearchBar setVisibleState={setVisibleState} items={listedPageItems} setSearchActive={setSearchActive} SearchActive={SearchActive} />
-        {!SearchActive && (
-          <>
-            {renderTree(listedPageItems)}
-            < li type='button' className={`${styles.item} ${styles.createnewpage_btn}`} onClick={() => createNewPage('')}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14" /><path d="M12 5v14" /></svg> Create a new page</li>
-          </>
-        )}
+      <div ref={shrinkcontainerRef} className={styles.shrinkcontainer}>
+        <div className={styles.container}>
+          <SearchBar setVisibleState={setVisibleState} items={listedPageItems} setSearchActive={setSearchActive} SearchActive={SearchActive} />
+          {!SearchActive && (
+            <>
+              {renderTree(listedPageItems)}
+              < li type='button' className={`${styles.item} ${styles.createnewpage_btn}`} onClick={() => createNewPage('')}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14" /><path d="M12 5v14" /></svg> Create a new page</li>
+            </>
+          )}
+        </div >
         <UserOptions user={pb.authStore.model} usageOpenDefault={query.usage} />
-      </div >
+      </div>
     </>
   )
 
