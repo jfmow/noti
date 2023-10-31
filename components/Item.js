@@ -149,9 +149,7 @@ export default function PageList({ currentPage, visible, setVisible, listedPageI
       if (window.innerWidth < 800) {
         setVisibleState(false)
       }
-      console.log('')
       router.push(`/page/${item}`);
-      console.log('')
     }
 
     async function handleSetExpand(e, item) {
