@@ -79,7 +79,7 @@ export default async function handler(request, response) {
 
         }
 
-        const data = await fetch(`https://api.unsplash.com/search/photos?query=${validSearchText}&client_id=${process.env.UNSPLASH_APIKEY}&per_page=200&orientation=landscape&page=${validPageNumber}`)
+        const data = await fetch(`https://api.unsplash.com/search/photos?query=${validSearchText}&client_id=${process.env.NEXT_PUBLIC_UNSPLASH}&per_page=200&orientation=landscape&page=${validPageNumber}`)
         const data2 = await data.json()
         return response.status(200).json(data2)
     } catch (err) {
