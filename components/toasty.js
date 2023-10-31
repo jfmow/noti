@@ -56,19 +56,8 @@ async function toast(text, type, options) {
         case 'loading':
             toastElement.classList.add("loading")
             toastElement.innerHTML = `
-            <div class="spinner center">
-<div class="spinner-blade"></div>
-<div class="spinner-blade"></div>
-<div class="spinner-blade"></div>
-<div class="spinner-blade"></div>
-<div class="spinner-blade"></div>
-<div class="spinner-blade"></div>
-<div class="spinner-blade"></div>
-<div class="spinner-blade"></div>
-<div class="spinner-blade"></div>
-<div class="spinner-blade"></div>
-<div class="spinner-blade"></div>
-<div class="spinner-blade"></div>
+            <div class="spinner">
+<img src='/toastloading.gif' width='16' height='16'/>
 </div>
 <p>${text}<p/>
             `
