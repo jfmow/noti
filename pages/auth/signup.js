@@ -8,6 +8,7 @@ import { ModalCheckBox } from "@/lib/Modal"
 import { getUserTimeZone } from '@/lib/getUserTimeZone';
 import validator from 'validator';
 import Link from "@/components/Link"
+import { toaster } from "@/components/toasty";
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 export default function LoginPage() {
     const [email, setEmail] = useState('')
@@ -39,7 +40,7 @@ export default function LoginPage() {
             await pb.collection('users').authWithPassword(username, password);
             Router.push('/page/firstopen')
         } catch (err) {
-            toast.error('Failed to create an account! Please try again or check if you already have one!')
+            toaster.error('Failed to create an account! Please try again or check if you already have one!')
         }
         setLoginRunning(false)
     }
@@ -50,7 +51,7 @@ export default function LoginPage() {
             await pb.collection('users').authWithOAuth2({ provider: provider });
             Router.push('/page/firstopen')
         } catch (error) {
-            toast.error(`Unable to login with ${provider}`)
+            toaster.error(`Unable to login with ${provider}`)
         }
         setLoginRunning(false)
     }

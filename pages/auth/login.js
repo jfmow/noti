@@ -5,6 +5,7 @@ import styles from '@/styles/Auth-new.module.css'
 import { toast } from "sonner"
 import Router from "next/router"
 import Link from "@/components/Link"
+import { toaster } from "@/components/toasty"
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 export default function LoginPage() {
@@ -23,7 +24,7 @@ export default function LoginPage() {
       );
       Router.push('/page/firstopen')
     } catch (err) {
-      toast.error('Invalid username/email or password')
+      toaster.error('Invalid username/email or password')
     }
     setLoginRunning(false)
   }
@@ -34,7 +35,7 @@ export default function LoginPage() {
       await pb.collection('users').authWithOAuth2({ provider: provider });
       Router.push('/page/firstopen')
     } catch (error) {
-      toast.error(`Unable to login with ${provider}`)
+      toaster.error(`Unable to login with ${provider}`)
     }
     setLoginRunning(false)
   }
@@ -71,19 +72,15 @@ export default function LoginPage() {
           <div className={styles.oauth2}>
             <div className={styles.oauth2_text}>
               <span className={styles.oauth2_line} />
-              <span>OAuth</span>
-              <span className={styles.oauth2_line} />
-            </div>
-            <div className={styles.oauth2_btns}>
-              <button aria-label='Github signup/login button' disabled={loginRunning} type="button" onClick={() => OAuthLogin('github')} className={styles.github_btn}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-                <path d="M16 0.396c-8.839 0-16 7.167-16 16 0 7.073 4.584 13.068 10.937 15.183 0.803 0.151 1.093-0.344 1.093-0.772 0-0.38-0.009-1.385-0.015-2.719-4.453 0.964-5.391-2.151-5.391-2.151-0.729-1.844-1.781-2.339-1.781-2.339-1.448-0.989 0.115-0.968 0.115-0.968 1.604 0.109 2.448 1.645 2.448 1.645 1.427 2.448 3.744 1.74 4.661 1.328 0.14-1.031 0.557-1.74 1.011-2.135-3.552-0.401-7.287-1.776-7.287-7.907 0-1.751 0.62-3.177 1.645-4.297-0.177-0.401-0.719-2.031 0.141-4.235 0 0 1.339-0.427 4.4 1.641 1.281-0.355 2.641-0.532 4-0.541 1.36 0.009 2.719 0.187 4 0.541 3.043-2.068 4.381-1.641 4.381-1.641 0.859 2.204 0.317 3.833 0.161 4.235 1.015 1.12 1.635 2.547 1.635 4.297 0 6.145-3.74 7.5-7.296 7.891 0.556 0.479 1.077 1.464 1.077 2.959 0 2.14-0.020 3.864-0.020 4.385 0 0.416 0.28 0.916 1.104 0.755 6.4-2.093 10.979-8.093 10.979-15.156 0-8.833-7.161-16-16-16z"></path>
-              </svg></button>
-              <button aria-label='Github signup/login button' disabled={loginRunning} type="button" onClick={() => OAuthLogin('twitch')} className={styles.github_btn}><img src="/Brand-assets/TwitchLogo.svg" /></button>
             </div>
           </div>
+          <button aria-label="Github login button" className={styles.auth_formsubmitbtn_alt} disabled={loginRunning} type="button" onClick={() => OAuthLogin('github')}><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class=" h-5 w-5 mr-2" data-id="16"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
+            Login with github</button>
+          <button aria-label="Twitch login button" className={styles.auth_formsubmitbtn_alt} disabled={loginRunning} type="button" onClick={() => OAuthLogin('twitch')}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class=" h-5 w-5 mr-2" data-id="18"><path d="M21 2H3v16h5v4l4-4h5l4-4V2zm-10 9V7m5 4V7"></path></svg>
+            Login with twitch</button>
 
-          <button aria-label="Signup redirect button" className={styles.auth_formsubmitbtn_alt} onClick={() => Router.push('/auth/signup')} type="button">Signup</button>
-
+          <Link style={{ textAlign: 'center', fontWeight: '500' }} href={'/auth/signup'}>Signup</Link>
         </div>
       </div>
 
