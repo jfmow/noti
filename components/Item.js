@@ -336,130 +336,23 @@ export default function PageList({ currentPage, visible, setVisible, listedPageI
       */}
       <div ref={shrinkcontainerRef} className={styles.shrinkcontainer}>
         <div className={styles.container}>
-          <SearchBar setVisibleState={setVisibleState} items={listedPageItems} setSearchActive={setSearchActive} SearchActive={SearchActive} />
-          {!SearchActive && (
-            <>
-              {renderTree(listedPageItems)}
-              < li type='button' className={`${styles.item} ${styles.createnewpage_btn}`} onClick={() => createNewPage('')}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14" /><path d="M12 5v14" /></svg> Create a new page</li>
-            </>
-          )}
+          <div className={styles.topbuttons}>
+            <button onClick={() => createNewPage('')} type='button' className={styles.topbutton}>New page<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-plus"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" /><polyline points="14 2 14 8 20 8" /><line x1="12" x2="12" y1="18" y2="12" /><line x1="9" x2="15" y1="15" y2="15" /></svg></button>
+            <button type='button' className={styles.topbutton} onClick={() => {
+              let openEvent = new Event('customEvent');
+              openEvent.key = "terminal_enable";
+              window.dispatchEvent(openEvent)
+            }}>Terminal
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-terminal-square"><path d="m7 11 2-2-2-2"></path><path d="M11 13h4"></path><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect></svg>
+            </button>
+          </div>
+          {renderTree(listedPageItems)}
+          < li type='button' className={`${styles.item} ${styles.createnewpage_btn}`} onClick={() => createNewPage('')}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14" /><path d="M12 5v14" /></svg> Create a new page</li>
         </div >
         <UserOptions user={pb.authStore.model} usageOpenDefault={query.usage} />
       </div>
     </>
   )
-
-  //Helper search bar func
-  function SearchBar({ setItems, items, setSearchActive, SearchActive, setVisibleState }) {
-
-    const [filteredItems, setFilteredItems] = useState([])
-    const [advancedMenu, setAdvancedMenu] = useState(false)
-    const [contentSearch, setContentSearch] = useState(false)
-    const [word, setWord] = useState('')
-
-    const Router = useRouter()
-
-    async function GetContentSearch(text) {
-      const records = await pb.collection('pages').getFullList({
-        sort: '-created', filter: `content ~ '${text.trim()}'`
-      });
-      setFilteredItems(records)
-    }
-
-    function FIlter(text) {
-      if (!text || text.length <= 0) {
-        setSearchActive(false)
-        setFilteredItems([])
-        setContentSearch(false)
-        return
-      }
-      setWord(text)
-      if (contentSearch) {
-        GetContentSearch(text)
-      }
-      setSearchActive(true)
-      setFilteredItems(items.filter((item) => item.title.trim().toUpperCase().includes(text.trim().toUpperCase())))
-    }
-
-    useEffect(() => {
-      function highlightWord() {
-        // Get the user input
-        if (word.length <= 0) return;
-        var textToHighlight = word.toLowerCase().trim(); // Convert the input to lowercase
-
-        // Get all elements with contenteditable="true"
-        var editableElements = document.querySelectorAll('[contenteditable="true"]');
-
-        // Loop through editable elements
-        editableElements.forEach(function (element) {
-          // Remove all existing <span> elements with the "highlighted" class
-          var highlightedElements = element.querySelectorAll('span.highlighted');
-          highlightedElements.forEach(function (highlightedElement) {
-            var text = highlightedElement.textContent;
-            var parent = highlightedElement.parentNode;
-            parent.replaceChild(document.createTextNode(text), highlightedElement);
-          });
-
-          var html = element.innerHTML;
-          var newText = html.toLowerCase(); // Convert the element's HTML to lowercase
-
-          // Use a regular expression to find all occurrences of the text
-          var regex = new RegExp(textToHighlight, 'g');
-          newText = newText.replace(regex, '<span class="highlighted">$&</span>');
-
-          // Set the element's HTML with the highlighted text
-          element.innerHTML = newText;
-        });
-      }
-      if (contentSearch) {
-        highlightWord();
-      }
-    }, [word, Router.pathname]);
-
-
-
-
-
-
-
-    return (
-      <>
-        <div className={styles.searchandhide}>
-          <div className={styles.search}>
-            <div className={styles.searchgroup}>
-              <svg className={styles.searchicon} aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
-              <input placeholder="Search" onChange={(e) => FIlter(e.target.value)} type="text" className={styles.searchinput} />
-              {/*<svg onClick={() => setAdvancedMenu(!advancedMenu)} className={styles.searchFiltersIcon} xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M3 18c0 .55.45 1 1 1h5v-2H4c-.55 0-1 .45-1 1zM3 6c0 .55.45 1 1 1h9V5H4c-.55 0-1 .45-1 1zm10 14v-1h7c.55 0 1-.45 1-1s-.45-1-1-1h-7v-1c0-.55-.45-1-1-1s-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1zM7 10v1H4c-.55 0-1 .45-1 1s.45 1 1 1h3v1c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1s-1 .45-1 1zm14 2c0-.55-.45-1-1-1h-9v2h9c.55 0 1-.45 1-1zm-5-3c.55 0 1-.45 1-1V7h3c.55 0 1-.45 1-1s-.45-1-1-1h-3V4c0-.55-.45-1-1-1s-1 .45-1 1v4c0 .55.45 1 1 1z" /></svg>
-            */}</div>
-            {/*{advancedMenu && (
-              <div className={styles.searchAdvancedMenu}>
-                <span className={`${styles.searchAdvancedMenuItem} ${contentSearch && styles.searchAdvancedMenuItemActive}`} onClick={() => setContentSearch(!contentSearch)}> <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M13 17H5c-.55 0-1 .45-1 1s.45 1 1 1h8c.55 0 1-.45 1-1s-.45-1-1-1zm6-8H5c-.55 0-1 .45-1 1s.45 1 1 1h14c.55 0 1-.45 1-1s-.45-1-1-1zM5 15h14c.55 0 1-.45 1-1s-.45-1-1-1H5c-.55 0-1 .45-1 1s.45 1 1 1zM4 6c0 .55.45 1 1 1h14c.55 0 1-.45 1-1s-.45-1-1-1H5c-.55 0-1 .45-1 1z" /></svg> Content search</span>
-              </div>
-            )}*/}
-          </div>
-          <button aria-label='Toggle page menu' onClick={setVisibleState} className={styles.hide_items}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-left-close"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><path d="M9 3v18" /><path d="m16 15-3-3 3-3" /></svg></button>
-        </div>
-        {SearchActive && (
-          <div>
-            <ol className={styles.items}>
-              {filteredItems.length <= 0 ? (
-                <>
-                  <div className={styles.searchLoaderCon}>
-                    <div className={styles.searchloader}></div>
-                  </div>
-                </>
-              ) : (
-                <>
-                  {renderTree(filteredItems)}
-                </>
-              )}
-            </ol>
-          </div>
-        )}
-
-      </>
-    )
-  }
 }
 
 

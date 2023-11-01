@@ -5,7 +5,7 @@ import Router from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { toaster } from "@/components/toasty";
 
-export default function TabBar({ pb, page, plVisible, setplVisible }) {
+export default function TabBar({ pb, page, plVisible, setplVisible, setListedPageItems }) {
     const [tabBarItems, setTabBarItems] = useState([]);
     const [draggedItemId, setDraggedItemId] = useState(null);
     const [newPageDropEvent, setNewPageDropEvent] = useState(null)
@@ -116,6 +116,22 @@ export default function TabBar({ pb, page, plVisible, setplVisible }) {
         setNewPageDropEvent(null)
         toaster.dismiss("loadingtoast")
         toaster.toast('Page created successfully!', "success")
+        setListedPageItems(prevItems => {
+            // Remove any previous item with the same ID
+            const filteredItems = prevItems.filter(item => item.id !== record.id);
+
+            // Add the new record at the appropriate position based on its created date
+            let insertIndex = filteredItems.findIndex(item => item.created < record.created);
+            if (insertIndex === -1) {
+                insertIndex = filteredItems.length;
+            }
+
+            return [
+                ...filteredItems.slice(0, insertIndex),
+                record,
+                ...filteredItems.slice(insertIndex)
+            ];
+        });
         Router.push(`/page/${record.id}`)
     }
 
