@@ -17,6 +17,8 @@ export default function Terminal({ pages, pb, setListedPageItems }) {
             }
         };
 
+        window.addEventListener('customEvent', (e) => { e.key === "terminal_enable" ? setVisible(true) : '' })
+
         // Add event listener for keydown
         document.addEventListener('keydown', handleKeyDown);
 
@@ -34,6 +36,7 @@ export default function Terminal({ pages, pb, setListedPageItems }) {
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
             document.removeEventListener('mousedown', handleClickOutside);
+            window.removeEventListener('customEvent', (e) => { e.key === "terminal_enable" ? setVisible(true) : '' })
         };
     }, []);
     useEffect(() => {

@@ -87,7 +87,9 @@ function NotionEditor({ pageId }) {
               '--modal_button_text_hover': '#fff',
               '--modal_button_bxshdw_hover': 'none',
               '--userinfo_section_bordertop': '#403e4f',
-              '--user_option_text': '#c8c8c8'
+              '--user_option_text': '#c8c8c8',
+              '--top_button_background': '#4b4764',
+              '--top_button_text': '#fff',
             }
             break;
           case 'navy blue':
@@ -119,6 +121,8 @@ function NotionEditor({ pageId }) {
               '--modal_button_bxshdw_hover': '#2d333a',
               '--editor_text': '#fff',
               '--userinfo_section_bordertop': '#404753',
+              '--top_button_background': '#505966',
+              '--top_button_text': '#fff',
             }
             break;
           case 'pro pink':
@@ -151,7 +155,9 @@ function NotionEditor({ pageId }) {
               '--modal_button_svg': '#fff',
               '--modal_border_color': '#e3abdb',
               '--user_option_text': '#fffceb',
-              '--userinfo_section_bordertop': '#af63a4'
+              '--userinfo_section_bordertop': '#af63a4',
+              '--top_button_background': '#ed7fef',
+              '--top_button_text': '#fff',
             }
             break;
           case 'relax orange':
@@ -187,6 +193,8 @@ function NotionEditor({ pageId }) {
               '--userinfo_section_bordertop': '#c8815e',
               '--editor_text': '#fff',
               '--userinfo_section_bordertop': '#d58e6b',
+              '--top_button_background': '#f48c59',
+              '--top_button_text': '#fff',
             }
             break;
           case 'pro dark':
@@ -218,6 +226,8 @@ function NotionEditor({ pageId }) {
               '--modal_button_bxshdw_hover': '#000000',
               '--editor_text': '#fff',
               '--userinfo_section_bordertop': '#141414',
+              '--top_button_background': '#292929',
+              '--top_button_text': '#fff',
             }
             break;
           case 'mid light':
@@ -250,7 +260,9 @@ function NotionEditor({ pageId }) {
               '--modal_button_text_hover': '#fff',
               '--modal_button_bxshdw_hover': '#e2e2e2',
               '--userinfo_section_bordertop': '#b8b8b8',
-              '--user_option_text': '#464646'
+              '--user_option_text': '#464646',
+              '--top_button_background': '#e9e9e9',
+              '--top_button_text': '#000',
             }
             break;
           case 'cool gray':
@@ -283,39 +295,9 @@ function NotionEditor({ pageId }) {
               '--modal_button_text_hover': '#393939',
               '--modal_button_bxshdw_hover': '#e2e2e2',
               '--userinfo_section_bordertop': '#b8b8b8',
-              '--user_option_text': '#464646'
-            }
-            break;
-          case 'light teal green':
-            vars = {
-              '--background': '#e0f2f1',
-              '--big_button_background': '#4db6ac',
-              '--big_button_border': '#009688',
-              '--big_button_border_hover_alt': '#00796b',
-              '--big_button_text': '#ffffff',
-              '--editor_text': '#000000',
-              '--desktophidemenu_bg': '#26a69a',
-              '--desktophidemenu_bg_hover': '#00796b',
-              '--boxshadow_primary': '#004d40',
-              '--page_list_item_hover': '#80cbc4',
-              '--page_list_item_active': '#b2dfdb',
-              '--page_list_item_icons_background_hover': '#009688',
-              '--page_list_item_hover_drag': '#ff7777',
-              '--create_new_page_btn_text': '#ffffff',
-              '--page_list_item_icons': '#ffffff',
-              '--page_list_item_fillcolor': '#ffffff',
-              '--modal_text_color': '#000000',
-              '--modal_button_svg': '#009688',
-              '--modal_background': '#b2dfdb',
-              '--modal_button_text': '#ffffff',
-              '--modal_close_button_hover': '#e0f2f1',
-              '--modal_button_bg': '#4db6ac',
-              '--modal_button_border': 'none',
-              '--modal_button_bg_hover': '#00796b',
-              '--modal_button_text_hover': '#ffffff',
-              '--modal_button_bxshdw_hover': '#004d40',
-              '--userinfo_section_bordertop': '#009688',
-              '--user_option_text': '#000000'
+              '--user_option_text': '#464646',
+              '--top_button_background': '#e4e4e4',
+              '--top_button_text': '#515151',
             }
             break;
           case 'system':
@@ -357,7 +339,7 @@ function NotionEditor({ pageId }) {
         <div className='main'>
           <MyComponent setListedPageItems={setListedPageItems} listedPageItems={listedPageItems} visible={visible} setVisible={setVisible} currentPage={pageId} />
           <div style={{ flex: '1 1 0%', position: 'relative', display: 'flex', height: '100vh', flexDirection: 'column' }}>
-            <TabBar plVisible={visible} setplVisible={setVisible} pb={pb} page={pageId[0]} />
+            <TabBar setListedPageItems={setListedPageItems} plVisible={visible} setplVisible={setVisible} pb={pb} page={pageId[0]} />
             <div style={{ display: 'flex', height: '100%', overflow: 'hidden' }}>
               {pageId.map((page) => (
                 <Editor listedPageItems={listedPageItems} setListedPageItems={setListedPageItems} page={page} multi={pageId.length > 1 && true} preview='false' />

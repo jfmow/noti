@@ -336,16 +336,7 @@ export default function PageList({ currentPage, visible, setVisible, listedPageI
       */}
       <div ref={shrinkcontainerRef} className={styles.shrinkcontainer}>
         <div className={styles.container}>
-          <div className={styles.topbuttons}>
-            <button onClick={() => createNewPage('')} type='button' className={styles.topbutton}>New page<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-plus"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" /><polyline points="14 2 14 8 20 8" /><line x1="12" x2="12" y1="18" y2="12" /><line x1="9" x2="15" y1="15" y2="15" /></svg></button>
-            <button type='button' className={styles.topbutton} onClick={() => {
-              let openEvent = new Event('customEvent');
-              openEvent.key = "terminal_enable";
-              window.dispatchEvent(openEvent)
-            }}>Terminal
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-terminal-square"><path d="m7 11 2-2-2-2"></path><path d="M11 13h4"></path><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect></svg>
-            </button>
-          </div>
+
           {renderTree(listedPageItems)}
           < li type='button' className={`${styles.item} ${styles.createnewpage_btn}`} onClick={() => createNewPage('')}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14" /><path d="M12 5v14" /></svg> Create a new page</li>
         </div >

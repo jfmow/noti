@@ -201,6 +201,18 @@ a {
   src: url("../fonts/int.woff2");
 }
 
+@font-face {
+  font-family: "Gest-semi-bold";
+  font-display: swap;
+  src: url("../fonts/Geist-SemiBold.otf");
+}
+
+@font-face {
+  font-family: "Gest-med-bold";
+  font-display: swap;
+  src: url("../fonts/Geist-Medium.otf");
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 2px;
