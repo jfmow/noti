@@ -58,7 +58,7 @@ export default function LoginPage() {
           <form className={styles.auth_form} onSubmit={(e) => loginNormal(e)}>
             <div className={styles.auth_formgroup}>
               <label for="email">Email/Username</label>
-              <input aria-label="Email input" type="text" id="email" name="email" autoComplete="current-email" placeholder="me@example.com" required="" onChange={(e) => setUsername(e.target.value)} />
+              <input aria-label="Email input" type="text" id="email" name="email" autoComplete="current-email username" placeholder="me@example.com" required="" onChange={(e) => setUsername(e.target.value)} />
 
               <label for="password">Password</label>
               <input aria-label="Password input" type="password" autoComplete="current-password" id="password" name="password" placeholder="Enter your password" required="" onChange={(e) => setPassword(e.target.value)} />
@@ -82,10 +82,8 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <p className={styles.auth_signuplink}>
-            Don't have an account?
-            <Link href="/auth/signup" className={`${styles.auth_signuplink} ${styles.auth_link}`}>Sign up now</Link>
-          </p>
+          <button aria-label="Signup redirect button" className={styles.auth_formsubmitbtn_alt} onClick={() => Router.push('/auth/signup')} type="button">Signup</button>
+
         </div>
       </div>
 

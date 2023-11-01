@@ -81,19 +81,16 @@ export default function LoginPage() {
                     <form aria-label="Signup form" className={styles.auth_form} onSubmit={(e) => loginNormal(e)}>
                         <div className={styles.auth_formgroup}>
                             <label for="email">Email</label>
-                            <input aria-required aria-label="Email input" type="email" id="email" name="email" placeholder="me@example.com" required="" onChange={(e) => setEmail(e.target.value)} />
+                            <input autoComplete="email" aria-required aria-label="Email input" type="email" id="email" name="email" placeholder="me@example.com" required="" onChange={(e) => setEmail(e.target.value)} />
 
                             <label for="username">Username</label>
-                            <input aria-required aria-label="Username input" type="text" id="username" name="username" placeholder="Enter a username" required="" onChange={(e) => setUsername(e.target.value)} />
+                            <input autoComplete="username" aria-required aria-label="Username input" type="text" id="username" name="username" placeholder="Enter a username" required="" onChange={(e) => setUsername(e.target.value)} />
 
                             <label for="password">Password</label>
-                            <input aria-required aria-label="Password input (One and only)" type={passwordVisible ? 'text' : 'password'} id="password" value={password} name="password" placeholder="Enter your password" required="" onChange={(e) => setPassword(e.target.value)} />
-                            <button aria-label="Password generator button (Not required if using own password)" type="button" className={`${styles.auth_signuplink} ${styles.auth_link}`} style={{ background: 'none', border: 'none', cursor: 'pointer', marginTop: '10px' }} onClick={() => {
-                                genPassword()
-                            }}>Or Generate password</button>
+                            <input autoComplete="current-password" aria-required aria-label="Password input (One and only)" type={passwordVisible ? 'text' : 'password'} id="password" value={password} name="password" placeholder="Enter your password" required="" onChange={(e) => setPassword(e.target.value)} />
                         </div>
 
-                        <p style={{ margin: '10px 0', wordBreak: 'break-all' }}>Please read the <Link href='/auth/terms-and-conditions' style={{ textDecoration: 'underline' }}>Terms and conditions</Link>, <Link style={{ textDecoration: 'underline' }} href='/auth/privacy-policy'>Privacy policy</Link> and <Link style={{ textDecoration: 'underline' }} href='/auth/disclamer'>Disclamer</Link> before continuing. By continuing you agree to these.</p>
+                        <p style={{ margin: '1em 0', color: '#a7a7a7', fontFamily: 'sans-serif' }}>Please read the <Link href='/auth/terms-and-conditions' style={{ textDecoration: 'underline' }}>Terms and conditions</Link>, <Link style={{ textDecoration: 'underline' }} href='/auth/privacy-policy'>Privacy policy</Link> and <Link style={{ textDecoration: 'underline' }} href='/auth/disclamer'>Disclamer</Link> before continuing. By continuing you agree to these.</p>
 
                         <button aria-label="Signup button" className={styles.auth_formsubmitbtn} disabled={loginRunning} type="submit">{loginRunning ? (<>
                             <div className={styles.loader}></div></>) : 'Signup'}</button>
@@ -102,22 +99,13 @@ export default function LoginPage() {
                     <div className={styles.oauth2}>
                         <div className={styles.oauth2_text}>
                             <span className={styles.oauth2_line} />
-                            <span>OAuth</span>
-                            <span className={styles.oauth2_line} />
-                        </div>
-                        <div className={styles.oauth2_btns}>
-                            <button aria-label='Github signup/login button' disabled={loginRunning} type="button" onClick={() => OAuthLogin('github')} className={styles.github_btn}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-                                <path d="M16 0.396c-8.839 0-16 7.167-16 16 0 7.073 4.584 13.068 10.937 15.183 0.803 0.151 1.093-0.344 1.093-0.772 0-0.38-0.009-1.385-0.015-2.719-4.453 0.964-5.391-2.151-5.391-2.151-0.729-1.844-1.781-2.339-1.781-2.339-1.448-0.989 0.115-0.968 0.115-0.968 1.604 0.109 2.448 1.645 2.448 1.645 1.427 2.448 3.744 1.74 4.661 1.328 0.14-1.031 0.557-1.74 1.011-2.135-3.552-0.401-7.287-1.776-7.287-7.907 0-1.751 0.62-3.177 1.645-4.297-0.177-0.401-0.719-2.031 0.141-4.235 0 0 1.339-0.427 4.4 1.641 1.281-0.355 2.641-0.532 4-0.541 1.36 0.009 2.719 0.187 4 0.541 3.043-2.068 4.381-1.641 4.381-1.641 0.859 2.204 0.317 3.833 0.161 4.235 1.015 1.12 1.635 2.547 1.635 4.297 0 6.145-3.74 7.5-7.296 7.891 0.556 0.479 1.077 1.464 1.077 2.959 0 2.14-0.020 3.864-0.020 4.385 0 0.416 0.28 0.916 1.104 0.755 6.4-2.093 10.979-8.093 10.979-15.156 0-8.833-7.161-16-16-16z"></path>
-                            </svg></button>
-                            <button aria-label='Github signup/login button' disabled={loginRunning} type="button" onClick={() => OAuthLogin('twitch')} className={styles.github_btn}><img src="/Brand-assets/TwitchLogo.svg" /></button>
 
                         </div>
+
                     </div>
 
-                    <p className={styles.auth_signuplink}>
-                        Have an account?
-                        <Link href="/auth/login" className={`${styles.auth_signuplink} ${styles.auth_link}`}>Login now</Link>
-                    </p>
+                    <button aria-label="Login redirect button" className={styles.auth_formsubmitbtn_alt} onClick={() => Router.push('/auth/login')} type="button">Login</button>
+
                 </div>
             </div>
 
