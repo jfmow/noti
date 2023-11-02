@@ -354,6 +354,7 @@
         bottom: 0;
         animation: none;
         width: 100%;
+        overflow: hidden;
     }
 
     .container {
@@ -363,6 +364,7 @@
     .hidden {
         animation: none;
     }
+
 
 }
 
