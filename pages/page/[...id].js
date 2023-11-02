@@ -339,7 +339,7 @@ function NotionEditor({ pageId }) {
       <div>
         <div className='main'>
           <MyComponent setListedPageItems={setListedPageItems} listedPageItems={listedPageItems} visible={visible} setVisible={setVisible} currentPage={pageId} />
-          <div style={{ flex: '1 1 0%', position: 'relative', display: 'flex', height: '100vh', flexDirection: 'column' }}>
+          <div style={{ flex: '1 1 0%', position: 'relative', display: 'flex', height: '100vh', flexDirection: 'column', overflow: 'hidden' }}>
             {/*            <TabBar setListedPageItems={setListedPageItems} plVisible={visible} setplVisible={setVisible} pb={pb} page={pageId[0]} />
 */}
             <MenuBar setVisible={setVisible} sideBarVisible={visible} listedPageItems={listedPageItems} setListedPageItems={setListedPageItems} pb={pb} page={pageId[0]} />
