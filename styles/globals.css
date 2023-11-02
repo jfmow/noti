@@ -213,6 +213,12 @@ a {
   src: url("../fonts/Geist-Medium.otf");
 }
 
+@font-face {
+  font-family: "Gest-reg";
+  font-display: swap;
+  src: url("../fonts/Geist-Regular.otf");
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 2px;

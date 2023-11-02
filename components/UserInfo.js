@@ -1,4 +1,3 @@
-import { ModalTempLoader } from '@/lib/Modal';
 import { PopUpCardDropMenuSection, PopUpCardDropMenuSectionItem, PopUpCardDropMenuSectionTitle, PopUpCardDropMenuStaticPos } from '@/lib/Pop-Cards/PopDropMenu';
 import styles from '@/styles/Useroption.module.css'
 import dynamic from 'next/dynamic';

@@ -2,13 +2,11 @@ import { useState } from "react"
 import PocketBase from 'pocketbase'
 import Head from "next/head"
 import styles from '@/styles/Auth-new.module.css'
-import { toast } from "sonner";
 import Router from "next/router"
-import { ModalCheckBox } from "@/lib/Modal"
 import { getUserTimeZone } from '@/lib/getUserTimeZone';
 import validator from 'validator';
-import Link from "@/components/Link"
 import { toaster } from "@/components/toasty";
+import { Input, Link, Paragraph, SubmitButton } from "@/components/UX-Components";
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 export default function LoginPage() {
     const [email, setEmail] = useState('')
@@ -81,20 +79,21 @@ export default function LoginPage() {
 
                     <form aria-label="Signup form" className={styles.auth_form} onSubmit={(e) => loginNormal(e)}>
                         <div className={styles.auth_formgroup}>
-                            <label for="email">Email</label>
-                            <input autoComplete="email" aria-required aria-label="Email input" type="email" id="email" name="email" placeholder="me@example.com" required="" onChange={(e) => setEmail(e.target.value)} />
-
-                            <label for="username">Username</label>
-                            <input autoComplete="username" aria-required aria-label="Username input" type="text" id="username" name="username" placeholder="Enter a username" required="" onChange={(e) => setUsername(e.target.value)} />
-
-                            <label for="password">Password</label>
-                            <input autoComplete="current-password" aria-required aria-label="Password input (One and only)" type={passwordVisible ? 'text' : 'password'} id="password" value={password} name="password" placeholder="Enter your password" required="" onChange={(e) => setPassword(e.target.value)} />
+                            <Input label={"Email"} autoComplete="email" aria-required aria-label="Email input" type="email" id="email" placeholder="me@example.com" required="" onChange={(e) => setEmail(e.target.value)} />
+                            <Input label={"username"} autoComplete="username" aria-required aria-label="Username input" type="text" id="username" placeholder="Enter a username" required="" onChange={(e) => setUsername(e.target.value)} />
+                            <Input label={"password"} autoComplete="current-password" aria-required aria-label="Password input (One and only)" type={passwordVisible ? 'text' : 'password'} id="password" value={password} placeholder="Enter your password" required="" onChange={(e) => setPassword(e.target.value)} />
                         </div>
 
-                        <p style={{ margin: '1em 0', color: '#a7a7a7', fontFamily: 'sans-serif' }}>Please read the <Link href='/auth/terms-and-conditions' style={{ textDecoration: 'underline' }}>Terms and conditions</Link>, <Link style={{ textDecoration: 'underline' }} href='/auth/privacy-policy'>Privacy policy</Link> and <Link style={{ textDecoration: 'underline' }} href='/auth/disclamer'>Disclamer</Link> before continuing. By continuing you agree to these.</p>
-
-                        <button aria-label="Signup button" className={styles.auth_formsubmitbtn} disabled={loginRunning} type="submit">{loginRunning ? (<>
-                            <div className={styles.loader}></div></>) : 'Signup'}</button>
+                        <Paragraph style={{ opacity: 0.5 }}>
+                            Please read the <Link href='/auth/terms-and-conditions' style={{ textDecoration: 'underline' }}>Terms and conditions</Link>, <Link style={{ textDecoration: 'underline' }} href='/auth/privacy-policy'>Privacy policy</Link> and <Link style={{ textDecoration: 'underline' }} href='/auth/disclamer'>Disclamer</Link> before continuing. By continuing you agree to these.
+                        </Paragraph>
+                        <SubmitButton aria-label="Signup button" disabled={loginRunning} type="submit">
+                            {loginRunning ? (
+                                <>
+                                    <div className={styles.loader}></div>
+                                </>
+                            ) : 'Signup'}
+                        </SubmitButton>
                     </form>
 
                     <div className={styles.oauth2}>
@@ -105,8 +104,7 @@ export default function LoginPage() {
 
                     </div>
 
-                    <button aria-label="Login redirect button" className={styles.auth_formsubmitbtn_alt} onClick={() => Router.push('/auth/login')} type="button">Login</button>
-
+                    <Link style={{ textAlign: 'center' }} href={'/auth/login'}>Login</Link>
                 </div>
             </div>
 

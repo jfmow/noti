@@ -1,0 +1,87 @@
+.ux_input_default label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.ux_input_default input {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 0.5rem;
+    font-family: inherit;
+    border: 1px solid #f3f3f3;
+    background: none;
+    color: #212121;
+    margin-bottom: 1em;
+}
+
+.ux_input_default input::placeholder {
+    opacity: 0.5;
+}
+
+.ux_input_default input:focus {
+    outline: none;
+    border-color: #efefef;
+}
+
+
+.ux_submitButton {
+    min-height: 43px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: inherit;
+    color: #fff;
+    background-color: #212121;
+    border: none;
+    width: 100%;
+    padding: 12px 16px;
+    font-size: inherit;
+    gap: 8px;
+    margin: 12px 0;
+    cursor: pointer;
+    border-radius: calc(0.5rem - 2px);
+    font-size: 14px !important;
+}
+
+.ux_submitButton_alt {
+    margin: 0;
+    font-size: 14px !important;
+    min-height: 43px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: inherit;
+    color: #212121;
+    background-color: #ffffff;
+    border: 2px solid #e7e7e7;
+    width: 100%;
+    padding: 12px 16px;
+    font-size: inherit;
+    gap: 8px;
+    cursor: pointer;
+    border-radius: calc(0.5rem - 2px);
+    font-family: "Gest-med-bold", sans-serif;
+}
+
+.ux_submitButton_alt:hover {
+    background: #f4f4f4;
+}
+
+.auth_container .ux_submitButton:hover {
+    background-color: #313131;
+}
+
+
+.ux_paragraph {
+    font-family: "Gest-reg", sans-serif;
+    font-size: 14px;
+    color: #212121;
+}
+
+
+.ux_link {
+    font-family: "Gest-med-bold", sans-serif;
+    font-size: 14px;
+    color: #212121;
+}
