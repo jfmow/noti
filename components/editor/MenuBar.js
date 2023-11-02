@@ -242,7 +242,7 @@ export default function MenuBar({ pb, page, setVisible, sideBarVisible, setListe
                     width: `200px`,
                     position: 'absolute',
                     zIndex: '5',
-                }} style={{ position: 'absolute', right: 0, top: '50px' }} event={popUpClickEventPageOptions} className={styles.title_buttons_btn} onClose={() => {
+                }} style={{ position: 'fixed', right: '10px', top: '50px' }} event={popUpClickEventPageOptions} className={styles.title_buttons_btn} onClose={() => {
                     setSharePageInfo(false);
                     setShowPageInfo(false);
                     setDeletePageAlert(false)
