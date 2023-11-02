@@ -191,7 +191,7 @@ export default function MenuBar({ pb, page, setVisible, sideBarVisible, setListe
                 // Compare the dates (newest to oldest)
                 return dateB - dateA;
             });
-            Router.push(`/page/${sortedData[0].id || 'firstopen'}`)
+            Router.push(`/page/${(sortedData[0].id === page ? sortedData[1].id : sortedData[0].id) || 'firstopen'}`)
         } catch (err) {
             console.log(err)
             toaster.error('An error occured while trying to delete the page')
