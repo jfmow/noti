@@ -174,7 +174,6 @@ export default function MenuBar({ pb, page, setVisible, sideBarVisible, setListe
         try {
             await pb.collection("pages").delete(page);
             toaster.toast(`Page deleted`, "success")
-            Router.push('/page/firstopen')
             setListedPageItems(prevItems => {
                 // Remove any previous item with the same ID
                 const filteredItems = prevItems.filter(item => item.id !== page);
@@ -184,6 +183,15 @@ export default function MenuBar({ pb, page, setVisible, sideBarVisible, setListe
                     ...filteredItems
                 ];
             })
+            const sortedData = listedPageItems.filter((pageA) => pageA.parentId === '').sort((a, b) => {
+                // Convert the created strings to Date objects for comparison
+                const dateA = new Date(a.created);
+                const dateB = new Date(b.created);
+
+                // Compare the dates (newest to oldest)
+                return dateB - dateA;
+            });
+            Router.push(`/page/${sortedData[0].id || 'firstopen'}`)
         } catch (err) {
             console.log(err)
             toaster.error('An error occured while trying to delete the page')
