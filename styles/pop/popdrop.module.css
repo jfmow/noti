@@ -140,3 +140,18 @@
     padding: 1rem;
     color: var(--modal_text_color);
 }
+
+.PopUpCardDropMenuSectionStatic {
+    animation: fadeIn 1 0.7s ease;
+}
+
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

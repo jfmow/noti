@@ -50,7 +50,6 @@ function Editor({ page, multi, setListedPageItems, listedPageItems }) {
     setEditorData({});
     setArticleTitle("");
     setArticleHeader(null);
-    setIsLoading(true);
     setLastTypedTime(Date.now());
     setLastTypedTimeIdle(true);
     setIsSaving(false);
@@ -457,7 +456,7 @@ function Editor({ page, multi, setListedPageItems, listedPageItems }) {
               editor.destroy();
             } catch (err) {
               console.warn(err);
-              toaster.toast(`Reloading editor`, "error");
+              toaster.error(`Reloading editor`);
               setIsLoading(true);
               setTimeout(() => {
                 window.location.reload();
@@ -468,7 +467,16 @@ function Editor({ page, multi, setListedPageItems, listedPageItems }) {
       }
     } catch (error) {
       console.error(error)
-      toaster.toast(`Editor not ready! Saving may not work.`, "error");
+      toaster.error(`Editor not ready! Saving may not work.`);
+    }
+    return () => {
+      if (editorRef.current) {
+        if (editor) {
+          try {
+            editor.destroy();
+          } catch { }
+        }
+      }
     }
   }, [editorData, page]);
 

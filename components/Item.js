@@ -43,8 +43,8 @@ export default function PageList({ currentPage, visible, setVisible, listedPageI
       shrinkcontainerRef.current.animate(
         [
           // keyframes
-          { width: containerWidthMax, overflow: isMobile ? 'hidden' : 'visible' },
-          { width: "0px", overflow: isMobile ? 'hidden' : 'visible' },
+          { width: containerWidthMax, overflow: 'hidden' },
+          { width: "0px", overflow: 'hidden' },
         ],
         {
           // timing options

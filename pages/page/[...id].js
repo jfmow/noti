@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import MyComponent from '@/components/Item';
 import TabBar from '@/components/editor/TabBar';
 import Terminal from '@/components/Terminal';
+import MenuBar from '@/components/editor/MenuBar';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 
@@ -339,8 +340,10 @@ function NotionEditor({ pageId }) {
         <div className='main'>
           <MyComponent setListedPageItems={setListedPageItems} listedPageItems={listedPageItems} visible={visible} setVisible={setVisible} currentPage={pageId} />
           <div style={{ flex: '1 1 0%', position: 'relative', display: 'flex', height: '100vh', flexDirection: 'column' }}>
-            <TabBar setListedPageItems={setListedPageItems} plVisible={visible} setplVisible={setVisible} pb={pb} page={pageId[0]} />
-            <div style={{ display: 'flex', height: '100%', overflow: 'hidden' }}>
+            {/*            <TabBar setListedPageItems={setListedPageItems} plVisible={visible} setplVisible={setVisible} pb={pb} page={pageId[0]} />
+*/}
+            <MenuBar setVisible={setVisible} sideBarVisible={visible} listedPageItems={listedPageItems} setListedPageItems={setListedPageItems} pb={pb} page={pageId[0]} />
+            <div style={{ display: 'flex', height: 'calc(100dvh - 45px)', overflow: 'hidden' }}>
               {pageId.map((page) => (
                 <Editor listedPageItems={listedPageItems} setListedPageItems={setListedPageItems} page={page} multi={pageId.length > 1 && true} preview='false' />
               ))}
