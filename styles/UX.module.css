@@ -42,6 +42,7 @@
     cursor: pointer;
     border-radius: calc(0.5rem - 2px);
     font-size: 14px !important;
+    font-family: "Gest-med-bold", sans-serif;
 }
 
 .ux_submitButton_alt {
