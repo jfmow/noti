@@ -39,7 +39,6 @@ export default function PageList({ currentPage, visible, setVisible, listedPageI
     const isMobile = window.innerWidth <= 600
     if (!visible) {
       shrinkcontainerRef.current.style.width = 0
-      shrinkcontainerRef.current.style.overflow = 'hidden'
       shrinkcontainerRef.current.animate(
         [
           // keyframes
