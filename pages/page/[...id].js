@@ -344,9 +344,12 @@ function NotionEditor({ pageId }) {
 */}
             <MenuBar setVisible={setVisible} sideBarVisible={visible} listedPageItems={listedPageItems} setListedPageItems={setListedPageItems} pb={pb} page={pageId[0]} />
             <div style={{ display: 'flex', height: 'calc(100dvh - 45px)', overflow: 'hidden' }}>
-              {pageId.map((page) => (
-                <Editor listedPageItems={listedPageItems} setListedPageItems={setListedPageItems} page={page} multi={pageId.length > 1 && true} preview='false' />
-              ))}
+              {
+                [...new Set(pageId)].map((page) => (
+                  <Editor listedPageItems={listedPageItems} setListedPageItems={setListedPageItems} page={page} multi={pageId.length > 1 && true} preview='false' />
+                ))
+              }
+
             </div>
           </div>
         </div>
