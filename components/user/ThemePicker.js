@@ -1,9 +1,17 @@
 import { PopUpCardDropMenuSection, PopUpCardDropMenuSectionItem } from "@/lib/Pop-Cards/PopDropMenu";
-import { ToggleTabBar } from "../editor/TabBar";
+import { useEffect, useState } from "react";
 
 export default function UserHelpModal({ CloseHelp }) {
     //const [themePicker, setThemePicker] = useState(false);
-    const themes = [{ displayName: 'Purple', key: 'purple', color: '#373544' }, { displayName: 'Navy blue', key: 'navy blue', color: '#353b44' }, { displayName: 'Pro pink', key: 'pro pink', color: '#e3abdb' }, { displayName: 'Relax orange', key: 'relax orange', color: '#e69973' }, { displayName: 'Pro dark', key: 'pro dark', color: '#000000' }, { displayName: 'Mid light', key: 'mid light', color: '#f9f9f9' }, { displayName: 'Cool Gray', key: 'cool gray', color: '#dbdada' }, { displayName: 'System', key: 'system' }]
+    const [themes, setThemes] = useState([])
+    useEffect(() => {
+        async function getThemes() {
+            const themeFetch = await fetch(`${process.env.NEXT_PUBLIC_CURRENTURL}/themes.json`)
+            const themeFile = await themeFetch.json()
+            setThemes([...themeFile, { display_name: 'System', id: 'system' }])
+        }
+        getThemes()
+    }, [])
 
     function disableCustomTheme() {
         try {
@@ -28,10 +36,10 @@ export default function UserHelpModal({ CloseHelp }) {
             <PopUpCardDropMenuSection>
                 {themes.map((theme) => (
                     <PopUpCardDropMenuSectionItem onClick={() => {
-                        updateTheme(theme.key)
+                        updateTheme(theme.id)
                     }}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill={theme.color} style={{ color: theme.color }} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle"><circle cx="12" cy="12" r="10" /></svg>
-                        <p>{theme.displayName}</p>
+                        <p>{theme.display_name}</p>
                     </PopUpCardDropMenuSectionItem>
                 ))}
             </PopUpCardDropMenuSection>

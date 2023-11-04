@@ -48,7 +48,7 @@ export default function CustomThemePicker({ close }) {
             "#000"
         ],
         [
-            "--modal_background",
+            "--popup_background",
             "#ffffff"
         ],
         [
@@ -64,11 +64,11 @@ export default function CustomThemePicker({ close }) {
             "#fff"
         ],
         [
-            "--modal_button_bg",
+            "--popup_button_bg",
             "#eaeaea"
         ],
         [
-            "--modal_button_bg_hover",
+            "--popup_button_bg_hover",
             "#000000"
         ],
         [

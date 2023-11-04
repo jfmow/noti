@@ -24,7 +24,7 @@
 .coloritem {
     padding: 5px;
     border-radius: 9px;
-    background: var(--modal_button_bg);
+    background: var(--popup_button_bg);
     display: flex;
     align-items: center;
     font-weight: 600;
@@ -35,7 +35,7 @@
 }
 
 .colorpicker {
-    background: var(--modal_button_bg);
+    background: var(--popup_button_bg);
     padding: 0 2px;
     margin: 0;
     width: 70px;

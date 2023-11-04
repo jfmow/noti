@@ -38,17 +38,17 @@
 }
 
 .categoryButton {
-    background: var(--modal_button_bg);
+    background: var(--popup_button_bg);
     padding: 4px 7px;
     border-radius: 4px;
     border: none;
     cursor: pointer;
-    color: var(--modal_button_text);
+    color: var(--modal_text_color);
     font-size: 12px;
 }
 
 .active {
-    background: var(--modal_button_bg_hover);
+    background: var(--popup_button_bg_hover);
     color: var(--modal_button_text_hover);
 }
 
@@ -67,8 +67,8 @@
     font-size: 12px;
     border: none;
     border-radius: 4px;
-    background-color: var(--modal_button_bg);
-    color: var(--modal_button_text);
+    background-color: var(--popup_button_bg);
+    color: var(--modal_text_color);
     width: 100%;
     outline: none;
 }
@@ -98,6 +98,10 @@
         transform: translateY(-25px);
         opacity: 0;
     }
+}
+
+.sinput[type="text"]::placeholder {
+    color: var(--modal_text_color);
 }
 
 .sinput[type="text"]:placeholder-shown+label {

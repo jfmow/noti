@@ -1,12 +1,12 @@
 :root {
+  /*DO NOT CHANGE*/
+  --title_input_color: #fff;
+  --title_buttons_fill: #fff;
+  --title_buttons_background: #ffffff57;
 
+  /*You can change these :)*/
   --background: #f9f9f9;
-  --big_button_background: #f2f2f2;
-  --big_button_border: #d5d5d5;
-  --big_button_border_hover_alt: #a8a8a8;
-  --big_button_text: #7d7d7d;
-  --desktophidemenu_bg: #ffffff;
-  --desktophidemenu_bg_hover: #c0c0c0;
+  --editor_text: #000;
   --boxshadow_primary: #f3f3f39e;
   --page_list_item_hover: #d8d8d8;
   --page_list_item_active: #00000029;
@@ -16,71 +16,31 @@
   --page_list_item_icons: #00000099;
   --page_list_item_fillcolor: #00000099;
   --modal_text_color: #000;
-  --modal_button_svg: #707684;
-  --modal_background: #ffffff;
-  --modal_button_text: #707684;
-  --modal_close_button_hover: #000000;
-  --modal_border_color: #fff;
-  --modal_button_bg: #eaeaea;
-  --modal_button_border: none;
-  --modal_button_bg_hover: #000000;
-  --modal_button_text_hover: #fff;
-  --modal_button_bxshdw_hover: #e2e2e2;
+  --popup_background: #ffffff;
+  --popup_button_bg: #eaeaea;
+  --popup_button_bg_hover: #000000;
   --userinfo_section_bordertop: #b8b8b8;
   --user_option_text: #464646;
-
-
-  --title_input_color: #ffffff;
-  --title_input_color_plcholder: #8f8f8f;
-  --title_background: linear-gradient(20deg, #607d8b, #fff, #607d8b);
-  --title_buttons_fill: #fff;
-  --title_buttons_background: #ffffff57;
-  --editor_text: #000;
-  --buttonlabel_label_background: #0d2342;
-  --buttonlabel_label_color: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    /*Main page*/
-    --background: #202020;
-    /*Modal btn 1 (Redundant)*/
-    --big_button_background: #353535;
-    --big_button_border: #4f4f4f;
-    --big_button_border_hover_alt: #2d2d2d;
-    --big_button_text: #707684;
-    /*Page selector (item.js)*/
-    --desktophidemenu_bg: #464646;
-    --desktophidemenu_bg_hover: #040404;
-    --boxshadow_primary: #1d1d1d;
-    --page_list_item_hover: #000000;
-    --page_list_item_active: #0000001a;
-    --page_list_item_icons_background_hover: #282828;
+    --background: #0c0c0c;
+    --editor_text: #f4f4f4;
+    --boxshadow_primary: #000000;
+    --page_list_item_hover: #b196ff36;
+    --page_list_item_active: #000000;
+    --page_list_item_icons_background_hover: #a889ff36;
     --page_list_item_hover_drag: #ff7777;
-    --create_new_page_btn_text: #989898;
-    --page_list_item_icons: #ffffff99;
-    --page_list_item_fillcolor: #ffffff99;
-    /*Modal*/
-    --modal_text_color: #ffffff;
-    --modal_background: #1f1f1f;
-    --modal_border_color: #000000;
-    --modal_input_placeholder_color: #8e8e8e;
-    --modal_close_button_hover: #333333;
-    --modal_s2ndry_btn_bxshdw_unused: #e8e8e8;
-    --modal_button_text: #707684;
-    --modal_button_svg: #50545d;
-    --modal_temp_loader_bg: #eeeeee;
-    --modal_button_bg: #353535;
-    --modal_button_border: none;
-    --modal_button_bg_hover: #000;
-    --modal_button_text_hover: #fff;
-    --modal_button_bxshdw_hover: #1c1c1c;
-    /*Editor*/
-    --editor_text: #fff;
-    /*User profile thing*/
-    --userinfo_section_bordertop: #2d2d2d;
-
-    --user_option_text: #868686;
+    --create_new_page_btn_text: #bcbcbc;
+    --page_list_item_icons: #ffffffe8;
+    --page_list_item_fillcolor: #ffffffe8;
+    --modal_text_color: #dddddd;
+    --popup_background: #000000;
+    --popup_button_bg: #3d3d3d;
+    --popup_button_bg_hover: #000000;
+    --userinfo_section_bordertop: #1d1d1d;
+    --user_option_text: #959595;
   }
 }
 

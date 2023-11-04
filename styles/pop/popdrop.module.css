@@ -32,7 +32,7 @@
     width: calc(200px);
     flex-direction: column;
     position: fixed;
-    background: var(--modal_background);
+    background: var(--popup_background);
     --tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1), 0 2px 4px -2px rgba(0, 0, 0, .1);
     --tw-ring-offset-shadow: 0 0 #0000;
     --tw-ring-shadow: 0 0 #0000;
@@ -119,7 +119,7 @@
 
 .PopUpCardDropMenuSectionItem:hover {
     border-radius: calc(0.5rem - 4px);
-    background: var(--modal_button_bg);
+    background: var(--popup_button_bg);
 }
 
 .PopUpCardDropMenuSectionItem>a,
