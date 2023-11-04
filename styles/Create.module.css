@@ -251,12 +251,14 @@
   position: absolute;
   padding: 5px;
   border-radius: 5px;
-  background: var(--buttonlabel_label_background);
+  background: #fff;
   width: -moz-fit-content;
   width: fit-content;
   white-space: nowrap;
-  color: var(--buttonlabel_label_color);
+  color: #1a1a1a;
   font-size: 12px;
+  font-family: sans-serif;
+  font-weight: 600;
   /* font-weight: 100; */
 
   /* Adjustments to prevent going off-screen */
@@ -281,7 +283,7 @@
   transform: translateX(-50%) rotate(180deg);
   border-width: 5px;
   border-style: solid;
-  border-color: transparent transparent var(--buttonlabel_label_background) transparent;
+  border-color: transparent transparent #fff transparent;
 }
 
 

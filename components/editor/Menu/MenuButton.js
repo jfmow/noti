@@ -209,7 +209,7 @@ export default function MenuButtons({ listedPageItems, setListedPageItems, pb, p
             </div>
 
             <div className={styles.buttonlabel}>
-                <div className={styles.buttonlabel_label}>Customise</div>
+                <div role="tooltip" className={styles.buttonlabel_label}>Customise</div>
                 <button
                     aria-label="Customise page menu opener"
                     type="button"
