@@ -67,5 +67,9 @@
             "--userinfo_section_bordertop": "#1d1d1d",
             "--user_option_text": "#959595"
         }
+    },
+    {
+        "display_name": "System",
+        "id": "system"
     }
 ]

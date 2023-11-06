@@ -4,7 +4,9 @@ import { useEffect, useState } from 'react';
 import { PopUpCardDropMenuSection, PopUpCardDropMenuSectionItem, PopUpCardDropMenuSectionTitle, PopUpCardDropMenuStaticPos, PopDropMenuStatic } from "@/lib/Pop-Cards/PopDropMenu";
 import { toaster } from '@/components/toasty';
 import { ToolTip, ToolTipCon, ToolTipTrigger } from '@/components/UX-Components/Tooltip';
-export default function MenuBar({ pb, page, setVisible, sideBarVisible, setListedPageItems, listedPageItems }) {
+import { useEditorContext } from '@/pages/page/[...id]';
+export default function MenuBar() {
+    const { pb, currentPage, setVisible, sideBarVisible, setListedPageItems, listedPageItems } = useEditorContext()
     const [activePage, setActivePage] = useState({})
     const [filteredItems, setFilteredItems] = useState([]);
     const [popUpClickEventPageOptions, setpopUpClickEventPageOptions] = useState(null)
@@ -23,7 +25,7 @@ export default function MenuBar({ pb, page, setVisible, sideBarVisible, setListe
         setDeletePageAlert(false)
         setSharePageInfo(false)
         setPageInfo({})
-        const mainItem = listedPageItems.find((Apage) => Apage.id === page);
+        const mainItem = listedPageItems.find((Apage) => Apage.id === currentPage);
         setActivePage(mainItem)
         let tree = [mainItem];
         let parent = mainItem;
@@ -37,7 +39,7 @@ export default function MenuBar({ pb, page, setVisible, sideBarVisible, setListe
         }
         tree.reverse();
         setFilteredItems(tree);
-    }, [listedPageItems, page]);
+    }, [listedPageItems, currentPage]);
 
     useEffect(() => {
         if (showPageInfo) {
@@ -45,7 +47,7 @@ export default function MenuBar({ pb, page, setVisible, sideBarVisible, setListe
                 try {
 
 
-                    const record = await pb.collection('pages').getOne(page);
+                    const record = await pb.collection('pages').getOne(currentPage);
                     function calculateWordCount(input) {
                         function removeHtmlTags(text) {
                             return text.replace(/<[^>]*>/g, '');
@@ -117,11 +119,11 @@ export default function MenuBar({ pb, page, setVisible, sideBarVisible, setListe
 
     async function handleSharePage() {
         const data = {
-            shared: !filteredItems.find((Apage) => Apage.id === page)?.shared,
+            shared: !filteredItems.find((Apage) => Apage.id === currentPage)?.shared,
         };
         setListedPageItems(prevItems => {
             // Remove any previous item with the same ID
-            const oldItem = listedPageItems.filter((item3) => item3.id === page)[0]
+            const oldItem = listedPageItems.filter((item3) => item3.id === currentPage)[0]
             const filteredItems = prevItems.filter(item3 => item3.id !== oldItem.id);
 
             // Add the new record at the appropriate position based on its created date
@@ -135,9 +137,9 @@ export default function MenuBar({ pb, page, setVisible, sideBarVisible, setListe
                 { ...oldItem, shared: data.shared },
                 ...filteredItems.slice(insertIndex)
             ];
-            //return [...prevItems.filter(item => item.id !== page), { ...oldItem, icon: `${e.unified}.png` }]
+            //return [...prevItems.filter(item => item.id !== currentPage), { ...oldItem, icon: `${e.unified}.png` }]
         })
-        const record = await pb.collection("pages").update(page, data);
+        const record = await pb.collection("pages").update(currentPage, data);
     }
 
     async function handleCopyTextToClipboard(data, e) {
@@ -173,11 +175,11 @@ export default function MenuBar({ pb, page, setVisible, sideBarVisible, setListe
     }
     async function handleDeletePage() {
         try {
-            await pb.collection("pages").delete(page);
+            await pb.collection("pages").delete(currentPage);
             toaster.toast(`Page deleted`, "success")
             setListedPageItems(prevItems => {
                 // Remove any previous item with the same ID
-                const filteredItems = prevItems.filter(item => item.id !== page);
+                const filteredItems = prevItems.filter(item => item.id !== currentPage);
 
 
                 return [
@@ -192,10 +194,10 @@ export default function MenuBar({ pb, page, setVisible, sideBarVisible, setListe
                 // Compare the dates (newest to oldest)
                 return dateB - dateA;
             });
-            Router.push(`/page/${(sortedData[0].id === page ? sortedData[1].id : sortedData[0].id) || 'firstopen'}`)
+            Router.push(`/page/${(sortedData[0].id === currentPage ? sortedData[1].id : sortedData[0].id) || 'firstopen'}`)
         } catch (err) {
             console.log(err)
-            toaster.error('An error occured while trying to delete the page')
+            toaster.error('An error occured while trying to delete the currentPage')
         }
     }
 
@@ -217,7 +219,7 @@ export default function MenuBar({ pb, page, setVisible, sideBarVisible, setListe
                         <>
                             {filteredItems.map((item, index) => (
                                 <div className={styles.page} key={index}>
-                                    <div className={styles.page_content} onClick={() => Router.push(`/page/${item.id}`)}>
+                                    <div className={styles.page_content} onClick={() => Router.push(`/currentPage/${item.id}`)}>
                                         <div className={styles.page_icon}>
                                             {item?.icon && item?.icon.includes('.png') ? (<img className={styles.item_icon} src={`/emoji/twitter/64/${item?.icon}`} />) : (!isNaN(parseInt(item?.icon, 16)) && String.fromCodePoint(parseInt(item?.icon, 16)))}
                                         </div>
@@ -229,7 +231,7 @@ export default function MenuBar({ pb, page, setVisible, sideBarVisible, setListe
                     ) : (
                         <>
                             <div className={styles.page}>
-                                <div className={styles.page_content} onClick={() => Router.push(`/page/${page}`)}>
+                                <div className={styles.page_content} onClick={() => Router.push(`/currentPage/${currentPage}`)}>
                                     <div className={styles.page_icon}>
                                         {activePage?.icon && activePage?.icon.includes('.png') ? (<img className={styles.activePage_icon} src={`/emoji/twitter/64/${activePage?.icon}`} />) : (!isNaN(parseInt(activePage?.icon, 16)) && String.fromCodePoint(parseInt(activePage?.icon, 16)))}
                                     </div>
@@ -270,7 +272,7 @@ export default function MenuBar({ pb, page, setVisible, sideBarVisible, setListe
                             <PopUpCardDropMenuSectionItem
                                 onMouseEnter={() => setSharePageInfo(true)} onMouseLeave={() => setSharePageInfo(false)} >
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" /><polyline points="16 6 12 2 8 6" /><line x1="12" x2="12" y1="2" y2="15" /></svg>
-                                <p >Share page</p>
+                                <p >Share currentPage</p>
                                 {sharePageInfo && (
                                     <PopDropMenuStatic style={{ width: '200px', minHeight: '100px', position: 'absolute', zIndex: '13', left: `-194px`, top: '20px' }}>
                                         <PopUpCardDropMenuSectionTitle>
@@ -279,13 +281,13 @@ export default function MenuBar({ pb, page, setVisible, sideBarVisible, setListe
                                         <PopUpCardDropMenuSection>
                                             <PopUpCardDropMenuSectionItem>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" /><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" /></svg>
-                                                <p style={{ width: '100%', overflow: 'hidden' }}>Link: <span style={{ width: '100%', display: 'inline-block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{process.env.NEXT_PUBLIC_CURRENTURL}/page/view/{page}</span></p>
+                                                <p style={{ width: '100%', overflow: 'hidden' }}>Link: <span style={{ width: '100%', display: 'inline-block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{process.env.NEXT_PUBLIC_CURRENTURL}/currentPage/view/{currentPage}</span></p>
                                             </PopUpCardDropMenuSectionItem>
-                                            {filteredItems.find((Apage) => Apage.id === page)?.shared ? (
+                                            {filteredItems.find((Apage) => Apage.id === currentPage)?.shared ? (
                                                 <>
                                                     <PopUpCardDropMenuSectionItem onClick={(e) => {
                                                         async function CopyStuff() {
-                                                            await handleCopyTextToClipboard(`${process.env.NEXT_PUBLIC_CURRENTURL}/page/view/${page}`, e)
+                                                            await handleCopyTextToClipboard(`${process.env.NEXT_PUBLIC_CURRENTURL}/currentPage/view/${currentPage}`, e)
                                                             const icondiv = document.getElementById('copyicon')
                                                             const oldIcon = icondiv.innerHTML
                                                             icondiv.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check"><polyline points="20 6 9 17 4 12"/></svg>'
@@ -302,14 +304,14 @@ export default function MenuBar({ pb, page, setVisible, sideBarVisible, setListe
                                                     </PopUpCardDropMenuSectionItem>
                                                     <PopUpCardDropMenuSectionItem onClick={handleSharePage}>
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" /></svg>
-                                                        <p>Make page private</p>
+                                                        <p>Make currentPage private</p>
                                                     </PopUpCardDropMenuSectionItem>
                                                 </>
                                             ) : (
                                                 <>
                                                     <PopUpCardDropMenuSectionItem onClick={handleSharePage}>
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-off"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" /><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" /><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" /><line x1="2" x2="22" y1="2" y2="22" /></svg>
-                                                        <p>Make page public</p>
+                                                        <p>Make currentPage public</p>
                                                     </PopUpCardDropMenuSectionItem>
                                                 </>
                                             )}
@@ -367,7 +369,7 @@ export default function MenuBar({ pb, page, setVisible, sideBarVisible, setListe
                                 ) : (
                                     <>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" /><line x1="10" x2="10" y1="11" y2="17" /><line x1="14" x2="14" y1="11" y2="17" /></svg>
-                                        <p >Delete page</p>
+                                        <p >Delete currentPage</p>
                                     </>
                                 )}
 

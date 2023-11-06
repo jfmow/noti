@@ -5,10 +5,12 @@ import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { ContextMenuDropMenu, ContextMenuDropMenuSection, ContextMenuDropMenuSectionItem } from '@/lib/ContextMenu';
 import UserOptions from './UserInfo';
+import { useEditorContext } from '@/pages/page/[...id]';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 pb.autoCancellation(false)
 
-export default function PageList({ currentPage, visible, setVisible, listedPageItems, setListedPageItems }) {
+export default function PageList() {
+  const { currentPage, visible, setVisible, listedPageItems, setListedPageItems } = useEditorContext()
   const [contextMenuEvent, setContextMenuEvent] = useState(null)
   const [SearchActive, setSearchActive] = useState(false)
   const router = useRouter()

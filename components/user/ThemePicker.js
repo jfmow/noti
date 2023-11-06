@@ -1,17 +1,8 @@
 import { PopUpCardDropMenuSection, PopUpCardDropMenuSectionItem } from "@/lib/Pop-Cards/PopDropMenu";
-import { useEffect, useState } from "react";
+import { useEditorContext } from "@/pages/page/[...id]";
 
-export default function UserHelpModal({ CloseHelp }) {
-    //const [themePicker, setThemePicker] = useState(false);
-    const [themes, setThemes] = useState([])
-    useEffect(() => {
-        async function getThemes() {
-            const themeFetch = await fetch(`${process.env.NEXT_PUBLIC_CURRENTURL}/themes.json`)
-            const themeFile = await themeFetch.json()
-            setThemes([...themeFile, { display_name: 'System', id: 'system' }])
-        }
-        getThemes()
-    }, [])
+export default function ThemePickerPopup() {
+    const { themes } = useEditorContext()
 
     function disableCustomTheme() {
         try {

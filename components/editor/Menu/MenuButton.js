@@ -6,6 +6,7 @@ import compressImage from "@/lib/CompressImg";
 import { useState } from "react";
 import { toaster } from "@/components/toasty";
 import { ToolTip, ToolTipCon, ToolTipTrigger } from "@/components/UX-Components/Tooltip";
+import { useEditorContext } from "@/pages/page/[...id]";
 
 const TabbedDropMenuItem = dynamic(() => import('@/lib/Pop-Cards/Tabbed').then((module) => module.TabbedDropMenuItem));
 const TabbedDropMenuItemSurround = dynamic(() => import('@/lib/Pop-Cards/Tabbed').then((module) => module.TabbedDropMenuItemSurround));
@@ -32,7 +33,8 @@ const ColorSelector = dynamic(() => import("@/components/editor/Menu/ColorSelect
 });
 
 
-export default function MenuButtons({ listedPageItems, setListedPageItems, pb, page, currentPageIconValue, setArticleHeader, setCurrentPageIconValue }) {
+export default function MenuButtons({ currentPageIconValue, setArticleHeader, setCurrentPageIconValue }) {
+    const { listedPageItems, setListedPageItems, pb, currentPage } = useEditorContext()
 
 
     //Modal states
@@ -74,7 +76,7 @@ export default function MenuButtons({ listedPageItems, setListedPageItems, pb, p
                 //if (compressedFile.size > 4547000) {
                 //    return toast.error('Compresed file may be too big (>4.5mb)!')
                 //}
-                await pb.collection("pages").update(page, formData);
+                await pb.collection("pages").update(currentPage, formData);
 
                 toaster.dismiss("upload")
                 toaster.toast("Image uploaded successfully!", "success")
@@ -87,10 +89,10 @@ export default function MenuButtons({ listedPageItems, setListedPageItems, pb, p
     }
 
 
-    async function handleChangePageListDisplayColor(color, page) {
+    async function handleChangePageListDisplayColor(color) {
         setListedPageItems(prevItems => {
             // Remove any previous item with the same ID
-            const oldItem = listedPageItems.filter((item) => item.id === page)[0]
+            const oldItem = listedPageItems.filter((item) => item.id === currentPage)[0]
             const filteredItems = prevItems.filter(item => item.id !== oldItem.id);
 
             // Add the new record at the appropriate position based on its created date
@@ -110,7 +112,7 @@ export default function MenuButtons({ listedPageItems, setListedPageItems, pb, p
             "color": color
         };
 
-        await pb.collection('pages').update(page, data);
+        await pb.collection('pages').update(currentPage, data);
     }
     async function handlePageDisplayIconChange(e) {
         setCurrentPageIconValue(`${e.unified}.png`)
@@ -119,10 +121,10 @@ export default function MenuButtons({ listedPageItems, setListedPageItems, pb, p
         };
         //icon.codePointAt(0).toString(16)
         setIconModalState(false);
-        await pb.collection("pages").update(page, data);
+        await pb.collection("pages").update(currentPage, data);
         setListedPageItems(prevItems => {
             // Remove any previous item with the same ID
-            const oldItem = listedPageItems.filter((item) => item.id === page)[0]
+            const oldItem = listedPageItems.filter((item) => item.id === currentPage)[0]
             const filteredItems = prevItems.filter(item => item.id !== oldItem.id);
 
             // Add the new record at the appropriate position based on its created date
@@ -255,7 +257,7 @@ export default function MenuButtons({ listedPageItems, setListedPageItems, pb, p
                             )}
                         </TabbedDropMenuItem>
                         <TabbedDropMenuItem active={popUpEmojiState.activeItem === 'Color'}>
-                            <ColorSelector onSelectColor={handleChangePageListDisplayColor} page={page} />
+                            <ColorSelector onSelectColor={handleChangePageListDisplayColor} page={currentPage} />
                         </TabbedDropMenuItem>
                     </TabbedDropMenuItemSurround>
                 </TabbedDropMenuStaticPos>

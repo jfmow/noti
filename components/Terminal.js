@@ -3,7 +3,9 @@ import { useState, useEffect, useRef } from 'react';
 import Link from '@/components/Link';
 import Router from 'next/router';
 import { ToggleTabBar } from './editor/TabBar';
-export default function Terminal({ pages, pb, setListedPageItems }) {
+import { useEditorContext } from '@/pages/page/[...id]';
+export default function Terminal() {
+    const { listedPageItems, pb, setListedPageItems } = useEditorContext()
     const [visible, setVisible] = useState(false);
     const [filters, setFilters] = useState({ created: false, shared: false, title: '' })
     const [filteredPages, setFilteredPages] = useState([])
@@ -40,7 +42,7 @@ export default function Terminal({ pages, pb, setListedPageItems }) {
         };
     }, []);
     useEffect(() => {
-        let pagesCopy = [...pages]; // Create a copy of the pages array
+        let pagesCopy = [...listedPageItems]; // Create a copy of the listedPageItems array
         if (filters.created) {
             pagesCopy = pagesCopy.sort((a, b) => new Date(a.created) - new Date(b.created));
         } else {
@@ -53,7 +55,7 @@ export default function Terminal({ pages, pb, setListedPageItems }) {
             pagesCopy = pagesCopy.filter((page) => page.title.toLowerCase().includes(filters.title.toLowerCase()))
         }
         setFilteredPages(pagesCopy);
-    }, [filters, pages]);
+    }, [filters, listedPageItems]);
 
     async function createNewPage(parent) {
         const data = {
@@ -64,7 +66,7 @@ export default function Terminal({ pages, pb, setListedPageItems }) {
                 "blocks": []
             }
         };
-        const record = await pb.collection('pages').create(data);
+        const record = await pb.collection('listedPageItems').create(data);
         Router.push(`/page/${record.id}`)
         setVisible(false)
         setListedPageItems(prevItems => {
@@ -100,7 +102,7 @@ export default function Terminal({ pages, pb, setListedPageItems }) {
                                 Terminal
                             </span>
                         </div>
-                        <input onChange={(e) => setFilters({ ...filters, title: e.target.value })} placeholder={`Search ${pb.authStore.model.username}'s pages...`} className={styles.searchPagesInput} type='text' />
+                        <input onChange={(e) => setFilters({ ...filters, title: e.target.value })} placeholder={`Search ${pb.authStore.model.username}'s listedPageItems...`} className={styles.searchPagesInput} type='text' />
                         <button type='button' className={styles.close} onClick={() => setVisible(false)}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
                         </button>

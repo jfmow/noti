@@ -23,11 +23,13 @@ import LineBreak from "@/customEditorTools/LineBreak";
 import { handleCreateBlurHash } from '@/lib/idk'
 import MenuButtons from "./Menu/MenuButton";
 import { toaster } from "../toasty";
+import { useEditorContext } from "@/pages/page/[...id]";
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false)
 
-function Editor({ page, multi, setListedPageItems, listedPageItems }) {
+function Editor({ page }) {
+  const { pageId, setListedPageItems, listedPageItems } = useEditorContext()
   const editorRef = useRef(null);
   const [editor, setEditor] = useState(null);
   const [editorData, setEditorData] = useState({});
@@ -549,7 +551,7 @@ function Editor({ page, multi, setListedPageItems, listedPageItems }) {
         </div>
       </div>
 
-      <div className={`${styles.creategrid} ${multi && styles.creategrid_lock}`}>
+      <div className={`${styles.creategrid} ${pageId.length > 1 && styles.creategrid_lock}`}>
         <div className={styles.form}>
           <div className={styles.editor} ref={editorRef} id="content"></div>
         </div>
