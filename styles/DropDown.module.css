@@ -11,10 +11,6 @@
     overflow: hidden;
 }
 
-.container {
-    z-index: 12;
-}
-
 .trigger {
     display: flex;
     align-items: center;
