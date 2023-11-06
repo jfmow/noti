@@ -1,5 +1,3 @@
-import { PopUpCardDropMenuSection, PopUpCardDropMenuSectionItem, PopUpCardDropMenuSectionTitle, PopUpCardDropMenuStaticPos, PopDropMenuStatic } from "@/lib/Pop-Cards/PopDropMenu";
-
 import dynamic from 'next/dynamic';
 import styles from "@/styles/Create.module.css";
 import compressImage from "@/lib/CompressImg";
