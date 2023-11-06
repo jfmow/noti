@@ -195,7 +195,7 @@ export default function MenuButtons({ currentPageIconValue, setArticleHeader, se
                         <PopUpCardTitle>Unsplash</PopUpCardTitle>
                         <PopUpCardSubTitle>Choose a cover image for your page.</PopUpCardSubTitle>
                         {popUpClickEventUnsplash && (
-                            <Img setArticleHeader={setArticleHeader} page={page} />
+                            <Img setArticleHeader={setArticleHeader} page={currentPage} />
                         )}
 
                     </PopUpCardCorner>
@@ -203,7 +203,7 @@ export default function MenuButtons({ currentPageIconValue, setArticleHeader, se
                         <PopUpCardTitle>Gradients</PopUpCardTitle>
                         <PopUpCardSubTitle>Choose a gradient cover for your page.</PopUpCardSubTitle>
                         {popUpClickEventGradient && (
-                            <Gradient setArticleHeader={setArticleHeader} page={page} pb={pb} />
+                            <Gradient setArticleHeader={setArticleHeader} page={currentPage} pb={pb} />
                         )}
 
                     </PopUpCardCorner>
