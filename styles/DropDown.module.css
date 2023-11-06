@@ -1,4 +1,4 @@
-.clickBox {
+.clicker {
     position: fixed;
     top: 0;
     left: 0;
@@ -12,26 +12,22 @@
 }
 
 .container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 11;
-    pointer-events: none;
-    user-select: none;
+    z-index: 12;
 }
 
+.trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    height: fit-content;
+}
 
-
-
-.PopUpCardDropMenu {
+.dropdown {
+    position: fixed;
     display: flex;
     width: calc(200px);
     flex-direction: column;
-    position: fixed;
     background: var(--popup_background);
     --tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1), 0 2px 4px -2px rgba(0, 0, 0, .1);
     --tw-ring-offset-shadow: 0 0 #0000;
@@ -39,22 +35,16 @@
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
     border-radius: calc(0.5rem - 2px);
     border: 1px solid #e5e7eb6e;
-    z-index: 15 !important;
-    animation: dropmenuin 0.2s 1 ease-in-out;
+    z-index: 14;
 }
 
-.PopUpCardDropMenu :first-child {
+
+.dropdown :first-child {
     border-top: none;
 }
 
-.PopUpCardDropMenu :last-child {
+.dropdown :last-child {
     border-bottom: none;
-}
-
-.hidden {
-    display: none;
-    animation: dropmenuout 0.15s 1 ease-in-out;
-
 }
 
 @keyframes dropmenuin {
@@ -91,7 +81,7 @@
     }
 }
 
-.PopUpCardDropMenuSection {
+.section {
     border-top: 1px solid #e5e7eb6e;
     border-bottom: 1px solid #e5e7eb6e;
     width: 100%;
@@ -102,7 +92,15 @@
     font-weight: 500;
 }
 
-.PopUpCardDropMenuSectionItem {
+.title {
+    font-family: "Geist-bold", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 1rem;
+    color: var(--modal_text_color);
+}
+
+.item {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -112,46 +110,14 @@
     word-break: break-word;
 }
 
-.red {
-    background: rgb(255, 105, 105);
-    border-radius: calc(0.5rem - 4px);
-}
-
-.PopUpCardDropMenuSectionItem:hover {
+.item:hover {
     border-radius: calc(0.5rem - 4px);
     background: var(--popup_button_bg);
 }
 
-.PopUpCardDropMenuSectionItem>a,
-.PopUpCardDropMenuSectionItem>p,
-.PopUpCardDropMenuSectionItem>button {}
-
-.PopUpCardDropMenuSectionItem svg {
+.item svg {
     width: 16px;
     height: 16px;
     margin-right: 0.5rem;
     display: flex;
-}
-
-.PopUpCardDropMenuSectionTitle {
-    font-family: sans-serif;
-    font-weight: 600;
-    font-size: 14px;
-    padding: 1rem;
-    color: var(--modal_text_color);
-}
-
-.PopUpCardDropMenuSectionStatic {
-    animation: fadeIn 1 0.7s ease;
-}
-
-
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
 }
