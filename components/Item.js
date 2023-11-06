@@ -10,7 +10,7 @@ const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 pb.autoCancellation(false)
 
 export default function PageList() {
-  const { currentPage, visible, setVisible, listedPageItems, setListedPageItems } = useEditorContext()
+  const { currentPage, visible, setVisible, listedPageItems, setListedPageItems, listedPageItemsFilter } = useEditorContext()
   const [contextMenuEvent, setContextMenuEvent] = useState(null)
   const [SearchActive, setSearchActive] = useState(false)
   const router = useRouter()
@@ -113,7 +113,6 @@ export default function PageList() {
   //Render items
   function renderTree(items, parentId = "") {
     const filteredItems = items.filter(item => item.parentId === parentId);
-
     if (filteredItems.length === 0) {
       return null;
     }
