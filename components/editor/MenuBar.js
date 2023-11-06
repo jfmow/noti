@@ -245,7 +245,7 @@ export default function MenuBar() {
                         <>
                             {filteredItems.map((item, index) => (
                                 <div className={styles.page} key={index}>
-                                    <div className={styles.page_content} onClick={() => Router.push(`/currentPage/${item.id}`)}>
+                                    <div className={styles.page_content} onClick={() => Router.push(`/page/${item.id}`)}>
                                         <div className={styles.page_icon}>
                                             {item?.icon && item?.icon.includes('.png') ? (<img className={styles.item_icon} src={`/emoji/twitter/64/${item?.icon}`} />) : (!isNaN(parseInt(item?.icon, 16)) && String.fromCodePoint(parseInt(item?.icon, 16)))}
                                         </div>
@@ -257,7 +257,7 @@ export default function MenuBar() {
                     ) : (
                         <>
                             <div className={styles.page}>
-                                <div className={styles.page_content} onClick={() => Router.push(`/currentPage/${currentPage}`)}>
+                                <div className={styles.page_content} onClick={() => Router.push(`/page/${currentPage}`)}>
                                     <div className={styles.page_icon}>
                                         {activePage?.icon && activePage?.icon.includes('.png') ? (<img className={styles.activePage_icon} src={`/emoji/twitter/64/${activePage?.icon}`} />) : (!isNaN(parseInt(activePage?.icon, 16)) && String.fromCodePoint(parseInt(activePage?.icon, 16)))}
                                     </div>
