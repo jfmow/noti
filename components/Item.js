@@ -24,7 +24,7 @@ export default function PageList() {
       });
       //console.log(records)
       setListedPageItems(records)
-      if (!currentPage || (currentPage[0] === 'firstopen' && records.length >= 1)) {
+      if (!currentPage || (currentPage === 'firstopen' && records.length >= 1)) {
         Router.push(`/page/${records.filter(record => record.updated)[0].id}`)
       }
     } catch {
