@@ -86,3 +86,71 @@
     font-size: 14px;
     color: #212121;
 }
+
+
+/*Switch*/
+.ux_toggleSwitch_container {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-family: "Gest-med-bold", sans-serif;
+    color: #212121;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 1em;
+}
+
+.ux_toggleSwitch {
+    font-size: 12px;
+    position: relative;
+    display: inline-block;
+    width: 3.5em;
+    height: 2em;
+}
+
+/* Hide default HTML checkbox */
+.ux_toggleSwitch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.ux_toggleSwitch_slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    border: 1px solid #adb5bd;
+    transition: .4s;
+    border-radius: 30px;
+}
+
+.ux_toggleSwitch_slider:before {
+    position: absolute;
+    content: "";
+    height: 1.4em;
+    width: 1.4em;
+    border-radius: 20px;
+    left: 0.27em;
+    bottom: 0.25em;
+    background-color: #adb5bd;
+    transition: .4s;
+}
+
+input:checked+.ux_toggleSwitch_slider {
+    background-color: #007bff;
+    border: 1px solid #007bff;
+}
+
+input:focus+.ux_toggleSwitch_slider {
+    box-shadow: 0 0 1px #007bff;
+}
+
+input:checked+.ux_toggleSwitch_slider:before {
+    transform: translateX(1.4em);
+    background-color: #fff;
+}
