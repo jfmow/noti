@@ -7,6 +7,7 @@ import { useState } from "react";
 import { toaster } from "@/components/toasty";
 import { ToolTip, ToolTipCon, ToolTipTrigger } from "@/components/UX-Components/Tooltip";
 import { useEditorContext } from "@/pages/page/[...id]";
+import { DropDown, DropDownContainer, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from "@/lib/Pop-Cards/DropDown";
 
 const TabbedDropMenuItem = dynamic(() => import('@/lib/Pop-Cards/Tabbed').then((module) => module.TabbedDropMenuItem));
 const TabbedDropMenuItemSurround = dynamic(() => import('@/lib/Pop-Cards/Tabbed').then((module) => module.TabbedDropMenuItemSurround));
@@ -145,74 +146,70 @@ export default function MenuButtons({ currentPageIconValue, setArticleHeader, se
     return (
         <>
             <ToolTipCon>
-                <ToolTipTrigger>
-                    <button
-                        aria-label="Page cover options"
-                        type="button"
-                        onClick={(e) => setpopUpClickEventPageCoverOptions(e)}
-                        className={styles.title_buttons_btn}
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wallpaper"><circle cx="8" cy="9" r="2" /><path d="m9 17 6.1-6.1a2 2 0 0 1 2.81.01L22 15V5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2" /><path d="M8 21h8" /><path d="M12 17v4" /></svg>
-                    </button>
-                </ToolTipTrigger>
-                <ToolTip>
-                    Change cover
-                </ToolTip>
+                <DropDownContainer>
+                    <ToolTipTrigger>
+                        <DropDownTrigger>
+                            <button
+                                aria-label="Page cover options"
+                                type="button"
+                                className={styles.title_buttons_btn}
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wallpaper"><circle cx="8" cy="9" r="2" /><path d="m9 17 6.1-6.1a2 2 0 0 1 2.81.01L22 15V5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2" /><path d="M8 21h8" /><path d="M12 17v4" /></svg>
+                            </button>
+                        </DropDownTrigger>
+                    </ToolTipTrigger>
+                    <ToolTip>
+                        Change cover
+                    </ToolTip>
+                    <DropDown>
+                        <DropDownSectionTitle>
+                            Page cover
+                        </DropDownSectionTitle>
+                        <DropDownSection>
+                            <DropDownItem
+                                onClick={(e) => setpopUpClickEventUnsplash(e)}>
+                                <svg width="24" height="24" viewBox="0 0 32 32" version="1.1" aria-labelledby="unsplash-home" aria-hidden="false"><path d="M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z"></path></svg>
+                                <p>Unsplash</p>
+                            </DropDownItem>
+                            <DropDownItem
+                                onClick={(e) => setpopUpClickEventGradient(e)}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-paintbrush-2"><path d="M14 19.9V16h3a2 2 0 0 0 2-2v-2H5v2c0 1.1.9 2 2 2h3v3.9a2 2 0 1 0 4 0Z" /><path d="M6 12V2h12v10" /><path d="M14 2v4" /><path d="M10 2v2" /></svg>
+                                <p>Gradient</p>
+                            </DropDownItem>
+                            <DropDownItem>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-image"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><circle cx="9" cy="9" r="2" /><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" /></svg>
+                                <label className={styles.customfileupload} >
+                                    <input
+                                        type="file"
+                                        name="file"
+                                        id="fileInput"
+                                        accept="image/*"
+                                        className={styles.finput}
+                                        onChange={handlePageHeaderImageUpload}
+                                    />
+                                    <p>Custom</p>
+                                </label>
+                            </DropDownItem>
+                        </DropDownSection>
+                    </DropDown>
 
-                <PopUpCardDropMenuStaticPos animationOrgin={'top right'} mobilepos={{
-                    top: `70px`,
-                    left: `0`,
-                    width: `200px`,
-                    position: 'absolute',
-                    zIndex: '5',
-                }} style={{ position: 'absolute', right: '0', top: '50px' }} event={popUpClickEventPageCoverOptions} className={styles.title_buttons_btn}>
-                    <PopUpCardDropMenuSectionTitle>
-                        Page cover
-                    </PopUpCardDropMenuSectionTitle>
-                    <PopUpCardDropMenuSection>
-                        <PopUpCardDropMenuSectionItem
-                            onClick={(e) => setpopUpClickEventUnsplash(e)}>
-                            <svg width="24" height="24" viewBox="0 0 32 32" version="1.1" aria-labelledby="unsplash-home" aria-hidden="false"><path d="M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z"></path></svg>
-                            <p>Unsplash</p>
-                        </PopUpCardDropMenuSectionItem>
-                        <PopUpCardDropMenuSectionItem
-                            onClick={(e) => setpopUpClickEventGradient(e)}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-paintbrush-2"><path d="M14 19.9V16h3a2 2 0 0 0 2-2v-2H5v2c0 1.1.9 2 2 2h3v3.9a2 2 0 1 0 4 0Z" /><path d="M6 12V2h12v10" /><path d="M14 2v4" /><path d="M10 2v2" /></svg>
-                            <p>Gradient</p>
-                        </PopUpCardDropMenuSectionItem>
-                        <PopUpCardDropMenuSectionItem>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-image"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><circle cx="9" cy="9" r="2" /><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" /></svg>
-                            <label className={styles.customfileupload} >
-                                <input
-                                    type="file"
-                                    name="file"
-                                    id="fileInput"
-                                    accept="image/*"
-                                    className={styles.finput}
-                                    onChange={handlePageHeaderImageUpload}
-                                />
-                                <p>Custom</p>
-                            </label>
-                        </PopUpCardDropMenuSectionItem>
-                    </PopUpCardDropMenuSection>
+                    <PopUpCardCorner event={popUpClickEventUnsplash} className={styles.title_buttons_btn}>
+                        <PopUpCardTitle>Unsplash</PopUpCardTitle>
+                        <PopUpCardSubTitle>Choose a cover image for your page.</PopUpCardSubTitle>
+                        {popUpClickEventUnsplash && (
+                            <Img setArticleHeader={setArticleHeader} page={page} />
+                        )}
 
-                </PopUpCardDropMenuStaticPos>
-                <PopUpCardCorner event={popUpClickEventUnsplash} className={styles.title_buttons_btn}>
-                    <PopUpCardTitle>Unsplash</PopUpCardTitle>
-                    <PopUpCardSubTitle>Choose a cover image for your page.</PopUpCardSubTitle>
-                    {popUpClickEventUnsplash && (
-                        <Img setArticleHeader={setArticleHeader} page={page} />
-                    )}
+                    </PopUpCardCorner>
+                    <PopUpCardCorner event={popUpClickEventGradient} className={styles.title_buttons_btn}>
+                        <PopUpCardTitle>Gradients</PopUpCardTitle>
+                        <PopUpCardSubTitle>Choose a gradient cover for your page.</PopUpCardSubTitle>
+                        {popUpClickEventGradient && (
+                            <Gradient setArticleHeader={setArticleHeader} page={page} pb={pb} />
+                        )}
 
-                </PopUpCardCorner>
-                <PopUpCardCorner event={popUpClickEventGradient} className={styles.title_buttons_btn}>
-                    <PopUpCardTitle>Gradients</PopUpCardTitle>
-                    <PopUpCardSubTitle>Choose a gradient cover for your page.</PopUpCardSubTitle>
-                    {popUpClickEventGradient && (
-                        <Gradient setArticleHeader={setArticleHeader} page={page} pb={pb} />
-                    )}
-
-                </PopUpCardCorner>
+                    </PopUpCardCorner>
+                </DropDownContainer>
             </ToolTipCon>
 
             <ToolTipCon>
