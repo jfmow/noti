@@ -109,7 +109,7 @@ export default function MenuBar() {
         }
         getPageData()
 
-    }, [listedPageItems])
+    }, [listedPageItems, currentPage])
 
     async function handleSharePage() {
         const data = {
