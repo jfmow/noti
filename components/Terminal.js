@@ -54,6 +54,11 @@ export default function Terminal() {
         if (filters.title) {
             pagesCopy = pagesCopy.filter((page) => page.title.toLowerCase().includes(filters.title.toLowerCase()))
         }
+        if (filters.archived) {
+            pagesCopy = pagesCopy.filter((page) => page.archived)
+        } else if (!filters.archived) {
+            pagesCopy = pagesCopy.filter((page) => !page.archived)
+        }
         setFilteredPages(pagesCopy);
     }, [filters, listedPageItems]);
 
@@ -102,7 +107,7 @@ export default function Terminal() {
                                 Terminal
                             </span>
                         </div>
-                        <input onChange={(e) => setFilters({ ...filters, title: e.target.value })} placeholder={`Search ${pb.authStore.model.username}'s listedPageItems...`} className={styles.searchPagesInput} type='text' />
+                        <input onChange={(e) => setFilters({ ...filters, title: e.target.value })} placeholder={`Search ${pb.authStore.model.username}'s pages...`} className={styles.searchPagesInput} type='text' />
                         <button type='button' className={styles.close} onClick={() => setVisible(false)}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
                         </button>
@@ -119,6 +124,10 @@ export default function Terminal() {
                         <div className={`${styles.quickmenuItem} ${filters.shared && styles.quickmenuItem_selected}`} onClick={() => setFilters({ ...filters, shared: !filters.shared })}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-waypoints"><circle cx="12" cy="4.5" r="2.5" /><path d="m10.2 6.3-3.9 3.9" /><circle cx="4.5" cy="12" r="2.5" /><path d="M7 12h10" /><circle cx="19.5" cy="12" r="2.5" /><path d="m13.8 17.7 3.9-3.9" /><circle cx="12" cy="19.5" r="2.5" /></svg>
                             Shared
+                        </div>
+                        <div className={`${styles.quickmenuItem} ${filters.archived && styles.quickmenuItem_selected}`} onClick={() => setFilters({ ...filters, archived: !filters.archived })}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive"><rect width="20" height="5" x="2" y="3" rx="1" /><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8" /><path d="M10 12h4" /></svg>
+                            Archived
                         </div>
                         <div className={`${styles.quickmenuItem} ${filters.created && styles.quickmenuItem_selected}`} onClick={() => setFilters({ ...filters, created: !filters.created })}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-clock"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5" /><path d="M16 2v4" /><path d="M8 2v4" /><path d="M3 10h5" /><path d="M17.5 17.5 16 16.25V14" /><path d="M22 16a6 6 0 1 1-12 0 6 6 0 0 1 12 0Z" /></svg>
