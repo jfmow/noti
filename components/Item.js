@@ -316,28 +316,8 @@ export default function PageList() {
   return (
 
     <>
-      {/*<ContextMenuDropMenu event={contextMenuEvent}>
-        <ContextMenuDropMenuSection>
-          {/*<ContextMenuDropMenuSectionItem onClick={() => {
-            setShowMultiEditorSelector(true)
-            setContextMenuEvent(null)
-          }}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-columns"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><line x1="12" x2="12" y1="3" y2="21" /></svg>
-            <p>Multieditor</p>
-        </ContextMenuDropMenuSectionItem>*/}
-      {/*<ContextMenuDropMenuSectionItem onClick={() => {
-            contextMenuDeletePage(contextMenuEvent.data.filter(item => item.key === 'pageid')[0].value)
-            setContextMenuEvent(null)
-          }}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" /><line x1="10" x2="10" y1="11" y2="17" /><line x1="14" x2="14" y1="11" y2="17" /></svg>
-            <p>Delete page</p>
-          </ContextMenuDropMenuSectionItem>
-        </ContextMenuDropMenuSection>
-      </ContextMenuDropMenu>
-      */}
       <div ref={shrinkcontainerRef} className={styles.shrinkcontainer}>
         <div className={styles.container}>
-
           {renderTree(listedPageItems)}
           < li type='button' className={`${styles.item} ${styles.createnewpage_btn}`} onClick={() => createNewPage('')}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14" /><path d="M12 5v14" /></svg> Create a new page</li>
         </div >

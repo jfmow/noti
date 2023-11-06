@@ -50,3 +50,15 @@ export function Link({ ...props }) {
         <a {...props} className={styles.ux_link}>{props.children}</a>
     )
 }
+
+export function ToggleSwitch({ ...props }) {
+    return (
+        <div className={styles.ux_toggleSwitch_container}>
+            <label style={{ fontSize: props?.size || '' }} {...props} className={styles.ux_toggleSwitch}>
+                <input defaultChecked={props?.enabled} type="checkbox" />
+                <span className={styles.ux_toggleSwitch_slider}></span>
+            </label >
+            <span>{props.children}</span>
+        </div>
+    )
+}

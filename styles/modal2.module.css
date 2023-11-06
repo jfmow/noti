@@ -49,9 +49,8 @@
 
 .modalContent h1 {
     margin-bottom: 10px;
-    font-family: sans-serif;
+    font-family: "Gest-bold", sans-serif;
     font-size: 24px;
-    font-weight: 800;
 }
 
 .modalContent h2 {
