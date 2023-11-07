@@ -3,16 +3,13 @@ import Router, { useRouter } from 'next/router';
 import PocketBase from 'pocketbase'
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
-import { ContextMenuDropMenu, ContextMenuDropMenuSection, ContextMenuDropMenuSectionItem } from '@/lib/ContextMenu';
 import UserOptions from './UserInfo';
 import { useEditorContext } from '@/pages/page/[...id]';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 pb.autoCancellation(false)
 
 export default function PageList() {
-  const { currentPage, visible, setVisible, listedPageItems, setListedPageItems, listedPageItemsFilter } = useEditorContext()
-  const [contextMenuEvent, setContextMenuEvent] = useState(null)
-  const [SearchActive, setSearchActive] = useState(false)
+  const { currentPage, visible, setVisible, listedPageItems, setListedPageItems } = useEditorContext()
   const router = useRouter()
   const shrinkcontainerRef = useRef(null)
   const { query } = router;
@@ -38,7 +35,6 @@ export default function PageList() {
 
   useEffect(() => {
     const containerWidthMax = window.innerWidth <= 600 ? '100%' : '300px'
-    const isMobile = window.innerWidth <= 600
     if (!visible) {
       shrinkcontainerRef.current.style.width = 0
       shrinkcontainerRef.current.animate(
@@ -128,14 +124,6 @@ export default function PageList() {
         ))}
       </ul>
     );
-  }
-
-  //Context menu
-  function setContextMenu(e, page) {
-    setContextMenuEvent({ eventData: e, data: [{ key: 'pageid', value: page }] })
-  }
-  async function contextMenuDeletePage(page) {
-    await pb.collection('pages').delete(page)
   }
 
   //Item
@@ -260,7 +248,6 @@ export default function PageList() {
     function handleRightClick(event, item) {
       //console.log(event, item)
       event.preventDefault();
-      setContextMenu(event, item)
     }
 
     return (
