@@ -1,41 +1,37 @@
-# SaveMyNotes 🚀
+# Noti
 
-## Your Ultimate Guide to Mastering Text Editing in 2023
+Online note editor for work & school
 
-| [Explore My Portfolio](https://jamesmowat.com/) | [Check Out the Preview](https://note.suddsy.dev/) |
-| ----------------------------------------------- | ------------------------------------------------- |
+![License](https://img.shields.io/badge/License-GPL_2-blue)
+![Version](https://img.shields.io/badge/Version-0.1.0-yellow)
+![Stability](https://img.shields.io/badge/Stability-STABLE-green)
 
-### SaveMyNotes: Revolutionizing Text Editing with PocketBase (Go) Backend
+# Setup
 
----
 
-**Easy Setup, Maximum Efficiency!**
+1. Download/clone the repo and extract it to a folder
+2. Use `npm i` or `npm install` to install the dependencies
+3. Copy the `.env.example` to `.env` and add your own environment variables
+4. Run the website using `npm run dev` or `npm run ibs` (custom command)
+5. That’s it!
 
-1. **Clone & Deploy:** Simply clone this repository and deploy it wherever Next.js can thrive.
+# Environment variables
 
-2. **PocketBase Magic:** Download the PocketBase executable to your server. For optimal performance, use Docker. Don't forget to expose port 443 or the port specified in your Docker configuration.
 
-   - **Pro Tip:** Visit the [PocketBase GitHub](https://github.com/jfmow/pocketbase), navigate to `examples/base/main.go`, customize it for your hosting environment, build, and run it.
-   - **Configuration:** Add the schema in the settings panel on the admin site.
 
-3. **That's All!**
+- NEXT_PUBLIC_POCKETURL='your-pocketbase'
+    - This is the url to your pocket base instance with the custom schema applied.
+- NEXT_PUBLIC_CURRENTURL='the-current-url-for-the-enviroment-eg-lh3000'
+    - The current url of the website, eg [localhost:3000](http://localhost:3000) for dev env or [https://mysite.com](https://mysite.com) (no trailing /)
+- PRODUCTION='false'
+    - Enables production only variables like content security policy
+- UNSPLASH_APIKEY='for-unsplash-api'
+    - Your UNSPLASH client_id for cover images
 
-4. **Empower Your Admin:** Create an admin account, then effortlessly import the schema into the PocketBase settings section.
+# Pocketbase
 
----
 
-### Why We Ditched `next/link` 🔗
 
-We opted for our own custom solution to prevent random redirects and ensure a seamless user experience. Stay tuned for updates as we continue to refine this! (Next link is just broken :( )
+For this app I have created a **custom build** of pocketbase which requires you to build it locally, and use the schema. You can customise the schema to you liking but **be aware of certain requirements in the main.go for table names etc.**
 
----
-
-**Accessibility Matters!**
-
-I've poured my dedication into making this website incredibly accessible. While I strive for perfection, there might be areas that need a little extra love. Your feedback is invaluable!
-
-- **Awesome Icons:** [Lucide](https://lucide.dev/)
-- **Powerful DB/Backend:** [PocketBase](https://pocketbase.io/)
-
-**Disclaimer**:
-This code is offered as is, without any warranty. Please review the attached license for details and happy coding! 🚀✨
+Build: [https://github.com/jfmow/pocketbase](https://github.com/jfmow/pocketbase)
