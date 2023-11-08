@@ -234,6 +234,8 @@ function Editor({ page }) {
             });
             if (records.length >= 2) {
               setMultiPageModal({ ...multiPageModal, active: true, records: records })
+              setIsLoading(false)
+              return
             }
             const record = records[0]
 
