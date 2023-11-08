@@ -236,19 +236,8 @@ function Editor({ page }) {
               setMultiPageModal({ ...multiPageModal, active: true, records: records })
             }
             const record = records[0]
-            setEditorData(record.content);
-            setArticleTitle(record.title);
-            setPageSharedTF(record.shared);
-            setCurrentPageIconValue(record.icon);
-            setImportantNote(record.important)
-            if (record.header_img) {
-              setArticleHeader(
-                `${process.env.NEXT_PUBLIC_POCKETURL}/api/files/pages/${page}/${record.header_img}`
-              );
-            } else {
-              setArticleHeader(record.unsplash);
-            }
-            setIsLoading(false);
+
+            Router.push('/page/' + record.id)
           } catch {
             toaster.error(
               "Unable to find a page with that id"
