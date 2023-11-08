@@ -24,6 +24,8 @@ import { handleCreateBlurHash } from '@/lib/idk'
 import MenuButtons from "./Menu/MenuButton";
 import { toaster } from "../toasty";
 import { useEditorContext } from "@/pages/page/[...id]";
+import { Paragraph, SubmitButton } from "../UX-Components";
+import { Modal } from "@/lib/Modals/Modal";
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false)
@@ -44,6 +46,7 @@ function Editor({ page }) {
   const [pageSharedTF, setPageSharedTF] = useState(false);
   const [currentPageIconValue, setCurrentPageIconValue] = useState("");
   const [importantNote, setImportantNote] = useState(false)
+  const [multiPageModal, setMultiPageModal] = useState({ active: false, records: [] })
 
   const [offline, setOffline] = useState({ warning: false, state: false })
   const pagetitleref = useRef(null)
@@ -207,16 +210,7 @@ function Editor({ page }) {
 
         try {
           const record = await pb.collection("pages").getOne(page);
-          //encryption
-          try {
-            setEditorData(JSON.parse(decryptedNote));
-            //toast("Note no longer encrypted on server.")
-          } catch (error) {
-            console.warn(error);
-            setEditorData(record.content);
-          }
-
-          //rest of unencrypt data
+          setEditorData(record.content);
           setArticleTitle(record.title);
           setPageSharedTF(record.shared);
           setCurrentPageIconValue(record.icon);
@@ -230,10 +224,33 @@ function Editor({ page }) {
           }
           setIsLoading(false);
         } catch (error) {
-          toaster.toast(
-            "Error while loading content", "error"
-          );
-          console.error(error);
+          try {
+            const records = await pb.collection('pages').getFullList({
+              sort: '-created', filter: `title ?~ "${page.toLowerCase()}"`
+            });
+            console.log(records)
+            if (records.length >= 2) {
+              setMultiPageModal({ ...multiPageModal, active: true, records: records })
+            }
+            const record = records[0]
+            setEditorData(record.content);
+            setArticleTitle(record.title);
+            setPageSharedTF(record.shared);
+            setCurrentPageIconValue(record.icon);
+            setImportantNote(record.important)
+            if (record.header_img) {
+              setArticleHeader(
+                `${process.env.NEXT_PUBLIC_POCKETURL}/api/files/pages/${page}/${record.header_img}`
+              );
+            } else {
+              setArticleHeader(record.unsplash);
+            }
+            setIsLoading(false);
+          } catch {
+            toaster.error(
+              "Unable to find a page with that id"
+            );
+          }
         }
       }
 
@@ -513,6 +530,35 @@ function Editor({ page }) {
 
   if (isLoading) {
     return <Loader />;
+  }
+
+  if (multiPageModal.active) {
+    return (
+      <>
+        <Modal>
+          <h1>Multiple pages found!</h1>
+          <Paragraph>
+            Looks like theres multiple pages with that name. Please select one from the list below to open.
+          </Paragraph>
+          <div style={{ maxHeight: '190px', overflowY: 'scroll' }}>
+            {multiPageModal.records.map((item) => (
+              <div onClick={() => {
+                setMultiPageModal({ active: false })
+                Router.push(`/page/${item.id}`)
+              }} style={{ display: 'flex', gap: '7px', alignItems: 'center', cursor: 'pointer' }}>
+                <div aria-label='Page icon' style={{ display: 'flex', width: '16px', height: '16px' }}>
+                  {item.icon && item.icon.includes('.png') ? (<img className={styles.item_icon} src={`/emoji/twitter/64/${item.icon}`} />) : (!isNaN(parseInt(item.icon, 16)) && String.fromCodePoint(parseInt(item.icon, 16)))}
+                </div>
+                <p>{item.title}</p>
+              </div>
+            ))}
+          </div>
+          <SubmitButton onClick={() => setMultiPageModal({ ...multiPageModal, active: false })}>
+            Cancel
+          </SubmitButton>
+        </Modal>
+      </>
+    )
   }
 
 
