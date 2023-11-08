@@ -352,13 +352,13 @@ export default function MenuBar() {
                                         <DropDownSection>
                                             <DropDownItem>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" /><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" /></svg>
-                                                <p style={{ width: '100%', overflow: 'hidden' }}>Link: <span style={{ width: '100%', display: 'inline-block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{process.env.NEXT_PUBLIC_CURRENTURL}/currentPage/view/{currentPage}</span></p>
+                                                <p style={{ width: '100%', overflow: 'hidden' }}>Link: <span style={{ width: '100%', display: 'inline-block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{process.env.NEXT_PUBLIC_CURRENTURL}/page/view/{currentPage}</span></p>
                                             </DropDownItem>
                                             {filteredItems.find((Apage) => Apage?.id === currentPage)?.shared ? (
                                                 <>
                                                     <DropDownItem onClick={(e) => {
                                                         async function CopyStuff() {
-                                                            await handleCopyTextToClipboard(`${process.env.NEXT_PUBLIC_CURRENTURL}/currentPage/view/${currentPage}`, e)
+                                                            await handleCopyTextToClipboard(`${process.env.NEXT_PUBLIC_CURRENTURL}/page/view/${currentPage}`, e)
                                                             const icondiv = document.getElementById('copyicon')
                                                             const oldIcon = icondiv.innerHTML
                                                             icondiv.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check"><polyline points="20 6 9 17 4 12"/></svg>'
