@@ -6,7 +6,7 @@ import { ToolTip, ToolTipCon, ToolTipTrigger } from '@/components/UX-Components/
 import { useEditorContext } from '@/pages/page/[...id]';
 import { DropDown, DropDownContainer, DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from '@/lib/Pop-Cards/DropDown';
 export default function MenuBar() {
-    const { pb, currentPage, setVisible, sideBarVisible, setListedPageItems, listedPageItems } = useEditorContext()
+    const { pb, currentPage, setVisible, visible, setListedPageItems, listedPageItems } = useEditorContext()
     const [activePage, setActivePage] = useState({})
     const [filteredItems, setFilteredItems] = useState([]);
     const [DeletePageAlert, setDeletePageAlert] = useState(false)
@@ -222,16 +222,9 @@ export default function MenuBar() {
     return (
         <div className={styles.container}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
-                <ToolTipCon>
-                    <ToolTipTrigger>
-                        <button onClick={() => setVisible(!sideBarVisible)} type='button' className={styles.optionButton}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-right"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><line x1="15" x2="15" y1="3" y2="21" /></svg>
-                        </button>
-                    </ToolTipTrigger>
-                    <ToolTip>
-                        Toggle side bar
-                    </ToolTip>
-                </ToolTipCon>
+                <button onClick={() => setVisible(!visible)} type='button' className={styles.optionButton}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-right"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><line x1="15" x2="15" y1="3" y2="21" /></svg>
+                </button>
 
                 <div className={styles.pages}>
                     {!isMobile ? (
