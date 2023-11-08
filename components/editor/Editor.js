@@ -225,6 +225,11 @@ function Editor({ page }) {
           setIsLoading(false);
         } catch (error) {
           try {
+            if (page.length <= 2) {
+              setMultiPageModal({ ...multiPageModal, active: true, records: [{ title: 'Title too short', id: 'firstopen' }] })
+              setIsLoading(false)
+              return
+            }
             const records = await pb.collection('pages').getFullList({
               sort: '-created', filter: `title ?~ "${page.toLowerCase()}"`
             });
