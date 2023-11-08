@@ -179,6 +179,12 @@ a {
   src: url("../fonts/Geist-Bold.otf");
 }
 
+@font-face {
+  font-family: "Gest-ultra-bold";
+  font-display: swap;
+  src: url("../fonts/Geist-UltraBlack.otf");
+}
+
 
 
 @font-face {
