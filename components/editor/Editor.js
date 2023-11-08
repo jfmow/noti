@@ -185,7 +185,6 @@ function Editor({ page }) {
       ResetUseStateVars()
       async function fetchArticles() {
         if (page === "firstopen") {
-
           if (localStorage.getItem('Offlinetime') === 'true') {
             try {
               setEditorData(JSON.parse(localStorage.getItem('Offlinesave')));
@@ -195,7 +194,6 @@ function Editor({ page }) {
                 "title": `Migrated offline page ${Date.now()}`
               }
               pb.autoCancellation(true)
-
               const state = await pb.collection("pages").create(data);
               Router.push(`/page/${state.id}`)
               localStorage.setItem('Offlinetime', 'false')
@@ -205,6 +203,7 @@ function Editor({ page }) {
             }
           }
           setIsLoading(false);
+          Router.push(`/page/${listedPageItems[0]?.id}`)
           return;
         }
 
