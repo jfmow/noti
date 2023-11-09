@@ -28,6 +28,7 @@ export default class LineBreak {
         const iframe = document.createElement('div');
         iframe.style.width = '100%';
         iframe.style.border = '1px dashed var(--editor_text)';
+        iframe.style.opacity = 0.7
         iframe.style.margin = '20px 0'
         this.wrapper.appendChild(iframe)
     }
