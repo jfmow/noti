@@ -230,7 +230,7 @@ function Editor({ page }) {
               return
             }
             const records = await pb.collection('pages').getFullList({
-              sort: '-created', filter: `title ?~ "${page.toLowerCase()}"`
+              sort: '-created', filter: `title ?~ "${page.toLowerCase()}"`, skipTotal: true
             });
             if (records.length >= 2) {
               setMultiPageModal({ ...multiPageModal, active: true, records: records })
