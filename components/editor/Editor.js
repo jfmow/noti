@@ -181,7 +181,6 @@ function Editor({ page }) {
           if (!record || record?.id !== page || new Date(record?.updated) < new Date(listedPageItems.find((Apage) => Apage.id === page)?.updated)) {
             console.log('not from cache')
             record = await pb.collection("pages").getOne(page);
-            Cache.set(record.id, JSON.stringify(record))
           }
           setEditorData(record.content);
           setArticleTitle(record.title);
@@ -196,6 +195,7 @@ function Editor({ page }) {
             setArticleHeader(record.unsplash);
           }
           setIsLoading(false);
+          Cache.set(record.id, JSON.stringify(record))
         } catch (error) {
           // console.log(error)
           try {
