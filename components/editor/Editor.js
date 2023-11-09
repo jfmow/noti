@@ -26,6 +26,7 @@ import { toaster } from "../toasty";
 import { useEditorContext } from "@/pages/page/[...id]";
 import { Paragraph, SubmitButton } from "../UX-Components";
 import { Modal } from "@/lib/Modals/Modal";
+import { Cache } from "@/lib/Cache";
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false)
@@ -102,25 +103,18 @@ function Editor({ page }) {
             let formData = new FormData();
 
             formData.append("title", articleTitle);
-            // Encrypt the note content
-            // Replace with the user's encryption key
-
-            //const encryptedNote = AES.encrypt(
-            //  JSON.stringify(articleContent),
-            //  chefKey
-            //).toString();
-
-            // Decrypt the note content
-
 
             formData.append("content", JSON.stringify(articleContent));
             try {
               if (page === "firstopen") {
                 formData.append("owner", pb.authStore.model.id);
                 const state = await pb.collection("pages").create(formData);
+                Cache.set(state.id, JSON.stringify(state))
                 return Router.push(`/page/${state.id}`)
               }
               const state = await pb.collection("pages").update(page, formData);
+              Cache.set(state.id, JSON.stringify(state))
+
               //console.log("Auto saved successfully!");
             } catch (error) {
               toaster.toast("Could not auto save!", "error");
@@ -147,12 +141,6 @@ function Editor({ page }) {
       updateLastTypedTime();
       setLastTypedTimeIdle(false);
     };
-
-    // Event listener for detecting mouse movement
-    //const mouseMovementEventListener = () => {
-    //  updateLastTypedTime();
-    //};
-
     // Attach event listeners
     if (editorRef) {
       try {
@@ -185,30 +173,17 @@ function Editor({ page }) {
       ResetUseStateVars()
       async function fetchArticles() {
         if (page === "firstopen") {
-          if (localStorage.getItem('Offlinetime') === 'true') {
-            try {
-              setEditorData(JSON.parse(localStorage.getItem('Offlinesave')));
-              const data = {
-                "content": localStorage.getItem('Offlinesave'),
-                "owner": pb.authStore.model.id,
-                "title": `Migrated offline page ${Date.now()}`
-              }
-              pb.autoCancellation(true)
-              const state = await pb.collection("pages").create(data);
-              Router.push(`/page/${state.id}`)
-              localStorage.setItem('Offlinetime', 'false')
-              localStorage.removeItem('Offlinesave');
-            } catch (err) {
-              console.error(err)
-            }
-          }
           setIsLoading(false);
           Router.push(`/page/${listedPageItems[0]?.id}`)
           return;
         }
-
         try {
-          const record = await pb.collection("pages").getOne(page);
+          let record = await Cache.get(page)
+          if (!record || new Date(record?.updated) <= new Date(listedPageItems.find((Apage) => Apage.id === page)?.updated)) {
+            console.log('not from cache')
+            record = await pb.collection("pages").getOne(page);
+            Cache.set(record.id, JSON.stringify(record))
+          }
           setEditorData(record.content);
           setArticleTitle(record.title);
           setPageSharedTF(record.shared);
@@ -223,6 +198,7 @@ function Editor({ page }) {
           }
           setIsLoading(false);
         } catch (error) {
+          // console.log(error)
           try {
             if (page.length <= 2) {
               setMultiPageModal({ ...multiPageModal, active: true, records: [{ title: 'Title too short', id: 'firstopen' }] })
@@ -240,7 +216,8 @@ function Editor({ page }) {
             const record = records[0]
 
             Router.push('/page/' + record.id)
-          } catch {
+          } catch (err) {
+            //console.log(err)
             toaster.error(
               "Unable to find a page with that id"
             );
