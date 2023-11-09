@@ -109,11 +109,11 @@ function Editor({ page }) {
               if (page === "firstopen") {
                 formData.append("owner", pb.authStore.model.id);
                 const state = await pb.collection("pages").create(formData);
-                Cache.set(state.id, JSON.stringify(state))
+                //Cache.set(state.id, JSON.stringify(state))
                 return Router.push(`/page/${state.id}`)
               }
               const state = await pb.collection("pages").update(page, formData);
-              Cache.set(state.id, JSON.stringify(state))
+              //Cache.set(state.id, JSON.stringify(state))
 
               //console.log("Auto saved successfully!");
             } catch (error) {
@@ -177,11 +177,12 @@ function Editor({ page }) {
           return;
         }
         try {
-          let record = await Cache.get(page)
-          if (!record || record.id !== page || new Date(record?.updated) < new Date(listedPageItems.find((Apage) => Apage.id === page)?.updated)) {
-            console.log('not from cache')
-            record = await pb.collection("pages").getOne(page);
-          }
+          //let record = await Cache.get(page)
+          //if (!record || record.id !== page || new Date(record?.updated) < new Date(listedPageItems.find((Apage) => Apage.id === page)?.updated)) {
+          //  console.log('not from cache')
+          //  //record = await pb.collection("pages").getOne(page);
+          //}
+          const record = await pb.collection("pages").getOne(page);
           setEditorData(record.content);
           setArticleTitle(record.title);
           setPageSharedTF(record.shared);
@@ -195,7 +196,7 @@ function Editor({ page }) {
             setArticleHeader(record.unsplash);
           }
           setIsLoading(false);
-          Cache.set(record.id, JSON.stringify(record))
+          //Cache.set(record.id, JSON.stringify(record))
         } catch (error) {
           // console.log(error)
           try {
