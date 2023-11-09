@@ -303,7 +303,7 @@ function Editor({ page }) {
                       let record = null
                       try {
                         if (compressedFile.size > 5242880) {
-                          toast.error('File too big. Must be < 5mb')
+                          toaster.error('File too big. Must be < 5mb')
                           return { success: 0 }
                         }
                         record = await pb.collection("imgs").create(formData);
