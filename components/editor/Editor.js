@@ -179,7 +179,7 @@ function Editor({ page }) {
         }
         try {
           let record = await Cache.get(page)
-          if (!record || new Date(record?.updated) <= new Date(listedPageItems.find((Apage) => Apage.id === page)?.updated)) {
+          if (!record || new Date(record?.updated) < new Date(listedPageItems.find((Apage) => Apage.id === page)?.updated)) {
             console.log('not from cache')
             record = await pb.collection("pages").getOne(page);
             Cache.set(record.id, JSON.stringify(record))
