@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { StrictMode, useEffect, useRef, useState } from "react";
 import Head from "next/head";
 import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
@@ -435,7 +435,7 @@ function Editor({ page }) {
           },
           data: editorData,
           placeholder: "Enter some text...",
-          autofocus: editorData?.blocks?.length >= 1 && (editorData?.blocks[0]?.type === 'image' || editorData?.blocks[0]?.type === 'Video' || editorData?.blocks[0]?.type === 'simpleEmbeds') ? false : true,
+          autofocus: editorData?.blocks?.length >= 1 && (editorData?.blocks[0]?.type === 'image' || editorData?.blocks[0]?.type === 'Video' || editorData?.blocks[0]?.type === 'simpleEmbeds' || editorData?.blocks[0]?.type === 'SimpleIframeWebpage') ? false : true,
         });
 
         setEditor(editorInstance, () => {
@@ -533,46 +533,48 @@ function Editor({ page }) {
 
 
   return (
-    <div className={styles.create} id="createcon">
-      <Head>
-        <title>{articleTitle}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" href={currentPageIconValue ? (`/emoji/twitter/64/${currentPageIconValue}`) : '/Favicon.png'} />
+    <StrictMode>
+      <div className={styles.create} id="createcon">
+        <Head>
+          <title>{articleTitle}</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <link rel="icon" href={currentPageIconValue ? (`/emoji/twitter/64/${currentPageIconValue}`) : '/Favicon.png'} />
 
-      </Head>
+        </Head>
 
-      <div className={styles.title}>
-        <div className={styles.title} id="titlebg">
-          {articleHeader && <img className={styles.articleTitle_img} src={articleHeader} alt="Page header img" />}
-          <div className={styles.headerstuff}>
-            <div className={styles.titleeditorcontainer}>
-              <div
-                className={styles.titleinput}
-                contentEditable
-                type="text"
-                ref={pagetitleref}
-                onBlur={handlePageTitleChange}
-                id="tuttitle"
-                aria-label="Page title"
-              >
-                {articleTitle ? articleTitle : "Untitled"}
+        <div className={styles.title}>
+          <div className={styles.title} id="titlebg">
+            {articleHeader && <img className={styles.articleTitle_img} src={articleHeader} alt="Page header img" />}
+            <div className={styles.headerstuff}>
+              <div className={styles.titleeditorcontainer}>
+                <div
+                  className={styles.titleinput}
+                  contentEditable
+                  type="text"
+                  ref={pagetitleref}
+                  onBlur={handlePageTitleChange}
+                  id="tuttitle"
+                  aria-label="Page title"
+                >
+                  {articleTitle ? articleTitle : "Untitled"}
+                </div>
               </div>
-            </div>
-            <div className={styles.title_buttons} id="tut_title_btns_id">
+              <div className={styles.title_buttons} id="tut_title_btns_id">
 
-              <MenuButtons listedPageItems={listedPageItems} setListedPageItems={setListedPageItems} pb={pb} page={page} editor={editor} editorRef={editorRef} articleTitle={articleTitle} clearStates={ResetUseStateVars} currentPageIconValue={currentPageIconValue} setArticleHeader={setArticleHeader} pageSharedTF={pageSharedTF} setCurrentPageIconValue={setCurrentPageIconValue} setPageSharedTF={setPageSharedTF} />
+                <MenuButtons listedPageItems={listedPageItems} setListedPageItems={setListedPageItems} pb={pb} page={page} editor={editor} editorRef={editorRef} articleTitle={articleTitle} clearStates={ResetUseStateVars} currentPageIconValue={currentPageIconValue} setArticleHeader={setArticleHeader} pageSharedTF={pageSharedTF} setCurrentPageIconValue={setCurrentPageIconValue} setPageSharedTF={setPageSharedTF} />
 
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className={`${styles.creategrid} ${pageId.length > 1 && styles.creategrid_lock}`}>
-        <div className={styles.form}>
-          <div className={styles.editor} ref={editorRef} id="content"></div>
+        <div className={`${styles.creategrid} ${pageId.length > 1 && styles.creategrid_lock}`}>
+          <div className={styles.form}>
+            <div className={styles.editor} ref={editorRef} id="content"></div>
+          </div>
         </div>
       </div>
-    </div>
+    </StrictMode>
   );
 }
 
