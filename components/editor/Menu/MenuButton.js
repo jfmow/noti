@@ -243,7 +243,7 @@ export default function MenuButtons({ currentPageIconValue, setArticleHeader, se
                         <TabbedDropMenuItem active={popUpEmojiState.activeItem === 'Icons'}>
                             {(popUpEmojiState.activeItem === 'Icons' && popUpClickEventEmoji !== null) || popUpEmojiState.active ? (
                                 <>
-                                    <Icons Select={handlePageDisplayIconChange} Selected={`${currentPageIconValue.toString()}`} />
+                                    <Icons Select={handlePageDisplayIconChange} Selected={`${currentPageIconValue}`} />
                                 </>
                             ) : (
                                 <div className={styles.LongBarLoaderDiv}>
