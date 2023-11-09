@@ -173,8 +173,7 @@ function Editor({ page }) {
       ResetUseStateVars()
       async function fetchArticles() {
         if (page === "firstopen") {
-          setIsLoading(false);
-          Router.push(`/page/${listedPageItems[0]?.id}`)
+          setIsLoading(true);
           return;
         }
         try {
