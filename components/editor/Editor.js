@@ -178,7 +178,7 @@ function Editor({ page }) {
         }
         try {
           let record = await Cache.get(page)
-          if (!record || record?.id !== page || new Date(record?.updated) < new Date(listedPageItems.find((Apage) => Apage.id === page)?.updated)) {
+          if (!record || record.id !== page || new Date(record?.updated) < new Date(listedPageItems.find((Apage) => Apage.id === page)?.updated)) {
             console.log('not from cache')
             record = await pb.collection("pages").getOne(page);
           }
