@@ -32,11 +32,9 @@ const ColorSelector = dynamic(() => import("@/components/editor/Menu/ColorSelect
 });
 
 
-export default function MenuButtons({ currentPageIconValue, setArticleHeader, setCurrentPageIconValue }) {
+export default function MenuButtons({ updateIcon, updateColor, updateHeader, setHeader }) {
     const { listedPageItems, setListedPageItems, pb, currentPage } = useEditorContext()
 
-
-    //Modal states
     const [iconModalState, setIconModalState] = useState(false);
 
 
@@ -49,97 +47,6 @@ export default function MenuButtons({ currentPageIconValue, setArticleHeader, se
     const [popUpClickEventPageCoverOptions, setpopUpClickEventPageCoverOptions] = useState(null)
 
 
-
-
-
-    async function handlePageHeaderImageUpload(e) {
-        toaster.toast("Uploading...", "loading", { id: "upload" })
-
-        const file = e.target.files[0];
-
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            setArticleHeader(event.target.result);
-        };
-        reader.readAsDataURL(file);
-        let formData = new FormData();
-        if (file) {
-
-            try {
-                const compressedBlob = await compressImage(file, 200); // Maximum file size in KB (100KB in this example)
-                const compressedFile = new File([compressedBlob], file.name, {
-                    type: "image/jpeg",
-                });
-                formData.append("header_img", compressedFile);
-                formData.append("unsplash", '');
-                //if (compressedFile.size > 4547000) {
-                //    return toast.error('Compresed file may be too big (>4.5mb)!')
-                //}
-                await pb.collection("pages").update(currentPage, formData);
-
-                toaster.dismiss("upload")
-                toaster.toast("Image uploaded successfully!", "success")
-
-            } catch (error) {
-                toaster.dismiss("upload")
-                toaster.toast("Error uploading header img", "error");
-            }
-        }
-    }
-
-
-    async function handleChangePageListDisplayColor(color) {
-        setListedPageItems(prevItems => {
-            // Remove any previous item with the same ID
-            const oldItem = listedPageItems.filter((item) => item.id === currentPage)[0]
-            const filteredItems = prevItems.filter(item => item.id !== oldItem.id);
-
-            // Add the new record at the appropriate position based on its created date
-            let insertIndex = filteredItems.findIndex(item => item.created < oldItem.created);
-            if (insertIndex === -1) {
-                insertIndex = filteredItems.length;
-            }
-
-            return [
-                ...filteredItems.slice(0, insertIndex),
-                { ...oldItem, color: color },
-                ...filteredItems.slice(insertIndex)
-            ];
-            //return [...prevItems.filter(item => item.id !== page), { ...oldItem, icon: `${e.unified}.png` }]
-        })
-        const data = {
-            "color": color
-        };
-
-        await pb.collection('pages').update(currentPage, data);
-    }
-    async function handlePageDisplayIconChange(e) {
-        setCurrentPageIconValue(`${e.unified}.png`)
-        const data = {
-            icon: e.image,
-        };
-        //icon.codePointAt(0).toString(16)
-        setIconModalState(false);
-        await pb.collection("pages").update(currentPage, data);
-        setListedPageItems(prevItems => {
-            // Remove any previous item with the same ID
-            const oldItem = listedPageItems.filter((item) => item.id === currentPage)[0]
-            const filteredItems = prevItems.filter(item => item.id !== oldItem.id);
-
-            // Add the new record at the appropriate position based on its created date
-            let insertIndex = filteredItems.findIndex(item => item.created < oldItem.created);
-            if (insertIndex === -1) {
-                insertIndex = filteredItems.length;
-            }
-
-            return [
-                ...filteredItems.slice(0, insertIndex),
-                { ...oldItem, icon: `${e.unified.toLowerCase()}.png` },
-                ...filteredItems.slice(insertIndex)
-            ];
-            //return [...prevItems.filter(item => item.id !== page), { ...oldItem, icon: `${e.unified}.png` }]
-        })
-    }
 
     return (
         <>
@@ -183,7 +90,7 @@ export default function MenuButtons({ currentPageIconValue, setArticleHeader, se
                                         id="fileInput"
                                         accept="image/*"
                                         className={styles.finput}
-                                        onChange={handlePageHeaderImageUpload}
+                                        onChange={updateHeader}
                                     />
                                     <p>Custom</p>
                                 </label>
@@ -195,7 +102,7 @@ export default function MenuButtons({ currentPageIconValue, setArticleHeader, se
                         <PopUpCardTitle>Unsplash</PopUpCardTitle>
                         <PopUpCardSubTitle>Choose a cover image for your page.</PopUpCardSubTitle>
                         {popUpClickEventUnsplash && (
-                            <Img setArticleHeader={setArticleHeader} page={currentPage} />
+                            <Img setArticleHeader={setHeader} page={currentPage} />
                         )}
 
                     </PopUpCardCorner>
@@ -203,7 +110,7 @@ export default function MenuButtons({ currentPageIconValue, setArticleHeader, se
                         <PopUpCardTitle>Gradients</PopUpCardTitle>
                         <PopUpCardSubTitle>Choose a gradient cover for your page.</PopUpCardSubTitle>
                         {popUpClickEventGradient && (
-                            <Gradient setArticleHeader={setArticleHeader} page={currentPage} pb={pb} />
+                            <Gradient setArticleHeader={setHeader} page={currentPage} pb={pb} />
                         )}
 
                     </PopUpCardCorner>
@@ -243,7 +150,7 @@ export default function MenuButtons({ currentPageIconValue, setArticleHeader, se
                         <TabbedDropMenuItem active={popUpEmojiState.activeItem === 'Icons'}>
                             {(popUpEmojiState.activeItem === 'Icons' && popUpClickEventEmoji !== null) || popUpEmojiState.active ? (
                                 <>
-                                    <Icons Select={handlePageDisplayIconChange} Selected={`${currentPageIconValue}`} />
+                                    <Icons Select={updateIcon} />
                                 </>
                             ) : (
                                 <div className={styles.LongBarLoaderDiv}>
@@ -252,7 +159,7 @@ export default function MenuButtons({ currentPageIconValue, setArticleHeader, se
                             )}
                         </TabbedDropMenuItem>
                         <TabbedDropMenuItem active={popUpEmojiState.activeItem === 'Color'}>
-                            <ColorSelector onSelectColor={handleChangePageListDisplayColor} page={currentPage} />
+                            <ColorSelector onSelectColor={updateColor} page={currentPage} />
                         </TabbedDropMenuItem>
                     </TabbedDropMenuItemSurround>
                 </TabbedDropMenuStaticPos>

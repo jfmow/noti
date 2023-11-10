@@ -631,3 +631,52 @@
     left: unset;
   }
 }
+
+.load {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  animation: pulse 1.5s infinite ease;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.load :nth-child(n - 2) {
+  height: 16px;
+  width: 100%;
+  background: rgb(193, 193, 193);
+  content: "";
+  border-radius: 0.3rem;
+}
+
+.load :nth-child(n + 2) {
+  height: 20px;
+  width: 100%;
+  background: rgb(193, 193, 193);
+  content: "";
+  border-radius: 0.3rem;
+}
+
+.load :nth-child(4) {
+  margin-top: 20px;
+  height: 20px;
+  width: 100%;
+  background: rgb(193, 193, 193);
+  content: "";
+  border-radius: 0.3rem;
+}

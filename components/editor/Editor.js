@@ -52,6 +52,12 @@ function Editor({ page }) {
   const [offline, setOffline] = useState({ warning: false, state: false })
   const pagetitleref = useRef(null)
   function ResetUseStateVars() {
+    if (editorRef.current) {
+      if (editor) {
+        console.log('a')
+        editor.destroy()
+      }
+    }
     setEditor(null);
     setEditorData({});
     setArticleTitle("");
@@ -533,48 +539,46 @@ function Editor({ page }) {
 
 
   return (
-    <StrictMode>
-      <div className={styles.create} id="createcon">
-        <Head>
-          <title>{articleTitle}</title>
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-          <link rel="icon" href={currentPageIconValue ? (`/emoji/twitter/64/${currentPageIconValue}`) : '/Favicon.png'} />
+    <div className={styles.create} id="createcon">
+      <Head>
+        <title>{articleTitle}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href={currentPageIconValue ? (`/emoji/twitter/64/${currentPageIconValue}`) : '/Favicon.png'} />
 
-        </Head>
+      </Head>
 
-        <div className={styles.title}>
-          <div className={styles.title} id="titlebg">
-            {articleHeader && <img className={styles.articleTitle_img} src={articleHeader} alt="Page header img" />}
-            <div className={styles.headerstuff}>
-              <div className={styles.titleeditorcontainer}>
-                <div
-                  className={styles.titleinput}
-                  contentEditable
-                  type="text"
-                  ref={pagetitleref}
-                  onBlur={handlePageTitleChange}
-                  id="tuttitle"
-                  aria-label="Page title"
-                >
-                  {articleTitle ? articleTitle : "Untitled"}
-                </div>
+      <div className={styles.title}>
+        <div className={styles.title} id="titlebg">
+          {articleHeader && <img className={styles.articleTitle_img} src={articleHeader} alt="Page header img" />}
+          <div className={styles.headerstuff}>
+            <div className={styles.titleeditorcontainer}>
+              <div
+                className={styles.titleinput}
+                contentEditable
+                type="text"
+                ref={pagetitleref}
+                onBlur={handlePageTitleChange}
+                id="tuttitle"
+                aria-label="Page title"
+              >
+                {articleTitle ? articleTitle : "Untitled"}
               </div>
-              <div className={styles.title_buttons} id="tut_title_btns_id">
+            </div>
+            <div className={styles.title_buttons} id="tut_title_btns_id">
 
-                <MenuButtons listedPageItems={listedPageItems} setListedPageItems={setListedPageItems} pb={pb} page={page} editor={editor} editorRef={editorRef} articleTitle={articleTitle} clearStates={ResetUseStateVars} currentPageIconValue={currentPageIconValue} setArticleHeader={setArticleHeader} pageSharedTF={pageSharedTF} setCurrentPageIconValue={setCurrentPageIconValue} setPageSharedTF={setPageSharedTF} />
+              <MenuButtons listedPageItems={listedPageItems} setListedPageItems={setListedPageItems} pb={pb} page={page} editor={editor} editorRef={editorRef} articleTitle={articleTitle} clearStates={ResetUseStateVars} currentPageIconValue={currentPageIconValue} setArticleHeader={setArticleHeader} pageSharedTF={pageSharedTF} setCurrentPageIconValue={setCurrentPageIconValue} setPageSharedTF={setPageSharedTF} />
 
-              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <div className={`${styles.creategrid} ${pageId.length > 1 && styles.creategrid_lock}`}>
-          <div className={styles.form}>
-            <div className={styles.editor} ref={editorRef} id="content"></div>
-          </div>
+      <div className={`${styles.creategrid} ${pageId.length > 1 && styles.creategrid_lock}`}>
+        <div className={styles.form}>
+          <div className={styles.editor} ref={editorRef} id="content"></div>
         </div>
       </div>
-    </StrictMode>
+    </div>
   );
 }
 
