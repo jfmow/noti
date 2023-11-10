@@ -160,9 +160,9 @@ export default function Editor() {
                 // Auto-save 3 seconds after the user stops typing
                 setLastTypedTimeIdle(true);
                 try {
-                    if (Editor) {
+                    if (EditorRef.current) {
 
-                        const articleContent = await Editor.save();
+                        const articleContent = await EditorRef.current.save();
                         let formData = new FormData();
 
                         formData.append("content", JSON.stringify(articleContent));
