@@ -29,7 +29,7 @@ import { Modal } from "@/lib/Modals/Modal";
 import { Cache } from "@/lib/Cache";
 import { debounce } from "lodash";
 export default function Editor() {
-    const { currentPage, listedPageItems, setListedPageItems, pb } = useEditorContext();
+    const { currentPage, listedPageItems, setListedPageItems, pb, noSaving } = useEditorContext();
     const [loading, setLoading] = useState(true)
     const [content, setContent] = useState({})
     const pageId = useRef(null)
@@ -149,75 +149,78 @@ export default function Editor() {
     }
 
     useEffect(() => {
-        let timer;
+        if (!noSaving) {
+            let timer;
 
-        // Function to save the article after the specified delay
-        const saveArticle = async () => {
-            const currentTime = Date.now();
-            const elapsedTime = currentTime - lastTypedTime;
+            // Function to save the article after the specified delay
+            const saveArticle = async () => {
+                const currentTime = Date.now();
+                const elapsedTime = currentTime - lastTypedTime;
 
-            if (elapsedTime >= 500 && !lastTypedTimeIdle) {
-                // Auto-save 3 seconds after the user stops typing
-                setLastTypedTimeIdle(true);
-                try {
-                    if (EditorRef.current) {
-
-                        const articleContent = await EditorRef.current.save();
-                        let formData = new FormData();
-
-                        formData.append("content", JSON.stringify(articleContent));
-                        try {
-
-                            const state = await pb.collection("pages").update(currentPage, formData);
-
-                            //console.log("Auto saved successfully!");
-                        } catch (error) {
-                            toaster.toast("Could not auto save!", "error");
-                            console.error(error);
-                        }
-                        //console.log("Auto-save executed.");
-                    }
+                if (elapsedTime >= 500 && !lastTypedTimeIdle) {
+                    // Auto-save 3 seconds after the user stops typing
                     setLastTypedTimeIdle(true);
-                } catch (error) {
-                    console.log(error)
-                    toaster.toast("Could not auto save!", "error")
+                    try {
+                        if (EditorRef.current) {
+
+                            const articleContent = await EditorRef.current.save();
+                            let formData = new FormData();
+
+                            formData.append("content", JSON.stringify(articleContent));
+                            try {
+
+                                const state = await pb.collection("pages").update(currentPage, formData);
+
+                                //console.log("Auto saved successfully!");
+                            } catch (error) {
+                                toaster.toast("Could not auto save!", "error");
+                                console.error(error);
+                            }
+                            //console.log("Auto-save executed.");
+                        }
+                        setLastTypedTimeIdle(true);
+                    } catch (error) {
+                        console.log(error)
+                        toaster.toast("Could not auto save!", "error")
+                    }
                 }
-            }
-        };
+            };
 
-        // Function to update the last typing timestamp
-        const updateLastTypedTime = () => {
-            setLastTypedTime(Date.now());
-        };
+            // Function to update the last typing timestamp
+            const updateLastTypedTime = () => {
+                setLastTypedTime(Date.now());
+            };
 
-        // Event listener for detecting user typing
-        const typingEventListener = () => {
-            updateLastTypedTime();
-            setLastTypedTimeIdle(false);
-        };
-        // Attach event listeners
-        if (editorRef) {
-            try {
-                editorRef.current.addEventListener("keyup", typingEventListener);
-            } catch { }
-        }
-        //window.addEventListener("mousemove", mouseMovementEventListener);
-
-        // Start the auto-save timer
-        timer = setTimeout(() => {
-            saveArticle();
-        }, 500); // Initial auto-save 3 seconds after component mount
-
-        return () => {
-            // Clean up the event listeners and timer on component unmount
+            // Event listener for detecting user typing
+            const typingEventListener = () => {
+                updateLastTypedTime();
+                setLastTypedTimeIdle(false);
+            };
+            // Attach event listeners
             if (editorRef) {
                 try {
-                    editorRef.current.removeEventListener("keyup", typingEventListener);
+                    editorRef.current.addEventListener("keyup", typingEventListener);
                 } catch { }
             }
-            //window.removeEventListener("mousemove", mouseMovementEventListener);
-            clearTimeout(timer);
-        };
+            //window.addEventListener("mousemove", mouseMovementEventListener);
+
+            // Start the auto-save timer
+            timer = setTimeout(() => {
+                saveArticle();
+            }, 500); // Initial auto-save 3 seconds after component mount
+
+            return () => {
+                // Clean up the event listeners and timer on component unmount
+                if (editorRef) {
+                    try {
+                        editorRef.current.removeEventListener("keyup", typingEventListener);
+                    } catch { }
+                }
+                //window.removeEventListener("mousemove", mouseMovementEventListener);
+                clearTimeout(timer);
+            };
+        }
+
     }, [lastTypedTime, editorRef.current]);
 
     useEffect(() => {

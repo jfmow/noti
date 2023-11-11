@@ -39,6 +39,10 @@ function NotionEditor({ pageId, themes }) {
       }
 
     }
+    if (pageId[0] === 'rzz50e2mnhgwof2') {
+      setIsLoading(false)
+      return
+    }
     authUpdate()
 
     const lastActiveInti = setInterval(async () => {
@@ -82,7 +86,7 @@ function NotionEditor({ pageId, themes }) {
   }
 
   return (
-    <EditorContext.Provider value={{ listedPageItems, pb, setListedPageItems, visible, setVisible, currentPage: pageId[0], pageId, themes, listedPageItemsFilter, setListedPageItemsFilters }}>
+    <EditorContext.Provider value={{ listedPageItems, pb, setListedPageItems, visible, setVisible, currentPage: pageId[0], pageId, themes, listedPageItemsFilter, setListedPageItemsFilters, noSaving: pageId[0] === 'rzz50e2mnhgwof2' }}>
       <Terminal />
       <div>
         <div className='main'>
