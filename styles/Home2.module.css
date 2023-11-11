@@ -4,9 +4,10 @@
     padding: 0;
     margin: 0;
     position: relative;
-    overflow: scroll;
+    overflow-y: scroll;
     color: #2c2c2c;
     background: #f8f8f8;
+    overflow-x: hidden;
 }
 
 .nav {
