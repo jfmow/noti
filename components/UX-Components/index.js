@@ -47,7 +47,7 @@ export function Paragraph({ ...props }) {
 
 export function Link({ ...props }) {
     return (
-        <a {...props} className={styles.ux_link}>{props.children}</a>
+        <a {...props} className={`${props.className} ${styles.ux_link}`}>{props.children}</a>
     )
 }
 
