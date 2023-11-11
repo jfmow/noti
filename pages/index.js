@@ -39,7 +39,7 @@ export default function Home() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
             <Link href='/auth/login'>Login</Link>
             <Link href='/auth/signup'>Signup</Link>
-            <Link href='/preview'>Preview</Link>
+            <Link href='/page/rzz50e2mnhgwof2'>Preview</Link>
             <Link href='https://github.com/jfmow/noti'>Selfhost</Link>
             <Link href='https://jamesmowat.com/'>James Mowat</Link>
           </div>
@@ -75,7 +75,7 @@ function Header() {
         <br />Putting <strong>your</strong> notes in <strong>your hands</strong>
       </Paragraph>
       <div className={styles.buttons}>
-        <Link href='/preview' className={styles.calltoaction_alt}>Explore the demo</Link>
+        <Link href='/page/rzz50e2mnhgwof2' className={styles.calltoaction_alt}>Explore the demo</Link>
         <Link href='/auth/signup' className={styles.calltoaction}>Get started</Link>
       </div>
     </div>
