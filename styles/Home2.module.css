@@ -271,4 +271,9 @@
     .features {
         grid-template-columns: 1fr;
     }
+
+    .footer {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
 }
