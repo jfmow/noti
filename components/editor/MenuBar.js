@@ -188,7 +188,7 @@ export default function MenuBar() {
                 // Compare the dates (newest to oldest)
                 return dateB - dateA;
             });
-            Router.push(`/page/${(sortedData[0].id === currentPage ? sortedData[1].id : sortedData[0].id) || 'firstopen'}`)
+            window.location.replace('/page/firstopen')
         } catch (err) {
             console.log(err)
             toaster.error('An error occured while trying to delete the currentPage')
