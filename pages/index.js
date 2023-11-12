@@ -23,7 +23,25 @@ export default function Home() {
 
         <footer className={styles.footer}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-            <img width='24' src='/icon.svg' />
+            <svg width="24" height="24" viewBox="0 0 440 467" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g filter="url(#filter0_d_1_15)">
+                <path d="M420 215C420 161.957 398.929 111.086 361.421 73.5786C323.914 36.0714 273.043 15 220 15C166.957 15 116.086 36.0714 78.5787 73.5786C41.0714 111.086 20 161.957 20 215L220 215H420Z" fill="#FF7953" />
+                <path d="M420 241.047C420 294.09 398.929 344.961 361.421 382.468C323.914 419.975 273.043 441.047 220 441.047C166.957 441.047 116.086 419.975 78.5787 382.468C41.0714 344.961 20 294.09 20 241.047L220 241.047H420Z" fill="#01232D" />
+              </g>
+              <defs>
+                <filter id="filter0_d_1_15" x="0" y="0" width="440" height="466.047" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                  <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                  <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                  <feOffset dy="5" />
+                  <feGaussianBlur stdDeviation="10" />
+                  <feComposite in2="hardAlpha" operator="out" />
+                  <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0" />
+                  <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1_15" />
+                  <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1_15" result="shape" />
+                </filter>
+              </defs>
+            </svg>
+
             <span style={{ display: 'flex', flexDirection: 'row', gap: '3px', alignItems: 'center' }}>
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copyright"><circle cx="12" cy="12" r="10" /><path d="M14.83 14.83a4 4 0 1 1 0-5.66" /></svg>
               <strong>James Mowat</strong> 2023-current
@@ -53,7 +71,25 @@ function Nav() {
   return (
     <nav className={styles.nav}>
       <div className={styles.logo}>
-        <img src='/icon.svg' />
+        <svg width="28" height="28" viewBox="0 0 440 467" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g filter="url(#filter0_d_1_15)">
+            <path d="M420 215C420 161.957 398.929 111.086 361.421 73.5786C323.914 36.0714 273.043 15 220 15C166.957 15 116.086 36.0714 78.5787 73.5786C41.0714 111.086 20 161.957 20 215L220 215H420Z" fill="#FF7953" />
+            <path d="M420 241.047C420 294.09 398.929 344.961 361.421 382.468C323.914 419.975 273.043 441.047 220 441.047C166.957 441.047 116.086 419.975 78.5787 382.468C41.0714 344.961 20 294.09 20 241.047L220 241.047H420Z" fill="#01232D" />
+          </g>
+          <defs>
+            <filter id="filter0_d_1_15" x="0" y="0" width="440" height="466.047" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+              <feFlood flood-opacity="0" result="BackgroundImageFix" />
+              <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+              <feOffset dy="5" />
+              <feGaussianBlur stdDeviation="10" />
+              <feComposite in2="hardAlpha" operator="out" />
+              <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0" />
+              <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1_15" />
+              <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1_15" result="shape" />
+            </filter>
+          </defs>
+        </svg>
+
         <span>savemynotes</span>
       </div>
       <div className={styles.links}>
