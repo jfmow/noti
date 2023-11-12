@@ -1,7 +1,14 @@
 import { Link, Paragraph } from '@/components/UX-Components'
 import styles from '@/styles/Home2.module.css'
+import Router from 'next/router'
+import { useEffect } from 'react'
 
 export default function Home() {
+  useEffect(() => {
+    if (window.localStorage.getItem('pocketbase_auth')) {
+      Router.replace('/page/firstopen')
+    }
+  }, [])
   return (
     <>
       <div className={styles.container}>
