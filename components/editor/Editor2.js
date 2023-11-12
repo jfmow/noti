@@ -154,6 +154,9 @@ export default function Editor() {
 
             // Function to save the article after the specified delay
             const saveArticle = async () => {
+                if (currentPage === "firstopen") {
+                    return
+                }
                 const currentTime = Date.now();
                 const elapsedTime = currentTime - lastTypedTime;
 
