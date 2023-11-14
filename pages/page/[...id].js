@@ -10,7 +10,7 @@ pb.autoCancellation(false);
 
 const EditorContext = React.createContext();
 
-const Editor = dynamic(() => import('../../components/editor/Editor'), {
+const Editor = dynamic(() => import('../../components/editor/Editor2'), {
   ssr: false,
 });
 
