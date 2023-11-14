@@ -12,6 +12,7 @@ export default function AccountButtons({ event }) {
     const [avatarModal, setAvatarModal] = useState(false)
     const [userInfoModal, setUserInfoModal] = useState(false)
     const [totalUsage, setTotalUsage] = useState(0)
+    const [usageLimit, setUsageLimit] = useState(10)
 
     useEffect(() => {
         setUserInfoModal(false)
@@ -32,7 +33,16 @@ export default function AccountButtons({ event }) {
             //console.log(imagesSize)
         } catch { }
         setTotalUsage(Math.round(Math.max((filesSize + imagesSize) / 1000000)))
+        try {
+            const record = await pb.collection('user_flags').getFirstListItem(`user="${pb.authStore.model.id}"`, {
+                skipTotal: true
+            });
+            setUsageLimit(record.quota)
+        } catch {
+
+        }
     }
+
     async function authUpdate() {
         try {
             const authData = await pb.collection('users').authRefresh();
@@ -161,7 +171,7 @@ export default function AccountButtons({ event }) {
                                 {totalUsage}MB
                             </DropDownItem>
                             <DropDownItem>
-                                Limit: 10MB
+                                Limit: {usageLimit || '10'}MB
                             </DropDownItem>
                         </DropDownSection>
                     </DropDownExtension>
