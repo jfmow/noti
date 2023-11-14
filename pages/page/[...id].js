@@ -5,6 +5,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import MyComponent from '@/components/Item';
 import Terminal from '@/components/Terminal';
 import MenuBar from '@/components/editor/MenuBar';
+import { toaster } from '@/components/toasty';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 
@@ -48,6 +49,7 @@ function NotionEditor({ pageId, themes }) {
     const lastActiveInti = setInterval(async () => {
       await pb.send("/ping");
     }, 60000);
+    toaster.info("The editor is currently unstable and work may not be saved!")
     return () => {
       clearInterval(lastActiveInti);
     };
