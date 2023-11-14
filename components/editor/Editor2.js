@@ -227,14 +227,6 @@ export default function Editor() {
     }, [lastTypedTime, editorRef.current]);
 
     useEffect(() => {
-        if (Editor) {
-            setLoading(true)
-            try {
-                Editor.clear()
-                Editor.destroy()
-            } catch { }
-
-        }
         async function loadData() {
             try {
                 const record = await pb.collection('pages').getOne(currentPage);
@@ -253,13 +245,14 @@ export default function Editor() {
     useEffect(() => {
         //console.log(Editor, content, editorRef.current)
         try {
-            if (Editor) {
-                try {
-                    Editor.clear()
-                    Editor.destroy()
-                } catch { }
-            }
+
             if (editorRef.current && (content == null || content)) {
+                if (Editor) {
+                    try {
+                        Editor.clear()
+                        Editor.destroy()
+                    } catch { }
+                }
                 const editor = new EditorJS({
                     holder: editorRef.current,
                     tools: {
