@@ -5,8 +5,9 @@ import { toaster } from '@/components/toasty';
 import { ToolTip, ToolTipCon, ToolTipTrigger } from '@/components/UX-Components/Tooltip';
 import { useEditorContext } from '@/pages/page/[...id]';
 import { DropDown, DropDownContainer, DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from '@/lib/Pop-Cards/DropDown';
+import { EncryptionEnabled } from '@/lib/Encryption';
 export default function MenuBar() {
-    const { pb, currentPage, setVisible, visible, setListedPageItems, listedPageItems } = useEditorContext()
+    const { pb, currentPage, setVisible, visible, setListedPageItems, listedPageItems, encryptedPage, setEncryptedPage } = useEditorContext()
     const [activePage, setActivePage] = useState({})
     const [filteredItems, setFilteredItems] = useState([]);
     const [DeletePageAlert, setDeletePageAlert] = useState(false)
@@ -219,6 +220,14 @@ export default function MenuBar() {
         toaster.success(`Page ${newState ? 'archived' : 'restored'} successfully`)
     }
 
+    async function handleMarkPageEncryption() {
+        const data = {
+            "encrypted": !encryptedPage,
+        };
+        const record = await pb.collection('pages').update(currentPage, data);
+        setEncryptedPage(data.encrypted)
+    }
+
     return (
         <div className={styles.container}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -420,6 +429,22 @@ export default function MenuBar() {
                                         </>
                                     )}
                                 </DropDownItem>
+                                {EncryptionEnabled() && (
+                                    <>
+                                        {encryptedPage ? (
+                                            <DropDownItem onClick={() => handleMarkPageEncryption()}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-key"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H14" /><path d="M20 8v14H6.5a2.5 2.5 0 0 1 0-5H20" /><circle cx="14" cy="8" r="2" /><path d="m20 2-4.5 4.5" /><path d="m19 3 1 1" /></svg>
+                                                Decrypt
+                                            </DropDownItem>
+                                        ) : (
+                                            <DropDownItem onClick={() => handleMarkPageEncryption()}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-lock"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" /><rect width="8" height="6" x="8" y="12" rx="1" /><path d="M15 12v-2a3 3 0 1 0-6 0v2" /></svg>
+                                                Encrypt
+                                            </DropDownItem>
+                                        )}
+                                    </>
+                                )}
+
 
                             </DropDownSection>
                         </DropDown >

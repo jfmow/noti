@@ -47,6 +47,10 @@
 
 }
 
+.modalContent :last-child {
+    margin-bottom: 0;
+}
+
 .modalContent h1 {
     margin-bottom: 10px;
     font-family: "Gest-bold", sans-serif;

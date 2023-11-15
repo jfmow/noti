@@ -28,8 +28,9 @@ import { Paragraph, SubmitButton } from "../UX-Components";
 import { Modal } from "@/lib/Modals/Modal";
 import { Cache } from "@/lib/Cache";
 import { debounce } from "lodash";
+import { DecryptData, EncryptData, EncryptionEnabled } from "@/lib/Encryption";
 export default function Editor() {
-    const { currentPage, listedPageItems, setListedPageItems, pb, noSaving } = useEditorContext();
+    const { currentPage, listedPageItems, setListedPageItems, pb, noSaving, encryptedPage, setEncryptedPage } = useEditorContext();
     const [loading, setLoading] = useState(true)
     const [content, setContent] = useState({})
     const pageId = useRef(null)
@@ -169,14 +170,18 @@ export default function Editor() {
                             const articleContent = await EditorRef.current.save();
                             let formData = new FormData();
 
-                            formData.append("content", JSON.stringify(articleContent));
+                            if (EncryptionEnabled() && encryptedPage) {
+                                const encData = await EncryptData(JSON.stringify(articleContent))
+                                formData.append("content", encData);
+                            } else {
+                                formData.append("content", JSON.stringify(articleContent));
+                            }
+
                             try {
-
                                 const state = await pb.collection("pages").update(currentPage, formData);
-
                                 //console.log("Auto saved successfully!");
                             } catch (error) {
-                                toaster.toast("Could not auto save!", "error");
+                                toaster.error("Could not auto save!");
                                 console.error(error);
                             }
                             //console.log("Auto-save executed.");
@@ -184,7 +189,7 @@ export default function Editor() {
                         setLastTypedTimeIdle(true);
                     } catch (error) {
                         console.log(error)
-                        toaster.toast("Could not auto save!", "error")
+                        toaster.error("Could not auto save!")
                     }
                 }
             };
@@ -231,14 +236,25 @@ export default function Editor() {
             setLoading(true)
             try {
                 const record = await pb.collection('pages').getOne(currentPage);
-                setContent(record.content || {})
+                if (record.encrypted) {
+                    if (EncryptionEnabled()) {
+                        const data = await DecryptData(record.content)
+                        setContent(JSON.parse(data))
+                        setEncryptedPage(true)
+                        return
+                    }
+                    toaster.error('Unable to load page content. Encryption not enabled to decrypt this encrypted page', { delay: 10000 })
+                } else {
+                    setContent(record.content || {})
+                    setEncryptedPage(false)
+                }
                 setTitle(record.title || '')
                 setIcon(record?.icon || '')
                 setHeader(record?.header_img ? `${process.env.NEXT_PUBLIC_POCKETURL}/api/files/${record.collectionId}/${record.id}/${record?.header_img}` : record?.unsplash ? record?.unsplash : null)
                 setUpdated(record.updated)
                 pageId.current = { data: record.id, curr: currentPage }
                 //console.log(record.id, currentPage)
-            } catch { }
+            } catch (err) { console.log(err) }
         }
         loadData()
     }, [currentPage])

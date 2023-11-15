@@ -5,6 +5,9 @@ import Router from 'next/router';
 import AvatarModal from './AvatarModal';
 import { toaster } from "@/components/toasty";
 import { DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle } from '@/lib/Pop-Cards/DropDown';
+import { Modal } from '@/lib/Modals/Modal';
+import { Link, Paragraph, SubmitButton, ToggleSwitch } from '../UX-Components';
+import { EncryptionEnabled, PageEncryption } from '@/lib/Encryption';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 export default function AccountButtons({ event }) {
@@ -13,6 +16,7 @@ export default function AccountButtons({ event }) {
     const [userInfoModal, setUserInfoModal] = useState(false)
     const [totalUsage, setTotalUsage] = useState(0)
     const [usageLimit, setUsageLimit] = useState(10)
+    const [flagsModal, setFlagsModal] = useState(false)
 
     useEffect(() => {
         setUserInfoModal(false)
@@ -103,6 +107,45 @@ export default function AccountButtons({ event }) {
         return authUpdate();
 
     }
+
+
+    async function handleToggleEncryption(e) {
+        if (e.target.checked) {
+            const prevFlags = window.localStorage.getItem('flags')
+            window.localStorage.setItem('flags', JSON.stringify({ ...JSON.parse(prevFlags), encryption: true }))
+            const testMsg = 'Test abc'
+            const keyPair = await PageEncryption.generateKeyPair()
+            //console.log(keyPair.publicKey, keyPair.privateKey)
+            const exportedPublicKey = await PageEncryption.exportPublicKey(keyPair.publicKey)
+            const exportedPrivateKey = await PageEncryption.exportPrivateKey(keyPair.privateKey)
+            const importedPublicKey = await PageEncryption.importPublicKey(exportedPublicKey)
+            const importedPrivateKey = await PageEncryption.importPrivateKey(exportedPrivateKey)
+            //console.log(imprt)
+            const encrypted = await PageEncryption.encrypt(testMsg, importedPublicKey)
+            //console.log(encrypted)
+            const decrypted = await PageEncryption.decrypt(encrypted, importedPrivateKey)
+            console.log(decrypted)
+            if (testMsg === decrypted && encrypted) {
+                if (window.localStorage.getItem('encryption')) {
+                    const continueA = confirm('You already have encryption keys stored. Do you wish to overide them?')
+                    if (continueA) {
+                        window.localStorage.setItem('encryption', JSON.stringify({ publickey: exportedPublicKey, privateKey: exportedPrivateKey }))
+                    }
+                }
+                toaster.success('Page encryption is now enabled!\nPlease read the docs.')
+            }
+        } else {
+            const continueE = confirm('Warning! All pages that are still encrypted will be unable to be decrypted! Are you sure you want to continue?')
+            if (continueE) {
+                const prevFlags = window.localStorage.getItem('flags')
+                window.localStorage.setItem('flags', JSON.stringify({ ...JSON.parse(prevFlags), encryption: false }))
+                toaster.success('Encryption disabled')
+            }
+
+        }
+
+        return
+    }
     return (
         <>
             <DropDownSectionTitle>
@@ -178,6 +221,10 @@ export default function AccountButtons({ event }) {
                 </DropDownExtensionContainer>
             </DropDownSection>
             <DropDownSection>
+                <DropDownItem onClick={() => setFlagsModal(true)}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-flask-conical"><path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2" /><path d="M8.5 2h7" /><path d="M7 16h10" /></svg>
+                    Flags
+                </DropDownItem>
                 <DropDownItem onClick={(e) => deleteAccount(e)}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-x-2"><path d="M14 19a6 6 0 0 0-12 0" /><circle cx="8" cy="9" r="4" /><line x1="17" x2="22" y1="8" y2="13" /><line x1="22" x2="17" y1="8" y2="13" /></svg>
                     Delete account
@@ -197,6 +244,20 @@ export default function AccountButtons({ event }) {
              */}
 
                 {avatarModal && <AvatarModal close={() => setAvatarModal(false)} pb={pb} />}
+                {flagsModal && (
+                    <>
+                        <Modal close={() => setFlagsModal(false)}>
+                            <h1>Feature flags</h1>
+                            <Paragraph style={{ fontSize: '14px', lineHeight: '18px', opacity: 0.7 }}>
+                                All features (flags) within this system are considered highly experimental. Users are advised to exercise utmost caution when utilizing these features, as they may exhibit instability and potentially result in unintended data loss.
+                            </Paragraph>
+                            <ToggleSwitch enabled={EncryptionEnabled()} onChange={(e) => handleToggleEncryption(e)}>
+                                On device encryption
+                            </ToggleSwitch>
+                            <SubmitButton onClick={() => Router.push('/docs/flags')}>Docs</SubmitButton>
+                        </Modal>
+                    </>
+                )}
 
             </>
 
@@ -204,4 +265,3 @@ export default function AccountButtons({ event }) {
 
     )
 }
-
