@@ -254,6 +254,43 @@ export default function AccountButtons({ event }) {
                             <ToggleSwitch enabled={EncryptionEnabled()} onChange={(e) => handleToggleEncryption(e)}>
                                 On device encryption
                             </ToggleSwitch>
+                            {EncryptionEnabled() && (
+                                <Link style={{ cursor: 'pointer', marginTop: '12px' }} onClick={() => {
+                                    // Retrieve data from localStorage
+                                    const encryptedKeysString = localStorage.getItem('encryption');
+
+                                    // Check if data exists
+                                    if (!encryptedKeysString) {
+                                        console.error('No data found in localStorage');
+                                        return;
+                                    }
+
+                                    // Parse the JSON data
+                                    const encryptedKeys = JSON.parse(encryptedKeysString);
+
+                                    // Create a Blob containing the JSON data
+                                    const blob = new Blob([JSON.stringify(encryptedKeys, null, 2)], { type: 'application/json' });
+
+                                    // Create a link element
+                                    const link = document.createElement('a');
+
+                                    // Set the download attribute and file name
+                                    link.download = 'keys.json';
+
+                                    // Create a URL for the Blob and set it as the href attribute
+                                    link.href = window.URL.createObjectURL(blob);
+
+                                    // Append the link to the document
+                                    document.body.appendChild(link);
+
+                                    // Trigger a click on the link to initiate the download
+                                    link.click();
+
+                                    // Remove the link from the document
+                                    document.body.removeChild(link);
+
+                                }}>Download keys</Link>
+                            )}
                             <SubmitButton onClick={() => Router.push('/docs/flags')}>Docs</SubmitButton>
                         </Modal>
                     </>
