@@ -228,6 +228,7 @@ export default function Editor() {
 
     useEffect(() => {
         async function loadData() {
+            setLoading(true)
             try {
                 const record = await pb.collection('pages').getOne(currentPage);
                 setContent(record.content || {})
