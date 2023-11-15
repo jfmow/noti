@@ -130,7 +130,10 @@ export default function AccountButtons({ event }) {
                     const continueA = confirm('You already have encryption keys stored. Do you wish to overide them?')
                     if (continueA) {
                         window.localStorage.setItem('encryption', JSON.stringify({ publickey: exportedPublicKey, privateKey: exportedPrivateKey }))
+
                     }
+                } else {
+                    window.localStorage.setItem('encryption', JSON.stringify({ publickey: exportedPublicKey, privateKey: exportedPrivateKey }))
                 }
                 toaster.success('Page encryption is now enabled!\nPlease read the docs.')
             }
