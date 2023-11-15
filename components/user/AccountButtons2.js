@@ -37,7 +37,7 @@ export default function AccountButtons({ event }) {
             const record = await pb.collection('user_flags').getFirstListItem(`user="${pb.authStore.model.id}"`, {
                 skipTotal: true
             });
-            setUsageLimit(record.quota)
+            setUsageLimit(record.quota / 1048576)
         } catch {
 
         }
