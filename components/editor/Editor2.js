@@ -151,6 +151,7 @@ export default function Editor() {
     useEffect(() => {
         if (!noSaving) {
             let timer;
+            let retryCount = 0
 
             // Function to save the article after the specified delay
             const saveArticle = async () => {
@@ -165,7 +166,6 @@ export default function Editor() {
                     setLastTypedTimeIdle(true);
                     try {
                         if (EditorRef.current) {
-
                             const articleContent = await EditorRef.current.save();
                             let formData = new FormData();
 
@@ -173,7 +173,18 @@ export default function Editor() {
                             try {
 
                                 const state = await pb.collection("pages").update(currentPage, formData);
-
+                                if (JSON.stringify(state.content) === JSON.stringify(articleContent)) {
+                                    setLastTypedTimeIdle(true);
+                                    return
+                                } else {
+                                    if (retryCount >= 4) {
+                                        toaster.error('Page failed to save too many times. Please check your network.')
+                                        retryCount = 0
+                                        return
+                                    }
+                                    retryCount++
+                                    saveArticle()
+                                }
                                 //console.log("Auto saved successfully!");
                             } catch (error) {
                                 toaster.toast("Could not auto save!", "error");
@@ -181,7 +192,6 @@ export default function Editor() {
                             }
                             //console.log("Auto-save executed.");
                         }
-                        setLastTypedTimeIdle(true);
                     } catch (error) {
                         console.log(error)
                         toaster.toast("Could not auto save!", "error")
