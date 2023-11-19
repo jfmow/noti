@@ -84,7 +84,7 @@ export default function LoginPage() {
                             <Input label={"password"} autoComplete="current-password" aria-required aria-label="Password input (One and only)" type={passwordVisible ? 'text' : 'password'} id="password" value={password} placeholder="Enter your password" required="" onChange={(e) => setPassword(e.target.value)} />
                         </div>
 
-                        <Paragraph style={{ opacity: 0.5 }}>
+                        <Paragraph >
                             Please read the <Link href='/auth/terms-and-conditions' style={{ textDecoration: 'underline' }}>Terms and conditions</Link>, <Link style={{ textDecoration: 'underline' }} href='/auth/privacy-policy'>Privacy policy</Link> and <Link style={{ textDecoration: 'underline' }} href='/auth/disclamer'>Disclamer</Link> before continuing. By continuing you agree to these.
                         </Paragraph>
                         <SubmitButton aria-label="Signup button" disabled={loginRunning} type="submit">

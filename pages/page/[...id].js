@@ -49,7 +49,6 @@ function NotionEditor({ pageId, themes }) {
     const lastActiveInti = setInterval(async () => {
       await pb.send("/ping");
     }, 60000);
-    toaster.info("The editor is currently unstable and work may not be saved!")
     return () => {
       clearInterval(lastActiveInti);
     };

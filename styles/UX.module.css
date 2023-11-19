@@ -33,16 +33,17 @@
     font-family: inherit;
     color: #fff;
     background-color: #212121;
-    border: none;
+    border: 2px solid #212121;
     width: 100%;
     padding: 12px 16px;
     font-size: inherit;
     gap: 8px;
     margin: 12px 0;
     cursor: pointer;
-    border-radius: calc(0.5rem - 2px);
+    border-radius: 0.75rem;
     font-size: 14px !important;
     font-family: "Gest-med-bold", sans-serif;
+    transition: 0.3s all ease-out;
 }
 
 .ux_submitButton_alt {
@@ -54,23 +55,25 @@
     align-items: center;
     font-family: inherit;
     color: #212121;
-    background-color: #ffffff;
-    border: 2px solid #e7e7e7;
+    background-color: transparent;
+    border: 2px solid #212121;
     width: 100%;
     padding: 12px 16px;
     font-size: inherit;
     gap: 8px;
     cursor: pointer;
-    border-radius: calc(0.5rem - 2px);
+    border-radius: 0.75rem;
     font-family: "Gest-med-bold", sans-serif;
 }
 
 .ux_submitButton_alt:hover {
-    background: #f4f4f4;
+    background-color: #212121 !important;
+    color: #ffffff !important;
 }
 
-.auth_container .ux_submitButton:hover {
-    background-color: #313131;
+.ux_submitButton:hover {
+    background-color: transparent;
+    color: #212121;
 }
 
 
@@ -78,6 +81,7 @@
     font-family: "Gest-reg", sans-serif;
     font-size: 14px;
     color: #212121;
+    opacity: 0.6;
 }
 
 
