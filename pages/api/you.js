@@ -60,7 +60,7 @@ export default async function handler(request, response) {
     if (!reqBody.id) {
         return response.status(406).send('Not all required data included')
     }
-    response.status(200).send('Success')
+
     //console.log(reqBody)
     if (reqBody?.url === '/') {
         reqBody.url = 'home'
@@ -79,7 +79,7 @@ export default async function handler(request, response) {
     } catch {
         return response.status(500).send('Internal server error')
     }
-
+    response.status(200).send('Success')
 }
 
 
