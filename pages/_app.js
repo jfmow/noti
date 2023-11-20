@@ -48,6 +48,11 @@ export default function App({ Component, pageProps }) {
     window.addEventListener('click', (e) => {
       Analytics((e.target.tagName + ' ' + e.target.innerText) || e.target.tagName + ' button')
     })
+    return () => {
+      window.removeEventListener('click', (e) => {
+        Analytics((e.target.tagName + ' ' + e.target.innerText) || e.target.tagName + ' button')
+      })
+    }
   })
 
   return (
