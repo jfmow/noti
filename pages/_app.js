@@ -46,10 +46,37 @@ export default function App({ Component, pageProps }) {
     }
     Analytics()
     function getAction(e) {
-      let inputString = Array.from(e.target.classList)[0];
-      let outputString = inputString?.replace(/_+|__.+$/, ' ');
 
-      Analytics((e.target.parentElement.ariaLabel ? e.target.parentElement.ariaLabel.replace(/_/g, '') : e.target.innerText ? e.target.innerText : outputString?.split('__')[0]))
+      function findParentLink(element, maxDepth) {
+        var currentElement = element;
+        for (var i = 0; i < maxDepth; i++) {
+          if (!currentElement || currentElement.tagName === "A") {
+            return currentElement;
+          }
+          currentElement = currentElement.parentElement;
+        }
+        return null;
+      }
+      function isClickableElement(element) {
+        return element.tagName === "A" || element.tagName === "BUTTON" || typeof element.onclick === "function";
+      }
+      function handleLinkOrButtonClick(event) {
+        var target = event.target;
+
+        if (isClickableElement(target)) {
+          if (target.tagName === "A") {
+            var link = findParentLink(target, 10);
+            if (link && link.getAttribute("data-track-event") && link.href) {
+              event.preventDefault();
+              Analytics(link.innerText)
+              Router.push(link.href)
+            }
+          } else if ((target.tagName === "BUTTON" && target.getAttribute("data-track-event")) || (typeof target.onclick === "function" && target.getAttribute("data-track-event"))) {
+            Analytics(target.innerText)
+          }
+        }
+      }
+      handleLinkOrButtonClick(e)
     }
     window.addEventListener('click', (e) => getAction(e))
     return () => {

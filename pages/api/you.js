@@ -76,10 +76,13 @@ export default async function handler(request, response) {
 
     try {
         await pb.collection('analytics').create(data);
-    } catch {
+    } catch (err) {
+        if (err.status === 0) {
+            return response.status(201).send('Duplicate')
+        }
         return response.status(500).send('Internal server error')
     }
-    response.status(200).send('Success')
+    return response.status(200).send('Success')
 }
 
 

@@ -43,11 +43,11 @@ function Nav() {
         <span>savemynotes</span>
       </div>
       <div className={styles.links}>
-        <Link>Home</Link>
-        <Link href='https://github.com/jfmow/noti'>Selfhost</Link>
-        <Link href='/auth/login'>Login</Link>
+        <Link data-track-event>Home</Link>
+        <Link data-track-event href='https://github.com/jfmow/noti'>Selfhost</Link>
+        <Link data-track-event href='/auth/login'>Login</Link>
       </div>
-      <Link href='/auth/signup' className={styles.calltoaction}>Get started</Link>
+      <Link data-track-event href='/auth/signup' className={styles.calltoaction}>Get started</Link>
     </nav>
   )
 }
@@ -61,8 +61,8 @@ function Header() {
         <br />Putting <strong>your</strong> notes in <strong>your hands</strong>
       </Paragraph>
       <div className={styles.buttons}>
-        <Link href='/page/rzz50e2mnhgwof2' className={styles.calltoaction_alt}>Explore the demo</Link>
-        <Link href='/auth/signup' className={styles.calltoaction}>Get started</Link>
+        <Link data-track-event href='/page/rzz50e2mnhgwof2' className={styles.calltoaction_alt}>Explore the demo</Link>
+        <Link data-track-event href='/auth/signup' className={styles.calltoaction}>Get started</Link>
       </div>
     </div>
   )
@@ -158,7 +158,7 @@ function Footer() {
         <Link href='/auth/signup'>Signup</Link>
         <Link href='/page/rzz50e2mnhgwof2'>Preview</Link>
         <Link href='https://github.com/jfmow/noti'>Selfhost</Link>
-        <Link href='https://jamesmowat.com/'>James Mowat</Link>
+        <Link data-track-event href='https://jamesmowat.com/'>James Mowat</Link>
       </div>
     </footer>
   )
