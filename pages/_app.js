@@ -45,13 +45,15 @@ export default function App({ Component, pageProps }) {
       }
     }
     Analytics()
-    window.addEventListener('click', (e) => {
-      Analytics((e.target.tagName + ' ' + e.target.innerText) || e.target.tagName + ' button')
-    })
+    function getAction(e) {
+      let inputString = Array.from(e.target.classList)[0];
+      let outputString = inputString?.replace(/_+|__.+$/, ' ');
+
+      Analytics((e.target.parentElement.ariaLabel ? e.target.parentElement.ariaLabel.replace(/_/g, '') : e.target.innerText ? e.target.innerText : outputString?.split('__')[0]))
+    }
+    window.addEventListener('click', (e) => getAction(e))
     return () => {
-      window.removeEventListener('click', (e) => {
-        Analytics((e.target.tagName + ' ' + e.target.innerText) || e.target.tagName + ' button')
-      })
+      window.removeEventListener('click', (e) => getAction(e))
     }
   })
 
