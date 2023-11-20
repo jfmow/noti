@@ -30,6 +30,12 @@ export default function PageList() {
   }
 
   useEffect(() => {
+    if (!currentPage || (currentPage === 'firstopen' && listedPageItems.length >= 1)) {
+      Router.push(`/page/${listedPageItems.filter(record => record.updated)[0].id}`)
+    }
+  }, [currentPage])
+
+  useEffect(() => {
     getUserPages()
   }, [])
 

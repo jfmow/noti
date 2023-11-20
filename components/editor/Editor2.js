@@ -40,6 +40,7 @@ export default function Editor() {
     const [Editor, _setEditor] = useState(null)
     const [lastTypedTime, setLastTypedTime] = useState(Date.now());
     const [lastTypedTimeIdle, setLastTypedTimeIdle] = useState(false);
+    const [multiPageModal, setMultiPageModal] = useState({ active: false, records: [] })
     const editorRef = useRef(null)
     const EditorRef = useRef(null)
     const setEditor = (v) => {
@@ -149,7 +150,7 @@ export default function Editor() {
     }
 
     useEffect(() => {
-        if (!noSaving) {
+        if (!noSaving && !loading) {
             let timer;
             let retryCount = 0
 
@@ -187,14 +188,14 @@ export default function Editor() {
                                 }
                                 //console.log("Auto saved successfully!");
                             } catch (error) {
-                                toaster.toast("Could not auto save!", "error");
+                                toaster.toast("Could not save", "error");
                                 console.error(error);
                             }
                             //console.log("Auto-save executed.");
                         }
                     } catch (error) {
                         console.log(error)
-                        toaster.toast("Could not auto save!", "error")
+                        toaster.toast("Could not save", "error")
                     }
                 }
             };
@@ -238,6 +239,9 @@ export default function Editor() {
 
     useEffect(() => {
         async function loadData() {
+            if (currentPage === 'firstopen') {
+                return
+            }
             setLoading(true)
             try {
                 const record = await pb.collection('pages').getOne(currentPage);
@@ -248,7 +252,33 @@ export default function Editor() {
                 setUpdated(record.updated)
                 pageId.current = { data: record.id, curr: currentPage }
                 //console.log(record.id, currentPage)
-            } catch { }
+            } catch {
+                try {
+                    if (currentPage.length <= 2) {
+                        setMultiPageModal({ ...multiPageModal, active: true, records: [{ title: 'Title too short', id: 'firstopen' }] })
+                        setLoading(false)
+                        return
+                    }
+                    const records = await pb.collection('pages').getFullList({
+                        sort: '-created', filter: `title ?~ "${currentPage.toLowerCase()}"`, skipTotal: true
+                    });
+                    console.log(records)
+                    if (records.length >= 2) {
+                        setMultiPageModal({ ...multiPageModal, active: true, records: records })
+                        setLoading(false)
+                        return
+                    }
+                    const record = records[0]
+
+                    Router.push('/page/' + record.id)
+                } catch (err) {
+                    //console.log(err)
+                    toaster.info(
+                        "Unable to find a page with that id"
+                    );
+                    Router.push('/page/firstopen')
+                }
+            }
         }
         loadData()
     }, [currentPage])
@@ -438,7 +468,7 @@ export default function Editor() {
                     },
                     data: content || [],
                     placeholder: "Enter some text...",
-                    autofocus: content?.blocks?.length >= 1 && (content?.blocks[0]?.type === 'image' || content?.blocks[0]?.type === 'Video' || content?.blocks[0]?.type === 'simpleEmbeds' || content?.blocks[0]?.type === 'SimpleIframeWebpage') ? false : true,
+                    autofocus: content && content?.blocks?.length >= 1 && (content?.blocks[0]?.type === 'image' || content?.blocks[0]?.type === 'Video' || content?.blocks[0]?.type === 'simpleEmbeds' || content?.blocks[0]?.type === 'SimpleIframeWebpage') ? false : true,
                 })
                 editor.isReady.then(() => {
                     //console.log('Ready')
@@ -476,6 +506,35 @@ export default function Editor() {
         await pb.collection("pages").update(currentPage, {
             title: data
         });
+    }
+
+    if (multiPageModal.active) {
+        return (
+            <>
+                <Modal>
+                    <h1>Multiple pages found!</h1>
+                    <Paragraph>
+                        Looks like theres multiple pages with that name. Please select one from the list below to open.
+                    </Paragraph>
+                    <div style={{ maxHeight: '190px', overflowY: 'scroll' }}>
+                        {multiPageModal.records.map((item) => (
+                            <div onClick={() => {
+                                setMultiPageModal({ active: false })
+                                Router.push(`/page/${item.id}`)
+                            }} style={{ display: 'flex', gap: '7px', alignItems: 'center', cursor: 'pointer' }}>
+                                <div aria-label='Page icon' style={{ display: 'flex', width: '16px', height: '16px' }}>
+                                    {item.icon && item.icon.includes('.png') ? (<img className={styles.item_icon} src={`/emoji/twitter/64/${item.icon}`} />) : (!isNaN(parseInt(item.icon, 16)) && String.fromCodePoint(parseInt(item.icon, 16)))}
+                                </div>
+                                <p>{item.title}</p>
+                            </div>
+                        ))}
+                    </div>
+                    <SubmitButton onClick={() => setMultiPageModal({ ...multiPageModal, active: false })}>
+                        Cancel
+                    </SubmitButton>
+                </Modal>
+            </>
+        )
     }
 
     return (
