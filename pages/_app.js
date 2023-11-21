@@ -58,7 +58,7 @@ export default function App({ Component, pageProps }) {
             if (target && target.getAttribute("data-track-event") && target.href) {
               event.preventDefault();
               Analytics(target.getAttribute("data-track-event"))
-              Router.push(link.href)
+              Router.push(target.href)
             }
           } else if ((target.tagName === "BUTTON" && target.getAttribute("data-track-event")) || (typeof target.onclick === "function" && target.getAttribute("data-track-event"))) {
             Analytics(target.getAttribute("data-track-event"))
