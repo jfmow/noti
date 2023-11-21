@@ -30,16 +30,23 @@ export default function App({ Component, pageProps }) {
         const data = {
           url: currentPage,
           id: id,
-          action: button ? button : ''
+          action: button ? button : '',
         };
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_CURRENTURL}/api/you`, {
-          method: 'POST', // Specify the HTTP method
+        // Convert the data object to a query string
+        const queryString = Object.keys(data)
+          .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
+          .join('&');
+
+        const urlWithParams = `${process.env.NEXT_PUBLIC_POCKETURL}/analytics?${queryString}`;
+
+        const res = await fetch(urlWithParams, {
+          method: 'GET', // Specify the HTTP method
           headers: {
             'Content-Type': 'application/json', // Specify the content type as JSON
           },
-          body: JSON.stringify(data), // Convert the data to a JSON string
         });
+
       } catch {
         console.error('Analytics error')
       }
