@@ -87,7 +87,7 @@ export default function LoginPage() {
                         <Paragraph >
                             Please read the <Link href='/auth/terms-and-conditions' style={{ textDecoration: 'underline' }}>Terms and conditions</Link>, <Link style={{ textDecoration: 'underline' }} href='/auth/privacy-policy'>Privacy policy</Link> and <Link style={{ textDecoration: 'underline' }} href='/auth/disclamer'>Disclamer</Link> before continuing. By continuing you agree to these.
                         </Paragraph>
-                        <SubmitButton data-track-event aria-label="Signup button" disabled={loginRunning} type="submit">
+                        <SubmitButton data-track-event='Signup btn signup page' aria-label="Signup button" disabled={loginRunning} type="submit">
                             {loginRunning ? (
                                 <>
                                     <div className={styles.loader}></div>
@@ -104,7 +104,7 @@ export default function LoginPage() {
 
                     </div>
 
-                    <Link data-track-event style={{ textAlign: 'center' }} href={'/auth/login'}>Login</Link>
+                    <Link data-track-event='Login redirect signup page' style={{ textAlign: 'center' }} href={'/auth/login'}>Login</Link>
                 </div>
             </div>
 

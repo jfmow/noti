@@ -47,16 +47,6 @@ export default function App({ Component, pageProps }) {
     Analytics()
     function getAction(e) {
 
-      function findParentLink(element, maxDepth) {
-        var currentElement = element;
-        for (var i = 0; i < maxDepth; i++) {
-          if (!currentElement || currentElement.tagName === "A") {
-            return currentElement;
-          }
-          currentElement = currentElement.parentElement;
-        }
-        return null;
-      }
       function isClickableElement(element) {
         return element.tagName === "A" || element.tagName === "BUTTON" || typeof element.onclick === "function";
       }
@@ -64,15 +54,14 @@ export default function App({ Component, pageProps }) {
         var target = event.target;
 
         if (isClickableElement(target)) {
-          if (target.tagName === "A") {
-            var link = findParentLink(target, 10);
+          if (target.tagName === "A" && target.getAttribute("data-track-event")) {
             if (link && link.getAttribute("data-track-event") && link.href) {
               event.preventDefault();
-              Analytics(link.innerText)
+              Analytics(target.getAttribute("data-track-event"))
               Router.push(link.href)
             }
           } else if ((target.tagName === "BUTTON" && target.getAttribute("data-track-event")) || (typeof target.onclick === "function" && target.getAttribute("data-track-event"))) {
-            Analytics(target.innerText)
+            Analytics(target.getAttribute("data-track-event"))
           }
         }
       }
