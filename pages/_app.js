@@ -55,7 +55,7 @@ export default function App({ Component, pageProps }) {
 
         if (isClickableElement(target)) {
           if (target.tagName === "A" && target.getAttribute("data-track-event")) {
-            if (link && link.getAttribute("data-track-event") && link.href) {
+            if (target && target.getAttribute("data-track-event") && target.href) {
               event.preventDefault();
               Analytics(target.getAttribute("data-track-event"))
               Router.push(link.href)
