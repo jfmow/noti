@@ -28,6 +28,7 @@
     min-width: 200px;
     min-height: 200px;
     height: fit-content;
+    color: var(--modal_text_color);
 }
 
 .popup h1 {
