@@ -92,7 +92,7 @@
     font-family: 'Segoe UI', "Geist-bold", sans-serif;
     font-weight: 600;
     font-size: 14px;
-    padding: 1rem;
+    padding: 0.8rem;
     color: var(--modal_text_color);
 }
 
