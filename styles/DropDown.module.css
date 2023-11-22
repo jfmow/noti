@@ -5,7 +5,7 @@
     right: 0;
     bottom: 0;
     width: 100%;
-    height: 100dvh;
+    height: svh;
     z-index: 11;
     user-select: none;
     overflow: hidden;

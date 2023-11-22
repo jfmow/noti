@@ -1,6 +1,6 @@
 .container {
   width: 100%;
-  min-height: 100dvh;
+  min-height: svh;
   margin: 0;
   margin-top: 10dvh;
   padding: 0;
@@ -13,7 +13,7 @@
 }
 
 .create {
-  height: 100dvh;
+  height: svh;
   overflow-x: hidden;
   overflow-y: scroll;
   flex: 1 1 0%;
