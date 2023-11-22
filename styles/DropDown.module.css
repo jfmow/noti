@@ -29,7 +29,7 @@
     --tw-ring-offset-shadow: 0 0 #0000;
     --tw-ring-shadow: 0 0 #0000;
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-    border-radius: calc(0.5rem - 2px);
+    border-radius: calc(0.5rem);
     border: 1px solid #e5e7eb6e;
     z-index: 14;
 }
