@@ -54,7 +54,8 @@ html,
 body {
   max-width: 100dvw;
   overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased !important;
+  font-smooth: antialiased !important;
 }
 
 .main {

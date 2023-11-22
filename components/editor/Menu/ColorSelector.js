@@ -1,4 +1,4 @@
-import { PopUpCardsGlobalButton } from '@/lib/Pop-Cards/PopUpCard';
+import { PopUpCardsGlobalButton } from '@/lib/Pop-Cards/Popup';
 import React from 'react';
 import { useState } from 'react';
 

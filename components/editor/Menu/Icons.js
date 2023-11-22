@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import emojis from 'emoji-datasource-twitter';
 import styles from '@/styles/Single/emojis.module.css';
-import { PopUpCardsGlobalButton } from "@/lib/Pop-Cards/PopUpCard";
+import { PopUpCardsGlobalButton } from "@/lib/Pop-Cards/Popup";
 
 export default function Icons({ Select, Selected, Close }) {
     const [searchTerm, setSearchTerm] = useState('');

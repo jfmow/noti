@@ -1,22 +1,16 @@
 import dynamic from 'next/dynamic';
 import styles from "@/styles/Create.module.css";
-import compressImage from "@/lib/CompressImg";
 import { useState } from "react";
-import { toaster } from "@/components/toasty";
 import { ToolTip, ToolTipCon, ToolTipTrigger } from "@/components/UX-Components/Tooltip";
 import { useEditorContext } from "@/pages/page/[...id]";
 import { DropDown, DropDownContainer, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from "@/lib/Pop-Cards/DropDown";
-
+import { Paragraph } from "@/components/UX-Components";
+import { PopUpTrigger, Popup, PopupContainer } from "@/lib/Pop-Cards/Popup";
 const TabbedDropMenuItem = dynamic(() => import('@/lib/Pop-Cards/Tabbed').then((module) => module.TabbedDropMenuItem));
 const TabbedDropMenuItemSurround = dynamic(() => import('@/lib/Pop-Cards/Tabbed').then((module) => module.TabbedDropMenuItemSurround));
 const TabbedDropMenuSelectorOptions = dynamic(() => import('@/lib/Pop-Cards/Tabbed').then((module) => module.TabbedDropMenuSelectorOptions));
 const TabbedDropMenuStaticPos = dynamic(() => import('@/lib/Pop-Cards/Tabbed').then((module) => module.TabbedDropMenuStaticPos));
 const TabbedDropMenuStaticPosSelectorSurround = dynamic(() => import('@/lib/Pop-Cards/Tabbed').then((module) => module.TabbedDropMenuStaticPosSelectorSurround));
-
-
-const PopUpCardCorner = dynamic(() => import('@/lib/Pop-Cards/PopUpCard').then((module) => module.PopUpCardCorner));
-const PopUpCardSubTitle = dynamic(() => import('@/lib/Pop-Cards/PopUpCard').then((module) => module.PopUpCardSubTitle));
-const PopUpCardTitle = dynamic(() => import('@/lib/Pop-Cards/PopUpCard').then((module) => module.PopUpCardTitle));
 
 const Gradient = dynamic(() => import("@/components/editor/Menu/gradient/adient"), {
     ssr: true,
@@ -33,18 +27,12 @@ const ColorSelector = dynamic(() => import("@/components/editor/Menu/ColorSelect
 
 
 export default function MenuButtons({ updateIcon, updateColor, updateHeader, setHeader }) {
-    const { listedPageItems, setListedPageItems, pb, currentPage } = useEditorContext()
-
-    const [iconModalState, setIconModalState] = useState(false);
+    const { pb, currentPage } = useEditorContext()
 
 
     const [popUpEmojiState, setPopUpEmojiState] = useState({ activeItem: 'Icons', active: false })
 
-    //PopUps
-    const [popUpClickEventUnsplash, setpopUpClickEventUnsplash] = useState(null)
-    const [popUpClickEventGradient, setpopUpClickEventGradient] = useState(null)
     const [popUpClickEventEmoji, setpopUpClickEventEmoji] = useState(null)
-    const [popUpClickEventPageCoverOptions, setpopUpClickEventPageCoverOptions] = useState(null)
 
 
 
@@ -71,16 +59,38 @@ export default function MenuButtons({ updateIcon, updateColor, updateHeader, set
                             Page cover
                         </DropDownSectionTitle>
                         <DropDownSection>
-                            <DropDownItem
-                                onClick={(e) => setpopUpClickEventUnsplash(e)}>
-                                <svg width="24" height="24" viewBox="0 0 32 32" version="1.1" aria-labelledby="unsplash-home" aria-hidden="false"><path d="M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z"></path></svg>
-                                <p>Unsplash</p>
-                            </DropDownItem>
-                            <DropDownItem
-                                onClick={(e) => setpopUpClickEventGradient(e)}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-paintbrush-2"><path d="M14 19.9V16h3a2 2 0 0 0 2-2v-2H5v2c0 1.1.9 2 2 2h3v3.9a2 2 0 1 0 4 0Z" /><path d="M6 12V2h12v10" /><path d="M14 2v4" /><path d="M10 2v2" /></svg>
-                                <p>Gradient</p>
-                            </DropDownItem>
+                            <PopupContainer>
+                                <PopUpTrigger>
+                                    <DropDownItem>
+                                        <svg width="24" height="24" viewBox="0 0 32 32" version="1.1" aria-labelledby="unsplash-home" aria-hidden="false"><path d="M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z"></path></svg>
+                                        <p>Unsplash</p>
+                                    </DropDownItem>
+                                </PopUpTrigger>
+                                <Popup style={{ width: 520, height: 400 }}>
+                                    <h1>Unsplash covers</h1>
+                                    <Paragraph>
+                                        Chose a cover for your page from unsplash's image libary
+                                    </Paragraph>
+                                    <Img setArticleHeader={setHeader} page={currentPage} />
+                                </Popup>
+                            </PopupContainer>
+                            <PopupContainer>
+                                <PopUpTrigger >
+                                    <DropDownItem>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-paintbrush-2"><path d="M14 19.9V16h3a2 2 0 0 0 2-2v-2H5v2c0 1.1.9 2 2 2h3v3.9a2 2 0 1 0 4 0Z" /><path d="M6 12V2h12v10" /><path d="M14 2v4" /><path d="M10 2v2" /></svg>
+                                        <p>Gradient</p>
+                                    </DropDownItem>
+                                </PopUpTrigger>
+                                <Popup style={{ width: 520, height: 400 }}>
+                                    <h1>Gradient covers</h1>
+                                    <Paragraph>
+                                        Choose a gradient cover for your page
+                                    </Paragraph>
+                                    <Gradient setArticleHeader={setHeader} page={currentPage} pb={pb} />
+                                </Popup>
+                            </PopupContainer>
+
+
                             <DropDownItem>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-image"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><circle cx="9" cy="9" r="2" /><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" /></svg>
                                 <label className={styles.customfileupload} >
@@ -97,23 +107,6 @@ export default function MenuButtons({ updateIcon, updateColor, updateHeader, set
                             </DropDownItem>
                         </DropDownSection>
                     </DropDown>
-
-                    <PopUpCardCorner event={popUpClickEventUnsplash} className={styles.title_buttons_btn}>
-                        <PopUpCardTitle>Unsplash</PopUpCardTitle>
-                        <PopUpCardSubTitle>Choose a cover image for your page.</PopUpCardSubTitle>
-                        {popUpClickEventUnsplash && (
-                            <Img setArticleHeader={setHeader} page={currentPage} />
-                        )}
-
-                    </PopUpCardCorner>
-                    <PopUpCardCorner event={popUpClickEventGradient} className={styles.title_buttons_btn}>
-                        <PopUpCardTitle>Gradients</PopUpCardTitle>
-                        <PopUpCardSubTitle>Choose a gradient cover for your page.</PopUpCardSubTitle>
-                        {popUpClickEventGradient && (
-                            <Gradient setArticleHeader={setHeader} page={currentPage} pb={pb} />
-                        )}
-
-                    </PopUpCardCorner>
                 </DropDownContainer>
             </ToolTipCon>
 

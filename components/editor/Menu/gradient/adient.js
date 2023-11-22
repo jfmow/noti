@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import styles from '@/styles/MeshGradient.module.css';
-import { PopUpCardsGlobalButton } from "@/lib/Pop-Cards/PopUpCard";
+import { PopUpCardsGlobalButton } from "@/lib/Pop-Cards/Popup";
 import { gradient } from "@/components/editor/Menu/gradient";
 import compressImage from "@/lib/CompressImg";
 
