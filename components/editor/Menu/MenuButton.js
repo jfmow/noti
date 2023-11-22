@@ -11,7 +11,7 @@ const TabbedDropMenuItemSurround = dynamic(() => import('@/lib/Pop-Cards/Tabbed'
 const TabbedDropMenuSelectorOptions = dynamic(() => import('@/lib/Pop-Cards/Tabbed').then((module) => module.TabbedDropMenuSelectorOptions));
 const TabbedDropMenuStaticPos = dynamic(() => import('@/lib/Pop-Cards/Tabbed').then((module) => module.TabbedDropMenuStaticPos));
 const TabbedDropMenuStaticPosSelectorSurround = dynamic(() => import('@/lib/Pop-Cards/Tabbed').then((module) => module.TabbedDropMenuStaticPosSelectorSurround));
-
+import { TabContent, TabGroup, TabMenu, TabMenuItem, TabsProvider, Tabtrigger } from "@/lib/Pop-Cards/Tabs";
 const Gradient = dynamic(() => import("@/components/editor/Menu/gradient/adient"), {
     ssr: true,
 });
@@ -111,51 +111,42 @@ export default function MenuButtons({ updateIcon, updateColor, updateHeader, set
             </ToolTipCon>
 
             <ToolTipCon>
-                <ToolTipTrigger>
-                    <button
-                        aria-label="Customise page menu opener"
-                        type="button"
-                        onClick={(e) => setpopUpClickEventEmoji(e)}
-                        className={styles.title_buttons_btn}
-                        onMouseOver={() => setPopUpEmojiState({ ...popUpEmojiState, active: true })
-                        }
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-palette"><circle cx="13.5" cy="6.5" r=".5" /><circle cx="17.5" cy="10.5" r=".5" /><circle cx="8.5" cy="7.5" r=".5" /><circle cx="6.5" cy="12.5" r=".5" /><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" /></svg>
-                    </button>
-                </ToolTipTrigger>
-                <ToolTip>
-                    Page customisation
-                </ToolTip>
-                <TabbedDropMenuStaticPos mobilepos={{
-                    top: `50px`,
-                    right: `0`,
-                    width: `100%`,
-                }} event={popUpClickEventEmoji} style={{ position: 'absolute', right: 0, top: '50px' }}>
-                    <TabbedDropMenuStaticPosSelectorSurround>
-                        <TabbedDropMenuSelectorOptions active={popUpEmojiState.activeItem === 'Icons'} click={() => setPopUpEmojiState({ ...popUpEmojiState, activeItem: 'Icons' })}>
-                            Page Icon
-                        </TabbedDropMenuSelectorOptions>
-                        <TabbedDropMenuSelectorOptions active={popUpEmojiState.activeItem === 'Color'} click={() => setPopUpEmojiState({ ...popUpEmojiState, activeItem: 'Color' })}>
-                            Color
-                        </TabbedDropMenuSelectorOptions>
-                    </TabbedDropMenuStaticPosSelectorSurround >
-                    <TabbedDropMenuItemSurround>
-                        <TabbedDropMenuItem active={popUpEmojiState.activeItem === 'Icons'}>
-                            {(popUpEmojiState.activeItem === 'Icons' && popUpClickEventEmoji !== null) || popUpEmojiState.active ? (
-                                <>
-                                    <Icons Select={updateIcon} />
-                                </>
-                            ) : (
-                                <div className={styles.LongBarLoaderDiv}>
-                                    <div className={styles.LongBarLoader}></div>
-                                </div>
-                            )}
-                        </TabbedDropMenuItem>
-                        <TabbedDropMenuItem active={popUpEmojiState.activeItem === 'Color'}>
+                <TabsProvider>
+                    <ToolTipTrigger>
+                        <Tabtrigger>
+                            <button
+                                aria-label="Customise page menu opener"
+                                type="button"
+                                className={styles.title_buttons_btn}
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-palette"><circle cx="13.5" cy="6.5" r=".5" /><circle cx="17.5" cy="10.5" r=".5" /><circle cx="8.5" cy="7.5" r=".5" /><circle cx="6.5" cy="12.5" r=".5" /><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" /></svg>
+                            </button>
+                        </Tabtrigger>
+                    </ToolTipTrigger>
+                    <ToolTip>
+                        Page customisation
+                    </ToolTip>
+
+                    <TabGroup>
+                        <TabMenu>
+                            <TabMenuItem for="icon">
+                                Icons
+                            </TabMenuItem>
+                            <TabMenuItem for="color">
+                                Color
+                            </TabMenuItem>
+                        </TabMenu>
+                        <TabContent name="icon">
+                            <>
+                                <Icons Select={updateIcon} />
+                            </>
+                        </TabContent>
+                        <TabContent name="color">
                             <ColorSelector onSelectColor={updateColor} page={currentPage} />
-                        </TabbedDropMenuItem>
-                    </TabbedDropMenuItemSurround>
-                </TabbedDropMenuStaticPos>
+                        </TabContent>
+                    </TabGroup>
+                </TabsProvider>
+
             </ToolTipCon>
         </>
     )

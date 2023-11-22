@@ -1,0 +1,64 @@
+.container {
+    top: 0;
+    left: 0;
+    position: fixed;
+    background: var(--popup_background);
+    box-shadow: 0px 36px 89px rgb(0 0 0/4%), 0px 23.3333px 52.1227px rgba(0, 0, 0, .03), 0px 13.8667px 28.3481px rgba(0, 0, 0, .024), 0px 7.2px 14.4625px rgb(0 0 0/2%), 0px 2.93333px 7.25185px rgba(0, 0, 0, .016), 0px 0.666667px 3.50231px rgba(0, 0, 0, .01);
+
+    z-index: 11;
+    border-width: 1px;
+    border-radius: calc(0.5rem + 4px);
+    animation: popin 0.35s 1 ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+    width: 400px;
+    min-height: 200px;
+    height: fit-content;
+    color: var(--modal_text_color);
+    overflow: hidden;
+    max-height: 50svh;
+}
+
+.menu {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    width: 100%;
+    padding: 0.5em;
+    gap: 2px;
+}
+
+.active {
+    background: var(--popup_button_bg);
+}
+
+.item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5em;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    font-family: sans-serif "Inter";
+    font-weight: 600;
+}
+
+.content {
+    padding: 1em;
+    overflow-y: scroll;
+    max-height: 50svh;
+}
+
+@media(max-width: 600px) {
+    .container {
+        top: auto !important;
+        left: 1em !important;
+        right: 1em !important;
+        bottom: 1em !important;
+        width: calc(100vw - 2em);
+        height: 50svh;
+    }
+}
