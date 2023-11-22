@@ -1,6 +1,6 @@
 .loadercontainer {
   flex: 1 1 0%;
-  height: 100dvh;
+  height: 100svh;
   z-index: 1;
   display: flex;
   flex-direction: column;
