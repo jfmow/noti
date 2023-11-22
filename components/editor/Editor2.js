@@ -198,36 +198,26 @@ export default function Editor() {
                     }
                 }
             };
+            const debounceSave = debounce(saveArticle, 500)
 
-            // Function to update the last typing timestamp
-            const updateLastTypedTime = () => {
-                setLastTypedTime(Date.now());
-            };
 
-            // Event listener for detecting user typing
-            const typingEventListener = () => {
-                updateLastTypedTime();
-                setLastTypedTimeIdle(false);
-            };
-            // Attach event listeners
-            if (editorRef) {
+            if (editorRef && editorRef.current) {
                 try {
-                    editorRef.current.addEventListener("keyup", typingEventListener);
+                    editorRef.current.addEventListener("keyup", debounceSave);
                 } catch { }
             }
-            //window.addEventListener("mousemove", mouseMovementEventListener);
+
             return () => {
                 // Clean up the event listeners and timer on component unmount
                 if (editorRef) {
                     try {
-                        editorRef.current.removeEventListener("keyup", typingEventListener);
+                        editorRef.current.removeEventListener("keyup", debounceSave);
                     } catch { }
                 }
-                //window.removeEventListener("mousemove", mouseMovementEventListener);
             };
         }
 
-    }, [lastTypedTime, editorRef.current]);
+    }, [lastTypedTime, editorRef.current, loading]);
 
     useEffect(() => {
         async function loadData() {
