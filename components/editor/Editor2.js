@@ -219,12 +219,6 @@ export default function Editor() {
                 }, 700)
             }
             //window.addEventListener("mousemove", mouseMovementEventListener);
-
-            // Start the auto-save timer
-            timer = setTimeout(() => {
-                saveArticle();
-            }, 500); // Initial auto-save 3 seconds after component mount
-
             return () => {
                 // Clean up the event listeners and timer on component unmount
                 if (editorRef) {
