@@ -212,9 +212,11 @@ export default function Editor() {
             };
             // Attach event listeners
             if (editorRef) {
-                try {
-                    editorRef.current.addEventListener("keyup", typingEventListener);
-                } catch { }
+                setTimeout(() => {
+                    try {
+                        editorRef.current.addEventListener("keyup", typingEventListener);
+                    } catch { }
+                }, 700)
             }
             //window.addEventListener("mousemove", mouseMovementEventListener);
 
