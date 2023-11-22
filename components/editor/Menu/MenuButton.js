@@ -24,13 +24,6 @@ const ColorSelector = dynamic(() => import("@/components/editor/Menu/ColorSelect
 export default function MenuButtons({ updateIcon, updateColor, updateHeader, setHeader }) {
     const { pb, currentPage } = useEditorContext()
 
-
-    const [popUpEmojiState, setPopUpEmojiState] = useState({ activeItem: 'Icons', active: false })
-
-    const [popUpClickEventEmoji, setpopUpClickEventEmoji] = useState(null)
-
-
-
     return (
         <>
             <ToolTipCon>
