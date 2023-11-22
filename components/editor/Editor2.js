@@ -151,7 +151,6 @@ export default function Editor() {
 
     useEffect(() => {
         if (!noSaving && !loading) {
-            let timer;
             let retryCount = 0
 
             // Function to save the article after the specified delay
@@ -227,7 +226,6 @@ export default function Editor() {
                     } catch { }
                 }
                 //window.removeEventListener("mousemove", mouseMovementEventListener);
-                clearTimeout(timer);
             };
         }
 
