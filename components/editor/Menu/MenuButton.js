@@ -6,11 +6,6 @@ import { useEditorContext } from "@/pages/page/[...id]";
 import { DropDown, DropDownContainer, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from "@/lib/Pop-Cards/DropDown";
 import { Paragraph } from "@/components/UX-Components";
 import { PopUpTrigger, Popup, PopupContainer } from "@/lib/Pop-Cards/Popup";
-const TabbedDropMenuItem = dynamic(() => import('@/lib/Pop-Cards/Tabbed').then((module) => module.TabbedDropMenuItem));
-const TabbedDropMenuItemSurround = dynamic(() => import('@/lib/Pop-Cards/Tabbed').then((module) => module.TabbedDropMenuItemSurround));
-const TabbedDropMenuSelectorOptions = dynamic(() => import('@/lib/Pop-Cards/Tabbed').then((module) => module.TabbedDropMenuSelectorOptions));
-const TabbedDropMenuStaticPos = dynamic(() => import('@/lib/Pop-Cards/Tabbed').then((module) => module.TabbedDropMenuStaticPos));
-const TabbedDropMenuStaticPosSelectorSurround = dynamic(() => import('@/lib/Pop-Cards/Tabbed').then((module) => module.TabbedDropMenuStaticPosSelectorSurround));
 import { TabContent, TabGroup, TabMenu, TabMenuItem, TabsProvider, Tabtrigger } from "@/lib/Pop-Cards/Tabs";
 const Gradient = dynamic(() => import("@/components/editor/Menu/gradient/adient"), {
     ssr: true,
