@@ -42,14 +42,17 @@
     padding: 0.5em;
     cursor: pointer;
     border-radius: 0.5rem;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', "Geist-bold", sans-serif;
     font-weight: 600;
+    font-size: 14px;
+    min-height: 37px;
 }
 
 .content {
     padding: 1em;
     overflow-y: scroll;
     max-height: 50svh;
+    position: relative;
 }
 
 @media(max-width: 600px) {
