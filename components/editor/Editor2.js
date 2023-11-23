@@ -374,7 +374,7 @@ export default function Editor() {
                                 storeFile: {
                                     uploadFile(file) {
                                         async function uploadbyFile(file) {
-                                            const loadingToast = toaster.toast("Uploading...", "loading", { id: "uploadToast" })
+                                            const loadingToast = toaster.loading("Uploading...")
                                             const formData = new FormData();
                                             formData.append("file_data", file);
                                             formData.append("uploader", pb.authStore.model.id);
@@ -382,26 +382,26 @@ export default function Editor() {
                                             let record = null
                                             try {
                                                 if (file.size > 5242880) {
-                                                    toast.error('File too big. Must be < 5mb')
+                                                    toaster.error('File too big. Must be < 5mb')
                                                     return { success: 0 }
                                                 }
                                                 if (file.name.endsWith(".docx") || file.name.endsWith(".docx/")) {
-                                                    toast.error('File type not supported yet!')
+                                                    toaster.error('File type not supported yet!')
                                                     return { success: 0 }
                                                 }
                                                 record = await pb.collection("files").create(formData);
                                                 //console.log(record);
-                                                toaster.dismiss("uploadToast")
-                                                toaster.toast("File uploaded successfully!", "success")
+                                                toaster.dismiss(loadingToast)
+                                                toaster.success("File uploaded successfully!")
 
                                             } catch (error) {
-                                                toast.dismiss(loadingToast)
+                                                toaster.dismiss(loadingToast)
                                                 console.error(error);
                                                 if (error.data.code === 403) {
-                                                    toaster.toast(error.data.message, "error")
+                                                    toaster.error(error.data.message, { delay: 7000 })
                                                     return { success: 0 }
                                                 }
-                                                toaster.toast('Unable to upload file. It may not be supported yet. Try .pdf or images', "error")
+                                                toaster.error('Unable to upload file. It may not be supported yet. Try .pdf or images')
                                                 return { success: 0 }
                                                 // Handle error
                                             }
