@@ -5,7 +5,7 @@
     /* bottom: 0px;
     left: 0;*/
     display: flex;
-    background: var(--background);
+    background: transparent;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
@@ -54,7 +54,7 @@
 }
 
 .usricon svg {
-    color: #707684;
+    color: var(--user_option_text);
 }
 
 

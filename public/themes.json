@@ -23,6 +23,30 @@
         }
     },
     {
+        "id": "bluey",
+        "display_name": "Bluey",
+        "color": "#5476ff",
+        "data": {
+            "--margin_toast": "20px",
+            "--background": "#bbc8ff",
+            "--editor_text": "#373737",
+            "--boxshadow_primary": "#829affcf",
+            "--page_list_item_hover": "#abbbff",
+            "--page_list_item_active": "linear-gradient(20deg, #98adff, #54e1ff73)",
+            "--page_list_item_icons_background_hover": "#a4b5ff",
+            "--page_list_item_hover_drag": "#ff7777",
+            "--create_new_page_btn_text": "#8ea3ff",
+            "--page_list_item_icons": "#313131",
+            "--page_list_item_fillcolor": "#000000",
+            "--modal_text_color": "#222",
+            "--popup_background": "#9cb0ff",
+            "--popup_button_bg": "#8589ff70",
+            "--popup_button_bg_hover": "#000000",
+            "--userinfo_section_bordertop": "#b2c1ff",
+            "--user_option_text": "#252525"
+        }
+    },
+    {
         "id": "purple",
         "display_name": "Purple",
         "color": "#5839b4",
@@ -43,6 +67,30 @@
             "--popup_button_bg_hover": "#000000",
             "--userinfo_section_bordertop": "#3b3158",
             "--user_option_text": "#6b5c95"
+        }
+    },
+    {
+        "id": "grass",
+        "display_name": "Grass",
+        "color": "#daffbe",
+        "data": {
+            "--margin_toast": "20px",
+            "--background": "linear-gradient(30deg, #daffbe 33%, #caffa2 66%, #c0ff90 100%)",
+            "--editor_text": "#373737",
+            "--boxshadow_primary": "#9be067c7",
+            "--page_list_item_hover": "#c1e1a8",
+            "--page_list_item_active": "linear-gradient(20deg, #d2ffb0, #6fff73)",
+            "--page_list_item_icons_background_hover": "#ccf0af",
+            "--page_list_item_hover_drag": "#ff7777",
+            "--create_new_page_btn_text": "#575757",
+            "--page_list_item_icons": "#313131",
+            "--page_list_item_fillcolor": "#000000",
+            "--modal_text_color": "#050505",
+            "--popup_background": "#ccffa5",
+            "--popup_button_bg": "#a9fb6b69",
+            "--popup_button_bg_hover": "#000000",
+            "--userinfo_section_bordertop": "#cff9b0",
+            "--user_option_text": "#252525"
         }
     },
     {
