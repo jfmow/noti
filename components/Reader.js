@@ -35,6 +35,19 @@ function Editor({ page, multi }) {
     const [isLoading, setIsLoading] = useState(true);
     const [lastTypedTimeIdle, setLastTypedTimeIdle] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
+    const [ownerData, setOwnerData] = useState({
+        "avatar": "",
+        "collectionId": "",
+        "collectionName": "",
+        "created": "",
+        "id": "",
+        "last_active": "",
+        "time_zone": "",
+        "updated": "",
+        "usage_email_sent": false,
+        "username": "",
+        "verified": false
+    })
 
     const pagetitleref = useRef(null)
 
@@ -49,7 +62,8 @@ function Editor({ page, multi }) {
             setArticleHeader(null)
             async function fetchArticles() {
                 try {
-                    const record = await pb.collection("pages").getOne(page);
+                    const record = await pb.collection("pages").getOne(page, { expand: 'owner' });
+                    setOwnerData(record.expand?.owner)
                     setEditorData(record.content);
                     setArticleTitle(record.title);
                     if (record.header_img) {
@@ -151,7 +165,6 @@ function Editor({ page, multi }) {
                 },
                 data: editorData,
                 placeholder: "No content found!",
-                autofocus: true,
                 readOnly: true,
             });
 
@@ -220,6 +233,10 @@ function Editor({ page, multi }) {
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <link rel="icon" href="/Favicon.png" />
             </Head>
+            <div className={styles.ownerbox}>
+                <img src={`${process.env.NEXT_PUBLIC_POCKETURL}/api/files/users/${ownerData?.id}/${ownerData?.avatar}`} />
+                {ownerData?.username}
+            </div>
             <div className={styles.title}>
                 <div className={styles.title} id="titlebg">
                     {articleHeader && <img className={styles.articleTitle_img} src={articleHeader} alt="Page header img" />}
