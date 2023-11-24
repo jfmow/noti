@@ -659,3 +659,38 @@
   content: "";
   border-radius: 0.3rem;
 }
+
+
+.ownerbox {
+  position: fixed;
+  top: 1em;
+  right: 1em;
+  max-width: 200px;
+  height: 50px;
+  background: #efefef;
+  color: #1b1b1b;
+  border-radius: 0.5em;
+  z-index: 9999;
+  padding: 0.8em;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-family: 'Segoe UI', sans-serif, "Inter";
+  font-weight: 600;
+  gap: 10px;
+  user-select: none;
+  pointer-events: none;
+  box-shadow:
+    2.8px 2.8px 2.2px rgba(0, 0, 0, 0.02),
+    6.7px 6.7px 5.3px rgba(0, 0, 0, 0.028),
+    12.5px 12.5px 10px rgba(0, 0, 0, 0.035),
+    22.3px 22.3px 17.9px rgba(0, 0, 0, 0.042),
+    41.8px 41.8px 33.4px rgba(0, 0, 0, 0.05),
+    100px 100px 80px rgba(0, 0, 0, 0.07);
+}
+
+.ownerbox img {
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+}
