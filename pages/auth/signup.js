@@ -7,6 +7,7 @@ import { getUserTimeZone } from '@/lib/getUserTimeZone';
 import validator from 'validator';
 import { toaster } from "@/components/toasty";
 import { Input, Link, Paragraph, SubmitButton } from "@/components/UX-Components";
+import { Modal, ModalContent, ModalTrigger } from "@/lib/Modals/Modal"
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 export default function LoginPage() {
     const [email, setEmail] = useState('')
@@ -54,11 +55,19 @@ export default function LoginPage() {
         setLoginRunning(false)
     }
 
-    async function genPassword() {
-        const pwd = await fetch('/api/random-password?length=16')
-        const pwdstring = await pwd.json()
-        setPassword(pwdstring.password)
-        setPasswordVisible(true)
+    async function SignupWithSSO() {
+        try {
+            setLoginRunning(true)
+            if (!email || !username) {
+                return
+            }
+            const authData = await pb.send(`/api/auth/sso/signup?email=${email}&username=${username}`, { method: 'POST' })
+            window.localStorage.setItem('pocketbase_auth', JSON.stringify(authData))
+            Router.push('/page/firstopen')
+        } catch {
+            toaster.error(`Error while logging in with sso`)
+        }
+        setLoginRunning(false)
     }
 
     return (
@@ -101,6 +110,29 @@ export default function LoginPage() {
                             <span className={styles.oauth2_line} />
 
                         </div>
+                        <Modal>
+                            <ModalTrigger>
+                                <SubmitButton data-track-event='Signup btn signup page' aria-label="Signup button" disabled={loginRunning} type="submit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-key-square"><path d="M12.4 2.7c.9-.9 2.5-.9 3.4 0l5.5 5.5c.9.9.9 2.5 0 3.4l-3.7 3.7c-.9.9-2.5.9-3.4 0L8.7 9.8c-.9-.9-.9-2.5 0-3.4Z" /><path d="m14 7 3 3" /><path d="M9.4 10.6 2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4" /></svg>
+                                    Use sso
+                                </SubmitButton>
+                            </ModalTrigger>
+                            <ModalContent>
+                                <h1>Single-Sign-On</h1>
+                                <Paragraph>Use your email to sign-in, no annoying passwords. Complete this form to signup and use sso.</Paragraph>
+                                <Input label={"Email"} autoComplete="email" aria-required aria-label="Email input" type="email" id="email" placeholder="me@example.com" required="" onChange={(e) => setEmail(e.target.value)} />
+                                <Input label={"username"} autoComplete="username" aria-required aria-label="Username input" type="text" id="username" placeholder="Enter a username" required="" onChange={(e) => setUsername(e.target.value)} />
+
+                                <SubmitButton data-track-event='Signup btn signup page' aria-label="Signup button" disabled={loginRunning} type="button" onClick={() => SignupWithSSO()}>
+                                    {loginRunning ? (
+                                        <>
+                                            <div className={styles.loader}></div>
+                                        </>
+                                    ) : 'Signup'}
+                                </SubmitButton>
+
+                            </ModalContent>
+                        </Modal>
 
                     </div>
 
