@@ -464,6 +464,9 @@ export default function Editor() {
 
     return (
         <>
+            <Head>
+                <title>{title || currentPage}</title>
+            </Head>
             <div className={styles.create} id="createcon">
                 <div className={styles.title}>
                     <div className={styles.title} id="titlebg">
