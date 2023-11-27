@@ -191,7 +191,7 @@ export default function AccountButtons({ event }) {
                         <div style={{ maxHeight: '50svh', overflowY: 'scroll', display: 'flex', flexDirection: 'column', gap: '5px' }}>
                             {listedPageItems.filter(item => item.deleted).map((item) => (
                                 <div style={{ display: 'grid', gridTemplateColumns: '9fr 1fr' }}>
-                                    <div>
+                                    <div style={{ display: 'flex', gap: '5px' }}>
                                         <div aria-label='Page icon' style={{ display: 'flex' }}>
                                             {item.icon && item.icon.includes('.png') ? (<img width={18} src={`/emoji/twitter/64/${item.icon}`} />) : (!isNaN(parseInt(item.icon, 16)) && String.fromCodePoint(parseInt(item.icon, 16)))}
                                         </div>
