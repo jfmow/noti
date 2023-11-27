@@ -22,7 +22,7 @@ export default function PageList() {
       //console.log(records)
       setListedPageItems(records)
       if (!currentPage || (currentPage === 'firstopen' && records.length >= 1)) {
-        Router.push(`/page/${records.filter(record => record.updated)[0].id}`)
+        Router.push(`/page/${records.filter(record => record.updated && !record.archived && !record.deleted)[0].id}`)
       }
     } catch {
       toast.error('Error fetching data')
