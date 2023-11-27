@@ -86,17 +86,17 @@ export default function Icons({ Select, Selected, Close }) {
                 ))}
             </div>
             <div className={styles.emojigrid} ref={containerRef}>
-                {visibleEmojis.map((emoji) => {
+                {visibleEmojis.map((emoji, index) => {
                     try {
                         if (emoji.has_img_twitter) {
-                            const { sheet_x, sheet_y } = emoji;
-                            const sheet_size = 32;
-                            const x = (sheet_x * (sheet_size + 2)) + 1;
-                            const y = (sheet_y * (sheet_size + 2)) + 1;
-                            const style = {
-                                backgroundImage: `url(/32.png)`,
-                                backgroundPosition: `-${x}px -${y}px`,
-                            };
+                            //const { sheet_x, sheet_y } = emoji;
+                            //const sheet_size = 32;
+                            //const x = (sheet_x * (sheet_size + 2)) + 1;
+                            //const y = (sheet_y * (sheet_size + 2)) + 1;
+                            //const style = {
+                            //    backgroundImage: `url(/32.png)`,
+                            //    backgroundPosition: `-${x}px -${y}px`,
+                            //};
                             return (
                                 <div
                                     key={emoji.unified}
@@ -104,9 +104,10 @@ export default function Icons({ Select, Selected, Close }) {
                                     onClick={() => setNewIcon(emoji)}
                                     title={emoji.short_name}
                                 >
-                                    <span
+                                    <img
+                                        loading={index > 250 ? "lazy" : "eager"}
                                         className={` ${styles.emojiIcon}`}
-                                        style={style}
+                                        src={`/emoji/twitter/64/${emoji.image}`}
                                     />
                                 </div>
                             );
