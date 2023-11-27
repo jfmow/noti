@@ -7,19 +7,10 @@ import { DropDown, DropDownContainer, DropDownItem, DropDownSection, DropDownSec
 import { Paragraph } from "@/components/UX-Components";
 import { PopUpTrigger, Popup, PopupContainer } from "@/lib/Pop-Cards/Popup";
 import { TabContent, TabGroup, TabMenu, TabMenuItem, TabsProvider, Tabtrigger } from "@/lib/Pop-Cards/Tabs";
-const Gradient = dynamic(() => import("@/components/editor/Menu/gradient/adient"), {
-    ssr: true,
-});
-const Icons = dynamic(() => import("@/components/editor/Menu/Icons"), {
-    ssr: true,
-});
-const Img = dynamic(() => import("@/components/editor/Menu/Img"), {
-    ssr: true,
-});
-const ColorSelector = dynamic(() => import("@/components/editor/Menu/ColorSelector"), {
-    ssr: true,
-});
-
+import Img from "@/components/editor/Menu/Img"
+import Icons from "@/components/editor/Menu/Icons"
+import Gradient from '@/components/editor/Menu/gradient/adient';
+import ColorSelector from '@/components/editor/Menu/ColorSelector';
 
 export default function MenuButtons({ updateIcon, updateColor, updateHeader, setHeader }) {
     const { pb, currentPage } = useEditorContext()

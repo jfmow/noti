@@ -1,4 +1,4 @@
-import { StrictMode, useEffect, useRef, useState } from "react"
+import { StrictMode, Suspense, lazy, useEffect, useRef, useState } from "react"
 import Head from "next/head";
 import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
@@ -7,13 +7,10 @@ import InlineCode from "@editorjs/inline-code";
 import List from "@editorjs/list";
 import Quote from "@editorjs/quote";
 import Table from "@editorjs/table";
-import PocketBase from "pocketbase";
 import styles from "@/styles/Create.module.css";
 import Video from '@/customEditorTools/Video'
-import Loader from "../Loader";
 import compressImage from "@/lib/CompressImg";
 import Router from "next/router";
-import { createRandomMeshGradients } from "@/lib/randomMeshGradient";
 import NestedList from '@editorjs/nested-list';
 import MarkerTool from "@/customEditorTools/Marker";
 import Image from "@/customEditorTools/Image";
@@ -21,13 +18,14 @@ import SimpleIframe from "@/customEditorTools/SimpleEmbed";
 import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
 import LineBreak from "@/customEditorTools/LineBreak";
 import { handleCreateBlurHash } from '@/lib/idk'
-import MenuButtons from "./Menu/MenuButton";
 import { toaster } from "../toasty";
 import { useEditorContext } from "@/pages/page/[...id]";
 import { Paragraph, SubmitButton } from "../UX-Components";
 import { Modal } from "@/lib/Modals/Modal";
 import { debounce } from "lodash";
 import { updateListedPages } from "../Item";
+
+const MenuButtons = lazy(() => import("./Menu/MenuButton"))
 export default function Editor() {
     const { currentPage, listedPageItems, setListedPageItems, pb, noSaving } = useEditorContext();
     const [loading, setLoading] = useState(true)
@@ -484,9 +482,9 @@ export default function Editor() {
                                 </div>
                             </div>
                             <div className={styles.title_buttons} id="tut_title_btns_id">
-
-                                <MenuButtons setHeader={setHeader} updateHeader={updateCurrentPage.headerCustomImg} updateIcon={updateCurrentPage.icon} updateColor={updateCurrentPage.color} />
-
+                                <Suspense fallback={<></>}>
+                                    <MenuButtons setHeader={setHeader} updateHeader={updateCurrentPage.headerCustomImg} updateIcon={updateCurrentPage.icon} updateColor={updateCurrentPage.color} />
+                                </Suspense>
                             </div>
                         </div>
                     </div>

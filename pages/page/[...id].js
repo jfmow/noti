@@ -1,7 +1,7 @@
 import Loader from '@/components/Loader';
 import dynamic from 'next/dynamic';
 import PocketBase from 'pocketbase'
-import React, { useContext, useEffect, useState } from 'react';
+import React, { Suspense, lazy, useContext, useEffect, useState } from 'react';
 import MyComponent from '@/components/Item';
 import Terminal from '@/components/Terminal';
 import MenuBar from '@/components/editor/MenuBar';
@@ -10,9 +10,8 @@ pb.autoCancellation(false);
 
 const EditorContext = React.createContext();
 
-const Editor = dynamic(() => import('../../components/editor/Editor2'), {
-  ssr: false,
-});
+
+const Editor = lazy(() => import('../../components/editor/Editor2'));
 
 function NotionEditor({ pageId, themes }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -94,10 +93,11 @@ function NotionEditor({ pageId, themes }) {
             <div style={{ display: 'flex', height: 'calc(100dvh - 45px)', overflow: 'hidden' }}>
               {
                 [...new Set(pageId)].map((page) => (
-                  <Editor page={page} />
+                  <Suspense fallback={<></>}>
+                    <Editor page={page} />
+                  </Suspense>
                 ))
               }
-
             </div>
           </div>
         </div>
