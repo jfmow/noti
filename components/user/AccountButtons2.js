@@ -5,17 +5,20 @@ import Router from 'next/router';
 import AvatarModal from './AvatarModal';
 import { toaster } from "@/components/toasty";
 import { DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle } from '@/lib/Pop-Cards/DropDown';
+import { Modal, ModalContent, ModalTrigger } from '@/lib/Modals/Modal';
+import { useEditorContext } from '@/pages/page/[...id]';
+import { updateListedPages } from '../Item';
+import { Paragraph } from '../UX-Components';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 export default function AccountButtons({ event }) {
-    const [usageModal, setUsageModal] = useState(false)
-    const [avatarModal, setAvatarModal] = useState(false)
-    const [userInfoModal, setUserInfoModal] = useState(false)
+    const { listedPageItems, setListedPageItems } = useEditorContext()
     const [totalUsage, setTotalUsage] = useState(0)
     const [usageLimit, setUsageLimit] = useState(10)
+    const [itemLoading, setItemLoading] = useState([])
+
 
     useEffect(() => {
-        setUserInfoModal(false)
         getTotalUsage()
     }, [event])
 
@@ -150,10 +153,7 @@ export default function AccountButtons({ event }) {
                         </DropDownSection>
                     </DropDownExtension>
                 </DropDownExtensionContainer>
-                <DropDownItem onClick={() => setAvatarModal(true)}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-circle-2"><path d="M18 20a6 6 0 0 0-12 0" /><circle cx="12" cy="10" r="4" /><circle cx="12" cy="12" r="10" /></svg>
-                    Avatar
-                </DropDownItem>
+                <AvatarModal pb={pb} />
                 <DropDownExtensionContainer>
                     <DropDownExtensionTrigger hover>
                         <DropDownItem>
@@ -178,6 +178,45 @@ export default function AccountButtons({ event }) {
                 </DropDownExtensionContainer>
             </DropDownSection>
             <DropDownSection>
+                <Modal>
+                    <ModalTrigger>
+                        <DropDownItem>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rotate-ccw"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /></svg>
+                            Recover pages
+                        </DropDownItem>
+                    </ModalTrigger>
+                    <ModalContent>
+                        <h1>Deleted pages</h1>
+                        <Paragraph>Recover your deleted pages here</Paragraph>
+                        <div style={{ maxHeight: '50svh', overflowY: 'scroll', display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                            {listedPageItems.filter(item => item.deleted).map((item) => (
+                                <div style={{ display: 'grid', gridTemplateColumns: '9fr 1fr' }}>
+                                    <div>
+                                        <div aria-label='Page icon' style={{ display: 'flex' }}>
+                                            {item.icon && item.icon.includes('.png') ? (<img width={18} src={`/emoji/twitter/64/${item.icon}`} />) : (!isNaN(parseInt(item.icon, 16)) && String.fromCodePoint(parseInt(item.icon, 16)))}
+                                        </div>
+                                        {item.title || item.id}
+                                    </div>
+                                    <DropDownItem onClick={async () => {
+                                        setItemLoading([...itemLoading, item.id])
+                                        if (!itemLoading.includes(item.id)) {
+                                            await pb.collection("pages").update(item.id, { deleted: false })
+                                            setListedPageItems(updateListedPages(item.id, { deleted: false }, listedPageItems))
+                                            setItemLoading([...itemLoading.filter(item2 => item2 !== item.id)])
+                                        }
+                                    }} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <svg style={{ margin: 0 }} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rotate-ccw"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /></svg>
+                                    </DropDownItem>
+                                </div>
+                            )
+                            )}
+                        </div>
+                    </ModalContent>
+                </Modal>
+
+
+            </DropDownSection>
+            <DropDownSection>
                 <DropDownItem onClick={(e) => deleteAccount(e)}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-x-2"><path d="M14 19a6 6 0 0 0-12 0" /><circle cx="8" cy="9" r="4" /><line x1="17" x2="22" y1="8" y2="13" /><line x1="22" x2="17" y1="8" y2="13" /></svg>
                     Delete account
@@ -190,15 +229,6 @@ export default function AccountButtons({ event }) {
                     Logout
                 </DropDownItem>
             </DropDownSection>
-
-            <>
-                {/**
-             * Modals
-             */}
-
-                {avatarModal && <AvatarModal close={() => setAvatarModal(false)} pb={pb} />}
-
-            </>
 
         </>
 
