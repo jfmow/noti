@@ -17,7 +17,7 @@ export default function PageList() {
   async function getUserPages() {
     try {
       const records = await pb.collection('pages_Bare').getFullList({
-        sort: '-created', skipTotal: true
+        sort: '-created', skipTotal: true,
       });
       //console.log(records)
       setListedPageItems(records)
@@ -90,26 +90,7 @@ export default function PageList() {
     };
     const record = await pb.collection('pages').create(data);
     router.push(`/page/${record.id}`)
-    setListedPageItems(prevItems => {
-      // Remove any previous item with the same ID
-      const filteredItems = prevItems.filter(item => item.id !== record.id);
-
-      // Add the new record at the appropriate position based on its created date
-      let insertIndex = filteredItems.findIndex(item => item.created < record.created);
-      if (insertIndex === -1) {
-        insertIndex = filteredItems.length;
-      }
-
-      return [
-        ...filteredItems.slice(0, insertIndex),
-        record,
-        ...filteredItems.slice(insertIndex)
-      ];
-    });
-    ////console.log(record.id);
-
-    // Update the items state by adding the new record
-    //setItems((prevItems) => [...prevItems, record]);
+    setListedPageItems(updateListedPages('', record, listedPageItems))
   }
 
   //Render items
@@ -152,24 +133,7 @@ export default function PageList() {
       const data = {
         "expanded": !expand
       };
-      setListedPageItems(prevItems => {
-        // Remove any previous item with the same ID
-        const oldItem = listedPageItems.filter((item3) => item3.id === item)[0]
-        const filteredItems = prevItems.filter(item3 => item3.id !== oldItem.id);
-
-        // Add the new record at the appropriate position based on its created date
-        let insertIndex = filteredItems.findIndex(item3 => item3.created < oldItem.created);
-        if (insertIndex === -1) {
-          insertIndex = filteredItems.length;
-        }
-
-        return [
-          ...filteredItems.slice(0, insertIndex),
-          { ...oldItem, expanded: !expand },
-          ...filteredItems.slice(insertIndex)
-        ];
-        //return [...prevItems.filter(item => item.id !== page), { ...oldItem, icon: `${e.unified}.png` }]
-      })
+      setListedPageItems(updateListedPages(item, { expanded: !expand }, listedPageItems))
       setExpand(!expand);
 
       await pb.collection('pages').update(item, data);
@@ -215,24 +179,7 @@ export default function PageList() {
         //console.log('Should be fineeeee')
       }
 
-      setListedPageItems(prevItems => {
-        // Remove any previous item with the same ID
-        const oldItem = listedPageItems.filter((item) => item.id === draggedItemId)[0]
-        const filteredItems = prevItems.filter(item => item.id !== oldItem.id);
-
-        // Add the new record at the appropriate position based on its created date
-        let insertIndex = filteredItems.findIndex(item => item.created < oldItem.created);
-        if (insertIndex === -1) {
-          insertIndex = filteredItems.length;
-        }
-
-        return [
-          ...filteredItems.slice(0, insertIndex),
-          { ...oldItem, parentId: itemId },
-          ...filteredItems.slice(insertIndex)
-        ];
-        //return [...prevItems.filter(item => item.id !== page), { ...oldItem, icon: `${e.unified}.png` }]
-      })
+      setListedPageItems(updateListedPages(draggedItemId, { parentId: itemId }, listedPageItems))
 
 
       const data = {
@@ -310,7 +257,7 @@ export default function PageList() {
     <>
       <div ref={shrinkcontainerRef} className={styles.shrinkcontainer}>
         <div className={styles.container}>
-          {renderTree(listedPageItems.filter((Apage) => !Apage?.archived))}
+          {renderTree(listedPageItems.filter((Apage) => !Apage?.archived && !Apage?.deleted))}
           <li data-track-event='Create new page btn' type='button' className={`${styles.item} ${styles.createnewpage_btn}`} onClick={() => createNewPage('')}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14" /><path d="M12 5v14" /></svg> Create a new page</li>
         </div >
         <UserOptions user={pb.authStore.model} usageOpenDefault={query.usage} />
@@ -319,5 +266,40 @@ export default function PageList() {
   )
 }
 
+
+export function updateListedPages(itemToUpdate, data, prevItems) {
+  try {
+    // Find the previous item with the same ID
+    const oldItem = prevItems.find(item => item.id === itemToUpdate);
+
+    if (!oldItem) {
+
+      // Insert the new record with the 'deleted' flag set to true
+      return [
+        data,
+        ...prevItems
+      ];
+    }
+
+    // Filter out the previous item from the list
+    const filteredItems = prevItems.filter(item => item.id !== oldItem.id);
+
+    // Find the index to insert the new record based on its created date
+    let insertIndex = filteredItems.findIndex(item => item.created < oldItem.created);
+    if (insertIndex === -1) {
+      insertIndex = filteredItems.length;
+    }
+
+    // Insert the new record with the 'deleted' flag set to true
+    return [
+      ...filteredItems.slice(0, insertIndex),
+      oldItem ? { ...oldItem, ...data } : data,
+      ...filteredItems.slice(insertIndex)
+    ];
+
+  } catch (err) {
+    throw err
+  }
+}
 
 

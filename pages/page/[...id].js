@@ -5,7 +5,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import MyComponent from '@/components/Item';
 import Terminal from '@/components/Terminal';
 import MenuBar from '@/components/editor/MenuBar';
-import { toaster } from '@/components/toasty';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 
@@ -20,8 +19,6 @@ function NotionEditor({ pageId, themes }) {
   const [visible, setVisible] = useState(true)
   const [listedPageItems, setListedPageItems] = useState([])
   const [listedPageItemsFilter, setListedPageItemsFilters] = useState({ archived: false })
-
-
 
   useEffect(() => {
 

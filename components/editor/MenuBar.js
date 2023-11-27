@@ -5,6 +5,7 @@ import { toaster } from '@/components/toasty';
 import { ToolTip, ToolTipCon, ToolTipTrigger } from '@/components/UX-Components/Tooltip';
 import { useEditorContext } from '@/pages/page/[...id]';
 import { DropDown, DropDownContainer, DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from '@/lib/Pop-Cards/DropDown';
+import { updateListedPages } from '../Item';
 export default function MenuBar() {
     const { pb, currentPage, setVisible, visible, setListedPageItems, listedPageItems } = useEditorContext()
     const [activePage, setActivePage] = useState({})
@@ -133,6 +134,8 @@ export default function MenuBar() {
             ];
             //return [...prevItems.filter(item => item.id !== currentPage), { ...oldItem, icon: `${e.unified}.png` }]
         })
+        setListedPageItems(updateListedPages(currentPage, { shared: data.shared }, listedPageItems))
+
         const record = await pb.collection("pages").update(currentPage, data);
     }
 
@@ -169,26 +172,10 @@ export default function MenuBar() {
     }
     async function handleDeletePage() {
         try {
-            await pb.collection("pages").delete(currentPage);
+            await pb.collection("pages").update(currentPage, { deleted: true });
             toaster.toast(`Page deleted`, "success")
-            setListedPageItems(prevItems => {
-                // Remove any previous item with the same ID
-                const filteredItems = prevItems.filter(item => item.id !== currentPage);
+            setListedPageItems(updateListedPages(currentPage, { deleted: true }, listedPageItems))
 
-
-                return [
-                    ...filteredItems
-                ];
-            })
-            const sortedData = listedPageItems.filter((pageA) => pageA.parentId === '').sort((a, b) => {
-                // Convert the created strings to Date objects for comparison
-                const dateA = new Date(a.created);
-                const dateB = new Date(b.created);
-
-                // Compare the dates (newest to oldest)
-                return dateB - dateA;
-            });
-            window.location.replace('/page/firstopen')
         } catch (err) {
             console.log(err)
             toaster.error('An error occured while trying to delete the currentPage')
@@ -197,24 +184,7 @@ export default function MenuBar() {
 
     async function handleArchivePageToggle() {
         const newState = !listedPageItems.find((Apage) => Apage.id === currentPage).archived
-        setListedPageItems(prevItems => {
-            // Remove any previous item with the same ID
-            const oldItem = listedPageItems.filter((item3) => item3.id === currentPage)[0]
-            const filteredItems = prevItems.filter(item3 => item3.id !== oldItem.id);
-
-            // Add the new record at the appropriate position based on its created date
-            let insertIndex = filteredItems.findIndex(item3 => item3.created < oldItem.created);
-            if (insertIndex === -1) {
-                insertIndex = filteredItems.length;
-            }
-
-            return [
-                ...filteredItems.slice(0, insertIndex),
-                { ...oldItem, archived: newState },
-                ...filteredItems.slice(insertIndex)
-            ];
-            //return [...prevItems.filter(item => item.id !== currentPage), { ...oldItem, icon: `${e.unified}.png` }]
-        })
+        setListedPageItems(updateListedPages(currentPage, { archived: newState }, listedPageItems))
         await pb.collection('pages').update(currentPage, { archived: newState });
         toaster.success(`Page ${newState ? 'archived' : 'restored'} successfully`)
     }

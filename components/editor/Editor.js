@@ -27,6 +27,7 @@ import { useEditorContext } from "@/pages/page/[...id]";
 import { Paragraph, SubmitButton } from "../UX-Components";
 import { Modal } from "@/lib/Modals/Modal";
 import { Cache } from "@/lib/Cache";
+import { updateListedPages } from "../Item";
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false)
@@ -478,24 +479,7 @@ function Editor({ page }) {
   async function handlePageTitleChange() {
     const title = pagetitleref.current
     setArticleTitle(title.innerText);
-    setListedPageItems(prevItems => {
-      // Remove any previous item with the same ID
-      const oldItem = listedPageItems.filter((item) => item.id === page)[0]
-      const filteredItems = prevItems.filter(item => item.id !== oldItem.id);
-
-      // Add the new record at the appropriate position based on its created date
-      let insertIndex = filteredItems.findIndex(item => item.created < oldItem.created);
-      if (insertIndex === -1) {
-        insertIndex = filteredItems.length;
-      }
-
-      return [
-        ...filteredItems.slice(0, insertIndex),
-        { ...oldItem, title: title.innerText },
-        ...filteredItems.slice(insertIndex)
-      ];
-      //return [...prevItems.filter(item => item.id !== page), { ...oldItem, icon: `${e.unified}.png` }]
-    })
+    setListedPageItems(updateListedPages(page, { title: title.innerText }, listedPageItems))
     const newTitle = {
       title: title.innerText
     };

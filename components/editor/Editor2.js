@@ -26,8 +26,8 @@ import { toaster } from "../toasty";
 import { useEditorContext } from "@/pages/page/[...id]";
 import { Paragraph, SubmitButton } from "../UX-Components";
 import { Modal } from "@/lib/Modals/Modal";
-import { Cache } from "@/lib/Cache";
 import { debounce } from "lodash";
+import { updateListedPages } from "../Item";
 export default function Editor() {
     const { currentPage, listedPageItems, setListedPageItems, pb, noSaving } = useEditorContext();
     const [loading, setLoading] = useState(true)
@@ -54,27 +54,7 @@ export default function Editor() {
                 return new Error('Please include a new icon')
             }
             try {
-                setListedPageItems(prevItems => {
-                    // Remove any previous item with the same ID
-                    const oldItem = listedPageItems.filter((item) => item.id === currentPage)[0]
-                    if (!oldItem) {
-                        return [...prevItems]
-                    }
-                    const filteredItems = prevItems.filter(item => item.id !== oldItem.id);
-
-                    // Add the new record at the appropriate position based on its created date
-                    let insertIndex = filteredItems.findIndex(item => item.created < oldItem.created);
-                    if (insertIndex === -1) {
-                        insertIndex = filteredItems.length;
-                    }
-
-                    return [
-                        ...filteredItems.slice(0, insertIndex),
-                        { ...oldItem, icon: newIcon.image },
-                        ...filteredItems.slice(insertIndex)
-                    ];
-
-                })
+                setListedPageItems(updateListedPages(currentPage, { icon: newIcon.image }, listedPageItems))
                 await pb.collection('pages').update(currentPage, { icon: newIcon.image });
             } catch {
                 return new Error('Something went wrong updating the page icon')
@@ -87,27 +67,8 @@ export default function Editor() {
                 return new Error('No color provided')
             }
             try {
-                setListedPageItems(prevItems => {
-                    // Remove any previous item with the same ID
-                    const oldItem = listedPageItems.filter((item) => item.id === currentPage)[0]
-                    if (!oldItem) {
-                        return [...prevItems]
-                    }
-                    const filteredItems = prevItems.filter(item => item.id !== oldItem.id);
+                setListedPageItems(updateListedPages(currentPage, { color: newColor }, listedPageItems))
 
-                    // Add the new record at the appropriate position based on its created date
-                    let insertIndex = filteredItems.findIndex(item => item.created < oldItem.created);
-                    if (insertIndex === -1) {
-                        insertIndex = filteredItems.length;
-                    }
-
-                    return [
-                        ...filteredItems.slice(0, insertIndex),
-                        { ...oldItem, color: newColor },
-                        ...filteredItems.slice(insertIndex)
-                    ];
-
-                })
                 await pb.collection('pages').update(currentPage, { color: newColor });
             } catch {
                 return new Error('An error occured while updating page color')
@@ -467,24 +428,8 @@ export default function Editor() {
     async function handlePageTitleChange(e) {
         const data = e.target.innerText;
         setTitle(data)
-        setListedPageItems(prevItems => {
-            // Remove any previous item with the same ID
-            const oldItem = listedPageItems.filter((item) => item.id === currentPage)[0]
-            const filteredItems = prevItems.filter(item => item.id !== oldItem.id);
+        setListedPageItems(updateListedPages(currentPage, { title: data }, listedPageItems))
 
-            // Add the new record at the appropriate position based on its created date
-            let insertIndex = filteredItems.findIndex(item => item.created < oldItem.created);
-            if (insertIndex === -1) {
-                insertIndex = filteredItems.length;
-            }
-
-            return [
-                ...filteredItems.slice(0, insertIndex),
-                { ...oldItem, title: data },
-                ...filteredItems.slice(insertIndex)
-            ];
-            //return [...prevItems.filter(item => item.id !== page), { ...oldItem, icon: `${e.unified}.png` }]
-        })
         await pb.collection("pages").update(currentPage, {
             title: data
         });

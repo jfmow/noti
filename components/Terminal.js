@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from '@/components/Link';
 import Router from 'next/router';
 import { useEditorContext } from '@/pages/page/[...id]';
+import { updateListedPages } from './Item';
 export default function Terminal() {
     const { listedPageItems, pb, setListedPageItems } = useEditorContext()
     const [visible, setVisible] = useState(false);
@@ -70,25 +71,10 @@ export default function Terminal() {
                 "blocks": []
             }
         };
-        const record = await pb.collection('listedPageItems').create(data);
+        const record = await pb.collection('pages').create(data);
         Router.push(`/page/${record.id}`)
         setVisible(false)
-        setListedPageItems(prevItems => {
-            // Remove any previous item with the same ID
-            const filteredItems = prevItems.filter(item => item.id !== record.id);
-
-            // Add the new record at the appropriate position based on its created date
-            let insertIndex = filteredItems.findIndex(item => item.created < record.created);
-            if (insertIndex === -1) {
-                insertIndex = filteredItems.length;
-            }
-
-            return [
-                ...filteredItems.slice(0, insertIndex),
-                record,
-                ...filteredItems.slice(insertIndex)
-            ];
-        });
+        setListedPageItems(updateListedPages('', record, listedPageItems))
         ////console.log(record.id);
 
         // Update the items state by adding the new record
