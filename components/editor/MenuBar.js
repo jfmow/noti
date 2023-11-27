@@ -154,28 +154,13 @@ export default function MenuBar() {
         document.execCommand("copy");
         // Remove the dummy input from the DOM
         document.body.removeChild(dummyInput);
-
-        // Create a new div element for mouse position feedback
-        //var mouseFeedbackDiv = document.createElement("div");
-        //mouseFeedbackDiv.innerText = "Text copied!";
-        //mouseFeedbackDiv.style.position = "absolute";
-        //mouseFeedbackDiv.style.left = e.pageX + "px";
-        //mouseFeedbackDiv.style.top = e.pageY + "px";
-        //mouseFeedbackDiv.classList.add(styles.copypopconf)
-        //document.body.appendChild(mouseFeedbackDiv);
-        //
-        //// Optionally, set a timeout to remove the feedback after a certain duration
-        //setTimeout(function () {
-        //    document.body.removeChild(mouseFeedbackDiv);
-        //    // Optionally, provide visual feedback to the user
-        //}, 1000); // 2000 milliseconds (2 seconds) in this example, adjust as needed
     }
     async function handleDeletePage() {
         try {
             await pb.collection("pages").update(currentPage, { deleted: true });
             toaster.toast(`Page deleted`, "success")
             setListedPageItems(updateListedPages(currentPage, { deleted: true }, listedPageItems))
-
+            Router.push('/page/firstopen')
         } catch (err) {
             console.log(err)
             toaster.error('An error occured while trying to delete the currentPage')
