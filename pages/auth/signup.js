@@ -81,10 +81,39 @@ export default function LoginPage() {
 
 
             <div className={styles.container}>
+                <div className={styles.oauth_promote}>
+                    <h1>Go <gradient>password</gradient> less!</h1>
+                    <Paragraph>
+                        Only use your email to login, faster, more secure and easier.
+                    </Paragraph>
+                    <Modal>
+                        <ModalTrigger style={{ width: '352px' }}>
+                            <SubmitButton data-track-event='Signup btn signup page' aria-label="Signup button" disabled={loginRunning} type="submit">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-key-square"><path d="M12.4 2.7c.9-.9 2.5-.9 3.4 0l5.5 5.5c.9.9.9 2.5 0 3.4l-3.7 3.7c-.9.9-2.5.9-3.4 0L8.7 9.8c-.9-.9-.9-2.5 0-3.4Z" /><path d="m14 7 3 3" /><path d="M9.4 10.6 2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4" /></svg>
+                                Use sso
+                            </SubmitButton>
+                        </ModalTrigger>
+                        <ModalContent>
+                            <h1>Go password less!</h1>
+                            <Paragraph>
+                                Only use your email to login, faster, more secure and easier.
+                            </Paragraph>
+                            <Input label={"Email"} autoComplete="email" aria-required aria-label="Email input" type="email" id="email" placeholder="me@example.com" required="" onChange={(e) => setEmail(e.target.value)} />
+                            <Input label={"username"} autoComplete="username" aria-required aria-label="Username input" type="text" id="username" placeholder="Enter a username" required="" onChange={(e) => setUsername(e.target.value)} />
+
+                            <SubmitButton data-track-event='Signup btn signup page' aria-label="Signup button" disabled={loginRunning} type="button" onClick={() => SignupWithSSO()}>
+                                {loginRunning ? (
+                                    <>
+                                        <div className={styles.loader}></div>
+                                    </>
+                                ) : 'Signup'}
+                            </SubmitButton>
+
+                        </ModalContent>
+                    </Modal>
+                </div>
                 <div className={styles.auth_container}>
-                    <div className={styles.logocontainer}>
-                        Signup
-                    </div>
+                    <h1 style={{ textAlign: 'center' }}>Signup</h1>
 
                     <form aria-label="Signup form" className={styles.auth_form} onSubmit={(e) => loginNormal(e)}>
                         <div className={styles.auth_formgroup}>
@@ -110,29 +139,34 @@ export default function LoginPage() {
                             <span className={styles.oauth2_line} />
 
                         </div>
-                        <Modal>
-                            <ModalTrigger>
-                                <SubmitButton data-track-event='Signup btn signup page' aria-label="Signup button" disabled={loginRunning} type="submit">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-key-square"><path d="M12.4 2.7c.9-.9 2.5-.9 3.4 0l5.5 5.5c.9.9.9 2.5 0 3.4l-3.7 3.7c-.9.9-2.5.9-3.4 0L8.7 9.8c-.9-.9-.9-2.5 0-3.4Z" /><path d="m14 7 3 3" /><path d="M9.4 10.6 2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4" /></svg>
-                                    Use sso
-                                </SubmitButton>
-                            </ModalTrigger>
-                            <ModalContent>
-                                <h1>Single-Sign-On</h1>
-                                <Paragraph>Use your email to sign-in, no annoying passwords. Complete this form to signup and use sso.</Paragraph>
-                                <Input label={"Email"} autoComplete="email" aria-required aria-label="Email input" type="email" id="email" placeholder="me@example.com" required="" onChange={(e) => setEmail(e.target.value)} />
-                                <Input label={"username"} autoComplete="username" aria-required aria-label="Username input" type="text" id="username" placeholder="Enter a username" required="" onChange={(e) => setUsername(e.target.value)} />
+                        <div className={styles.mobile_sso_promo}>
 
-                                <SubmitButton data-track-event='Signup btn signup page' aria-label="Signup button" disabled={loginRunning} type="button" onClick={() => SignupWithSSO()}>
-                                    {loginRunning ? (
-                                        <>
-                                            <div className={styles.loader}></div>
-                                        </>
-                                    ) : 'Signup'}
-                                </SubmitButton>
+                            <Modal>
+                                <ModalTrigger style={{ width: '100%' }}>
+                                    <SubmitButton data-track-event='Signup btn signup page' aria-label="Signup button" disabled={loginRunning} type="submit">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-key-square"><path d="M12.4 2.7c.9-.9 2.5-.9 3.4 0l5.5 5.5c.9.9.9 2.5 0 3.4l-3.7 3.7c-.9.9-2.5.9-3.4 0L8.7 9.8c-.9-.9-.9-2.5 0-3.4Z" /><path d="m14 7 3 3" /><path d="M9.4 10.6 2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4" /></svg>
+                                        Use sso
+                                    </SubmitButton>
+                                </ModalTrigger>
+                                <ModalContent>
+                                    <h1>Go password less!</h1>
+                                    <Paragraph>
+                                        Only use your email to login, faster, more secure and easier.
+                                    </Paragraph>
+                                    <Input label={"Email"} autoComplete="email" aria-required aria-label="Email input" type="email" id="email" placeholder="me@example.com" required="" onChange={(e) => setEmail(e.target.value)} />
+                                    <Input label={"username"} autoComplete="username" aria-required aria-label="Username input" type="text" id="username" placeholder="Enter a username" required="" onChange={(e) => setUsername(e.target.value)} />
 
-                            </ModalContent>
-                        </Modal>
+                                    <SubmitButton data-track-event='Signup btn signup page' aria-label="Signup button" disabled={loginRunning} type="button" onClick={() => SignupWithSSO()}>
+                                        {loginRunning ? (
+                                            <>
+                                                <div className={styles.loader}></div>
+                                            </>
+                                        ) : 'Signup'}
+                                    </SubmitButton>
+
+                                </ModalContent>
+                            </Modal>
+                        </div>
 
                     </div>
 
