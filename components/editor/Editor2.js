@@ -155,12 +155,9 @@ export default function Editor() {
 
             if (editorRef && editorRef.current && !loading) {
                 try {
-                    console.log('trying event')
-                    setLastTypedTimeIdle(false)
-
                     editorRef.current.addEventListener("keyup", debounceSave);
-                } catch (err) {
-                    console.log(err)
+                } catch {
+
                 }
             }
 
