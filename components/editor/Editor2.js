@@ -117,53 +117,51 @@ export default function Editor() {
                 if (currentPage === "firstopen") {
                     return
                 }
-                const currentTime = Date.now();
-                const elapsedTime = currentTime - lastTypedTime;
+                try {
+                    if (EditorRef.current) {
+                        const articleContent = await EditorRef.current.save();
+                        let formData = new FormData();
 
-                if (elapsedTime >= 500 && !lastTypedTimeIdle) {
-                    // Auto-save 3 seconds after the user stops typing
-                    setLastTypedTimeIdle(true);
-                    try {
-                        if (EditorRef.current) {
-                            const articleContent = await EditorRef.current.save();
-                            let formData = new FormData();
+                        formData.append("content", JSON.stringify(articleContent));
+                        try {
 
-                            formData.append("content", JSON.stringify(articleContent));
-                            try {
-
-                                const state = await pb.collection("pages").update(currentPage, formData);
-                                if (JSON.stringify(state.content) === JSON.stringify(articleContent)) {
-                                    setLastTypedTimeIdle(true);
+                            const state = await pb.collection("pages").update(currentPage, formData);
+                            if (JSON.stringify(state.content) === JSON.stringify(articleContent)) {
+                                return
+                            } else {
+                                if (retryCount >= 4) {
+                                    toaster.error('Page failed to save too many times. Please check your network.')
+                                    retryCount = 0
                                     return
-                                } else {
-                                    if (retryCount >= 4) {
-                                        toaster.error('Page failed to save too many times. Please check your network.')
-                                        retryCount = 0
-                                        return
-                                    }
-                                    retryCount++
-                                    saveArticle()
                                 }
-                                //console.log("Auto saved successfully!");
-                            } catch (error) {
-                                toaster.toast("Could not save", "error");
-                                console.error(error);
+                                retryCount++
+                                saveArticle()
                             }
-                            //console.log("Auto-save executed.");
+                            //console.log("Auto saved successfully!");
+                        } catch (error) {
+                            toaster.toast("Could not save", "error");
+                            console.error(error);
                         }
-                    } catch (error) {
-                        console.log(error)
-                        toaster.toast("Could not save", "error")
+                        //console.log("Auto-save executed.");
                     }
+                } catch (error) {
+                    console.log(error)
+                    toaster.toast("Could not save", "error")
                 }
+
             };
             const debounceSave = debounce(saveArticle, 500)
 
 
-            if (editorRef && editorRef.current) {
+            if (editorRef && editorRef.current && !loading) {
                 try {
+                    console.log('trying event')
+                    setLastTypedTimeIdle(false)
+
                     editorRef.current.addEventListener("keyup", debounceSave);
-                } catch { }
+                } catch (err) {
+                    console.log(err)
+                }
             }
 
             return () => {
@@ -176,7 +174,7 @@ export default function Editor() {
             };
         }
 
-    }, [lastTypedTime, editorRef.current, loading]);
+    }, [lastTypedTime, editorRef, loading]);
 
     useEffect(() => {
         async function loadData() {
