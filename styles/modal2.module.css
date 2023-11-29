@@ -43,14 +43,15 @@
     border-radius: 1rem;
     color: #000;
     padding: 32px;
-    font-family: sans-serif;
+    font-family: 'Segoe UI', "Geist-reg", sans-serif;
 
 }
 
 .modalContent h1 {
     margin-bottom: 10px;
-    font-family: "Gest-bold", sans-serif;
+    font-weight: 700;
     font-size: 24px;
+    font-family: 'Segoe UI', "Geist-bold", sans-serif;
 }
 
 .modalContent h2 {

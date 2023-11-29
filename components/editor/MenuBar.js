@@ -159,8 +159,9 @@ export default function MenuBar() {
         try {
             await pb.collection("pages").update(currentPage, { deleted: true });
             toaster.toast(`Page deleted`, "success")
-            setListedPageItems(updateListedPages(currentPage, { deleted: true }, listedPageItems))
-            Router.push('/page/firstopen')
+            //Not using below code because page is fully reloaded
+            //setListedPageItems(updateListedPages(currentPage, { deleted: true }, listedPageItems))
+            window.location.replace('/page/firstopen')
         } catch (err) {
             console.log(err)
             toaster.error('An error occured while trying to delete the currentPage')

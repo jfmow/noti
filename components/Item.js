@@ -12,7 +12,6 @@ export default function PageList() {
   const { currentPage, visible, setVisible, listedPageItems, setListedPageItems } = useEditorContext()
   const router = useRouter()
   const shrinkcontainerRef = useRef(null)
-  const { query } = router;
 
   async function getUserPages() {
     try {
@@ -260,7 +259,7 @@ export default function PageList() {
           {renderTree(listedPageItems.filter((Apage) => !Apage?.archived && !Apage?.deleted))}
           <li data-track-event='Create new page btn' type='button' className={`${styles.item} ${styles.createnewpage_btn}`} onClick={() => createNewPage('')}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14" /><path d="M12 5v14" /></svg> Create a new page</li>
         </div >
-        <UserOptions user={pb.authStore.model} usageOpenDefault={query.usage} />
+        <UserOptions />
       </div>
     </>
   )
@@ -281,8 +280,14 @@ export function updateListedPages(itemToUpdate, data, prevItems) {
       ];
     }
 
+
+
     // Filter out the previous item from the list
     const filteredItems = prevItems.filter(item => item.id !== oldItem.id);
+
+    if (!data) {
+      return filteredItems
+    }
 
     // Find the index to insert the new record based on its created date
     let insertIndex = filteredItems.findIndex(item => item.created < oldItem.created);
