@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import PocketBase from 'pocketbase'
 import Head from "next/head"
 import styles from '@/styles/Auth-new.module.css'
-import { toast } from "sonner"
 import Router, { useRouter } from "next/router"
 import { toaster } from "@/components/toasty"
 import { Input, Link, Paragraph, SubmitButton } from "@/components/UX-Components"
