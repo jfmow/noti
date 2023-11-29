@@ -53,7 +53,7 @@ export default function AvatarModal({ pb }) {
             </ModalTrigger>
             <ModalContent>
                 <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'center', marginBottom: '10px' }}>
-                    {pb.authStore.model.avatar ? (
+                    {pb.authStore.model?.avatar ? (
                         <>
                             {!refreshAvatar && (
                                 <img style={{ width: '64px', height: '64px', objectFit: 'cover', borderRadius: '50%' }} src={`${process.env.NEXT_PUBLIC_POCKETURL}/api/files/users/${pb.authStore.model.id}/${pb.authStore.model.avatar}`} />

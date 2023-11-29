@@ -1,9 +1,9 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import PocketBase from 'pocketbase'
 import Head from "next/head"
 import styles from '@/styles/Auth-new.module.css'
 import { toast } from "sonner"
-import Router from "next/router"
+import Router, { useRouter } from "next/router"
 import { toaster } from "@/components/toasty"
 import { Input, Link, Paragraph, SubmitButton } from "@/components/UX-Components"
 import { Modal, ModalContent, ModalInput, ModalTrigger } from "@/lib/Modals/Modal"
@@ -14,8 +14,16 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [loginRunning, setLoginRunning] = useState(false)
   const [SSOInputType, setSSOInputType] = useState('email')
-  const [SSOCode, setSSOCode] = useState('')
-  const [SSOEmail, setSSOEmail] = useState('')
+  const [SSOcode, setSSOCode] = useState('')
+  const [SSOemail, setSSOEmail] = useState('')
+  const router = useRouter()
+  const { query } = router
+
+  useEffect(() => {
+    if (query.ssoToken && query.ssoEmail) {
+      LoginWithSSOCode(query.ssoEmail, query.ssoToken)
+    }
+  }, [query])
 
   async function loginNormal(e) {
     e.preventDefault();
@@ -46,18 +54,19 @@ export default function LoginPage() {
 
   async function GetSSOCode() {
     try {
-      if (!SSOEmail) {
+      if (!SSOemail) {
         return
       }
-      await pb.send(`/api/auth/sso?email=${SSOEmail}`, { method: 'POST' })
-      toaster.success(`Code sent to ${SSOEmail}`)
+      await pb.send(`/api/auth/sso?email=${SSOemail}&linkUrl=${process.env.NEXT_PUBLIC_CURRENTURL}`, { method: 'POST' })
+      toaster.success(`Code sent to ${SSOemail}`)
       setSSOInputType('code')
     } catch {
-      toaster.error(`Error while sending code to ${SSOEmail}`)
+      toaster.error(`Error while sending code to ${SSOemail}`)
     }
   }
-  async function LoginWithSSOCode() {
+  async function LoginWithSSOCode(SSOEmail, SSOCode) {
     try {
+      setLoginRunning(true)
       if (!SSOEmail || !SSOCode) {
         return
       }
@@ -68,6 +77,7 @@ export default function LoginPage() {
     } catch {
       toaster.error(`Error while logging in with sso`)
     }
+    setLoginRunning(false)
   }
 
   return (
@@ -112,7 +122,7 @@ export default function LoginPage() {
                   <Input label={"Auth code"} aria-label="Code input" type="text" id="code" autoComplete="none" placeholder="Code from email eg: 874f62489347edf2d34ed499" required onChange={(e) => setSSOCode(e.target.value)} />
                 )}
                 {SSOInputType === "code" && (
-                  <SubmitButton onClick={() => LoginWithSSOCode()}>Login</SubmitButton>
+                  <SubmitButton onClick={() => LoginWithSSOCode(SSOemail, SSOcode)}>Login</SubmitButton>
                 )}
                 {SSOInputType === "email" && (
                   <SubmitButton onClick={() => GetSSOCode()}>Get code</SubmitButton>
