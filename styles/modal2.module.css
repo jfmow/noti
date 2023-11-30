@@ -56,6 +56,9 @@
 
 .modalContent h2 {
     margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 20px;
+    font-family: 'Segoe UI', "Geist-bold", sans-serif;
 }
 
 .modalContent h3 {

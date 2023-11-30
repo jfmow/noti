@@ -5,7 +5,7 @@ import styles from '@/styles/Auth-new.module.css'
 import Router, { useRouter } from "next/router"
 import { toaster } from "@/components/toasty"
 import { Input, Link, Paragraph, SubmitButton } from "@/components/UX-Components"
-import { Modal, ModalContent, ModalTrigger } from "@/lib/Modals/Modal"
+import { Gap, Modal, ModalContent, ModalTrigger } from "@/lib/Modals/Modal"
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 export default function PasswordReset() {
@@ -83,43 +83,33 @@ export default function PasswordReset() {
             <div className={styles.container}>
                 <div className={styles.oauth_promote}>
                     <div className={styles.oauth_promote_content}>
-                        <h1><gradient>Quick login!</gradient></h1>
+                        <h1>🚀<gradient> Upgrade Your Login Experience! </gradient>🌟</h1>
                         <Paragraph>
-                            Use a magic link sent to your email to login!
+                            Tired of juggling multiple passwords? Embrace seamless access with Single Sign-On (SSO)! Enable SSO today to revolutionize your login process. Say goodbye to password hassles and hello to a frictionless experience.
+                        </Paragraph>
+                        <Gap>10</Gap>
+                        <Paragraph>
+
+                            <h2>🔐 How it Works:</h2>
+                            Simply enter your email on the login page, and voilà! Receive a magic link or a code for hassle-free authentication. No more remembering complex passwords — it's that easy!
+
+                        </Paragraph>
+                        <Paragraph>
+                            <h2>🚀 Why SSO?</h2>
+                            <li>Effortless Access: Your email is your key.</li>
+                            <li>Enhanced Security: Bid farewell to password vulnerabilities.</li>
+                            <li>Universal Compatibility: Use with other OAuth providers seamlessly.</li>
+                        </Paragraph>
+                        <Paragraph>
+                            <h2>✨ Experience the Future of Login!</h2>
+
+                            Unlock the power of streamlined authentication. Enable SSO now and embrace a secure, password-free future.
                         </Paragraph>
 
-                        <div className={styles.oauth2}>
-                            <div className={styles.oauth2_text}>
-                                <span className={styles.oauth2_line} />
-                                <Paragraph>Or</Paragraph>
-                                <span className={styles.oauth2_line} />
-                            </div>
-                        </div>
-                        <Modal>
-                            <ModalTrigger style={{ width: '100%' }}>
-                                <SubmitButton data-track-event='Login SSO btn' aria-label="SSO login button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send"><path d="m22 2-7 20-4-9-9-4Z" /><path d="M22 2 11 13" /></svg>
-                                    Login with Email
-                                </SubmitButton>
-                            </ModalTrigger>
-                            <ModalContent>
-                                {SSOInputType === "code" && (
-                                    <>
-                                        <Paragraph>Enter code here or <strong>click link in email</strong>, the code/link is only valid for 5min</Paragraph>
-                                        <form aria-label="Auth code submit form" onSubmit={(e) => LoginWithSSOCode(SSOemail, SSOcode, e)}>
-                                            <Input label={""} aria-label="Code input" type="text" id="code" autoComplete="none" placeholder="Code from email eg: 874f62489347edf2d34ed499" required onChange={(e) => setSSOCode(e.target.value)} />
-                                            <SubmitButton type='submit'>Login</SubmitButton>
-                                        </form>
-                                    </>
-                                )}
-                                {SSOInputType === "email" && (
-                                    <form aria-label="Auth code request with email form" onSubmit={(e) => GetSSOCode(e)}>
-                                        <Input label={"Email"} aria-label="Email input" type="email" id="sso-email" autoComplete="current-email" placeholder="me@example.com" required="" onChange={(e) => setSSOEmail(e.target.value)} />
-                                        <SubmitButton type='submit'>Request code</SubmitButton>
-                                    </form>
-                                )}
-                            </ModalContent>
-                        </Modal>
+                        <Paragraph>
+                            Can be enabled on your profile settings in the editor
+                        </Paragraph>
+
                     </div>
 
                 </div>
@@ -141,37 +131,9 @@ export default function PasswordReset() {
                     <div className={styles.oauth2}>
                         <div className={styles.oauth2_text}>
                             <span className={styles.oauth2_line} />
-                            <Paragraph>Or</Paragraph>
-                            <span className={styles.oauth2_line} />
                         </div>
                     </div>
-                    <div className={styles.mobile_sso_promo} style={{ flexDirection: 'column', gap: '10px' }}>
-                        <Modal>
-                            <ModalTrigger style={{ width: '100%' }}>
-                                <SubmitButton data-track-event='Login SSO btn' alt aria-label="SSO login button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send"><path d="m22 2-7 20-4-9-9-4Z" /><path d="M22 2 11 13" /></svg>
-                                    Email link login
-                                </SubmitButton>
-                            </ModalTrigger>
-                            <ModalContent>
-                                {SSOInputType === "code" && (
-                                    <>
-                                        <Paragraph>Enter code here or <strong>click link in email</strong>, the code/link is only valid for 5min</Paragraph>
-                                        <form aria-label="Auth code submit form" onSubmit={(e) => LoginWithSSOCode(SSOemail, SSOcode, e)}>
-                                            <Input label={""} aria-label="Code input" type="text" id="code" autoComplete="none" placeholder="Code from email eg: 874f62489347edf2d34ed499" required onChange={(e) => setSSOCode(e.target.value)} />
-                                            <SubmitButton type='submit'>Login</SubmitButton>
-                                        </form>
-                                    </>
-                                )}
-                                {SSOInputType === "email" && (
-                                    <form aria-label="Auth code request with email form" onSubmit={(e) => GetSSOCode(e)}>
-                                        <Input label={"Email"} aria-label="Email input" type="email" id="sso-email" autoComplete="current-email" placeholder="me@example.com" required="" onChange={(e) => setSSOEmail(e.target.value)} />
-                                        <SubmitButton type='submit'>Request code</SubmitButton>
-                                    </form>
-                                )}
-                            </ModalContent>
-                        </Modal>
-                    </div>
+
                     <Link data-track-event='Login page redirect link' style={{ textAlign: 'center' }} href={'/auth/login'}>Login</Link>
                 </div>
             </div>
