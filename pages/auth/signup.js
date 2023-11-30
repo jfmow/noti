@@ -149,21 +149,22 @@ export default function LoginPage() {
                                     </SubmitButton>
                                 </ModalTrigger>
                                 <ModalContent>
-                                    <h1>Go password less!</h1>
-                                    <Paragraph>
-                                        Only use your email to login, faster, more secure and easier.
-                                    </Paragraph>
-                                    <Input label={"Email"} autoComplete="email" aria-required aria-label="Email input" type="email" id="email" placeholder="me@example.com" required="" onChange={(e) => setEmail(e.target.value)} />
-                                    <Input label={"username"} autoComplete="username" aria-required aria-label="Username input" type="text" id="username" placeholder="Enter a username" required="" onChange={(e) => setUsername(e.target.value)} />
+                                    <form onSubmit={() => SignupWithSSO()}>
+                                        <h1>Go password less!</h1>
+                                        <Paragraph>
+                                            Only use your email to login, faster, more secure and easier.
+                                        </Paragraph>
+                                        <Input label={"Email"} autoComplete="email" aria-required aria-label="Email input" type="email" id="email" placeholder="me@example.com" required="" onChange={(e) => setEmail(e.target.value)} />
+                                        <Input label={"username"} autoComplete="username" aria-required aria-label="Username input" type="text" id="username" placeholder="Enter a username" required="" onChange={(e) => setUsername(e.target.value)} />
 
-                                    <SubmitButton data-track-event='Signup btn signup page' aria-label="Signup button" disabled={loginRunning} type="button" onClick={() => SignupWithSSO()}>
-                                        {loginRunning ? (
-                                            <>
-                                                <div className={styles.loader}></div>
-                                            </>
-                                        ) : 'Signup'}
-                                    </SubmitButton>
-
+                                        <SubmitButton data-track-event='Signup btn signup page' aria-label="Signup button" disabled={loginRunning} type="submit">
+                                            {loginRunning ? (
+                                                <>
+                                                    <div className={styles.loader}></div>
+                                                </>
+                                            ) : 'Signup'}
+                                        </SubmitButton>
+                                    </form>
                                 </ModalContent>
                             </Modal>
                         </div>

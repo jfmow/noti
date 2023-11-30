@@ -51,7 +51,8 @@ export default function LoginPage() {
     setLoginRunning(false)
   }
 
-  async function GetSSOCode() {
+  async function GetSSOCode(e) {
+    e.preventDefault()
     try {
       if (!SSOemail) {
         return
@@ -63,7 +64,10 @@ export default function LoginPage() {
       toaster.error(`Error while sending code to ${SSOemail}`)
     }
   }
-  async function LoginWithSSOCode(SSOEmail, SSOCode) {
+  async function LoginWithSSOCode(SSOEmail, SSOCode, e) {
+    if (e) {
+      e.preventDefault()
+    }
     try {
       setLoginRunning(true)
       if (!SSOEmail || !SSOCode) {
@@ -106,25 +110,27 @@ export default function LoginPage() {
             </div>
             <Modal>
               <ModalTrigger style={{ width: '100%' }}>
-                <SubmitButton data-track-event='Login SSO btn' alt aria-label="SSO login button">
+                <SubmitButton data-track-event='Login SSO btn' aria-label="SSO login button">
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-key-square"><path d="M12.4 2.7c.9-.9 2.5-.9 3.4 0l5.5 5.5c.9.9.9 2.5 0 3.4l-3.7 3.7c-.9.9-2.5.9-3.4 0L8.7 9.8c-.9-.9-.9-2.5 0-3.4Z" /><path d="m14 7 3 3" /><path d="M9.4 10.6 2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4" /></svg>
                   Login with SSO
                 </SubmitButton>
               </ModalTrigger>
               <ModalContent>
                 <h1>Single-Sign-On</h1>
-                <Paragraph>The code is only valid for 5min</Paragraph>
-                {SSOInputType === "email" && (
-                  <Input label={"Email"} aria-label="Email input" type="email" id="email" autoComplete="current-email username" placeholder="me@example.com" required="" onChange={(e) => setSSOEmail(e.target.value)} />
-                )}
                 {SSOInputType === "code" && (
-                  <Input label={"Auth code"} aria-label="Code input" type="text" id="code" autoComplete="none" placeholder="Code from email eg: 874f62489347edf2d34ed499" required onChange={(e) => setSSOCode(e.target.value)} />
-                )}
-                {SSOInputType === "code" && (
-                  <SubmitButton onClick={() => LoginWithSSOCode(SSOemail, SSOcode)}>Login</SubmitButton>
+                  <>
+                    <Paragraph>The code is only valid for 5min</Paragraph>
+                    <form aria-label="Auth code submit form" onSubmit={(e) => LoginWithSSOCode(SSOemail, SSOcode, e)}>
+                      <Input label={"Auth code"} aria-label="Code input" type="text" id="code" autoComplete="none" placeholder="Code from email eg: 874f62489347edf2d34ed499" required onChange={(e) => setSSOCode(e.target.value)} />
+                      <SubmitButton type='submit'>Login</SubmitButton>
+                    </form>
+                  </>
                 )}
                 {SSOInputType === "email" && (
-                  <SubmitButton onClick={() => GetSSOCode()}>Get code</SubmitButton>
+                  <form aria-label="Auth code request with email form" onSubmit={(e) => GetSSOCode(e)}>
+                    <Input label={"Email"} aria-label="Email input" type="email" id="email" autoComplete="current-email" placeholder="me@example.com" required="" onChange={(e) => setSSOEmail(e.target.value)} />
+                    <SubmitButton type='submit'>Get code</SubmitButton>
+                  </form>
                 )}
               </ModalContent>
             </Modal>
@@ -155,7 +161,6 @@ export default function LoginPage() {
               </>) : 'Login'}
             </SubmitButton>
           </form>
-
           <div className={styles.oauth2}>
             <div className={styles.oauth2_text}>
               <span className={styles.oauth2_line} />
