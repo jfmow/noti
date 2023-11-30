@@ -3,6 +3,7 @@ import { DropDownItem } from "@/lib/Pop-Cards/DropDown";
 import { Paragraph, SubmitButton } from "../UX-Components";
 import { useEditorContext } from "@/pages/page/[...id]";
 import { useEffect, useState } from "react";
+import { toaster } from "../toasty";
 
 export default function EnableSSOItem() {
     const { pb } = useEditorContext()
@@ -19,7 +20,12 @@ export default function EnableSSOItem() {
         CheckSSOState()
     }, [pb])
     async function ToggleSSO() {
-        await pb.send(`/api/auth/sso/toggle`, { method: 'POST' })
+        try {
+            await pb.send(`/api/auth/sso/toggle`, { method: 'POST' })
+            setSSOState(!ssoState)
+        } catch {
+            toaster.error('Problem toggling SSO')
+        }
     }
     return (
         <Modal>
