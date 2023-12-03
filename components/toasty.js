@@ -15,7 +15,7 @@ async function toast(text, type, options) {
     toastElement.id = toastId
     window.addEventListener('CustomEvent', (e) => {
         //console.log(e)
-        if (e.value === options?.id && e.key === "toastDis") {
+        if (e.value === toastId && e.key === "toastDis") {
             if (open) {
                 open = false;
                 toastElement.style.animationName = "exit"
@@ -54,6 +54,7 @@ async function toast(text, type, options) {
             break;
 
         case 'loading':
+            nodelay = true
             toastElement.classList.add("loading")
             toastElement.innerHTML = `
             <div class="spinner">
@@ -141,6 +142,7 @@ async function toast(text, type, options) {
         }
 
     }
+    return toastElement
 }
 
 //Helpers
@@ -213,6 +215,7 @@ export const toaster = {
      * @param {ToastOptions} [options] - Additional options for the toast message.
      */
     async loading(text, options) {
-        toast(text, 'loading', options || {})
+        const toast2 = await toast(text, 'loading', options || {})
+        return toast2.id
     },
 };

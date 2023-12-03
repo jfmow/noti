@@ -1,6 +1,6 @@
 import { Gap, Modal, ModalContent, ModalTrigger } from "@/lib/Modals/Modal";
 import { DropDownItem } from "@/lib/Pop-Cards/DropDown";
-import { Paragraph, SubmitButton } from "../UX-Components";
+import { Input, Paragraph, SubmitButton } from "../UX-Components";
 import { useEditorContext } from "@/pages/page/[...id]";
 import { useEffect, useState } from "react";
 import { toaster } from "../toasty";
@@ -8,6 +8,7 @@ import { toaster } from "../toasty";
 export default function EnableSSOItem() {
     const { pb } = useEditorContext()
     const [ssoState, setSSOState] = useState(false)
+    const [newPassword, setNewPassword] = useState({ newPass: '', confNewPass: '', required: false })
     useEffect(() => {
         async function CheckSSOState() {
             try {
@@ -19,13 +20,24 @@ export default function EnableSSOItem() {
         }
         CheckSSOState()
     }, [pb])
-    async function ToggleSSO() {
-        try {
-            await pb.send(`/api/auth/sso/toggle`, { method: 'POST' })
-            setSSOState(!ssoState)
-        } catch {
-            toaster.error('Problem toggling SSO')
+    async function ToggleSSO(reqNewPassword) {
+        const loadingToast = await toaster.loading(ssoState ? 'Disabling sso' : 'Enabling sso')
+        if (reqNewPassword && (!newPassword.newPass || !newPassword.confNewPass)) {
+            return toaster.info('Please fill out all displayed fields')
         }
+        try {
+            const state = await pb.send(reqNewPassword ? `/api/auth/sso/toggle?np=${newPassword.newPass}` : `/api/auth/sso/toggle`, { method: 'POST' })
+            setSSOState(!ssoState)
+            toaster.dismiss(loadingToast)
+        } catch (err) {
+            console.log(err.data)
+            if (err.data.message === "You must set a password before disabling SSO.") {
+                setNewPassword({ ...newPassword, required: true })
+            }
+            toaster.dismiss(loadingToast)
+            toaster.error(err.data.message)
+        }
+
     }
     return (
         <Modal>
@@ -38,7 +50,19 @@ export default function EnableSSOItem() {
                         </DropDownItem>
                     </ModalTrigger>
                     <ModalContent>
-                        <SubmitButton onClick={() => ToggleSSO()}>Disable</SubmitButton>
+                        {newPassword.required ? (
+                            <>
+                                <form onSubmit={(e) => { e.preventDefault(); ToggleSSO(true); }}>
+                                    <Input autocomplete='new-password' placeholder='New password' type='password' required onChange={(e) => setNewPassword({ ...newPassword, newPass: e.target.value })} />
+                                    <Input autocomplete='new-password' placeholder='Confirm new password' type='password' required onChange={(e) => setNewPassword({ ...newPassword, confNewPass: e.target.value })} />
+                                    <SubmitButton type='submit'>Disable</SubmitButton>
+
+                                </form>
+                            </>
+                        ) : (
+                            <SubmitButton onClick={() => ToggleSSO()}>Disable</SubmitButton>
+                        )}
+
                     </ModalContent>
                 </>
             ) : (

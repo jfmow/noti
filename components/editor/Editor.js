@@ -291,7 +291,7 @@ function Editor({ page }) {
                 storeFile: {
                   uploadFile(file) {
                     async function uploadbyFile(file) {
-                      toaster.toast("Uploading...", "loading", { id: "uploadToast" })
+                      const uploadToast = await toaster.loading("Uploading...")
                       const formData = new FormData();
 
                       const compressedBlob = await compressImage(file); // Maximum file size in KB (100KB in this example)
@@ -313,10 +313,10 @@ function Editor({ page }) {
                           return { success: 0 }
                         }
                         record = await pb.collection("imgs").create(formData);
-                        toaster.dismiss("uploadToast")
+                        toaster.dismiss(uploadToast)
                         toaster.toast("Image uploaded successfully!", "success")
                       } catch (error) {
-                        toaster.dismiss("uploadToast")
+                        toaster.dismiss(uploadToast)
                         if (error.data.code === 403) {
                           toaster.toast(error.data.message, "error")
                           return { success: 0 }
@@ -366,7 +366,7 @@ function Editor({ page }) {
                 storeFile: {
                   uploadFile(file) {
                     async function uploadbyFile(file) {
-                      const loadingToast = toaster.toast("Uploading...", "loading", { id: "uploadToast" })
+                      const loadingToast = await toaster.loading("Uploading...")
                       const formData = new FormData();
                       formData.append("file_data", file);
                       formData.append("uploader", pb.authStore.model.id);
@@ -383,11 +383,11 @@ function Editor({ page }) {
                         }
                         record = await pb.collection("files").create(formData);
                         //console.log(record);
-                        toaster.dismiss("uploadToast")
+                        toaster.dismiss(loadingToast)
                         toaster.toast("File uploaded successfully!", "success")
 
                       } catch (error) {
-                        toast.dismiss(loadingToast)
+                        toaster.dismiss(loadingToast)
                         console.error(error);
                         if (error.data.code === 403) {
                           toaster.toast(error.data.message, "error")

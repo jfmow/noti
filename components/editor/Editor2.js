@@ -73,7 +73,7 @@ export default function Editor() {
             }
         },
         async headerCustomImg(e) {
-            toaster.toast("Uploading...", "loading", { id: "upload" })
+            const loadingToast = await toaster.loading("Uploading...")
 
             const file = e.target.files[0];
 
@@ -97,11 +97,11 @@ export default function Editor() {
                     //}
                     await pb.collection("pages").update(currentPage, formData);
 
-                    toaster.dismiss("upload")
+                    toaster.dismiss(loadingToast)
                     toaster.toast("Image uploaded successfully!", "success")
 
                 } catch (error) {
-                    toaster.dismiss("upload")
+                    toaster.dismiss(loadingToast)
                     toaster.toast("Error uploading header img", "error");
                 }
             }
@@ -253,7 +253,7 @@ export default function Editor() {
                                 storeFile: {
                                     uploadFile(file) {
                                         async function uploadbyFile(file) {
-                                            toaster.toast("Uploading...", "loading", { id: "uploadToast" })
+                                            const loadingToast = await toaster.toast("Uploading...")
                                             const formData = new FormData();
 
                                             const compressedBlob = await compressImage(file); // Maximum file size in KB (100KB in this example)
@@ -275,10 +275,10 @@ export default function Editor() {
                                                     return { success: 0 }
                                                 }
                                                 record = await pb.collection("imgs").create(formData);
-                                                toaster.dismiss("uploadToast")
+                                                toaster.dismiss(loadingToast)
                                                 toaster.toast("Image uploaded successfully!", "success")
                                             } catch (error) {
-                                                toaster.dismiss("uploadToast")
+                                                toaster.dismiss(loadingToast)
                                                 if (error.data.code === 403) {
                                                     toaster.toast(error.data.message, "error")
                                                     return { success: 0 }

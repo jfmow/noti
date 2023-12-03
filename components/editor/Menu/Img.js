@@ -49,7 +49,7 @@ export default function Unsplash({ page, setArticleHeader, close }) {
     }
 
     async function downloadAndCreateFileObjects(data) {
-        toaster.toast("Setting cover...", "loading", { id: "LoadingToast" })
+        const loadingToast = await toaster.loading("Setting cover...")
 
         const fullImageUrl = data.urls.full;
         setLoading(data.id);
@@ -67,7 +67,7 @@ export default function Unsplash({ page, setArticleHeader, close }) {
             console.error('Error downloading and creating file objects:', err);
             // Handle the error, e.g., set an error state or show an error message
         } finally {
-            toaster.dismiss("LoadingToast")
+            toaster.dismiss(loadingToast)
             toaster.toast("Cover set successfully!", "success")
             setLoading(null);
         }

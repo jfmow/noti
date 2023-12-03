@@ -14,7 +14,7 @@ export default function AccountButtons() {
         if (!window.confirm('Are you sure you want to delete your account?')) {
             return
         }
-        const toastA = toaster.loading('Deleting account...')
+        const toastA = await toaster.loading('Deleting account...')
 
         try {
             await pb.collection('users').delete(pb.authStore.model.id)
