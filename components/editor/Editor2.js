@@ -18,7 +18,7 @@ import SimpleIframe from "@/customEditorTools/SimpleEmbed";
 import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
 import LineBreak from "@/customEditorTools/LineBreak";
 import { handleCreateBlurHash } from '@/lib/idk'
-import { toaster } from "../toasty";
+import { toaster } from "@/components/toast";
 import { useEditorContext } from "@/pages/page/[...id]";
 import { Paragraph, SubmitButton } from "../UX-Components";
 import { Modal } from "@/lib/Modals/Modal";

@@ -3,7 +3,7 @@ import { DropDownItem } from "@/lib/Pop-Cards/DropDown";
 import { Input, Paragraph, SubmitButton } from "../UX-Components";
 import { useEditorContext } from "@/pages/page/[...id]";
 import { useEffect, useState } from "react";
-import { toaster } from "../toasty";
+import { toaster } from "@/components/toast";
 
 export default function EnableSSOItem() {
     const { pb } = useEditorContext()
