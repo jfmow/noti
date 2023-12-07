@@ -3,7 +3,7 @@ import PocketBase from 'pocketbase';
 import debounce from 'lodash/debounce';
 import Link from '../../Link';
 import styles from '@/styles/Single/Unsplashpicker.module.css'
-import { toaster } from '@/components/toasty';
+import { toaster } from '@/components/toast';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 

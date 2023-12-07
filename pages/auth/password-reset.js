@@ -3,7 +3,7 @@ import PocketBase from 'pocketbase'
 import Head from "next/head"
 import styles from '@/styles/Auth-new.module.css'
 import Router, { useRouter } from "next/router"
-import { toaster } from "@/components/toasty"
+import { toaster } from "@/components/toast"
 import { Input, Link, Paragraph, SubmitButton } from "@/components/UX-Components"
 import { Gap, Modal, ModalContent, ModalTrigger } from "@/lib/Modals/Modal"
 

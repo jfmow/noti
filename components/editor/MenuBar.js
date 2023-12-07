@@ -1,7 +1,7 @@
 import styles from '@/styles/MenuBar.module.css';
 import Router from 'next/router';
 import { useEffect, useState } from 'react';
-import { toaster } from '@/components/toasty';
+import { toaster } from '@/components/toast';
 import { ToolTip, ToolTipCon, ToolTipTrigger } from '@/components/UX-Components/Tooltip';
 import { useEditorContext } from '@/pages/page/[...id]';
 import { DropDown, DropDownContainer, DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from '@/lib/Pop-Cards/DropDown';

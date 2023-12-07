@@ -1,5 +1,5 @@
 import Router from 'next/router';
-import { toaster } from "@/components/toasty";
+import { toaster } from "@/components/toast";
 import { DropDownItem, DropDownSection, DropDownSectionTitle } from '@/lib/Pop-Cards/DropDown';
 import { useEditorContext } from '@/pages/page/[...id]';
 import AccountDetails from './AccountInfoSection';

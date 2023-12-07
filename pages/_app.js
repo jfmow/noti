@@ -3,8 +3,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useEffect } from 'react';
 import { Toaster } from 'sonner';
 import Router from 'next/router';
-import '@/components/toast.css'
-import { ToastContainer } from '@/components/toasty';
+import { ToastContainer } from '@/components/toast';
+import "@/components/toaster.css"
 import { generateDeviceFingerprint } from '@/lib/Fingerprint';
 
 export default function App({ Component, pageProps }) {

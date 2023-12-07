@@ -4,7 +4,7 @@ import { useEditorContext } from '@/pages/page/[...id]';
 import { updateListedPages } from '../Item';
 import { Paragraph } from '../UX-Components';
 import { ToolTip, ToolTipCon, ToolTipTrigger } from '../UX-Components/Tooltip';
-import { toaster } from "@/components/toasty";
+import { toaster } from "@/components/toast";
 import { DropDownItem, DropDownSection } from '@/lib/Pop-Cards/DropDown';
 export default function DeletedPagesManager() {
     const { pb } = useEditorContext()

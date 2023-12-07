@@ -5,7 +5,7 @@ import styles from '@/styles/Auth-new.module.css'
 import Router from "next/router"
 import { getUserTimeZone } from '@/lib/getUserTimeZone';
 import validator from 'validator';
-import { toaster } from "@/components/toasty";
+import { toaster } from "@/components/toast";
 import { Input, Link, Paragraph, SubmitButton } from "@/components/UX-Components";
 import { Modal, ModalContent, ModalTrigger } from "@/lib/Modals/Modal"
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
