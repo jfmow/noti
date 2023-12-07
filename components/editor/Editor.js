@@ -374,11 +374,11 @@ function Editor({ page }) {
                       let record = null
                       try {
                         if (file.size > 5242880) {
-                          toast.error('File too big. Must be < 5mb')
+                          toaster.error('File too big. Must be < 5mb')
                           return { success: 0 }
                         }
                         if (file.name.endsWith(".docx") || file.name.endsWith(".docx/")) {
-                          toast.error('File type not supported yet!')
+                          toaster.error('File type not supported yet!')
                           return { success: 0 }
                         }
                         record = await pb.collection("files").create(formData);

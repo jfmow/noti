@@ -19,6 +19,7 @@ import LineBreak from "@/customEditorTools/LineBreak";
 
 import { handleBlurHashChange } from '@/lib/idk'
 import SimpleIframe from "@/customEditorTools/SimpleEmbed";
+import { toaster } from "./toast";
 
 
 
@@ -76,7 +77,7 @@ function Editor({ page, multi }) {
                     setError(false);
                     setIsLoading(false);
                 } catch (error) {
-                    toast.error(
+                    toaster.error(
                         "Page not found"
                     );
                     console.error(error);
@@ -175,7 +176,7 @@ function Editor({ page, multi }) {
                         editor.destroy();
                     } catch (err) {
                         console.warn(err);
-                        toast.error(`Reloading editor`);
+                        toaster.error(`Reloading editor`);
                         setIsLoading(true);
                         setTimeout(() => {
                             window.location.reload();

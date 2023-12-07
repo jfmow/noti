@@ -2,6 +2,7 @@ import PocketBase from "pocketbase";
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false)
 import styles from "@/styles/Create.module.css";
+import { toaster } from "@/components/toast";
 
 export default class SimpleIframe {
   static get toolbox() {
@@ -24,7 +25,7 @@ export default class SimpleIframe {
     try {
       if (this.data.url) {
         if (url.endsWith(".docx") || url.endsWith(".docx/")) {
-          return toast.error('File type not supported please reupload as a pdf!');
+          return toaster.error('File type not supported please reupload as a pdf!');
         }
       }
     } catch (err) {

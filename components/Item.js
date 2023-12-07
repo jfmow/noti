@@ -2,9 +2,9 @@ import styles from '@/styles/ItemList.module.css'
 import Router, { useRouter } from 'next/router';
 import PocketBase from 'pocketbase'
 import { useEffect, useRef, useState } from 'react';
-import { toast } from 'sonner';
 import UserOptions from './UserInfo';
 import { useEditorContext } from '@/pages/page/[...id]';
+import { toaster } from './toast';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 pb.autoCancellation(false)
 
@@ -24,7 +24,7 @@ export default function PageList() {
         Router.push(`/page/${records.filter(record => record.updated && !record.archived && !record.deleted)[0].id}`)
       }
     } catch {
-      toast.error('Error fetching data')
+      toaster.error('Error fetching data')
     }
   }
 
