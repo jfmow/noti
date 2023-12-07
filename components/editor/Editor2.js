@@ -322,7 +322,7 @@ export default function Editor() {
                                 storeFile: {
                                     uploadFile(file) {
                                         async function uploadbyFile(file) {
-                                            const loadingToast = toaster.loading("Uploading...")
+                                            const loadingToast = await toaster.loading("Uploading...")
                                             const formData = new FormData();
                                             formData.append("file_data", file);
                                             formData.append("uploader", pb.authStore.model.id);
