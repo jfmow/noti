@@ -53,18 +53,20 @@ export default function LoginPage() {
 
   async function GetSSOCode(e) {
     e.preventDefault()
+    const loadingToast = await toaster.loading("Requesting code...")
     try {
       if (!SSOemail) {
         return
       }
       await pb.send(`/api/auth/sso?email=${SSOemail}&linkUrl=${process.env.NEXT_PUBLIC_CURRENTURL}`, { method: 'POST' })
-      toaster.success(`Code sent to ${SSOemail}`)
+      toaster.update(loadingToast, `Code sent to ${SSOemail}`, "success")
       setSSOInputType('code')
     } catch {
-      toaster.error(`Error while sending code to ${SSOemail}`)
+      toaster.update(loadingToast, `Error while sending code to ${SSOemail}`, "error")
     }
   }
   async function LoginWithSSOCode(SSOEmail, SSOCode, e) {
+    const loadingToast = await toaster.loading("Checking code...")
     if (e) {
       e.preventDefault()
     }
@@ -75,12 +77,13 @@ export default function LoginPage() {
       }
       const authData = await pb.send(`/api/auth/sso/login?email=${SSOEmail}&token=${SSOCode}`, { method: 'POST' })
       window.localStorage.setItem('pocketbase_auth', JSON.stringify(authData))
-      toaster.success(`Successfully logged in!`)
+      toaster.update(loadingToast, `Successfully logged in!`, "success")
       Router.push('/page/firstopen')
     } catch {
-      toaster.error(`Error while logging in with sso`)
+      toaster.update(loadingToast, `Error while logging in with sso`, "error")
     }
     setLoginRunning(false)
+
   }
 
   return (

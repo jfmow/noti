@@ -18,7 +18,7 @@ async function toast(type, text) {
     toastElement.innerHTML = Svgs(type)
 
     const textElement = document.createElement('span')
-    textElement.innerText = text + ' ' + id
+    textElement.innerText = text
 
     toastElement.appendChild(textElement)
     container.appendChild(toastElement)
