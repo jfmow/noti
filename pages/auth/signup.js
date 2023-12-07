@@ -18,11 +18,16 @@ export default function LoginPage() {
 
     async function loginNormal(e) {
         e.preventDefault();
+
         if (!username || !password || !email) return;
+
+        const loadingToast = await toaster.loading("Creating account...")
+
         const sanitizedEmail = validator.trim(validator.escape(email));
         const sanitizedPassword = validator.trim(validator.escape(password));
         const sanitizedUsername = validator.trim(validator.escape(username));
         const userTimeZone = getUserTimeZone()
+
         try {
             setLoginRunning(true)
             const data = {
@@ -37,25 +42,16 @@ export default function LoginPage() {
             await pb.collection('users').create(data);
             await pb.collection('users').requestVerification(email);
             await pb.collection('users').authWithPassword(username, password);
+            toaster.update(loadingToast, "Account created", "success")
             Router.push('/page/firstopen')
         } catch (err) {
-            toaster.error('Failed to create an account! Please try again or check if you already have one!')
-        }
-        setLoginRunning(false)
-    }
-
-    async function OAuthLogin(provider) {
-        try {
-            setLoginRunning(true)
-            await pb.collection('users').authWithOAuth2({ provider: provider });
-            Router.push('/page/firstopen')
-        } catch (error) {
-            toaster.error(`Unable to login with ${provider}`)
+            toaster.update(loadingToast, 'Failed to create an account! Please try again or check if you already have one!', "Error")
         }
         setLoginRunning(false)
     }
 
     async function SignupWithSSO() {
+        const loadingToast = await toaster.loading("Creating account...")
         try {
             setLoginRunning(true)
             if (!email || !username) {
@@ -63,9 +59,10 @@ export default function LoginPage() {
             }
             const authData = await pb.send(`/api/auth/sso/signup?email=${email}&username=${username}`, { method: 'POST' })
             window.localStorage.setItem('pocketbase_auth', JSON.stringify(authData))
+            toaster.update(loadingToast, "Account created", "success")
             Router.push('/page/firstopen')
         } catch {
-            toaster.error(`Error while logging in with sso`)
+            toaster.update(loadingToast, `Error while logging in with sso`, "error")
         }
         setLoginRunning(false)
     }

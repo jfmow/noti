@@ -63,12 +63,12 @@ export default function Unsplash({ page, setArticleHeader, close }) {
             if (!response.ok) {
                 throw new Error("Download API error");
             }
+            toaster.update(loadingToast, "Cover set successfully!", "success")
         } catch (err) {
             console.error('Error downloading and creating file objects:', err);
+            toaster.error('An error occured while setting the page cover')
             // Handle the error, e.g., set an error state or show an error message
         } finally {
-            toaster.dismiss(loadingToast)
-            toaster.toast("Cover set successfully!", "success")
             setLoading(null);
         }
     }

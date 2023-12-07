@@ -5,15 +5,12 @@ import styles from '@/styles/Auth-new.module.css'
 import Router, { useRouter } from "next/router"
 import { toaster } from "@/components/toast"
 import { Input, Link, Paragraph, SubmitButton } from "@/components/UX-Components"
-import { Gap, Modal, ModalContent, ModalTrigger } from "@/lib/Modals/Modal"
+import { Gap } from "@/lib/Modals/Modal"
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 export default function PasswordReset() {
     const [username, setUsername] = useState('')
     const [loginRunning, setLoginRunning] = useState(false)
-    const [SSOInputType, setSSOInputType] = useState('email')
-    const [SSOcode, setSSOCode] = useState('')
-    const [SSOemail, setSSOEmail] = useState('')
     const router = useRouter()
     const { query } = router
 
@@ -36,20 +33,6 @@ export default function PasswordReset() {
             toaster.error('Invalid email')
         }
         setLoginRunning(false)
-    }
-
-    async function GetSSOCode(e) {
-        e.preventDefault()
-        try {
-            if (!SSOemail) {
-                return
-            }
-            await pb.send(`/api/auth/sso?email=${SSOemail}&linkUrl=${process.env.NEXT_PUBLIC_CURRENTURL}`, { method: 'POST' })
-            toaster.success(`Code sent to ${SSOemail}`)
-            setSSOInputType('code')
-        } catch {
-            toaster.error(`Error while sending code to ${SSOemail}`)
-        }
     }
     async function LoginWithSSOCode(SSOEmail, SSOCode, e) {
         if (e) {

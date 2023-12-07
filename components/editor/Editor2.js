@@ -97,12 +97,10 @@ export default function Editor() {
                     //}
                     await pb.collection("pages").update(currentPage, formData);
 
-                    toaster.dismiss(loadingToast)
-                    toaster.toast("Image uploaded successfully!", "success")
+                    toaster.update(loadingToast, "Image uploaded successfully!", "success")
 
                 } catch (error) {
-                    toaster.dismiss(loadingToast)
-                    toaster.toast("Error uploading header img", "error");
+                    toaster.update(loadingToast, "Error uploading header img", "error");
                 }
             }
         }
@@ -139,14 +137,12 @@ export default function Editor() {
                             }
                             //console.log("Auto saved successfully!");
                         } catch (error) {
-                            toaster.toast("Could not save", "error");
-                            console.error(error);
+                            toaster.error("Could not save");
                         }
                         //console.log("Auto-save executed.");
                     }
                 } catch (error) {
-                    console.log(error)
-                    toaster.toast("Could not save", "error")
+                    toaster.error("Could not save")
                 }
 
             };
@@ -253,7 +249,7 @@ export default function Editor() {
                                 storeFile: {
                                     uploadFile(file) {
                                         async function uploadbyFile(file) {
-                                            const loadingToast = await toaster.toast("Uploading...")
+                                            const loadingToast = await toaster.loading("Uploading...")
                                             const formData = new FormData();
 
                                             const compressedBlob = await compressImage(file); // Maximum file size in KB (100KB in this example)
@@ -271,19 +267,17 @@ export default function Editor() {
                                             let record = null
                                             try {
                                                 if (compressedFile.size > 5242880) {
-                                                    toaster.error('File too big. Must be < 5mb')
+                                                    toaster.update(loadingToast, 'File too big. Must be < 5mb', "error")
                                                     return { success: 0 }
                                                 }
                                                 record = await pb.collection("imgs").create(formData);
-                                                toaster.dismiss(loadingToast)
-                                                toaster.toast("Image uploaded successfully!", "success")
+                                                toaster.update(loadingToast, "Image uploaded successfully!", "success")
                                             } catch (error) {
-                                                toaster.dismiss(loadingToast)
                                                 if (error.data.code === 403) {
-                                                    toaster.toast(error.data.message, "error")
+                                                    toaster.update(loadingToast, error.data.message, "error")
                                                     return { success: 0 }
                                                 }
-                                                toaster.toast('Unable to upload file', "error")
+                                                toaster.update(loadingToast, 'Unable to upload file', "error")
                                                 return { success: 0 }
                                             }
 
@@ -336,26 +330,23 @@ export default function Editor() {
                                             let record = null
                                             try {
                                                 if (file.size > 5242880) {
-                                                    toaster.error('File too big. Must be < 5mb')
+                                                    toaster.update(loadingToast, 'File too big. Must be < 5mb', "error")
                                                     return { success: 0 }
                                                 }
-                                                if (file.name.endsWith(".docx") || file.name.endsWith(".docx/")) {
-                                                    toaster.error('File type not supported yet!')
+                                                if (!file.name.endsWith(".pdf")) {
+                                                    toaster.update(loadingToast, 'File type not supported yet!', "error")
                                                     return { success: 0 }
                                                 }
                                                 record = await pb.collection("files").create(formData);
                                                 //console.log(record);
-                                                toaster.dismiss(loadingToast)
-                                                toaster.success("File uploaded successfully!")
+                                                toaster.update(loadingToast, "File uploaded successfully!", "success")
 
                                             } catch (error) {
-                                                toaster.dismiss(loadingToast)
-                                                console.error(error);
                                                 if (error.data.code === 403) {
-                                                    toaster.error(error.data.message, { delay: 7000 })
+                                                    toaster.update(loadingToast, error.data.message, "error")
                                                     return { success: 0 }
                                                 }
-                                                toaster.error('Unable to upload file. It may not be supported yet. Try .pdf or images')
+                                                toaster.update(loadingToast, 'Only pdf files are currently supported for this function', "error")
                                                 return { success: 0 }
                                                 // Handle error
                                             }

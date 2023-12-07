@@ -28,14 +28,13 @@ export default function EnableSSOItem() {
         try {
             const state = await pb.send(reqNewPassword ? `/api/auth/sso/toggle?np=${newPassword.newPass}` : `/api/auth/sso/toggle`, { method: 'POST' })
             setSSOState(!ssoState)
-            toaster.dismiss(loadingToast)
+            toaster.update(loadingToast, ssoState ? 'SSO disabled' : 'SSO enabled', "info")
         } catch (err) {
             console.log(err.data)
             if (err.data.message === "You must set a password before disabling SSO.") {
                 setNewPassword({ ...newPassword, required: true })
             }
-            toaster.dismiss(loadingToast)
-            toaster.error(err.data.message)
+            toaster.update(loadingToast, err.data.message, "error")
         }
 
     }

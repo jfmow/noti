@@ -18,13 +18,11 @@ export default function AccountButtons() {
 
         try {
             await pb.collection('users').delete(pb.authStore.model.id)
-            toaster.dismiss(toastA)
-            toaster.toast('Deleted account', "success")
+            toaster.update(toastA, 'Deleted account', "success")
             pb.authStore.clear();
             window.location.replace('/');
         } catch (error) {
-            toaster.dismiss(toastA)
-            toaster.toast('Error while deleting account', "error")
+            toaster.toast(toastA, 'Error while deleting account', "error")
         }
     }
 

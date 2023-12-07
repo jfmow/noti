@@ -11,29 +11,31 @@ export default function DeletedPagesManager() {
     const [itemLoading, setItemLoading] = useState([])
     const { listedPageItems, setListedPageItems } = useEditorContext()
     async function handleRecoverDeletedPage(item) {
+        const loadingToast = await toaster.loading('Restoring page...')
         try {
             if (!itemLoading.includes(item.id)) {
                 setItemLoading([...itemLoading, item.id])
                 await pb.collection("pages").update(item.id, { deleted: false })
                 setListedPageItems(updateListedPages(item.id, { deleted: false }, listedPageItems))
-                toaster.success('Page restored')
+                toaster.update(loadingToast, 'Page restored', "success")
             }
         } catch {
-            toaster.error('Problem recovering page')
+            toaster.update(loadingToast, 'An error occured while attempting to recover the page', "error")
         }
         setItemLoading([...itemLoading.filter(item2 => item2 !== item.id)])
 
     }
     async function handlePermaDeletePage(item) {
+        const loadingToast = await toaster.loading('Deleting page...')
         try {
             if (!itemLoading.includes(item.id)) {
                 setItemLoading([...itemLoading, item.id])
                 await pb.collection("pages").delete(item.id)
                 setListedPageItems(listedPageItems.filter((page) => page.id !== item.id))
-                toaster.success('Page deleted')
+                toaster.update(loadingToast, 'Page deleted', "success")
             }
         } catch {
-            toaster.error('Problem while deleting page.')
+            toaster.update(loadingToast, 'An error occured while attempting to delete the page', "error")
         }
         setItemLoading([...itemLoading.filter(item2 => item2 !== item.id)])
 

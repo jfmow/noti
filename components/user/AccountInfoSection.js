@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import AvatarModal from './AvatarModal';
 import { DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle } from '@/lib/Pop-Cards/DropDown';
 import { useEditorContext } from '@/pages/page/[...id]';
+import { toaster } from '../toast';
 export default function AccountDetails() {
     const { pb } = useEditorContext()
     const [totalUsage, setTotalUsage] = useState(0)
@@ -44,11 +45,10 @@ export default function AccountDetails() {
         const newEmail = prompt('Enter a new email address', pb.authStore.model.email)
         try {
             await pb.collection('users').requestEmailChange(newEmail);
-            toast('Email change request sent! 👍')
-            toaster.toast("Please check your email (new) for a request form.", "success")
+            toaster.success("Please check your email (new) for a request form.")
             return
         } catch (error) {
-            toaster.toast("Failed to request email change, please try again.", "error")
+            toaster.error("Failed to request email change, please try again.")
             return
         }
     }
@@ -56,13 +56,13 @@ export default function AccountDetails() {
         try {
             const newUsername = prompt('Enter a new username', pb.authStore.model.username)
             if (newUsername.length <= 2) {
-                return toaster.toast('Must be longer than 3 letters/numbers', "error");
+                return toaster.error('Must be longer than 3 letters/numbers');
             }
             const data = {
                 "username": newUsername
             };
             await pb.collection('users').update(pb.authStore.model.id, data);
-            toaster.toast(`Your username has been updated: ${newUsername}`, "success")
+            toaster.success(`Your username has been updated: ${newUsername}`)
             await pb.collection('users').authRefresh()
         } catch {
 

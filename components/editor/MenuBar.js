@@ -158,7 +158,7 @@ export default function MenuBar() {
     async function handleDeletePage() {
         try {
             await pb.collection("pages").update(currentPage, { deleted: true });
-            toaster.toast(`Page deleted`, "success")
+            toaster.success(`Page deleted`)
             //Not using below code because page is fully reloaded
             //setListedPageItems(updateListedPages(currentPage, { deleted: true }, listedPageItems))
             window.location.replace('/page/firstopen')

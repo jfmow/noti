@@ -6,7 +6,7 @@ export function ToastContainer({ ...props }) {
     )
 }
 
-async function toast(type, text) {
+async function toast(type = "", text) {
     const id = self.crypto.randomUUID()
     const container = document.body.querySelector(".suddsy_toaster")
 
@@ -120,6 +120,9 @@ async function toast(type, text) {
 }
 
 export const toaster = {
+    async toast(text, type = "") {
+        return toast(type, text)
+    },
     async info(text) {
         return toast("info", text)
     },
