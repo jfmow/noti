@@ -11,7 +11,7 @@ pb.autoCancellation(false);
 const EditorContext = React.createContext();
 
 
-const Editor = lazy(() => import('../../components/editor/Editor2'));
+const Editor = lazy(() => import('../../components/editor/Editor3'));
 
 function NotionEditor({ pageId, themes }) {
   const [isLoading, setIsLoading] = useState(true);

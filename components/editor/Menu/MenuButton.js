@@ -11,9 +11,89 @@ import Img from "@/components/editor/Menu/Img"
 import Icons from "@/components/editor/Menu/Icons"
 import Gradient from '@/components/editor/Menu/gradient/adient';
 import ColorSelector from '@/components/editor/Menu/ColorSelector';
+import { openPageContext } from '../Editor3';
+import { toaster } from '@/components/toast';
 
-export default function MenuButtons({ updateIcon, updateColor, updateHeader, setHeader }) {
-    const { pb, currentPage } = useEditorContext()
+export default function MenuButtons() {
+    const { pb, currentPage, setListedPageItems } = useEditorContext()
+    const { openPageData, setOpenPageData, updateOpenPageData } = openPageContext()
+
+    async function setHeader(img) {
+        setOpenPageData(prevData => {
+            return { ...prevData, header_img: "", unsplash: img }
+        })
+    }
+
+    async function updateIcon(newIcon = '') {
+        if (!newIcon) {
+            return new Error('Please include a new icon')
+        }
+        try {
+            setListedPageItems(prevItems => {
+                return prevItems.map((item) => {
+                    if (item.id === currentPage) {
+                        return { ...item, icon: newIcon.image }
+                    } else {
+                        return item
+                    }
+                })
+            })
+            await pb.collection('pages').update(currentPage, { icon: newIcon.image });
+        } catch {
+            return new Error('Something went wrong updating the page icon')
+        }
+    }
+
+    async function updateColor(newColor = '') {
+        if (!newColor) {
+            return new Error('No color provided')
+        }
+        try {
+            setListedPageItems(prevItems => {
+                return prevItems.map((item) => {
+                    if (item.id === currentPage) {
+                        return { ...item, color: newColor }
+                    } else {
+                        return item
+                    }
+                })
+            })
+            await pb.collection('pages').update(currentPage, { color: newColor });
+        } catch {
+            return new Error('An error occured while updating page color')
+        }
+    }
+
+    async function customHeaderHandler(e) {
+        const file = e.target.files[0]
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            setHeader(event.target.result);
+        };
+        reader.readAsDataURL(file);
+        let formData = new FormData();
+        if (file) {
+
+            try {
+                const compressedBlob = await compressImage(file, 200); // Maximum file size in KB (100KB in this example)
+                const compressedFile = new File([compressedBlob], file.name, {
+                    type: "image/jpeg",
+                });
+                formData.append("header_img", compressedFile);
+                formData.append("unsplash", '');
+                //if (compressedFile.size > 4547000) {
+                //    return toast.error('Compresed file may be too big (>4.5mb)!')
+                //}
+                setOpenPageData(prevData => {
+                    return { ...prevData, header_img: "", unsplash: compressedFile }
+                })
+                await pb.collection("pages").update(currentPage, formData);
+
+            } catch (error) {
+                toaster.error(loadingToast, "Error uploading header image, please try again.", "error");
+            }
+        }
+    }
 
     return (
         <>
@@ -79,7 +159,7 @@ export default function MenuButtons({ updateIcon, updateColor, updateHeader, set
                                         id="fileInput"
                                         accept="image/*"
                                         className={styles.finput}
-                                        onChange={updateHeader}
+                                        onChange={customHeaderHandler}
                                     />
                                     <p>Custom</p>
                                 </label>
