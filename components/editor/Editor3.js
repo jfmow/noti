@@ -303,7 +303,7 @@ export default function EditorV3() {
 
     async function updateTitle(e) {
         try {
-            const titleText = e.target.innerText;
+            const titleText = e.target.innerText.trim();
             /**
              * Update the listed page items (side bar)'s content to reflect the change of the title
              */
