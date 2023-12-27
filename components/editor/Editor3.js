@@ -364,7 +364,7 @@ export default function EditorV3() {
                 <title>{openPageData.title}</title>
             </Head>
             <div className="flex flex-col w-full h-full overflow-scroll" id={`editor-container-${currentPage}`}>
-                <div className="relative w-full min-h-[380px] h-[380px] bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400 flex items-center justify-center mb-5">
+                <div className="relative w-full min-h-[300px] h-[300px] bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400 flex items-center justify-center mb-5">
                     <div className="absolute top-0 left-0 right-0 bottom-0 w-full h-full overflow-hidden">
                         {openPageData.unsplash || openPageData.header_img ? (
                             <img src={openPageData.unsplash || `${process.env.NEXT_PUBLIC_POCKETURL}/api/files/${openPageData.collectionId}/${openPageData.id}/${openPageData.header_img}`} className="w-full h-full object-cover" />
@@ -379,7 +379,7 @@ export default function EditorV3() {
                         <MenuButtons />
                     </div>
                 </div>
-                <div ref={SaveRef} style={{ color: "var(--editor_text)" }} id={`editorjs-editor-${currentPage}`} />
+                <div ref={SaveRef} className="px-3" style={{ color: "var(--editor_text)" }} id={`editorjs-editor-${currentPage}`} />
             </div>
         </editorV3Context.Provider>
     )
