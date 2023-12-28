@@ -2,8 +2,8 @@ import legal from '@/styles/Legal.module.css'
 import Router from 'next/router'
 export default function tc() {
     return (
-        <div className={legal.container}>
-            <button aria-label='Back' className={legal.back} onClick={() => Router.back()}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /></svg></button>
+        <div className="w-full h-full bg-zinc-50 text-zinc-800 p-7">
+            <button aria-label='Back' className="flex items-center justify-center text-zinc-600 p-2 hover:bg-zinc-200 rounded" onClick={() => Router.back()}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /></svg></button>
             <ol>
                 <h1>Terms of Service</h1>
                 <p>These Terms of Service ("Terms") govern your use of savemynotes.net ("the Website") provided by SaveMyNotes ("we," "us," or "our"). By accessing or using the Website, you agree to be bound by these Terms. If you do not agree with these Terms, you must not use the Website.</p>
