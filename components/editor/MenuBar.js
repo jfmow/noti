@@ -189,7 +189,7 @@ export default function MenuBar() {
                                 <>
                                     <div className="flex items-center justify-center relative cursor-pointer" key={index}>
                                         <Link className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200" onClick={() => Router.push(`/page/${item.id}`)}>
-                                            {item.icon && (
+                                            {item?.icon && (
                                                 <div className="w-4 h-4 flex items-center justify-center">
                                                     {item?.icon && item?.icon.includes('.png') ? (<img src={`/emoji/twitter/64/${item?.icon}`} />) : (!isNaN(parseInt(item?.icon, 16)) && String.fromCodePoint(parseInt(item?.icon, 16)))}
                                                 </div>
