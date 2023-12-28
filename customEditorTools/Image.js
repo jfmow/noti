@@ -89,7 +89,7 @@ export default class Image {
       await this._createImage(
         data2.file // Pass the fileId as an argument
       );
-      this.config.saveData.saveAll()
+
     } else {
       return
     }
