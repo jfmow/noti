@@ -188,10 +188,12 @@ export default function MenuBar() {
                             {filteredItems.map((item, index) => (
                                 <>
                                     <div className="flex items-center justify-center relative cursor-pointer" key={index}>
-                                        <Link className="flex gap-1 items-center text-[12px] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200" onClick={() => Router.push(`/page/${item.id}`)}>
-                                            <div className="w-4 h-4 flex items-center justify-center">
-                                                {item?.icon && item?.icon.includes('.png') ? (<img src={`/emoji/twitter/64/${item?.icon}`} />) : (!isNaN(parseInt(item?.icon, 16)) && String.fromCodePoint(parseInt(item?.icon, 16)))}
-                                            </div>
+                                        <Link className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200" onClick={() => Router.push(`/page/${item.id}`)}>
+                                            {item.icon && (
+                                                <div className="w-4 h-4 flex items-center justify-center">
+                                                    {item?.icon && item?.icon.includes('.png') ? (<img src={`/emoji/twitter/64/${item?.icon}`} />) : (!isNaN(parseInt(item?.icon, 16)) && String.fromCodePoint(parseInt(item?.icon, 16)))}
+                                                </div>
+                                            )}
                                             {item?.title || item?.id}
                                         </Link>
                                     </div>
@@ -206,7 +208,7 @@ export default function MenuBar() {
                     ) : (
                         <>
                             <div className="flex items-center justify-center relative cursor-pointer">
-                                <div className="flex gap-1 items-center text-[12px] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200" onClick={() => Router.push(`/page/${currentPage}`)}>
+                                <div className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200" onClick={() => Router.push(`/page/${currentPage}`)}>
                                     <div className="w-4 h-4 flex items-center justify-center">
                                         {activePage?.icon && activePage?.icon.includes('.png') ? (<img src={`/emoji/twitter/64/${activePage?.icon}`} />) : (!isNaN(parseInt(activePage?.icon, 16)) && String.fromCodePoint(parseInt(activePage?.icon, 16)))}
                                     </div>
