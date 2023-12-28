@@ -12,6 +12,15 @@ module.exports = {
   ],
   theme: {
     extend: {
+      animation: {
+        'fade-in-quick': 'fadeinquick 0.3s 1 ease',
+      },
+      keyframes: {
+        fadeinquick: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        }
+      }
     },
   },
   plugins: [],
