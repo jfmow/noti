@@ -192,7 +192,7 @@ export default function MenuButtons() {
                                 Color
                             </TabMenuItem>
                         </TabMenu>
-                        <TabContent name="icon">
+                        <TabContent style={{ paddingTop: 0 }} name="icon">
                             <>
                                 <Icons Select={updateIcon} />
                             </>
