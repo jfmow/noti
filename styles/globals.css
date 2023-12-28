@@ -63,6 +63,26 @@ Basic h1's for editor js
   }
 }
 
+.background-animate {
+  background-size: 200%;
+
+  -webkit-animation: AnimationName 40s ease infinite;
+  -moz-animation: AnimationName 40s ease infinite;
+  animation: AnimationName 40s ease infinite;
+}
+
+@keyframes AnimationName {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
 
 
 

@@ -98,7 +98,7 @@ export default function LoginPage() {
                             <Input label={"Email"} autoComplete="email" aria-required aria-label="Email input" type="email" id="email" placeholder="me@example.com" required="" onChange={(e) => setEmail(e.target.value)} />
                             <Input label={"username"} autoComplete="username" aria-required aria-label="Username input" type="text" id="username" placeholder="Enter a username" required="" onChange={(e) => setUsername(e.target.value)} />
 
-                            <SubmitButton data-track-event='Signup btn signup page' aria-label="Signup button" disabled={loginRunning} type="button" onClick={() => SignupWithSSO()}>
+                            <SubmitButton data-track-event='Signup btn signup page' aria-label="Signup button" disabled={loginRunning} type="button" onClick={(e) => { e.preventDefault(); SignupWithSSO() }}>
                                 {loginRunning ? (
                                     <>
                                         <div className={styles.loader}></div>
