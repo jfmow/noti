@@ -83,7 +83,7 @@ export default class SimpleIframe {
       await this._createImage(
         data2.file.recid // Pass the fileId as an argument
       );
-      this.config.saveData.saveAll()
+
     } else {
       return
     }
