@@ -116,6 +116,8 @@ Basic h1's for editor js
 
 html,
 body {
+  font-family: 'Segoe UI', "Geist-bold", sans-serif;
+
   max-width: 100dvw;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased !important;
