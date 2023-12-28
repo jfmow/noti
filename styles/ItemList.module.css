@@ -176,7 +176,7 @@
 .hide_items {
     width: 100%;
     height: 36px;
-    background: var(--popup_button_bg);
+    background: var(--popupButtonBg);
     color: var(--modal_button_text);
     border: none;
     border-radius: 0 8px 8px 0;
@@ -222,7 +222,7 @@
     border: 2px solid transparent;
     border-radius: 8px 0 0 8px;
     outline: none;
-    background: var(--popup_button_bg);
+    background: var(--popupButtonBg);
     color: var(--modal_button_text);
     transition: .3s ease border-color, .3s ease box-shadow;
 }
@@ -273,7 +273,7 @@
     border: 2px solid transparent;
     border-radius: 0px 0px 8px 8px;
     outline: none;
-    background: var(--popup_button_bg);
+    background: var(--popupButtonBg);
     color: var(--modal_button_text);
     transition: .3s ease;
 }

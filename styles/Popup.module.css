@@ -13,10 +13,10 @@
 
 .popup {
     position: fixed;
-    background: var(--popup_background);
+    background: var(--popupBackground);
     box-shadow: 0px 36px 89px rgb(0 0 0/4%), 0px 23.3333px 52.1227px rgba(0, 0, 0, .03), 0px 13.8667px 28.3481px rgba(0, 0, 0, .024), 0px 7.2px 14.4625px rgb(0 0 0/2%), 0px 2.93333px 7.25185px rgba(0, 0, 0, .016), 0px 0.666667px 3.50231px rgba(0, 0, 0, .01);
 
-    z-index: 11;
+    z-index: 19;
     border-width: 1px;
     border-radius: calc(0.5rem + 4px);
     padding: 1.5rem;
@@ -28,7 +28,7 @@
     min-width: 200px;
     min-height: 200px;
     height: fit-content;
-    color: var(--modal_text_color);
+    color: var(--modalTextColor);
 }
 
 .popup h1 {
@@ -37,7 +37,7 @@
     font-weight: 600;
     letter-spacing: -.025em;
     line-height: 1;
-    color: var(--modal_text_color);
+    color: var(--modalTextColor);
 }
 
 @media(max-width: 640px) {

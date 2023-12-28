@@ -1,4 +1,4 @@
-.clicker {
+/*.clicker {
     position: fixed;
     top: 0;
     left: 0;
@@ -24,14 +24,14 @@
     display: flex;
     width: calc(200px);
     flex-direction: column;
-    background: var(--popup_background);
+    background: var(--popupBackground);
     --tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1), 0 2px 4px -2px rgba(0, 0, 0, .1);
     --tw-ring-offset-shadow: 0 0 #0000;
     --tw-ring-shadow: 0 0 #0000;
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
     border-radius: calc(0.5rem);
     border: 1px solid #e5e7eb6e;
-    z-index: 14;
+    z-index: 18;
 }
 
 
@@ -93,22 +93,22 @@
     font-weight: 600;
     font-size: 14px;
     padding: 0.8rem;
-    color: var(--modal_text_color);
+    color: var(--modalTextColor);
 }
-
+*/
 .item {
     display: flex;
     flex-direction: row;
     align-items: center;
     padding: 6px 8px;
     cursor: default;
-    color: var(--modal_text_color);
+    color: var(--modalTextColor);
     word-break: break-word;
 }
 
 .item:hover {
     border-radius: calc(0.5rem - 4px);
-    background: var(--popup_button_bg);
+    background: var(--popupButtonBg);
 }
 
 .item svg {

@@ -5,7 +5,7 @@ import styles from '@/styles/Auth-new.module.css'
 import Router, { useRouter } from "next/router"
 import { toaster } from "@/components/toast"
 import { Input, Link, Paragraph, SubmitButton } from "@/components/UX-Components"
-import { Modal, ModalContent, ModalInput, ModalTrigger } from "@/lib/Modals/Modal"
+import { Modal, ModalContent, ModalTrigger } from "@/lib/Modals/Modal"
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 export default function LoginPage() {

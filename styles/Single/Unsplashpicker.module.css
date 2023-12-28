@@ -157,7 +157,7 @@
     font-size: 16px;
     border: none;
     border-radius: 4px;
-    background-color: var(--popup_button_bg);
+    background-color: var(--popupButtonBg);
     color: var(--modal_button_text);
     width: 100%;
     outline: none;

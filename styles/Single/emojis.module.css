@@ -38,17 +38,17 @@
 }
 
 .categoryButton {
-    background: var(--popup_button_bg);
+    background: var(--popupButtonBg);
     padding: 4px 7px;
     border-radius: 4px;
     border: none;
     cursor: pointer;
-    color: var(--modal_text_color);
+    color: var(--modalTextColor);
     font-size: 12px;
 }
 
 .active {
-    background: var(--popup_button_bg_hover);
+    background: var(--popupButtonBg_hover);
     color: var(--modal_button_text_hover);
 }
 
@@ -67,8 +67,8 @@
     font-size: 12px;
     border: none;
     border-radius: 4px;
-    background-color: var(--popup_button_bg);
-    color: var(--modal_text_color);
+    background-color: var(--popupButtonBg);
+    color: var(--modalTextColor);
     width: 100%;
     outline: none;
 }
@@ -101,7 +101,7 @@
 }
 
 .sinput[type="text"]::placeholder {
-    color: var(--modal_text_color);
+    color: var(--modalTextColor);
 }
 
 .sinput[type="text"]:placeholder-shown+label {

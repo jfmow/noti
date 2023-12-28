@@ -50,9 +50,9 @@ export default function DeletedPagesManager() {
                     </DropDownItem>
                 </ModalTrigger>
                 <ModalContent>
-                    <h1>Deleted pages</h1>
+                    <h1 className="text-[24px]">Deleted pages</h1>
                     <Paragraph>Recover your deleted pages here</Paragraph>
-                    <div style={{ maxHeight: '50svh', overflowY: 'scroll', display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                    <div className="mt-2" style={{ maxHeight: '50svh', overflowY: 'scroll', display: 'flex', flexDirection: 'column', gap: '5px' }}>
                         {listedPageItems.filter(item => item.deleted).map((item) => (
                             <div style={{ display: 'grid', gridTemplateColumns: '8fr 1fr 1fr' }}>
                                 <div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>

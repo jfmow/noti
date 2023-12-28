@@ -14,10 +14,10 @@
             "--create_new_page_btn_text": "#929292",
             "--page_list_item_icons": "#00000099",
             "--page_list_item_fillcolor": "#00000099",
-            "--modal_text_color": "#000",
-            "--popup_background": "#ffffff",
-            "--popup_button_bg": "#eaeaea",
-            "--popup_button_bg_hover": "#000000",
+            "--modalTextColor": "#000",
+            "--popupBackground": "#ffffff",
+            "--popupButtonBg": "#eaeaea",
+            "--popupButtonBg_hover": "#000000",
             "--userinfo_section_bordertop": "#b8b8b8",
             "--user_option_text": "#464646"
         }
@@ -38,10 +38,10 @@
             "--create_new_page_btn_text": "#8ea3ff",
             "--page_list_item_icons": "#313131",
             "--page_list_item_fillcolor": "#000000",
-            "--modal_text_color": "#222",
-            "--popup_background": "#9cb0ff",
-            "--popup_button_bg": "#8589ff70",
-            "--popup_button_bg_hover": "#000000",
+            "--modalTextColor": "#222",
+            "--popupBackground": "#9cb0ff",
+            "--popupButtonBg": "#8589ff70",
+            "--popupButtonBg_hover": "#000000",
             "--userinfo_section_bordertop": "#b2c1ff",
             "--user_option_text": "#252525"
         }
@@ -61,10 +61,10 @@
             "--create_new_page_btn_text": "#806eb4",
             "--page_list_item_icons": "#ffffffe8",
             "--page_list_item_fillcolor": "#ffffffe8",
-            "--modal_text_color": "#cfd1ff",
-            "--popup_background": "#5839b4",
-            "--popup_button_bg": "#7b4eff",
-            "--popup_button_bg_hover": "#000000",
+            "--modalTextColor": "#cfd1ff",
+            "--popupBackground": "#5839b4",
+            "--popupButtonBg": "#7b4eff",
+            "--popupButtonBg_hover": "#000000",
             "--userinfo_section_bordertop": "#3b3158",
             "--user_option_text": "#6b5c95"
         }
@@ -85,10 +85,10 @@
             "--create_new_page_btn_text": "#575757",
             "--page_list_item_icons": "#313131",
             "--page_list_item_fillcolor": "#000000",
-            "--modal_text_color": "#050505",
-            "--popup_background": "#ccffa5",
-            "--popup_button_bg": "#a9fb6b69",
-            "--popup_button_bg_hover": "#000000",
+            "--modalTextColor": "#050505",
+            "--popupBackground": "#ccffa5",
+            "--popupButtonBg": "#a9fb6b69",
+            "--popupButtonBg_hover": "#000000",
             "--userinfo_section_bordertop": "#cff9b0",
             "--user_option_text": "#252525"
         }
@@ -108,10 +108,10 @@
             "--create_new_page_btn_text": "#bcbcbc",
             "--page_list_item_icons": "#ffffffe8",
             "--page_list_item_fillcolor": "#ffffffe8",
-            "--modal_text_color": "#dddddd",
-            "--popup_background": "#000000",
-            "--popup_button_bg": "#3d3d3d",
-            "--popup_button_bg_hover": "#000000",
+            "--modalTextColor": "#dddddd",
+            "--popupBackground": "#000000",
+            "--popupButtonBg": "#3d3d3d",
+            "--popupButtonBg_hover": "#000000",
             "--userinfo_section_bordertop": "#1d1d1d",
             "--user_option_text": "#959595"
         }

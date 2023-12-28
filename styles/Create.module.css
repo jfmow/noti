@@ -458,8 +458,8 @@
 
 .copypopconf {
   z-index: 100;
-  color: var(--modal_text_color);
-  background: var(--popup_background);
+  color: var(--modalTextColor);
+  background: var(--popupBackground);
   animation: popincopyconf 0.1s 1 ease-in-out;
   padding: 1em;
   font-weight: 600;

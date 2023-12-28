@@ -15,10 +15,10 @@
   --create_new_page_btn_text: #929292;
   --page_list_item_icons: #00000099;
   --page_list_item_fillcolor: #00000099;
-  --modal_text_color: #000;
-  --popup_background: #ffffff;
-  --popup_button_bg: #eaeaea;
-  --popup_button_bg_hover: #000000;
+  --modalTextColor: #000;
+  --popupBackground: #ffffff;
+  --popupButtonBg: #eaeaea;
+  --popupButtonBg_hover: #000000;
   --userinfo_section_bordertop: #b8b8b8;
   --user_option_text: #464646;
 }
@@ -34,6 +34,7 @@ Basic h1's for editor js
 @layer base {
   h1 {
     @apply text-4xl font-bold leading-tight;
+
     /* You can adjust the size, weight, and line height as needed */
   }
 
@@ -98,10 +99,10 @@ Basic h1's for editor js
     --create_new_page_btn_text: #bcbcbc;
     --page_list_item_icons: #ffffffe8;
     --page_list_item_fillcolor: #ffffffe8;
-    --modal_text_color: #dddddd;
-    --popup_background: #000000;
-    --popup_button_bg: #3d3d3d;
-    --popup_button_bg_hover: #000000;
+    --modalTextColor: #dddddd;
+    --popupBackground: #000000;
+    --popupButtonBg: #3d3d3d;
+    --popupButtonBg_hover: #000000;
     --userinfo_section_bordertop: #1d1d1d;
     --user_option_text: #959595;
   }
