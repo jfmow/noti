@@ -197,7 +197,7 @@ export default function MenuButtons() {
                                 <Icons Select={updateIcon} />
                             </>
                         </TabContent>
-                        <TabContent name="color">
+                        <TabContent name="color" >
                             <ColorSelector onSelectColor={updateColor} page={currentPage} />
                         </TabContent>
                     </TabGroup>

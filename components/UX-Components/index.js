@@ -1,7 +1,7 @@
 export function Input({ label, ...props }) {
     const id = crypto.randomUUID()
     return (
-        <div>
+        <div className="w-full h-fit">
             {label && (
                 <label className="block mb-1 font-[500] text-[14px]" for={id}>{label}</label>
             )}
