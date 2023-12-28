@@ -1,4 +1,3 @@
-import styles from '@/styles/UX.module.css'
 export function Input({ label, ...props }) {
     const id = crypto.randomUUID()
     return (
