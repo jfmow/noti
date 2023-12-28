@@ -1,7 +1,6 @@
 import PocketBase from "pocketbase";
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false)
-import styles from "@/styles/Create.module.css";
 import { handleBlurHashChange, handleCreateBlurHash } from '@/lib/idk'
 
 export default class Image {
@@ -98,11 +97,11 @@ export default class Image {
 
   async _createImage(file) {
     const iframe = document.createElement("img");
-    iframe.classList.add(styles.embedIframe);
     iframe.style.width = "100%";
     iframe.style.maxHeight = "50vh";
     iframe.style.objectFit = 'contain';
     iframe.style.borderRadius = "5px";
+    iframe.style.margin = "1em 0";
     if (file.blurHashData) {
       const blurHash = handleBlurHashChange(file.blurHashData)
       iframe.src = blurHash
