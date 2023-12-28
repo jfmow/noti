@@ -96,13 +96,6 @@ export default function EditorV3() {
                         image: {
                             class: Image,
                             config: {
-                                saveData: {
-                                    saveAll() {
-                                        setLastTypedTime(Date.now());
-                                        setLastTypedTimeIdle(false);
-                                        return
-                                    }
-                                },
                                 storeFile: {
                                     uploadFile(file) {
                                         async function uploadbyFile(file) {
@@ -169,13 +162,6 @@ export default function EditorV3() {
                             class: SimpleIframe,
                             inlineToolbar: true,
                             config: {
-                                saveData: {
-                                    saveAll() {
-                                        setLastTypedTime(Date.now());
-                                        setLastTypedTimeIdle(false);
-                                        return
-                                    }
-                                },
                                 storeFile: {
                                     uploadFile(file) {
                                         async function uploadbyFile(file) {
