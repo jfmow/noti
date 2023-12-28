@@ -38,7 +38,7 @@ Basic h1's for editor js
   }
 
   h2 {
-    @apply text-3xl font-semibold leading-tight;
+    @apply text-3xl font-bold leading-tight;
     /* You can adjust the size, weight, and line height as needed */
   }
 
