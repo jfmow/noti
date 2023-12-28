@@ -19,8 +19,8 @@
   --popupBackground: #ffffff;
   --popupButtonBg: #eaeaea;
   --popupButtonBg_hover: #000000;
-  --userinfo_section_bordertop: #b8b8b8;
-  --user_option_text: #464646;
+  --userinfoSectionBordertop: #b8b8b8;
+  --userOptionText: #464646;
 }
 
 @tailwind base;
@@ -103,8 +103,8 @@ Basic h1's for editor js
     --popupBackground: #000000;
     --popupButtonBg: #3d3d3d;
     --popupButtonBg_hover: #000000;
-    --userinfo_section_bordertop: #1d1d1d;
-    --user_option_text: #959595;
+    --userinfoSectionBordertop: #1d1d1d;
+    --userOptionText: #959595;
   }
 }
 

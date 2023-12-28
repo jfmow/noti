@@ -18,8 +18,8 @@
             "--popupBackground": "#ffffff",
             "--popupButtonBg": "#eaeaea",
             "--popupButtonBg_hover": "#000000",
-            "--userinfo_section_bordertop": "#b8b8b8",
-            "--user_option_text": "#464646"
+            "--userinfoSectionBordertop": "#b8b8b8",
+            "--userOptionText": "#464646"
         }
     },
     {
@@ -42,8 +42,8 @@
             "--popupBackground": "#9cb0ff",
             "--popupButtonBg": "#8589ff70",
             "--popupButtonBg_hover": "#000000",
-            "--userinfo_section_bordertop": "#b2c1ff",
-            "--user_option_text": "#252525"
+            "--userinfoSectionBordertop": "#b2c1ff",
+            "--userOptionText": "#252525"
         }
     },
     {
@@ -65,8 +65,8 @@
             "--popupBackground": "#5839b4",
             "--popupButtonBg": "#7b4eff",
             "--popupButtonBg_hover": "#000000",
-            "--userinfo_section_bordertop": "#3b3158",
-            "--user_option_text": "#6b5c95"
+            "--userinfoSectionBordertop": "#3b3158",
+            "--userOptionText": "#6b5c95"
         }
     },
     {
@@ -89,8 +89,8 @@
             "--popupBackground": "#ccffa5",
             "--popupButtonBg": "#a9fb6b69",
             "--popupButtonBg_hover": "#000000",
-            "--userinfo_section_bordertop": "#cff9b0",
-            "--user_option_text": "#252525"
+            "--userinfoSectionBordertop": "#cff9b0",
+            "--userOptionText": "#252525"
         }
     },
     {
@@ -112,8 +112,8 @@
             "--popupBackground": "#000000",
             "--popupButtonBg": "#3d3d3d",
             "--popupButtonBg_hover": "#000000",
-            "--userinfo_section_bordertop": "#1d1d1d",
-            "--user_option_text": "#959595"
+            "--userinfoSectionBordertop": "#1d1d1d",
+            "--userOptionText": "#959595"
         }
     },
     {
