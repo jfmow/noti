@@ -52,7 +52,8 @@ export default function PageList() {
           // timing options
           duration: 500,
           iterations: 1,
-          easing: "ease-in-out"
+          easing: "ease-in-out",
+          fill: "both"
         },
       );
     } else if (visible) {
@@ -67,7 +68,8 @@ export default function PageList() {
           // timing options
           duration: 500,
           iterations: 1,
-          easing: "ease-in-out"
+          easing: "ease-in-out",
+          fill: "both"
         },
       );
     }
