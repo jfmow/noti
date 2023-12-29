@@ -1,4 +1,3 @@
-import legal from '@/styles/Legal.module.css'
 import Router from 'next/router'
 export default function pp() {
     return (
