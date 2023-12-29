@@ -20,11 +20,11 @@ export function ToolTipCon({ children }) {
     );
 }
 
-export function ToolTipTrigger({ children }) {
+export function ToolTipTrigger({ ...props }) {
     const { handleMouseEnter, handleMouseLeave, triggerRef } = useContext(toolTipContext)
     return (
-        <div ref={triggerRef} onMouseEnter={() => handleMouseEnter()} onMouseLeave={() => handleMouseLeave()}>
-            {children}
+        <div {...props} ref={triggerRef} onMouseEnter={() => handleMouseEnter()} onMouseLeave={() => handleMouseLeave()}>
+            {props.children}
         </div>
     )
 }
