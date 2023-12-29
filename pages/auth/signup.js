@@ -1,4 +1,4 @@
-import { Paragraph, SubmitButton } from "@/components/UX-Components";
+import { Link, Paragraph, SubmitButton } from "@/components/UX-Components";
 import { ToolTip, ToolTipCon, ToolTipTrigger } from "@/components/UX-Components/Tooltip";
 import { toaster } from "@/components/toast";
 import { useEffect, useState } from "react";
@@ -60,6 +60,11 @@ export default function Login() {
                 <div className="flex items-center justify-center flex-col mb-4">
                     <h1 className="underline decoration-zinc-300 mb-2  font-[600] text-[28px] text-zinc-800">Signup</h1>
                     <Paragraph>Enter your details to signup</Paragraph>
+                    <div className="flex gap-3">
+                        <Link href="/auth/terms-and-conditions">Terms and conditions</Link>
+                        <Link href="/auth/privacy-policy">Privacy policy</Link>
+                    </div>
+
                 </div>
                 <form onSubmit={(e) => { e.preventDefault(); authMethod ? normalLogin() : ssoLogin() }} className="w-[300px] grid gap-2">
                     {authMethod ? (
@@ -89,6 +94,7 @@ export default function Login() {
                         </ToolTipCon>
                     </div>
                 </form>
+
 
                 <div className="w-[400px] mt-5 flex flex-col items-center justify-center">
                     <div className="grid grid-cols-[1fr_70px_1fr] items-center w-full justify-items-center select-none">
