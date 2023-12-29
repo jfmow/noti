@@ -1,4 +1,3 @@
-import styles from '@/styles/MenuBar.module.css';
 import Router from 'next/router';
 import { useEffect, useState } from 'react';
 import { toaster } from '@/components/toast';
@@ -6,6 +5,7 @@ import { ToolTip, ToolTipCon, ToolTipTrigger } from '@/components/UX-Components/
 import { useEditorContext } from '@/pages/page/[...id]';
 import { DropDown, DropDownContainer, DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from '@/lib/Pop-Cards/DropDown';
 import { updateListedPages } from '../Item';
+import { Link } from '../UX-Components';
 export default function MenuBar() {
     const { pb, currentPage, setVisible, visible, setListedPageItems, listedPageItems } = useEditorContext()
     const [activePage, setActivePage] = useState({})
@@ -176,32 +176,41 @@ export default function MenuBar() {
     }
 
     return (
-        <div className={styles.container}>
+        <div className="w-full h-[45px] pl-1 pr-2 flex justify-between items-center bg-zinc-50 overflow-x-scroll overflow-y-hidden">
             <div style={{ display: 'flex', alignItems: 'center' }}>
-                <button onClick={() => setVisible(!visible)} type='button' className={styles.optionButton}>
+                <button onClick={() => setVisible(!visible)} type='button' className="flex items-center justify-center bg-none border-none text-zinc-800 cursor-pointer p-1 rounded relative w-[30px] h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-right"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><line x1="15" x2="15" y1="3" y2="21" /></svg>
                 </button>
 
-                <div className={styles.pages}>
+                <div className="flex items-center text-zinc-800">
                     {!isMobile ? (
                         <>
                             {filteredItems.map((item, index) => (
-                                <div className={styles.page} key={index}>
-                                    <div className={styles.page_content} onClick={() => Router.push(`/page/${item.id}`)}>
-                                        <div className={styles.page_icon}>
-                                            {item?.icon && item?.icon.includes('.png') ? (<img className={styles.item_icon} src={`/emoji/twitter/64/${item?.icon}`} />) : (!isNaN(parseInt(item?.icon, 16)) && String.fromCodePoint(parseInt(item?.icon, 16)))}
-                                        </div>
-                                        {item?.title || item?.id}
+                                <>
+                                    <div className="flex items-center justify-center relative cursor-pointer" key={index}>
+                                        <Link className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200" onClick={() => Router.push(`/page/${item.id}`)}>
+                                            {item?.icon && (
+                                                <div className="w-4 h-4 flex items-center justify-center">
+                                                    {item?.icon && item?.icon.includes('.png') ? (<img src={`/emoji/twitter/64/${item?.icon}`} />) : (!isNaN(parseInt(item?.icon, 16)) && String.fromCodePoint(parseInt(item?.icon, 16)))}
+                                                </div>
+                                            )}
+                                            {item?.title || item?.id}
+                                        </Link>
                                     </div>
-                                </div>
+                                    {index < filteredItems.length - 1 && (
+                                        <div className='text-zinc-300 flex items-center justify-center mx-1'>
+                                            /
+                                        </div>
+                                    )}
+                                </>
                             ))}
                         </>
                     ) : (
                         <>
-                            <div className={styles.page}>
-                                <div className={styles.page_content} onClick={() => Router.push(`/page/${currentPage}`)}>
-                                    <div className={styles.page_icon}>
-                                        {activePage?.icon && activePage?.icon.includes('.png') ? (<img className={styles.activePage_icon} src={`/emoji/twitter/64/${activePage?.icon}`} />) : (!isNaN(parseInt(activePage?.icon, 16)) && String.fromCodePoint(parseInt(activePage?.icon, 16)))}
+                            <div className="flex items-center justify-center relative cursor-pointer">
+                                <div className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200" onClick={() => Router.push(`/page/${currentPage}`)}>
+                                    <div className="w-4 h-4 flex items-center justify-center">
+                                        {activePage?.icon && activePage?.icon.includes('.png') ? (<img src={`/emoji/twitter/64/${activePage?.icon}`} />) : (!isNaN(parseInt(activePage?.icon, 16)) && String.fromCodePoint(parseInt(activePage?.icon, 16)))}
                                     </div>
                                     {activePage?.title || activePage?.id}
                                 </div>
@@ -210,10 +219,10 @@ export default function MenuBar() {
                     )}
                 </div>
             </div>
-            <div className={styles.options}>
+            <div className="flex items-center justify-center gap-0 relative">
                 <DropDownContainer>
                     <DropDownTrigger>
-                        <button className={styles.optionButton}>
+                        <button className="flex items-center justify-center bg-none border-none text-zinc-800 cursor-pointer p-1 rounded relative w-[30px] h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-help-circle"><circle cx="12" cy="12" r="10" /><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" /><path d="M12 17h.01" /></svg>
                         </button>
                     </DropDownTrigger>
@@ -241,7 +250,7 @@ export default function MenuBar() {
                     <DropDownContainer>
                         <ToolTipTrigger>
                             <DropDownTrigger>
-                                <button className={styles.optionButton}>
+                                <button className="flex items-center justify-center bg-none border-none text-zinc-800 cursor-pointer p-1 rounded relative w-[30px] h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-more-horizontal"><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg>
                                 </button>
                             </DropDownTrigger>
@@ -288,7 +297,7 @@ export default function MenuBar() {
                                             </DropDownItem>
                                             <DropDownItem>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-party-popper"><path d="M5.8 11.3 2 22l10.7-3.79" /><path d="M4 3h.01" /><path d="M22 8h.01" /><path d="M15 2h.01" /><path d="M22 20h.01" /><path d="m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12v0c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10" /><path d="m22 13-.82-.33c-.86-.34-1.82.2-1.98 1.11v0c-.11.7-.72 1.22-1.43 1.22H17" /><path d="m11 2 .33.82c.34.86-.2 1.82-1.11 1.98v0C9.52 4.9 9 5.52 9 6.23V7" /><path d="M11 13c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z" /></svg>
-                                                <p style={{ display: 'flex', alignItems: 'center', gap: '7px' }} >Icon: {pageInfo.icon && pageInfo.icon.includes('.png') ? (<img width='16' height='16' className={styles.page_icon} src={`/emoji/twitter/64/${pageInfo.icon}`} />) : (!isNaN(parseInt(pageInfo.icon, 16)) && String.fromCodePoint(parseInt(pageInfo.icon, 16)))}
+                                                <p style={{ display: 'flex', alignItems: 'center', gap: '7px' }} >Icon: {pageInfo.icon && pageInfo.icon.includes('.png') ? (<img width='16' height='16' src={`/emoji/twitter/64/${pageInfo.icon}`} />) : (!isNaN(parseInt(pageInfo.icon, 16)) && String.fromCodePoint(parseInt(pageInfo.icon, 16)))}
                                                 </p>
                                             </DropDownItem>
                                         </DropDownSection>
@@ -324,8 +333,8 @@ export default function MenuBar() {
                                                         }
                                                         CopyStuff()
                                                     }}>
-                                                        <div id="copyicon">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></svg>
+                                                        <div id="copyicon" className='w-4 h-4 object-contain overflow-hidden mr-2'>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></svg>
                                                         </div>
                                                         <p>Copy to clipboard</p>
                                                     </DropDownItem>

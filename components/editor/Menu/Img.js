@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PocketBase from 'pocketbase';
 import debounce from 'lodash/debounce';
 import Link from '../../Link';
-import styles from '@/styles/Single/Unsplashpicker.module.css'
 import { toaster } from '@/components/toast';
+import { Input } from '@/components/UX-Components';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 
@@ -90,45 +90,41 @@ export default function Unsplash({ page, setArticleHeader, close }) {
 
     return (
         <>
-            <div className={styles.sinputcontainer}>
-                <input
-                    placeholder="Search for an image..."
-                    onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                            debouncedSearch();
-                        }
-                    }}
-                    type="text"
-                    className={styles.sinput}
-                    id={styles.sinput}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <div className={styles.sunderline}></div>
-            </div>
+            <Input
+                placeholder="Search for an image..."
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                        debouncedSearch();
+                    }
+                }}
+                type="text"
+                onChange={(e) => setSearchTerm(e.target.value)}
+            />
 
-            <div className={styles.imgs}>
+            <div className="flex flex-wrap items-center justify-between overflow-y-scroll overflow-x-hidden max-h-[200px]">
                 {images?.map((image) => (
-                    <div key={image.id} className={`${loading === image.id && styles.loading} ${styles.img}`}>
+                    <div key={image.id} className={`${loading === image.id && "opacity-45"} ${"p-1 w-[100px] flex flex-col relative object-cover overflow-hidden"}`}>
                         <img
                             src={image.urls.raw + '?q=65&w=200'}
                             alt={image.alt_description}
                             onClick={() => !loading && downloadAndCreateFileObjects(image)}
                             onLoad={() => setLoading(false)}
+                            className='rounded w-full h-full cursor-pointer'
                         />
-                        <Link href={image.user.links.html + `?utm_source=note.suddsy.dev&utm_medium=referral`} className={styles.author}>
-                            Photo by: <span className={styles.author_name}>{image.user.name}</span>
+                        <Link target={'_blank'} href={image.user.links.html + `?utm_source=${process.env.NEXT_PUBLIC_CURRENTURL}&utm_medium=referral`} className="inline overflow-hidden text-ellipsis text-[8px] text-nowrap">
+                            Photo by: <span className="underline">{image.user.name}</span>
                         </Link>
                     </div>
                 ))}
             </div>
-            <div className={styles.buttons}>
-                <button className={styles.pagebtn} type="button" onClick={() => setPageNumber((prev) => prev - 1)} disabled={currentPageNumber <= 1}>
+            <div className="flex items-center justify-center gap-3 w-full mt-4">
+                <button className="rounded flex items-center justify-center px-3 py-1 aspect-[3/1] bg-zinc-800 text-zinc-50 cursor-pointer hover:bg-zinc-900 text-[14px] font-[300] disabled:bg-red-500 disabled:opacity-45" type="button" onClick={() => setPageNumber((prev) => prev - 1)} disabled={currentPageNumber <= 1}>
                     Back
                 </button>
-                <button className={styles.pagebtn} type="button" onClick={() => setPageNumber((prev) => prev + 1)} disabled={currentPageNumber >= totalPages || totalPages === -1}>
+                <button className="rounded flex items-center justify-center px-3 py-1 aspect-[3/1] bg-zinc-800 text-zinc-50 cursor-pointer hover:bg-zinc-900 text-[14px] font-[300] disabled:bg-red-500 disabled:opacity-45" type="button" onClick={() => setPageNumber((prev) => prev + 1)} disabled={currentPageNumber >= totalPages || totalPages === -1}>
                     Next
                 </button>
-                <button className={`${styles.pagebtn} ${styles.pagebtn_dark}`} type="button" onClick={() => removeCover()}>
+                <button className="rounded flex items-center justify-center px-3 py-1 aspect-[3/1] bg-zinc-800 text-zinc-50 cursor-pointer hover:bg-zinc-900 text-[14px] font-[300] disabled:bg-red-500 disabled:opacity-45" type="button" onClick={() => removeCover()}>
                     Remove cover
                 </button>
             </div>

@@ -1,177 +1,120 @@
-import { useState } from "react"
-import PocketBase from 'pocketbase'
-import Head from "next/head"
-import styles from '@/styles/Auth-new.module.css'
-import Router from "next/router"
-import { getUserTimeZone } from '@/lib/getUserTimeZone';
-import validator from 'validator';
+import { Link, Paragraph, SubmitButton } from "@/components/UX-Components";
+import { ToolTip, ToolTipCon, ToolTipTrigger } from "@/components/UX-Components/Tooltip";
 import { toaster } from "@/components/toast";
-import { Input, Link, Paragraph, SubmitButton } from "@/components/UX-Components";
-import { Modal, ModalContent, ModalTrigger } from "@/lib/Modals/Modal"
+import { useEffect, useState } from "react";
+import PocketBase from 'pocketbase'
+import Router, { useRouter } from "next/router";
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
-export default function LoginPage() {
-    const [email, setEmail] = useState('')
-    const [username, setUsername] = useState('')
+
+export default function Login() {
+    const [authMethod, setAuthMethod] = useState(true)
+    const [idenity, setIdentity] = useState('')
     const [password, setPassword] = useState('')
-    const [loginRunning, setLoginRunning] = useState(false)
-    const [passwordVisible, setPasswordVisible] = useState(false)
-
-    async function loginNormal(e) {
-        e.preventDefault();
-
-        if (!username || !password || !email) return;
-
-        const loadingToast = await toaster.loading("Creating account...")
-
-        const sanitizedEmail = validator.trim(validator.escape(email));
-        const sanitizedPassword = validator.trim(validator.escape(password));
-        const sanitizedUsername = validator.trim(validator.escape(username));
-        const userTimeZone = getUserTimeZone()
-
+    const [username, setUsername] = useState('')
+    async function normalLogin() {
+        const loadingToast = await toaster.loading('Working...')
         try {
-            setLoginRunning(true)
-            const data = {
-                "username": sanitizedUsername,
-                "email": sanitizedEmail,
-                "emailVisibility": false,
-                "password": sanitizedPassword,
-                "passwordConfirm": sanitizedPassword,
-                "time_zone": userTimeZone
-            };
-
-            await pb.collection('users').create(data);
-            await pb.collection('users').requestVerification(email);
-            await pb.collection('users').authWithPassword(username, password);
-            toaster.update(loadingToast, "Account created", "success")
+            await pb.collection('users').authWithPassword(idenity, password)
+            toaster.dismiss(loadingToast)
             Router.push('/page/firstopen')
         } catch (err) {
-            toaster.update(loadingToast, 'Failed to create an account! Please try again or check if you already have one!', "Error")
+            toaster.update(loadingToast, "Invalid username/email or password.", "error")
         }
-        setLoginRunning(false)
     }
 
-    async function SignupWithSSO() {
-        const loadingToast = await toaster.loading("Creating account...")
+    async function ssoLogin() {
+        const loadingToast = await toaster.loading("Working...")
         try {
-            setLoginRunning(true)
-            if (!email || !username) {
+            if (!idenity || !username) {
                 return
             }
-            const authData = await pb.send(`/api/auth/sso/signup?email=${email}&username=${username}`, { method: 'POST' })
+            const authData = await pb.send(`/api/auth/sso/signup?email=${idenity}&username=${username}&linkUrl=${process.env.NEXT_PUBLIC_CURRENTURL}`, { method: 'POST' })
             window.localStorage.setItem('pocketbase_auth', JSON.stringify(authData))
-            toaster.update(loadingToast, "Account created", "success")
+            toaster.dismiss(loadingToast)
             Router.push('/page/firstopen')
         } catch {
-            toaster.update(loadingToast, `Error while logging in with sso`, "error")
+            toaster.update(loadingToast, `Invalid username/email`, "error")
         }
-        setLoginRunning(false)
+    }
+
+    async function OAuthLogin(provider) {
+        const loadingToast = await toaster.loading('Working...')
+        try {
+            await pb.collection('users').authWithOAuth2({ provider: provider })
+            toaster.dismiss(loadingToast)
+            Router.push('/page/firstopen')
+        } catch (err) {
+            toaster.update(loadingToast, "A problem has occured logging in.", "error")
+        }
     }
 
     return (
-        <>
+        <div className="bg-zinc-50 w-full h-screen grid sm:grid-cols-2">
 
-            <Head>
-                <title>Signup</title>
-            </Head>
+            <div className="hidden sm:flex items-center flex-col justify-center" >
+                <h1 className="from-pink-600 via-orange-600 to-red-600 bg-gradient-to-r bg-clip-text text-transparent mb-2  font-[800] text-[38px]">Welcome</h1>
+                <Paragraph>It's a bit lonely here without you ☹️, join us?</Paragraph>
+            </div>
 
-            <button aria-label="Back" className={styles.back} onClick={() => Router.back()}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0V0z" fill="none" /><path d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /></svg></button>
-
-
-            <div className={styles.container}>
-                <div className={styles.oauth_promote}>
-                    <h1>Go <gradient>password</gradient> less!</h1>
-                    <Paragraph>
-                        Only use your email to login, faster, more secure and easier.
-                    </Paragraph>
-                    <Modal>
-                        <ModalTrigger style={{ width: '352px' }}>
-                            <SubmitButton data-track-event='Signup btn signup page' aria-label="Signup button" disabled={loginRunning} type="submit">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-key-square"><path d="M12.4 2.7c.9-.9 2.5-.9 3.4 0l5.5 5.5c.9.9.9 2.5 0 3.4l-3.7 3.7c-.9.9-2.5.9-3.4 0L8.7 9.8c-.9-.9-.9-2.5 0-3.4Z" /><path d="m14 7 3 3" /><path d="M9.4 10.6 2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4" /></svg>
-                                Use sso
-                            </SubmitButton>
-                        </ModalTrigger>
-                        <ModalContent>
-                            <h1>Go password less!</h1>
-                            <Paragraph>
-                                Only use your email to login, faster, more secure and easier.
-                            </Paragraph>
-                            <Input label={"Email"} autoComplete="email" aria-required aria-label="Email input" type="email" id="email" placeholder="me@example.com" required="" onChange={(e) => setEmail(e.target.value)} />
-                            <Input label={"username"} autoComplete="username" aria-required aria-label="Username input" type="text" id="username" placeholder="Enter a username" required="" onChange={(e) => setUsername(e.target.value)} />
-
-                            <SubmitButton data-track-event='Signup btn signup page' aria-label="Signup button" disabled={loginRunning} type="button" onClick={(e) => { e.preventDefault(); SignupWithSSO() }}>
-                                {loginRunning ? (
-                                    <>
-                                        <div className={styles.loader}></div>
-                                    </>
-                                ) : 'Signup'}
-                            </SubmitButton>
-
-                        </ModalContent>
-                    </Modal>
-                </div>
-                <div className={styles.auth_container}>
-                    <h1 style={{ textAlign: 'center' }}>Signup</h1>
-
-                    <form aria-label="Signup form" className={styles.auth_form} onSubmit={(e) => loginNormal(e)}>
-                        <div className={styles.auth_formgroup}>
-                            <Input label={"Email"} autoComplete="email" aria-required aria-label="Email input" type="email" id="email" placeholder="me@example.com" required="" onChange={(e) => setEmail(e.target.value)} />
-                            <Input label={"username"} autoComplete="username" aria-required aria-label="Username input" type="text" id="username" placeholder="Enter a username" required="" onChange={(e) => setUsername(e.target.value)} />
-                            <Input label={"password"} autoComplete="current-password" aria-required aria-label="Password input (One and only)" type={passwordVisible ? 'text' : 'password'} id="password" value={password} placeholder="Enter your password" required="" onChange={(e) => setPassword(e.target.value)} />
-                        </div>
-
-                        <Paragraph >
-                            Please read the <Link href='/auth/terms-and-conditions' style={{ textDecoration: 'underline' }}>Terms and conditions</Link>, <Link style={{ textDecoration: 'underline' }} href='/auth/privacy-policy'>Privacy policy</Link> and <Link style={{ textDecoration: 'underline' }} href='/auth/disclamer'>Disclamer</Link> before continuing. By continuing you agree to these.
-                        </Paragraph>
-                        <SubmitButton data-track-event='Signup btn signup page' aria-label="Signup button" disabled={loginRunning} type="submit">
-                            {loginRunning ? (
-                                <>
-                                    <div className={styles.loader}></div>
-                                </>
-                            ) : 'Signup'}
-                        </SubmitButton>
-                    </form>
-
-                    <div className={styles.oauth2}>
-                        <div className={styles.oauth2_text}>
-                            <span className={styles.oauth2_line} />
-
-                        </div>
-                        <div className={styles.mobile_sso_promo}>
-
-                            <Modal>
-                                <ModalTrigger style={{ width: '100%' }}>
-                                    <SubmitButton data-track-event='Signup btn signup page' aria-label="Signup button" disabled={loginRunning} type="submit">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-key-square"><path d="M12.4 2.7c.9-.9 2.5-.9 3.4 0l5.5 5.5c.9.9.9 2.5 0 3.4l-3.7 3.7c-.9.9-2.5.9-3.4 0L8.7 9.8c-.9-.9-.9-2.5 0-3.4Z" /><path d="m14 7 3 3" /><path d="M9.4 10.6 2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4" /></svg>
-                                        Use sso
-                                    </SubmitButton>
-                                </ModalTrigger>
-                                <ModalContent>
-                                    <form onSubmit={() => SignupWithSSO()}>
-                                        <h1>Go password less!</h1>
-                                        <Paragraph>
-                                            Only use your email to login, faster, more secure and easier.
-                                        </Paragraph>
-                                        <Input label={"Email"} autoComplete="email" aria-required aria-label="Email input" type="email" id="email" placeholder="me@example.com" required="" onChange={(e) => setEmail(e.target.value)} />
-                                        <Input label={"username"} autoComplete="username" aria-required aria-label="Username input" type="text" id="username" placeholder="Enter a username" required="" onChange={(e) => setUsername(e.target.value)} />
-
-                                        <SubmitButton data-track-event='Signup btn signup page' aria-label="Signup button" disabled={loginRunning} type="submit">
-                                            {loginRunning ? (
-                                                <>
-                                                    <div className={styles.loader}></div>
-                                                </>
-                                            ) : 'Signup'}
-                                        </SubmitButton>
-                                    </form>
-                                </ModalContent>
-                            </Modal>
-                        </div>
-
+            <div className="w-[100vw] sm:w-[100%] h-full p-3 bg-zinc-100 border-r border-zinc-200 shadow-lg flex flex-col items-center justify-center">
+                <div className="flex items-center justify-center flex-col mb-4">
+                    <h1 className="underline decoration-zinc-300 mb-2  font-[600] text-[28px] text-zinc-800">Signup</h1>
+                    <Paragraph>Enter your details to signup</Paragraph>
+                    <div className="flex gap-3">
+                        <Link href="/auth/terms-and-conditions">Terms and conditions</Link>
+                        <Link href="/auth/privacy-policy">Privacy policy</Link>
                     </div>
 
-                    <Link data-track-event='Login redirect signup page' style={{ textAlign: 'center' }} href={'/auth/login'}>Login</Link>
+                </div>
+                <form onSubmit={(e) => { e.preventDefault(); authMethod ? normalLogin() : ssoLogin() }} className="w-[300px] grid gap-2">
+                    {authMethod ? (
+                        <>
+                            <input onChange={(e) => setIdentity(e.target.value)} placeholder="Email" type="email" className="flex h-9 w-full rounded-md border border-zinc-300 bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                            <input onChange={(e) => setUsername(e.target.value)} placeholder="username" type="text" className="flex h-9 w-full rounded-md border border-zinc-300 bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                            <input onChange={(e) => setPassword(e.target.value)} placeholder="Password" type="password" className="flex h-9 w-full rounded-md border border-zinc-300 bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                        </>) : (
+                        <>
+                            <input onChange={(e) => setIdentity(e.target.value)} placeholder="Email" type="email" className="flex h-9 w-full rounded-md border border-zinc-300 bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                            <input onChange={(e) => setUsername(e.target.value)} placeholder="username" type="text" className="flex h-9 w-full rounded-md border border-zinc-300 bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+
+
+                        </>
+                    )}
+                    <div className={`grid grid-cols-[1fr_45px] gap-1`}>
+                        <SubmitButton type="submit" style={{ margin: 0 }}>Signup</SubmitButton>
+                        <ToolTipCon>
+                            <ToolTipTrigger>
+                                <SubmitButton onClick={() => { authMethod ? setAuthMethod(false) : normalLogin() }} type="button" style={{ margin: 0 }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-key-square"><path d="M12.4 2.7c.9-.9 2.5-.9 3.4 0l5.5 5.5c.9.9.9 2.5 0 3.4l-3.7 3.7c-.9.9-2.5.9-3.4 0L8.7 9.8c-.9-.9-.9-2.5 0-3.4Z" /><path d="m14 7 3 3" /><path d="M9.4 10.6 2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4" /></svg>
+                                </SubmitButton>
+                            </ToolTipTrigger>
+                            <ToolTip>
+                                SSO
+                            </ToolTip>
+                        </ToolTipCon>
+                    </div>
+                </form>
+
+
+                <div className="w-[400px] mt-5 flex flex-col items-center justify-center">
+                    <div className="grid grid-cols-[1fr_70px_1fr] items-center w-full justify-items-center select-none">
+                        <div className="w-full h-[1px] bg-zinc-400 rounded-xl" />
+                        <span className="text-zinc-800">OAuth</span>
+                        <div className="w-full h-[1px] bg-zinc-400 rounded-xl" />
+                    </div>
+                    <div className="w-[300px] mt-3">
+                        <SubmitButton alt onClick={() => OAuthLogin('github')}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /><path d="M9 18c-4.51 2-5-2-7-2" /></svg>
+                            Github
+                        </SubmitButton>
+                        <SubmitButton alt onClick={() => OAuthLogin('twitch')}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-twitch"><path d="M21 2H3v16h5v4l4-4h5l4-4V2zm-10 9V7m5 4V7" /></svg>                            Twitch
+                        </SubmitButton>
+                    </div>
+
                 </div>
             </div>
 
-        </>
+        </div>
     )
 }

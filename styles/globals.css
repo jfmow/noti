@@ -1,26 +1,26 @@
 :root {
   /*DO NOT CHANGE*/
   --title_input_color: #fff;
-  --title_buttons_fill: #fff;
-  --title_buttons_background: #ffffff57;
+  --titleButtonsFill: #fff;
+  --titleButtonsBackground: #ffffff57;
 
   /*You can change these :)*/
   --background: #f9f9f9;
   --editor_text: #000;
   --boxshadow_primary: #f3f3f39e;
-  --page_list_item_hover: #d8d8d8;
+  --pageListItemHover: #d8d8d8;
   --page_list_item_active: #00000029;
-  --page_list_item_icons_background_hover: #c4c4c4;
-  --page_list_item_hover_drag: #ff7777;
-  --create_new_page_btn_text: #929292;
-  --page_list_item_icons: #00000099;
+  --pageListItemIconsBackgroundHover: #c4c4c4;
+  --pageListItemHover_drag: #ff7777;
+  --createNewPageBtnText: #929292;
+  --pageListItemIcons: #00000099;
   --page_list_item_fillcolor: #00000099;
-  --modal_text_color: #000;
-  --popup_background: #ffffff;
-  --popup_button_bg: #eaeaea;
-  --popup_button_bg_hover: #000000;
-  --userinfo_section_bordertop: #b8b8b8;
-  --user_option_text: #464646;
+  --modalTextColor: #000;
+  --popupBackground: #ffffff;
+  --popupButtonBg: #eaeaea;
+  --popupButtonBg_hover: #000000;
+  --userinfoSectionBordertop: #b8b8b8;
+  --userOptionText: #464646;
 }
 
 @tailwind base;
@@ -34,6 +34,7 @@ Basic h1's for editor js
 @layer base {
   h1 {
     @apply text-4xl font-bold leading-tight;
+
     /* You can adjust the size, weight, and line height as needed */
   }
 
@@ -91,19 +92,19 @@ Basic h1's for editor js
     --background: #0c0c0c;
     --editor_text: #f4f4f4;
     --boxshadow_primary: #000000;
-    --page_list_item_hover: #b196ff36;
+    --pageListItemHover: #b196ff36;
     --page_list_item_active: #000000;
-    --page_list_item_icons_background_hover: #a889ff36;
-    --page_list_item_hover_drag: #ff7777;
-    --create_new_page_btn_text: #bcbcbc;
-    --page_list_item_icons: #ffffffe8;
+    --pageListItemIconsBackgroundHover: #a889ff36;
+    --pageListItemHover_drag: #ff7777;
+    --createNewPageBtnText: #bcbcbc;
+    --pageListItemIcons: #ffffffe8;
     --page_list_item_fillcolor: #ffffffe8;
-    --modal_text_color: #dddddd;
-    --popup_background: #000000;
-    --popup_button_bg: #3d3d3d;
-    --popup_button_bg_hover: #000000;
-    --userinfo_section_bordertop: #1d1d1d;
-    --user_option_text: #959595;
+    --modalTextColor: #dddddd;
+    --popupBackground: #000000;
+    --popupButtonBg: #3d3d3d;
+    --popupButtonBg_hover: #000000;
+    --userinfoSectionBordertop: #1d1d1d;
+    --userOptionText: #959595;
   }
 }
 
@@ -115,6 +116,8 @@ Basic h1's for editor js
 
 html,
 body {
+  font-family: 'Segoe UI', "Geist-bold", sans-serif;
+
   max-width: 100dvw;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased !important;

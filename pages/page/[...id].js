@@ -3,7 +3,6 @@ import dynamic from 'next/dynamic';
 import PocketBase from 'pocketbase'
 import React, { Suspense, lazy, useContext, useEffect, useState } from 'react';
 import MyComponent from '@/components/Item';
-import Terminal from '@/components/Terminal';
 import MenuBar from '@/components/editor/MenuBar';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
@@ -84,7 +83,6 @@ function NotionEditor({ pageId, themes }) {
 
   return (
     <EditorContext.Provider value={{ listedPageItems, pb, setListedPageItems, visible, setVisible, currentPage: pageId[0], pageId, themes, listedPageItemsFilter, setListedPageItemsFilters, noSaving: pageId[0] === 'rzz50e2mnhgwof2' }}>
-      <Terminal />
       <div>
         <div className='main'>
           <MyComponent />

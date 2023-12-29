@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import emojis from 'emoji-datasource-twitter';
-import styles from '@/styles/Single/emojis.module.css';
 import { PopUpCardsGlobalButton } from "@/lib/Pop-Cards/Popup";
+import { Input } from "@/components/UX-Components";
 
 export default function Icons({ Select, Selected, Close }) {
     const [searchTerm, setSearchTerm] = useState('');
@@ -51,25 +51,20 @@ export default function Icons({ Select, Selected, Close }) {
 
     return (
         <>
-            <div className={styles.sinputcontainer}>
-                <input
-                    placeholder="Search for a emoji"
-                    onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                            debouncedSearch();
-                        }
-                    }}
-                    type="text"
-                    className={styles.sinput}
-                    id={styles.sinput}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <div className={styles.sunderline}></div>
-            </div>
-            <div className={styles.categories}>
+            <Input
+                type="text"
+                placeholder="Search for a emoji"
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                        debouncedSearch();
+                    }
+                }}
+                onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <div className="flex items-center flex-wrap gap-2 mb-1">
                 <button
                     type="button"
-                    className={`${styles.categoryButton}`}
+                    className="flex items-center justify-center bg-slate-100 p-1 text-[12px] font-[600] rounded text-slate-800"
                     onClick={() => handleCategoryClick('')}
                 >All</button>
                 {categories.map((category) => (
@@ -77,15 +72,15 @@ export default function Icons({ Select, Selected, Close }) {
                         aria-label={`${category} category filter button`}
                         key={category}
                         type="button"
-                        className={`${styles.categoryButton} ${selectedCategory === category ? styles.active : ''
+                        className={`${"flex items-center justify-center p-1 text-[12px] font-[600] rounded text-slate-800"} ${selectedCategory === category ? "bg-slate-300 " : 'bg-slate-100'
                             }`}
                         onClick={() => handleCategoryClick(category)}
                     >
                         {category}
                     </button>
                 ))}
-            </div>
-            <div className={styles.emojigrid} ref={containerRef}>
+            </div >
+            <div className="relative flex flex-wrap h-full justify-between items-center" ref={containerRef}>
                 {visibleEmojis.map((emoji, index) => {
                     try {
                         if (emoji.has_img_twitter) {
@@ -100,13 +95,14 @@ export default function Icons({ Select, Selected, Close }) {
                             return (
                                 <div
                                     key={emoji.unified}
-                                    className={styles.icon}
+                                    className="p-1 cursor-pointer m-[-5px]"
+                                    style={{ transform: 'scale(0.8)' }}
                                     onClick={() => setNewIcon(emoji)}
                                     title={emoji.short_name}
                                 >
                                     <img
                                         loading={index > 250 ? "lazy" : "eager"}
-                                        className={` ${styles.emojiIcon}`}
+                                        className="flex cursor-pointer w-[32px] h-[32px] cursor-pointer"
                                         src={`/emoji/twitter/64/${emoji.image}`}
                                     />
                                 </div>

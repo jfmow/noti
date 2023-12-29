@@ -8,7 +8,6 @@ import InlineCode from "@editorjs/inline-code";
 import List from "@editorjs/list";
 import Quote from "@editorjs/quote";
 import Table from "@editorjs/table";
-import styles from "@/styles/Create.module.css";
 import Video from '@/customEditorTools/Video'
 import compressImage from "@/lib/CompressImg";
 import Router from "next/router";
@@ -331,7 +330,7 @@ export default function EditorV3() {
                                     Router.push(`/page/${item.id}`)
                                 }} style={{ display: 'flex', gap: '7px', alignItems: 'center', cursor: 'pointer' }} className="hover:bg-[#f9f9f9] rounded p-3">
                                     <div aria-label='Page icon' style={{ display: 'flex', width: '16px', height: '16px' }}>
-                                        {item.icon && item.icon.includes('.png') ? (<img className={styles.item_icon} src={`/emoji/twitter/64/${item.icon}`} />) : (!isNaN(parseInt(item.icon, 16)) && String.fromCodePoint(parseInt(item.icon, 16)))}
+                                        {item.icon && item.icon.includes('.png') ? (<img className="w-4 h-4" src={`/emoji/twitter/64/${item.icon}`} />) : (!isNaN(parseInt(item.icon, 16)) && String.fromCodePoint(parseInt(item.icon, 16)))}
                                     </div>
                                     <div>{item.title}</div>
                                 </div>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import styles from '@/styles/MeshGradient.module.css';
 import { PopUpCardsGlobalButton } from "@/lib/Pop-Cards/Popup";
 import { gradient } from "@/components/editor/Menu/gradient";
 import compressImage from "@/lib/CompressImg";
@@ -55,20 +54,20 @@ export default function Gradient({ setArticleHeader, page, pb }) {
     }
 
     return (
-        <div className={styles.container}>
-            <div className={styles.canvas}>
-                <canvas id="gradient-canvas" ref={canvasRef} />
+        <div className="w-full h-[300px] overflow-hidden relative flex flex-col items-center justify-center">
+            <div className="w-[300px]">
+                <canvas className="w-full shadow-lg rounded" id="gradient-canvas" ref={canvasRef} />
             </div>
-            <div className={styles.coloroptions}>
+            <div className="flex gap-2 items-center justify-center my-4">
                 {colors.map((color, index) => (
-                    <div className={styles.colorpickerwrapper} key={index}>
-                        <div className={styles.colorpicker}>
-                            <input type="color" value={color} onChange={(e) => handleColorChange(index, e.target.value)} />
+                    <div className="flex justify-center items-center shadow bg-zinc-50 w-[40px] h-[30px] rounded border border-2 border-zinc-100 mx-1" key={index}>
+                        <div className="relative overflow-hidden w-[40px] h-[40px] rounded">
+                            <input className="absolute right-[-8px] top-[-8px] w-[56px] h-[56px] border-none" type="color" value={color} onChange={(e) => handleColorChange(index, e.target.value)} />
                         </div>
                     </div>
                 ))}
             </div>
-            <div className={styles.coloroptions}>
+            <div className="flex gap-2 items-center justify-center">
                 <PopUpCardsGlobalButton click={() => {
                     gradient.changeGradientColors(colors);
                     gradient.changePosition(Math.floor(Math.random() * 1000));

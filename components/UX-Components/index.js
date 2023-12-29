@@ -1,18 +1,17 @@
-import styles from '@/styles/UX.module.css'
 export function Input({ label, ...props }) {
     const id = crypto.randomUUID()
     return (
-        <div className={styles.ux_input_default}>
+        <div className="w-full h-fit">
             {label && (
-                <label for={id}>{label}</label>
+                <label className="block mb-1 font-[500] text-[14px]" for={id}>{label}</label>
             )}
-            <input name={id} {...props} />
+            <input className="w-full py-[12px] px-[16px] rounded-lg outline-none border border-slate-100 bg-slate-50 text-zinc-800 text-[14px] mb-2 font-[400]" name={id} {...props} />
         </div>
     )
 }
 
 export function FileInput({ alt, ...props }) {
-    const className = `${styles.ux_submitButton} ${alt ? styles.ux_submitButton_alt : ''}`
+    const className = `mt-1 min-h-[43px] flex justify-center items-center  border-2 border-zinc-800 w-full px-1 py-2 gap-2 mx-1 cursor-pointer rounded-xl text-[14px] transition-all transition-ease-in-out font-[500] ${alt ? 'bg-none text-zinc-800 hover:bg-zinc-800 hover:text-zinc-50' : 'text-zinc-50 bg-zinc-800 hover:bg-none hover:text-zinc-800'}`
     return (
         <label className={className}>
             <input onChange={props.onChange} accept={props.accept} style={{ display: 'none' }} type={'file'} />
@@ -22,7 +21,7 @@ export function FileInput({ alt, ...props }) {
 }
 
 export function SubmitButton({ alt, ...props }) {
-    const className = `${styles.ux_submitButton} ${alt ? styles.ux_submitButton_alt : ''}`
+    const className = `mt-1 min-h-[43px] flex justify-center items-center  border-2 border-zinc-800 w-full px-1 py-2 gap-2 mx-1 cursor-pointer rounded-xl text-[14px] transition-all transition-ease-in-out font-[500] ${alt ? 'bg-none text-zinc-800 hover:bg-zinc-800 hover:text-zinc-50' : 'text-zinc-50 bg-zinc-800 hover:bg-zinc-50 hover:text-zinc-800'}`
     if (!props?.type) {
         return (
             <>
@@ -39,7 +38,7 @@ export function SubmitButton({ alt, ...props }) {
 
 export function Paragraph({ ...props }) {
     return (
-        <p {...props} className={styles.ux_paragraph}>
+        <p {...props} className="text-[14px] text-zinc-500 font-[500] mb-2">
             {props?.children}
         </p>
     )
@@ -47,18 +46,6 @@ export function Paragraph({ ...props }) {
 
 export function Link({ ...props }) {
     return (
-        <a {...props} className={`${props.className} ${styles.ux_link}`}>{props.children}</a>
-    )
-}
-
-export function ToggleSwitch({ ...props }) {
-    return (
-        <div className={styles.ux_toggleSwitch_container}>
-            <label style={{ fontSize: props?.size || '' }} {...props} className={styles.ux_toggleSwitch}>
-                <input defaultChecked={props?.enabled} type="checkbox" />
-                <span className={styles.ux_toggleSwitch_slider}></span>
-            </label >
-            <span>{props.children}</span>
-        </div>
+        <a {...props} className={`${props.className} ${"font-[500] text-[14px] text-zinc-800"}`}>{props.children}</a>
     )
 }

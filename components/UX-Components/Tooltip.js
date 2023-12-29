@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from "react"
-import styles from '@/styles/Tooltip.module.css'
 const toolTipContext = React.createContext();
 
 export function ToolTipCon({ children }) {
@@ -21,11 +20,11 @@ export function ToolTipCon({ children }) {
     );
 }
 
-export function ToolTipTrigger({ children }) {
+export function ToolTipTrigger({ ...props }) {
     const { handleMouseEnter, handleMouseLeave, triggerRef } = useContext(toolTipContext)
     return (
-        <div ref={triggerRef} onMouseEnter={() => handleMouseEnter()} onMouseLeave={() => handleMouseLeave()}>
-            {children}
+        <div {...props} ref={triggerRef} onMouseEnter={() => handleMouseEnter()} onMouseLeave={() => handleMouseLeave()}>
+            {props.children}
         </div>
     )
 }
@@ -68,7 +67,7 @@ export function ToolTip({ children }) {
     return (
         <>
             {tooltipVisible && (
-                <div aria-roledescription="tooltip" role="tooltip" ref={tooltipRef} className={styles.tooltip}>
+                <div aria-roledescription="tooltip" role="tooltip" ref={tooltipRef} className="fixed z-[2] p-[5px] rounded whitespace-nowrap text-zinc-800 bg-zinc-50 font-[600] text-[12px] shadow-sm animate-fade-in-quick">
                     {children}
                 </div>
             )}

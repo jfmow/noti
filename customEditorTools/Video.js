@@ -1,4 +1,3 @@
-import styles from "@/styles/Create.module.css";
 
 export default class SimpleIframeWebpage {
   static get toolbox() {
@@ -59,7 +58,6 @@ export default class SimpleIframeWebpage {
 
   async _createIframe(src) {
     const iframe = document.createElement("iframe");
-    iframe.classList.add(styles.embedIframe);
     iframe.style.width = "100%";
     iframe.style.background = 'none';
     iframe.style.maxHeight = "85vh";

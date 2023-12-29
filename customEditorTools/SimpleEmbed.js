@@ -1,7 +1,6 @@
 import PocketBase from "pocketbase";
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false)
-import styles from "@/styles/Create.module.css";
 import { toaster } from "@/components/toast";
 
 export default class SimpleIframe {
@@ -92,7 +91,6 @@ export default class SimpleIframe {
 
   async _createImage(fileId) {
     const iframe = document.createElement("iframe");
-    iframe.classList.add(styles.embedIframe);
     iframe.style.width = "100%";
     iframe.style.height = "90vh";
     iframe.style.border = "none";
