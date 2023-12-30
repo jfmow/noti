@@ -17,6 +17,8 @@ function NotionEditor({ pageId, themes }) {
   const [visible, setVisible] = useState(true)
   const [listedPageItems, setListedPageItems] = useState([])
   const [listedPageItemsFilter, setListedPageItemsFilters] = useState({ archived: false })
+  const [showArchivedPages, setShowArchivedPages] = useState(false)
+
 
   useEffect(() => {
 
@@ -82,7 +84,7 @@ function NotionEditor({ pageId, themes }) {
   }
 
   return (
-    <EditorContext.Provider value={{ listedPageItems, pb, setListedPageItems, visible, setVisible, currentPage: pageId[0], pageId, themes, listedPageItemsFilter, setListedPageItemsFilters, noSaving: pageId[0] === 'rzz50e2mnhgwof2' }}>
+    <EditorContext.Provider value={{ showArchivedPages, setShowArchivedPages, listedPageItems, pb, setListedPageItems, visible, setVisible, currentPage: pageId[0], pageId, themes, listedPageItemsFilter, setListedPageItemsFilters, noSaving: pageId[0] === 'rzz50e2mnhgwof2' }}>
       <div>
         <div className='main'>
           <MyComponent />
