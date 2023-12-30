@@ -2,7 +2,6 @@ import Router from 'next/router';
 import { DropDownItem, DropDownSection, DropDownSectionTitle } from '@/lib/Pop-Cards/DropDown';
 import { useEditorContext } from '@/pages/page/[...id]';
 import AccountDetails from './AccountInfoSection';
-import DeletedPagesManager from './DeletedPagesManager';
 import SecuritySettings from './SecuritySettings';
 export default function AccountButtons() {
     const { pb } = useEditorContext()
@@ -12,7 +11,6 @@ export default function AccountButtons() {
                 Settings
             </DropDownSectionTitle>
             <AccountDetails />
-            <DeletedPagesManager />
             <DropDownSection>
                 <SecuritySettings />
 

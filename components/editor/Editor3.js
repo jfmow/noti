@@ -60,6 +60,10 @@ export default function EditorV3() {
                 } catch {
                     try {
                         const altRecord = await pb.collection('pages').getFullList({ sort: '-created', filter: `title ?~ '${currentPage}'` })
+                        if (!altRecord || altRecord.length === 0) {
+                            Router.push('/page/firstopen')
+                            return
+                        }
                         if (altRecord.length === 1) {
                             Router.push(altRecord[0].id)
                         } else {

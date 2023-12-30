@@ -10,7 +10,6 @@ export default function MenuBar() {
     const { pb, currentPage, setVisible, visible, setListedPageItems, listedPageItems } = useEditorContext()
     const [activePage, setActivePage] = useState({})
     const [filteredItems, setFilteredItems] = useState([]);
-    const [DeletePageAlert, setDeletePageAlert] = useState(false)
     const [pageInfo, setPageInfo] = useState({})
     const [isMobile, setIsMobile] = useState(false)
     useEffect(() => {
@@ -19,7 +18,6 @@ export default function MenuBar() {
         }
     }, [])
     useEffect(() => {
-        setDeletePageAlert(false)
         setPageInfo({})
         const mainItem = listedPageItems.find((Apage) => Apage.id === currentPage);
         setActivePage(mainItem)
@@ -156,15 +154,17 @@ export default function MenuBar() {
         document.body.removeChild(dummyInput);
     }
     async function handleDeletePage() {
+        if (!confirm(`Are you sure you wish to delete ${listedPageItems.find((item) => item.id === currentPage)?.title || currentPage}`)) return
         try {
-            await pb.collection("pages").update(currentPage, { deleted: true });
+            await pb.collection("pages").delete(currentPage);
             toaster.success(`Page deleted`)
-            //Not using below code because page is fully reloaded
-            //setListedPageItems(updateListedPages(currentPage, { deleted: true }, listedPageItems))
-            window.location.replace('/page/firstopen')
+            setListedPageItems(prevItems => {
+                return prevItems.filter((aitem) => aitem.id !== currentPage)
+            })
+            Router.push(`/page/firstopen`)
         } catch (err) {
             console.log(err)
-            toaster.error('An error occured while trying to delete the currentPage')
+            toaster.error('An error occured while trying to delete the page')
         }
     }
 
@@ -356,21 +356,7 @@ export default function MenuBar() {
                                     </DropDownExtension>
                                 </DropDownExtensionContainer>
 
-                                <DropDownItem
-                                    onClick={() => DeletePageAlert ? handleDeletePage() : setDeletePageAlert(true)} red={DeletePageAlert}>
-                                    {DeletePageAlert ? (
-                                        <>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
-                                            <p>Click to delete</p>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" /><line x1="10" x2="10" y1="11" y2="17" /><line x1="14" x2="14" y1="11" y2="17" /></svg>
-                                            <p >Delete</p>
-                                        </>
-                                    )}
 
-                                </DropDownItem>
 
                                 <DropDownItem onClick={() => handleArchivePageToggle()}>
                                     {listedPageItems.find((Apage) => Apage.id === currentPage)?.archived ? (
@@ -386,6 +372,12 @@ export default function MenuBar() {
                                     )}
                                 </DropDownItem>
 
+                                <DropDownItem
+                                    onClick={() => handleDeletePage()} >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" /><line x1="10" x2="10" y1="11" y2="17" /><line x1="14" x2="14" y1="11" y2="17" /></svg>
+                                    <p >Delete</p>
+
+                                </DropDownItem>
                             </DropDownSection>
                         </DropDown >
                     </DropDownContainer>
