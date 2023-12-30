@@ -35,3 +35,10 @@ Online note editor for work & school
 For this app I have created a **custom build** of pocketbase which requires you to build it locally, and use the schema. You can customise the schema to you liking but **be aware of certain requirements in the main.go for table names etc.**
 
 Build: [https://github.com/jfmow/pocketbase](https://github.com/jfmow/pocketbase)
+
+
+
+---
+Z-INDEX for tabed popup: 10 & 11
+Z-INDEX for Corner popup: 15,16
+Z-INDEX for dialog (dropdown): 13,14
