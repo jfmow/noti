@@ -86,7 +86,7 @@ function NotionEditor({ pageId, themes }) {
   return (
     <EditorContext.Provider value={{ showArchivedPages, setShowArchivedPages, listedPageItems, pb, setListedPageItems, visible, setVisible, currentPage: pageId[0], pageId, themes, listedPageItemsFilter, setListedPageItemsFilters, noSaving: pageId[0] === 'rzz50e2mnhgwof2' }}>
       <div>
-        <div className='main'>
+        <div className='flex flex-col sm:flex-row'>
           <MyComponent />
           <div style={{ flex: '1 1 0%', position: 'relative', display: 'flex', height: '100vh', flexDirection: 'column', overflowX: 'hidden' }}>
             <MenuBar />
