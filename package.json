@@ -33,6 +33,7 @@
     "fast-blurhash": "^1.1.2",
     "framer-motion": "^10.12.16",
     "lodash": "^4.17.21",
+    "lucide-react": "^0.303.0",
     "next": "13.5.4",
     "pocketbase": "^0.16.0",
     "react": "18.2.0",
