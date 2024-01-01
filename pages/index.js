@@ -1,8 +1,15 @@
 import { Link } from "@/components/UX-Components"
+import Head from "next/head"
 
 export default function Home() {
   return (
     <>
+      <Head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Note</title>
+        <link rel="icon" href="/logo.png" />
+      </Head>
       <nav className="px-5 py-3 sm:py-0 text-black items-center grid sm:grid-cols-3 sticky top-0 left-0 right-0 h-[60px] z-50 w-full border-b bg-zinc-50">
         <div className="w-full h-full hidden items-center sm:flex justify-start ">
           <div className="overflow-hidden w-6 h-6 object-contain">
