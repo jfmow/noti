@@ -16,6 +16,13 @@ export default function Login() {
     async function normalLogin() {
         const loadingToast = await toaster.loading('Working...')
         try {
+            await pb.collection('users').create({
+                "username": username,
+                "email": idenity,
+                "emailVisibility": false,
+                "password": password,
+                "passwordConfirm": password,
+            })
             await pb.collection('users').authWithPassword(idenity, password)
             toaster.dismiss(loadingToast)
             Router.push('/page/firstopen')
