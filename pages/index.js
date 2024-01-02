@@ -264,10 +264,10 @@ function Hero() {
         <h1 className="text-center text-5xl font-bold leading-tight tracking-tighter md:text-8xl lg:leading-[1.1]"><span className="from-pink-600 via-orange-600 to-red-600 bg-gradient-to-r bg-clip-text text-transparent">Unleash</span> Your Creativity with <span className="from-pink-600 via-purple-600 to-blue-600 bg-gradient-to-r bg-clip-text text-transparent">Beautiful</span> Notes</h1>
         <h2 className="w-[90%] md:max-w-[700px] mt-3 font-[500] text-center text-sm text-zinc-600 sm:text-xl">Step into a world where your thoughts become vibrant expressions. Craft notes that reflect your unique creativity and personality. Immerse yourself in a personalized experience that turns every detail into a visual masterpiece.</h2>
         <div className="flex items-center justify-center gap-5 p-4">
-          <Link href="/page/rzz50e2mnhgwof2" className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-zinc-800 text-zinc-50 shadow hover:bg-zinc-800/90 h-9 px-4 py-2">
+          <Link href="/page/rzz50e2mnhgwof2" className="text-zinc-50 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-zinc-800 text-zinc-50 shadow hover:bg-zinc-800/90 h-9 px-4 py-2">
             Demo
           </Link>
-          <Link href="/page/signup" className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-zinc-800 text-zinc-50 shadow hover:bg-zinc-800/90 h-9 px-4 py-2">
+          <Link href="/page/signup" className="text-zinc-50 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-zinc-800 text-zinc-50 shadow hover:bg-zinc-800/90 h-9 px-4 py-2">
             Get started
           </Link>
         </div>
