@@ -220,32 +220,6 @@ export default function MenuBar() {
                 </div>
             </div>
             <div className="flex items-center justify-center gap-0 relative">
-                <DropDownContainer>
-                    <DropDownTrigger>
-                        <button className="flex items-center justify-center bg-none border-none text-zinc-800 cursor-pointer p-1 rounded relative w-[30px] h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-help-circle"><circle cx="12" cy="12" r="10" /><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" /><path d="M12 17h.01" /></svg>
-                        </button>
-                    </DropDownTrigger>
-                    <DropDown>
-                        <DropDownSectionTitle>
-                            How to: View archived pages
-                        </DropDownSectionTitle>
-                        <DropDownSection>
-                            <DropDownItem>
-                                Use ctrl/cmd p or spacebar to open the terminal and then enable archived filter
-                            </DropDownItem>
-                        </DropDownSection>
-                        <DropDownSectionTitle>
-                            How to: Use the terminal
-                        </DropDownSectionTitle>
-                        <DropDownSection>
-                            <DropDownItem>
-                                Use ctrl/cmd p or spacebar to open the terminal. It lists pages, filters, search and actions
-                            </DropDownItem>
-                        </DropDownSection>
-                    </DropDown>
-                </DropDownContainer>
-
                 <ToolTipCon>
                     <DropDownContainer>
                         <ToolTipTrigger>
