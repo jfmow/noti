@@ -1,7 +1,14 @@
 import { Link } from "@/components/UX-Components"
 import Head from "next/head"
-
+import { useEffect } from "react"
+import PocketBase from 'pocketbase'
+const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 export default function Home() {
+  useEffect(() => {
+    if (pb.authStore.isValid) {
+      window.location.replace('/page/firstopen')
+    }
+  }, [])
   return (
     <>
       <Head>

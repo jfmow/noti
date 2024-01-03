@@ -90,7 +90,7 @@ function NotionEditor({ pageId, themes }) {
           <MyComponent />
           <div style={{ flex: '1 1 0%', position: 'relative', display: 'flex', height: '100vh', flexDirection: 'column', overflowX: 'hidden' }}>
             <MenuBar />
-            <div style={{ display: 'flex', height: 'calc(100dvh - 45px)', overflow: 'hidden' }}>
+            <div style={{ display: 'flex', height: '100%', overflow: 'hidden' }}>
               {
                 [...new Set(pageId)].map((page) => (
                   <Suspense fallback={<></>}>

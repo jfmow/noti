@@ -368,7 +368,7 @@ export default function EditorV3() {
                         <MenuButtons />
                     </div>
                 </div>
-                <div ref={SaveRef} className="px-3" style={{ color: "var(--editor_text)" }} id={`editorjs-editor-${currentPage}`} />
+                <div ref={SaveRef} className="px-8" style={{ color: "var(--editor_text)" }} id={`editorjs-editor-${currentPage}`} />
             </div>
         </editorV3Context.Provider>
     )
