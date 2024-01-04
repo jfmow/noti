@@ -70,11 +70,11 @@ export default function HOME() {
 
         </div>
         <div className="w-full min-h-screen justify-center flex-col flex items-center relative">
-          <div class="absolute top-0 z-[-2] h-screen w-screen bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
+          <div class="absolute top-0 z-[-2] h-screen w-screen bg-[#000000] bg-[radial-gradient(#ffffff33_1px,rgb(2_6_23_/_1)_1px)] bg-[size:20px_20px]"></div>
           <div className="flex flex-col justify-center w-full max-w-[1200px] px-5">
             <h1 className="mb-8 mt-8 text-6xl text-center">Get started Now!</h1>
             <div className="py-6 mt-4 flex items-center justify-center gap-6 flex-row mb-12">
-              <Link href="/auth/signup" className="p-8 text-xl md:text-4xl bg-purple-600 text-zinc-100 rounded-xl font-bold hover:bg-purple-700">
+              <Link href="/auth/signup" className="md:p-8 p-5 text-md md:text-4xl bg-purple-600 text-zinc-100 rounded-xl font-semibold hover:bg-purple-700">
                 Get started
               </Link>
             </div>
