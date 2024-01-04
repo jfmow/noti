@@ -1,5 +1,6 @@
 import Link from "@/components/Link";
 import Head from "next/head";
+import Image from "next/image";
 import PocketBase from 'pocketbase'
 import { useEffect } from "react";
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
@@ -51,8 +52,8 @@ export default function HOME() {
               </Link>
             </div>
 
-            <img className="md:hidden object-contain" src="/mobile-preview.png" />
-            <img className="hidden md:block" src="/desktop-preview.png" />
+            <Image loading="lazy" width={500} height={1000} className="md:hidden object-contain" src="/mobile-preview.png" />
+            <Image loading="eager" width={1000} height={1000} className="hidden md:block" src="/desktop-preview.png" />
           </div>
         </div>
         <div className="w-full min-h-screen p-5 pb-10 justify-center flex-col flex items-center relative bg-slate-950">
@@ -63,8 +64,8 @@ export default function HOME() {
               Note is an editor which only has what you need. Nothing fancy, just the basics
             </p>
 
-            <img className="md:hidden max-h-[50dvh] object-contain" src="/mobile-page-alone.png" />
-            <img className="hidden md:block rounded-xl" src="/page-alone.png" />
+            <img loading="lazy" className="md:hidden max-h-[50dvh] object-contain" src="/mobile-page-alone.png" />
+            <img loading="lazy" className="hidden md:block rounded-xl" src="/page-alone.png" />
           </div>
 
         </div>
