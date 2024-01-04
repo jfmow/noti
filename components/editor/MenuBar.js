@@ -13,10 +13,17 @@ export default function MenuBar() {
     const [filteredItems, setFilteredItems] = useState([]);
     const [pageInfo, setPageInfo] = useState({})
     const [isMobile, setIsMobile] = useState(false)
+    const [tabBarVisible, setTabBarVisible] = useState(false)
     useEffect(() => {
         if (window.innerWidth < 450) {
             setIsMobile(true)
         }
+        setTabBarVisible(window.localStorage.getItem('tabbar'))
+        document.body.addEventListener("TABBARTOGGLE", (e) => {
+            const newState = e.detail
+            window.localStorage.setItem('tabbar', newState)
+            setTabBarVisible(newState)
+        })
     }, [])
     useEffect(() => {
         setPageInfo({})
@@ -178,50 +185,53 @@ export default function MenuBar() {
 
     return (
         <>
-            <TabBar />
+
 
             <div className="w-full h-[45px] pl-1 pr-2 px-2 flex justify-between items-center bg-zinc-50 overflow-x-scroll overflow-y-hidden">
-                <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div className='flex items-center h-full'>
                     <button onClick={() => setVisible(!visible)} type='button' className="flex items-center justify-center bg-none border-none text-zinc-800 cursor-pointer p-1 rounded relative w-[30px] h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-right"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><line x1="15" x2="15" y1="3" y2="21" /></svg>
                     </button>
-
-                    <div className="flex items-center text-zinc-800">
-                        {!isMobile ? (
-                            <>
-                                {filteredItems.map((item, index) => (
-                                    <>
-                                        <div className="flex items-center justify-center relative cursor-pointer" key={index}>
-                                            <Link className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200" onClick={() => Router.push(`/page/${item.id}`)}>
-                                                {item?.icon && (
-                                                    <div className="w-4 h-4 flex items-center justify-center">
-                                                        {item?.icon && item?.icon.includes('.png') ? (<img src={`/emoji/twitter/64/${item?.icon}`} />) : (!isNaN(parseInt(item?.icon, 16)) && String.fromCodePoint(parseInt(item?.icon, 16)))}
-                                                    </div>
-                                                )}
-                                                {item?.title || item?.id}
-                                            </Link>
-                                        </div>
-                                        {index < filteredItems.length - 1 && (
-                                            <div className='text-zinc-300 flex items-center justify-center mx-1'>
-                                                /
+                    {tabBarVisible ? (
+                        <TabBar />
+                    ) : (
+                        <div className="flex items-center text-zinc-800">
+                            {!isMobile ? (
+                                <>
+                                    {filteredItems.map((item, index) => (
+                                        <>
+                                            <div className="flex items-center justify-center relative cursor-pointer" key={index}>
+                                                <Link className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200" onClick={() => Router.push(`/page/${item.id}`)}>
+                                                    {item?.icon && (
+                                                        <div className="w-4 h-4 flex items-center justify-center">
+                                                            {item?.icon && item?.icon.includes('.png') ? (<img src={`/emoji/twitter/64/${item?.icon}`} />) : (!isNaN(parseInt(item?.icon, 16)) && String.fromCodePoint(parseInt(item?.icon, 16)))}
+                                                        </div>
+                                                    )}
+                                                    {item?.title || item?.id}
+                                                </Link>
                                             </div>
-                                        )}
-                                    </>
-                                ))}
-                            </>
-                        ) : (
-                            <>
-                                <div className="flex items-center justify-center relative cursor-pointer">
-                                    <div className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200" onClick={() => Router.push(`/page/${currentPage}`)}>
-                                        <div className="w-4 h-4 flex items-center justify-center">
-                                            {activePage?.icon && activePage?.icon.includes('.png') ? (<img src={`/emoji/twitter/64/${activePage?.icon}`} />) : (!isNaN(parseInt(activePage?.icon, 16)) && String.fromCodePoint(parseInt(activePage?.icon, 16)))}
+                                            {index < filteredItems.length - 1 && (
+                                                <div className='text-zinc-300 flex items-center justify-center mx-1'>
+                                                    /
+                                                </div>
+                                            )}
+                                        </>
+                                    ))}
+                                </>
+                            ) : (
+                                <>
+                                    <div className="flex items-center justify-center relative cursor-pointer">
+                                        <div className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200" onClick={() => Router.push(`/page/${currentPage}`)}>
+                                            <div className="w-4 h-4 flex items-center justify-center">
+                                                {activePage?.icon && activePage?.icon.includes('.png') ? (<img src={`/emoji/twitter/64/${activePage?.icon}`} />) : (!isNaN(parseInt(activePage?.icon, 16)) && String.fromCodePoint(parseInt(activePage?.icon, 16)))}
+                                            </div>
+                                            {activePage?.title || activePage?.id}
                                         </div>
-                                        {activePage?.title || activePage?.id}
                                     </div>
-                                </div>
-                            </>
-                        )}
-                    </div>
+                                </>
+                            )}
+                        </div>
+                    )}
                 </div>
                 <div className="flex items-center justify-center gap-0 relative">
                     <ToolTipCon>
@@ -239,8 +249,8 @@ export default function MenuBar() {
                                 </DropDownSectionTitle>
                                 <DropDownSection>
                                     <DropDownItem onClick={() => {
-                                        window.localStorage.setItem('tabbar', window.localStorage.getItem('tabbar') === '0' ? '1' : '0')
-                                        window.location.reload()
+                                        const event = new CustomEvent("TABBARTOGGLE", { detail: !tabBarVisible });
+                                        document.body.dispatchEvent(event)
                                     }}>
                                         <AppWindow />
                                         Toggle tab bar
@@ -399,13 +409,6 @@ export default function MenuBar() {
 function TabBar() {
     const { currentPage, listedPageItems } = useEditorContext()
     const [recentPages, setRecentPages] = useState([])
-    const [visible, setVisible] = useState(0)
-    useEffect(() => {
-        const state = window.localStorage.getItem('tabbar')
-        if (state) {
-            setVisible(+state)
-        }
-    })
     useEffect(() => {
         function useRegex(input) {
             let regex = /^(?=.*[a-zA-Z])(?=.*\d).+$/;
@@ -415,55 +418,46 @@ function TabBar() {
             setRecentPages(prevItems => prevItems.includes(currentPage) ? prevItems : [...prevItems, currentPage])
         }
     }, [currentPage])
-    if (visible === 1) {
-        return (
-            <div className="text-zinc-800 w-full h-[45px] flex justify-between items-center bg-zinc-50 overflow-hidden">
-                <div className='flex items-center gap-0 h-full overflow-x-scroll overflow-y-hidden'>
-                    {recentPages.map((item) => (
-                        <div
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                Router.push(`/page/${item}`);
-                            }}
-                            className={`text-sm text-zinc-600 h-full px-3 flex items-center hover:bg-zinc-200 cursor-pointer ${currentPage === item ? "bg-zinc-300" : null}`}
-                        >
+    return (
+        <div className='flex items-center gap-0 h-full overflow-x-scroll overflow-y-hidden gap-1 pt-1'>
+            {recentPages.map((item) => (
+                <div
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        Router.push(`/page/${item}`);
+                    }}
+                    className={`rounded-tl-lg border-l border-r border-t border-b-0  rounded-tr-lg text-sm text-zinc-600 h-full px-3 flex items-center hover:bg-zinc-200 cursor-pointer ${currentPage === item ? " border-zinc-300  border-2 shadow-xl" : "border-zinc-50"}`}
+                >
 
-                            {listedPageItems.find((aitem) => aitem.id === item)?.icon && (
-                                <img className='w-4 h-4 mr-2' src={`/emoji/twitter/64/${listedPageItems.find((aitem) => aitem.id === item)?.icon}`} />
-                            )}
-                            <span className='text-nowrap'>
-                                {listedPageItems.find((aitem) => aitem.id === item)?.title || item}
-                            </span>
-                            <ToolTipCon>
-                                <ToolTipTrigger>
-                                    <X
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            setRecentPages((prevItems) =>
-                                                prevItems.filter((aitem) => aitem !== item)
-                                            );
-                                        }}
-                                        className="w-4 h-4 ml-2 text-zinc-400"
-                                    />
-                                    <span className='sr-only'>Close tab</span>
-                                </ToolTipTrigger>
-                                <ToolTip>
-                                    Close
-                                </ToolTip>
-                            </ToolTipCon>
-                        </div>
+                    {listedPageItems.find((aitem) => aitem.id === item)?.icon && (
+                        <img className='w-4 h-4 mr-2' src={`/emoji/twitter/64/${listedPageItems.find((aitem) => aitem.id === item)?.icon}`} />
+                    )}
+                    <span className='text-nowrap'>
+                        {listedPageItems.find((aitem) => aitem.id === item)?.title || item}
+                    </span>
+                    <ToolTipCon>
+                        <ToolTipTrigger>
+                            <X
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setRecentPages((prevItems) =>
+                                        prevItems.filter((aitem) => aitem !== item)
+                                    );
+                                }}
+                                className="w-4 h-4 ml-2 text-zinc-400"
+                            />
+                            <span className='sr-only'>Close tab</span>
+                        </ToolTipTrigger>
+                        <ToolTip>
+                            Close
+                        </ToolTip>
+                    </ToolTipCon>
+                </div>
 
-                    ))}
-                </div>
-                {/**
-                 * <div className='px-2 flex items-center justify-center h-full'>
-                    <button className="flex items-center justify-center bg-none border-none text-zinc-800 cursor-pointer p-1 rounded relative w-[30px] h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-more-horizontal"><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg>
-                    </button>
-                </div>
-                 */}
-            </div>
-        )
-    }
+            ))}
+        </div>
+
+    )
+
 
 }

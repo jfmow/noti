@@ -78,6 +78,8 @@ export default function EditorV3() {
     }, [currentPage])
 
     useEffect(() => {
+        if (currentPage === "firstopen") return
+
         try {
             if (openPageData || openPageData?.content === null) {
                 if (Editor) {
