@@ -33,6 +33,7 @@ export default function EditorV3() {
     const Editor = useRef(null)
     const SaveRef = useRef(null)
     const [openPageData, setOpenPageData] = useState([])
+    const [editorContent, setEditorContent] = useState({})
     const [multiRecordSearch, setMultiRecordSearch] = useState({ state: false, records: [] })
     const [loading, setLoading] = useState(false)
 
@@ -57,6 +58,7 @@ export default function EditorV3() {
                     const record = await pb.collection('pages').getOne(page)
                     setLoading(false)
                     setOpenPageData(record)
+                    setEditorContent(record?.content || {})
                 } catch {
                     try {
                         const altRecord = await pb.collection('pages').getFullList({ sort: '-created', filter: `title ?~ '${currentPage}'` })
@@ -81,7 +83,7 @@ export default function EditorV3() {
         if (currentPage === "firstopen") return
 
         try {
-            if (openPageData || openPageData?.content === null) {
+            if (editorContent || editorContent === null) {
                 if (Editor) {
                     try {
                         Editor.clear()
@@ -241,9 +243,9 @@ export default function EditorV3() {
                             inlineToolbar: true,
                         },
                     },
-                    data: openPageData?.content || [],
+                    data: editorContent || [],
                     placeholder: "Enter some text...",
-                    autofocus: openPageData?.content && openPageData?.content?.blocks?.length >= 1 && (openPageData?.content?.blocks[0]?.type === 'image' || openPageData?.content?.blocks[0]?.type === 'Video' || openPageData?.content?.blocks[0]?.type === 'simpleEmbeds' || openPageData?.content?.blocks[0]?.type === 'SimpleIframeWebpage') ? false : true,
+                    autofocus: editorContent && editorContent?.blocks?.length >= 1 && (editorContent?.blocks[0]?.type === 'image' || editorContent?.blocks[0]?.type === 'Video' || editorContent?.blocks[0]?.type === 'simpleEmbeds' || editorContent?.blocks[0]?.type === 'SimpleIframeWebpage') ? false : true,
                 })
                 editor.isReady.then(() => {
                     console.log('Ready')
@@ -255,7 +257,7 @@ export default function EditorV3() {
             console.log(err)
             toaster.error(err)
         }
-    }, [openPageData])
+    }, [editorContent])
 
     useEffect(() => {
         /**
