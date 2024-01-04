@@ -1,7 +1,8 @@
-import { Link } from "@/components/UX-Components"
+import Link from "@/components/Link"
 import Head from "next/head"
 import { useEffect } from "react"
 import PocketBase from 'pocketbase'
+import { ArrowRight } from "lucide-react"
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 export default function Home() {
   useEffect(() => {
@@ -266,21 +267,23 @@ export default function Home() {
 
 function Hero() {
   return (
-    <div className="w-full min-h-screen bg-zinc-50 flex flex-col items-center p-5">
-      <div className="max-w-[1000px] text-zinc-800 flex flex-col items-center justify-center">
-        <h1 className="text-center text-5xl font-bold leading-tight tracking-tighter md:text-8xl lg:leading-[1.1]"><span className="from-pink-600 via-orange-600 to-red-600 bg-gradient-to-r bg-clip-text text-transparent">Unleash</span> Your Creativity with <span className="from-pink-600 via-purple-600 to-blue-600 bg-gradient-to-r bg-clip-text text-transparent">Beautiful</span> Notes</h1>
+    <div className="w-full min-h-fit bg-zinc-50 flex flex-col items-center p-5">
+      <div className="max-w-[1000px]  flex flex-col items-center justify-center">
+        <h1 className="text-center text-zinc-800 text-5xl font-bold leading-tight tracking-tighter md:text-8xl lg:leading-[1.1]"><span className="from-pink-600 via-orange-600 to-red-600 bg-gradient-to-r bg-clip-text text-transparent">Unleash</span> Your Creativity with <span className="from-pink-600 via-purple-600 to-blue-600 bg-gradient-to-r bg-clip-text text-transparent">Beautiful</span> Notes</h1>
         <h2 className="w-[90%] md:max-w-[700px] mt-3 font-[500] text-center text-sm text-zinc-600 sm:text-xl">Step into a world where your thoughts become vibrant expressions. Craft notes that reflect your unique creativity and personality. Immerse yourself in a personalized experience that turns every detail into a visual masterpiece.</h2>
         <div className="flex items-center justify-center gap-5 p-4">
-          <Link href="/page/rzz50e2mnhgwof2" className="text-zinc-50 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-zinc-800 text-zinc-50 shadow hover:bg-zinc-800/90 h-9 px-4 py-2">
+          <Link href="/page/rzz50e2mnhgwof2" className="text-zinc-50 inline-flex items-center justify-center whitespace-nowrap rounded text-[16px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-zinc-800 text-zinc-50 shadow hover:bg-zinc-800/90 h-9 p-5">
             Demo
           </Link>
-          <Link href="/page/signup" className="text-zinc-50 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-zinc-800 text-zinc-50 shadow hover:bg-zinc-800/90 h-9 px-4 py-2">
+          <Link href="/auth/signup" className="text-zinc-50 inline-flex items-center justify-center whitespace-nowrap rounded text-[16px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-purple-700 text-zinc-50 shadow hover:bg-purple-800/90 h-9 p-5">
             Get started
+            <ArrowRight className="w-4 h-4 ml-2" />
           </Link>
         </div>
         <div className="w-full h-fit max-w-[900px] object-contain overflow-hidden bg-zinc-100 p-5 rounded-xl shadow-lg">
           <img className="w-full h-full" src="/page.png" />
         </div>
+
       </div>
     </div>
   )
