@@ -76,55 +76,58 @@ export default function Login() {
     return (
         <div className="bg-zinc-50 w-full h-screen grid">
 
-            <div className="w-[100vw] sm:w-[100%] h-full p-3 bg-zinc-100 border-r border-zinc-200 shadow-lg flex flex-col items-center justify-center">
-                <div className="flex items-center justify-center flex-col mb-4">
-                    <h1 className="underline decoration-zinc-300 mb-2  font-[600] text-[28px] text-zinc-800">Login</h1>
-                    <Paragraph>Enter your account details to login</Paragraph>
-                </div>
-                <form onSubmit={(e) => { e.preventDefault(); authMethod ? normalLogin() : ssoLogin() }} className="w-[300px] grid gap-2">
-                    <input onChange={(e) => setIdentity(e.target.value)} placeholder="Email/username" type="text" className="flex h-9 w-full rounded-md border border-zinc-300 bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
-                    <input onChange={(e) => setPassword(e.target.value)} placeholder="Password" type="password" className="flex h-9 w-full rounded-md border border-zinc-300 bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
-                    <SubmitButton type="submit">Login</SubmitButton>
-                </form>
+            <div className="w-[100vw] sm:w-[100%] h-full p-3 bg-zinc-100 border-r border-zinc-200 shadow-lg flex flex-col items-center justify-center relative"><div class="absolute h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
+                <div className="z-2 relative  flex flex-col items-center justify-center ">
+                    <div className="flex items-center justify-center flex-col mb-4">
+                        <h1 className="underline decoration-zinc-300 mb-2  font-[600] text-[28px] text-zinc-800">Login</h1>
+                        <Paragraph>Enter your account details to login</Paragraph>
+                    </div>
+                    <form onSubmit={(e) => { e.preventDefault(); authMethod ? normalLogin() : ssoLogin() }} className="w-[300px] grid gap-2">
+                        <input onChange={(e) => setIdentity(e.target.value)} placeholder="Email/username" type="text" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                        <input onChange={(e) => setPassword(e.target.value)} placeholder="Password" type="password" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                        <SubmitButton type="submit">Login</SubmitButton>
+                    </form>
 
-                <div className="w-[400px] mt-5 flex flex-col items-center justify-center border-t">
-                    <div className="w-[300px] mt-3 grid grid-cols-3 gap-3">
-                        <Modal>
-                            <ModalTrigger>
-                                <SubmitButton>
-                                    <Key className="w-5 h-5" />
-                                    SSO
-                                </SubmitButton>
-                            </ModalTrigger>
-                            <ModalContent>
-                                <h2 className="mb-2">Single-sign-on.</h2>
-                                <form onSubmit={(e) => { e.preventDefault(); ssoLogin() }} className="w-full grid gap-2">
-                                    <input required onChange={(e) => setIdentity(e.target.value)} placeholder="Email | me@example.com" type="email" className="flex h-9 w-full rounded-md border border-zinc-300 bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
-                                    {codeRequested ? (
-                                        <>
-                                            <input required onChange={(e) => setPassword(e.target.value)} placeholder="Code" type="text" className="flex h-9 w-full rounded-md border border-zinc-300 bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
-                                            <SubmitButton type="submit">Login</SubmitButton>
-                                        </>
-                                    ) : (
-                                        <SubmitButton type="submit">Request code</SubmitButton>
-                                    )}
+                    <div className="w-[400px] mt-5 flex flex-col items-center justify-center border-t">
+                        <div className="w-[300px] mt-3 grid grid-cols-3 gap-3">
+                            <Modal>
+                                <ModalTrigger>
+                                    <SubmitButton>
+                                        <Key className="w-5 h-5" />
+                                        SSO
+                                    </SubmitButton>
+                                </ModalTrigger>
+                                <ModalContent>
+                                    <h2 className="mb-2">Single-sign-on.</h2>
+                                    <form onSubmit={(e) => { e.preventDefault(); ssoLogin() }} className="w-full grid gap-2">
+                                        <input required onChange={(e) => setIdentity(e.target.value)} placeholder="Email | me@example.com" type="email" className="flex h-9 w-full rounded-md border border-zinc-300 bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                                        {codeRequested ? (
+                                            <>
+                                                <input required onChange={(e) => setPassword(e.target.value)} placeholder="Code" type="text" className="flex h-9 w-full rounded-md border border-zinc-300 bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                                                <SubmitButton type="submit">Login</SubmitButton>
+                                            </>
+                                        ) : (
+                                            <SubmitButton type="submit">Request code</SubmitButton>
+                                        )}
 
-                                </form >
-                            </ModalContent>
-                        </Modal>
-                        <SubmitButton alt onClick={() => OAuthLogin('github')}>
-                            <Github className="w-5 h-5" />
-                            Github
-                        </SubmitButton>
-                        <SubmitButton alt onClick={() => OAuthLogin('twitch')}>
-                            <Twitch className="w-5 h-5" />
-                            Twitch
-                        </SubmitButton>
+                                    </form >
+                                </ModalContent>
+                            </Modal>
+                            <SubmitButton alt onClick={() => OAuthLogin('github')}>
+                                <Github className="w-5 h-5" />
+                                Github
+                            </SubmitButton>
+                            <SubmitButton alt onClick={() => OAuthLogin('twitch')}>
+                                <Twitch className="w-5 h-5" />
+                                Twitch
+                            </SubmitButton>
+                        </div>
+
                     </div>
 
-                </div>
 
-                <Link className="absolute bottom-5 cursor-pointer" href="/auth/signup">Signup</Link>
+                </div>
+                <Link className="absolute  w-full text-center bottom-5 cursor-pointer" href="/auth/signup">Signup</Link>
             </div>
 
         </div>
