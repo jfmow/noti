@@ -90,8 +90,15 @@ export default function EditorV3() {
                         Editor.destroy()
                     } catch { }
                 }
+                let editorContainer
+                if (document.getElementById(`editorjs-editor-${currentPage}`).childElementCount >= 1) {
+                    return
+                } else {
+                    editorContainer = document.createElement("div")
+                    document.getElementById(`editorjs-editor-${currentPage}`).appendChild(editorContainer)
+                }
                 const editor = new EditorJS({
-                    holder: document.getElementById(`editorjs-editor-${currentPage}`),
+                    holder: editorContainer,
                     tools: {
                         header: {
                             class: Header,
