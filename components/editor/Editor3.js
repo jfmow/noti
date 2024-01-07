@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { Suspense, createContext, useContext, useEffect, useRef, useState } from "react";
 import { lazy } from "react";
 import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
@@ -374,7 +374,9 @@ export default function EditorV3() {
                         <h1 contentEditable onBlur={(e) => updateTitle(e)} className="outline-none scroll-m-20 text-4xl font-bold tracking-tight lg:text-4xl">{openPageData.title || "Untitled page"}</h1>
                     </div>
                     <div className="z-2 absolute bottom-2 right-2 flex gap-2">
-                        <MenuButtons />
+                        <Suspense>
+                            <MenuButtons />
+                        </Suspense>
                     </div>
                 </div>
                 <div ref={SaveRef} className="px-8" style={{ color: "var(--editor_text)" }} id={`editorjs-editor-${currentPage}`} />
