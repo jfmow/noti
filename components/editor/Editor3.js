@@ -371,7 +371,7 @@ export default function EditorV3() {
                         )}
                     </div>
                     <div className="z-3 relative ">
-                        <h1 contentEditable onBlur={(e) => updateTitle(e)} className="outline-none scroll-m-20 text-4xl font-bold tracking-tight lg:text-4xl">{openPageData.title || "Untitled page"}</h1>
+                        <h1 contentEditable onBlur={(e) => updateTitle(e)} className="text-zinc-50 px-3 text-balance text-center outline-none scroll-m-20 text-4xl font-bold tracking-tight lg:text-4xl">{openPageData.title || "Untitled page"}</h1>
                     </div>
                     <div className="z-2 absolute bottom-2 right-2 flex gap-2">
                         <Suspense>
