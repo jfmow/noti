@@ -208,8 +208,8 @@ export default function PageList() {
 
 
         <li
-          style={{ background: currentPage.includes(item.id) ? `var(--page_list_item_active)` : hoveredItemId === item.id ? 'rgba(99, 223, 225, 0.638)' : item.color }}
-          className={`flex items-center p-[6px] cursor-pointer list-none gap-1 rounded-lg text-[var(--pageListItemIcons)] text-[16px] mx-[1px] my-[3px] min-h[36px] overflow-hidden text-ellipsis text-wrap hover:bg-[var(--pageListItemHover)] ${item.archived && "border border-red-600"}`}
+          style={{ background: currentPage.includes(item.id) ? `var(--pageListItemOpen)` : hoveredItemId === item.id ? 'rgba(99, 223, 225, 0.638)' : item.color }}
+          className={`flex items-center p-[6px] cursor-pointer list-none gap-1 rounded-lg text-[var(--pageListItemTextIcon)] text-[16px] mx-[1px] my-[3px] min-h[36px] overflow-hidden text-ellipsis text-wrap hover:bg-[var(--pageListItemHover)] ${item.archived && "border border-red-600"}`}
           key={item.id}
           onClick={(e) => openPage(e, item.id)}
           onDragOver={(e) => handleDragOver(e, item.id)}
@@ -219,7 +219,7 @@ export default function PageList() {
           draggable
           onContextMenu={(e) => handleRightClick(e, item.id)}
         >
-          <button aria-label='Expand sub pages' type='button' onClick={(e) => handleSetExpand(e, item.id)} className="flex items-center justify-center bg-none border-none rounded cursor-pointer p-1 [&>svg]:w-4 [&>svg]:h-4 aspect-[1/1] object-contain overflow-hidden text-[var(--pageListItemIcons)] hover:bg-[var(--pageListItemIconsBackgroundHover)]">
+          <button aria-label='Expand sub pages' type='button' onClick={(e) => handleSetExpand(e, item.id)} className="flex items-center justify-center bg-none border-none rounded cursor-pointer p-1 [&>svg]:w-4 [&>svg]:h-4 aspect-[1/1] object-contain overflow-hidden text-[var(--pageListItemTextIcon)] hover:bg-[var(--pageListItemTextIconBackgroundHover)]">
             {expand ? (
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6" /></svg>
             ) : (
@@ -232,7 +232,7 @@ export default function PageList() {
 
           <span className={`${expand ? "w-full overflow-hidden text-wrap pl-[3px] pr-[5px]" : "w-full overflow-hidden text-ellipsis text-nowrap pl-[3px] pr-[5px]"}`}>{item.title.trim() || 'Untitled page ' + item.id}</span>
           {expand && (
-            <button aria-label='Create new subpage' type='button' onClick={(e) => createNewPage(item.id)} className="flex items-center justify-center bg-none border-none rounded cursor-pointer p-1 [&>svg]:w-4 [&>svg]:h-4 aspect-[1/1] object-contain overflow-hidden text-[var(--pageListItemIcons)] hover:bg-[var(--pageListItemIconsBackgroundHover)]">
+            <button aria-label='Create new subpage' type='button' onClick={(e) => createNewPage(item.id)} className="flex items-center justify-center bg-none border-none rounded cursor-pointer p-1 [&>svg]:w-4 [&>svg]:h-4 aspect-[1/1] object-contain overflow-hidden text-[var(--pageListItemTextIcon)] hover:bg-[var(--pageListItemTextIconBackgroundHover)]">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14" /><path d="M12 5v14" /></svg>
             </button>
           )}
@@ -258,7 +258,7 @@ export default function PageList() {
       <div ref={shrinkcontainerRef} className=" sm:w-[300px] w-full sm:z-[1] z-[8] fixed top-0 left-0 right-0 bottom-0 overflow-hidden sm:overflow-auto sm:relative h-screen">
         <div className="w-full sm:w-[300px] relative h-[calc(100dvh_-_70px)] overflow-y-scroll overflow-x-hidden p-2 bg-[var(--background)] flex flex-col">
           {renderTree(listedPageItems.filter((Apage) => !Apage?.deleted))}
-          <li data-track-event='Create new page btn' type='button' className="flex items-center p-[6px] cursor-pointer list-none gap-1 rounded-lg text-[var(--pageListItemIcons)] text-[12px] mx-[1px] my-[3px] min-h[36px] overflow-hidden text-ellipsis text-wrap hover:bg-[var(--pageListItemHover)] [&>svg]:w-4 [&>svg]:h-4 min-h-[32px]" onClick={() => createNewPage('')}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14" /><path d="M12 5v14" /></svg> Create a new page</li>
+          <li data-track-event='Create new page btn' type='button' className="flex items-center p-[6px] cursor-pointer list-none gap-1 rounded-lg text-[var(--pageListItemTextIcon)] text-[12px] mx-[1px] my-[3px] min-h[36px] overflow-hidden text-ellipsis text-wrap hover:bg-[var(--pageListItemHover)] [&>svg]:w-4 [&>svg]:h-4 min-h-[32px]" onClick={() => createNewPage('')}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14" /><path d="M12 5v14" /></svg> Create a new page</li>
         </div >
         <UserOptions />
       </div>
