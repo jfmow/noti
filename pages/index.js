@@ -52,7 +52,7 @@ export default function HOME() {
               </Link>
             </div>
 
-            <Image loading="lazy" width={500} height={1000} className="md:hidden object-contain" src="/mobile-preview.png" />
+            <img loading="lazy" width={500} height={1000} className="md:hidden object-contain" src="/mobile-preview.webp" />
             <img loading="eager" className="hidden md:block" src="/desktop-preview.webp" />
           </div>
         </div>
@@ -64,7 +64,7 @@ export default function HOME() {
               Note is an editor which only has what you need. Nothing fancy, just the basics
             </p>
 
-            <img loading="lazy" className="md:hidden max-h-[50dvh] object-contain" src="/mobile-page-alone.png" />
+            <img loading="lazy" className="md:hidden max-h-[50dvh] object-contain" src="/mobile-page-alone.webp" />
             <img loading="lazy" className="hidden md:block rounded-xl" src="/page-alone.webp" />
           </div>
 
