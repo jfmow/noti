@@ -53,7 +53,7 @@ export default function HOME() {
               </Link>
             </div>
 
-            <img alt="mobile page preview" loading="lazy" width={500} height={1000} className="md:hidden object-contain" src="/mobile-preview.webp" />
+            <img alt="mobile page preview" width={500} height={1000} className="md:hidden object-contain" src="/mobile-preview.webp" />
             <img alt="desktop and mobile together - page preview" loading="eager" className="hidden md:block" src="/desktop-preview.webp" />
           </div>
         </div>
