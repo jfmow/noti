@@ -54,7 +54,7 @@ export default function HOME() {
             </div>
 
             <img alt="mobile page preview" width={500} height={1000} className="md:hidden object-contain" src="/mobile-preview.webp" />
-            <img alt="desktop and mobile together - page preview" loading="eager" className="hidden md:block" src="/desktop-preview.webp" />
+            <img alt="desktop and mobile together - page preview" loading="eager" width={2189} height={1190} className="hidden md:block" src="/desktop-preview.webp" />
           </div>
         </div>
         <div className="w-full min-h-screen p-5 pb-10 justify-center flex-col flex items-center relative bg-slate-950">
