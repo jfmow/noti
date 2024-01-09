@@ -16,24 +16,25 @@ export default function HOME() {
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Note</title>
-        <link rel="icon" href="/logo.png" />
+        <link rel="icon" href="/logo-small.webp" />
+        <meta name="description" content="Note. The notes app for you, simple, fast, free." />
       </Head>
       <div className="w-full text-zinc-50">
         <nav className="px-5 py-3 sm:py-0 text-[#d1cddb] items-center grid sm:grid-cols-3 h-[60px] z-50 w-full bg-[#0b0518]">
           <div className="w-full h-full hidden items-center sm:flex justify-start ">
             <div className="overflow-hidden w-6 h-6 object-contain">
-              <img src="/logo.png" />
+              <img alt="Brand logo - mountians with lines" src="/logo-small.webp" />
             </div>
             <p className="ml-2 "><span className="font-semibold">Note</span></p>
           </div>
           <div className="w-full h-full flex items-center justify-center gap-3">
             <Link href={"/page/rzz50e2mnhgwof2"}>Demo</Link>
-            <Link className={"font-semibold"}>Get started</Link>
+            <Link href="/auth/signup" className={"font-semibold"}>Get started</Link>
             <Link href={"https://github.com/jfmow/noti"}>Self-host</Link>
             <Link href={"/auth/login"}>Login</Link>
           </div>
           <div className="w-full h-full items-center justify-end hidden sm:flex">
-            <Link href={"/auth/signup"} className="flex items-center justify-center text-white py-3 px-4 bg-blue-700 hover:bg-blue-500 rounded-lg transition-all font-semibold min-w-[120px]">
+            <Link href="/auth/signup" className="flex items-center justify-center text-white py-3 px-4 bg-blue-700 hover:bg-blue-500 rounded-lg transition-all font-semibold min-w-[120px]">
               Get Started
             </Link>
           </div>
@@ -52,8 +53,8 @@ export default function HOME() {
               </Link>
             </div>
 
-            <img loading="lazy" width={500} height={1000} className="md:hidden object-contain" src="/mobile-preview.webp" />
-            <img loading="eager" className="hidden md:block" src="/desktop-preview.webp" />
+            <img alt="mobile page preview" loading="lazy" width={500} height={1000} className="md:hidden object-contain" src="/mobile-preview.webp" />
+            <img alt="desktop and mobile together - page preview" loading="eager" className="hidden md:block" src="/desktop-preview.webp" />
           </div>
         </div>
         <div className="w-full min-h-screen p-5 pb-10 justify-center flex-col flex items-center relative bg-slate-950">
@@ -64,8 +65,8 @@ export default function HOME() {
               Note is an editor which only has what you need. Nothing fancy, just the basics
             </p>
 
-            <img loading="lazy" className="md:hidden max-h-[50dvh] object-contain" src="/mobile-page-alone.webp" />
-            <img loading="lazy" className="hidden md:block rounded-xl" src="/page-alone.webp" />
+            <img alt="mobile feature preview - list of buttons" loading="lazy" className="md:hidden max-h-[50dvh] object-contain" src="/mobile-page-alone.webp" />
+            <img alt="Desktop page preview" loading="lazy" className="hidden md:block rounded-xl" src="/page-alone.webp" />
           </div>
 
         </div>
@@ -123,7 +124,7 @@ export default function HOME() {
                       className="text-gray-700 transition hover:opacity-75"
                     >
                       <span className="sr-only">James mowat</span>
-                      <img className="h-6 w-6 rounded-xl" src="/jmlogo.svg" />
+                      <img alt="james mowat logo" className="h-6 w-6 rounded-xl" src="/jmlogo.svg" />
                     </a>
                   </li>
                 </ul>
