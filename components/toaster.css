@@ -21,6 +21,7 @@
     animation-iteration-count: 1;
     animation-timing-function: ease-in-out;
     width: 356px;
+    max-width: 100%;
     display: flex;
     gap: 8px;
     align-items: center;
@@ -53,4 +54,13 @@
 .info {
     background: #5bbbef;
     color: #ffffff;
+}
+
+@media (max-width: 400px) {
+    .suddsy_toaster {
+        left: 1em;
+        right: 1em;
+        bottom: 1em;
+        top: auto;
+    }
 }
