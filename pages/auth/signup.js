@@ -9,7 +9,7 @@ import { Modal, ModalContent, ModalTrigger } from "@/lib/Modals/Modal";
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 
 export default function Login() {
-    const [authMethod, setAuthMethod] = useState(true)
+    const [authMethod, setAuthMethod] = useState('password')
     const [idenity, setIdentity] = useState('')
     const [password, setPassword] = useState('')
     const [username, setUsername] = useState('')
@@ -58,6 +58,11 @@ export default function Login() {
         }
     }
 
+    function isValidEmail(email) {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailRegex.test(email);
+    }
+
     return (
         <div className="bg-zinc-50 w-full h-screen grid relative">
             <div className="w-[100vw] sm:w-[100%] h-full p-3 bg-zinc-100 border-r border-zinc-200 shadow-lg flex flex-col items-center justify-center">
@@ -72,33 +77,39 @@ export default function Login() {
                         </div>
 
                     </div>
-                    <form onSubmit={(e) => { e.preventDefault(); normalLogin() }} className="w-[300px] grid gap-2">
-                        <input required onChange={(e) => setIdentity(e.target.value)} placeholder="Email" type="email" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
-                        <input required onChange={(e) => setUsername(e.target.value)} placeholder="username" type="text" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
-                        <input required onChange={(e) => setPassword(e.target.value)} placeholder="Password" type="password" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
-                        <SubmitButton type="submit">Signup</SubmitButton>
-                    </form >
+                    {authMethod === "password" || !authMethod ? (
+                        <>
+                            <form onSubmit={(e) => { e.preventDefault(); normalLogin() }} className="w-[300px] grid gap-2">
+                                <input defaultValue={idenity} required onChange={(e) => setIdentity(e.target.value)} placeholder="Email" type="email" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                                {isValidEmail(idenity) ? (
+                                    <>
+                                        <input required onChange={(e) => setUsername(e.target.value)} placeholder="username" type="text" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                                        <input required onChange={(e) => setPassword(e.target.value)} placeholder="Password" type="password" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                                    </>
+                                ) : null}
+                                <SubmitButton type="submit">Signup</SubmitButton>
+                            </form >
+                            <Link onClick={() => setAuthMethod('sso')} className="mt-4 underline cursor-pointer">Use Email Auth</Link>
+                        </>
+                    ) : null}
+                    {authMethod === "sso" ? (
+                        <>
+                            <form onSubmit={(e) => { e.preventDefault(); ssoLogin() }} className="w-[300px] grid gap-2">
+                                <input defaultValue={idenity} required onChange={(e) => setIdentity(e.target.value)} placeholder="Email | me@example.com" type="email" className="flex h-9 w-full rounded-md border border-zinc-300 bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                                {isValidEmail(idenity) ? (
+                                    <input required onChange={(e) => setUsername(e.target.value)} placeholder="Username" type="text" className="flex h-9 w-full rounded-md border border-zinc-300 bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                                ) : null}
+                                <SubmitButton type="submit">Signup</SubmitButton>
+                            </form >
+                            <Link onClick={() => setAuthMethod('password')} className="mt-4 underline cursor-pointer">Use password</Link>
+                        </>
+                    ) : null}
+
+
 
 
                     <div className="w-[400px] mt-5 flex flex-col items-center justify-center border-t">
-                        <div className="w-[300px] mt-3 grid grid-cols-3 gap-3">
-                            <Modal>
-                                <ModalTrigger>
-                                    <SubmitButton>
-                                        <Key className="w-5 h-5" />
-                                        SSO
-                                    </SubmitButton>
-                                </ModalTrigger>
-                                <ModalContent>
-                                    <h2>Single-sign-on.</h2>
-                                    <Paragraph>Allows you to login to your account through a token that is emailed to you. Allowing for quicker and more secure signins.</Paragraph>
-                                    <form onSubmit={(e) => { e.preventDefault(); ssoLogin() }} className="w-full grid gap-2">
-                                        <input required onChange={(e) => setIdentity(e.target.value)} placeholder="Email | me@example.com" type="email" className="flex h-9 w-full rounded-md border border-zinc-300 bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
-                                        <input required onChange={(e) => setUsername(e.target.value)} placeholder="Username" type="text" className="flex h-9 w-full rounded-md border border-zinc-300 bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
-                                        <SubmitButton type="submit">Signup</SubmitButton>
-                                    </form >
-                                </ModalContent>
-                            </Modal>
+                        <div className="w-[300px] mt-3 grid grid-cols-2 gap-3">
                             <SubmitButton alt onClick={() => OAuthLogin('github')}>
                                 <Github className="w-5 h-5" />
                                 Github
