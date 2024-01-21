@@ -1,4 +1,4 @@
-import { Link, SubmitButton } from "@/components/UX-Components";
+import { Link, Paragraph, SubmitButton } from "@/components/UX-Components";
 import { toaster } from "@/components/toast";
 import PocketBase from 'pocketbase'
 import Router, { useRouter } from "next/router";
@@ -9,7 +9,18 @@ const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 pb.autoCancellation(false)
 export default function Login() {
     const [sso, setSSO] = useState(false)
+    const [oauthmethods, setOauthmethods] = useState([])
     const { query } = useRouter()
+    useEffect(() => {
+        async function getOauthMethods() {
+            const result = await pb.collection('users').listAuthMethods();
+            const providers = result.authProviders.map((item) => {
+                return item.name
+            })
+            setOauthmethods(providers)
+        }
+        getOauthMethods()
+    }, [])
     useEffect(() => {
         if (query?.msg) {
             toaster.error(query.msg)
@@ -38,20 +49,10 @@ export default function Login() {
 
             <div className="w-[100vw] sm:w-[100%] h-full p-3 bg-zinc-100 border-r border-zinc-200 shadow-lg flex flex-col items-center justify-center relative"><div class="absolute h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
                 <div className="z-2 relative  flex flex-col items-center justify-center ">
-                    <div className="flex items-center justify-center flex-col">
-                        <h1 className=" mb-2  font-[700] text-5xl text-zinc-800">Log in</h1>
-                    </div>
-                    <div className="w-[400px] mb-4 mt-2 pb-5 flex flex-col items-center justify-center border-b">
-                        <div className="w-[300px] mt-3 grid gap-1 grid-cols-2">
-                            <SubmitButton onClick={() => OAuthLogin('github')}>
-                                <Github className="w-5 h-5" />
-                                Github
-                            </SubmitButton>
-                            <SubmitButton onClick={() => OAuthLogin('twitch')}>
-                                <Twitch className="w-5 h-5" />
-                                Twitch
-                            </SubmitButton>
-                        </div>
+                    <div className="flex items-center justify-center flex-col mb-4">
+                        <h1 className="underline decoration-zinc-300 mb-2  font-[600] text-[28px] text-zinc-800">Login</h1>
+                        <Paragraph>Enter your details to continue</Paragraph>
+
                     </div>
 
                     {!sso ? (
@@ -66,6 +67,18 @@ export default function Login() {
                             <Link className="underline mt-4 cursor-pointer" onClick={() => setSSO(false)}>Username/Email Login</Link>
                         </>
                     )}
+
+                    <div className="w-[400px] mt-5 flex flex-col items-center justify-center border-t">
+                        <div className="w-[300px] mt-3 grid grid-cols-2 gap-3">
+                            {oauthmethods.map((item) => (
+                                <button className="flex w-full min-h-[37px] rounded-lg bg-zinc-300 items-center justify-center gap-3 px-3 py-2 font-semibold text-zinc-800 hover:bg-zinc-200 transition-all duration-300" onClick={() => OAuthLogin(item)}>
+                                    <img className="w-5 h-5" src={`/icons/oauth/${item}.svg`} />
+                                    {item.slice(0, 1).toUpperCase()}{item.slice(1)}
+                                </button>
+                            ))}
+                        </div>
+
+                    </div>
 
 
 
