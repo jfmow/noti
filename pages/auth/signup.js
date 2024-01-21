@@ -1,18 +1,29 @@
 import { Link, Paragraph, SubmitButton } from "@/components/UX-Components";
-import { ToolTip, ToolTipCon, ToolTipTrigger } from "@/components/UX-Components/Tooltip";
 import { toaster } from "@/components/toast";
 import { useEffect, useState } from "react";
 import PocketBase from 'pocketbase'
-import Router, { useRouter } from "next/router";
-import { Github, Key, Twitch } from "lucide-react";
-import { Modal, ModalContent, ModalTrigger } from "@/lib/Modals/Modal";
+import Router from "next/router";
+import { Github, Twitch } from "lucide-react";
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 
 export default function Login() {
     const [authMethod, setAuthMethod] = useState('password')
+    const [oauthmethods, setOauthmethods] = useState([])
     const [idenity, setIdentity] = useState('')
     const [password, setPassword] = useState('')
     const [username, setUsername] = useState('')
+
+    useEffect(() => {
+        async function getOauthMethods() {
+            const result = await pb.collection('users').listAuthMethods();
+            const providers = result.authProviders.map((item) => {
+                return item.name
+            })
+            setOauthmethods(providers)
+        }
+        getOauthMethods()
+    }, [])
+
     async function normalLogin() {
         const loadingToast = await toaster.loading('Working...')
         try {
@@ -110,14 +121,12 @@ export default function Login() {
 
                     <div className="w-[400px] mt-5 flex flex-col items-center justify-center border-t">
                         <div className="w-[300px] mt-3 grid grid-cols-2 gap-3">
-                            <SubmitButton alt onClick={() => OAuthLogin('github')}>
-                                <Github className="w-5 h-5" />
-                                Github
-                            </SubmitButton>
-                            <SubmitButton alt onClick={() => OAuthLogin('twitch')}>
-                                <Twitch className="w-5 h-5" />
-                                Twitch
-                            </SubmitButton>
+                            {oauthmethods.map((item) => (
+                                <button className="flex w-full min-h-[37px] rounded-lg bg-zinc-300 items-center justify-center gap-3 px-3 py-2 font-semibold text-zinc-800 hover:bg-zinc-200 transition-all duration-300" onClick={() => OAuthLogin(item)}>
+                                    <img className="w-5 h-5" src={`/icons/oauth/${item}.svg`} />
+                                    {item.slice(0, 1).toUpperCase()}{item.slice(1)}
+                                </button>
+                            ))}
                         </div>
 
                     </div>
