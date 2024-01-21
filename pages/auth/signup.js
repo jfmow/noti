@@ -2,11 +2,12 @@ import { Link, Paragraph, SubmitButton } from "@/components/UX-Components";
 import { toaster } from "@/components/toast";
 import { useEffect, useState } from "react";
 import PocketBase from 'pocketbase'
-import Router from "next/router";
-import { Github, Twitch } from "lucide-react";
+import Router, { useRouter } from "next/router";
+import { Github, Route, Twitch } from "lucide-react";
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 
 export default function Login() {
+    const { query } = useRouter()
     const [authMethod, setAuthMethod] = useState('password')
     const [oauthmethods, setOauthmethods] = useState([])
     const [idenity, setIdentity] = useState('')
@@ -36,7 +37,11 @@ export default function Login() {
             })
             await pb.collection('users').authWithPassword(idenity, password)
             toaster.dismiss(loadingToast)
-            Router.push('/page/firstopen')
+            if (query?.redirect) {
+                Router.push(query.redirect)
+            } else {
+                Router.push('/page/firstopen')
+            }
         } catch (err) {
             toaster.update(loadingToast, "Invalid username/email or password.", "error")
         }
@@ -52,7 +57,11 @@ export default function Login() {
             const authData = await pb.send(`/api/auth/sso/signup?email=${idenity}&username=${username}&linkUrl=${process.env.NEXT_PUBLIC_CURRENTURL}`, { method: 'POST' })
             window.localStorage.setItem('pocketbase_auth', JSON.stringify(authData))
             toaster.dismiss(loadingToast)
-            Router.push('/page/firstopen')
+            if (query?.redirect) {
+                Router.push(query.redirect)
+            } else {
+                Router.push('/page/firstopen')
+            }
         } catch {
             toaster.update(loadingToast, `Invalid username/email`, "error")
         }
@@ -63,7 +72,11 @@ export default function Login() {
         try {
             await pb.collection('users').authWithOAuth2({ provider: provider })
             toaster.dismiss(loadingToast)
-            Router.push('/page/firstopen')
+            if (query?.redirect) {
+                Router.push(query.redirect)
+            } else {
+                Router.push('/page/firstopen')
+            }
         } catch (err) {
             toaster.update(loadingToast, "A problem has occured logging in.", "error")
         }
@@ -133,7 +146,7 @@ export default function Login() {
                 </div>
 
             </div >
-            <Link className="absolute bottom-5 w-full text-center cursor-pointer" href="/auth/login">Login</Link>
+            <Link className="absolute bottom-5 w-full text-center cursor-pointer" href={`${query?.redirect ? `/auth/login?redirect=${query.redirect}` : '/auth/login'}`}>Login</Link>
 
 
         </div >

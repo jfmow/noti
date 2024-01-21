@@ -11,6 +11,9 @@ export default function Login() {
     const [sso, setSSO] = useState(false)
     const { query } = useRouter()
     useEffect(() => {
+        if (query?.msg) {
+            toaster.error(query.msg)
+        }
         if (query.ssoEmail && query.ssoToken) {
             setSSO(true)
         }
@@ -20,7 +23,11 @@ export default function Login() {
         try {
             await pb.collection('users').authWithOAuth2({ provider: provider })
             toaster.dismiss(loadingToast)
-            Router.push('/page/firstopen')
+            if (query?.redirect) {
+                Router.push(query.redirect)
+            } else {
+                Router.push('/page/firstopen')
+            }
         } catch (err) {
             toaster.update(loadingToast, "A problem has occured logging in.", "error")
         }
@@ -63,14 +70,15 @@ export default function Login() {
 
 
                 </div>
-                <Link className="absolute  w-full text-center bottom-5 cursor-pointer" href="/auth/signup">Signup</Link>
+                <Link className="absolute  w-full text-center bottom-5 cursor-pointer" href={`${query?.redirect ? `/auth/signup?redirect=${query.redirect}` : '/auth/signup'}`}>Signup</Link>
             </div>
 
-        </div>
+        </div >
     )
 }
 
 function PasswordLogin() {
+    const { query } = useRouter()
     const [user, setUser] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
@@ -92,7 +100,12 @@ function PasswordLogin() {
         setLoading(true)
         try {
             await pb.collection('users').authWithPassword(user, password)
-            Router.push('/page/firstopen')
+            if (query?.redirect) {
+                Router.push(query.redirect)
+            } else {
+                Router.push('/page/firstopen')
+            }
+
             return
         } catch (err) {
             toaster.error(err.message)
@@ -116,6 +129,8 @@ function PasswordLogin() {
 }
 
 function SSOLogin({ prefill = { email: '', code: '' } }) {
+    const { query } = useRouter()
+
     const [codeRequested, setCodeRequested] = useState(false)
     const [email, setEmail] = useState(prefill.email)
     const [code, setCode] = useState(prefill.code)
@@ -132,7 +147,11 @@ function SSOLogin({ prefill = { email: '', code: '' } }) {
                 setLoading(true)
                 const req = await pb.send(`/api/auth/sso/login?email=${email}&token=${code}`, { method: "POST" })
                 window.localStorage.setItem('pocketbase_auth', JSON.stringify(req))
-                Router.push('/page/firstopen')
+                if (query?.redirect) {
+                    Router.push(query.redirect)
+                } else {
+                    Router.push('/page/firstopen')
+                }
                 return
             }
         } catch (err) {
