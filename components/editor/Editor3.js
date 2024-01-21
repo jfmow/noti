@@ -343,7 +343,7 @@ export default function EditorV3() {
                                     Router.push(`/page/${item.id}`)
                                 }} style={{ display: 'flex', gap: '7px', alignItems: 'center', cursor: 'pointer' }} className="hover:bg-[#f9f9f9] rounded p-3">
                                     <div aria-label='Page icon' style={{ display: 'flex', width: '16px', height: '16px' }}>
-                                        {item.icon && item.icon.includes('.png') ? (<img className="w-4 h-4" src={`/emoji/twitter/64/${item.icon}`} />) : (!isNaN(parseInt(item.icon, 16)) && String.fromCodePoint(parseInt(item.icon, 16)))}
+                                        {item.icon && item.icon.includes('.png') ? (<img className="w-4 h-4 object-contain" src={`/emoji/twitter/64/${item.icon}`} />) : (!isNaN(parseInt(item.icon, 16)) && String.fromCodePoint(parseInt(item.icon, 16)))}
                                     </div>
                                     <div>{item.title}</div>
                                 </div>
