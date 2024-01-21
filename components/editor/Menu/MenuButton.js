@@ -10,6 +10,7 @@ import Gradient from '@/components/editor/Menu/gradient/adient';
 import ColorSelector from '@/components/editor/Menu/ColorSelector';
 import { openPageContext } from '../Editor3';
 import { toaster } from '@/components/toast';
+import compressImage from "@/lib/CompressImg";
 
 export default function MenuButtons() {
     const { pb, currentPage, setListedPageItems } = useEditorContext()
@@ -72,22 +73,29 @@ export default function MenuButtons() {
         if (file) {
 
             try {
+
                 const compressedBlob = await compressImage(file, 200); // Maximum file size in KB (100KB in this example)
                 const compressedFile = new File([compressedBlob], file.name, {
                     type: "image/jpeg",
                 });
-                formData.append("header_img", compressedFile);
-                formData.append("unsplash", '');
+                if (file.size > 747000) {
+                    formData.append("header_img", compressedFile);
+                } else {
+                    formData.append("header_img", file);
+                }
+                formData.append("unsplash", "");
                 //if (compressedFile.size > 4547000) {
                 //    return toast.error('Compresed file may be too big (>4.5mb)!')
                 //}
+
+                const pageData = await pb.collection("pages").update(currentPage, formData);
                 setOpenPageData(prevData => {
-                    return { ...prevData, header_img: "", unsplash: compressedFile }
+                    return pageData
                 })
-                await pb.collection("pages").update(currentPage, formData);
 
             } catch (error) {
-                toaster.error(loadingToast, "Error uploading header image, please try again.", "error");
+                console.log(error)
+                toaster.error("Error uploading header image, please try again.");
             }
         }
     }
