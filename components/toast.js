@@ -25,11 +25,11 @@ async function toast(type = "", text) {
 
     function animateInToast() {
         const toastSlideIn = [
-            { transform: "translateX(100%)" },
-            { transform: "translateX(0)" },
+            { transform: "translateY(-100vh)" },
+            { transform: "translateY(0)" },
         ];
         const toastSlideInTiming = {
-            duration: 500,
+            duration: 650,
             iterations: 1,
             fill: 'both',
             easing: "ease-in-out"
@@ -45,8 +45,8 @@ async function toast(type = "", text) {
         //Stops the autoremove timeout from running acidentialy
         clearTimeout(autoRmToastTimeOut)
         const toastSlide = [
-            { transform: "translateX(0)" },
-            { transform: "translateX(200%)" },
+            { transform: "translateY(0)" },
+            { transform: "translateY(-200vh)" },
         ];
         const toastShrink = [
             { height: 0, marginTop: toastElement.getBoundingClientRect().height + 'px', padding: 0 },
