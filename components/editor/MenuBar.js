@@ -407,57 +407,92 @@ export default function MenuBar() {
 
 
 function TabBar() {
-    const { currentPage, listedPageItems } = useEditorContext()
-    const [recentPages, setRecentPages] = useState([])
+    const { currentPage, listedPageItems } = useEditorContext();
+    const [recentPages, setRecentPages] = useState([]);
+
     useEffect(() => {
         function useRegex(input) {
             let regex = /^(?=.*[a-zA-Z])(?=.*\d).+$/;
             return regex.test(input);
         }
+
         if (useRegex(currentPage)) {
-            setRecentPages(prevItems => prevItems.includes(currentPage) ? prevItems : [...prevItems, currentPage])
+            setRecentPages((prevItems) =>
+                prevItems.includes(currentPage)
+                    ? prevItems
+                    : [...prevItems, currentPage]
+            );
         }
-    }, [currentPage])
+    }, [currentPage]);
+
+    const handleDragStart = (e, item) => {
+        e.dataTransfer.setData('text/plain', item);
+    };
+
+    const handleDragOver = (e) => {
+        e.preventDefault();
+    };
+
+    const handleDragLeave = (e) => {
+        e.preventDefault()
+    }
+
+    const handleDrop = (e) => {
+        e.preventDefault();
+        const draggedItem = e.dataTransfer.getData('text/plain');
+        const dropIndex = [...e.target.parentNode.children].indexOf(e.target);
+
+        // Create a new array without the dragged item
+        const updatedPages = recentPages.filter((item) => item !== draggedItem);
+
+        // Insert the dragged item at the drop position
+        updatedPages.splice(dropIndex, 0, draggedItem);
+
+        setRecentPages(updatedPages);
+    };
+
     return (
         <div className='flex items-center gap-0 h-full overflow-x-scroll overflow-y-hidden gap-1 pt-1'>
-            {recentPages.map((item) => (
+            {recentPages.map((item, index) => (
                 <div
+                    key={item}
                     onClick={(e) => {
                         e.stopPropagation();
                         Router.push(`/page/${item}`);
                     }}
-                    className={`rounded-tl-lg border-l border-r border-t border-b-0  rounded-tr-lg text-sm text-zinc-600 h-full px-3 flex items-center hover:bg-zinc-200 cursor-pointer ${currentPage === item ? " border-zinc-300  border-2 shadow-xl" : "border-zinc-50"}`}
+                    onDragStart={(e) => handleDragStart(e, item)}
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleDrop}
+                    draggable
+                    className={`rounded-tl-lg border-l border-r border-t border-b-0  rounded-tr-lg text-sm text-zinc-600 h-full px-3 flex items-center hover:bg-zinc-200 cursor-pointer ${currentPage === item
+                        ? ' border-zinc-300  border-2 shadow-xl'
+                        : 'border-zinc-50'
+                        }`}
                 >
-
                     {listedPageItems.find((aitem) => aitem.id === item)?.icon && (
-                        <img className='w-4 h-4 mr-2' src={`/emoji/twitter/64/${listedPageItems.find((aitem) => aitem.id === item)?.icon}`} />
+                        <img
+                            className='w-4 h-4 mr-2'
+                            src={`/emoji/twitter/64/${listedPageItems.find((aitem) => aitem.id === item)?.icon}`}
+                        />
                     )}
                     <span className='text-nowrap'>
                         {listedPageItems.find((aitem) => aitem.id === item)?.title || item}
                     </span>
-                    <ToolTipCon>
-                        <ToolTipTrigger>
-                            <X
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    setRecentPages((prevItems) =>
-                                        prevItems.filter((aitem) => aitem !== item)
-                                    );
-                                }}
-                                className="w-4 h-4 ml-2 text-zinc-400"
-                            />
-                            <span className='sr-only'>Close tab</span>
-                        </ToolTipTrigger>
-                        <ToolTip>
-                            Close
-                        </ToolTip>
-                    </ToolTipCon>
+                    <div>
+                        <X
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setRecentPages((prevItems) =>
+                                    prevItems.filter((aitem) => aitem !== item)
+                                );
+                            }}
+                            className='w-4 h-4 ml-2 text-zinc-400'
+                        />
+                        <span className='sr-only'>Close tab</span>
+                    </div>
                 </div>
-
             ))}
         </div>
-
-    )
-
-
+    );
 }
