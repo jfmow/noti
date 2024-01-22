@@ -12,8 +12,8 @@ import { openPageContext } from '../Editor3';
 import { toaster } from '@/components/toast';
 import compressImage from "@/lib/CompressImg";
 
-export default function MenuButtons() {
-    const { pb, currentPage, setListedPageItems } = useEditorContext()
+export default function MenuButtons({ currentPage }) {
+    const { pb, setListedPageItems } = useEditorContext()
     const { openPageData, setOpenPageData, updateOpenPageData } = openPageContext()
 
     async function setHeader(img) {

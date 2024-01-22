@@ -14,12 +14,17 @@ module.exports = {
     extend: {
       animation: {
         'fade-in-quick': 'fadeinquick 0.3s 1 ease',
+        'fade-in-slow-middle': 'fadeinslowmiddle 0.3s 1 ease',
       },
       keyframes: {
         fadeinquick: {
           '0%': { opacity: 0 },
           '100%': { opacity: 1 },
-        }
+        },
+        fadeinslowmiddle: {
+          '0%': { opacity: 0, transformOrigin: "center", transform: "scale(0.8)" },
+          '100%': { opacity: 1, transformOrigin: "center", transform: "scale(1)" },
+        },
       }
     },
   },

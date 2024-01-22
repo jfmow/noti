@@ -28,8 +28,8 @@ import Loader from "../Loader";
 const MenuButtons = lazy(() => import("./Menu/MenuButton"))
 
 const editorV3Context = createContext();
-export default function EditorV3() {
-    const { pb, currentPage, setListedPageItems } = useEditorContext()
+export default function EditorV3({ currentPage }) {
+    const { pb, setListedPageItems } = useEditorContext()
     const Editor = useRef(null)
     const SaveRef = useRef(null)
     const [openPageData, setOpenPageData] = useState([])
@@ -375,7 +375,7 @@ export default function EditorV3() {
                     </div>
                     <div className="z-2 absolute bottom-2 right-2 flex gap-2">
                         <Suspense>
-                            <MenuButtons />
+                            <MenuButtons currentPage={currentPage} />
                         </Suspense>
                     </div>
                 </div>

@@ -94,7 +94,7 @@ function NotionEditor({ pageId, themes }) {
               {
                 [...new Set(pageId)].map((page) => (
                   <Suspense fallback={<></>}>
-                    <Editor page={page} />
+                    <Editor currentPage={page} page={page} />
                   </Suspense>
                 ))
               }
