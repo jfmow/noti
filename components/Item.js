@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from 'react';
 import UserOptions from './UserInfo';
 import { useEditorContext } from '@/pages/page/[...id]';
 import { toaster } from './toast';
-import NewPageModal from '@/lib/Modals/NewPage';
 import { Loader2, Plus } from 'lucide-react';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 pb.autoCancellation(false)
@@ -94,7 +93,7 @@ export default function PageList() {
     if (window.innerWidth < 640) {
       router.push(`/page/${record.id}`)
     } else {
-      router.push(`${window.location.pathname}?pagepopup=${record.id}`)
+      router.push(`${window.location.pathname}?p=${record.id}&pm=l`)
     }
     setListedPageItems(updateListedPages('', record, listedPageItems))
   }
@@ -273,9 +272,7 @@ export default function PageList() {
         </div >
         <UserOptions />
       </div>
-      {router.query.pagepopup ? (
-        <NewPageModal pageId={router.query.pagepopup} />
-      ) : null}
+
     </>
   )
 }

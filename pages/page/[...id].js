@@ -1,11 +1,11 @@
 import Loader from '@/components/Loader';
-import dynamic from 'next/dynamic';
 import PocketBase from 'pocketbase'
 import React, { Suspense, lazy, useContext, useEffect, useState } from 'react';
 import MyComponent from '@/components/Item';
 import MenuBar from '@/components/editor/MenuBar';
 import { useRouter } from 'next/router';
 import PeekPageBlock from '@/lib/Modals/PeekPage';
+import NewPageModal from '@/lib/Modals/NewPage';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 
@@ -103,9 +103,12 @@ function NotionEditor({ pageId, themes }) {
               }
             </div>
           </div>
-          {query.peekPage ? (
+          {query.pm === "l" ? (
+            <NewPageModal pageId={query.p} />
+          ) : null}
+          {query.pm === "s" ? (
             <div className='bg-zinc-200 max-w-[35%] w-[800px] h-screen overflow-hidden'>
-              <PeekPageBlock pageId={query.peekPage} />
+              <PeekPageBlock pageId={query.p} />
             </div>
           ) : null}
         </div>
