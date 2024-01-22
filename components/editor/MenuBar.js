@@ -6,7 +6,7 @@ import { useEditorContext } from '@/pages/page/[...id]';
 import { DropDown, DropDownContainer, DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from '@/lib/Pop-Cards/DropDown';
 import { updateListedPages } from '../Item';
 import { Link } from '../UX-Components';
-import { AppWindow, PanelTopDashed, Settings2, X } from 'lucide-react';
+import { AppWindow, PanelRightDashed, PanelTopDashed, Settings2, X } from 'lucide-react';
 export default function MenuBar() {
     const { pb, currentPage, setVisible, visible, setListedPageItems, listedPageItems } = useEditorContext()
     const [activePage, setActivePage] = useState({})
@@ -279,6 +279,10 @@ export default function MenuBar() {
                                     Page options
                                 </DropDownSectionTitle>
                                 <DropDownSection>
+                                    <DropDownItem onClick={() => Router.push(`/page/firstopen?p=${currentPage}&pm=s`)}>
+                                        <PanelRightDashed />
+                                        Peek page
+                                    </DropDownItem>
                                     <DropDownExtensionContainer>
                                         <DropDownExtensionTrigger hover>
                                             <DropDownItem >
@@ -458,7 +462,7 @@ function TabBar() {
                     key={item}
                     onClick={(e) => {
                         e.stopPropagation();
-                        Router.push(`/page/${item}`);
+                        Router.push(`/page/${item}?${new URLSearchParams(Object.fromEntries(Object.entries(Router.query).filter(([key]) => key !== 'id'))).toString()}`);
                     }}
                     onDragStart={(e) => handleDragStart(e, item)}
                     onDragOver={handleDragOver}

@@ -21,7 +21,7 @@ export default function PageList() {
       //console.log(records)
       setListedPageItems(records)
       if (!currentPage || (currentPage === 'firstopen' && records.length >= 1)) {
-        Router.push(`/page/${records.filter(record => record.updated && !record.archived && !record.deleted)[0].id}`)
+        Router.push(`/page/${records.filter(record => record.updated && !record.archived && !record.deleted)[0].id}?${new URLSearchParams(Object.fromEntries(Object.entries(router.query).filter(([key]) => key !== 'id'))).toString()}`)
       }
     } catch {
       toaster.error('Error fetching data')
@@ -30,7 +30,7 @@ export default function PageList() {
 
   useEffect(() => {
     if (!currentPage || (currentPage === 'firstopen' && listedPageItems.length >= 1)) {
-      Router.push(`/page/${listedPageItems.filter(record => record.updated)[0].id}`)
+      Router.push(`/page/${listedPageItems.filter(record => record.updated)[0].id}?${new URLSearchParams(Object.fromEntries(Object.entries(router.query).filter(([key]) => key !== 'id'))).toString()}`)
     }
   }, [currentPage])
 
@@ -130,7 +130,7 @@ export default function PageList() {
       if (window.innerWidth < 800) {
         setVisibleState(false)
       }
-      router.push(`/page/${item}`);
+      router.push(`/page/${item}?${new URLSearchParams(Object.fromEntries(Object.entries(router.query).filter(([key]) => key !== 'id'))).toString()}`);
     }
 
     async function handleSetExpand(e, item) {
