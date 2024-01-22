@@ -21,7 +21,7 @@ export function FileInput({ alt, ...props }) {
 }
 
 export function SubmitButton({ alt, ...props }) {
-    const className = `mt-1 min-h-[43px] flex justify-center items-center  border-2 border-zinc-800 w-full px-1 py-2 gap-2 mx-1 cursor-pointer rounded-xl text-[14px] transition-all transition-ease-in-out font-[500] ${alt ? 'bg-none text-zinc-800 hover:bg-zinc-800 hover:text-zinc-50' : 'text-zinc-50 bg-zinc-800 hover:bg-zinc-50 hover:text-zinc-800'}`
+    const className = `mt-1 min-h-[43px] disabled:opacity-75 flex justify-center items-center  border-2 border-zinc-800 w-full px-1 py-2 gap-2 mx-1 cursor-pointer rounded-xl text-[14px] transition-all transition-ease-in-out font-[500] ${alt ? 'bg-none text-zinc-800 hover:bg-zinc-800 hover:text-zinc-50' : 'text-zinc-50 bg-zinc-800 hover:bg-zinc-50 hover:text-zinc-800'}`
     if (!props?.type) {
         return (
             <>

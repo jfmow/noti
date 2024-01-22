@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 pb.autoCancellation(false)
 export default function Login() {
-    const [sso, setSSO] = useState(false)
+    const [sso, setSSO] = useState(true)
     const [oauthmethods, setOauthmethods] = useState([])
     const { query } = useRouter()
     useEffect(() => {
@@ -59,12 +59,12 @@ export default function Login() {
                         <>
                             <PasswordLogin />
 
-                            <Link className="underline mt-4 cursor-pointer" onClick={() => setSSO(true)}>SSO Login</Link>
+                            <Link className="underline mt-4 cursor-pointer" onClick={() => setSSO(true)}>Email Auth login</Link>
                         </>
                     ) : (
                         <>
                             <SSOLogin prefill={{ email: query?.ssoEmail, code: query?.ssoToken }} />
-                            <Link className="underline mt-4 cursor-pointer" onClick={() => setSSO(false)}>Username/Email Login</Link>
+                            <Link className="underline mt-4 cursor-pointer" onClick={() => setSSO(false)}>Password login</Link>
                         </>
                     )}
 
@@ -150,14 +150,14 @@ function SSOLogin({ prefill = { email: '', code: '' } }) {
     const [loading, setLoading] = useState(false)
     async function ssoLogin() {
         if (!email) return
+        setLoading(true)
         try {
             if (!code) {
                 await pb.send(`/api/auth/sso?email=${email}&linkUrl=https://${window.location.hostname}`, { method: "POST" })
-                toaster.info(`Code sent to ${email}`)
+                toaster.info(`A login code has been sent to ${email}`)
                 setCodeRequested(true)
                 return
             } else {
-                setLoading(true)
                 const req = await pb.send(`/api/auth/sso/login?email=${email}&token=${code}`, { method: "POST" })
                 window.localStorage.setItem('pocketbase_auth', JSON.stringify(req))
                 if (query?.redirect) {
@@ -182,7 +182,7 @@ function SSOLogin({ prefill = { email: '', code: '' } }) {
                     <SubmitButton type="submit" disabled={loading}>{loading ? (<Loader2 className="mr-1 h-4 w-4 animate-spin" />) : null}Login</SubmitButton>
                 </>
             ) : (
-                <SubmitButton type="submit">Request code</SubmitButton>
+                <SubmitButton type="submit" disabled={loading}>{loading ? (<Loader2 className="mr-1 h-4 w-4 animate-spin" />) : null}Request code</SubmitButton>
             )}
 
         </form >

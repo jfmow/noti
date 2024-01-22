@@ -3,16 +3,17 @@ import { toaster } from "@/components/toast";
 import { useEffect, useState } from "react";
 import PocketBase from 'pocketbase'
 import Router, { useRouter } from "next/router";
-import { Github, Route, Twitch } from "lucide-react";
+import { Github, Loader2, Route, Twitch } from "lucide-react";
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 
 export default function Login() {
     const { query } = useRouter()
-    const [authMethod, setAuthMethod] = useState('password')
+    const [authMethod, setAuthMethod] = useState('sso')
     const [oauthmethods, setOauthmethods] = useState([])
     const [idenity, setIdentity] = useState('')
     const [password, setPassword] = useState('')
     const [username, setUsername] = useState('')
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         async function getOauthMethods() {
@@ -26,7 +27,7 @@ export default function Login() {
     }, [])
 
     async function normalLogin() {
-        const loadingToast = await toaster.loading('Working...')
+        setLoading(true)
         try {
             await pb.collection('users').create({
                 "username": username,
@@ -36,49 +37,51 @@ export default function Login() {
                 "passwordConfirm": password,
             })
             await pb.collection('users').authWithPassword(idenity, password)
-            toaster.dismiss(loadingToast)
             if (query?.redirect) {
                 Router.push(query.redirect)
             } else {
                 Router.push('/page/firstopen')
             }
         } catch (err) {
-            toaster.update(loadingToast, "Invalid username/email or password.", "error")
+            toaster.error("Invalid username/email or password.")
+        } finally {
+            setLoading(false)
         }
     }
 
     async function ssoLogin() {
-        const loadingToast = await toaster.loading("Working...")
         try {
             if (!idenity || !username) {
-                toaster.dismiss(loadingToast)
                 return
             }
+            setLoading(true)
             const authData = await pb.send(`/api/auth/sso/signup?email=${idenity}&username=${username}&linkUrl=${process.env.NEXT_PUBLIC_CURRENTURL}`, { method: 'POST' })
             window.localStorage.setItem('pocketbase_auth', JSON.stringify(authData))
-            toaster.dismiss(loadingToast)
             if (query?.redirect) {
                 Router.push(query.redirect)
             } else {
                 Router.push('/page/firstopen')
             }
         } catch {
-            toaster.update(loadingToast, `Invalid username/email`, "error")
+            toaster.error(`Invalid username/email`)
+        } finally {
+            setLoading(false)
         }
     }
 
     async function OAuthLogin(provider) {
-        const loadingToast = await toaster.loading('Working...')
         try {
+            setLoading(true)
             await pb.collection('users').authWithOAuth2({ provider: provider })
-            toaster.dismiss(loadingToast)
             if (query?.redirect) {
                 Router.push(query.redirect)
             } else {
                 Router.push('/page/firstopen')
             }
         } catch (err) {
-            toaster.update(loadingToast, "A problem has occured logging in.", "error")
+            toaster.error("A problem has occured logging in.")
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -93,8 +96,8 @@ export default function Login() {
                 <div class="absolute h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
                 <div className="z-2 relative  flex flex-col items-center justify-center ">
                     <div className="flex items-center justify-center flex-col mb-4">
-                        <h1 className="underline decoration-zinc-300 mb-2  font-[600] text-[28px] text-zinc-800">Signup</h1>
-                        <Paragraph>Enter your details to signup</Paragraph>
+                        <h1 className="underline decoration-zinc-300 mb-2  font-[600] text-[28px] text-zinc-800">Sign up</h1>
+                        <Paragraph>Enter your details to sign up</Paragraph>
                         <div className="flex gap-3">
                             <Link href="/auth/terms-and-conditions">Terms and conditions</Link>
                             <Link href="/auth/privacy-policy">Privacy policy</Link>
@@ -111,7 +114,7 @@ export default function Login() {
                                         <input required onChange={(e) => setPassword(e.target.value)} placeholder="Password" type="password" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
                                     </>
                                 ) : null}
-                                <SubmitButton type="submit">Signup</SubmitButton>
+                                <SubmitButton type="submit" disabled={loading}>{loading ? (<Loader2 className="mr-1 h-4 w-4 animate-spin" />) : null}Sign up</SubmitButton>
                             </form >
                             <Link onClick={() => setAuthMethod('sso')} className="mt-4 underline cursor-pointer">Use Email Auth</Link>
                         </>
@@ -123,7 +126,7 @@ export default function Login() {
                                 {isValidEmail(idenity) ? (
                                     <input required onChange={(e) => setUsername(e.target.value)} placeholder="Username" type="text" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
                                 ) : null}
-                                <SubmitButton type="submit">Signup</SubmitButton>
+                                <SubmitButton type="submit" disabled={loading}>{loading ? (<Loader2 className="mr-1 h-4 w-4 animate-spin" />) : null}Sign up</SubmitButton>
                             </form >
                             <Link onClick={() => setAuthMethod('password')} className="mt-4 underline cursor-pointer">Use password</Link>
                         </>
