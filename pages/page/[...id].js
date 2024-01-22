@@ -91,7 +91,7 @@ function NotionEditor({ pageId, themes }) {
       <div>
         <div className='flex flex-col sm:flex-row'>
           <MyComponent />
-          <div style={{ flex: '1 1 0%', position: 'relative', display: 'flex', height: '100vh', flexDirection: 'column', overflowX: 'hidden' }}>
+          <div style={{ flex: '1 1 0%', position: 'relative', display: 'flex', height: '100dvh', flexDirection: 'column', overflowX: 'hidden' }}>
             <MenuBar />
             <div style={{ display: 'flex', height: '100%', overflow: 'hidden' }}>
               {
@@ -107,7 +107,7 @@ function NotionEditor({ pageId, themes }) {
             <NewPageModal pageId={query.p} />
           ) : null}
           {query.pm === "s" ? (
-            <div className='bg-zinc-200 max-w-[35%] w-[800px] h-screen overflow-hidden'>
+            <div className='bg-zinc-200 max-w-[35%] w-[800px] h-[100dvh] overflow-hidden'>
               <PeekPageBlock pageId={query.p} />
             </div>
           ) : null}
