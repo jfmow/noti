@@ -4,6 +4,8 @@ import PocketBase from 'pocketbase'
 import React, { Suspense, lazy, useContext, useEffect, useState } from 'react';
 import MyComponent from '@/components/Item';
 import MenuBar from '@/components/editor/MenuBar';
+import { useRouter } from 'next/router';
+import PeekPageBlock from '@/lib/Modals/PeekPage';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 
@@ -13,6 +15,7 @@ const EditorContext = React.createContext();
 const Editor = lazy(() => import('../../components/editor/Editor3'));
 
 function NotionEditor({ pageId, themes }) {
+  const { query } = useRouter()
   const [isLoading, setIsLoading] = useState(true);
   const [visible, setVisible] = useState(true)
   const [listedPageItems, setListedPageItems] = useState([])
@@ -100,6 +103,11 @@ function NotionEditor({ pageId, themes }) {
               }
             </div>
           </div>
+          {query.peekPage ? (
+            <div className='bg-zinc-200 max-w-[35%] w-[800px] h-screen overflow-hidden'>
+              <PeekPageBlock pageId={query.peekPage} />
+            </div>
+          ) : null}
         </div>
       </div>
     </EditorContext.Provider>
