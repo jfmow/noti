@@ -30,7 +30,7 @@ export default function SecuritySettings() {
             toaster.update(loadingToast, ssoState ? 'Email Auth disabled' : 'Email Auth enabled', "info")
         } catch (err) {
             console.log(err.data)
-            if (err.data.message === "You must set a password before disabling Email Auth.") {
+            if (err.data.message === "You must set a password before disabling SSO.") {
                 setNewPassword({ ...newPassword, required: true })
             }
             toaster.update(loadingToast, err.data.message, "error")
