@@ -187,53 +187,53 @@ export default function MenuBar() {
         <>
 
 
-            <div className="w-full h-[45px] min-h-[45px] max-h-[45px] pl-1 pr-2 px-2 flex justify-between items-center bg-zinc-50 overflow-x-scroll overflow-y-hidden">
+            <div className="w-full h-[45px] min-h-[45px] max-h-[45px] pl-1 pr-2 px-2 flex justify-between items-center bg-zinc-50 overflow-y-hidden">
                 <div className='flex items-center h-full'>
                     <button onClick={() => setVisible(!visible)} type='button' className="flex items-center justify-center bg-none border-none text-zinc-800 cursor-pointer p-1 rounded relative w-[30px] h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-right"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><line x1="15" x2="15" y1="3" y2="21" /></svg>
                     </button>
-                    {tabBarVisible ? (
-                        <TabBar />
-                    ) : (
-                        <div className="flex items-center text-zinc-800">
-                            {!isMobile ? (
-                                <>
-                                    {filteredItems.map((item, index) => (
-                                        <>
-                                            <div className="flex items-center justify-center relative cursor-pointer" key={index}>
-                                                <Link className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200" onClick={() => Router.push(`/page/${item.id}`)}>
-                                                    {item?.icon && (
-                                                        <div className="w-4 h-4 flex items-center justify-center">
-                                                            {item?.icon && item?.icon.includes('.png') ? (<img src={`/emoji/twitter/64/${item?.icon}`} />) : (!isNaN(parseInt(item?.icon, 16)) && String.fromCodePoint(parseInt(item?.icon, 16)))}
-                                                        </div>
-                                                    )}
-                                                    {item?.title || item?.id}
-                                                </Link>
-                                            </div>
-                                            {index < filteredItems.length - 1 && (
-                                                <div className='text-zinc-300 flex items-center justify-center mx-1'>
-                                                    /
-                                                </div>
-                                            )}
-                                        </>
-                                    ))}
-                                </>
-                            ) : (
-                                <>
-                                    <div className="flex items-center justify-center relative cursor-pointer">
-                                        <div className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200" onClick={() => Router.push(`/page/${currentPage}`)}>
-                                            <div className="w-4 h-4 flex items-center justify-center">
-                                                {activePage?.icon && activePage?.icon.includes('.png') ? (<img src={`/emoji/twitter/64/${activePage?.icon}`} />) : (!isNaN(parseInt(activePage?.icon, 16)) && String.fromCodePoint(parseInt(activePage?.icon, 16)))}
-                                            </div>
-                                            {activePage?.title || activePage?.id}
-                                        </div>
-                                    </div>
-                                </>
-                            )}
-                        </div>
-                    )}
                 </div>
-                <div className="flex items-center justify-center gap-0 relative">
+                {tabBarVisible ? (
+                    <TabBar />
+                ) : (
+                    <div className="flex items-center text-zinc-800">
+                        {!isMobile ? (
+                            <>
+                                {filteredItems.map((item, index) => (
+                                    <>
+                                        <div className="flex items-center justify-center relative cursor-pointer" key={index}>
+                                            <Link className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200" onClick={() => Router.push(`/page/${item.id}`)}>
+                                                {item?.icon && (
+                                                    <div className="w-4 h-4 flex items-center justify-center">
+                                                        {item?.icon && item?.icon.includes('.png') ? (<img src={`/emoji/twitter/64/${item?.icon}`} />) : (!isNaN(parseInt(item?.icon, 16)) && String.fromCodePoint(parseInt(item?.icon, 16)))}
+                                                    </div>
+                                                )}
+                                                {item?.title || item?.id}
+                                            </Link>
+                                        </div>
+                                        {index < filteredItems.length - 1 && (
+                                            <div className='text-zinc-300 flex items-center justify-center mx-1'>
+                                                /
+                                            </div>
+                                        )}
+                                    </>
+                                ))}
+                            </>
+                        ) : (
+                            <>
+                                <div className="flex items-center justify-center relative cursor-pointer">
+                                    <div className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200" onClick={() => Router.push(`/page/${currentPage}`)}>
+                                        <div className="w-4 h-4 flex items-center justify-center">
+                                            {activePage?.icon && activePage?.icon.includes('.png') ? (<img src={`/emoji/twitter/64/${activePage?.icon}`} />) : (!isNaN(parseInt(activePage?.icon, 16)) && String.fromCodePoint(parseInt(activePage?.icon, 16)))}
+                                        </div>
+                                        {activePage?.title || activePage?.id}
+                                    </div>
+                                </div>
+                            </>
+                        )}
+                    </div>
+                )}
+                <div className="flex items-center justify-center gap-0  min-w-[100px]">
                     <ToolTipCon>
                         <DropDownContainer>
                             <ToolTipTrigger>
@@ -456,7 +456,7 @@ function TabBar() {
     };
 
     return (
-        <div className='flex items-center gap-0 h-full overflow-x-scroll overflow-y-hidden gap-1 pt-1'>
+        <div className='flex items-center gap-0 h-full overflow-y-hidden w-full overflow-x-scroll gap-1 pt-1'>
             {recentPages.map((item, index) => (
                 <div
                     key={item}
