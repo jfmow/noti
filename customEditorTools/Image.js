@@ -107,13 +107,19 @@ export default class Image {
       iframe.src = blurHash
       this.wrapper.innerHTML = "";
       this.wrapper.appendChild(iframe);
-      const fileToken = await pb.files.getToken();
+
       // retrieve an example protected file url (will be valid ~5min)
-      const record = await pb.collection('imgs').getOne(file.fileId); // Use the fileId to retrieve the record
+      const record = await pb.collection('imgs').getOne(file.fileId, { expand: "page" }); // Use the fileId to retrieve the record
       if (record.page === "") {
         await pb.collection("imgs").update(file.fileId, { "page": this.currpage })
       }
-      const url = pb.files.getUrl(record, record.file_data, { 'token': fileToken });
+      let url
+      if (!record.expand.page.shared) {
+        const fileToken = await pb.files.getToken();
+        url = pb.files.getUrl(record, record.file_data, { 'token': fileToken });
+      } else {
+        url = pb.files.getUrl(record, record.file_data);
+      }
 
       iframe.src = url;
       iframe.setAttribute('fileId', file.fileId); // Set the fileId as an attribute of the iframe

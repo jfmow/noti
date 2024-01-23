@@ -27,10 +27,6 @@ export default function EditorV3({ page }) {
     const [openPageData, setOpenPageData] = useState([])
     const [loading, setLoading] = useState(false)
 
-    if (!pb.authStore.isValid) {
-        window.location.replace(`/auth/login?redirect=${window.location.href}&msg="This note requires all viewers to be logged in"`)
-    }
-
     useEffect(() => {
         /*
         * Check if the url is on the default route `firstopen`, 
