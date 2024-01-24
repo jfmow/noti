@@ -1,9 +1,29 @@
+import { useState, useEffect } from 'react';
 import AvatarModal from './AvatarModal';
 import { DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle } from '@/lib/Pop-Cards/DropDown';
 import { useEditorContext } from '@/pages/page/[...id]';
 import { toaster } from '../toast';
 export default function AccountDetails() {
     const { pb } = useEditorContext()
+    const [totalUsage, setTotalUsage] = useState(0)
+    const [usageLimit, setUsageLimit] = useState(10)
+
+
+    useEffect(() => {
+        async function getTotalUsage() {
+            try {
+                const record = await pb.collection('user_usage').getOne(pb.authStore.model.id);
+                setTotalUsage(record.total_size)
+                const accountFlags = await pb.collection('user_flags').getFirstListItem(`user="${pb.authStore.model.id}"`);
+                setUsageLimit(accountFlags.quota)
+            } catch {
+                // Handle errors if needed
+            }
+        }
+        getTotalUsage()
+    }, [])
+
+
 
     async function ChangeEmail() {
         const newEmail = prompt('Enter a new email address', pb.authStore.model.email)
@@ -76,7 +96,32 @@ export default function AccountDetails() {
                 </DropDownExtension>
             </DropDownExtensionContainer>
             <AvatarModal pb={pb} />
-
+            <DropDownExtensionContainer>
+                <DropDownExtensionTrigger hover>
+                    <DropDownItem>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pie-chart"><path d="M21.21 15.89A10 10 0 1 1 8 2.83" /><path d="M22 12A10 10 0 0 0 12 2v10z" /></svg>
+                        Usage
+                    </DropDownItem>
+                </DropDownExtensionTrigger>
+                <DropDownExtension>
+                    <DropDownSectionTitle>
+                        Usage
+                    </DropDownSectionTitle>
+                    <DropDownSection>
+                        <DropDownItem>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-database"><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5V19A9 3 0 0 0 21 19V5" /><path d="M3 12A9 3 0 0 0 21 12" /></svg>
+                            {totalUsage === 'loading' ? ('loading...') : (
+                                <>
+                                    {totalUsage}MB
+                                </>
+                            )}
+                        </DropDownItem>
+                        <DropDownItem>
+                            Limit: {usageLimit || '10'}MB
+                        </DropDownItem>
+                    </DropDownSection>
+                </DropDownExtension>
+            </DropDownExtensionContainer>
         </DropDownSection>
     )
 }
