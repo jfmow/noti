@@ -1,45 +1,9 @@
-import { useState, useEffect } from 'react';
 import AvatarModal from './AvatarModal';
 import { DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle } from '@/lib/Pop-Cards/DropDown';
 import { useEditorContext } from '@/pages/page/[...id]';
 import { toaster } from '../toast';
 export default function AccountDetails() {
     const { pb } = useEditorContext()
-    const [totalUsage, setTotalUsage] = useState(0)
-    const [usageLimit, setUsageLimit] = useState(10)
-
-
-    useEffect(() => {
-        getTotalUsage()
-    }, [])
-
-    async function getTotalUsage() {
-        try {
-            const getTotalSize = async (collectionName) => {
-                try {
-                    const record = await pb.collection(collectionName).getOne(pb.authStore.model.id);
-                    return record ? record.total_size : 0;
-                } catch { return 0 }
-            };
-
-            const totalSize = await Promise.all([
-                getTotalSize('total_files_per_user'),
-                getTotalSize('Total_img_per_user'),
-            ]).then(sizes => sizes.reduce((acc, size) => acc + size, 0));
-
-            setTotalUsage(Math.round(totalSize / 1000000));
-
-            const userFlagsRecord = await pb.collection('user_flags').getFirstListItem(`user="${pb.authStore.model.id}"`, {
-                skipTotal: true
-            });
-
-            if (userFlagsRecord) {
-                setUsageLimit(userFlagsRecord.quota / 1048576);
-            }
-        } catch {
-            // Handle errors if needed
-        }
-    }
 
     async function ChangeEmail() {
         const newEmail = prompt('Enter a new email address', pb.authStore.model.email)
@@ -112,32 +76,7 @@ export default function AccountDetails() {
                 </DropDownExtension>
             </DropDownExtensionContainer>
             <AvatarModal pb={pb} />
-            <DropDownExtensionContainer>
-                <DropDownExtensionTrigger hover>
-                    <DropDownItem>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pie-chart"><path d="M21.21 15.89A10 10 0 1 1 8 2.83" /><path d="M22 12A10 10 0 0 0 12 2v10z" /></svg>
-                        Usage
-                    </DropDownItem>
-                </DropDownExtensionTrigger>
-                <DropDownExtension>
-                    <DropDownSectionTitle>
-                        Usage
-                    </DropDownSectionTitle>
-                    <DropDownSection>
-                        <DropDownItem>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-database"><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5V19A9 3 0 0 0 21 19V5" /><path d="M3 12A9 3 0 0 0 21 12" /></svg>
-                            {totalUsage === 'loading' ? ('loading...') : (
-                                <>
-                                    {totalUsage}MB
-                                </>
-                            )}
-                        </DropDownItem>
-                        <DropDownItem>
-                            Limit: {usageLimit || '10'}MB
-                        </DropDownItem>
-                    </DropDownSection>
-                </DropDownExtension>
-            </DropDownExtensionContainer>
+
         </DropDownSection>
     )
 }
