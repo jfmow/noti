@@ -18,7 +18,8 @@ export default function MenuBar() {
         if (window.innerWidth < 450) {
             setIsMobile(true)
         }
-        setTabBarVisible(window.localStorage.getItem('tabbar'))
+
+        setTabBarVisible(window.localStorage.getItem('tabbar') === "false" ? false : true)
         document.body.addEventListener("TABBARTOGGLE", (e) => {
             const newState = e.detail
             window.localStorage.setItem('tabbar', newState)
@@ -196,7 +197,7 @@ export default function MenuBar() {
                 {tabBarVisible ? (
                     <TabBar />
                 ) : (
-                    <div className="flex items-center text-zinc-800">
+                    <div className="flex items-center text-zinc-800 w-full">
                         {!isMobile ? (
                             <>
                                 {filteredItems.map((item, index) => (
