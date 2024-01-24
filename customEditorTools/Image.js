@@ -109,7 +109,7 @@ export default class Image {
       this.wrapper.appendChild(iframe);
 
       // retrieve an example protected file url (will be valid ~5min)
-      const record = await pb.collection('imgs').getOne(file.fileId, { expand: "page" }); // Use the fileId to retrieve the record
+      const record = await pb.collection('files').getOne(file.fileId, { expand: "page" }); // Use the fileId to retrieve the record
       if (record.page === "") {
         await pb.collection("imgs").update(file.fileId, { "page": this.currpage })
       }
@@ -127,7 +127,7 @@ export default class Image {
     } else {
       const fileToken = await pb.files.getToken();
       // retrieve an example protected file url (will be valid ~5min)
-      const record = await pb.collection('imgs').getOne(file.fileId); // Use the fileId to retrieve the record
+      const record = await pb.collection('files').getOne(file.fileId); // Use the fileId to retrieve the record
       if (record.page === "") {
         await pb.collection("imgs").update(file.fileId, { "page": this.currpage })
       }
@@ -184,7 +184,7 @@ export default class Image {
     if (this.data.fileId) {
       console.log(this.data.fileId)
       async function removeImg(file) {
-        await pb.collection('imgs').delete(file);
+        await pb.collection('files').delete(file);
       }
       removeImg(this.data.fileId)
     }

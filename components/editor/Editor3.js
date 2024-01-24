@@ -132,7 +132,7 @@ export default function EditorV3({ currentPage }) {
                                                     toaster.update(loadingToast, 'File too big. Must be < 5mb', "error")
                                                     return { success: 0 }
                                                 }
-                                                record = await pb.collection("imgs").create(formData);
+                                                record = await pb.collection("files").create(formData);
                                                 toaster.update(loadingToast, "Image uploaded successfully!", "success")
                                             } catch (error) {
                                                 if (error.data.code === 403) {
