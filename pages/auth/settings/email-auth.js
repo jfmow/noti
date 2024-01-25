@@ -43,9 +43,7 @@ export default function EmailAuth() {
     return (
         <>
             <div className="w-full h-[100dvh] bg-zinc-50 text-zinc-800 relative">
-                <div class="absolute top-0 h-full w-full bg-white">
-                    <div class="absolute bottom-auto left-auto right-0 top-0 h-[500px] w-[500px] -translate-x-[30%] translate-y-[20%] rounded-full bg-[rgba(173,109,244,0.5)] opacity-50 blur-[80px]"></div>
-                </div>
+                <div class="absolute top-0 h-screen w-screen bg-white bg-[radial-gradient(100%_50%_at_50%_0%,rgba(0,163,255,0.13)_0,rgba(0,163,255,0)_50%,rgba(0,163,255,0)_100%)]"></div>
                 <div className="relative z-[2] w-full h-[100dvh] flex flex-col items-center justify-center px-5 ">
                     <Link onClick={() => Router.back()} className="absolute top-7 left-7 cursor-pointer">
                         <ArrowLeft className="w-6 h-6 text-zinc-600" />
