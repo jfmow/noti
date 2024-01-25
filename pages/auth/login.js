@@ -73,7 +73,7 @@ export default function Login() {
     async function requestToken() {
         setLoading(true)
         try {
-            const req = await pb.send(`/api/auth/sso?email=${idenity}&linkUrl=https://${window.location.hostname}`, { method: "POST" })
+            const req = await pb.send(`/api/auth/sso/token?email=${idenity}`, { method: "POST" })
             toaster.info(`A code has been emailed to ${idenity}. This code is valid for 5 minutes`)
             setemailAuthCodeRequested(true)
         } catch (error) {

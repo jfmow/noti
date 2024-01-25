@@ -55,7 +55,7 @@ export default function Login() {
                 return
             }
             setLoading(true)
-            const authData = await pb.send(`/api/auth/sso/signup?email=${idenity}&username=${username}&linkUrl=${process.env.NEXT_PUBLIC_CURRENTURL}`, { method: 'POST' })
+            const authData = await pb.send(`/api/auth/sso/signup?email=${idenity}&username=${username}`, { method: 'POST' })
             window.localStorage.setItem('pocketbase_auth', JSON.stringify(authData))
             if (query?.redirect) {
                 Router.push(query.redirect)
