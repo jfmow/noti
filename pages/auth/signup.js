@@ -49,13 +49,13 @@ export default function Login() {
         }
     }
 
-    async function ssoLogin() {
+    async function ssoLogin(e) {
+        e.preventDefault()
+        const form = new FormData(e.target)
+        form.set("create", "true")
         try {
-            if (!idenity || !username) {
-                return
-            }
             setLoading(true)
-            const authData = await pb.send(`/api/auth/sso/signup?email=${idenity}&username=${username}`, { method: 'POST' })
+            const authData = await pb.send(`/api/collections/users/auth-with-email-token`, { method: 'POST', body: form })
             window.localStorage.setItem('pocketbase_auth', JSON.stringify(authData))
             if (query?.redirect) {
                 Router.push(query.redirect)
@@ -121,10 +121,10 @@ export default function Login() {
                     ) : null}
                     {authMethod === "sso" ? (
                         <>
-                            <form onSubmit={(e) => { e.preventDefault(); ssoLogin() }} className="w-[300px] grid gap-2">
-                                <input defaultValue={idenity} required onChange={(e) => setIdentity(e.target.value)} placeholder="Email | me@example.com" type="email" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                            <form onSubmit={ssoLogin} className="w-[300px] grid gap-2">
+                                <input name="email" defaultValue={idenity} required onChange={(e) => setIdentity(e.target.value)} placeholder="Email | me@example.com" type="email" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
                                 {isValidEmail(idenity) ? (
-                                    <input required onChange={(e) => setUsername(e.target.value)} placeholder="Username" type="text" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                                    <input name="username" required placeholder="Username" type="text" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
                                 ) : null}
                                 <SubmitButton type="submit" disabled={loading}>{loading ? (<Loader2 className="mr-1 h-4 w-4 animate-spin" />) : null}Sign up</SubmitButton>
                             </form >

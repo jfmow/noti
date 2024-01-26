@@ -22,7 +22,7 @@ export default function EmailAuth() {
                 return toaster.error("Password must be at least 8 characters long")
             }
             try {
-                const req = await pb.send('/api/auth/sso/toggle', { method: "POST", body: form })
+                const req = await pb.send('/api/collections/users/toggle-email-token', { method: "POST", body: form })
                 pb.authStore.clear()
                 Router.push("/auth/login")
             } catch (err) {
@@ -30,7 +30,7 @@ export default function EmailAuth() {
             }
         } else {
             try {
-                const req = await pb.send('/api/auth/sso/toggle', { method: "POST" })
+                const req = await pb.send('/api/collections/users/toggle-email-token', { method: "POST" })
                 pb.authStore.clear()
                 Router.push("/auth/login")
             } catch (err) {
