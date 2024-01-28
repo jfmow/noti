@@ -3,6 +3,8 @@ import AvatarModal from './AvatarModal';
 import { DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle } from '@/lib/Pop-Cards/DropDown';
 import { useEditorContext } from '@/pages/page/[...id]';
 import { toaster } from '../toast';
+import Router from 'next/router';
+import { Github } from 'lucide-react';
 export default function AccountDetails() {
     const { pb } = useEditorContext()
     const [totalUsage, setTotalUsage] = useState(0)
@@ -97,7 +99,7 @@ export default function AccountDetails() {
             </DropDownExtensionContainer>
             <AvatarModal pb={pb} />
             <DropDownExtensionContainer>
-                <DropDownExtensionTrigger hover>
+                <DropDownExtensionTrigger>
                     <DropDownItem>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pie-chart"><path d="M21.21 15.89A10 10 0 1 1 8 2.83" /><path d="M22 12A10 10 0 0 0 12 2v10z" /></svg>
                         Usage
@@ -122,6 +124,10 @@ export default function AccountDetails() {
                     </DropDownSection>
                 </DropDownExtension>
             </DropDownExtensionContainer>
+            <DropDownItem onClick={() => Router.push("/auth/settings/oauth-providers")}>
+                <Github />
+                OAuth providers
+            </DropDownItem>
         </DropDownSection>
     )
 }
