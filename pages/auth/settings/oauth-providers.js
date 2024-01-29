@@ -98,7 +98,7 @@ function RemoveOAuthAccount({ oAuthAccounts, setLinkedAccounts }) {
                         </>
                     ))}
                 </div>
-                <div className="h-full w-[1px] border border-zinc-200" />
+
             </>) : null}
         </>
     )
@@ -134,6 +134,7 @@ function LinkOAuthAccount({ oAuthAccounts }) {
         <>
             {providers.length >= 1 ? (
                 <>
+                    {oAuthAccounts.length >= 1 ? (<div className="h-full w-[1px] border border-zinc-200" />) : null}
                     <div className="pt-2 max-w-[80%] w-[400px]">
                         <h1 className="mb-2 font-semibold text-2xl text-left">Link OAuth provider</h1>
                         {providers.map((item) => (
