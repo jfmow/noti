@@ -55,6 +55,8 @@ export default function ResetPassword() {
 }
 
 function RemoveOAuthAccount({ oAuthAccounts, setLinkedAccounts }) {
+    const [requiresPassword, setRequiresPassword] = useState(false)
+    const [newPassword, setNewPassword] = useState('')
 
     useEffect(() => {
         async function GetLinkedOAuthAccounts() {
@@ -67,16 +69,30 @@ function RemoveOAuthAccount({ oAuthAccounts, setLinkedAccounts }) {
     }, [])
 
     async function handleUnLinkProvider(provider) {
-        await pb.collection('users').unlinkExternalAuth(
-            pb.authStore.model.id,
-            provider
-        );
+        try {
+            const form = new FormData()
+            form.set("password", newPassword)
+            await pb.send(`/api/collections/users/records/${pb.authStore.model.id}/external-auths/${provider}`, { method: "DELETE", body: form })
+            setRequiresPassword(false)
+            window.location.reload()
+        } catch (err) {
+            toaster.error(err.message)
+            if (err.message === "You must set a password before unlinking OAuth provider.") {
+                //Show a password input promt or emailAuth Promt
+                setRequiresPassword(true)
+            }
+        }
     }
     return (
         <>
             {oAuthAccounts.length >= 1 ? (<>
                 <div className="max-w-[80%] w-[400px]">
                     <h1 className="mb-2 font-semibold text-2xl text-left">Un-link OAuth provider</h1>
+                    {requiresPassword ? (
+                        <>
+                            <Input onChange={(e) => setNewPassword(e.target.value)} required placeholder="New password" type="password" />
+                        </>
+                    ) : null}
                     {oAuthAccounts.map((item) => (
                         <>
                             <div className="w-full min-h-[55px] bg-zinc-100 shadow-sm py-2 px-6 rounded-xl flex items-center font-semibold text-md justify-between">
