@@ -1,6 +1,6 @@
 import Link from "@/components/Link";
+import { ArrowRight } from "lucide-react";
 import Head from "next/head";
-import Image from "next/image";
 import PocketBase from 'pocketbase'
 import { useEffect } from "react";
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
@@ -19,36 +19,45 @@ export default function HOME() {
         <link rel="icon" href="/logo-small.webp" />
         <meta name="description" content="Note. The notes app for you, simple, fast, free." />
       </Head>
-      <div className="w-full text-zinc-50">
-        <nav className="px-5 py-3 sm:py-0 text-[#d1cddb] items-center grid sm:grid-cols-3 h-[60px] z-50 w-full bg-[#0b0518]">
-          <div className="w-full h-full hidden items-center sm:flex justify-start ">
-            <div className="overflow-hidden w-6 h-6 object-contain">
-              <img alt="Brand logo - mountians with lines" src="/logo-small.webp" />
+      <div className="w-full text-zinc-800">
+
+        <div className="w-full min-h-screen sm:justify-center justify-between flex-col flex items-center relative px-5 pb-0">
+
+          <div class="absolute top-0 z-[-2] h-full w-screen rotate-180 transform bg-white bg-[radial-gradient(60%_120%_at_50%_50%,hsla(0,0%,100%,0)_0,rgba(252,205,238,.5)_100%)]"></div>
+
+          <nav className="sm:absolute top-0 p-3 text-zinc-700 items-center grid sm:grid-cols-3 min-h-[60px] h-fit z-[50] w-full ">
+            <div className="w-full h-full hidden items-center sm:flex justify-start ">
+              <div className="overflow-hidden w-6 h-6 object-contain">
+                <img alt="Brand logo - mountians with lines" src="/logo-small.webp" />
+              </div>
+              <p className="ml-2 "><span className="font-semibold">Note</span></p>
             </div>
-            <p className="ml-2 "><span className="font-semibold">Note</span></p>
-          </div>
-          <div className="w-full h-full flex items-center justify-center gap-3">
-            <Link href={"/page/rzz50e2mnhgwof2"}>Demo</Link>
-            <Link href="/auth/signup" className={"font-semibold"}>Get started</Link>
-            <Link href={"https://github.com/jfmow/noti"}>Self-host</Link>
-            <Link href={"/auth/login"}>Login</Link>
-          </div>
-          <div className="w-full h-full items-center justify-end hidden sm:flex">
-            <Link href="/auth/signup" className="flex items-center justify-center text-white py-3 px-4 bg-blue-700 hover:bg-blue-500 rounded-lg transition-all font-semibold min-w-[120px]">
-              Get Started
-            </Link>
-          </div>
-        </nav>
-        <div className="w-full min-h-screen justify-center flex-col flex items-center relative  p-5 pb-10">
-          <div className="absolute inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]"></div>
+            <div className="w-full h-full flex items-center justify-center gap-3">
+              <Link href={"/page/rzz50e2mnhgwof2"}>Demo</Link>
+              <Link href="/auth/signup" className={"font-semibold"}>Get started</Link>
+              <Link href={"https://github.com/jfmow/noti"}>Self-host</Link>
+              <Link href={"/auth/login"}>Login</Link>
+            </div>
+            <div className="w-full h-full items-center justify-end hidden sm:flex">
+              <Link href="/auth/signup" className="flex items-center justify-center text-white py-3 px-4 bg-blue-700 hover:bg-blue-500 rounded-lg transition-all font-semibold min-w-[120px]">
+                Get Started
+              </Link>
+            </div>
+          </nav>
+
+
           <div className="flex flex-col justify-center w-full max-w-[1200px] px-5">
-            <h1 className="mb-8 mt-8 text-6xl">Note.</h1>
-            <p className="text-2xl sm:text-3xl text-zinc-50 opacity-70 mb-4">A community and simplicity-focused editor. For you, by you.</p>
-            <div className="py-6 mt-4 flex items-start sm:items-center gap-6 flex-col sm:flex-row mb-12">
-              <Link href="/auth/signup" className="p-5 text-lg md:text-2xl bg-purple-600 text-zinc-100 rounded font-semibold hover:bg-purple-700">
+            <div className="mb-2 flex items-center justify-center w-full">
+              <div className="border inline-flex h-full cursor-pointer justify-center items-center rounded-full bg-white px-3 py-1 text-xs font-medium leading-5 text-zinc-600 backdrop-blur-xl">
+                Explore the demo 🤯 <ArrowRight className="w-4 h-4 ml-2" />
+              </div>
+            </div>
+            <h1 className="text-center text-3xl font-medium text-gray-900 sm:text-6xl">Accelerate your thoughts, <br />become <span className="bg-gradient-to-r from-zinc-900 via-zinc-600 to-zinc-400 bg-clip-text text-transparent">more creative</span></h1>
+            <div className="py-6 mt-4 flex items-center justify-center gap-6 flex-row mb-12 w-full">
+              <Link href="/auth/signup" className="px-4 py-2 text-md bg-purple-600 text-zinc-100 rounded-md font-medium hover:bg-purple-700">
                 Get started
               </Link>
-              <Link href="/page/rzz50e2mnhgwof2" className="p-5 text-lg md:text-2xl text-purple-600 rounded hover:text-purple-500">
+              <Link href="/page/rzz50e2mnhgwof2" className="px-4 py-2 text-md bg-zinc-100 text-zinc-800 rounded-md font-medium hover:bg-zinc-200">
                 View demo
               </Link>
             </div>
@@ -58,10 +67,12 @@ export default function HOME() {
           </div>
         </div>
         <div className="w-full min-h-screen p-5 pb-10 justify-center flex-col flex items-center relative bg-slate-950">
-          <div className="absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
-          <div className="relative z-3 flex flex-col justify-center w-full max-w-[1200px]">
-            <h1 className="mb-8 mt-8 text-xl md:text-6xl mb-6 text-center">Simplicity.</h1>
-            <p className="text-lg text-center sm:text-xl text-zinc-300  mb-12">
+
+          <div class="absolute top-0 z-[1] h-full w-full bg-white"><div class="absolute bottom-auto left-auto right-0 top-0 h-[500px] w-[500px] -translate-x-[30%] translate-y-[20%] rounded-full bg-[rgba(173,109,244,0.5)] opacity-50 blur-[80px]"></div></div>
+
+          <div className="relative z-3 flex flex-col justify-center w-full max-w-[1200px] z-[2]">
+            <h1 className="mb-8 pb-1 mt-8 text-xl md:text-6xl mb-6 text-center font-extrabold bg-gradient-to-r from-fuchsia-400 to-fuchsia-700 bg-clip-text text-transparent">Simplicity</h1>
+            <p className="text-lg text-center sm:text-xl text-zinc-600  mb-12">
               Note is an editor which only has what you need. Nothing fancy, just the basics
             </p>
 
@@ -70,8 +81,7 @@ export default function HOME() {
           </div>
 
         </div>
-        <div className="w-full min-h-screen justify-center flex-col flex items-center relative">
-          <div class="absolute top-0 z-[-2] h-screen w-screen bg-[#000000] bg-[radial-gradient(#ffffff33_1px,rgb(2_6_23_/_1)_1px)] bg-[size:20px_20px]"></div>
+        <div className="w-full min-h-screen justify-center flex-col flex items-center relative bg-zinc-50">
           <div className="flex flex-col justify-center w-full max-w-[1200px] px-5">
             <h1 className="mb-8 mt-8 text-6xl text-center">Get started Now!</h1>
             <div className="py-6 mt-4 flex items-center justify-center gap-6 flex-row mb-12">

@@ -116,7 +116,7 @@ Basic h1's for editor js
 
 html,
 body {
-  font-family: 'Segoe UI', "Geist-bold", sans-serif;
+  font-family: "Inter";
 
   max-width: 100dvw;
   overflow-x: hidden;
@@ -127,7 +127,7 @@ body {
 body {
   color: #000;
   background: var(--background);
-  font-family: Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans,
+  font-family: "Inter", Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans,
     Droid Sans, Helvetica Neue, sans-serif;
 }
 

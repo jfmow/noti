@@ -25,6 +25,9 @@ module.exports = {
           '0%': { opacity: 0, transformOrigin: "center", transform: "scale(0.8)" },
           '100%': { opacity: 1, transformOrigin: "center", transform: "scale(1)" },
         },
+      },
+      fontFamily: {
+        'inter': ['Inter'],
       }
     },
   },
