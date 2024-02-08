@@ -81,6 +81,26 @@
         }
     },
     {
+        "id": "pink",
+        "display_name": "Pink",
+        "color": "#fff7f9",
+        "data": {
+            "--background": "#fff7f9",
+            "--editor_text": "#000",
+            "--pageListItemHover": "#efe3e6",
+            "--pageListItemOpen": "#00000029",
+            "--pageListItemTextIconBackgroundHover": "#c4c4c4",
+            "--pageListItemHover_drag": "#ff7777",
+            "--createNewPageBtnText": "#929292",
+            "--pageListItemTextIcon": "#00000099",
+            "--modalTextColor": "#000",
+            "--popupBackground": "#fff1f5",
+            "--popupButtonBg": "#fffafb",
+            "--userinfoSectionBordertop": "#b8b8b8",
+            "--userOptionText": "#464646"
+        }
+    },
+    {
         "id": "dark",
         "display_name": "Dark",
         "color": "#000000",
