@@ -86,7 +86,7 @@
         "color": "#fff7f9",
         "data": {
             "--background": "#fff7f9",
-            "--editor_text": "#000",
+            "--editor_text": "#ff5781",
             "--pageListItemHover": "#efe3e6",
             "--pageListItemOpen": "#00000029",
             "--pageListItemTextIconBackgroundHover": "#c4c4c4",

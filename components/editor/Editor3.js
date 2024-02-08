@@ -360,6 +360,7 @@ export default function EditorV3({ currentPage }) {
         <editorV3Context.Provider value={{ openPageData, setOpenPageData, updateOpenPageData }}>
             <Head>
                 <title>{openPageData.title}</title>
+                <link rel='icon' type='image/png' href={`/emoji/twitter/64/${openPageData.icon}`} />
             </Head>
             <div className="flex flex-col w-full h-full overflow-scroll" id={`editor-container-${currentPage}`}>
                 <div className="relative w-full min-h-[300px] h-[300px] bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400 flex items-center justify-center mb-5">
