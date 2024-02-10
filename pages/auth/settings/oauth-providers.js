@@ -19,8 +19,8 @@ export default function OAuthManager() {
                 <Link href={"/page/firstopen"} className="absolute z-[5] top-7 left-7 cursor-pointer">
                     <ArrowLeft className="w-6 h-6 text-zinc-600" />
                 </Link>
-                <div class="absolute inset-0 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"></div>
-                <div className="relative z-[2] w-full h-[100dvh] flex gap-5 items-center justify-center">
+                <div class="absolute h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
+                <div className="relative z-[2] w-full h-[100dvh] flex flex-col gap-5 items-center justify-center">
                     <Content />
                 </div>
 
@@ -89,7 +89,7 @@ function Content() {
                         <span className="animate-pulse h-4 max-w-full w-[100px] bg-zinc-300 rounded"></span>
                     </div>
                     <div className="inline-flex items-center">
-                        <Loader2 className="h-4 w-4 animate-spin" />
+                        <span className="animate-pulse h-4 w-4 bg-zinc-300 rounded-[99999px]"></span>
                     </div>
                 </div>
                 <div aria-label="oauth2 provider" className="my-4 w-full min-h-[55px] bg-zinc-100 shadow-sm py-2 px-6 rounded-xl flex items-center font-semibold text-md justify-between">
@@ -98,7 +98,7 @@ function Content() {
                         <span className="animate-pulse h-4 max-w-full w-[100px] bg-zinc-300 rounded"></span>
                     </div>
                     <div className="inline-flex items-center">
-                        <Loader2 className="h-4 w-4 animate-spin" />
+                        <span className="animate-pulse h-4 w-4 bg-zinc-300 rounded-[99999px]"></span>
                     </div>
                 </div>
                 <div aria-label="oauth2 provider" className="my-4 w-full min-h-[55px] bg-zinc-100 shadow-sm py-2 px-6 rounded-xl flex items-center font-semibold text-md justify-between">
@@ -107,7 +107,16 @@ function Content() {
                         <span className="animate-pulse h-4 max-w-full w-[100px] bg-zinc-300 rounded"></span>
                     </div>
                     <div className="inline-flex items-center">
-                        <Loader2 className="h-4 w-4 animate-spin" />
+                        <span className="animate-pulse h-4 w-4 bg-zinc-300 rounded-[99999px]"></span>
+                    </div>
+                </div>
+                <div aria-label="oauth2 provider" className="my-4 w-full min-h-[55px] bg-zinc-100 shadow-sm py-2 px-6 rounded-xl flex items-center font-semibold text-md justify-between">
+                    <div className="inline-flex items-center">
+                        <span className="animate-pulse h-4 w-4 bg-zinc-300 rounded-[99999px] mr-2"></span>
+                        <span className="animate-pulse h-4 max-w-full w-[100px] bg-zinc-300 rounded"></span>
+                    </div>
+                    <div className="inline-flex items-center">
+                        <span className="animate-pulse h-4 w-4 bg-zinc-300 rounded-[99999px]"></span>
                     </div>
                 </div>
             </div>
