@@ -83,7 +83,7 @@ function Content() {
     if (loading) {
         return (
             <div className="w-full max-w-[400px]">
-                <div aria-label="oauth2 provider" className="my-4 w-full min-h-[55px] bg-zinc-100 shadow-sm py-2 px-6 rounded-xl flex items-center font-semibold text-md justify-between">
+                <div aria-label="oauth2 provider" className="my-6 w-full min-h-[55px] bg-zinc-100 shadow-lg py-2 px-6 rounded-xl flex items-center font-semibold text-md justify-between">
                     <div className="inline-flex items-center">
                         <span className="animate-pulse h-4 w-4 bg-zinc-300 rounded-[99999px] mr-2"></span>
                         <span className="animate-pulse h-4 max-w-full w-[100px] bg-zinc-300 rounded"></span>
@@ -92,7 +92,7 @@ function Content() {
                         <span className="animate-pulse h-4 w-4 bg-zinc-300 rounded-[99999px]"></span>
                     </div>
                 </div>
-                <div aria-label="oauth2 provider" className="my-4 w-full min-h-[55px] bg-zinc-100 shadow-sm py-2 px-6 rounded-xl flex items-center font-semibold text-md justify-between">
+                <div aria-label="oauth2 provider" className="my-6 w-full min-h-[55px] bg-zinc-100 shadow-lg py-2 px-6 rounded-xl flex items-center font-semibold text-md justify-between">
                     <div className="inline-flex items-center">
                         <span className="animate-pulse h-4 w-4 bg-zinc-300 rounded-[99999px] mr-2"></span>
                         <span className="animate-pulse h-4 max-w-full w-[100px] bg-zinc-300 rounded"></span>
@@ -101,7 +101,7 @@ function Content() {
                         <span className="animate-pulse h-4 w-4 bg-zinc-300 rounded-[99999px]"></span>
                     </div>
                 </div>
-                <div aria-label="oauth2 provider" className="my-4 w-full min-h-[55px] bg-zinc-100 shadow-sm py-2 px-6 rounded-xl flex items-center font-semibold text-md justify-between">
+                <div aria-label="oauth2 provider" className="my-6 w-full min-h-[55px] bg-zinc-100 shadow-lg py-2 px-6 rounded-xl flex items-center font-semibold text-md justify-between">
                     <div className="inline-flex items-center">
                         <span className="animate-pulse h-4 w-4 bg-zinc-300 rounded-[99999px] mr-2"></span>
                         <span className="animate-pulse h-4 max-w-full w-[100px] bg-zinc-300 rounded"></span>
@@ -110,7 +110,7 @@ function Content() {
                         <span className="animate-pulse h-4 w-4 bg-zinc-300 rounded-[99999px]"></span>
                     </div>
                 </div>
-                <div aria-label="oauth2 provider" className="my-4 w-full min-h-[55px] bg-zinc-100 shadow-sm py-2 px-6 rounded-xl flex items-center font-semibold text-md justify-between">
+                <div aria-label="oauth2 provider" className="my-6 w-full min-h-[55px] bg-zinc-100 shadow-lg py-2 px-6 rounded-xl flex items-center font-semibold text-md justify-between">
                     <div className="inline-flex items-center">
                         <span className="animate-pulse h-4 w-4 bg-zinc-300 rounded-[99999px] mr-2"></span>
                         <span className="animate-pulse h-4 max-w-full w-[100px] bg-zinc-300 rounded"></span>
@@ -119,6 +119,7 @@ function Content() {
                         <span className="animate-pulse h-4 w-4 bg-zinc-300 rounded-[99999px]"></span>
                     </div>
                 </div>
+
             </div>
         )
     }
@@ -131,7 +132,7 @@ function Content() {
                 </div>
             ) : null}
             {providers.map((item) => (
-                <div aria-label="oauth2 provider" className="my-4 w-full min-h-[55px] bg-zinc-100 shadow-sm py-2 px-6 rounded-xl flex items-center font-semibold text-md justify-between">
+                <div aria-label="oauth2 provider" className="my-6 w-full min-h-[55px] bg-zinc-100 shadow-lg py-2 px-6 rounded-xl flex items-center font-semibold text-md justify-between">
                     <div className="inline-flex items-center">
                         <img aria-label="oauth2 provider icon" src={`/icons/oauth/${item.name}.svg`} className="w-4 h-4 mr-2" />
                         <span>{item.name}</span>
