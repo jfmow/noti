@@ -3,17 +3,15 @@ import Loader from "@/components/Loader"
 import { Input, SubmitButton } from "@/components/UX-Components"
 import { ToolTip, ToolTipCon, ToolTipTrigger } from "@/components/UX-Components/Tooltip"
 import { toaster } from "@/components/toast"
-import { ArrowLeft, LinkIcon, Loader2, X } from "lucide-react"
-import { useRouter } from "next/router"
+import { Modal, ModalContent } from "@/lib/Modals/Modal"
+import { ArrowLeft, LinkIcon, Loader2, Unlink, X } from "lucide-react"
+import Router from "next/router"
 import PocketBase from 'pocketbase'
 import { useEffect, useState } from "react"
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 pb.autoCancellation(false)
 export default function ResetPassword() {
-    const { query } = useRouter()
     const [loading, setLoading] = useState(true)
-    const token = query?.token
-    const [oAuthAccounts, setLinkedAccounts] = useState([])
 
     useEffect(() => {
         async function UpdateAuth() {
@@ -44,8 +42,7 @@ export default function ResetPassword() {
                 </Link>
                 <div class="absolute inset-0 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"></div>
                 <div className="relative z-[2] w-full h-[100dvh] flex gap-5 items-center justify-center">
-                    <RemoveOAuthAccount oAuthAccounts={oAuthAccounts} setLinkedAccounts={setLinkedAccounts} />
-                    <LinkOAuthAccount oAuthAccounts={oAuthAccounts} />
+                    <Content />
                 </div>
 
             </div>
@@ -178,5 +175,121 @@ function LinkOAuthAccount({ oAuthAccounts }) {
                 </>
             ) : null}
         </>
+    )
+}
+
+function Content() {
+    const [providers, setProviders] = useState([])
+    const { msg } = Router.query
+    useEffect(() => {
+        async function getProviders() {
+            const result = await pb.collection('users').listAuthMethods();
+            const providers = result.authProviders
+            const data = providers.map((item) => {
+                return { ...item, linked: "loading" }
+            })
+            setProviders(data)
+            return data
+        }
+        async function getUsersAuthMethods() {
+            const providers = await getProviders()
+            const linkedProviders = await pb.collection('users').listExternalAuths(
+                pb.authStore.model.id
+            );
+
+            //Sorting logic, for if they use provider or not
+            const data = providers.map((item) => {
+                if (linkedProviders.some((aitem) => aitem.provider === item.name)) {
+                    return { ...item, linked: true }
+                } else {
+                    return { ...item, linked: false }
+                }
+            })
+            console.log(data)
+            setProviders(data)
+        }
+        getUsersAuthMethods()
+    }, [])
+    return (
+        <div className="w-full h-full flex items-center justify-center">
+            <div className="w-full max-w-[400px]">
+                {msg ? (
+                    <div className="font-semibold text-red-500 mt-6 mb-6 bg-red-100 p-4 rounded-xl">
+                        {msg}
+                    </div>
+                ) : null}
+                {providers.map((item) => (
+                    <div aria-label="oauth2 provider" className="my-4 w-full min-h-[55px] bg-zinc-100 shadow-sm py-2 px-6 rounded-xl flex items-center font-semibold text-md justify-between">
+                        <div className="inline-flex items-center">
+                            <img aria-label="oauth2 provider icon" src={`/icons/oauth/${item.name}.svg`} className="w-4 h-4 mr-2" />
+                            <span>{item.name}</span>
+                        </div>
+                        <div className="inline-flex items-center">
+                            {item.linked === "loading" ? (<Loader2 className="h-4 w-4 animate-spin" />) : (
+                                <>
+                                    {item.linked ? (
+                                        <UNLink provider={item.name} />
+                                    ) : (
+                                        <LinkProvider provider={item.name} />
+                                    )}
+                                </>
+                            )}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    )
+}
+
+function UNLink({ provider }) {
+    async function handleUnLinkProvider(e) {
+        e.preventDefault()
+        try {
+            await pb.send(`/api/collections/users/records/${pb.authStore.model.id}/external-auths/${provider}`, { method: "DELETE" })
+            window.location.replace(`${window.location.pathname}?msg=${encodeURIComponent(`You just un-linked ${provider}! If you did not set a password/don't know your password, please use the password reset form on the login page.`)}`)
+        } catch (err) {
+            toaster.error(err.message)
+        }
+    }
+
+    return (
+        <>
+            <ToolTipCon>
+                <ToolTipTrigger>
+                    <button type="submit" onClick={handleUnLinkProvider} aria-haspopup="dialog" aria-label="unlink oauth2 provider">
+                        <Unlink className="w-4 h-4" />
+                    </button>
+                </ToolTipTrigger>
+                <ToolTip>
+                    Un-link {provider}
+                </ToolTip>
+            </ToolTipCon>
+        </>
+    )
+}
+
+function LinkProvider({ provider }) {
+    async function handleLinkProvider(e) {
+        e.preventDefault()
+        if (!confirm("The email for the OAuth provider's account must match the one for this account or else the accounts will not link and a new account will be created!")) return
+        try {
+            const authData = await pb.collection('users').authWithOAuth2({ provider: provider });
+            window.location.reload()
+        } catch (err) {
+            toaster.error(err.message)
+        }
+    }
+    return (
+        <ToolTipCon>
+            <ToolTipTrigger>
+                <button type="submit" onClick={handleLinkProvider} aria-haspopup="dialog" aria-label="link oauth2 provider">
+                    <LinkIcon className="w-4 h-4" />
+                </button>
+            </ToolTipTrigger>
+            <ToolTip>
+                Link {provider}
+            </ToolTip>
+        </ToolTipCon>
     )
 }
