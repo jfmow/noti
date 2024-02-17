@@ -7,11 +7,9 @@ import { useEffect, useState } from "react";
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 pb.autoCancellation(false)
 export default function Login() {
-    const [authMethod, setAuthMethod] = useState('sso')
     const [oauthmethods, setOauthmethods] = useState([])
     const [idenity, setIdentity] = useState('')
     const [password, setPassword] = useState('')
-    const [emailAuthCodeRequested, setemailAuthCodeRequested] = useState(false)
     const [loading, setLoading] = useState(false)
     const { query } = useRouter()
     useEffect(() => {
@@ -27,10 +25,6 @@ export default function Login() {
     useEffect(() => {
         if (query?.msg) {
             toaster.error(query.msg)
-        }
-        if (query.ssoEmail && query.ssoToken) {
-            //TODO: this
-            authWithToken(null, query.ssoEmail, query.ssoToken)
         }
     }, [query])
     async function OAuthLogin(provider) {
@@ -69,48 +63,6 @@ export default function Login() {
         }
     }
 
-    async function requestToken(e, email, token) {
-        let form
-        if (e) {
-            e.preventDefault()
-            form = new FormData(e.target)
-            form.set("link", process.env.NEXT_PUBLIC_CURRENTURL)
-        }
-        if (email && token && !e) {
-            form.set("email", email)
-            form.set("token", token)
-        }
-
-        setLoading(true)
-        try {
-            const req = await pb.send(`/api/collections/users/request-email-token`, { method: "POST", body: form })
-            toaster.info(`A code has been emailed to ${form.get("email")}. This code is valid for 5 minutes`)
-            setemailAuthCodeRequested(true)
-        } catch (error) {
-            toaster.error(error.message)
-        } finally {
-            setLoading(false)
-        }
-    }
-
-    async function authWithToken(e) {
-        e.preventDefault()
-        const form = new FormData(e.target)
-        setLoading(true)
-        try {
-            const req = await pb.send(`/api/collections/users/auth-with-email-token`, { method: "POST", body: form })
-            window.localStorage.setItem('pocketbase_auth', JSON.stringify(req))
-            if (query?.redirect) {
-                Router.push(query.redirect)
-            } else {
-                Router.push('/page/firstopen')
-            }
-        } catch (error) {
-            toaster.error(error.message)
-        } finally {
-            setLoading(false)
-        }
-    }
 
     return (
         <div className="bg-zinc-50 w-full h-screen grid">
@@ -123,36 +75,18 @@ export default function Login() {
 
                     </div>
 
-                    {authMethod === "password" || !authMethod ? (
-                        <>
-                            <form onSubmit={(e) => { e.preventDefault(); authWithPassword() }} className="w-[300px] grid gap-2">
-                                <input defaultValue={idenity} required onChange={(e) => setIdentity(e.target.value)} placeholder="Email | me@example.com" type="email" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
-                                {isValidEmail(idenity) ? (
-                                    <>
-                                        <input required onChange={(e) => setPassword(e.target.value)} placeholder="Password" type="password" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
-                                    </>
-                                ) : null}
-                                <SubmitButton type="submit" disabled={loading}>{loading ? (<Loader2 className="mr-1 h-4 w-4 animate-spin" />) : null}Log in</SubmitButton>
-                            </form >
-                            <Link onClick={() => setAuthMethod('sso')} className="mt-4 underline cursor-pointer">Use Email Auth</Link>
-                        </>
-                    ) : null}
-                    {authMethod === "sso" ? (
-                        <>
-                            <form onSubmit={(e) => { emailAuthCodeRequested ? authWithToken(e) : requestToken(e) }} className="w-[300px] grid gap-2">
-                                <input name="email" required placeholder="Email | me@example.com" type="email" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
-                                {emailAuthCodeRequested ? (
-                                    <>
-                                        <input required name="token" placeholder="Token" type="text" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
-                                        <SubmitButton type="submit" disabled={loading}>{loading ? (<Loader2 className="mr-1 h-4 w-4 animate-spin" />) : null}Log in</SubmitButton>
-                                    </>
-                                ) : (
-                                    <SubmitButton type="submit" disabled={loading}>{loading ? (<Loader2 className="mr-1 h-4 w-4 animate-spin" />) : null}Request code</SubmitButton>
-                                )}
-                            </form >
-                            <Link onClick={() => setAuthMethod('password')} className="mt-4 underline cursor-pointer">Use password</Link>
-                        </>
-                    ) : null}
+                    <>
+                        <form onSubmit={(e) => { e.preventDefault(); authWithPassword() }} className="w-[300px] grid gap-2">
+                            <input defaultValue={idenity} required onChange={(e) => setIdentity(e.target.value)} placeholder="Email | me@example.com" type="email" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                            {isValidEmail(idenity) ? (
+                                <>
+                                    <input required onChange={(e) => setPassword(e.target.value)} placeholder="Password" type="password" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                                </>
+                            ) : null}
+                            <SubmitButton type="submit" disabled={loading}>{loading ? (<Loader2 className="mr-1 h-4 w-4 animate-spin" />) : null}Log in</SubmitButton>
+                        </form >
+                    </>
+
 
                     <div className="w-[400px] mt-5 flex flex-col items-center justify-center border-t">
                         <div className="w-[300px] mt-3 grid grid-cols-2 gap-3">

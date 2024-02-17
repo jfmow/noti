@@ -40,7 +40,7 @@ function NotionEditor({ pageId, themes }) {
       }
 
     }
-    if (pageId[0] === 'rzz50e2mnhgwof2') {
+    if (pageId[0] === 'previewwelcome0') {
       setIsLoading(false)
       return
     }
@@ -87,7 +87,7 @@ function NotionEditor({ pageId, themes }) {
   }
 
   return (
-    <EditorContext.Provider value={{ showArchivedPages, setShowArchivedPages, listedPageItems, pb, setListedPageItems, visible, setVisible, currentPage: pageId[0], pageId, themes, listedPageItemsFilter, setListedPageItemsFilters, noSaving: pageId[0] === 'rzz50e2mnhgwof2' }}>
+    <EditorContext.Provider value={{ showArchivedPages, setShowArchivedPages, listedPageItems, pb, setListedPageItems, visible, setVisible, currentPage: pageId[0], pageId, themes, listedPageItemsFilter, setListedPageItemsFilters, noSaving: pageId[0] === 'previewwelcome0' }}>
       <div>
         <div className='flex flex-col sm:flex-row'>
           <MyComponent />

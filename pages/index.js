@@ -33,7 +33,7 @@ export default function HOME() {
               <p className="ml-2 "><span className="font-semibold">Note</span></p>
             </div>
             <div className="w-full h-full flex items-center justify-center gap-3">
-              <Link href={"/page/rzz50e2mnhgwof2"}>Demo</Link>
+              <Link href={"/page/previewwelcome0"}>Demo</Link>
               <Link href="/auth/signup" className={"font-semibold"}>Get started</Link>
               <Link href={"https://github.com/jfmow/noti"}>Self-host</Link>
               <Link href={"/auth/login"}>Login</Link>
@@ -57,7 +57,7 @@ export default function HOME() {
               <Link href="/auth/signup" className="px-4 py-2 text-md bg-purple-600 text-zinc-100 rounded-md font-medium hover:bg-purple-700">
                 Get started
               </Link>
-              <Link href="/page/rzz50e2mnhgwof2" className="px-4 py-2 text-md bg-zinc-100 text-zinc-800 rounded-md font-medium hover:bg-zinc-200">
+              <Link href="/page/previewwelcome0" className="px-4 py-2 text-md bg-zinc-100 text-zinc-800 rounded-md font-medium hover:bg-zinc-200">
                 View demo
               </Link>
             </div>
