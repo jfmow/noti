@@ -46,7 +46,7 @@ export default function HOME() {
           </nav>
 
 
-          <div className="inline-flex justify-center items-center w-full h-[100dvh]">
+          <div className="inline-flex justify-center items-center w-full h-[100dvh] pt-[90px] sm:pt-0">
             <div className="flex flex-col justify-center items-center w-full max-w-[1200px] px-5">
               <div className="mb-2 flex items-center justify-center w-full">
                 <div className="border inline-flex h-full cursor-pointer justify-center items-center rounded-full bg-white px-3 py-1 text-xs font-medium leading-5 text-zinc-600 backdrop-blur-xl">
