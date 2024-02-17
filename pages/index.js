@@ -25,7 +25,7 @@ export default function HOME() {
 
           <div class="absolute top-0 z-[-2] h-full w-screen rotate-180 transform bg-white bg-[radial-gradient(60%_120%_at_50%_50%,hsla(0,0%,100%,0)_0,rgba(252,205,238,.5)_100%)]"></div>
 
-          <nav className="p-3 fixed bg-zinc-50 shadow-lg text-zinc-700 items-center grid sm:grid-cols-3 min-h-[60px] h-fit z-[50] w-full ">
+          <nav className="p-3 fixed top-0 bg-zinc-50 shadow-lg text-zinc-700 items-center grid sm:grid-cols-3 z-[50] w-full ">
             <div className="w-full h-full hidden items-center sm:flex justify-start ">
               <div className="overflow-hidden w-6 h-6 object-contain">
                 <img alt="Brand logo - mountians with lines" src="/logo-small.webp" />
