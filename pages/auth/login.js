@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 pb.autoCancellation(false)
 export default function Login() {
+    const [loginMethod, setLoginMethod] = useState('sso')
     const [oauthmethods, setOauthmethods] = useState([])
     const [idenity, setIdentity] = useState('')
     const [password, setPassword] = useState('')
@@ -75,17 +76,30 @@ export default function Login() {
 
                     </div>
 
-                    <>
-                        <form onSubmit={(e) => { e.preventDefault(); authWithPassword() }} className="w-[300px] grid gap-2">
-                            <input defaultValue={idenity} required onChange={(e) => setIdentity(e.target.value)} placeholder="Email | me@example.com" type="email" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
-                            {isValidEmail(idenity) ? (
-                                <>
-                                    <input required onChange={(e) => setPassword(e.target.value)} placeholder="Password" type="password" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
-                                </>
-                            ) : null}
-                            <SubmitButton type="submit" disabled={loading}>{loading ? (<Loader2 className="mr-1 h-4 w-4 animate-spin" />) : null}Log in</SubmitButton>
-                        </form >
-                    </>
+
+
+                    {loginMethod === "sso" ? (
+                        <>
+                            <EmailAuth />
+                            <Link className="mt-2 cursor-pointer" onClick={() => setLoginMethod("password")}>Use password</Link>
+                        </>
+                    ) : null}
+                    {loginMethod === "password" ? (
+                        <>
+                            <form onSubmit={(e) => { e.preventDefault(); authWithPassword() }} className="w-[300px] grid gap-2">
+                                <input defaultValue={idenity} required onChange={(e) => setIdentity(e.target.value)} placeholder="Email | me@example.com" type="email" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                                {isValidEmail(idenity) ? (
+                                    <>
+                                        <input required onChange={(e) => setPassword(e.target.value)} placeholder="Password" type="password" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                                    </>
+                                ) : null}
+                                <SubmitButton type="submit" disabled={loading}>{loading ? (<Loader2 className="mr-1 h-4 w-4 animate-spin" />) : null}Log in</SubmitButton>
+                            </form >
+                            <Link className="mt-2 cursor-pointer" onClick={() => setLoginMethod("sso")}>Use Email Auth</Link>
+                        </>
+                    ) : null}
+
+
 
 
                     <div className="w-[400px] mt-5 flex flex-col items-center justify-center border-t">
@@ -107,5 +121,58 @@ export default function Login() {
             </div>
 
         </div >
+    )
+}
+
+function EmailAuth() {
+    const [token, setToken] = useState("")
+    const [email, setEmail] = useState("")
+    const [tokenRequested, setTokenRequested] = useState(false)
+
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search)
+
+        if (urlParams.get('token')?.length > 2) {
+            setToken(urlParams.get('token'))
+            setEmail(urlParams.get('user'))
+            setTokenRequested(true)
+        }
+    }, [])
+
+    async function Login(e) {
+        e.preventDefault()
+        const formData = new FormData(e.target)
+
+        if (tokenRequested) {
+            //Login
+            const req = await pb.send("/api/collections/users/auth-with-sso/login", { method: "POST", body: formData })
+            window.localStorage.setItem("pocketbase_auth", JSON.stringify(req))
+            Router.push("/page/firstopen")
+        } else {
+            //request token
+            try {
+                const req = await pb.send("/api/collections/users/auth-with-sso/code", { method: "POST", body: formData })
+                setTokenRequested(true)
+            } catch (err) {
+                toaster.error(err.message)
+            }
+        }
+
+    }
+
+    return (
+        <>
+            <form onSubmit={Login} className="w-[300px] grid gap-2">
+                <input name="email" defaultValue={email} required onChange={(e) => setEmail(e.target.value)} placeholder="Email | me@example.com" type="email" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                {tokenRequested ? (
+                    <>
+                        <input name="token" defaultValue={token} required onChange={(e) => setToken(e.target.value)} placeholder="Code" type="text" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                        <SubmitButton type="submit">Login</SubmitButton>
+                    </>
+                ) : (
+                    <SubmitButton type="submit">Request code</SubmitButton>
+                )}
+            </form>
+        </>
     )
 }

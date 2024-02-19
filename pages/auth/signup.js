@@ -7,7 +7,7 @@ import { Github, Loader2, Route, Twitch } from "lucide-react";
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 pb.autoCancellation(false)
 export default function Login() {
-    const { query } = useRouter()
+    const [signupMethod, setSignupMethod] = useState("sso")
     const [oauthmethods, setOauthmethods] = useState([])
     const [idenity, setIdentity] = useState('')
     const [password, setPassword] = useState('')
@@ -36,11 +36,7 @@ export default function Login() {
                 "passwordConfirm": password,
             })
             await pb.collection('users').authWithPassword(idenity, password)
-            if (query?.redirect) {
-                Router.push(query.redirect)
-            } else {
-                Router.push('/page/firstopen')
-            }
+            Router.push('/page/firstopen')
         } catch (err) {
             toaster.error("Invalid username/email or password.")
         } finally {
@@ -65,10 +61,7 @@ export default function Login() {
         }
     }
 
-    function isValidEmail(email) {
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        return emailRegex.test(email);
-    }
+
 
     return (
         <div className="bg-zinc-50 w-full h-screen grid relative">
@@ -84,18 +77,23 @@ export default function Login() {
                         </div>
 
                     </div>
-                    <>
-                        <form onSubmit={(e) => { e.preventDefault(); normalLogin() }} className="w-[300px] grid gap-2">
-                            <input defaultValue={idenity} required onChange={(e) => setIdentity(e.target.value)} placeholder="Email" type="email" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
-                            {isValidEmail(idenity) ? (
-                                <>
-                                    <input required onChange={(e) => setUsername(e.target.value)} placeholder="Username" type="text" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
-                                    <input required onChange={(e) => setPassword(e.target.value)} placeholder="Password" type="password" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
-                                </>
-                            ) : null}
-                            <SubmitButton type="submit" disabled={loading}>{loading ? (<Loader2 className="mr-1 h-4 w-4 animate-spin" />) : null}Sign up</SubmitButton>
-                        </form >
-                    </>
+                    {signupMethod === "sso" ? (
+                        <EmailAuth />
+                    ) : null}
+                    {signupMethod === "password" ? (
+                        <>
+                            <form onSubmit={(e) => { e.preventDefault(); normalLogin() }} className="w-[300px] grid gap-2">
+                                <input defaultValue={idenity} required onChange={(e) => setIdentity(e.target.value)} placeholder="Email" type="email" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                                {isValidEmail(idenity) ? (
+                                    <>
+                                        <input required onChange={(e) => setUsername(e.target.value)} placeholder="Username" type="text" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                                        <input required onChange={(e) => setPassword(e.target.value)} placeholder="Password" type="password" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                                    </>
+                                ) : null}
+                                <SubmitButton type="submit" disabled={loading}>{loading ? (<Loader2 className="mr-1 h-4 w-4 animate-spin" />) : null}Sign up</SubmitButton>
+                            </form >
+                        </>
+                    ) : null}
 
 
 
@@ -115,9 +113,45 @@ export default function Login() {
                 </div>
 
             </div >
-            <Link className="absolute bottom-5 w-full text-center cursor-pointer" href={`${query?.redirect ? `/auth/login?redirect=${query.redirect}` : '/auth/login'}`}>Login</Link>
+            <Link className="absolute bottom-5 w-full text-center cursor-pointer" href="/auth/login">Login</Link>
 
 
         </div >
     )
+}
+
+function EmailAuth() {
+    const [loading, setLoading] = useState(false)
+    const [email, setEmail] = useState("")
+    async function Signup(e) {
+        e.preventDefault()
+        const formData = new FormData(e.target)
+        try {
+            setLoading(true)
+            const req = await pb.send("/api/collections/users/auth-with-sso/signup", { method: "POST", body: formData })
+            window.localStorage.setItem("pocketbase_auth", JSON.stringify(req))
+            Router.push("/page/firstopen")
+        } catch (err) {
+            toaster.error(err.message)
+        }
+        setLoading(false)
+    }
+    return (
+        <>
+            <form onSubmit={Signup} className="w-[300px] grid gap-2">
+                <input onChange={(e) => setEmail(e.target.value)} required name="email" placeholder="Email" type="email" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                {isValidEmail(email) ? (
+                    <>
+                        <input name="username" required placeholder="Username" type="text" className="flex h-9 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-400 text-zinc-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+                    </>
+                ) : null}
+                <SubmitButton type="submit" disabled={loading}>{loading ? (<Loader2 className="mr-1 h-4 w-4 animate-spin" />) : null}Sign up</SubmitButton>
+            </form >
+        </>
+    )
+}
+
+function isValidEmail(email) {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
 }
