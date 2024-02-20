@@ -20,7 +20,7 @@ export default function Login() {
             const formData = new FormData()
             formData.set("token", urlParams.get("token"))
             formData.set("email", urlParams.get("user"))
-            LoginWithCode(null, formData)
+            LoginWithCode(formData)
         }
     }, [])
 
