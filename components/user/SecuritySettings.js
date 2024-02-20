@@ -1,24 +1,11 @@
-import { Gap, Modal, ModalContent, ModalTrigger } from "@/lib/Modals/Modal";
 import { DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle } from "@/lib/Pop-Cards/DropDown";
-import { Input, Paragraph, SubmitButton } from "../UX-Components";
 import { useEditorContext } from "@/pages/page/[...id]";
-import { useEffect, useState } from "react";
 import { toaster } from "@/components/toast";
+import { Github } from "lucide-react";
 import Router from "next/router";
 
 export default function SecuritySettings() {
     const { pb } = useEditorContext()
-    const [ssoState, setSSOState] = useState(false)
-    useEffect(() => {
-        async function CheckSSOState() {
-            try {
-                //Get all the users profile flags from the db
-                const record = await pb.collection('user_flags').getFirstListItem(`user="${pb.authStore.model.id}"`);
-                setSSOState(record.sso)
-            } catch { }
-        }
-        CheckSSOState()
-    }, [pb])
 
     async function deleteAccount(e) {
         e.preventDefault();
@@ -50,27 +37,15 @@ export default function SecuritySettings() {
                         Security
                     </DropDownSectionTitle>
                     <DropDownSection>
-                        <Modal>
-                            {ssoState ? (
-                                <>
-                                    <DropDownItem onClick={() => Router.push("/auth/settings/email-auth?state=1")}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-key-square"><path d="M12.4 2.7c.9-.9 2.5-.9 3.4 0l5.5 5.5c.9.9.9 2.5 0 3.4l-3.7 3.7c-.9.9-2.5.9-3.4 0L8.7 9.8c-.9-.9-.9-2.5 0-3.4Z" /><path d="m14 7 3 3" /><path d="M9.4 10.6 2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4" /></svg>
-                                        Disable Email Auth
-                                    </DropDownItem>
-                                </>
-                            ) : (
-                                <>
-                                    <DropDownItem onClick={() => Router.push("/auth/settings/email-auth?state=0")}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-key-square"><path d="M12.4 2.7c.9-.9 2.5-.9 3.4 0l5.5 5.5c.9.9.9 2.5 0 3.4l-3.7 3.7c-.9.9-2.5.9-3.4 0L8.7 9.8c-.9-.9-.9-2.5 0-3.4Z" /><path d="m14 7 3 3" /><path d="M9.4 10.6 2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4" /></svg>
-                                        Enable Email Auth
-                                    </DropDownItem>
-                                </>
-                            )}
-                        </Modal>
+                        <DropDownItem onClick={() => Router.push("/auth/settings/oauth-providers")}>
+                            <Github />
+                            OAuth providers
+                        </DropDownItem>
                         <DropDownItem onClick={(e) => deleteAccount(e)}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-x-2"><path d="M14 19a6 6 0 0 0-12 0" /><circle cx="8" cy="9" r="4" /><line x1="17" x2="22" y1="8" y2="13" /><line x1="22" x2="17" y1="8" y2="13" /></svg>
                             Delete account
                         </DropDownItem>
+
                     </DropDownSection>
                 </DropDownExtension>
             </DropDownExtensionContainer>

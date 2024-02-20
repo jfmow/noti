@@ -3,8 +3,6 @@ import AvatarModal from './AvatarModal';
 import { DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle } from '@/lib/Pop-Cards/DropDown';
 import { useEditorContext } from '@/pages/page/[...id]';
 import { toaster } from '../toast';
-import Router from 'next/router';
-import { Github } from 'lucide-react';
 export default function AccountDetails() {
     const { pb } = useEditorContext()
     const [totalUsage, setTotalUsage] = useState(0)
@@ -124,10 +122,7 @@ export default function AccountDetails() {
                     </DropDownSection>
                 </DropDownExtension>
             </DropDownExtensionContainer>
-            <DropDownItem onClick={() => Router.push("/auth/settings/oauth-providers")}>
-                <Github />
-                OAuth providers
-            </DropDownItem>
+
         </DropDownSection>
     )
 }
