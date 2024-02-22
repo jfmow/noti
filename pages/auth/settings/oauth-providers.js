@@ -16,7 +16,7 @@ export default function OAuthManager() {
         <>
 
             <div className="relative w-full h-[100dvh] text-zinc-800 bg-zinc-50">
-                <Link href={"/page/firstopen"} className="absolute z-[5] top-7 left-7 cursor-pointer">
+                <Link href={"/page"} className="absolute z-[5] top-7 left-7 cursor-pointer">
                     <ArrowLeft className="w-6 h-6 text-zinc-600" />
                 </Link>
                 <div class="absolute h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>

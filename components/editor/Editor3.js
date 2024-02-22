@@ -35,15 +35,10 @@ export default function EditorV3({ currentPage }) {
     const [openPageData, setOpenPageData] = useState([])
     const [multiRecordSearch, setMultiRecordSearch] = useState({ state: false, records: [] })
     const [loading, setLoading] = useState(false)
+    const [saving, setSavingState] = useState("")
 
 
     useEffect(() => {
-        /*
-        * Check if the url is on the default route `firstopen`, 
-        * which is not a real page so should display nothing
-        */
-        if (currentPage === "firstopen") return
-
         //Check that there is a current page
         if (currentPage) {
             async function RetriveOpenPageData(page) {
@@ -61,7 +56,7 @@ export default function EditorV3({ currentPage }) {
                     try {
                         const altRecord = await pb.collection('pages').getFullList({ sort: '-created', filter: `title ?~ '${currentPage}'` })
                         if (!altRecord || altRecord.length === 0) {
-                            Router.push('/page/firstopen')
+                            Router.push('/page')
                             return
                         }
                         if (altRecord.length === 1) {
@@ -70,7 +65,9 @@ export default function EditorV3({ currentPage }) {
                             setMultiRecordSearch({ state: true, records: altRecord })
                         }
 
-                    } catch { }
+                    } catch {
+                        Router.push("/page")
+                    }
                 }
             }
             RetriveOpenPageData(currentPage)
@@ -78,8 +75,6 @@ export default function EditorV3({ currentPage }) {
     }, [currentPage])
 
     useEffect(() => {
-        if (currentPage === "firstopen") return
-
         try {
             if (openPageData?.id) {
                 if (Editor) {
@@ -251,6 +246,9 @@ export default function EditorV3({ currentPage }) {
                     data: openPageData?.content || [],
                     placeholder: "Enter some text...",
                     autofocus: openPageData?.content && openPageData?.content?.blocks?.length >= 1 && (openPageData?.content?.blocks[0]?.type === 'image' || openPageData?.content?.blocks[0]?.type === 'Video' || openPageData?.content?.blocks[0]?.type === 'simpleEmbeds' || openPageData?.content?.blocks[0]?.type === 'SimpleIframeWebpage') ? false : true,
+                    onChange: (api, event) => {
+                        setSavingState("Unsaved")
+                    }
                 })
                 editor.isReady.then(() => {
                     console.log('Ready')
@@ -271,9 +269,12 @@ export default function EditorV3({ currentPage }) {
 
         async function Save() {
             try {
+                setSavingState("Saving...")
                 const content = await Editor.current.save()
                 const res = await pb.collection('pages').update(currentPage, { "content": content })
+                setSavingState("Saved")
             } catch (err) {
+                setSavingState("Unable to save file...")
                 toaster.error(err?.message || err)
             }
         }
@@ -283,6 +284,15 @@ export default function EditorV3({ currentPage }) {
         try {
             if (SaveRef && SaveRef.current && !loading) {
                 SaveRef.current.addEventListener("keyup", debounceSave)
+                SaveRef.current.addEventListener('keydown', async function (event) {
+                    if (event.ctrlKey && event.key === 's') {
+                        event.preventDefault()
+                        const loadingToast = await toaster.loading("Manual save...")
+                        debounceSave.cancel()
+                        await Save()
+                        toaster.dismiss(loadingToast)
+                    }
+                })
             }
         } catch (err) {
             console.log(err)
@@ -359,7 +369,7 @@ export default function EditorV3({ currentPage }) {
     return (
         <editorV3Context.Provider value={{ openPageData, setOpenPageData, updateOpenPageData }}>
             <Head>
-                <title>{openPageData.title}</title>
+                <title>{saving !== "" ? (saving + " | ") : ""} {openPageData.title}</title>
                 <link rel='icon' type='image/png' href={`/emoji/twitter/64/${openPageData.icon}`} />
             </Head>
             <div className="flex flex-col w-full h-full overflow-scroll" id={`editor-container-${currentPage}`}>

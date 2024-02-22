@@ -170,7 +170,7 @@ export default function MenuBar() {
             setListedPageItems(prevItems => {
                 return prevItems.filter((aitem) => aitem.id !== currentPage)
             })
-            Router.push(`/page/firstopen`)
+            Router.push(`/page`)
         } catch (err) {
             console.log(err)
             toaster.error('An error occured while trying to delete the page')
@@ -280,7 +280,7 @@ export default function MenuBar() {
                                     Page options
                                 </DropDownSectionTitle>
                                 <DropDownSection>
-                                    <DropDownItem onClick={() => Router.push(`/page/firstopen?p=${currentPage}&pm=s`)}>
+                                    <DropDownItem onClick={() => Router.push(`/page?p=${currentPage}&pm=s`)}>
                                         <PanelRightDashed />
                                         Peek page
                                     </DropDownItem>

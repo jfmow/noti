@@ -29,12 +29,6 @@ export default function PageList() {
   }
 
   useEffect(() => {
-    if (!currentPage || (currentPage === 'firstopen' && listedPageItems.length >= 1)) {
-      Router.push(`/page/${listedPageItems.filter(record => record.updated)[0].id}?${new URLSearchParams(Object.fromEntries(Object.entries(router.query).filter(([key]) => key !== 'id'))).toString()}`)
-    }
-  }, [currentPage])
-
-  useEffect(() => {
     getUserPages()
   }, [showArchivedPages])
 
@@ -130,7 +124,10 @@ export default function PageList() {
       if (window.innerWidth < 800) {
         setVisibleState(false)
       }
-      router.push(`/page/${item}?${new URLSearchParams(Object.fromEntries(Object.entries(router.query).filter(([key]) => key !== 'id'))).toString()}`);
+
+      // Append the search params to the url
+      const urlParams = new URLSearchParams(window.location.search)
+      router.push(`/page/${item}${urlParams.has("p") && urlParams.has("pm") ? `?${urlParams.toString()}` : ""}`);
     }
 
     async function handleSetExpand(e, item) {

@@ -7,7 +7,7 @@ const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 export default function HOME() {
   useEffect(() => {
     if (pb.authStore.isValid) {
-      window.location.replace('/page/firstopen')
+      window.location.replace('/page')
     }
   }, [])
   return (

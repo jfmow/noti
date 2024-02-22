@@ -33,7 +33,7 @@ export default function Login() {
             if (query?.redirect) {
                 Router.push(query.redirect)
             } else {
-                Router.push('/page/firstopen')
+                Router.push('/page')
             }
         } catch (err) {
             toaster.update(loadingToast, "A problem has occured logging in.", "error")
