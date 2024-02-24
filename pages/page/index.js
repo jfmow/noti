@@ -120,7 +120,7 @@ function NotionEditor() {
     }
 
     return (
-        <EditorContext.Provider value={{ showArchivedPages, setShowArchivedPages, listedPageItems, pb, setListedPageItems, visible, setVisible, currentPage: pageId[0], pageId, themes, listedPageItemsFilter, setListedPageItemsFilters, noSaving: pageId[0] === 'previewwelcome0' }}>
+        <EditorContext.Provider value={{ showArchivedPages, setShowArchivedPages, listedPageItems, pb, setListedPageItems, visible, setVisible, currentPage: pageId, pageId, themes, listedPageItemsFilter, setListedPageItemsFilters, noSaving: pageId[0] === 'previewwelcome0' }}>
             <div>
                 <div className='flex flex-col sm:flex-row'>
                     <MyComponent />

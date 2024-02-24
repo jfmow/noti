@@ -47,7 +47,6 @@ export default function MenuBar() {
     useEffect(() => {
         async function getPageData() {
             try {
-                if (currentPage.length !== 15) return
                 const record = await pb.collection('pages').getOne(currentPage);
                 function calculateWordCount(input) {
                     function removeHtmlTags(text) {
