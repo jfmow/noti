@@ -7,7 +7,7 @@ import { DropDown, DropDownContainer, DropDownExtension, DropDownExtensionContai
 import { updateListedPages } from '../Item';
 import { Link } from '../UX-Components';
 import { AppWindow, PanelRightDashed, PanelTopDashed, Settings2, X } from 'lucide-react';
-export default function MenuBar() {
+export default function MenuBar({ currentPageData }) {
     const { pb, currentPage, setVisible, visible, setListedPageItems, listedPageItems } = useEditorContext()
     const [activePage, setActivePage] = useState({})
     const [filteredItems, setFilteredItems] = useState([]);
@@ -47,7 +47,7 @@ export default function MenuBar() {
     useEffect(() => {
         async function getPageData() {
             try {
-                const record = await pb.collection('pages').getOne(currentPage);
+                const record = currentPageData
                 function calculateWordCount(input) {
                     function removeHtmlTags(text) {
                         return text.replace(/<[^>]*>/g, '');

@@ -25,14 +25,15 @@ import { Modal, ModalContent } from "@/lib/Modals/Modal";
 import { debounce } from "lodash";
 import { updateListedPages } from "../Item";
 import Loader from "../Loader";
+import MenuBar from "./MenuBar";
 const MenuButtons = lazy(() => import("./Menu/MenuButton"))
 
 const editorV3Context = createContext();
 export default function EditorV3({ currentPage }) {
-    const { pb, setListedPageItems } = useEditorContext()
+    const { pb, setListedPageItems, openPageData, setOpenPageData } = useEditorContext()
     const Editor = useRef(null)
     const SaveRef = useRef(null)
-    const [openPageData, setOpenPageData] = useState([])
+
     const [multiRecordSearch, setMultiRecordSearch] = useState({ state: false, records: [] })
     const [loading, setLoading] = useState(false)
     const [saving, setSavingState] = useState("")
@@ -371,25 +372,28 @@ export default function EditorV3({ currentPage }) {
                 <title>{saving !== "" ? (saving + " | ") : ""} {openPageData.title}</title>
                 <link rel='icon' type='image/png' href={`/emoji/twitter/64/${openPageData.icon}`} />
             </Head>
-            <div className="flex flex-col w-full h-full overflow-scroll" id={`editor-container-${currentPage}`}>
-                <div className="relative w-full min-h-[300px] h-[300px] bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400 flex items-center justify-center mb-5">
-                    <div className="absolute top-0 left-0 right-0 bottom-0 w-full h-full overflow-hidden">
-                        {openPageData.unsplash || openPageData.header_img ? (
-                            <img src={openPageData.unsplash || `${process.env.NEXT_PUBLIC_POCKETURL}/api/files/${openPageData.collectionId}/${openPageData.id}/${openPageData.header_img}`} className="w-full h-full object-cover" />
-                        ) : (
-                            <div />
-                        )}
+
+            <div style={{ display: 'flex', height: '100%', overflow: 'hidden' }}>
+                <div className="flex flex-col w-full h-full overflow-scroll" id={`editor-container-${currentPage}`}>
+                    <div className="relative w-full min-h-[300px] h-[300px] bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400 flex items-center justify-center mb-5">
+                        <div className="absolute top-0 left-0 right-0 bottom-0 w-full h-full overflow-hidden">
+                            {openPageData.unsplash || openPageData.header_img ? (
+                                <img src={openPageData.unsplash || `${process.env.NEXT_PUBLIC_POCKETURL}/api/files/${openPageData.collectionId}/${openPageData.id}/${openPageData.header_img}`} className="w-full h-full object-cover" />
+                            ) : (
+                                <div />
+                            )}
+                        </div>
+                        <div className="z-3 relative ">
+                            <h1 contentEditable onBlur={(e) => updateTitle(e)} className="text-zinc-50 px-3 text-balance text-center outline-none scroll-m-20 text-4xl font-bold tracking-tight lg:text-4xl">{openPageData.title || "Untitled page"}</h1>
+                        </div>
+                        <div className="z-2 absolute bottom-2 right-2 flex gap-2">
+                            <Suspense>
+                                <MenuButtons currentPage={currentPage} />
+                            </Suspense>
+                        </div>
                     </div>
-                    <div className="z-3 relative ">
-                        <h1 contentEditable onBlur={(e) => updateTitle(e)} className="text-zinc-50 px-3 text-balance text-center outline-none scroll-m-20 text-4xl font-bold tracking-tight lg:text-4xl">{openPageData.title || "Untitled page"}</h1>
-                    </div>
-                    <div className="z-2 absolute bottom-2 right-2 flex gap-2">
-                        <Suspense>
-                            <MenuButtons currentPage={currentPage} />
-                        </Suspense>
-                    </div>
+                    <div ref={SaveRef} className="px-8" style={{ color: "var(--editor_text)" }} id={`editorjs-editor-${currentPage}`} />
                 </div>
-                <div ref={SaveRef} className="px-8" style={{ color: "var(--editor_text)" }} id={`editorjs-editor-${currentPage}`} />
             </div>
         </editorV3Context.Provider>
     )

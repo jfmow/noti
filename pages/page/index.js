@@ -21,6 +21,7 @@ function NotionEditor() {
     const [showArchivedPages, setShowArchivedPages] = useState(false)
     const [pageId, setPageId] = useState("")
     const [themes, setThemes] = useState([])
+    const [openPageData, setOpenPageData] = useState([])
 
     useEffect(() => {
         async function authUpdate() {
@@ -120,19 +121,18 @@ function NotionEditor() {
     }
 
     return (
-        <EditorContext.Provider value={{ showArchivedPages, setShowArchivedPages, listedPageItems, pb, setListedPageItems, visible, setVisible, currentPage: pageId, pageId, themes, listedPageItemsFilter, setListedPageItemsFilters, noSaving: pageId[0] === 'previewwelcome0' }}>
+        <EditorContext.Provider value={{ showArchivedPages, setShowArchivedPages, listedPageItems, pb, setListedPageItems, visible, setVisible, currentPage: pageId, pageId, themes, listedPageItemsFilter, setListedPageItemsFilters, noSaving: pageId[0] === 'previewwelcome0', openPageData, setOpenPageData }}>
             <div>
                 <div className='flex flex-col sm:flex-row'>
                     <MyComponent />
                     <div style={{ flex: '1 1 0%', position: 'relative', display: 'flex', height: '100dvh', flexDirection: 'column', overflowX: 'hidden' }}>
-                        <MenuBar />
-                        <div style={{ display: 'flex', height: '100%', overflow: 'hidden' }}>
-                            {pageId !== "" ? (
-                                <Suspense fallback={<></>}>
-                                    <Editor currentPage={pageId} page={pageId} />
-                                </Suspense>
-                            ) : null}
-                        </div>
+                        <MenuBar currentPageData={openPageData} />
+
+                        {pageId !== "" ? (
+                            <Suspense fallback={<></>}>
+                                <Editor currentPage={pageId} page={pageId} />
+                            </Suspense>
+                        ) : null}
                     </div>
                     {query.pm === "l" ? (
                         <NewPageModal pageId={query.p} />
