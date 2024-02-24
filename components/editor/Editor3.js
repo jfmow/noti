@@ -40,7 +40,7 @@ export default function EditorV3({ currentPage, peek }) {
 
     useEffect(() => {
         //Check that there is a current page
-        if (currentPage && openPageData.id !== currentPage) {
+        if ((currentPage && openPageData.id !== currentPage) || peek) {
             async function RetriveOpenPageData(page) {
                 /**
                  * Uses the pocketbase js sdk to query the db for the record with the id `page`
