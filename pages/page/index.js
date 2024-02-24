@@ -76,9 +76,8 @@ function NotionEditor() {
     }, [])
 
     useEffect(() => {
-        async function GetLatestPage() {
+        async function GetLatestPage(urlParams) {
             try {
-                const urlParams = new URLSearchParams(window.location.search)
                 try {
                     const latestPage = await pb.collection("pages").getFirstListItem("", { sort: "-updated" })
                     urlParams.set("edit", latestPage.id)
@@ -93,8 +92,7 @@ function NotionEditor() {
                 Router.push("/auth/login")
             }
         }
-        function SetCurrentPage() {
-            const urlParams = new URLSearchParams(window.location.search)
+        function SetCurrentPage(urlParams) {
             if (urlParams.has("edit")) {
                 const page = urlParams.get("edit")
                 if (page.length !== 15) {
@@ -108,11 +106,12 @@ function NotionEditor() {
                 setPageId(page)
             }
         }
-        if (query.edit) {
-            SetCurrentPage()
+        const urlParams = new URLSearchParams(window.location.search)
+        if (query.edit || urlParams.has("edit")) {
+            SetCurrentPage(urlParams)
             setIsLoading(false)
         } else {
-            GetLatestPage()
+            GetLatestPage(urlParams)
         }
     }, [query])
 
