@@ -102,16 +102,16 @@ export default function Users() {
             <div className="w-full h-screen bg-zinc-50 text-zinc-800 relative flex items-center justify-center">
                 <div className="grid grid-cols-1 max-w-full w-fit bg-zinc-50 shadow rounded p-4 overflow-y-scroll">
                     <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 items-center rounded-lg p-4 text-md">
-                        <div className="font-semibold sm:visible hidden">
+                        <div className="font-semibold sm:block hidden">
                             ID
                         </div>
                         <div className="">
                             Email
                         </div>
-                        <div className="sm:visible hidden">
+                        <div className="sm:block hidden">
                             Created
                         </div>
-                        <div className="sm:visible hidden">
+                        <div className="sm:block hidden">
                             Updated
                         </div>
                         <div className="w-full text-right">
@@ -124,16 +124,16 @@ export default function Users() {
                         {users.map((user) => (
                             <>
                                 <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 items-center bg-zinc-100 shadow-sm rounded-lg p-4 text-md mt-2">
-                                    <div className="font-semibold sm:visible hidden">
+                                    <div className="font-semibold sm:block hidden">
                                         {user.id}
                                     </div>
                                     <div>
                                         {user.email}
                                     </div>
-                                    <div className="sm:visible hidden">
+                                    <div className="sm:block hidden">
                                         {new Date(user.created).toLocaleDateString([], { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone })}
                                     </div>
-                                    <div className="sm:visible hidden">
+                                    <div className="sm:block hidden">
                                         {new Date(user.updated).toLocaleDateString([], { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone })}
                                     </div>
                                     <div className="flex items-center justify-end w-full">
@@ -207,7 +207,7 @@ export default function Users() {
                 </div>
 
                 <div className="absolute z-[3] bottom-4 left-0 right-0 flex items-center justify-center">
-                    <div className="p-2 flex items-center justify-center rounded-2xl shadow-xl border gap-1">
+                    <div className="p-2 flex items-center justify-evenly rounded-2xl shadow-xl border gap-1 w-[90%] sm:w-auto min-w-[150px] max-w-[90%]">
                         <Link className="hover:bg-zinc-300 p-2 rounded" href="/auth/login">
                             <LogOut className="w-4 h-4" />
                         </Link>

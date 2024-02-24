@@ -13,9 +13,9 @@ export default function AccountDetails() {
         async function getTotalUsage() {
             try {
                 const record = await pb.collection('user_usage').getOne(pb.authStore.model.id);
-                setTotalUsage(record.total_size)
+                setTotalUsage(Math.round(record.total_size * 0.00000095367432))
                 const accountFlags = await pb.collection('user_flags').getFirstListItem(`user="${pb.authStore.model.id}"`);
-                setUsageLimit(accountFlags.quota)
+                setUsageLimit(Math.floor(accountFlags.quota * 0.00000095367432))
             } catch {
                 // Handle errors if needed
             }
