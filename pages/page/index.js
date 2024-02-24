@@ -79,7 +79,7 @@ function NotionEditor() {
         async function GetLatestPage(urlParams) {
             try {
                 try {
-                    const latestPage = await pb.collection("pages").getFirstListItem("", { sort: "-updated" })
+                    const latestPage = await pb.collection("pages").getFirstListItem(`id != '${urlParams.get("p")}'`, { sort: "-updated" })
                     urlParams.set("edit", latestPage.id)
                     Router.push(`/page?${urlParams.toString()}`)
                 } catch (err) {
