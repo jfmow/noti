@@ -20,20 +20,19 @@ import LineBreak from "@/customEditorTools/LineBreak";
 import { handleCreateBlurHash } from '@/lib/idk'
 import { toaster } from "@/components/toast";
 import { useEditorContext } from "@/pages/page";
-import { Paragraph, SubmitButton } from "../UX-Components";
+import { Paragraph } from "../UX-Components";
 import { Modal, ModalContent } from "@/lib/Modals/Modal";
 import { debounce } from "lodash";
-import { updateListedPages } from "../Item";
 import Loader from "../Loader";
-import MenuBar from "./MenuBar";
 const MenuButtons = lazy(() => import("./Menu/MenuButton"))
 
 const editorV3Context = createContext();
-export default function EditorV3({ currentPage }) {
-    const { pb, setListedPageItems, openPageData, setOpenPageData } = useEditorContext()
+export default function EditorV3({ currentPage, peek }) {
+    const { pb, setListedPageItems, setPrimaryVisiblePageData } = useEditorContext()
     const Editor = useRef(null)
     const SaveRef = useRef(null)
 
+    const [openPageData, setOpenPageData] = useState([])
     const [multiRecordSearch, setMultiRecordSearch] = useState({ state: false, records: [] })
     const [loading, setLoading] = useState(false)
     const [saving, setSavingState] = useState("")
@@ -53,6 +52,9 @@ export default function EditorV3({ currentPage }) {
                     const record = await pb.collection('pages').getOne(page)
                     setLoading(false)
                     setOpenPageData(record)
+                    if (!peek) {
+                        setPrimaryVisiblePageData(record)
+                    }
                 } catch {
                     try {
                         const altRecord = await pb.collection('pages').getFullList({ sort: '-created', filter: `title ?~ '${currentPage}'` })
@@ -350,7 +352,7 @@ export default function EditorV3({ currentPage }) {
                         <div style={{ maxHeight: '190px', overflowY: 'scroll' }}>
                             {multiRecordSearch.records.map((item) => (
                                 <div onClick={() => {
-                                    Router.push(`/page/${item.id}`)
+                                    Router.push(`/page?edit=${item.id}`)
                                 }} style={{ display: 'flex', gap: '7px', alignItems: 'center', cursor: 'pointer' }} className="hover:bg-[#f9f9f9] rounded p-3">
                                     <div aria-label='Page icon' style={{ display: 'flex', width: '16px', height: '16px' }}>
                                         {item.icon && item.icon.includes('.png') ? (<img className="w-4 h-4 object-contain" src={`/emoji/twitter/64/${item.icon}`} />) : (!isNaN(parseInt(item.icon, 16)) && String.fromCodePoint(parseInt(item.icon, 16)))}

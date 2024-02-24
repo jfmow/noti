@@ -21,7 +21,7 @@ function NotionEditor() {
     const [showArchivedPages, setShowArchivedPages] = useState(false)
     const [pageId, setPageId] = useState("")
     const [themes, setThemes] = useState([])
-    const [openPageData, setOpenPageData] = useState([])
+    const [primaryVisiblePageData, setPrimaryVisiblePageData] = useState([])
 
     useEffect(() => {
         async function authUpdate() {
@@ -121,12 +121,12 @@ function NotionEditor() {
     }
 
     return (
-        <EditorContext.Provider value={{ showArchivedPages, setShowArchivedPages, listedPageItems, pb, setListedPageItems, visible, setVisible, currentPage: pageId, pageId, themes, listedPageItemsFilter, setListedPageItemsFilters, noSaving: pageId[0] === 'previewwelcome0', openPageData, setOpenPageData }}>
+        <EditorContext.Provider value={{ showArchivedPages, setShowArchivedPages, listedPageItems, pb, setListedPageItems, visible, setVisible, currentPage: pageId, pageId, themes, listedPageItemsFilter, setListedPageItemsFilters, noSaving: pageId[0] === 'previewwelcome0', setPrimaryVisiblePageData, primaryVisiblePageData }}>
             <div>
                 <div className='flex flex-col sm:flex-row'>
                     <MyComponent />
                     <div style={{ flex: '1 1 0%', position: 'relative', display: 'flex', height: '100dvh', flexDirection: 'column', overflowX: 'hidden' }}>
-                        <MenuBar currentPageData={openPageData} />
+                        <MenuBar currentPageData={primaryVisiblePageData} />
 
                         {pageId !== "" ? (
                             <Suspense fallback={<></>}>
