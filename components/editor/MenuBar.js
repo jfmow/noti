@@ -2,7 +2,7 @@ import Router from 'next/router';
 import { useEffect, useState } from 'react';
 import { toaster } from '@/components/toast';
 import { ToolTip, ToolTipCon, ToolTipTrigger } from '@/components/UX-Components/Tooltip';
-import { useEditorContext } from '@/pages/page/[...id]';
+import { useEditorContext } from '@/pages/page';
 import { DropDown, DropDownContainer, DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from '@/lib/Pop-Cards/DropDown';
 import { updateListedPages } from '../Item';
 import { Link } from '../UX-Components';
@@ -47,8 +47,7 @@ export default function MenuBar() {
     useEffect(() => {
         async function getPageData() {
             try {
-
-
+                if (currentPage.length !== 15) return
                 const record = await pb.collection('pages').getOne(currentPage);
                 function calculateWordCount(input) {
                     function removeHtmlTags(text) {

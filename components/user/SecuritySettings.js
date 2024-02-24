@@ -1,5 +1,5 @@
 import { DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle } from "@/lib/Pop-Cards/DropDown";
-import { useEditorContext } from "@/pages/page/[...id]";
+import { useEditorContext } from "@/pages/page";
 import { toaster } from "@/components/toast";
 import { Github } from "lucide-react";
 import Router from "next/router";

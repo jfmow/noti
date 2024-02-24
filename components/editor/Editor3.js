@@ -19,7 +19,7 @@ import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
 import LineBreak from "@/customEditorTools/LineBreak";
 import { handleCreateBlurHash } from '@/lib/idk'
 import { toaster } from "@/components/toast";
-import { useEditorContext } from "@/pages/page/[...id]";
+import { useEditorContext } from "@/pages/page";
 import { Paragraph, SubmitButton } from "../UX-Components";
 import { Modal, ModalContent } from "@/lib/Modals/Modal";
 import { debounce } from "lodash";
@@ -338,7 +338,6 @@ export default function EditorV3({ currentPage }) {
     }
 
     if (multiRecordSearch.state) {
-        console.log("AAAAA")
         return (
             <>
                 <Modal visibleDef={true}>

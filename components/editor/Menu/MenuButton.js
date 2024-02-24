@@ -1,5 +1,5 @@
 import { ToolTip, ToolTipCon, ToolTipTrigger } from "@/components/UX-Components/Tooltip";
-import { useEditorContext } from "@/pages/page/[...id]";
+import { useEditorContext } from "@/pages/page";
 import { DropDown, DropDownContainer, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from "@/lib/Pop-Cards/DropDown";
 import { Paragraph } from "@/components/UX-Components";
 import { PopUpTrigger, Popup, PopupContainer } from "@/lib/Pop-Cards/Popup";

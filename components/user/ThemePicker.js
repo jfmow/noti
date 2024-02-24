@@ -1,5 +1,5 @@
 import { DropDownItem, DropDownSection } from "@/lib/Pop-Cards/DropDown";
-import { useEditorContext } from "@/pages/page/[...id]";
+import { useEditorContext } from "@/pages/page";
 
 export default function ThemePickerPopup() {
     const { themes } = useEditorContext()

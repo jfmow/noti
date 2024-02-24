@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import AvatarModal from './AvatarModal';
 import { DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle } from '@/lib/Pop-Cards/DropDown';
-import { useEditorContext } from '@/pages/page/[...id]';
+import { useEditorContext } from '@/pages/page';
 import { toaster } from '../toast';
 export default function AccountDetails() {
     const { pb } = useEditorContext()

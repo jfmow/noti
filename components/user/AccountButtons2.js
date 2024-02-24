@@ -1,6 +1,6 @@
 import Router from 'next/router';
 import { DropDownItem, DropDownSection, DropDownSectionTitle } from '@/lib/Pop-Cards/DropDown';
-import { useEditorContext } from '@/pages/page/[...id]';
+import { useEditorContext } from '@/pages/page';
 import AccountDetails from './AccountInfoSection';
 import SecuritySettings from './SecuritySettings';
 export default function AccountButtons() {

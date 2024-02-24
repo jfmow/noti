@@ -2,7 +2,7 @@ import Router, { useRouter } from 'next/router';
 import PocketBase from 'pocketbase'
 import { useEffect, useRef, useState } from 'react';
 import UserOptions from './UserInfo';
-import { useEditorContext } from '@/pages/page/[...id]';
+import { useEditorContext } from '@/pages/page';
 import { toaster } from './toast';
 import { Loader2, Plus } from 'lucide-react';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
@@ -18,11 +18,7 @@ export default function PageList() {
       const records = await pb.collection('pages_Bare').getFullList({
         sort: '-created', skipTotal: true, filter: showArchivedPages ? `` : `archived = false`
       });
-      //console.log(records)
       setListedPageItems(records)
-      if (!currentPage || (currentPage === 'firstopen' && records.length >= 1)) {
-        Router.push(`/page/${records.filter(record => record.updated && !record.archived && !record.deleted)[0].id}?${new URLSearchParams(Object.fromEntries(Object.entries(router.query).filter(([key]) => key !== 'id'))).toString()}`)
-      }
     } catch {
       toaster.error('Error fetching data')
     }
@@ -84,10 +80,15 @@ export default function PageList() {
       }
     };
     const record = await pb.collection('pages').create(data);
+    const urlParams = new URLSearchParams(window.location.search)
+
     if (window.innerWidth < 640) {
-      router.push(`/page/${record.id}`)
+      urlParams.set("edit", record.id)
+      router.push(`/page?${urlParams.toString()}`)
     } else {
-      router.push(`${window.location.pathname}?p=${record.id}&pm=l`)
+      urlParams.set("p", record.id)
+      urlParams.set("pm", "l")
+      router.push(`/page?${urlParams.toString()}`)
     }
     setListedPageItems(updateListedPages('', record, listedPageItems))
   }
@@ -127,7 +128,8 @@ export default function PageList() {
 
       // Append the search params to the url
       const urlParams = new URLSearchParams(window.location.search)
-      router.push(`/page/${item}${urlParams.has("p") && urlParams.has("pm") ? `?${urlParams.toString()}` : ""}`);
+      urlParams.set("edit", item)
+      router.push(`/page?${urlParams.toString()}`);
     }
 
     async function handleSetExpand(e, item) {
