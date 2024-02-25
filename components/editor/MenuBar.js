@@ -115,7 +115,7 @@ export default function MenuBar({ currentPageData }) {
         }
         getPageData()
 
-    }, [listedPageItems, currentPage])
+    }, [listedPageItems, currentPage, currentPageData])
 
     async function handleSharePage() {
         const data = {
