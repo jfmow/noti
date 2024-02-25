@@ -43,9 +43,12 @@ function NotionEditor() {
             if (!themes || themes === "" || (Date.now() - themes.updated) < (1000 * 60 * 60 * 24)) {
                 const themeFetch = await fetch(`${process.env.NEXT_PUBLIC_CURRENTURL}/themes.json`)
                 themes = await themeFetch.json()
+                setThemes(themes)
                 window.localStorage.setItem("themes", JSON.stringify({ updated: Date.now(), themes: themes }))
+            } else {
+                setThemes(themes.themes)
             }
-            setThemes(themes)
+
             return themes
         }
         async function applyTheme() {
