@@ -15,6 +15,7 @@ module.exports = {
       animation: {
         'fade-in-quick': 'fadeinquick 0.3s 1 ease',
         'fade-in-slow-middle': 'fadeinslowmiddle 0.3s 1 ease',
+        "background-shine": "background-shine 2s linear infinite",
       },
       keyframes: {
         fadeinquick: {
@@ -24,6 +25,14 @@ module.exports = {
         fadeinslowmiddle: {
           '0%': { opacity: 0, transformOrigin: "center", transform: "scale(0.8)" },
           '100%': { opacity: 1, transformOrigin: "center", transform: "scale(1)" },
+        },
+        "background-shine": {
+          "from": {
+            "backgroundPosition": "0 0"
+          },
+          "to": {
+            "backgroundPosition": "-200% 0"
+          }
         },
       },
       fontFamily: {
