@@ -29,12 +29,9 @@ export default function Login() {
         const loadingToast = await toaster.loading('Working...')
         try {
             await pb.collection('users').authWithOAuth2({ provider: provider })
+            Router.push('/page')
             toaster.dismiss(loadingToast)
-            if (query?.redirect) {
-                Router.push(query.redirect)
-            } else {
-                Router.push('/page')
-            }
+
         } catch (err) {
             toaster.update(loadingToast, "A problem has occured logging in.", "error")
         }
