@@ -39,17 +39,19 @@ function NotionEditor() {
         authUpdate()
         let vars = {}
         async function GetThemes() {
-            var themes = JSON.parse(window.localStorage.getItem("themes"))
-            if (!themes || themes === "" || (Date.now() - themes.updated) < (1000 * 60 * 60 * 24)) {
+            const storedThemes = JSON.parse(window.localStorage.getItem("themes"))
+            if (!storedThemes || storedThemes === "" || (Date.now() - storedThemes.updated) < (1000 * 60 * 60 * 24)) {
                 const themeFetch = await fetch(`${process.env.NEXT_PUBLIC_CURRENTURL}/themes.json`)
-                themes = await themeFetch.json()
+                const themes = await themeFetch.json()
                 setThemes(themes)
                 window.localStorage.setItem("themes", JSON.stringify({ updated: Date.now(), themes: themes }))
+                return themes
             } else {
-                setThemes(themes.themes)
+                setThemes(storedThemes.themes)
+                return storedThemes.themes
             }
 
-            return themes
+
         }
         async function applyTheme() {
             const theme = window.localStorage.getItem('theme')
