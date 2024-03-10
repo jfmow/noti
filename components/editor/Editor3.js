@@ -325,7 +325,7 @@ export default function EditorV3({ currentPage, peek }) {
                                     Router.push(`/page?edit=${item.id}`)
                                 }} style={{ display: 'flex', gap: '7px', alignItems: 'center', cursor: 'pointer' }} className="hover:bg-[#f9f9f9] rounded p-3">
                                     <div aria-label='Page icon' style={{ display: 'flex', width: '16px', height: '16px' }}>
-                                        {item.icon && item.icon.includes('.png') ? (<img className="w-4 h-4 object-contain" src={`/emoji/twitter/64/${item.icon || "undefined.png"}`} />) : (!isNaN(parseInt(item.icon, 16)) && String.fromCodePoint(parseInt(item.icon, 16)))}
+                                        {item.icon && item.icon.includes('.png') ? (<img className="w-4 h-4 object-contain" src={`/emoji/twitter/64/${item.icon || "undefined.png?b"}`} />) : (!isNaN(parseInt(item.icon, 16)) && String.fromCodePoint(parseInt(item.icon, 16)))}
                                     </div>
                                     <div>{item.title}</div>
                                 </div>
@@ -342,7 +342,7 @@ export default function EditorV3({ currentPage, peek }) {
         <editorV3Context.Provider value={{ openPageData, setOpenPageData, updateOpenPageData }}>
             <Head>
                 <title>{saving !== "" ? (saving + " | ") : ""} {openPageData.title}</title>
-                <link rel='icon' type='image/png' href={`/emoji/twitter/64/${openPageData.icon || "undefined.png"}`} />
+                <link rel='icon' type='image/png' href={`/emoji/twitter/64/${openPageData.icon || "undefined.png?c"}`} />
             </Head>
 
             <div style={{ display: 'flex', height: '100%', overflow: 'hidden' }}>
