@@ -102,7 +102,6 @@ export default function EditorV3({ currentPage, peek }) {
                 }
                 let editorContainer
                 if (document.getElementById(`editorjs-editor-${currentPage}`).childElementCount >= 1) {
-                    console.log("A")
                     return
                 } else {
                     editorContainer = document.createElement("div")
