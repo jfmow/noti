@@ -77,6 +77,20 @@ export default function EditorV3({ currentPage, peek }) {
         }
     }, [currentPage])
 
+    async function Save(editor) {
+        try {
+            setSavingState("Saving...")
+            const content = await editor.save()
+            const res = await pb.collection('pages').update(currentPage, { "content": content })
+            setSavingState("Saved")
+        } catch (err) {
+            setSavingState("Unable to save file...")
+            toaster.error(err?.message || err)
+        }
+    }
+
+    const debounceSave = debounce(Save, 300)
+
     useEffect(() => {
         try {
             if (openPageData?.id) {
@@ -252,6 +266,7 @@ export default function EditorV3({ currentPage, peek }) {
                     autofocus: openPageData?.content && openPageData?.content?.blocks?.length >= 1 && (openPageData?.content?.blocks[0]?.type === 'image' || openPageData?.content?.blocks[0]?.type === 'Video' || openPageData?.content?.blocks[0]?.type === 'simpleEmbeds' || openPageData?.content?.blocks[0]?.type === 'SimpleIframeWebpage') ? false : true,
                     onChange: (api, event) => {
                         setSavingState("Unsaved")
+                        debounceSave(api.saver)
                     }
                 })
                 editor.isReady.then(() => {
@@ -266,52 +281,7 @@ export default function EditorV3({ currentPage, peek }) {
         }
     }, [openPageData])
 
-    useEffect(() => {
-        /**
-         * The logic for auto save
-         */
 
-        async function Save() {
-            try {
-                setSavingState("Saving...")
-                const content = await Editor.current.save()
-                const res = await pb.collection('pages').update(currentPage, { "content": content })
-                setSavingState("Saved")
-            } catch (err) {
-                setSavingState("Unable to save file...")
-                toaster.error(err?.message || err)
-            }
-        }
-
-        const debounceSave = debounce(Save, 300)
-
-        try {
-            if (SaveRef && SaveRef.current && !loading) {
-                SaveRef.current.addEventListener("keyup", debounceSave)
-                SaveRef.current.addEventListener('keydown', async function (event) {
-                    if (event.ctrlKey && event.key === 's') {
-                        event.preventDefault()
-                        const loadingToast = await toaster.loading("Manual save...")
-                        debounceSave.cancel()
-                        await Save()
-                        toaster.dismiss(loadingToast)
-                    }
-                })
-            }
-        } catch (err) {
-            console.log(err)
-        }
-
-        return () => {
-            try {
-                debounceSave.cancel()
-                SaveRef.current.removeEventListener("keyup", debounceSave)
-            } catch {
-
-            }
-        }
-
-    }, [currentPage, SaveRef, loading])
 
     async function updateTitle(e) {
         try {
