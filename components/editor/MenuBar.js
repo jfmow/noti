@@ -208,7 +208,7 @@ export default function MenuBar({ currentPageData }) {
                                             }}>
                                                 {item?.icon && (
                                                     <div className="w-4 h-4 flex items-center justify-center">
-                                                        {item?.icon && item?.icon.includes('.png') ? (<img src={`/emoji/twitter/64/${item?.icon}`} />) : (!isNaN(parseInt(item?.icon, 16)) && String.fromCodePoint(parseInt(item?.icon, 16)))}
+                                                        {item?.icon && item?.icon.includes('.png') ? (<img src={`/emoji/twitter/64/${item?.icon || "undefined.png"}`} />) : (!isNaN(parseInt(item?.icon, 16)) && String.fromCodePoint(parseInt(item?.icon, 16)))}
                                                     </div>
                                                 )}
                                                 {item?.title || item?.id}
