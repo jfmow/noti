@@ -103,27 +103,42 @@ export default class Image {
     iframe.style.borderRadius = "5px";
     iframe.style.margin = "1em 0";
     if (file.blurHashData) {
-      const blurHash = handleBlurHashChange(file.blurHashData)
-      iframe.src = blurHash
+      iframe.setAttribute('fileId', file.fileId); // Set the fileId as an attribute of the iframe
+      iframe.setAttribute('blurHashDataAtt', JSON.stringify(file.blurHashData))
       this.wrapper.innerHTML = "";
       this.wrapper.appendChild(iframe);
 
-      // retrieve an example protected file url (will be valid ~5min)
-      const record = await pb.collection('files').getOne(file.fileId, { expand: "page" }); // Use the fileId to retrieve the record
-      if (record.page === "") {
-        await pb.collection("imgs").update(file.fileId, { "page": this.currpage })
-      }
-      let url
-      if (!record.expand.page.shared) {
-        const fileToken = await pb.files.getToken();
-        url = pb.files.getUrl(record, record.file_data, { 'token': fileToken });
-      } else {
-        url = pb.files.getUrl(record, record.file_data);
-      }
+      const blurHashPromise = new Promise((reslove) => {
+        const blurHash = handleBlurHashChange(file.blurHashData)
+        iframe.src = blurHash
+        reslove(blurHash)
+      })
 
-      iframe.src = url;
-      iframe.setAttribute('fileId', file.fileId); // Set the fileId as an attribute of the iframe
-      iframe.setAttribute('blurHashDataAtt', JSON.stringify(file.blurHashData))
+      const filePromise = new Promise((reslove) => {
+        pb.collection('files').getOne(file.fileId, { expand: "page" }).then((record) => {
+          if (record.page === "") {
+            pb.collection("imgs").update(file.fileId, { "page": this.currpage })
+          }
+          if (!record.expand.page.shared) {
+            pb.files.getToken().then((token) => {
+              const url = pb.files.getUrl(record, record.file_data, { 'token': token });
+              iframe.src = url
+              reslove(url)
+            });
+          } else {
+            const url = pb.files.getUrl(record, record.file_data);
+            iframe.src = url
+            reslove(url)
+          }
+        }); // Use the fileId to retrieve the record
+
+      })
+
+      Promise.all([blurHashPromise, filePromise]).then((promises) => {
+        iframe.src = promises[1]
+      })
+
+
     } else {
       const fileToken = await pb.files.getToken();
       // retrieve an example protected file url (will be valid ~5min)
