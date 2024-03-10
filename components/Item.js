@@ -232,7 +232,7 @@ export default function PageList() {
             )}
           </button>
           <div aria-label='Page icon' style={{ display: 'flex' }}>
-            {item.icon && item.icon.includes('.png') ? (<img className="w-4 h-4 object-contain" src={`/emoji/twitter/64/${item.icon || "undefined.png?a"}`} />) : (!isNaN(parseInt(item.icon, 16)) && String.fromCodePoint(parseInt(item.icon, 16)))}
+            {item.icon && item.icon.includes('.png') ? (<img className="w-4 h-4 object-contain" src={`/emoji/twitter/64/${item.icon}`} />) : (!isNaN(parseInt(item.icon, 16)) && String.fromCodePoint(parseInt(item.icon, 16)))}
           </div>
 
           <span className={`${expand ? "w-full overflow-hidden text-wrap pl-[3px] pr-[5px]" : "w-full overflow-hidden text-ellipsis text-nowrap pl-[3px] pr-[5px]"}`}>{item.title.trim() || 'Untitled page ' + item.id}</span>
