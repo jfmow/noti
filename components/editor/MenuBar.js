@@ -188,7 +188,11 @@ export default function MenuBar({ currentPageData }) {
 
             <div className="w-full h-[45px] min-h-[45px] max-h-[45px] pl-2 pr-2 flex justify-between items-center bg-zinc-50 overflow-y-hidden">
                 <div className='flex items-center h-full'>
-                    <button onClick={() => setVisible(!visible)} type='button' className="flex items-center justify-center bg-none border-none text-zinc-800 cursor-pointer p-1 rounded relative w-[30px] h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4">
+                    <button onClick={() => {
+                        const queryParams = new URLSearchParams(window.location.search)
+                        queryParams.set("side", !visible)
+                        Router.push(`/page?${queryParams.toString()}`)
+                    }} type='button' className="flex items-center justify-center bg-none border-none text-zinc-800 cursor-pointer p-1 rounded relative w-[30px] h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-right"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><line x1="15" x2="15" y1="3" y2="21" /></svg>
                     </button>
                 </div>

@@ -114,6 +114,9 @@ function NotionEditor() {
         const urlParams = new URLSearchParams(window.location.search)
         if (query.edit || urlParams.has("edit")) {
             SetCurrentPage(urlParams)
+            if (urlParams.has("side")) {
+                setVisible(urlParams.get("side") === "true" ? true : false)
+            }
             setIsLoading(false)
         } else {
             GetLatestPage(urlParams)

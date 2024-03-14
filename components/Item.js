@@ -29,6 +29,7 @@ export default function PageList() {
   }, [showArchivedPages])
 
   useEffect(() => {
+    console.log(visible)
     const containerWidthMax = window.innerWidth <= 600 ? '100%' : '300px'
     if (!visible) {
       shrinkcontainerRef.current.style.width = 0
@@ -122,12 +123,13 @@ export default function PageList() {
     const router = useRouter()
     function openPage(e, item) {
       e.preventDefault();
+      const urlParams = new URLSearchParams(window.location.search)
       if (window.innerWidth < 800) {
-        setVisibleState(false)
+        urlParams.set("side", false)
       }
 
       // Append the search params to the url
-      const urlParams = new URLSearchParams(window.location.search)
+
       urlParams.set("edit", item)
       router.push(`/page?${urlParams.toString()}`);
     }
