@@ -1,6 +1,7 @@
 import { useTasksContext } from "@/pages/task"
 import AppSectionsBar from "../Navigation/appsections"
-import { ChevronRight, Router } from "lucide-react"
+import { ChevronRight } from "lucide-react"
+import Router from "next/router"
 export default function TasksList() {
     const { pb, tasks, setTasks } = useTasksContext()
     /**
@@ -13,7 +14,11 @@ export default function TasksList() {
                 <div className="p-3">
                     {tasks.map((task) => (
                         <>
-                            <div onClick={ } className="p-3 bg-zinc-100 shadow-sm rounded-lg mb-2 flex items-center justify-between cursor-pointer hover:bg-zinc-200" key={task.id}>
+                            <div onClick={() => {
+                                const queryParams = new URLSearchParams(window.location.search)
+                                queryParams.set("folder", task.id)
+                                Router.push(`/task?${queryParams.toString()}`)
+                            }} className="p-3 bg-zinc-100 shadow-sm rounded-lg mb-2 flex items-center justify-between cursor-pointer hover:bg-zinc-200" key={task.id}>
                                 <span className="font-semibold text-sm">
                                     {task.folderName}
                                 </span>

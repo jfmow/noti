@@ -1,4 +1,5 @@
 import TasksList from '@/components/tasks/list'
+import Tasks from '@/components/tasks/tasks'
 import PocketBase from 'pocketbase'
 import { createContext, useContext, useState } from 'react'
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
@@ -6,7 +7,7 @@ pb.autoCancellation(false)
 
 const tasksContext = createContext()
 
-export default function Tasks() {
+export default function TasksContainer() {
     const [tasks, setTasks] = useState([
         {
             folderName: "Folder 1", id: "abc", tasks: [
@@ -20,9 +21,7 @@ export default function Tasks() {
             <tasksContext.Provider value={{ pb, tasks, setTasks }}>
                 <div className='flex'>
                     <TasksList />
-                    <div>
-                        Everything else
-                    </div>
+                    <Tasks />
                 </div>
             </tasksContext.Provider>
         </>
