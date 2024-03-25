@@ -16,6 +16,7 @@ module.exports = {
         'fade-in-quick': 'fadeinquick 0.3s 1 ease',
         'fade-in-slow-middle': 'fadeinslowmiddle 0.3s 1 ease',
         "background-shine": "background-shine 2s linear infinite",
+        "fade-in": "fade-in 0.3s ease-in"
       },
       keyframes: {
         fadeinquick: {
@@ -34,6 +35,14 @@ module.exports = {
             "backgroundPosition": "-200% 0"
           }
         },
+        "fade-in": {
+          "0%": {
+            "opacity": "0"
+          },
+          "100%": {
+            "opacity": "1"
+          }
+        }
       },
       fontFamily: {
         'inter': ['Inter'],

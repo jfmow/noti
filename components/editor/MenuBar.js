@@ -7,24 +7,18 @@ import { DropDown, DropDownContainer, DropDownExtension, DropDownExtensionContai
 import { updateListedPages } from '../Item';
 import { Link } from '../UX-Components';
 import { AppWindow, PanelRightDashed, PanelTopDashed, Settings2, X } from 'lucide-react';
+import { debounce } from 'lodash';
 export default function MenuBar({ currentPageData }) {
     const { pb, currentPage, setVisible, visible, setListedPageItems, listedPageItems } = useEditorContext()
     const [activePage, setActivePage] = useState({})
     const [filteredItems, setFilteredItems] = useState([]);
     const [pageInfo, setPageInfo] = useState({})
     const [isMobile, setIsMobile] = useState(false)
-    const [tabBarVisible, setTabBarVisible] = useState(false)
+    const [hoveringTabItem, setHoveringTabItem] = useState({ id: '', position: null })
     useEffect(() => {
         if (window.innerWidth < 450) {
             setIsMobile(true)
         }
-
-        setTabBarVisible(window.localStorage.getItem('tabbar') === "false" ? false : true)
-        document.body.addEventListener("TABBARTOGGLE", (e) => {
-            const newState = e.detail
-            window.localStorage.setItem('tabbar', newState)
-            setTabBarVisible(newState)
-        })
     }, [])
     useEffect(() => {
         setPageInfo({})
@@ -76,7 +70,15 @@ export default function MenuBar({ currentPageData }) {
                         input.blocks.forEach(block => {
                             switch (block.type) {
                                 case "header":
+                                    if (block.data && block.data.text) {
+                                        words = words.concat(extractWords(removeHtmlTags(block.data.text)));
+                                    }
+                                    break;
                                 case "paragraph":
+                                    if (block.data && block.data.text) {
+                                        words = words.concat(extractWords(removeHtmlTags(block.data.text)));
+                                    }
+                                    break;
                                 case "quote":
                                     if (block.data && block.data.text) {
                                         words = words.concat(extractWords(removeHtmlTags(block.data.text)));
@@ -182,6 +184,57 @@ export default function MenuBar({ currentPageData }) {
         toaster.success(`Page ${newState ? 'archived' : 'restored'} successfully`)
     }
 
+    const debounceSetHoveringTabItem = debounce(setHoveredTabItem, 200)
+    const debounceUNSetHoveringTabItem = debounce(unSetHoveredTabItem, 300)
+
+
+    function setHoveredTabItem(data, itemId) {
+        if (itemId !== hoveringTabItem.id) {
+            debounceUNSetHoveringTabItem.cancel()
+            setHoveringTabItem(data)
+        } else {
+
+        }
+    }
+    function unSetHoveredTabItem(itemId) {
+        if (itemId === hoveringTabItem.id) {
+            setHoveringTabItem({ id: "", position: "" })
+        }
+    }
+
+
+    function renderTree(items, parentId = "") {
+        const filteredItems = items.filter(item => item.parentId === parentId);
+        if (filteredItems.length === 0) {
+            return null;
+        }
+
+        return (
+            <>
+                <div onMouseEnter={() => debounceUNSetHoveringTabItem.cancel()} className='animate-fade-in bg-zinc-100 shadow-lg p-2 grid gap-1 rounded-lg fixed bottom-[-10px] z-[2] min-w-[200px]' style={{ top: hoveringTabItem.position.bottom + 10 + "px", left: hoveringTabItem.position.left + "px", bottom: 'auto' }} aria-haspopup aria-label='sub pages dropdown' >
+
+                    {filteredItems.map(item => (
+                        <>
+                            <Link className='flex items-center gap-1 p-1 rounded hover:bg-zinc-200' onClick={() => {
+                                const params = new URLSearchParams(window.location.search)
+                                params.set("edit", item.id)
+                                Router.push(`/page?${params.toString()}`);
+                            }}>
+                                {item.icon ? (
+                                    <div aria-label='page icon' className="w-4 h-4 flex items-center justify-center">
+                                        {item?.icon && item?.icon.includes('.png') ? (<img src={`/emoji/twitter/64/${item?.icon}`} />) : (!isNaN(parseInt(item?.icon, 16)) && String.fromCodePoint(parseInt(item?.icon, 16)))}
+                                    </div>
+                                ) : null}
+                                <span aria-label='Page title'>{item?.title || item?.id}</span>
+                            </Link>
+                        </>
+                    ))}
+                </div>
+            </>
+        );
+    }
+
+
     return (
         <>
 
@@ -196,50 +249,55 @@ export default function MenuBar({ currentPageData }) {
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-right"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><line x1="15" x2="15" y1="3" y2="21" /></svg>
                     </button>
                 </div>
-                {tabBarVisible ? (
-                    <TabBar />
-                ) : (
-                    <div className="flex items-center text-zinc-800 w-full">
-                        {!isMobile ? (
-                            <>
-                                {filteredItems.map((item, index) => (
-                                    <>
-                                        <div className="flex items-center justify-center relative cursor-pointer" key={index}>
-                                            <Link className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200" onClick={() => {
-                                                const params = new URLSearchParams(window.location.search)
-                                                params.set("edit", item.id)
-                                                Router.push(`/page?${params.toString()}`);
-                                            }}>
-                                                {item?.icon && (
-                                                    <div className="w-4 h-4 flex items-center justify-center">
-                                                        {item?.icon && item?.icon.includes('.png') ? (<img src={`/emoji/twitter/64/${item?.icon}`} />) : (!isNaN(parseInt(item?.icon, 16)) && String.fromCodePoint(parseInt(item?.icon, 16)))}
-                                                    </div>
-                                                )}
-                                                {item?.title || item?.id}
-                                            </Link>
-                                        </div>
-                                        {index < filteredItems.length - 1 && (
-                                            <div className='text-zinc-300 flex items-center justify-center mx-1'>
-                                                /
-                                            </div>
-                                        )}
-                                    </>
-                                ))}
-                            </>
-                        ) : (
-                            <>
-                                <div className="flex items-center justify-center relative cursor-pointer">
-                                    <div className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200">
-                                        <div className="w-4 h-4 flex items-center justify-center">
-                                            {activePage?.icon && activePage?.icon.includes('.png') ? (<img src={`/emoji/twitter/64/${activePage?.icon}`} />) : (!isNaN(parseInt(activePage?.icon, 16)) && String.fromCodePoint(parseInt(activePage?.icon, 16)))}
-                                        </div>
-                                        {activePage?.title || activePage?.id}
+                <div className="flex items-center text-zinc-800 w-full">
+                    {!isMobile ? (
+                        //Not mobile
+                        <>
+                            {filteredItems.map((item, index) => (
+                                <>
+                                    <div onMouseLeave={() => debounceUNSetHoveringTabItem(item.id)} onMouseEnter={(e) => {
+                                        debounceSetHoveringTabItem({ id: item.id, position: e.currentTarget.getBoundingClientRect() }, item.id)
+                                    }} className="flex items-center justify-center relative cursor-pointer relative" key={index}>
+                                        <Link className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200" onClick={() => {
+                                            const params = new URLSearchParams(window.location.search)
+                                            params.set("edit", item.id)
+                                            Router.push(`/page?${params.toString()}`);
+                                        }}>
+                                            {item?.icon && (
+                                                <div aria-label='page icon' className="w-4 h-4 flex items-center justify-center">
+                                                    {item?.icon && item?.icon.includes('.png') ? (<img src={`/emoji/twitter/64/${item?.icon}`} />) : (!isNaN(parseInt(item?.icon, 16)) && String.fromCodePoint(parseInt(item?.icon, 16)))}
+                                                </div>
+                                            )}
+                                            <span aria-label='Page title'>{item?.title || item?.id}</span>
+                                        </Link>
+
+                                        {hoveringTabItem.id && hoveringTabItem.id === item.id ? (
+                                            renderTree(listedPageItems, item.id)
+                                        ) : null}
+
                                     </div>
+                                    {index < filteredItems.length - 1 && (
+                                        <div className='text-zinc-300 flex items-center justify-center mx-1'>
+                                            /
+                                        </div>
+                                    )}
+
+                                </>
+                            ))}
+                        </>
+                    ) : (
+                        <>
+                            <div className="flex items-center justify-center relative cursor-pointer">
+                                <div className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200">
+                                    <div className="w-4 h-4 flex items-center justify-center">
+                                        {activePage?.icon && activePage?.icon.includes('.png') ? (<img src={`/emoji/twitter/64/${activePage?.icon}`} />) : (!isNaN(parseInt(activePage?.icon, 16)) && String.fromCodePoint(parseInt(activePage?.icon, 16)))}
+                                    </div>
+                                    {activePage?.title || activePage?.id}
                                 </div>
-                            </>
-                        )}
-                    </div>
-                )}
+                            </div>
+                        </>
+                    )}
+                </div>
                 <div className="flex items-center justify-end gap-0  min-w-[100px]">
                     <ToolTipCon>
                         <DropDownContainer>
@@ -416,96 +474,3 @@ export default function MenuBar({ currentPageData }) {
     );
 }
 
-
-function TabBar() {
-    const { currentPage, listedPageItems } = useEditorContext();
-    const [recentPages, setRecentPages] = useState([]);
-
-    useEffect(() => {
-        function useRegex(input) {
-            let regex = /^(?=.*[a-zA-Z])(?=.*\d).+$/;
-            return regex.test(input);
-        }
-
-        if (useRegex(currentPage)) {
-            setRecentPages((prevItems) =>
-                prevItems.includes(currentPage)
-                    ? prevItems
-                    : [...prevItems, currentPage]
-            );
-        }
-    }, [currentPage]);
-
-    const handleDragStart = (e, item) => {
-        e.dataTransfer.setData('text/plain', item);
-    };
-
-    const handleDragOver = (e) => {
-        e.preventDefault();
-    };
-
-    const handleDragLeave = (e) => {
-        e.preventDefault()
-    }
-
-    const handleDrop = (e) => {
-        e.preventDefault();
-        const draggedItem = e.dataTransfer.getData('text/plain');
-        const dropIndex = [...e.target.parentNode.children].indexOf(e.target);
-
-        // Create a new array without the dragged item
-        const updatedPages = recentPages.filter((item) => item !== draggedItem);
-
-        // Insert the dragged item at the drop position
-        updatedPages.splice(dropIndex, 0, draggedItem);
-
-        setRecentPages(updatedPages);
-    };
-
-    return (
-        <div className='flex items-center gap-0 h-full overflow-y-hidden w-full overflow-x-scroll gap-1 pt-1'>
-            {recentPages.map((item, index) => (
-                <div
-                    key={item}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        const params = new URLSearchParams(window.location.search)
-                        params.set("edit", item)
-                        Router.push(`/page?${params.toString()}`);
-                    }}
-                    onDragStart={(e) => handleDragStart(e, item)}
-                    onDragOver={handleDragOver}
-                    onDragLeave={handleDragLeave}
-                    onDrop={handleDrop}
-                    draggable
-                    className={`rounded-tl-lg border-l border-r border-t border-b-0  rounded-tr-lg text-sm text-zinc-600 h-full px-3 flex items-center hover:bg-zinc-200 cursor-pointer ${currentPage === item
-                        ? ' border-zinc-300  border-2 shadow-xl'
-                        : 'border-zinc-50'
-                        }`}
-                >
-                    {listedPageItems.find((aitem) => aitem.id === item)?.icon && (
-                        <img
-                            className='w-4 h-4 mr-2'
-                            src={`/emoji/twitter/64/${listedPageItems.find((aitem) => aitem.id === item)?.icon}`}
-                        />
-                    )}
-                    <span className='text-nowrap'>
-                        {listedPageItems.find((aitem) => aitem.id === item)?.title || item}
-                    </span>
-                    <div>
-                        <X
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                setRecentPages((prevItems) =>
-                                    prevItems.filter((aitem) => aitem !== item)
-                                );
-                            }}
-                            className='w-4 h-4 ml-2 text-zinc-400'
-                        />
-                        <span className='sr-only'>Close tab</span>
-                    </div>
-                </div>
-            ))}
-        </div>
-    );
-}
