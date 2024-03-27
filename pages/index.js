@@ -42,7 +42,7 @@ export default function HomePage() {
                         <p className="ml-2 "><span className="font-light">Note</span></p>
                     </div>
                     <div className="w-full flex items-center justify-evenly">
-                        <Link href={"/page?edit=previewwelcome0"}>Demo</Link>
+                        <Link href={"/page?edit=rzz50e2mnhgwof2&demo=1"}>Demo</Link>
                         <Link href="/auth/signup" className={"font-semibold"}>Get started</Link>
                         <Link href={"https://github.com/jfmow/noti"}>Self-host</Link>
                         <Link href={"/auth/login"}>Login</Link>

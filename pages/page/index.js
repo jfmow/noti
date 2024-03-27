@@ -92,10 +92,6 @@ function NotionEditor() {
                     GetLatestPage()
                     return
                 }
-                if (page === "previewwelcome0") {
-                    setPageId("previewwelcome0")
-                    return
-                }
                 setPageId(page)
             }
         }
@@ -116,7 +112,7 @@ function NotionEditor() {
     }
 
     return (
-        <EditorContext.Provider value={{ showArchivedPages, setShowArchivedPages, listedPageItems, pb, setListedPageItems, visible, setVisible, currentPage: pageId, pageId, themes, listedPageItemsFilter, setListedPageItemsFilters, noSaving: pageId[0] === 'previewwelcome0', setPrimaryVisiblePageData, primaryVisiblePageData }}>
+        <EditorContext.Provider value={{ showArchivedPages, setShowArchivedPages, listedPageItems, pb, setListedPageItems, visible, setVisible, currentPage: pageId, pageId, themes, listedPageItemsFilter, setListedPageItemsFilters, setPrimaryVisiblePageData, primaryVisiblePageData }}>
             <div>
                 <div className='flex flex-col sm:flex-row'>
                     <MyComponent />

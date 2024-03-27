@@ -87,6 +87,7 @@ export default function EditorV3({ currentPage, peek }) {
                     }
                 }
             }
+
             RetriveOpenPageData(currentPage)
         }
     }, [currentPage])
@@ -278,6 +279,10 @@ export default function EditorV3({ currentPage, peek }) {
                     placeholder: "Enter some text...",
                     autofocus: openPageData?.content && openPageData?.content?.blocks?.length >= 1 && (openPageData?.content?.blocks[0]?.type === 'image' || openPageData?.content?.blocks[0]?.type === 'Video' || openPageData?.content?.blocks[0]?.type === 'simpleEmbeds' || openPageData?.content?.blocks[0]?.type === 'SimpleIframeWebpage') ? false : true,
                     onChange: (api, event) => {
+                        const urlParams = new URLSearchParams(window.location.search)
+                        if (urlParams.has("demo") && +urlParams.get("demo") === 1) {
+                            return
+                        }
                         setSavingState("Unsaved")
                         debounceSave(api.saver)
                     }
