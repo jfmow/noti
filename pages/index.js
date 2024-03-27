@@ -2,8 +2,26 @@
 import Link from "@/components/Link";
 import { Activity, Gauge, Github, LockIcon } from "lucide-react";
 import Head from "next/head";
+import { useEffect } from "react";
+import PocketBase from 'pocketbase'
+import Router from "next/router";
+const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
+pb.autoCancellation(false);
 
 export default function HomePage() {
+    useEffect(() => {
+        async function authRefresh() {
+            try {
+                const authData = await pb.collection('users').authRefresh();
+                if (pb.authStore.isValid) {
+                    Router.push("/page")
+                }
+            } catch {
+
+            }
+        }
+        authRefresh()
+    }, [])
     return (
         <>
             <Head>

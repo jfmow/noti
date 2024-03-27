@@ -38,7 +38,7 @@ export default function EditorV3({ currentPage, peek }) {
     const [saving, setSavingState] = useState("")
 
 
-    useEffect(async () => {
+    useEffect(() => {
         //Check that there is a current page
         async function authUpdate() {
             try {
@@ -87,8 +87,7 @@ export default function EditorV3({ currentPage, peek }) {
                     }
                 }
             }
-            await RetriveOpenPageData(currentPage)
-            authUpdate()
+            RetriveOpenPageData(currentPage)
         }
     }, [currentPage])
 
