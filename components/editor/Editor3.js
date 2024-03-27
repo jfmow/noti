@@ -38,8 +38,21 @@ export default function EditorV3({ currentPage, peek }) {
     const [saving, setSavingState] = useState("")
 
 
-    useEffect(() => {
+    useEffect(async () => {
         //Check that there is a current page
+        async function authUpdate() {
+            try {
+                const authData = await pb.collection('users').authRefresh();
+                if (!pb.authStore.isValid) {
+                    pb.authStore.clear();
+                    return window.location.replace("/auth/login");
+                }
+            } catch (error) {
+                pb.authStore.clear();
+                return window.location.replace('/auth/login');
+            }
+        }
+
         if (currentPage) {
             async function RetriveOpenPageData(page) {
                 /**
@@ -56,6 +69,7 @@ export default function EditorV3({ currentPage, peek }) {
                         setPrimaryVisiblePageData(record)
                     }
                 } catch {
+                    await authUpdate()
                     try {
                         const altRecord = await pb.collection('pages').getFullList({ sort: '-created', filter: `title ?~ '${currentPage}'` })
                         if (!altRecord || altRecord.length === 0) {
@@ -73,7 +87,8 @@ export default function EditorV3({ currentPage, peek }) {
                     }
                 }
             }
-            RetriveOpenPageData(currentPage)
+            await RetriveOpenPageData(currentPage)
+            authUpdate()
         }
     }, [currentPage])
 
@@ -342,7 +357,7 @@ export default function EditorV3({ currentPage, peek }) {
         <editorV3Context.Provider value={{ openPageData, setOpenPageData, updateOpenPageData }}>
             <Head>
                 <title>{saving !== "" ? (saving + " | ") : ""} {openPageData.title}</title>
-                {openPageData.icon !== "" ? (
+                {openPageData.icon !== "" && openPageData.icon !== undefined && openPageData?.icon.endsWith(".png") ? (
                     <link rel='icon' type='image/png' href={`/emoji/twitter/64/${openPageData.icon}`} />
                 ) : null}
             </Head>

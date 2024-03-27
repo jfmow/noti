@@ -24,19 +24,7 @@ function NotionEditor() {
     const [primaryVisiblePageData, setPrimaryVisiblePageData] = useState([])
 
     useEffect(() => {
-        async function authUpdate() {
-            try {
-                const authData = await pb.collection('users').authRefresh();
-                if (!pb.authStore.isValid) {
-                    pb.authStore.clear();
-                    return window.location.replace("/auth/login");
-                }
-            } catch (error) {
-                pb.authStore.clear();
-                return window.location.replace('/auth/login');
-            }
-        }
-        authUpdate()
+
         let vars = {}
         async function GetThemes() {
             const storedThemes = JSON.parse(window.localStorage.getItem("themes"))
