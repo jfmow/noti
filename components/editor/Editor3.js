@@ -85,9 +85,6 @@ export default function EditorV3({ currentPage, peek }) {
             const content = await editor.save()
             const res = await pb.collection('pages').update(currentPage, { "content": content })
             setSavingState("Saved")
-            if (primaryVisiblePageData.id === currentPage) {
-                setPrimaryVisiblePageData({ ...primaryVisiblePageData, content: content })
-            }
         } catch (err) {
             setSavingState("Unable to save file...")
             toaster.error(err?.message || err)
