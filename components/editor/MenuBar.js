@@ -6,7 +6,7 @@ import { useEditorContext } from '@/pages/page';
 import { DropDown, DropDownContainer, DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from '@/lib/Pop-Cards/DropDown';
 import { updateListedPages } from '../Item';
 import { Link } from '../UX-Components';
-import { AppWindow, PanelRightDashed, PanelTopDashed, Settings2, X } from 'lucide-react';
+import { AppWindow, Archive, ArchiveRestore, Baseline, CaseLower, Check, Copy, Eye, EyeOff, Info, Link2, PanelRightDashed, PanelTopDashed, Settings2, Share, Space, TextCursor, Trash2Icon, WholeWord, X } from 'lucide-react';
 import { debounce } from 'lodash';
 export default function MenuBar({ currentPageData }) {
     const { pb, currentPage, setVisible, visible, setListedPageItems, listedPageItems } = useEditorContext()
@@ -15,6 +15,7 @@ export default function MenuBar({ currentPageData }) {
     const [pageInfo, setPageInfo] = useState({})
     const [isMobile, setIsMobile] = useState(false)
     const [hoveringTabItem, setHoveringTabItem] = useState({ id: '', position: null })
+    const [copyIcon, setCopyIcon] = useState(<Copy />)
     useEffect(() => {
         if (window.innerWidth < 450) {
             setIsMobile(true)
@@ -39,83 +40,108 @@ export default function MenuBar({ currentPageData }) {
     }, [listedPageItems, currentPage]);
 
     useEffect(() => {
+
+        function CountWords(content) {
+            let totalWords = 0;
+            if (!content || content === undefined) return 0
+            const data = JSON.parse(JSON.stringify(content).replace(/<[^>]*>/g, ''));
+
+            data.blocks.forEach(block => {
+                if (block.data && block.data.text) {
+                    const text = block.data.text;
+                    const words = text.match(/\b\w+(?:['-]\w+)?\b/g); // Split by word boundaries
+                    words.forEach(word => {
+                        //console.log(`Word at position ${totalWords}: ${word}`);
+                        totalWords++;
+                    });
+                }
+
+                if (block.data && block.data.items) {
+                    const printNestedListWords = (items) => {
+                        items.forEach(item => {
+                            if (item.content) {
+                                const nestedWords = item.content.match(/\b\w+(?:['-]\w+)?\b/g);
+                                nestedWords.forEach(word => {
+                                    //console.log(`Word at position ${totalWords}: ${word}`);
+                                    totalWords++;
+                                });
+                            }
+                            if (item.items) {
+                                printNestedListWords(item.items);
+                            }
+                        });
+                    };
+                    printNestedListWords(block.data.items);
+                }
+
+                if (block.data && block.data.content) {
+                    const tableContent = block.data.content.flat().filter(cell => typeof cell === 'string');
+                    const words = tableContent.join(' ').match(/\b\w+(?:['-]\w+)?\b/g);
+                    words.forEach(word => {
+                        //console.log(`Word at position ${totalWords}: ${word}`);
+                        totalWords++;
+                    });
+                }
+            });
+
+            return totalWords
+
+        }
+        function CountCharacters(content, includeSpaces = true) {
+            let totalCharacters = 0;
+            if (!content || content === undefined) return 0
+            const data = JSON.parse(JSON.stringify(content).replace(/<[^>]*>/g, ''));
+
+
+            data.blocks.forEach(block => {
+                if (block.data && block.data.text) {
+                    const text = block.data.text;
+                    totalCharacters += includeSpaces ? text.length : text.replace(/\s/g, '').length;
+                }
+
+                if (block.data && block.data.items) {
+                    const countNestedListCharacters = (items) => {
+                        let nestedListCharacters = 0;
+                        items.forEach(item => {
+                            if (item.content) {
+                                nestedListCharacters += includeSpaces ? item.content.length : item.content.replace(/\s/g, '').length;
+                            }
+                            if (item.items) {
+                                nestedListCharacters += countNestedListCharacters(item.items);
+                            }
+                        });
+                        return nestedListCharacters;
+                    };
+                    totalCharacters += countNestedListCharacters(block.data.items);
+                }
+
+                if (block.data && block.data.content) {
+                    const tableContent = block.data.content.flat().filter(cell => typeof cell === 'string');
+                    const text = tableContent.join(' ');
+                    totalCharacters += includeSpaces ? text.length : text.replace(/\s/g, '').length;
+                }
+            });
+
+            return totalCharacters;
+        }
+
+
         async function getPageData() {
             try {
                 const record = currentPageData
-                function calculateWordCount(input) {
-                    function removeHtmlTags(text) {
-                        return text.replace(/<[^>]*>/g, '');
-                    }
-
-                    function extractWords(text) {
-                        return text.match(/\b\w+\b/g) || [];
-                    }
-
-                    function processNestedList(items) {
-                        let words = [];
-                        items.forEach(item => {
-                            if (item.content) {
-                                words = words.concat(extractWords(removeHtmlTags(item.content)));
-                            }
-                            if (item.items && item.items.length > 0) {
-                                words = words.concat(processNestedList(item.items));
-                            }
-                        });
-                        return words;
-                    }
-
-                    let words = [];
-
-                    if (input && input.blocks && Array.isArray(input.blocks)) {
-                        input.blocks.forEach(block => {
-                            switch (block.type) {
-                                case "header":
-                                    if (block.data && block.data.text) {
-                                        words = words.concat(extractWords(removeHtmlTags(block.data.text)));
-                                    }
-                                    break;
-                                case "paragraph":
-                                    if (block.data && block.data.text) {
-                                        words = words.concat(extractWords(removeHtmlTags(block.data.text)));
-                                    }
-                                    break;
-                                case "quote":
-                                    if (block.data && block.data.text) {
-                                        words = words.concat(extractWords(removeHtmlTags(block.data.text)));
-                                    }
-                                    break;
-                                case "nestedList":
-                                case "orderedList":
-                                    if (block.data && block.data.items && Array.isArray(block.data.items)) {
-                                        words = words.concat(processNestedList(block.data.items));
-                                    }
-                                    break;
-                                case "table":
-                                    if (block.data && block.data.content && Array.isArray(block.data.content)) {
-                                        block.data.content.forEach(row => {
-                                            row.forEach(cell => {
-                                                words = words.concat(extractWords(removeHtmlTags(cell)));
-                                            });
-                                        });
-                                    }
-                                    break;
-                                default:
-                                    break;
-                            }
-                        });
-                    }
-
-                    return words;
-                }
                 const input = record.content
-                const words = calculateWordCount(input);
+                const totalWords = CountWords(input)
+                const totalChartersWithSpaces = CountCharacters(input, true)
+                const totalChartersWithoutSpaces = CountCharacters(input, false)
                 //console.log(words, words.length)
-                setPageInfo({ ...record, wordCount: words.length })
+                setPageInfo({ ...record, wordCount: totalWords, chartersWithSpaces: totalChartersWithSpaces, chartersWithoutSpaces: totalChartersWithoutSpaces })
             } catch {
                 return
             }
         }
         getPageData()
+
+
 
     }, [listedPageItems, currentPage, currentPageData])
 
@@ -234,6 +260,14 @@ export default function MenuBar({ currentPageData }) {
         );
     }
 
+    async function copyPageShareUrl(e) {
+        await handleCopyTextToClipboard(`${process.env.NEXT_PUBLIC_CURRENTURL}/page/view/${currentPage}`, e)
+        setCopyIcon(<Check />)
+        setTimeout(() => {
+            setCopyIcon(<Copy />)
+        }, 1000);
+    }
+
 
     return (
         <>
@@ -304,16 +338,16 @@ export default function MenuBar({ currentPageData }) {
                             <ToolTipTrigger>
                                 <DropDownTrigger>
                                     <button className="flex items-center justify-center bg-none border-none text-zinc-800 cursor-pointer p-1 rounded relative w-[30px] h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-more-horizontal"><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg>
+                                        <Settings2 />
                                     </button>
                                 </DropDownTrigger>
                             </ToolTipTrigger>
                             <ToolTip>
-                                Page options
+                                Page settings
                             </ToolTip>
                             <DropDown >
                                 <DropDownSectionTitle>
-                                    Page options
+                                    Settings
                                 </DropDownSectionTitle>
                                 <DropDownSection>
                                     <DropDownItem onClick={() => Router.push(`/page?p=${currentPage}&pm=s`)}>
@@ -323,8 +357,8 @@ export default function MenuBar({ currentPageData }) {
                                     <DropDownExtensionContainer>
                                         <DropDownExtensionTrigger hover>
                                             <DropDownItem >
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg>
-                                                <p>Info</p>
+                                                <Info />
+                                                Info
                                             </DropDownItem>
                                         </DropDownExtensionTrigger>
                                         <DropDownExtension>
@@ -333,12 +367,8 @@ export default function MenuBar({ currentPageData }) {
                                             </DropDownSectionTitle>
                                             <DropDownSection>
                                                 <DropDownItem>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-case-upper"><path d="m3 15 4-8 4 8" /><path d="M4 13h6" /><path d="M15 11h4.5a2 2 0 0 1 0 4H15V7h4a2 2 0 0 1 0 4" /></svg>
+                                                    <Baseline />
                                                     <p>Title: {pageInfo.title}</p>
-                                                </DropDownItem>
-                                                <DropDownItem>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-z-a"><path d="m3 8 4-4 4 4" /><path d="M7 4v16" /><path d="M15 4h5l-5 6h5" /><path d="M15 20v-3.5a2.5 2.5 0 0 1 5 0V20" /><path d="M20 18h-5" /></svg>
-                                                    <p>Word Count: {pageInfo.wordCount}</p>
                                                 </DropDownItem>
                                                 <DropDownItem>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-clock"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5" /><path d="M16 2v4" /><path d="M8 2v4" /><path d="M3 10h5" /><path d="M17.5 17.5 16 16.25V14" /><path d="M22 16a6 6 0 1 1-12 0 6 6 0 0 1 12 0Z" /></svg>
@@ -358,13 +388,27 @@ export default function MenuBar({ currentPageData }) {
                                                     </p>
                                                 </DropDownItem>
                                             </DropDownSection>
+                                            <DropDownSection>
+                                                <DropDownItem>
+                                                    <WholeWord />
+                                                    <p>Word Count: {pageInfo.wordCount}</p>
+                                                </DropDownItem>
+                                                <DropDownItem>
+                                                    <CaseLower />
+                                                    Total charters: {pageInfo.chartersWithSpaces}
+                                                </DropDownItem>
+                                                <DropDownItem>
+                                                    <Space />
+                                                    Without spaces: {pageInfo.chartersWithoutSpaces}
+                                                </DropDownItem>
+                                            </DropDownSection>
                                         </DropDownExtension>
                                     </DropDownExtensionContainer>
                                     <DropDownExtensionContainer>
                                         <DropDownExtensionTrigger hover>
                                             <DropDownItem>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" /><polyline points="16 6 12 2 8 6" /><line x1="12" x2="12" y1="2" y2="15" /></svg>
-                                                <p>Share</p>
+                                                <Share />
+                                                Share
                                             </DropDownItem>
                                         </DropDownExtensionTrigger>
                                         <DropDownExtension>
@@ -373,38 +417,25 @@ export default function MenuBar({ currentPageData }) {
                                             </DropDownSectionTitle>
                                             <DropDownSection>
                                                 <DropDownItem>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" /><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" /></svg>
+                                                    <Link2 />
                                                     <p style={{ width: '100%', overflow: 'hidden' }}>Link: <span style={{ width: '100%', display: 'inline-block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{process.env.NEXT_PUBLIC_CURRENTURL}/page/view/{currentPage}</span></p>
                                                 </DropDownItem>
                                                 {filteredItems.find((Apage) => Apage?.id === currentPage)?.shared ? (
                                                     <>
-                                                        <DropDownItem onClick={(e) => {
-                                                            async function CopyStuff() {
-                                                                await handleCopyTextToClipboard(`${process.env.NEXT_PUBLIC_CURRENTURL}/page/view/${currentPage}`, e)
-                                                                const icondiv = document.getElementById('copyicon')
-                                                                const oldIcon = icondiv.innerHTML
-                                                                icondiv.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check"><polyline points="20 6 9 17 4 12"/></svg>'
-                                                                setTimeout(() => {
-                                                                    icondiv.innerHTML = oldIcon
-                                                                }, 1000);
-                                                            }
-                                                            CopyStuff()
-                                                        }}>
-                                                            <div id="copyicon" className='w-4 h-4 object-contain overflow-hidden mr-2'>
-                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></svg>
-                                                            </div>
-                                                            <p>Copy to clipboard</p>
+                                                        <DropDownItem onClick={copyPageShareUrl}>
+                                                            {copyIcon}
+                                                            Copy to clipboard
                                                         </DropDownItem>
                                                         <DropDownItem onClick={handleSharePage}>
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" /></svg>
-                                                            <p>Make page private</p>
+                                                            <Eye />
+                                                            Make page private
                                                         </DropDownItem>
                                                     </>
                                                 ) : (
                                                     <>
                                                         <DropDownItem onClick={handleSharePage}>
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-off"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" /><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" /><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" /><line x1="2" x2="22" y1="2" y2="22" /></svg>
-                                                            <p>Make page public</p>
+                                                            <EyeOff />
+                                                            Make page public
                                                         </DropDownItem>
                                                     </>
                                                 )}
@@ -418,12 +449,12 @@ export default function MenuBar({ currentPageData }) {
                                     <DropDownItem onClick={() => handleArchivePageToggle()}>
                                         {listedPageItems.find((Apage) => Apage.id === currentPage)?.archived ? (
                                             <>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive-restore"><rect width="20" height="5" x="2" y="3" rx="1" /><path d="M4 8v11a2 2 0 0 0 2 2h2" /><path d="M20 8v11a2 2 0 0 1-2 2h-2" /><path d="m9 15 3-3 3 3" /><path d="M12 12v9" /></svg>
+                                                <ArchiveRestore />
                                                 Un-archive
                                             </>
                                         ) : (
                                             <>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive"><rect width="20" height="5" x="2" y="3" rx="1" /><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8" /><path d="M10 12h4" /></svg>
+                                                <Archive />
                                                 Archive
                                             </>
                                         )}
@@ -431,8 +462,8 @@ export default function MenuBar({ currentPageData }) {
 
                                     <DropDownItem
                                         onClick={() => handleDeletePage()} >
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" /><line x1="10" x2="10" y1="11" y2="17" /><line x1="14" x2="14" y1="11" y2="17" /></svg>
-                                        <p >Delete</p>
+                                        <Trash2Icon />
+                                        Delete
 
                                     </DropDownItem>
                                 </DropDownSection>
