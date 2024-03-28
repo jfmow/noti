@@ -304,34 +304,6 @@ export default function MenuBar({ currentPageData }) {
                             <ToolTipTrigger>
                                 <DropDownTrigger>
                                     <button className="flex items-center justify-center bg-none border-none text-zinc-800 cursor-pointer p-1 rounded relative w-[30px] h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4">
-                                        <Settings2 />
-                                    </button>
-                                </DropDownTrigger>
-                            </ToolTipTrigger>
-                            <DropDown>
-                                <DropDownSectionTitle>
-                                    Toggle menus
-                                </DropDownSectionTitle>
-                                <DropDownSection>
-                                    <DropDownItem onClick={() => {
-                                        const event = new CustomEvent("TABBARTOGGLE", { detail: !tabBarVisible });
-                                        document.body.dispatchEvent(event)
-                                    }}>
-                                        <AppWindow />
-                                        Toggle tab bar
-                                    </DropDownItem>
-                                </DropDownSection>
-                            </DropDown>
-                        </DropDownContainer>
-                        <ToolTip>
-                            Settings
-                        </ToolTip>
-                    </ToolTipCon>
-                    <ToolTipCon>
-                        <DropDownContainer>
-                            <ToolTipTrigger>
-                                <DropDownTrigger>
-                                    <button className="flex items-center justify-center bg-none border-none text-zinc-800 cursor-pointer p-1 rounded relative w-[30px] h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-more-horizontal"><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg>
                                     </button>
                                 </DropDownTrigger>

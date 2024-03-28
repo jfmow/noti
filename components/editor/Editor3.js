@@ -40,18 +40,6 @@ export default function EditorV3({ currentPage, peek }) {
 
     useEffect(() => {
         //Check that there is a current page
-        async function authUpdate() {
-            try {
-                const authData = await pb.collection('users').authRefresh();
-                if (!pb.authStore.isValid) {
-                    pb.authStore.clear();
-                    return window.location.replace("/auth/login");
-                }
-            } catch (error) {
-                pb.authStore.clear();
-                return window.location.replace('/auth/login');
-            }
-        }
 
         if (currentPage) {
             async function RetriveOpenPageData(page) {
@@ -69,7 +57,6 @@ export default function EditorV3({ currentPage, peek }) {
                         setPrimaryVisiblePageData(record)
                     }
                 } catch {
-                    await authUpdate()
                     try {
                         const altRecord = await pb.collection('pages').getFullList({ sort: '-created', filter: `title ?~ '${currentPage}'` })
                         if (!altRecord || altRecord.length === 0) {
