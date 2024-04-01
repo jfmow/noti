@@ -19,16 +19,16 @@ export default function Login() {
 
     async function HandleForm(e) {
         e.preventDefault()
-        const formData = new FormData(e.target)
-        Signup(formData)
+
+        Signup(e.target)
     }
 
-    async function Signup(formData) {
+    async function Signup(form) {
+        const formData = new FormData(form)
         try {
             setLoading(true)
-            const req = await pb.send("/api/collections/users/auth-with-sso/signup", { method: "POST", body: formData })
-            window.localStorage.setItem("pocketbase_auth", JSON.stringify(req))
-            Router.push("/page")
+            const req = await pb.send("/api/collections/users/auth-with-sso/startsignup", { method: "POST", body: formData })
+            Router.push(`/auth/signup/confirm?email=${formData.get("email")}`)
         } catch (err) {
             toaster.error(err.message)
         } finally {
@@ -45,8 +45,7 @@ export default function Login() {
                     <Link href="/auth/login/oauth2" className="text-xs text-gray-600 underline text-right w-full">Use OAuth2</Link>
                 </div>
                 <LoginInput placeholder="Email | hi@example.com" type="email" name="email" required />
-                <LoginInput minlength={3} placeholder="Username | mom" name="username" required type="text" />
-                <LoginButton loading={loading}>Signup</LoginButton>
+                <LoginButton loading={loading}>Continue</LoginButton>
             </form>
             <div className="w-full mt-4 bg-gray-100 text-gray-400 text-xs p-3 rounded-lg">
                 As of 20/02/2024, password based accounts are no longer supported.

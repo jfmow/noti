@@ -37,7 +37,7 @@ export default function Login() {
     async function LoginWithCode(formData) {
         try {
             setLoading(true)
-            const req = await pb.send("/api/collections/users/auth-with-sso/login", { method: "POST", body: formData })
+            const req = await pb.send("/api/collections/users/auth-with-sso/finishlogin", { method: "POST", body: formData })
             window.localStorage.setItem("pocketbase_auth", JSON.stringify(req))
             Router.push("/page")
         } catch (err) {
@@ -51,8 +51,8 @@ export default function Login() {
         const formData = new FormData(e.target)
         try {
             setLoading(true)
-            await pb.send("/api/collections/users/auth-with-sso/code", { method: "POST", body: formData })
-            toaster.info("A code has been emailed to the email below")
+            await pb.send("/api/collections/users/auth-with-sso/startlogin", { method: "POST", body: formData })
+            toaster.info(`A code has been emailed to ${formData.get("email")}`)
             setCodeRequested(true)
         } catch (err) {
             toaster.error(err.message)
