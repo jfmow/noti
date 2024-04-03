@@ -290,7 +290,7 @@ export default function MenuBar({ currentPageData }) {
                                     <div onMouseLeave={() => debounceUNSetHoveringTabItem(item.id)} onMouseEnter={(e) => {
                                         debounceSetHoveringTabItem({ id: item.id, position: e.currentTarget.getBoundingClientRect() }, item.id)
                                     }} className="flex items-center justify-center relative cursor-pointer relative" key={index}>
-                                        <Link className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200" onClick={() => {
+                                        <Link className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-[#ffffff70] hover:backdrop-blur-md" onClick={() => {
                                             const params = new URLSearchParams(window.location.search)
                                             params.set("edit", item.id)
                                             Router.push(`/page?${params.toString()}`);
