@@ -196,7 +196,7 @@ export default function MenuBar({ currentPageData }) {
             setListedPageItems(prevItems => {
                 return prevItems.filter((aitem) => aitem.id !== currentPage)
             })
-            Router.push(`/page`)
+            window.location.replace(`/page`)
         } catch (err) {
             console.log(err)
             toaster.error('An error occured while trying to delete the page')
