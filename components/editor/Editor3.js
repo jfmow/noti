@@ -32,7 +32,7 @@ export default function EditorV3({ currentPage, peek }) {
     const Editor = useRef(null)
     const SaveRef = useRef(null)
 
-    const [openPageData, setOpenPageData] = useState([])
+    const [openPageData, setOpenPageData] = useState({})
     const [multiRecordSearch, setMultiRecordSearch] = useState({ state: false, records: [] })
     const [loading, setLoading] = useState(false)
     const [saving, setSavingState] = useState("")

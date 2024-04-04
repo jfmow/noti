@@ -21,7 +21,7 @@ function NotionEditor() {
     const [showArchivedPages, setShowArchivedPages] = useState(false)
     const [pageId, setPageId] = useState("")
     const [themes, setThemes] = useState([])
-    const [primaryVisiblePageData, setPrimaryVisiblePageData] = useState([])
+    const [primaryVisiblePageData, setPrimaryVisiblePageData] = useState({})
 
     useEffect(() => {
 
