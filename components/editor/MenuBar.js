@@ -271,7 +271,9 @@ export default function MenuBar({ currentPageData }) {
 
     return (
         <>
-            <div className="w-full h-[45px] min-h-[45px] max-h-[45px] pl-2 pr-2 flex justify-between items-center bg-[#ffffff70] backdrop-blur-md absolute z-[2] overflow-y-hidden">
+
+
+            <div className="w-full h-[45px] min-h-[45px] max-h-[45px] pl-2 pr-2 flex justify-between items-center bg-zinc-50 overflow-y-hidden">
                 <div className='flex items-center h-full'>
                     <button onClick={() => {
                         const queryParams = new URLSearchParams(window.location.search)
@@ -290,7 +292,7 @@ export default function MenuBar({ currentPageData }) {
                                     <div onMouseLeave={() => debounceUNSetHoveringTabItem(item.id)} onMouseEnter={(e) => {
                                         debounceSetHoveringTabItem({ id: item.id, position: e.currentTarget.getBoundingClientRect() }, item.id)
                                     }} className="flex items-center justify-center relative cursor-pointer relative" key={index}>
-                                        <Link className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-[#ffffff70] hover:backdrop-blur-md" onClick={() => {
+                                        <Link className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200" onClick={() => {
                                             const params = new URLSearchParams(window.location.search)
                                             params.set("edit", item.id)
                                             Router.push(`/page?${params.toString()}`);
