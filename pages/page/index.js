@@ -41,7 +41,7 @@ function NotionEditor() {
         let vars = {}
         async function GetThemes() {
             const storedThemes = JSON.parse(window.localStorage.getItem("themes"))
-            if (!storedThemes || storedThemes === "" || (Date.now() - storedThemes.updated) < (1000 * 60 * 60 * 24)) {
+            if (!storedThemes || storedThemes === "" || (Date.now() - storedThemes.updated) > (1000 * 60 * 60 * 24)) {
                 const themeFetch = await fetch(`${process.env.NEXT_PUBLIC_CURRENTURL}/themes.json`)
                 const themes = await themeFetch.json()
                 setThemes(themes)
