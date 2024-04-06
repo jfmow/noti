@@ -1,4 +1,4 @@
-import LoginPage, { LoginButton, LoginInput } from "@/components/Auth/login";
+import LoginPage, { LoginButton, LoginInput, LoginMessage, LoginShortcutLink } from "@/components/Auth/login";
 import { Link } from "@/components/UX-Components";
 import { toaster } from "@/components/toast";
 import Router from "next/router";
@@ -50,17 +50,17 @@ export default function Login() {
             </div>
             <form onSubmit={HandleForm}>
                 <div className="w-full grid grid-cols-2">
-                    <span className="text-xs text-gray-500 text-left w-full">Email-Auth (SSO)</span>
-                    <Link href="/auth/login/oauth2" className="text-xs text-gray-600 underline text-right w-full">Use OAuth2</Link>
+                    <LoginShortcutLink >Email-Auth (SSO)</LoginShortcutLink>
+                    <LoginShortcutLink href="/auth/login/oauth2" >Use OAuth2</LoginShortcutLink>
                 </div>
                 <LoginInput minlength={20} placeholder="Token" name="token" required type="text" defaultValue={queryData?.token} />
                 <LoginInput placeholder="Email | hi@example.com" type="email" name="email" required defaultValue={queryData?.email} disabled />
                 <LoginInput placeholder="Email | hi@example.com" type="email" name="email" required defaultValue={queryData?.email} hidden />
                 <LoginInput minlength={3} placeholder="Username | mom" name="username" required type="text" defaultValue={queryData?.username} />
                 <LoginButton loading={loading}>Signup</LoginButton>
-                <div className="w-full mt-4 bg-gray-100 text-gray-400 text-xs p-3 rounded-lg">
+                <LoginMessage>
                     By completing the signup process, you are acknowledging your agreement to comply with the terms and conditions, as well as the privacy policy, of this website. You can find links to these documents provided above for your convenience.
-                </div>
+                </LoginMessage>
             </form>
 
         </LoginPage>

@@ -1,4 +1,4 @@
-import LoginPage, { LoginButton, LoginInput } from "@/components/Auth/login";
+import LoginPage, { LoginButton, LoginInput, LoginMessage, LoginShortcutLink } from "@/components/Auth/login";
 import { Link } from "@/components/UX-Components";
 import { toaster } from "@/components/toast";
 import Router from "next/router";
@@ -66,8 +66,8 @@ export default function Login() {
         <LoginPage method={"Login"}>
             <form onSubmit={HandleForm}>
                 <div className="w-full grid grid-cols-2">
-                    <span className="text-xs text-gray-500 text-left w-full">Email-Auth (SSO)</span>
-                    <Link href="/auth/login/oauth2" className="text-xs text-gray-600 underline text-right w-full">Use OAuth2</Link>
+                    <LoginShortcutLink>Email-Auth (SSO)</LoginShortcutLink>
+                    <LoginShortcutLink href={"/auth/login/oauth2"}>Use OAuth2</LoginShortcutLink>
                 </div>
                 <LoginInput readonly={codeRequested} placeholder="Email | hi@example.com" type="email" name="email" required />
                 {codeRequested ? (
@@ -78,9 +78,9 @@ export default function Login() {
                 ) : null}
                 <LoginButton loading={loading}>Login</LoginButton>
             </form>
-            <div className="w-full mt-4 bg-gray-100 text-gray-400 text-xs p-3 rounded-lg">
+            <LoginMessage>
                 As of 20/02/2024, password based accounts are no longer supported.
-            </div>
+            </LoginMessage>
         </LoginPage>
     )
 }

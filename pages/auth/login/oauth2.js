@@ -1,4 +1,4 @@
-import LoginPage, { LoginButton, LoginInput } from "@/components/Auth/login";
+import LoginPage, { LoginButton, LoginInput, LoginShortcutLink } from "@/components/Auth/login";
 import { Link } from "@/components/UX-Components";
 import { toaster } from "@/components/toast";
 import Router from "next/router";
@@ -41,8 +41,8 @@ export default function Login() {
         <LoginPage method={"Login"}>
             <div>
                 <div className="w-full grid grid-cols-2 mb-2">
-                    <span className="text-xs text-gray-500 text-left w-full">OAuth2 auth</span>
-                    <Link href="/auth/login" className="text-xs text-gray-600 underline text-right w-full">Use Email-Auth (SSO)</Link>
+                    <LoginShortcutLink>OAuth2</LoginShortcutLink>
+                    <LoginShortcutLink href="/auth/login">Use Email-Auth (SSO)</LoginShortcutLink>
                 </div>
                 {oAuthProviders.map((item) => (
                     <>
