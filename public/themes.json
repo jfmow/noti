@@ -63,21 +63,21 @@
     {
         "id": "purple",
         "display_name": "Purple",
-        "color": "#5839b4",
+        "color": "#fdf8ff",
         "data": {
-            "--background": "#1f0f47",
-            "--editor_text": "#b8aadc",
-            "--pageListItemHover": "#2d195f",
-            "--pageListItemOpen": "linear-gradient(69deg, #170c32, #371f72, #30155c)",
-            "--pageListItemTextIconBackgroundHover": "#29155c",
+            "--background": "#fdf8ff",
+            "--editor_text": "#291b2e",
+            "--pageListItemHover": "#d8d8d8",
+            "--pageListItemOpen": "#00000029",
+            "--pageListItemTextIconBackgroundHover": "#c4c4c4",
             "--pageListItemHover_drag": "#ff7777",
             "--createNewPageBtnText": "#929292",
-            "--pageListItemTextIcon": "#bec3d9",
-            "--modalTextColor": "#beccd6",
-            "--popupBackground": "#261149",
-            "--popupButtonBg": "#30155c",
-            "--userinfoSectionBordertop": "#26174a",
-            "--userOptionText": "#c3acff"
+            "--pageListItemTextIcon": "#00000099",
+            "--modalTextColor": "#000",
+            "--popupBackground": "#ffffff",
+            "--popupButtonBg": "#eaeaea",
+            "--userinfoSectionBordertop": "#ccc5cf",
+            "--userOptionText": "#464646"
         }
     },
     {
