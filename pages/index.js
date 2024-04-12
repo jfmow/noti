@@ -61,7 +61,7 @@ export default function HomePage() {
                     <div className='p-4 lg:max-w-[1300px] md:max-w-[800px] sm:max-w-[90%] w-full flex items-center justify-between'>
                         <div className='flex items-center gap-3'>
                             <div className='w-6 h-6' aria-label='Brand logo'>
-                                <img src='logo-small.webp' />
+                                <img alt="Logo" src='logo-small.webp' />
                             </div>
                             <div>
                                 <ul aria-label='Navigation items list ' className='flex items-center gap-3 [&>li]:cursor-pointer [&>li]:text-zinc-800 [&>li]:hover:text-zinc-300'>
