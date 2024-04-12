@@ -46,6 +46,7 @@ module.exports = {
       },
       fontFamily: {
         'inter': ['Inter'],
+        sans: ['Inter', 'sans-serif'],
       }
     },
   },
