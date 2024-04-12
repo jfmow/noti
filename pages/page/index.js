@@ -37,7 +37,10 @@ function NotionEditor() {
                 return window.location.replace('/auth/login');
             }
         }
-        authUpdate()
+        const urlParams = new URLSearchParams(window.location.search)
+        if (!urlParams.has("demo") || +urlParams.get("demo") !== 1) {
+            authUpdate()
+        }
         let vars = {}
         async function GetThemes() {
             const storedThemes = JSON.parse(window.localStorage.getItem("themes"))

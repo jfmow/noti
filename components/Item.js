@@ -29,7 +29,6 @@ export default function PageList() {
   }, [showArchivedPages])
 
   useEffect(() => {
-    console.log(visible)
     const containerWidthMax = window.innerWidth <= 600 ? '100%' : '300px'
     if (!visible) {
       shrinkcontainerRef.current.style.width = 0
