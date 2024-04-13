@@ -258,7 +258,7 @@ async function createNewItem(parentId = "", setListedPageItems) {
 async function getPages(showArchivedPages = false) {
     try {
         const records = await pb.collection("pages_Bare").getFullList({
-            sort: '-created', skipTotal: true, filter: showArchivedPages ? `archived = true && archived = false` : `archived = false`
+            sort: '-created', skipTotal: true, filter: showArchivedPages ? `` : `archived = false`
         });
         return records
     } catch {
