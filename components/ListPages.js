@@ -18,12 +18,12 @@ export default function UsersPages() {
             if (window.innerWidth < 600) {
                 setDefaultWidth("full")
             }
-            const pages = await getPages()
+            const pages = await getPages(showArchivedPages)
             setListedPageItems(pages)
             setLoading(false)
         }
         run()
-    }, [])
+    }, [showArchivedPages])
 
     return (
         <>
