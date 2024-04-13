@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { Plus, ChevronDown, ChevronRight } from 'lucide-react'
 import Router from 'next/router';
 import UserOptions from './UserInfo';
+import Loader from './Loader';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 
 export default function UsersPages() {
@@ -14,29 +15,31 @@ export default function UsersPages() {
 
     useEffect(() => {
         async function run() {
-            const pages = await getPages()
-            setListedPageItems(pages)
-            setLoading(false)
             if (window.innerWidth < 600) {
                 setDefaultWidth("full")
             }
+            const pages = await getPages()
+            setListedPageItems(pages)
+            setLoading(false)
         }
         run()
     }, [])
 
-    if (loading) {
-        return "Loading"
-    }
-
     return (
         <>
             <div style={defaultWidth === "full" ? { width: "100vw", position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 2, height: "100svh", display: visible ? "flex" : "none" } : { width: defaultWidth + "px", height: "100dvh", display: visible ? "flex" : "none" }} className={`bg-[var(--background)] relative flex-col overflow-hidden`}>
-                <div className='h-full w-full p-2 overflow-y-scroll'>
-                    {listedPageItems.length >= 1 && renderPagesTree("", pageId, listedPageItems, setListedPageItems)}
-                    <CreateNewPageButton setListedPageItems={setListedPageItems} />
-                </div>
+                {loading ? (
+                    <Loader />
+                ) : (
+                    <>
+                        <div className='h-full w-full p-2 overflow-y-scroll'>
+                            {listedPageItems.length >= 1 && renderPagesTree("", pageId, listedPageItems, setListedPageItems)}
+                            <CreateNewPageButton setListedPageItems={setListedPageItems} />
+                        </div>
 
-                <UserOptions />
+                        <UserOptions />
+                    </>
+                )}
             </div>
         </>
     )
