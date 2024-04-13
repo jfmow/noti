@@ -1,11 +1,11 @@
 import Loader from '@/components/Loader';
 import PocketBase from 'pocketbase'
 import React, { Suspense, lazy, useContext, useEffect, useState } from 'react';
-import MyComponent from '@/components/Item';
 import MenuBar from '@/components/editor/MenuBar';
 import Router, { useRouter } from 'next/router';
 import PeekPageBlock from '@/lib/Modals/PeekPage';
 import NewPageModal from '@/lib/Modals/NewPage';
+import UsersPages from '@/components/ListPages';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 
@@ -131,7 +131,7 @@ function NotionEditor() {
         <EditorContext.Provider value={{ showArchivedPages, setShowArchivedPages, listedPageItems, pb, setListedPageItems, visible, setVisible, currentPage: pageId, pageId, themes, listedPageItemsFilter, setListedPageItemsFilters, setPrimaryVisiblePageData, primaryVisiblePageData }}>
             <div>
                 <div className='flex flex-col sm:flex-row'>
-                    <MyComponent />
+                    <UsersPages />
                     <div style={{ flex: '1 1 0%', position: 'relative', display: 'flex', height: '100dvh', flexDirection: 'column', overflowX: 'hidden' }}>
                         <MenuBar currentPageData={primaryVisiblePageData} />
 

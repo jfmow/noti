@@ -4,10 +4,10 @@ import { toaster } from '@/components/toast';
 import { ToolTip, ToolTipCon, ToolTipTrigger } from '@/components/UX-Components/Tooltip';
 import { useEditorContext } from '@/pages/page';
 import { DropDown, DropDownContainer, DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from '@/lib/Pop-Cards/DropDown';
-import { updateListedPages } from '../Item';
 import { Link } from '../UX-Components';
-import { AppWindow, Archive, ArchiveRestore, Baseline, CaseLower, Check, Copy, Eye, EyeOff, Info, Link2, PanelRightDashed, PanelTopDashed, Settings2, Share, Space, TextCursor, Trash2Icon, WholeWord, X } from 'lucide-react';
+import { Archive, ArchiveRestore, Baseline, CaseLower, Check, Copy, Eye, EyeOff, Info, Link2, PanelRightDashed, PanelTopDashed, Settings2, Share, Space, TextCursor, Trash2Icon, WholeWord, X } from 'lucide-react';
 import { debounce } from 'lodash';
+import { updateItem } from '../ListPages';
 export default function MenuBar({ currentPageData }) {
     const { pb, currentPage, setVisible, visible, setListedPageItems, listedPageItems } = useEditorContext()
     const [activePage, setActivePage] = useState({})
@@ -167,7 +167,8 @@ export default function MenuBar({ currentPageData }) {
             ];
             //return [...prevItems.filter(item => item.id !== currentPage), { ...oldItem, icon: `${e.unified}.png` }]
         })
-        setListedPageItems(updateListedPages(currentPage, { shared: data.shared }, listedPageItems))
+
+        updateItem("shared", data.shared, currentPage, listedPageItems, setListedPageItems)
 
         const record = await pb.collection("pages").update(currentPage, data);
     }
@@ -205,7 +206,7 @@ export default function MenuBar({ currentPageData }) {
 
     async function handleArchivePageToggle() {
         const newState = !listedPageItems.find((Apage) => Apage.id === currentPage).archived
-        setListedPageItems(updateListedPages(currentPage, { archived: newState }, listedPageItems))
+        updateItem("archived", newState, currentPage, listedPageItems, setListedPageItems)
         await pb.collection('pages').update(currentPage, { archived: newState });
         toaster.success(`Page ${newState ? 'archived' : 'restored'} successfully`)
     }
