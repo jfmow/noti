@@ -163,7 +163,8 @@ function ListItem({ item, pageId, listedPageItems, setListedPageItems, children 
                     }
                     urlParams.set("edit", item.id)
                     Router.push(`/page?${urlParams.toString()}`);
-                }} style={{ background: item.color }} className={`flex items-center justify-between gap-1 cursor-pointer p-2 mb-2 text-[var(--pageListItemTextIcon)] hover:bg-[var(--pageListItemHover)] hover:border-zinc-300 border border-[transparent] shadow-sm rounded-lg ${isDragingOver ? "!bg-red-300" : ""} ${pageId === item.id || (item.expanded) ? "bg-[var(--pageListItemOpen)]" : ""}`}>
+                }} style={{ background: item.color }}
+                className={`flex items-center justify-between gap-1 cursor-pointer p-2 mb-2 text-[var(--pageListItemTextIcon)] hover:bg-[var(--pageListItemHover)] hover:border-zinc-200 border border-[transparent] rounded-md ${isDragingOver ? "!bg-red-300" : ""} ${pageId === item.id ? "bg-[var(--pageListItemOpen)]" : ""}`}>
 
                 {item.icon != "" ? (
                     <div className='w-6 h-6'>
