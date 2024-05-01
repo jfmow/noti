@@ -5,7 +5,7 @@ import { ToolTip, ToolTipCon, ToolTipTrigger } from '@/components/UX-Components/
 import { useEditorContext } from '@/pages/page';
 import { DropDown, DropDownContainer, DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from '@/lib/Pop-Cards/DropDown';
 import { Link } from '../UX-Components';
-import { Archive, ArchiveRestore, Baseline, CaseLower, Check, Copy, Eye, EyeOff, Info, Link2, PanelRightDashed, PanelTopDashed, Settings2, Share, Space, TextCursor, Trash2Icon, WholeWord, X } from 'lucide-react';
+import { Archive, ArchiveRestore, Baseline, CaseLower, Check, Copy, Eye, EyeOff, Info, Link2, Loader2, PanelRightDashed, PanelTopDashed, Settings2, Share, Space, TextCursor, Trash2Icon, WholeWord, X } from 'lucide-react';
 import { debounce } from 'lodash';
 import { updateItem } from '../ListPages';
 export default function MenuBar({ currentPageData }) {
@@ -170,7 +170,7 @@ export default function MenuBar({ currentPageData }) {
 
         updateItem("shared", data.shared, currentPage, listedPageItems, setListedPageItems)
 
-        const record = await pb.collection("pages").update(currentPage, data);
+        await pb.collection("pages").update(currentPage, data);
     }
 
     async function handleCopyTextToClipboard(data, e) {
@@ -189,6 +189,7 @@ export default function MenuBar({ currentPageData }) {
         // Remove the dummy input from the DOM
         document.body.removeChild(dummyInput);
     }
+
     async function handleDeletePage() {
         if (!confirm(`Are you sure you wish to delete ${listedPageItems.find((item) => item.id === currentPage)?.title || currentPage}`)) return
         try {
@@ -209,56 +210,6 @@ export default function MenuBar({ currentPageData }) {
         updateItem("archived", newState, currentPage, listedPageItems, setListedPageItems)
         await pb.collection('pages').update(currentPage, { archived: newState });
         toaster.success(`Page ${newState ? 'archived' : 'restored'} successfully`)
-    }
-
-    const debounceSetHoveringTabItem = debounce(setHoveredTabItem, 200)
-    const debounceUNSetHoveringTabItem = debounce(unSetHoveredTabItem, 300)
-
-
-    function setHoveredTabItem(data, itemId) {
-        if (itemId !== hoveringTabItem.id) {
-            debounceUNSetHoveringTabItem.cancel()
-            setHoveringTabItem(data)
-        } else {
-
-        }
-    }
-    function unSetHoveredTabItem(itemId) {
-        if (itemId === hoveringTabItem.id) {
-            setHoveringTabItem({ id: "", position: "" })
-        }
-    }
-
-
-    function renderTree(items, parentId = "") {
-        const filteredItems = items.filter(item => item.parentId === parentId);
-        if (filteredItems.length === 0) {
-            return null;
-        }
-
-        return (
-            <>
-                <div onMouseEnter={() => debounceUNSetHoveringTabItem.cancel()} className='animate-fade-in bg-zinc-100 shadow-lg p-2 grid gap-1 rounded-lg fixed bottom-[-10px] z-[2] min-w-[200px]' style={{ top: hoveringTabItem.position.bottom + 10 + "px", left: hoveringTabItem.position.left + "px", bottom: 'auto' }} aria-haspopup aria-label='sub pages dropdown' >
-
-                    {filteredItems.map(item => (
-                        <>
-                            <Link className='flex items-center gap-1 p-1 rounded hover:bg-zinc-200' onClick={() => {
-                                const params = new URLSearchParams(window.location.search)
-                                params.set("edit", item.id)
-                                Router.push(`/page?${params.toString()}`);
-                            }}>
-                                {item.icon ? (
-                                    <div aria-label='page icon' className="w-4 h-4 flex items-center justify-center">
-                                        {item?.icon && item?.icon.includes('.png') ? (<img src={`/emoji/twitter/64/${item?.icon}`} />) : (!isNaN(parseInt(item?.icon, 16)) && String.fromCodePoint(parseInt(item?.icon, 16)))}
-                                    </div>
-                                ) : null}
-                                <span aria-label='Page title'>{item?.title || item?.id}</span>
-                            </Link>
-                        </>
-                    ))}
-                </div>
-            </>
-        );
     }
 
     async function copyPageShareUrl(e) {
@@ -284,55 +235,25 @@ export default function MenuBar({ currentPageData }) {
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-right"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><line x1="15" x2="15" y1="3" y2="21" /></svg>
                     </button>
                 </div>
-                <div className="flex items-center text-zinc-800 w-full">
+                <>
                     {!isMobile ? (
                         //Not mobile
                         <>
-                            {filteredItems.map((item, index) => (
-                                <>
-                                    <div onMouseLeave={() => debounceUNSetHoveringTabItem(item.id)} onMouseEnter={(e) => {
-                                        debounceSetHoveringTabItem({ id: item.id, position: e.currentTarget.getBoundingClientRect() }, item.id)
-                                    }} className="flex items-center justify-center relative cursor-pointer relative" key={index}>
-                                        <Link className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200" onClick={() => {
-                                            const params = new URLSearchParams(window.location.search)
-                                            params.set("edit", item.id)
-                                            Router.push(`/page?${params.toString()}`);
-                                        }}>
-                                            {item?.icon && (
-                                                <div aria-label='page icon' className="w-4 h-4 flex items-center justify-center">
-                                                    {item?.icon && item?.icon.includes('.png') ? (<img src={`/emoji/twitter/64/${item?.icon}`} />) : (!isNaN(parseInt(item?.icon, 16)) && String.fromCodePoint(parseInt(item?.icon, 16)))}
-                                                </div>
-                                            )}
-                                            <span aria-label='Page title'>{item?.title || item?.id}</span>
-                                        </Link>
-
-                                        {hoveringTabItem.id && hoveringTabItem.id === item.id ? (
-                                            renderTree(listedPageItems, item.id)
-                                        ) : null}
-
-                                    </div>
-                                    {index < filteredItems.length - 1 && (
-                                        <div className='text-zinc-300 flex items-center justify-center mx-1'>
-                                            /
-                                        </div>
-                                    )}
-
-                                </>
-                            ))}
+                            <FolderList folderTree={filteredItems} />
                         </>
                     ) : (
-                        <>
+                        <div className="flex items-center text-zinc-800 w-full">
                             <div className="flex items-center justify-center relative cursor-pointer">
                                 <div className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200">
                                     <div className="w-4 h-4 flex items-center justify-center">
-                                        {activePage?.icon && activePage?.icon.includes('.png') ? (<img src={`/emoji/twitter/64/${activePage?.icon}`} />) : (!isNaN(parseInt(activePage?.icon, 16)) && String.fromCodePoint(parseInt(activePage?.icon, 16)))}
+                                        {activePage?.icon && activePage?.icon.includes('.png') ? (<img src={`/emoji/twitter/64/${activePage?.icon}`} />) : null}
                                     </div>
                                     {activePage?.title || activePage?.id}
                                 </div>
                             </div>
-                        </>
+                        </div>
                     )}
-                </div>
+                </>
                 <div className="flex items-center justify-end gap-0  min-w-[100px]">
                     <ToolTipCon>
                         <DropDownContainer>
@@ -476,5 +397,34 @@ export default function MenuBar({ currentPageData }) {
 
         </>
     );
+}
+
+function FolderList({ folderTree }) {
+    return (
+        <>
+            <div className="flex items-center text-zinc-800 w-full">
+                {folderTree.length >= 1 && folderTree[0]?.id ? folderTree.map((page, index) => (
+                    <>
+                        <div className="flex items-center justify-center relative cursor-pointer relative" key={page.id + "-" + index}>
+                            <Link className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200" onClick={() => {
+                                const params = new URLSearchParams(window.location.search)
+                                params.set("edit", page.id)
+                                Router.push(`/page?${params.toString()}`);
+                            }}>
+                                {page?.icon && page?.icon.includes('.png') ? (
+                                    <div aria-label='page icon' className="w-4 h-4 flex items-center justify-center">
+                                        <img src={`/emoji/twitter/64/${page.icon}`} />
+                                    </div>
+                                ) : null}
+                                <span aria-label='Page title'>{page?.title || page.id}</span>
+                            </Link>
+                        </div>
+                        {index < folderTree.length - 1 && (<div className='text-zinc-300 flex items-center justify-center mx-1'>/</div>)}
+                    </>
+                )) : null}
+
+            </div>
+        </>
+    )
 }
 
