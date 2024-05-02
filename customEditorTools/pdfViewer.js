@@ -1,3 +1,4 @@
+import { debounce } from 'lodash';
 import React, { useEffect, useState, useRef } from 'react';
 import { Document, Page } from 'react-pdf';
 import { pdfjs } from 'react-pdf';
@@ -7,101 +8,100 @@ export default function MyPdfViewer({ url, fileId }) {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [scale, setScale] = useState(1.0); // Default scale is 100% (no zoom)
+  const [blurScale, setBlurScale] = useState(1.0)
 
   useEffect(() => {
-    function scrollZoom(e) {
-      //console.log(e.deltaY, e.deltaX, e.wheelDelta, e.wheelDeltaY)
-      if (e.deltaX > 0 || e.deltaX < 0) {
-        return
+    let vars = {}
+    async function GetThemes() {
+      const storedThemes = JSON.parse(window.localStorage.getItem("themes"))
+      if (!storedThemes || storedThemes === "" || (Date.now() - storedThemes.updated) > (1000 * 60 * 60 * 24)) {
+        const themeFetch = await fetch(`${process.env.NEXT_PUBLIC_CURRENTURL}/themes.json`)
+        const themes = await themeFetch.json()
+        window.localStorage.setItem("themes", JSON.stringify({ updated: Date.now(), themes: themes }))
+        return themes
       } else {
-        if (e.deltaY >= 0.5 && e.wheelDeltaY <= -150 && e.wheelDelta <= -150) {
-          e.preventDefault();
-          handleZoomOut('small');
-        } else if (e.deltaY <= -0.5 && e.wheelDeltaY >= 150 && e.wheelDelta >= 150) {
-          e.preventDefault();
-          handleZoomIn('small');
-        } else {
-          return
+        return storedThemes.themes
+      }
+
+
+    }
+    async function applyTheme() {
+      const theme = window.localStorage.getItem('theme')
+      const themes = await GetThemes()
+      if (theme && theme !== 'system') {
+        vars = themes.find((item) => item.id === theme)?.data
+        const r = document.documentElement.style;
+        for (const variable in vars) {
+          r.setProperty(variable, vars[variable]);
         }
       }
-    }
 
-    window.document.querySelector(".react-pdf__Document").addEventListener('wheel', (e) => scrollZoom(e), { passive: false })
-    return () => {
-      window.document.querySelector(".react-pdf__Document").removeEventListener('wheel', (e) => scrollZoom(e), { passive: false })
     }
+    applyTheme();
+
+    // Listen for changes in local storage
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'theme') {
+        // Theme property has changed, apply the new theme
+        const r = document.documentElement.style;
+        for (const variable in vars) {
+          r.removeProperty(variable);
+        }
+        applyTheme();
+      }
+    });
   }, [])
 
   const containerRef = useRef(null);
   const scaleRef = useRef(1.0);
-  const ctrlKeyRef = useRef(false);
 
-  function onDocumentLoadSuccess({ numPages }) {
-    setNumPages(numPages);
+  async function onDocumentLoadSuccess(pdf) {
+    setNumPages(pdf.numPages)
+    console.log(pdf)
+    const page = await pdf.getPage(1);
+    console.log(page.width);
+    console.log(page.height);
   }
 
-  function handleZoomIn(type) {
+  const debounceSetScale = debounce((val) => {
+    setBlurScale(1)
+    setScale(val)
+  }, 400)
+
+  function setPageScale(size) {
+    setBlurScale(size)
+    debounceSetScale(size)
+  }
+
+  function handleZoomIn() {
     if (scaleRef.current < 4) {
-      if (type === 'small') {
-        scaleRef.current = Math.min(scaleRef.current + 0.01, 4);
-        setScale(scaleRef.current);
-        return
-      }
       scaleRef.current = Math.min(scaleRef.current + 0.1, 4);
-      setScale(scaleRef.current);
+      setPageScale(scaleRef.current);
     }
   }
 
-  function handleZoomOut(type) {
+  function handleZoomOut() {
     if (scaleRef.current > 0.1) {
-      if (type === 'small') {
-        scaleRef.current = Math.min(scaleRef.current - 0.01, 4);
-        setScale(scaleRef.current);
-        return
-      }
       scaleRef.current = Math.max(scaleRef.current - 0.1, 0.1);
-      setScale(scaleRef.current);
-    }
-  }
-
-
-  useEffect(() => {
-    const container = containerRef.current;
-    container.addEventListener('wheel', handleWheelZoom);
-    return () => {
-      container.removeEventListener('wheel', handleWheelZoom);
-    };
-  }, []);
-
-  function handleWheelZoom(event) {
-    if (ctrlKeyRef.current) {
-      console.log(event)
-      event.preventDefault();
-      const delta = event.deltaY;
-      if (delta < 0 && scaleRef.current < 4) {
-        scaleRef.current = Math.min(scaleRef.current + 0.05, 4);
-      } else if (delta > 0 && scaleRef.current > 0.1) {
-        scaleRef.current = Math.max(scaleRef.current - 0.05, 0.1);
-      }
-      requestAnimationFrame(() => {
-        setScale(scaleRef.current);
-      });
+      setPageScale(scaleRef.current);
     }
   }
 
   function openInNewTab() {
     let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=600,height=600,left=10,top=10`;
-    open(`${process.env.NEXT_PUBLIC_CURRENTURL}/page/pdf/${fileId}`, `SaveMyNotes popup`, params);
+    open(`${process.env.NEXT_PUBLIC_CURRENTURL}/page/pdf/${fileId}`, `PDF Viewer`, params);
 
   }
 
   const pageComponents = Array.from(new Array(numPages), (el, index) => (
-    <Page
-      key={index}
-      pageNumber={index + 1}
-      scale={scale}
-      className={index === 0 ? 'react-pdf__Page__canvas__first' : index === numPages - 1 ? 'react-pdf__Page__canvas__last' : ''}
-    />
+    <div style={{ transform: `scale(${blurScale})` }}>
+      <Page
+        key={index}
+        pageNumber={index + 1}
+        scale={scale}
+        className={index === 0 ? 'react-pdf__Page__canvas__first' : index === numPages - 1 ? 'react-pdf__Page__canvas__last' : ''}
+      />
+    </div>
   ));
 
   async function downloadPDF() { // Replace this with the actual file ID
@@ -131,9 +131,10 @@ export default function MyPdfViewer({ url, fileId }) {
   }
 
 
+
   return (
     <>
-      <div className="flex fixed bottom-1 left-0 right-0 z-[2] w-full justify-center">
+      <div className=" flex fixed bottom-1 left-0 right-0 z-[2] w-full justify-center">
         <div className="px-3 py-2 rounded-lg flex bg-zinc-50 shadow items-center justify-evenly">
           <button aria-label='Zoom in' className="flex items-center border-none bg-none cursor-pointer text-[#292929] p-2 rounded-lg [&>svg]:w-4 [&>svg]:h-4 hover:bg-zinc-200" title='CTRL/CMD + scroll to zoom' onClick={handleZoomIn}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zoom-in"><circle cx="11" cy="11" r="8" /><line x1="21" x2="16.65" y1="21" y2="16.65" /><line x1="11" x2="11" y1="8" y2="14" /><line x1="8" x2="14" y1="11" y2="11" /></svg></button>
           <button aria-label='Zoom out' className="flex items-center border-none bg-none cursor-pointer text-[#292929] p-2 rounded-lg [&>svg]:w-4 [&>svg]:h-4 hover:bg-zinc-200" title='CTRL/CMD + scroll to zoom' onClick={handleZoomOut}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zoom-out"><circle cx="11" cy="11" r="8" /><line x1="21" x2="16.65" y1="21" y2="16.65" /><line x1="8" x2="14" y1="11" y2="11" /></svg></button>
