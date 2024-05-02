@@ -1,14 +1,35 @@
-import { debounce } from 'lodash';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Document, Page } from 'react-pdf';
-import { pdfjs } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
+import { pdfjs } from 'react-pdf';
+import { debounce } from 'lodash';
 pdfjs.GlobalWorkerOptions.workerSrc = '/pdfworker.min.js';
 export default function MyPdfViewer({ url, fileId }) {
   const [numPages, setNumPages] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1);
+  const [pageNumber, setPageNumber] = useState(3);
+  const [pagesToLoad, setPagesToLoad] = useState([1, 2, 3]);
   const [scale, setScale] = useState(1.0); // Default scale is 100% (no zoom)
   const [blurScale, setBlurScale] = useState(1.0)
+
+  const onDocumentLoadSuccess = ({ numPages }) => {
+    setNumPages(numPages);
+  };
+
+  useEffect(() => {
+    // Fetch the number of pages and initialize the first page.
+    // You might need to handle errors accordingly.
+    fetch(url)
+      .then(response => response.arrayBuffer())
+      .then(buffer => new Blob([buffer]))
+      .then(blob => URL.createObjectURL(blob))
+      .then(pdfUrl => {
+        setNumPages(null); // Reset numPages
+        setPageNumber(3); // Reset pageNumber
+        setPagesToLoad([1, 2, 3]); // Load initial page
+      });
+
+    return () => URL.revokeObjectURL(url);
+  }, [url]);
 
   useEffect(() => {
     let vars = {}
@@ -55,14 +76,6 @@ export default function MyPdfViewer({ url, fileId }) {
   const containerRef = useRef(null);
   const scaleRef = useRef(1.0);
 
-  async function onDocumentLoadSuccess(pdf) {
-    setNumPages(pdf.numPages)
-    console.log(pdf)
-    const page = await pdf.getPage(1);
-    console.log(page.width);
-    console.log(page.height);
-  }
-
   const debounceSetScale = debounce((val) => {
     setBlurScale(1)
     setScale(val)
@@ -93,17 +106,6 @@ export default function MyPdfViewer({ url, fileId }) {
 
   }
 
-  const pageComponents = Array.from(new Array(numPages), (el, index) => (
-    <div style={{ transform: `scale(${blurScale})` }}>
-      <Page
-        key={index}
-        pageNumber={index + 1}
-        scale={scale}
-        className={index === 0 ? 'react-pdf__Page__canvas__first' : index === numPages - 1 ? 'react-pdf__Page__canvas__last' : ''}
-      />
-    </div>
-  ));
-
   async function downloadPDF() { // Replace this with the actual file ID
     try {
       const response = await fetch(url, {
@@ -130,7 +132,20 @@ export default function MyPdfViewer({ url, fileId }) {
     }
   }
 
-
+  const onScroll = () => {
+    const container = document.getElementById('pdf-container');
+    if (container.scrollHeight - container.scrollTop === container.clientHeight) {
+      // Reached bottom of the container, load next pages.
+      const nextPage = Math.min(pageNumber + 1, numPages);
+      setPagesToLoad([...pagesToLoad, nextPage]);
+      setPageNumber(nextPage);
+    } else if (container.scrollTop === 0) {
+      // Reached top of the container, load previous pages.
+      const prevPage = Math.max(pageNumber - 1, 1);
+      setPagesToLoad([...pagesToLoad, prevPage]);
+      setPageNumber(prevPage);
+    }
+  };
 
   return (
     <>
@@ -143,9 +158,14 @@ export default function MyPdfViewer({ url, fileId }) {
           <button aria-label='Download pdf' className="flex items-center border-none bg-none cursor-pointer text-[#292929] p-2 rounded-lg [&>svg]:w-4 [&>svg]:h-4 hover:bg-zinc-200" onClick={downloadPDF}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" x2="12" y1="15" y2="3" /></svg></button>
         </div>
       </div>
-      <div style={{ overflow: 'scroll', display: 'grid', gridTemplateColumns: '1fr', justifyItems: 'center' }} ref={containerRef}>
+      <div ref={containerRef} id="pdf-container" onScroll={onScroll} style={{ overflow: 'scroll', height: '100vh', display: 'grid', gridTemplateColumns: '1fr', justifyItems: 'center' }}>
         <Document file={url} onLoadSuccess={onDocumentLoadSuccess}>
-          {pageComponents}
+          {pagesToLoad.map((page, index) => (
+            <div style={{ transform: `scale(${blurScale})` }}>
+              <Page scale={scale} key={index} pageNumber={page} />
+
+            </div>
+          ))}
         </Document>
       </div>
     </>
