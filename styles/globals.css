@@ -251,9 +251,8 @@ a {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 2px;
-  height: 1px;
-  display: none;
+  width: 0px;
+  height: 5px;
 }
 
 /* Track */
@@ -281,9 +280,9 @@ a {
     color: #fff;
   }
 
-  ::-webkit-scrollbar {
+  /*::-webkit-scrollbar {
     display: none;
-  }
+  }*/
 
   .tc-toolbox {
     color-scheme: light;

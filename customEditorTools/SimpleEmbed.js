@@ -2,11 +2,13 @@ import PocketBase from "pocketbase";
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false)
 import { toaster } from "@/components/toast";
+import { createRoot } from 'react-dom/client';
+import MyPdfViewer from "./pdfViewer";
 
 export default class SimpleIframe {
   static get toolbox() {
     return {
-      title: "Embed",
+      title: "PDF",
       icon: '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path style="stroke: none;" d="M0 0h24v24H0V0z" fill="none"/><path style="stroke: none;"  d="M8 16h8v2H8zm0-4h8v2H8zm6-10H6c-1.1 0-2 .9-2 2v16c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>',
     };
   }
@@ -90,23 +92,26 @@ export default class SimpleIframe {
   }
 
   async _createImage(fileId) {
-    const iframe = document.createElement("iframe");
-    iframe.style.width = "100%";
-    iframe.style.height = "90vh";
-    iframe.style.border = "none";
-    iframe.style.borderRadius = "5px";
 
-    iframe.src = `${process.env.NEXT_PUBLIC_CURRENTURL}/page/pdf/${fileId}`;
-    iframe.setAttribute('fileId', fileId); // Set the fileId as an attribute of the iframe
-
-    this.wrapper.innerHTML = "";
-    this.wrapper.appendChild(iframe);
-
+    const container = document.createElement("div")
+    container.setAttribute("level", "root-container")
+    container.dataset.fileId = fileId
+    container.setAttribute("fileId", fileId)
+    this.wrapper.appendChild(container);
+    const root = createRoot(container); // createRoot(container!) if you use TypeScript
+    let fileUrl
+    const record = await pb.collection('files').getOne(fileId, { expand: 'page' }); // Use the fileId to retrieve the record
+    if (!record.expand.page.shared) {
+      const fileToken = await pb.files.getToken();
+      fileUrl = pb.files.getUrl(record, record.file_data, { 'token': fileToken });
+    } else {
+      fileUrl = pb.files.getUrl(record, record.file_data);
+    }
+    root.render(<MyPdfViewer fileId={fileId} url={fileUrl} />);
   }
 
   removed() {
     if (this.data.fileId) {
-      console.log(this.data.fileId)
       async function removeImg(file) {
         await pb.collection('files').delete(file);
       }
@@ -116,8 +121,12 @@ export default class SimpleIframe {
 
   save(blockContent) {
     try {
-      const iframe = blockContent.querySelector("iframe");
-      const fileId = iframe.getAttribute('fileId'); // Retrieve the fileId attribute
+      const container = blockContent.querySelector('[level="root-container"]')
+      let fileId = container.dataset.fileId; // Retrieve the fileId attribute
+
+      if (fileId === "" || fileId === undefined) {
+        fileId = container.getAttribute("fileId")
+      }
 
       return {
         fileId: fileId // Include the fileId in the saved data
