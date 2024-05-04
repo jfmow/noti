@@ -137,7 +137,7 @@ export default function MenuBar({ currentPageData }) {
                 const totalChartersWithSpaces = CountCharacters(input, true)
                 const totalChartersWithoutSpaces = CountCharacters(input, false)
                 //console.log(words, words.length)
-                setPageInfo({ ...record, wordCount: totalWords, uniqueWord: uniqueWords, chartersWithSpaces: totalChartersWithSpaces, chartersWithoutSpaces: totalChartersWithoutSpaces })
+                setPageInfo({ ...record, wordCount: totalWords, uniqueWords: uniqueWords, chartersWithSpaces: totalChartersWithSpaces, chartersWithoutSpaces: totalChartersWithoutSpaces })
             } catch {
                 return
             }
