@@ -43,15 +43,18 @@ export default function MenuBar({ currentPageData }) {
 
         function CountWords(content) {
             let totalWords = 0;
-            if (!content || content === undefined) return 0
+            let uniqueWords = new Set(); // Set to store unique words
+
+            if (!content || content === undefined) return { totalWords: 0, uniqueWords: 0 };
+
             const data = JSON.parse(JSON.stringify(content).replace(/<[^>]*>/g, ''));
 
             data.blocks.forEach(block => {
                 if (block.data && block.data.text) {
                     const text = block.data.text;
-                    const words = text.match(/\b\w+(?:['-]\w+)?\b/g); // Split by word boundaries
+                    const words = text.match(/\b\w+(?:['-]\w+)?\b/g) || []; // Handle case when no words are found
                     words.forEach(word => {
-                        //console.log(`Word at position ${totalWords}: ${word}`);
+                        uniqueWords.add(word.toLowerCase()); // Add word to unique words set (convert to lowercase for case-insensitive comparison)
                         totalWords++;
                     });
                 }
@@ -60,9 +63,9 @@ export default function MenuBar({ currentPageData }) {
                     const printNestedListWords = (items) => {
                         items.forEach(item => {
                             if (item.content) {
-                                const nestedWords = item.content.match(/\b\w+(?:['-]\w+)?\b/g);
+                                const nestedWords = item.content.match(/\b\w+(?:['-]\w+)?\b/g) || []; // Handle case when no words are found
                                 nestedWords.forEach(word => {
-                                    //console.log(`Word at position ${totalWords}: ${word}`);
+                                    uniqueWords.add(word.toLowerCase()); // Add word to unique words set
                                     totalWords++;
                                 });
                             }
@@ -76,17 +79,17 @@ export default function MenuBar({ currentPageData }) {
 
                 if (block.data && block.data.content) {
                     const tableContent = block.data.content.flat().filter(cell => typeof cell === 'string');
-                    const words = tableContent.join(' ').match(/\b\w+(?:['-]\w+)?\b/g);
+                    const words = tableContent.join(' ').match(/\b\w+(?:['-]\w+)?\b/g) || []; // Handle case when no words are found
                     words.forEach(word => {
-                        //console.log(`Word at position ${totalWords}: ${word}`);
+                        uniqueWords.add(word.toLowerCase()); // Add word to unique words set
                         totalWords++;
                     });
                 }
             });
 
-            return totalWords
-
+            return { totalWords, uniqueWords: uniqueWords.size }; // Return both totalWords and the size of uniqueWords set
         }
+
         function CountCharacters(content, includeSpaces = true) {
             let totalCharacters = 0;
             if (!content || content === undefined) return 0
@@ -130,11 +133,11 @@ export default function MenuBar({ currentPageData }) {
             try {
                 const record = currentPageData
                 const input = record.content
-                const totalWords = CountWords(input)
+                const { totalWords, uniqueWords } = CountWords(input)
                 const totalChartersWithSpaces = CountCharacters(input, true)
                 const totalChartersWithoutSpaces = CountCharacters(input, false)
                 //console.log(words, words.length)
-                setPageInfo({ ...record, wordCount: totalWords, chartersWithSpaces: totalChartersWithSpaces, chartersWithoutSpaces: totalChartersWithoutSpaces })
+                setPageInfo({ ...record, wordCount: totalWords, uniqueWord: uniqueWords, chartersWithSpaces: totalChartersWithSpaces, chartersWithoutSpaces: totalChartersWithoutSpaces })
             } catch {
                 return
             }
@@ -316,12 +319,16 @@ export default function MenuBar({ currentPageData }) {
                                                     <p>Word Count: {pageInfo.wordCount}</p>
                                                 </DropDownItem>
                                                 <DropDownItem>
+                                                    <WholeWord />
+                                                    <p>Unique Words: {pageInfo.uniqueWords}</p>
+                                                </DropDownItem>
+                                                <DropDownItem>
                                                     <CaseLower />
-                                                    Total charters: {pageInfo.chartersWithSpaces}
+                                                    Total charters: {pageInfo.chartersWithoutSpaces}
                                                 </DropDownItem>
                                                 <DropDownItem>
                                                     <Space />
-                                                    Without spaces: {pageInfo.chartersWithoutSpaces}
+                                                    With spaces: {pageInfo.chartersWithSpaces}
                                                 </DropDownItem>
                                             </DropDownSection>
                                         </DropDownExtension>
