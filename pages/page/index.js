@@ -1,7 +1,7 @@
 import Loader from '@/components/Loader';
 import PocketBase from 'pocketbase'
 import React, { Suspense, lazy, useContext, useEffect, useState } from 'react';
-import MenuBar from '@/components/editor/MenuBar';
+import MenuBar from '@/components/editor/Menubar';
 import Router, { useRouter } from 'next/router';
 import PeekPageBlock from '@/lib/Modals/PeekPage';
 import NewPageModal from '@/lib/Modals/NewPage';

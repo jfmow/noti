@@ -28,7 +28,7 @@ const MenuButtons = lazy(() => import("./Menu/MenuButton"))
 
 const editorV3Context = createContext();
 export default function EditorV3({ currentPage, peek }) {
-    const { pb, setListedPageItems, setPrimaryVisiblePageData, primaryVisiblePageData } = useEditorContext()
+    const { pb, setListedPageItems, setPrimaryVisiblePageData } = useEditorContext()
     const Editor = useRef(null)
     const SaveRef = useRef(null)
 
@@ -85,6 +85,7 @@ export default function EditorV3({ currentPage, peek }) {
             const content = await editor.save()
             const res = await pb.collection('pages').update(currentPage, { "content": content })
             setSavingState("Saved")
+            setPrimaryVisiblePageData(res)
         } catch (err) {
             setSavingState("Unable to save file...")
             toaster.error(err?.message || err)
@@ -265,7 +266,7 @@ export default function EditorV3({ currentPage, peek }) {
                     data: openPageData?.content || [],
                     placeholder: "Enter some text...",
                     autofocus: openPageData?.content && openPageData?.content?.blocks?.length >= 1 && (openPageData?.content?.blocks[0]?.type === 'image' || openPageData?.content?.blocks[0]?.type === 'Video' || openPageData?.content?.blocks[0]?.type === 'simpleEmbeds' || openPageData?.content?.blocks[0]?.type === 'SimpleIframeWebpage') ? false : true,
-                    onChange: (api, event) => {
+                    onChange: (api) => {
                         const urlParams = new URLSearchParams(window.location.search)
                         if (urlParams.has("demo") && +urlParams.get("demo") === 1) {
                             return
