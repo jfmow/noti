@@ -108,6 +108,8 @@ function DropDownMenu({ currentPageData }) {
     const { pb, currentPage, setListedPageItems, listedPageItems, } = useEditorContext()
     const [pageInfo, setPageInfo] = useState({})
 
+
+
     async function handleSharePage() {
         const data = {
             shared: !listedPageItems.find((Apage) => Apage.id === currentPage)?.shared,
@@ -192,6 +194,11 @@ function DropDownMenu({ currentPageData }) {
             return
         }
     }
+
+    useEffect(() => {
+        //Update when the page is changed on nav, because sometimes is doesn't :(
+        getPageData()
+    }, [currentPage])
 
     return (
         <>
