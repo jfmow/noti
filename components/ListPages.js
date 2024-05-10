@@ -152,7 +152,7 @@ function ListItem({ item, pageId, listedPageItems, setListedPageItems, children 
 
     return (
         <>
-            <div draggable onDragStart={(e) => e.dataTransfer.setData("text/plain", item.id)} onDragOver={(e) => {
+            <li draggable onDragStart={(e) => e.dataTransfer.setData("text/plain", item.id)} onDragOver={(e) => {
                 e.preventDefault()
                 setIsDragingOver(true)
             }}
@@ -192,7 +192,7 @@ function ListItem({ item, pageId, listedPageItems, setListedPageItems, children 
                         )}
                     </button>
                 </div>
-            </div >
+            </li >
             {
                 item.expanded ? (
                     <>
