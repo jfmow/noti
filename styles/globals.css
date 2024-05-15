@@ -391,3 +391,7 @@ a {
 .highlighted {
   background-color: yellow;
 }
+
+.cdx-marker {
+  color: inherit;
+}
