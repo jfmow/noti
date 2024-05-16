@@ -1,3 +1,4 @@
+import OAuth2LoginButtons from "@/components/Auth/OAuth2/methods";
 import LoginPage, { LoginButton, LoginInput, LoginMessage, LoginShortcutLink } from "@/components/Auth/login";
 import { Link } from "@/components/UX-Components";
 import { toaster } from "@/components/toast";
@@ -65,22 +66,19 @@ export default function Login() {
     return (
         <LoginPage method={"Login"}>
             <form onSubmit={HandleForm}>
-                <div className="w-full grid grid-cols-2">
-                    <LoginShortcutLink>Email-Auth (SSO)</LoginShortcutLink>
-                    <LoginShortcutLink href={"/auth/login/oauth2"}>Use OAuth2</LoginShortcutLink>
+                <div className="w-full flex items-center justify-between">
+                    <div />
+                    <LoginShortcutLink href={"/auth/signup"}>Signup</LoginShortcutLink>
                 </div>
                 <LoginInput readonly={codeRequested} placeholder="Email | hi@example.com" type="email" name="email" required />
                 {codeRequested ? (
                     <>
                         <LoginInput placeholder="Code" name="token" required type="text" />
-
                     </>
                 ) : null}
-                <LoginButton loading={loading}>Login</LoginButton>
+                <LoginButton loading={loading}>Request magic link</LoginButton>
             </form>
-            <LoginMessage>
-                As of 20/02/2024, password based accounts are no longer supported.
-            </LoginMessage>
+            <OAuth2LoginButtons />
         </LoginPage>
     )
 }
