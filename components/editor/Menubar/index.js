@@ -219,7 +219,7 @@ function DropDownMenu({ currentPageData }) {
                             Settings
                         </DropDownSectionTitle>
                         <DropDownSection>
-                            <DropDownItem onClick={() => Router.push(`/page?p=${currentPage}&pm=s`)}>
+                            <DropDownItem onClick={() => window.location.replace(`/page?p=${currentPage}&pm=s`)}>
                                 <PanelRightDashed />
                                 Peek page
                             </DropDownItem>
