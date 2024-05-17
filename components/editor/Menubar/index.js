@@ -105,7 +105,7 @@ function FolderList({ folderTree }) {
 }
 
 function DropDownMenu({ currentPageData }) {
-    const { pb, currentPage, setListedPageItems, listedPageItems, } = useEditorContext()
+    const { pb, currentPage, setListedPageItems, listedPageItems } = useEditorContext()
     const [pageInfo, setPageInfo] = useState({})
 
 
@@ -181,9 +181,9 @@ function DropDownMenu({ currentPageData }) {
         await handleCopyTextToClipboard(`${process.env.NEXT_PUBLIC_CURRENTURL}/page/view/${currentPage}`, e)
     }
 
-    async function getPageData() {
+    async function getPageData(pageData) {
         try {
-            const record = currentPageData
+            const record = pageData
             const input = record.content
             const { totalWords, uniqueWords } = CountWords(input)
             const totalChartersWithSpaces = CountCharacters(input, true)
@@ -197,8 +197,8 @@ function DropDownMenu({ currentPageData }) {
 
     useEffect(() => {
         //Update when the page is changed on nav, because sometimes is doesn't :(
-        getPageData()
-    }, [currentPage])
+        getPageData(currentPageData)
+    }, [currentPage, currentPageData])
 
     return (
         <>
