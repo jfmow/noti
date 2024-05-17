@@ -40,6 +40,7 @@ export default function EditorV3({ currentPage, peek }) {
 
     useEffect(() => {
         //Check that there is a current page
+        debounceSave.cancel()
 
         if (currentPage) {
             async function RetriveOpenPageData(page) {
@@ -77,6 +78,7 @@ export default function EditorV3({ currentPage, peek }) {
 
             RetriveOpenPageData(currentPage)
         }
+
     }, [currentPage])
 
     async function Save(editor) {
@@ -85,7 +87,15 @@ export default function EditorV3({ currentPage, peek }) {
             const content = await editor.save()
             const res = await pb.collection('pages').update(currentPage, { "content": content })
             setSavingState("Saved")
-            setPrimaryVisiblePageData(res)
+            if (currentPage === res.id) {
+                setPrimaryVisiblePageData(oldData => {
+                    if (oldData.id !== currentPage) {
+                        return oldData
+                    } else {
+                        return res
+                    }
+                })
+            }
         } catch (err) {
             setSavingState("Unable to save file...")
             toaster.error(err?.message || err)
