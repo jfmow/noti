@@ -49,10 +49,6 @@ export default function Login() {
                 Paste the token from the email sent to <strong>{queryData?.email}</strong> to complete the signup form below
             </div>
             <form onSubmit={HandleForm}>
-                <div className="w-full grid grid-cols-2">
-                    <LoginShortcutLink >Email-Auth (SSO)</LoginShortcutLink>
-                    <LoginShortcutLink href="/auth/login/oauth2" >Use OAuth2</LoginShortcutLink>
-                </div>
                 <LoginInput minlength={20} placeholder="Token" name="token" required type="text" defaultValue={queryData?.token} />
                 <LoginInput placeholder="Email | hi@example.com" type="email" name="email" required defaultValue={queryData?.email} disabled />
                 <LoginInput placeholder="Email | hi@example.com" type="email" name="email" required defaultValue={queryData?.email} hidden />

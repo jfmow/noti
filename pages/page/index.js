@@ -25,22 +25,7 @@ function NotionEditor() {
 
     useEffect(() => {
 
-        async function authUpdate() {
-            try {
-                const authData = await pb.collection('users').authRefresh();
-                if (!pb.authStore.isValid) {
-                    pb.authStore.clear();
-                    return window.location.replace("/auth/login");
-                }
-            } catch (error) {
-                pb.authStore.clear();
-                return window.location.replace('/auth/login');
-            }
-        }
-        const urlParams = new URLSearchParams(window.location.search)
-        if (!urlParams.has("demo") || +urlParams.get("demo") !== 1) {
-            authUpdate()
-        }
+
         let vars = {}
         async function GetThemes() {
             const storedThemes = JSON.parse(window.localStorage.getItem("themes"))
@@ -85,7 +70,23 @@ function NotionEditor() {
     }, [])
 
     useEffect(() => {
+        async function authUpdate() {
+            try {
+                const authData = await pb.collection('users').authRefresh();
+                if (!pb.authStore.isValid) {
+                    pb.authStore.clear();
+                    return window.location.replace("/auth/login");
+                }
+            } catch (error) {
+                pb.authStore.clear();
+                return window.location.replace('/auth/login');
+            }
+        }
+
         async function GetLatestPage(urlParams) {
+            if (!urlParams.has("demo") || +urlParams.get("demo") !== 1) {
+                authUpdate()
+            }
             try {
                 try {
                     const latestPage = await pb.collection("pages").getFirstListItem(`id != '${urlParams.get("p")}'`, { sort: "-updated" })
