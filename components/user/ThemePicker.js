@@ -4,7 +4,7 @@ import { useEditorContext } from "@/pages/page";
 import { useEffect, useState } from "react";
 
 export default function ThemePickerPopup() {
-    const [themes, setThemes] = useState([])
+    const [themes, setThemes] = useState([1, 2, 3, 4, 5, 6, 7])
     useEffect(() => {
         GetThemes().then((res) => {
             setThemes(res)
@@ -19,10 +19,6 @@ export default function ThemePickerPopup() {
         storageEvent.key = 'theme';
         storageEvent.newValue = theme;
         window.dispatchEvent(storageEvent);
-    }
-
-    if (!Array.isArray(themes) || themes.length < 1) {
-        return <></>
     }
 
     return (

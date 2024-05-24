@@ -1,6 +1,6 @@
 import AccountButtons from './user/AccountButtons2';
 import { DropDown, DropDownContainer, DropDownSectionTitle, DropDownTrigger } from '@/lib/Pop-Cards/DropDown';
-import UserHelpModal from '@/components/user/ThemePicker'
+import ThemePicker from '@/components/user/ThemePicker'
 import { useEditorContext } from '@/pages/page';
 import { Paintbrush, Settings2, UserCircle } from 'lucide-react';
 export default function UserOptions({ clss }) {
@@ -31,7 +31,7 @@ export default function UserOptions({ clss }) {
                             <DropDownSectionTitle>
                                 Themes
                             </DropDownSectionTitle>
-                            <UserHelpModal />
+                            <ThemePicker />
                         </DropDown>
                     </DropDownContainer>
 
