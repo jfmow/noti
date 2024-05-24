@@ -76,7 +76,7 @@ export default function Login() {
                         <LoginInput placeholder="Code" name="token" required type="text" />
                     </>
                 ) : null}
-                <LoginButton loading={loading}>Request magic link</LoginButton>
+                <LoginButton loading={loading}>{codeRequested ? "Login" : "Request magic link"}</LoginButton>
             </form>
             <OAuth2LoginButtons />
         </LoginPage>

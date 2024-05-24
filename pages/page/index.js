@@ -28,35 +28,25 @@ function NotionEditor() {
     }, [])
 
     useEffect(() => {
-        async function authUpdate() {
-            try {
-                const authData = await pb.collection('users').authRefresh();
-                if (!pb.authStore.isValid) {
-                    pb.authStore.clear();
-                    return window.location.replace("/auth/login");
-                }
-            } catch (error) {
+        function authUpdate() {
+            pb.collection('users').authRefresh().then((() => {
+                //Ok
+                // Do nothing
+                return
+            }), (() => {
+                //Not OK
                 pb.authStore.clear();
-                return window.location.replace('/auth/login');
-            }
+                return window.location.replace("/auth/login");
+            }));
         }
 
         async function GetLatestPage(urlParams) {
             authUpdate()
             try {
-                try {
-                    const latestPage = await pb.collection("pages").getFirstListItem(`id != '${urlParams.get("p")}'`, { sort: "-updated" })
-                    urlParams.set("edit", latestPage.id)
-                    Router.push(`/page?${urlParams.toString()}`)
-                } catch (err) {
-                    if (err.data.code === 404) {
-                        const req = await pb.send("/api/collections/users/account/create-empty-page")
-                        Router.push(`/page?edit=${req.id}`)
-                    }
-                }
-            } catch {
-                Router.push("/auth/login")
-            }
+                const latestPage = await pb.collection("pages").getFirstListItem(`id != '${urlParams.get("p")}'`, { sort: "-updated" })
+                urlParams.set("edit", latestPage.id)
+                Router.push(`/page?${urlParams.toString()}`)
+            } catch { }
         }
         function SetCurrentPage(urlParams) {
             if (urlParams.has("edit")) {
@@ -74,13 +64,14 @@ function NotionEditor() {
             if (urlParams.has("side")) {
                 setVisible(urlParams.get("side") === "true" ? true : false)
             }
-            setIsLoading(false)
         } else {
             GetLatestPage(urlParams)
         }
+        setIsLoading(false)
+
     }, [query])
 
-    if (isLoading || pageId === "") {
+    if (isLoading) {
         return (<Loader />)
     }
 
