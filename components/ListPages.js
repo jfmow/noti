@@ -11,7 +11,7 @@ const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 export default function UsersPages() {
     const [defaultWidth, setDefaultWidth] = useState(260)
     const [loading, setLoading] = useState(true)
-    const { showArchivedPages, setShowArchivedPages, listedPageItems, pb, setListedPageItems, visible, setVisible, pageId, themes, listedPageItemsFilter, setListedPageItemsFilters, setPrimaryVisiblePageData, primaryVisiblePageData } = useEditorContext()
+    const { showArchivedPages, listedPageItems, setListedPageItems, visible, pageId } = useEditorContext()
 
     useEffect(() => {
         async function run() {

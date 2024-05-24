@@ -6,6 +6,7 @@ import Router, { useRouter } from 'next/router';
 import PeekPageBlock from '@/lib/Modals/PeekPage';
 import NewPageModal from '@/lib/Modals/NewPage';
 import UsersPages from '@/components/ListPages';
+import EnableWebsiteThemes from '@/lib/Themes/everything';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 
@@ -20,53 +21,10 @@ function NotionEditor() {
     const [listedPageItemsFilter, setListedPageItemsFilters] = useState({ archived: false })
     const [showArchivedPages, setShowArchivedPages] = useState(false)
     const [pageId, setPageId] = useState("")
-    const [themes, setThemes] = useState([])
     const [primaryVisiblePageData, setPrimaryVisiblePageData] = useState({})
 
     useEffect(() => {
-
-
-        let vars = {}
-        async function GetThemes() {
-            const storedThemes = JSON.parse(window.localStorage.getItem("themes"))
-            if (!storedThemes || storedThemes === "" || (Date.now() - storedThemes.updated) > (1000 * 60 * 60 * 24)) {
-                const themeFetch = await fetch(`${process.env.NEXT_PUBLIC_CURRENTURL}/themes.json`)
-                const themes = await themeFetch.json()
-                setThemes(themes)
-                window.localStorage.setItem("themes", JSON.stringify({ updated: Date.now(), themes: themes }))
-                return themes
-            } else {
-                setThemes(storedThemes.themes)
-                return storedThemes.themes
-            }
-
-
-        }
-        async function applyTheme() {
-            const theme = window.localStorage.getItem('theme')
-            const themes = await GetThemes()
-            if (theme && theme !== 'system') {
-                vars = themes.find((item) => item.id === theme)?.data
-                const r = document.documentElement.style;
-                for (const variable in vars) {
-                    r.setProperty(variable, vars[variable]);
-                }
-            }
-
-        }
-        applyTheme();
-
-        // Listen for changes in local storage
-        window.addEventListener('storage', (e) => {
-            if (e.key === 'theme') {
-                // Theme property has changed, apply the new theme
-                const r = document.documentElement.style;
-                for (const variable in vars) {
-                    r.removeProperty(variable);
-                }
-                applyTheme();
-            }
-        });
+        EnableWebsiteThemes()
     }, [])
 
     useEffect(() => {
@@ -84,9 +42,7 @@ function NotionEditor() {
         }
 
         async function GetLatestPage(urlParams) {
-            if (!urlParams.has("demo") || +urlParams.get("demo") !== 1) {
-                authUpdate()
-            }
+            authUpdate()
             try {
                 try {
                     const latestPage = await pb.collection("pages").getFirstListItem(`id != '${urlParams.get("p")}'`, { sort: "-updated" })
@@ -129,7 +85,7 @@ function NotionEditor() {
     }
 
     return (
-        <EditorContext.Provider value={{ showArchivedPages, setShowArchivedPages, listedPageItems, pb, setListedPageItems, visible, setVisible, currentPage: pageId, pageId, themes, listedPageItemsFilter, setListedPageItemsFilters, setPrimaryVisiblePageData, primaryVisiblePageData }}>
+        <EditorContext.Provider value={{ showArchivedPages, setShowArchivedPages, listedPageItems, pb, setListedPageItems, visible, setVisible, currentPage: pageId, pageId, listedPageItemsFilter, setListedPageItemsFilters, setPrimaryVisiblePageData, primaryVisiblePageData }}>
             <div>
                 <div className='flex flex-col sm:flex-row'>
                     <UsersPages />
