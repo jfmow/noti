@@ -195,6 +195,21 @@ function DropDownMenu({ currentPageData }) {
         }
     }
 
+    function handleDuplicatePage() {
+        const formData = new FormData()
+        formData.set("page", currentPage)
+        fetch(`${process.env.NEXT_PUBLIC_POCKETURL}/api/page/duplicate`, { method: "POST", body: formData, headers: { Authorization: pb.authStore.token } }).then(async (res) => {
+            if (res.ok) {
+                const nid = await res.text()
+                const queryParams = new URLSearchParams(window.location.search)
+                queryParams.set("edit", nid)
+                window.location.replace(`/page?${queryParams.toString()}`)
+            } else {
+                toaster.error("A problem occured while duplicating the page.")
+            }
+        })
+    }
+
     useEffect(() => {
         //Update when the page is changed on nav, because sometimes is doesn't :(
         getPageData(currentPageData)
@@ -326,6 +341,12 @@ function DropDownMenu({ currentPageData }) {
                                 )}
                             </DropDownItem>
 
+                            <DropDownItem
+                                onClick={() => handleDuplicatePage()} >
+                                <Copy />
+                                Duplicate
+
+                            </DropDownItem>
                             <DropDownItem
                                 onClick={() => handleDeletePage()} >
                                 <Trash2Icon />
