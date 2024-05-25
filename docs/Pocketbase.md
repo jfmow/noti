@@ -22,6 +22,21 @@ I have tried to reduce the ammount of envirment variables for simplicty and secu
 ## Get started
 To actualy get started, start by cloning both this repo and the pocketbase repo (Linked in the introduction). Then using a host of your choice like vercel you can connect this repo and it will be built and run on there, make sure to add the required env vars so that it works correctly.
 
+```bash
+james@DESKTOP:~/example_note$ git clone https://github.com/jfmow/pocketbase-simple
+Cloning into 'pocketbase-simple'...
+remote: Enumerating objects: 272, done.
+remote: Counting objects: 100% (272/272), done.
+remote: Compressing objects: 100% (165/165), done.
+remote: Total 272 (delta 109), reused 207 (delta 66), pack-reused 0
+Receiving objects: 100% (272/272), 84.46 KiB | 1.41 MiB/s, done.
+Resolving deltas: 100% (109/109), done.
+james@DESKTOP:~/example_note$ cd pocketbase-simple/
+james@DESKTOP:~/example_note/pocketbase-simple$ ls
+Dockerfile  app  assets  emails  go.mod  go.sum  main.go  package  preview_page.json  readme.md
+james@DESKTOP:~/example_note/pocketbase-simple$
+```
+
 Now using the pocketbase repo, build the executable. The simple way is to build it on the machine you will deploy it to so clone it to that machine and use the go cli to build the root dir:
 ```bash
 go build -o base .
@@ -30,13 +45,19 @@ This builds it to a file called base and builds from the current dir.
 
 Now run the executable using
 ```bash
-./base serve --http=0.0.0.0:8080
+./base serve --http=yourmachineip:8080
 ```
 Now go to your browser and using the ip of that machine go to port 8080/_ and you should see an admin setup page.
 
+![Default admin setup page](https://github.com/jfmow/noti/assets/103403655/fbaf4d32-b0b5-4c54-8e1a-b679d685db20)
+
+
 Create an account then navigate to the settings page and import collections. Copy the schema.json file from the pocketbase repo into and save. Allow anything to be replaced. Thats it.
 
-Now your Note app is up and running.
+Now your Note app is up and running and should look like this with all the steps above followed:
+
+![Default page when first setup](https://github.com/jfmow/noti/assets/103403655/a4fdc0be-8d29-4b10-b10e-413a69257a79)
+
 
 To get emails you need to get a STMP server connected and custom domain. Please refer to the pocketbase.io docs for more information on how to do this.
 
@@ -55,6 +76,11 @@ You can also run pocketbase in docker by building the exe then building the dock
 
 #### Emails
 For emails i'm using ***resend*** but you can also use gmail as it does work (i've tested it but won't explain how to here).
+
+My mail setup:
+
+![My email setup dash](https://github.com/jfmow/noti/assets/103403655/0b9cbcc7-783b-4d5e-a82e-95ffb7c4d4f9)
+
 
 ## Thanks
 
