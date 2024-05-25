@@ -54,6 +54,9 @@ Now go to your browser and using the ip of that machine go to port 8080/_ and yo
 
 Create an account then navigate to the settings page and import collections. Copy the schema.json file from the pocketbase repo into and save. Allow anything to be replaced. Thats it.
 
+![How to import collections](https://github.com/jfmow/noti/assets/103403655/434a700a-3525-4cb9-9b88-1ce311015a19)
+
+
 Now your Note app is up and running and should look like this with all the steps above followed:
 
 ![Default page when first setup](https://github.com/jfmow/noti/assets/103403655/a4fdc0be-8d29-4b10-b10e-413a69257a79)
