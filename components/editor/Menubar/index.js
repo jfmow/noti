@@ -306,7 +306,7 @@ function DropDownMenu({ currentPageData }) {
                                     <DropDownSection>
                                         {listedPageItems.find((Apage) => Apage?.id === currentPage)?.shared ? (
                                             <>
-                                                <DropDownItem className="active:border-zinc-200 border border-transparent" onClick={copyPageShareUrl}>
+                                                <DropDownItem onClick={copyPageShareUrl}>
                                                     <Copy />
                                                     Copy link to clipboard
                                                 </DropDownItem>
