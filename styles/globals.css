@@ -386,6 +386,14 @@ a {
     --editor_text: #000 !important;
     --boxshadow_primary: #f3f3f39e !important;
   }
+
+  #hidemewhenprinting {
+    display: none !important;
+  }
+
+  *:not(#dontchangemewhenprinting) {
+    overflow: visible !important;
+  }
 }
 
 .highlighted {

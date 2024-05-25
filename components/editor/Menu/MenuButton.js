@@ -101,7 +101,7 @@ export default function MenuButtons({ currentPage }) {
     }
 
     return (
-        <div className="flex items-center justify-center gap-2">
+        <div id="hidemewhenprinting" className="flex items-center justify-center gap-2">
             <ToolTipCon>
                 <DropDownContainer>
                     <ToolTipTrigger>
