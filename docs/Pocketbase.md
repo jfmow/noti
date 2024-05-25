@@ -47,6 +47,15 @@ Now run the executable using
 ```bash
 ./base serve --http=yourmachineip:8080
 ```
+
+```bash
+james@DESKTOP:~/example_note/pocketbase-simple$ ./base serve
+2024/05/25 17:37:21 Error loading from a .env FILE (if in docker don't worry if your using compose)
+2024/05/25 17:37:21 Server started at http://127.0.0.1:8090
+├─ REST API: http://127.0.0.1:8090/api/
+└─ Admin UI: http://127.0.0.1:8090/_/
+...
+```
 Now go to your browser and using the ip of that machine go to port 8080/_ and you should see an admin setup page.
 
 ![Default admin setup page](https://github.com/jfmow/noti/assets/103403655/fbaf4d32-b0b5-4c54-8e1a-b679d685db20)
