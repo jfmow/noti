@@ -107,6 +107,8 @@ function Navigation() {
                         <li><a href="/demo">Demo</a></li>
                         <li><a href="#pricing">Pricing</a></li>
                         <li><a href="/auth/login">Login</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li className="font-bold"><a href="/auth/signup">Signup</a></li>
                     </ul>
                 ) : null}
             </div>
@@ -124,6 +126,7 @@ function Navigation() {
                 <li><a href="/demo">Demo</a></li>
                 <li><a href="#pricing">Pricing</a></li>
                 <li><a href="/auth/login">Login</a></li>
+                <li className="font-bold"><a href="/auth/signup">Signup</a></li>
             </ul>
         </nav>
     )
