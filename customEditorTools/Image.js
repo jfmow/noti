@@ -121,7 +121,6 @@ export default class ImageTool {
 
     if (file.imageMeta) {
       const imageDimensions = file.imageMeta
-      console.log(imageDimensions)
       let maxWidth = 650
       if (window.innerWidth < 650) {
         maxWidth = window.innerWidth - 4 * 16
