@@ -1,9 +1,10 @@
+import Loader from "@/components/Loader";
 import PocketBase from "pocketbase";
+import { createRoot } from "react-dom/client";
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false)
-import { handleBlurHashChange, handleCreateBlurHash } from '@/lib/idk'
 
-export default class Image {
+export default class ImageTool {
   static get toolbox() {
     return {
       title: "Image",
@@ -11,10 +12,10 @@ export default class Image {
     };
   }
 
-  constructor({ data, config, }) {
+  constructor({ data = {}, config = {} }) {
     this.data = data;
     this.wrapper = undefined;
-    this.config = config || {};
+    this.config = config;
     this.currpage = config.currPage
   }
 
@@ -24,6 +25,7 @@ export default class Image {
     this.wrapper = document.createElement("div");
     this.wrapper.classList.add("simple-image");
 
+    //Legacy image support
     if (this.data.file?.url) {
       function extractStringFromURL(url) {
         const regex = /\/([^/]+)\/[^/]+$/;
@@ -43,20 +45,18 @@ export default class Image {
     }
 
     if (this.data && this.data.fileId) {
-      //const originalUrl = decodeURIComponent(this.data.url).replace(
-      //  /&amp;/g,
-      //  "&"
-      //);
       this._createImage(this.data);
       return this.wrapper;
     }
 
     const fileInput = document.createElement("input");
+    fileInput.id = "fileinputelement"
     fileInput.type = "file";
     fileInput.style.display = "none"; // Set the input display to hidden
     fileInput.addEventListener("change", this._handleFileSelection.bind(this));
 
     const uploadBtn = document.createElement("button");
+    uploadBtn.id = "uploadbtn"
     uploadBtn.textContent = "Upload image";
     uploadBtn.classList.add("cdx-button");
     uploadBtn.style.width = "100%";
@@ -75,20 +75,24 @@ export default class Image {
       return;
     }
 
-    const fileInput = this.wrapper.querySelector('input[type="file"]');
-    const uploadBtn = this.wrapper.querySelector("button");
+    const fileInput = this.wrapper.querySelector('#fileinputelement');
+    const uploadBtn = this.wrapper.querySelector("#uploadbtn");
 
     fileInput.disabled = true;
     uploadBtn.disabled = true;
+
     const data2 = await this.config.storeFile.uploadFile(file)
 
-    fileInput.disabled = false;
-    uploadBtn.disabled = false;
+
     if (data2.success === 1) {
-      await this._createImage(
+      //Remove the upload btn
+      this.wrapper.removeChild(fileInput)
+      this.wrapper.removeChild(uploadBtn)
+
+      //Render the image
+      this._createImage(
         data2.file // Pass the fileId as an argument
       );
-
     } else {
       return
     }
@@ -96,63 +100,77 @@ export default class Image {
   }
 
   async _createImage(file) {
-    const iframe = document.createElement("img");
-    iframe.style.width = "100%";
-    iframe.style.maxHeight = "50vh";
-    iframe.style.objectFit = 'contain';
-    iframe.style.borderRadius = "5px";
-    iframe.style.margin = "1em 0";
-    if (file.blurHashData) {
-      iframe.setAttribute('fileId', file.fileId); // Set the fileId as an attribute of the iframe
-      iframe.setAttribute('blurHashDataAtt', JSON.stringify(file.blurHashData))
-      this.wrapper.innerHTML = "";
-      this.wrapper.appendChild(iframe);
-
-      const blurHashPromise = new Promise((reslove) => {
-        const blurHash = handleBlurHashChange(file.blurHashData)
-        iframe.src = blurHash
-        reslove(blurHash)
-      })
-
-      const filePromise = new Promise((reslove) => {
-        pb.collection('files').getOne(file.fileId, { expand: "page" }).then((record) => {
-          if (record.page === "") {
-            pb.collection("imgs").update(file.fileId, { "page": this.currpage })
-          }
-          if (!record.expand.page.shared) {
-            pb.files.getToken().then((token) => {
-              const url = pb.files.getUrl(record, record.file_data, { 'token': token });
-              iframe.src = url
-              reslove(url)
-            });
-          } else {
-            const url = pb.files.getUrl(record, record.file_data);
-            iframe.src = url
-            reslove(url)
-          }
-        }); // Use the fileId to retrieve the record
-
-      })
-
-      Promise.all([blurHashPromise, filePromise]).then((promises) => {
-        iframe.src = promises[1]
-      })
-
-
-    } else {
+    async function getImageUrl() {
       const fileToken = await pb.files.getToken();
       // retrieve an example protected file url (will be valid ~5min)
       const record = await pb.collection('files').getOne(file.fileId); // Use the fileId to retrieve the record
-      if (record.page === "") {
-        await pb.collection("imgs").update(file.fileId, { "page": this.currpage })
-      }
-      const url = pb.files.getUrl(record, record.file_data, { 'token': fileToken });
 
-      iframe.src = url;
-      iframe.setAttribute('fileId', file.fileId); // Set the fileId as an attribute of the iframe
-      this.wrapper.innerHTML = "";
-      this.wrapper.appendChild(iframe);
+      const url = pb.files.getUrl(record, record.file_data, { 'token': fileToken });
+      return url
     }
+
+    const imageElement = document.createElement("div");
+
+    imageElement.style.width = "100%";
+    imageElement.style.maxHeight = "50vh";
+    imageElement.style.borderRadius = "5px";
+    imageElement.style.margin = "1em 0";
+    imageElement.style.backgroundRepeat = "no-repeat"
+    imageElement.style.backgroundSize = "contain"
+    imageElement.style.backgroundPosition = "center"
+
+    if (file.imageMeta) {
+      const imageDimensions = file.imageMeta
+      let maxWidth = 650
+      if (window.innerWidth < 650) {
+        maxWidth = window.innerWidth - 4 * 16
+      }
+      if (imageDimensions.width > maxWidth) {
+        const aspectRatio = imageDimensions.height / imageDimensions.width;
+        const newHeight = maxWidth * aspectRatio;
+        imageElement.style.height = newHeight + "px"
+      } else {
+        imageElement.style.height = imageDimensions.height + "px"
+      }
+
+
+
+      imageElement.setAttribute('imagemeta', JSON.stringify(file.imageMeta)); // Set the fileId as an attribute of the iframe
+    } else {
+      //Get the width and height if not there -- LEGACY IMG SUPPORT
+      const imageUrl = await getImageUrl();
+      const tempImage = new Image()
+      tempImage.src = imageUrl;
+
+      tempImage.onload = function () {
+        const width = this.width;
+        const height = this.height;
+
+        // Set the dimensions or do further processing here
+        imageElement.style.height = height + "px";
+        imageElement.setAttribute('imagemeta', JSON.stringify({ width: width, height: height }));
+      };
+    }
+
+    const root = createRoot(imageElement);
+    root.render(
+      <div className="absolute z-[-1] w-full h-full">
+        <Loader />
+      </div>
+    )
+
+
+
+    const url = await getImageUrl()
+
+    imageElement.style.backgroundImage = `url(${url})`
+    imageElement.setAttribute('fileid', file.fileId); // Set the fileId as an attribute of the iframe
+
+    this.wrapper.appendChild(imageElement);
+
+    setTimeout(() => {
+      root.unmount()
+    }, 5000 + (Math.random() * 1000));
 
   }
 
@@ -182,7 +200,7 @@ export default class Image {
 
         if (data2.success === 1) {
           await this._createImage(
-            { fileId: data2.file.fileId, blurHashData: data2.file.blurHashData } // Pass the fileId as an argument
+            { fileId: data2.file.fileId, imageMeta: data2.file.imageMeta } // Pass the fileId as an argument
           )
         } else {
           return
@@ -197,23 +215,19 @@ export default class Image {
 
   removed() {
     if (this.data.fileId) {
-      console.log(this.data.fileId)
-      async function removeImg(file) {
-        await pb.collection('files').delete(file);
-      }
-      removeImg(this.data.fileId)
+      pb.collection('files').delete(this.data.fileId);
     }
   }
 
   save(blockContent) {
     try {
-      const iframe = blockContent.querySelector("img");
-      const fileId = iframe.getAttribute('fileId'); // Retrieve the fileId attribute
-      const fileBlurHash = iframe.getAttribute('blurHashDataAtt'); // Retrieve the fileId attribute
+      const iframe = blockContent.querySelector("div[fileid]");
+      const fileId = iframe.getAttribute('fileid'); // Retrieve the fileId attribute
+      const imageMeta = iframe.getAttribute('imagemeta'); // Retrieve the fileId attribute
 
       return {
         fileId: fileId, // Include the fileId in the saved data
-        blurHashData: JSON.parse(fileBlurHash)
+        imageMeta: JSON.parse(imageMeta)
       };
     } catch (err) {
       //console.log(err)

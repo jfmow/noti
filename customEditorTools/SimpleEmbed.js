@@ -112,10 +112,7 @@ export default class SimpleIframe {
 
   removed() {
     if (this.data.fileId) {
-      async function removeImg(file) {
-        await pb.collection('files').delete(file);
-      }
-      removeImg(this.data.fileId)
+      pb.collection('files').delete(file);
     }
   }
 
