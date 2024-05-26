@@ -13,7 +13,7 @@ import compressImage from "@/lib/CompressImg";
 import Router from "next/router";
 import NestedList from '@editorjs/nested-list';
 import MarkerTool from "@/customEditorTools/Marker";
-import Image from "@/customEditorTools/Image";
+import ImageTool from "@/customEditorTools/Image";
 import SimpleIframe from "@/customEditorTools/SimpleEmbed";
 import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
 import LineBreak from "@/customEditorTools/LineBreak";
@@ -131,56 +131,71 @@ export default function EditorV3({ currentPage, peek }) {
                             class: MarkerTool,
                         },
                         image: {
-                            class: Image,
+                            class: ImageTool,
                             config: {
                                 storeFile: {
                                     uploadFile(file) {
+                                        async function getImageDimensions(file) {
+                                            return new Promise((resolve, reject) => {
+                                                const img = new Image();
+                                                img.onload = () => {
+                                                    resolve({ width: img.width, height: img.height });
+                                                };
+                                                img.onerror = () => {
+                                                    reject(new Error('Error loading image'));
+                                                };
+                                                img.src = URL.createObjectURL(file);
+                                            });
+                                        }
+
                                         async function uploadbyFile(file) {
-                                            const loadingToast = await toaster.loading("Uploading...")
+                                            const loadingToast = await toaster.loading("Uploading");
+
+                                            // Init the new file record as formData
                                             const formData = new FormData();
 
-                                            const compressedBlob = await compressImage(file); // Maximum file size in KB (100KB in this example)
+                                            // Compress the image
+                                            const compressedBlob = await compressImage(file);
+
+                                            // Convert the compressed data to a file
                                             const compressedFile = new File(
                                                 [compressedBlob],
                                                 file.name,
                                                 { type: "image/jpeg" }
                                             );
-                                            const result = await handleCreateBlurHash(compressedFile);
-                                            console.log("Result:", result); // Access result.hash, result.width, and result.height
+
+                                            // Get the image dimensions here
+                                            let imageMeta;
+                                            try {
+                                                imageMeta = await getImageDimensions(compressedFile);
+                                            } catch (error) {
+                                                console.error('Failed to get image dimensions', error);
+                                                imageMeta = { width: 0, height: 0 }; // Default values in case of error
+                                            }
 
                                             formData.append("file_data", compressedFile);
                                             formData.append("uploader", pb.authStore.model.id);
-                                            formData.append('page', currentPage)
-                                            let record = null
+                                            formData.append('page', currentPage);
                                             try {
-                                                if (compressedFile.size > 5242880) {
-                                                    toaster.update(loadingToast, 'File too big. Must be < 5mb', "error")
-                                                    return { success: 0 }
-                                                }
-                                                record = await pb.collection("files").create(formData);
-                                                toaster.update(loadingToast, "Image uploaded successfully!", "success")
+                                                const record = await pb.collection("files").create(formData);
+                                                toaster.update(loadingToast, "Image uploaded successfully!", "success");
+                                                return {
+                                                    success: 1,
+                                                    file: {
+                                                        fileId: record.id,
+                                                        imageMeta: imageMeta
+                                                    },
+                                                };
                                             } catch (error) {
-                                                if (error.data.code === 403) {
-                                                    toaster.update(loadingToast, error.data.message, "error")
-                                                    return { success: 0 }
-                                                }
-                                                toaster.update(loadingToast, 'Unable to upload file', "error")
-                                                return { success: 0 }
+                                                toaster.update(loadingToast, error.data.message, "error");
+                                                return { success: 0 };
                                             }
-
-                                            return {
-                                                success: 1,
-                                                file: {
-                                                    fileId: record.id,
-                                                    blurHashData: result
-                                                },
-                                            };
                                         }
+
                                         return uploadbyFile(file)
                                     },
                                 },
                                 currPage: currentPage
-
                             },
 
                         },
@@ -202,41 +217,33 @@ export default function EditorV3({ currentPage, peek }) {
                                 storeFile: {
                                     uploadFile(file) {
                                         async function uploadbyFile(file) {
-                                            const loadingToast = await toaster.loading("Uploading...")
+                                            const loadingToast = await toaster.loading("Uploading")
                                             const formData = new FormData();
                                             formData.append("file_data", file);
                                             formData.append("uploader", pb.authStore.model.id);
                                             formData.append('page', currentPage)
-                                            let record = null
                                             try {
-                                                if (file.size > 5242880) {
-                                                    toaster.update(loadingToast, 'File too big. Must be < 5mb', "error")
-                                                    return { success: 0 }
-                                                }
                                                 if (!file.name.endsWith(".pdf")) {
                                                     toaster.update(loadingToast, 'File type not supported yet!', "error")
                                                     return { success: 0 }
                                                 }
-                                                record = await pb.collection("files").create(formData);
-                                                //console.log(record);
+                                                const record = await pb.collection("files").create(formData);
+
                                                 toaster.update(loadingToast, "File uploaded successfully!", "success")
+                                                return {
+                                                    success: 1,
+                                                    file: {
+                                                        recid: record.id,
+                                                    },
+                                                };
 
                                             } catch (error) {
-                                                if (error.data.code === 403) {
-                                                    toaster.update(loadingToast, error.data.message, "error")
-                                                    return { success: 0 }
-                                                }
-                                                toaster.update(loadingToast, 'Only pdf files are currently supported for this function', "error")
+                                                toaster.update(loadingToast, error.data.message, "error")
                                                 return { success: 0 }
                                                 // Handle error
                                             }
 
-                                            return {
-                                                success: 1,
-                                                file: {
-                                                    recid: record.id,
-                                                },
-                                            };
+
                                         }
                                         return uploadbyFile(file)
                                     },
@@ -258,13 +265,10 @@ export default function EditorV3({ currentPage, peek }) {
                             class: InlineCode,
                             shortcut: 'CMD+SHIFT+M',
                         },
-
-
                         quote: {
                             class: Quote,
                             inlineToolbar: true,
                         },
-
                         break: {
                             class: LineBreak,
                         },
