@@ -1,6 +1,5 @@
 import OAuth2LoginButtons from "@/components/Auth/OAuth2/methods";
-import LoginPage, { LoginButton, LoginInput, LoginMessage, LoginShortcutLink } from "@/components/Auth/login";
-import { Link } from "@/components/UX-Components";
+import LoginPage, { LoginButton, LoginInput, LoginShortcutLink } from "@/components/Auth/login";
 import { toaster } from "@/components/toast";
 import Router from "next/router";
 import PocketBase from 'pocketbase'
@@ -14,6 +13,7 @@ export default function Login() {
     const [queryParams, setQueryParams] = useState(null)
 
     useEffect(() => {
+        //TODO: Support plans -> ?plan=pro / ?plan=normal
         const urlParams = new URLSearchParams(window.location.search)
         setQueryParams(urlParams)
     }, [])

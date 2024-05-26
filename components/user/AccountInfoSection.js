@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import AvatarModal from './AvatarModal';
 import { DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle } from '@/lib/Pop-Cards/DropDown';
 import { useEditorContext } from '@/pages/page';
-import { toaster } from '../toast';
+import { toaster } from '@/components/toast';
 export default function AccountDetails() {
     const { pb } = useEditorContext()
     const [totalUsage, setTotalUsage] = useState(0)

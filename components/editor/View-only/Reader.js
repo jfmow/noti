@@ -15,7 +15,7 @@ import SimpleIframe from "@/customEditorTools/SimpleEmbed";
 import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
 import LineBreak from "@/customEditorTools/LineBreak";
 import { toaster } from "@/components/toast";
-import Loader from "./Loader";
+import Loader from "../../Loader";
 import PocketBase from 'pocketbase'
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 pb.autoCancellation(false)

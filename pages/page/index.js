@@ -11,7 +11,7 @@ const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 
 const EditorContext = React.createContext();
-const Editor = lazy(() => import('../../components/editor/Editor3'));
+const Editor = lazy(() => import('../../components/editor/Editor'));
 
 function NotionEditor() {
     const { query } = useRouter()

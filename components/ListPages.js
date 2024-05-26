@@ -1,11 +1,11 @@
 import PocketBase from 'pocketbase'
-import { toaster } from './toast';
+import { toaster } from '@/components/toast';
 import { useEditorContext } from '@/pages/page';
 import { useEffect, useState } from 'react';
 import { Plus, ChevronDown, ChevronRight } from 'lucide-react'
 import Router from 'next/router';
-import UserOptions from './UserInfo';
-import Loader from './Loader';
+import UserOptions from '@/components/UserInfo';
+import Loader from '@/components/Loader';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 
 export default function UsersPages() {

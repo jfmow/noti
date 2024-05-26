@@ -43,9 +43,3 @@ export function Paragraph({ ...props }) {
         </p>
     )
 }
-
-export function Link({ ...props }) {
-    return (
-        <a {...props} className={`${props.className} ${"font-[500] text-[14px] text-zinc-800"}`}>{props.children}</a>
-    )
-}

@@ -1,5 +1,4 @@
-import LoginPage, { LoginButton, LoginInput, LoginMessage, LoginShortcutLink } from "@/components/Auth/login";
-import { Link } from "@/components/UX-Components";
+import LoginPage, { LoginButton, LoginInput, LoginMessage } from "@/components/Auth/login";
 import { toaster } from "@/components/toast";
 import Router from "next/router";
 import PocketBase from 'pocketbase'

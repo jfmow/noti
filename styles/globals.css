@@ -136,118 +136,16 @@ a {
   text-decoration: none;
 }
 
-@font-face {
-  font-family: "Anton";
-  src: url("../fonts/Anton-Regular.ttf");
-}
 
 @font-face {
-  font-family: "Ab";
-  src: url("../fonts/Abelone-FREE.otf");
+
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  src: url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+  font-variation-settings:
+    "slnt" 0;
 }
 
-@font-face {
-  font-family: "Chairbomb";
-  src: url("../fonts/CherryBombOne-Regular.ttf");
-}
-
-@font-face {
-  font-family: "Mori";
-  font-display: swap;
-  src: url("../fonts/MoiraiOne-Regular.ttf");
-}
-
-@font-face {
-  font-family: "Inter Tight";
-  font-display: swap;
-  src: url("../fonts/InterTight-VariableFont_wght.ttf");
-}
-
-@font-face {
-  font-family: "Inter";
-  font-display: swap;
-  src: url("../fonts/Inter-VariableFont_slnt\,wght.ttf");
-}
-
-@font-face {
-  font-family: "Gotham";
-  font-display: swap;
-  src: url("../fonts/gotham-bold-webfont.woff");
-}
-
-@font-face {
-  font-family: "mons";
-  font-display: swap;
-  src: url("../fonts/Montserrat-VariableFont_wght.ttf");
-}
-
-@font-face {
-  font-family: "Rubick";
-  font-display: swap;
-  src: url("../fonts/Rubik-VariableFont_wght.ttf");
-}
-
-@font-face {
-  font-family: "Rubick-I";
-  font-display: swap;
-  src: url("../fonts/Rubik-Italic-VariableFont_wght.ttf");
-}
-
-@font-face {
-  font-family: "Manrope";
-  font-display: swap;
-  src: url("../fonts/Manrope-VariableFont_wght.ttf");
-}
-
-@font-face {
-  font-family: "Nunto";
-  font-display: swap;
-  src: url("../fonts/Nunito-VariableFont_wght.ttf");
-}
-
-@font-face {
-  font-family: "Special";
-  font-display: swap;
-  src: url("../fonts/specialfont.woff2");
-}
-
-@font-face {
-  font-family: "Int";
-  font-display: swap;
-  src: url("../fonts/int.woff2");
-}
-
-@font-face {
-  font-family: "Gest-semi-bold";
-  font-display: swap;
-  src: url("../fonts/Geist-SemiBold.otf");
-}
-
-@font-face {
-  font-family: "Gest-med-bold";
-  font-display: swap;
-  src: url("../fonts/Geist-Medium.otf");
-}
-
-@font-face {
-  font-family: "Gest-bold";
-  font-display: swap;
-  src: url("../fonts/Geist-Bold.otf");
-}
-
-@font-face {
-  font-family: "Gest-ultra-bold";
-  font-display: swap;
-  src: url("../fonts/Geist-UltraBlack.otf");
-}
-
-
-
-@font-face {
-  font-family: "Gest-reg";
-  font-display: swap;
-  src: url("../fonts/Geist-Regular.otf");
-}
 
 /* width */
 ::-webkit-scrollbar {

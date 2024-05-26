@@ -4,7 +4,7 @@ import { Suspense, lazy } from 'react';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 
-const Reader = lazy(() => import('../../../components/Reader'));
+const Reader = lazy(() => import('../../../components/editor/View-only/Reader'));
 
 function NotionEditor({ pageId }) {
 

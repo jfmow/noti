@@ -8,7 +8,7 @@ import Img from "@/components/editor/Menu/Img"
 import Icons from "@/components/editor/Menu/Icons"
 import Gradient from '@/components/editor/Menu/gradient/adient';
 import ColorSelector from '@/components/editor/Menu/ColorSelector';
-import { openPageContext } from '../Editor3';
+import { openPageContext } from '../Editor';
 import { toaster } from '@/components/toast';
 import compressImage from "@/lib/CompressImg";
 

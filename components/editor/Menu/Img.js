@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PocketBase from 'pocketbase';
 import debounce from 'lodash/debounce';
-import Link from '../../Link';
+import Link from '@/components/Link';
 import { toaster } from '@/components/toast';
 import { Input } from '@/components/UX-Components';
 

@@ -1,11 +1,8 @@
 import Link from "@/components/Link"
-import Loader from "@/components/Loader"
-import { Input, SubmitButton } from "@/components/UX-Components"
 import { ToolTip, ToolTipCon, ToolTipTrigger } from "@/components/UX-Components/Tooltip"
 import { toaster } from "@/components/toast"
-import { Modal, ModalContent } from "@/lib/Modals/Modal"
-import { ArrowLeft, LinkIcon, Loader2, Unlink, X } from "lucide-react"
-import Router, { useRouter } from "next/router"
+import { ArrowLeft, LinkIcon, Loader2, Unlink } from "lucide-react"
+import { useRouter } from "next/router"
 import PocketBase from 'pocketbase'
 import { useEffect, useState } from "react"
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)

@@ -4,7 +4,7 @@ import { toaster } from '@/components/toast';
 import { ToolTip, ToolTipCon, ToolTipTrigger } from '@/components/UX-Components/Tooltip';
 import { useEditorContext } from '@/pages/page';
 import { DropDown, DropDownContainer, DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from '@/lib/Pop-Cards/DropDown';
-import { Link } from '../../UX-Components';
+import Link from '@/components/Link';
 import { CalendarDays, CircleUser, Share2, PartyPopper, Archive, ArchiveRestore, Baseline, CaseLower, Copy, Eye, EyeOff, Info, PanelRightDashed, Settings2, Share, Space, Trash2Icon, WholeWord } from 'lucide-react';
 import { updateItem } from '../../ListPages';
 import { CountCharacters, CountWords } from './helpers';

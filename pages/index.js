@@ -117,7 +117,7 @@ function Navigation() {
     }
 
     return (
-        <nav className="bg-zinc-100 w-full border-b p-3 flex items-center">
+        <nav className="bg-zinc-100 w-full border-b p-3 flex items-center justify-between">
             <div aria-label="Logo" className="object-contain w-9 h-9 overflow-hidden">
                 <img alt="Logo" src="/logo-small.webp" />
             </div>
@@ -126,8 +126,10 @@ function Navigation() {
                 <li><a href="/demo">Demo</a></li>
                 <li><a href="#pricing">Pricing</a></li>
                 <li><a href="/auth/login">Login</a></li>
-                <li className="font-bold"><a href="/auth/signup">Signup</a></li>
             </ul>
+            <div>
+                <a href="/auth/signup">Signup</a>
+            </div>
         </nav>
     )
 }
