@@ -1,7 +1,7 @@
 import { Modal, ModalContent, ModalTrigger } from "@/lib/Modals/Modal";
 import compressImage from "@/lib/CompressImg";
 import { useState } from "react";
-import { FileInput, SubmitButton } from "../UX-Components";
+import { FileInput, SubmitButton } from "@/components/UX-Components";
 import { DropDownItem } from "@/lib/Pop-Cards/DropDown";
 export default function AvatarModal({ pb }) {
     const [refreshAvatar, setrefreshAvatar] = useState(false)

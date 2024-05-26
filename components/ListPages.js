@@ -4,7 +4,7 @@ import { useEditorContext } from '@/pages/page';
 import { useEffect, useState } from 'react';
 import { Plus, ChevronDown, ChevronRight } from 'lucide-react'
 import Router from 'next/router';
-import UserOptions from '@/components/UserInfo';
+import UserOptions from '@/components/user-info';
 import Loader from '@/components/Loader';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 

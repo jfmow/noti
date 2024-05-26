@@ -4,17 +4,15 @@ import { DropDown, DropDownContainer, DropDownItem, DropDownSection, DropDownSec
 import { Paragraph } from "@/components/UX-Components";
 import { PopUpTrigger, Popup, PopupContainer } from "@/lib/Pop-Cards/Popup";
 import { TabContent, TabGroup, TabMenu, TabMenuItem, TabsProvider, Tabtrigger } from "@/lib/Pop-Cards/Tabs";
-import Img from "@/components/editor/Menu/Img"
-import Icons from "@/components/editor/Menu/Icons"
-import Gradient from '@/components/editor/Menu/gradient/adient';
-import ColorSelector from '@/components/editor/Menu/ColorSelector';
-import { openPageContext } from '../Editor';
-import { toaster } from '@/components/toast';
-import compressImage from "@/lib/CompressImg";
+import Img from "@/components/editor/Page-cover-buttons/Cover-image/unsplash"
+import Icons from "@/components/editor/Page-cover-buttons/Icons-and-list-color/Icons"
+import Gradient from '@/components/editor/Page-cover-buttons/Cover-image/gradient';
+import ColorSelector from '@/components/editor/Page-cover-buttons/Icons-and-list-color/ColorSelector';
+import { openPageContext } from '@/components/editor/Editor';
 
 export default function MenuButtons({ currentPage }) {
     const { pb, setListedPageItems } = useEditorContext()
-    const { openPageData, setOpenPageData, updateOpenPageData } = openPageContext()
+    const { setOpenPageData } = openPageContext()
 
     async function setHeader(img) {
         setOpenPageData(prevData => {
@@ -59,44 +57,6 @@ export default function MenuButtons({ currentPage }) {
             await pb.collection('pages').update(currentPage, { color: newColor });
         } catch {
             return new Error('An error occured while updating page color')
-        }
-    }
-
-    async function customHeaderHandler(e) {
-        const file = e.target.files[0]
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            setHeader(event.target.result);
-        };
-        reader.readAsDataURL(file);
-        let formData = new FormData();
-        if (file) {
-
-            try {
-
-                const compressedBlob = await compressImage(file, 200); // Maximum file size in KB (100KB in this example)
-                const compressedFile = new File([compressedBlob], file.name, {
-                    type: "image/jpeg",
-                });
-                if (file.size > 747000) {
-                    formData.append("header_img", compressedFile);
-                } else {
-                    formData.append("header_img", file);
-                }
-                formData.append("unsplash", "");
-                //if (compressedFile.size > 4547000) {
-                //    return toast.error('Compresed file may be too big (>4.5mb)!')
-                //}
-
-                const pageData = await pb.collection("pages").update(currentPage, formData);
-                setOpenPageData(prevData => {
-                    return pageData
-                })
-
-            } catch (error) {
-                console.log(error)
-                toaster.error("Error uploading header image, please try again.");
-            }
         }
     }
 
@@ -155,20 +115,7 @@ export default function MenuButtons({ currentPage }) {
                             </PopupContainer>
 
 
-                            <DropDownItem>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-image"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><circle cx="9" cy="9" r="2" /><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" /></svg>
-                                <label className="h-full flex items-center justify-center" >
-                                    <input
-                                        type="file"
-                                        name="file"
-                                        id="fileInput"
-                                        accept="image/*"
-                                        className="hidden"
-                                        onChange={customHeaderHandler}
-                                    />
-                                    <p>Custom</p>
-                                </label>
-                            </DropDownItem>
+
                         </DropDownSection>
                     </DropDown>
                 </DropDownContainer>

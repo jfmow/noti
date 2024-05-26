@@ -20,11 +20,11 @@ import LineBreak from "@/customEditorTools/LineBreak";
 import { handleCreateBlurHash } from '@/lib/idk'
 import { toaster } from "@/components/toast";
 import { useEditorContext } from "@/pages/page";
-import { Paragraph } from "../UX-Components";
+import { Paragraph } from "@/components/UX-Components";
 import { Modal, ModalContent } from "@/lib/Modals/Modal";
 import { debounce } from "lodash";
-import Loader from "../Loader";
-const MenuButtons = lazy(() => import("./Menu/MenuButton"))
+import Loader from "@/components/Loader";
+const MenuButtons = lazy(() => import("@/components/editor/Page-cover-buttons"))
 
 const editorV3Context = createContext();
 export default function EditorV3({ currentPage, peek }) {

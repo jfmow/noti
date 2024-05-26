@@ -1,8 +1,8 @@
 import Router from 'next/router';
 import { DropDownItem, DropDownSection, DropDownSectionTitle } from '@/lib/Pop-Cards/DropDown';
 import { useEditorContext } from '@/pages/page';
-import AccountDetails from './AccountInfoSection';
-import SecuritySettings from './SecuritySettings';
+import AccountDetails from '@/components/user-info/Account/Account-info';
+import SecuritySettings from '@/components/user-info/Account/SecuritySettings';
 export default function AccountButtons() {
     const { pb, showArchivedPages, setShowArchivedPages } = useEditorContext()
     return (

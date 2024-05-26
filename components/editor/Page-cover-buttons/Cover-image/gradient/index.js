@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { PopUpCardsGlobalButton } from "@/lib/Pop-Cards/Popup";
-import { gradient } from "@/components/editor/Menu/gradient";
+import { gradient } from "@/components/editor/Page-cover-buttons/Cover-image/gradient/init";
 import compressImage from "@/lib/CompressImg";
 
 export default function Gradient({ setArticleHeader, page, pb }) {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import AvatarModal from './AvatarModal';
+import AvatarModal from '@/components/user-info/Account/AvatarModal';
 import { DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle } from '@/lib/Pop-Cards/DropDown';
 import { useEditorContext } from '@/pages/page';
 import { toaster } from '@/components/toast';

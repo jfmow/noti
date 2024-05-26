@@ -1,6 +1,6 @@
-import AccountButtons from './user/AccountButtons2';
+import AccountButtons from '@/components/user-info/Account';
 import { DropDown, DropDownContainer, DropDownSectionTitle, DropDownTrigger } from '@/lib/Pop-Cards/DropDown';
-import ThemePicker from '@/components/user/ThemePicker'
+import ThemePicker from '@/components/user-info/Themes'
 import { useEditorContext } from '@/pages/page';
 import { Paintbrush, Settings2, UserCircle } from 'lucide-react';
 export default function UserOptions({ clss }) {
