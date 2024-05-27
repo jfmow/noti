@@ -289,6 +289,10 @@ a {
     display: none !important;
   }
 
+  #vanishmewhenprinting {
+    visibility: hidden !important;
+  }
+
   *:not(#dontchangemewhenprinting) {
     overflow: visible !important;
   }

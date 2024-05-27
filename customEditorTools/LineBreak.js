@@ -36,7 +36,7 @@ export default class LineBreak {
         breakElement.style.height = "2px"
         breakElement.style.background = adjustHexBrightness(document.documentElement.style.getPropertyValue("--background"))
         breakElement.style.pageBreakAfter = 'always';
-        breakElement.id = "hidemewhenprinting"
+        breakElement.id = "vanishmewhenprinting"
         this.wrapper.appendChild(breakElement)
     }
 
