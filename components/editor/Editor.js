@@ -86,6 +86,25 @@ export default function EditorV3({ currentPage, peek }) {
             setSavingState("Saving...")
             const content = await editor.save()
             const res = await pb.collection('pages').update(currentPage, { "content": content })
+
+            if ((res.content === "" && openPageData.content !== "")) {
+                toaster.error("THE PAGE HAS NOT BEEN SAVED.\nDO NOT CLOSE THIS PAGE!")
+                const loadingtoast = await toaster.loading("Attempting to save page again")
+                try {
+                    const content = await editor.save()
+                    const res = await pb.collection('pages').update(currentPage, { "content": content })
+                    if (!(res.content === "" && openPageData.content !== "")) {
+                        toaster.update(loadingtoast, "Page saved", "success")
+                    } else {
+                        toaster.update(loadingtoast, "Failed. This page is not in a saved state. Do not close this page.", "error")
+                    }
+                } catch (err) {
+                    toaster.error(err)
+                } finally {
+                    toaster.dismiss(loadingtoast)
+                }
+            }
+
             setSavingState("Saved")
             if (currentPage === res.id) {
                 setPrimaryVisiblePageData(oldData => {
@@ -96,6 +115,7 @@ export default function EditorV3({ currentPage, peek }) {
                     }
                 })
             }
+
         } catch (err) {
             setSavingState("Unable to save file...")
             toaster.error(err?.message || err)
