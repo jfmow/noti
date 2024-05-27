@@ -14,7 +14,7 @@ export default function MenuBar({ currentPageData }) {
     const [filteredItems, setFilteredItems] = useState([]);
     const [isMobile, setIsMobile] = useState(false)
     useEffect(() => {
-        if (window.innerWidth < 450) {
+        if (window.innerWidth < 640) {
             setIsMobile(true)
         }
     }, [])

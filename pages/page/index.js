@@ -7,6 +7,7 @@ import PeekPageBlock from '@/lib/Modals/PeekPage';
 import NewPageModal from '@/lib/Modals/NewPage';
 import UsersPages from '@/components/ListPages';
 import EnableWebsiteThemes from '@/lib/Themes/everything';
+import SettingsPopover from '@/components/Settings';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 

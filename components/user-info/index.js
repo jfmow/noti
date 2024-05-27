@@ -1,8 +1,8 @@
-import AccountButtons from '@/components/user-info/Account';
 import { DropDown, DropDownContainer, DropDownSectionTitle, DropDownTrigger } from '@/lib/Pop-Cards/DropDown';
 import ThemePicker from '@/components/user-info/Themes'
 import { useEditorContext } from '@/pages/page';
 import { Paintbrush, Settings2, UserCircle } from 'lucide-react';
+import SettingsPopover from '../Settings';
 export default function UserOptions({ clss }) {
     const { pb } = useEditorContext()
     return (
@@ -35,15 +35,10 @@ export default function UserOptions({ clss }) {
                         </DropDown>
                     </DropDownContainer>
 
-                    <DropDownContainer>
-                        <DropDownTrigger>
-                            <span className='sr-only'>Account settings</span>
-                            <Settings2 className='w-4 h-4 cursor-pointer' />
-                        </DropDownTrigger>
-                        <DropDown>
-                            <AccountButtons />
-                        </DropDown>
-                    </DropDownContainer>
+                    <SettingsPopover pb={pb}>
+                        <span className='sr-only'>Account settings</span>
+                        <Settings2 className='w-4 h-4 cursor-pointer' />
+                    </SettingsPopover>
                 </div>
             </div>
 

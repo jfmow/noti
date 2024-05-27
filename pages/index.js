@@ -11,7 +11,7 @@ export default function HomePage() {
     const [mobile, setIsOnMobile] = useState(false)
     useEffect(() => {
         if (window) {
-            if (window.innerWidth < 500) {
+            if (window.innerWidth < 640) {
                 setIsOnMobile(true)
             }
         }

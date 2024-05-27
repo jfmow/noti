@@ -15,7 +15,7 @@ export default function UsersPages() {
 
     useEffect(() => {
         async function run() {
-            if (window.innerWidth < 600) {
+            if (window.innerWidth < 640) {
                 setDefaultWidth("full")
             }
             const pages = await getPages(showArchivedPages)
