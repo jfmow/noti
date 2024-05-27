@@ -1,6 +1,8 @@
 import Avatar from "@/components/Settings/Account/Avatar"
 import { useSettingsPopoverContext } from "@/components/Settings"
 import Details from "@/components/Settings/Account/Details"
+import Pages from "@/components/Settings/Account/Pages"
+import DeleteAccount from "@/components/Settings/Account/Delete"
 
 export default function AccountTab() {
 
@@ -20,6 +22,8 @@ export default function AccountTab() {
                 </div>
             </div>
             <Details />
+            <Pages />
+            <DeleteAccount />
         </div>
     )
 }
