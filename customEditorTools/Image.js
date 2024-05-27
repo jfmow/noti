@@ -119,7 +119,7 @@ export default class ImageTool {
     imageElement.style.backgroundSize = "contain"
     imageElement.style.backgroundPosition = "center"
 
-    if (file.imageMeta) {
+    if (file.imageMeta && file.imageMeta.width > 1 && file.imageMeta.height > 1) {
       const imageDimensions = file.imageMeta
       let maxWidth = 650
       if (window.innerWidth < 650) {
