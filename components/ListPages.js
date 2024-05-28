@@ -232,7 +232,6 @@ export async function updateItem(thingToUpdate = "", value = "", itemId = "", li
         }
     })
     setListedPageItems(newArrayOfItems)
-    pb.collection("pages").update(updatedItem.id, updatedItem)
     return
 }
 
