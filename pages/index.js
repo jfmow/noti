@@ -128,7 +128,7 @@ function Navigation() {
                 <li><a href="/auth/login">Login</a></li>
             </ul>
             <div>
-                <a href="/auth/signup">Signup</a>
+                <a className="px-3 py-2 rounded cursor-pointer hover:bg-zinc-200 bg-zinc-300 border border-zinc-400" href="/auth/signup">Signup</a>
             </div>
         </nav>
     )
