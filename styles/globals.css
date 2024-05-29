@@ -182,10 +182,7 @@ a {
     color: #fff;
   }
 
-  /*Inter doesn't seem to work well with the print rendering*/
-  .codex-editor {
-    font-family: sans-serif !important;
-  }
+
 
   /*::-webkit-scrollbar {
     display: none;
@@ -311,6 +308,11 @@ a {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+  }
+
+  /*Inter doesn't seem to work well with the print rendering*/
+  .codex-editor {
+    font-family: sans-serif !important;
   }
 }
 
