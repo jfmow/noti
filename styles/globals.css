@@ -117,7 +117,6 @@ Basic h1's for editor js
 html,
 body {
   font-family: "Inter";
-
   max-width: 100dvw;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased !important;
@@ -181,6 +180,11 @@ a {
 
   body {
     color: #fff;
+  }
+
+  /*Inter doesn't seem to work well with the print rendering*/
+  .codex-editor {
+    font-family: sans-serif !important;
   }
 
   /*::-webkit-scrollbar {
