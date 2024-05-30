@@ -36,6 +36,7 @@ export default function EditorV3({ currentPage, peek }) {
     const [multiRecordSearch, setMultiRecordSearch] = useState({ state: false, records: [] })
     const [loading, setLoading] = useState(false)
     const [saving, setSavingState] = useState("")
+    const allowUnload = useRef(true)
 
 
     useEffect(() => {
@@ -79,6 +80,18 @@ export default function EditorV3({ currentPage, peek }) {
             RetriveOpenPageData(currentPage)
         }
 
+        window.addEventListener('beforeunload', (event) => {
+            if (!allowUnload.current) {
+                const message = 'You have unsaved changes. Do you really want to leave?';
+                event.returnValue = message; // Standard way to show the dialog
+                return message; // For some browsers
+            }
+        });
+
+        return () => {
+            window.removeEventListener
+        }
+
     }, [currentPage])
 
     async function Save(editor) {
@@ -86,6 +99,15 @@ export default function EditorV3({ currentPage, peek }) {
             setSavingState("Saving...")
             const content = await editor.save()
             const res = await pb.collection('pages').update(currentPage, { "content": content })
+
+            if (res.content === "" || (res.content.blocks.length !== content.blocks.length)) {
+                console.error("Database response does not contain what is on the page.")
+                toaster.info("An error occured while saving. We are trying again.")
+                allowUnload.current = false
+                debounceSave(editor)
+            } else {
+                allowUnload.current = true
+            }
 
             setSavingState("Saved")
             if (currentPage === res.id) {
@@ -104,7 +126,7 @@ export default function EditorV3({ currentPage, peek }) {
         }
     }
 
-    const debounceSave = debounce(Save, 300)
+    const debounceSave = debounce(Save, 420)
 
     useEffect(() => {
         try {
