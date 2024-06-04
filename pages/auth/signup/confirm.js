@@ -48,7 +48,7 @@ export default function Login() {
                 Paste the token from the email sent to <strong>{queryData?.email}</strong> to complete the signup form below
             </div>
             <form onSubmit={HandleForm}>
-                <LoginInput minlength={20} placeholder="Token" name="token" required type="text" defaultValue={queryData?.token} />
+                <LoginInput minlength={15} placeholder="Token" name="token" required type="text" defaultValue={queryData?.token} />
                 <LoginInput placeholder="Email | hi@example.com" type="email" name="email" required defaultValue={queryData?.email} disabled />
                 <LoginInput placeholder="Email | hi@example.com" type="email" name="email" required defaultValue={queryData?.email} hidden />
                 <LoginInput minlength={3} placeholder="Username | mom" name="username" required type="text" defaultValue={queryData?.username} />

@@ -293,7 +293,7 @@ function DropDownMenu({ currentPageData }) {
                                 </DropDownExtension>
                             </DropDownExtensionContainer>
                             <DropDownExtensionContainer>
-                                <DropDownExtensionTrigger hover>
+                                <DropDownExtensionTrigger>
                                     <DropDownItem>
                                         <Share />
                                         Share
