@@ -184,7 +184,7 @@ function ListItem({ item, pageId, listedPageItems, setListedPageItems, children 
                     }} type='button' style={{ opacity: item.expanded ? 100 : 0 }} className='flex items-center justify-center p-1 rounded bg-none border-none hover:bg-[var(--pageListItemTextIconBackgroundHover)]'>
                         <Plus className='w-4 h-4' />
                     </button>
-                    <button aria-label='Expand children' onClick={(e) => { e.stopPropagation(); updateItem("expanded", "toggle", item.id, listedPageItems, setListedPageItems) }} type='button' className='flex items-center justify-center p-1 rounded bg-none border-none hover:bg-[var(--pageListItemTextIconBackgroundHover)]'>
+                    <button aria-label='Expand children' onClick={(e) => { e.stopPropagation(); pb.collection("page").update(item.id, { expanded: !item.expanded }); updateItem("expanded", "toggle", item.id, listedPageItems, setListedPageItems) }} type='button' className='flex items-center justify-center p-1 rounded bg-none border-none hover:bg-[var(--pageListItemTextIconBackgroundHover)]'>
                         {item.expanded ? (
                             <ChevronDown className='w-4 h-4' />
                         ) : (
