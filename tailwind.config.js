@@ -16,7 +16,9 @@ module.exports = {
         'fade-in-quick': 'fadeinquick 0.3s 1 ease',
         'fade-in-slow-middle': 'fadeinslowmiddle 0.3s 1 ease',
         "background-shine": "background-shine 2s linear infinite",
-        "fade-in": "fade-in 0.3s ease-in"
+        "fade-in": "fade-in 0.3s ease-in",
+        "slidein": "slideout 0.3s ease-in-out forwards",
+        "slideout": "slidein 0.3s ease-in-out forwards",
       },
       keyframes: {
         fadeinquick: {
@@ -42,6 +44,14 @@ module.exports = {
           "100%": {
             "opacity": "1"
           }
+        },
+        slideout: {
+          "0%": { transform: "translateX(0px)", "margin-right": "0px" },
+          "100%": { transform: "translateX(-260px)", "margin-right": "-260px", display: "none" }
+        },
+        slidein: {
+          "0%": { transform: "translateX(-260px)", "margin-right": "-260px" },
+          "100%": { transform: "translateX(0px)", "margin-right": "0px", display: "flex" }
         }
       },
       fontFamily: {

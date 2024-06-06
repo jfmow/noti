@@ -27,7 +27,7 @@ export default function UsersPages() {
 
     return (
         <>
-            <div id="hidemewhenprinting" style={defaultWidth === "full" ? { width: "100vw", position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 2, height: "100svh", display: visible ? "flex" : "none" } : { width: defaultWidth + "px", height: "100dvh", display: visible ? "flex" : "none" }} className={`bg-[var(--background)] relative flex-col overflow-hidden`}>
+            <div id="hidemewhenprinting" style={defaultWidth === "full" ? { width: "100vw", position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 2, height: "100svh", display: visible ? "flex" : "none" } : { width: defaultWidth + "px", height: "100dvh" }} className={`bg-[var(--background)] relative flex-col overflow-hidden ${defaultWidth === "full" ? "" : (visible ? "animate-slideout" : "animate-slidein")}`}>
                 {loading ? (
                     <Loader />
                 ) : (
