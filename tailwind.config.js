@@ -46,12 +46,12 @@ module.exports = {
           }
         },
         slideout: {
-          "0%": { transform: "translateX(0px)", "margin-right": "0px" },
-          "100%": { transform: "translateX(-260px)", "margin-right": "-260px", display: "none" }
+          "0%": { transform: "translateX(0px)", "margin-right": "0px", "filter": "blur(0px)" },
+          "100%": { transform: "translateX(-260px)", "margin-right": "-260px", display: "none", "filter": "blur(3px)" }
         },
         slidein: {
-          "0%": { transform: "translateX(-260px)", "margin-right": "-260px" },
-          "100%": { transform: "translateX(0px)", "margin-right": "0px", display: "flex" }
+          "0%": { transform: "translateX(-260px)", "margin-right": "-260px", "filter": "blur(3px)" },
+          "100%": { transform: "translateX(0px)", "margin-right": "0px", display: "flex", "filter": "blur(0px)" }
         }
       },
       fontFamily: {
