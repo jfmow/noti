@@ -309,6 +309,10 @@ export default function EditorV3({ currentPage, peek }) {
                         if (urlParams.has("demo") && +urlParams.get("demo") === 1) {
                             return
                         }
+                        if (openPageData?.read_only) {
+                            console.warn(`The page ${openPageData.id} is marked as read only.\n- Saving has been disabled`)
+                            return
+                        }
                         setSavingState("Unsaved")
                         debounceSave(api.saver)
                     }
