@@ -176,6 +176,12 @@ function DropDownMenu({ currentPageData }) {
         await pb.collection('pages').update(currentPage, { archived: newState });
         toaster.success(`Page ${newState ? 'archived' : 'restored'} successfully`)
     }
+    async function handleReadOnlyPageToggle() {
+        const newState = !listedPageItems.find((Apage) => Apage.id === currentPage).read_only
+        updateItem("read_only", newState, currentPage, listedPageItems, setListedPageItems)
+        await pb.collection('pages').update(currentPage, { read_only: newState });
+        toaster.success(`Page ${newState ? 'set to read only' : 'editing allowed'} successfully`)
+    }
 
     async function copyPageShareUrl(e) {
         await handleCopyTextToClipboard(`${process.env.NEXT_PUBLIC_CURRENTURL}/page/view/${currentPage}`, e)
@@ -337,6 +343,19 @@ function DropDownMenu({ currentPageData }) {
                                     <>
                                         <Archive />
                                         Archive
+                                    </>
+                                )}
+                            </DropDownItem>
+                            <DropDownItem onClick={() => handleReadOnlyPageToggle()}>
+                                {listedPageItems.find((Apage) => Apage.id === currentPage)?.read_only ? (
+                                    <>
+                                        <Pencil />
+                                        Allow editing
+                                    </>
+                                ) : (
+                                    <>
+                                        <BookDashed />
+                                        Make page read only
                                     </>
                                 )}
                             </DropDownItem>
