@@ -310,6 +310,8 @@ export default function EditorV3({ currentPage, peek }) {
                             return
                         }
                         if (openPageData?.read_only) {
+                            //TODO: When its read only make it so the editor uses the read only one.
+                            //The editor needs to take in the page data and the index page needs to handle getting the data for the loading with suspence fall back and selecting the read only or the editor editor
                             console.warn(`The page ${openPageData.id} is marked as read only.\n- Saving has been disabled`)
                             return
                         }

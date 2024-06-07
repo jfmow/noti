@@ -181,6 +181,9 @@ function DropDownMenu({ currentPageData }) {
         updateItem("read_only", newState, currentPage, listedPageItems, setListedPageItems)
         await pb.collection('pages').update(currentPage, { read_only: newState });
         toaster.success(`Page ${newState ? 'set to read only' : 'editing allowed'} successfully`)
+        setTimeout(() => {
+            window.location.reload()
+        }, 1200);
     }
 
     async function copyPageShareUrl(e) {
