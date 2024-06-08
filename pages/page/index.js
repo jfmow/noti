@@ -86,7 +86,7 @@ function NotionEditor() {
 
                         {pageId !== "" ? (
                             <Suspense fallback={<></>}>
-                                <Editor currentPage={pageId} page={pageId} />
+                                <Editor currentPage={pageId} />
                             </Suspense>
                         ) : null}
                     </div>

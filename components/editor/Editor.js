@@ -30,30 +30,32 @@ const editorV3Context = createContext();
 export default function EditorV3({ currentPage, peek }) {
     const { pb, setListedPageItems, setPrimaryVisiblePageData } = useEditorContext()
     const Editor = useRef(null)
-    const SaveRef = useRef(null)
 
     const [openPageData, setOpenPageData] = useState({})
     const [multiRecordSearch, setMultiRecordSearch] = useState({ state: false, records: [] })
-    const [loading, setLoading] = useState(false)
-    const [saving, setSavingState] = useState("")
-    const allowUnload = useRef(true)
+    const [saving, setSavingMessage] = useState("")
+    const savingPermited = useRef(false)
+    const currentpageref = useRef(currentPage)
+    const editorElementRef = useRef(null)
 
 
     useEffect(() => {
         //Check that there is a current page
+        savingPermited.current = false
         debounceSave.cancel()
 
         if (currentPage) {
+            currentpageref.current = currentPage
             async function RetriveOpenPageData(page) {
                 /**
                  * Uses the pocketbase js sdk to query the db for the record with the id `page`
                  * It then sets the state value with the returned record.
                  * This record contains all the data, title, owner, content, header images etc
                  */
-                setLoading(true)
+
                 try {
                     const record = await pb.collection('pages').getOne(page)
-                    setLoading(false)
+
                     setOpenPageData(record)
                     if (!peek) {
                         setPrimaryVisiblePageData(record)
@@ -80,36 +82,16 @@ export default function EditorV3({ currentPage, peek }) {
             RetriveOpenPageData(currentPage)
         }
 
-        window.addEventListener('beforeunload', (event) => {
-            if (!allowUnload.current) {
-                const message = 'You have unsaved changes. Do you really want to leave?';
-                event.returnValue = message; // Standard way to show the dialog
-                return message; // For some browsers
-            }
-        });
-
-        return () => {
-            window.removeEventListener
-        }
-
     }, [currentPage])
 
-    async function Save(editor) {
+    async function Save(editor, page) {
+        const currentPage = currentpageref.current
+        if (!savingPermited.current || page !== currentPage) return
         try {
-            setSavingState("Saving...")
+            setSavingMessage("Saving...")
             const content = await editor.save()
             const res = await pb.collection('pages').update(currentPage, { "content": content })
-
-            if (res.content === "" || (res.content.blocks.length !== content.blocks.length)) {
-                console.error("Database response does not contain what is on the page.")
-                toaster.info("An error occured while saving. We are trying again.")
-                allowUnload.current = false
-                debounceSave(editor)
-            } else {
-                allowUnload.current = true
-            }
-
-            setSavingState("Saved")
+            setSavingMessage("Saved")
             if (currentPage === res.id) {
                 setPrimaryVisiblePageData(oldData => {
                     if (oldData.id !== currentPage) {
@@ -121,217 +103,221 @@ export default function EditorV3({ currentPage, peek }) {
             }
 
         } catch (err) {
-            setSavingState("Unable to save file...")
+            setSavingMessage("Unable to save file...")
             toaster.error(err?.message || err)
         }
     }
 
-    const debounceSave = debounce(Save, 420)
+    const debounceSave = debounce(Save, 500)
 
     useEffect(() => {
+        if (editorElementRef.current === null) return
         try {
-            if (openPageData?.id) {
-                if (Editor) {
-                    try {
-                        Editor.clear()
-                        Editor.destroy()
-                    } catch { }
-                }
-                let editorContainer
-                if (document.getElementById(`editorjs-editor-${currentPage}`).childElementCount >= 1) {
-                    return
-                } else {
-                    editorContainer = document.createElement("div")
-                    document.getElementById(`editorjs-editor-${currentPage}`).appendChild(editorContainer)
-                }
-                const editor = new EditorJS({
-                    holder: editorContainer,
-                    tools: {
-                        header: {
-                            class: Header,
-                            inlineToolbar: true,
-                        },
-                        marker: {
-                            class: MarkerTool,
-                        },
-                        image: {
-                            class: ImageTool,
-                            config: {
-                                storeFile: {
-                                    uploadFile(file) {
-                                        async function getImageDimensions(file) {
-                                            return new Promise((resolve, reject) => {
-                                                const img = new Image();
-                                                img.onload = () => {
-                                                    resolve({ width: img.width, height: img.height });
-                                                };
-                                                img.onerror = () => {
-                                                    reject(new Error('Error loading image'));
-                                                };
-                                                img.src = URL.createObjectURL(file);
-                                            });
+            const editor = new EditorJS({
+                holder: editorElementRef.current,
+                tools: {
+                    header: {
+                        class: Header,
+                        inlineToolbar: true,
+                    },
+                    marker: {
+                        class: MarkerTool,
+                    },
+                    image: {
+                        class: ImageTool,
+                        config: {
+                            storeFile: {
+                                uploadFile(file) {
+                                    async function getImageDimensions(file) {
+                                        return new Promise((resolve, reject) => {
+                                            const img = new Image();
+                                            img.onload = () => {
+                                                resolve({ width: img.width, height: img.height });
+                                            };
+                                            img.onerror = () => {
+                                                reject(new Error('Error loading image'));
+                                            };
+                                            img.src = URL.createObjectURL(file);
+                                        });
+                                    }
+
+                                    async function uploadbyFile(file) {
+                                        const loadingToast = await toaster.loading("Uploading");
+
+                                        // Init the new file record as formData
+                                        const formData = new FormData();
+
+                                        // Compress the image
+                                        const compressedBlob = await compressImage(file);
+
+                                        // Convert the compressed data to a file
+                                        const compressedFile = new File(
+                                            [compressedBlob],
+                                            file.name,
+                                            { type: "image/jpeg" }
+                                        );
+
+                                        // Get the image dimensions here
+                                        let imageMeta;
+                                        try {
+                                            imageMeta = await getImageDimensions(compressedFile);
+                                        } catch (error) {
+                                            console.error('Failed to get image dimensions', error);
+                                            imageMeta = { width: 0, height: 0 }; // Default values in case of error
                                         }
 
-                                        async function uploadbyFile(file) {
-                                            const loadingToast = await toaster.loading("Uploading");
-
-                                            // Init the new file record as formData
-                                            const formData = new FormData();
-
-                                            // Compress the image
-                                            const compressedBlob = await compressImage(file);
-
-                                            // Convert the compressed data to a file
-                                            const compressedFile = new File(
-                                                [compressedBlob],
-                                                file.name,
-                                                { type: "image/jpeg" }
-                                            );
-
-                                            // Get the image dimensions here
-                                            let imageMeta;
-                                            try {
-                                                imageMeta = await getImageDimensions(compressedFile);
-                                            } catch (error) {
-                                                console.error('Failed to get image dimensions', error);
-                                                imageMeta = { width: 0, height: 0 }; // Default values in case of error
-                                            }
-
-                                            formData.append("file_data", compressedFile);
-                                            formData.append("uploader", pb.authStore.model.id);
-                                            formData.append('page', currentPage);
-                                            try {
-                                                const record = await pb.collection("files").create(formData);
-                                                toaster.update(loadingToast, "Image uploaded successfully!", "success");
-                                                return {
-                                                    success: 1,
-                                                    file: {
-                                                        fileId: record.id,
-                                                        imageMeta: imageMeta
-                                                    },
-                                                };
-                                            } catch (error) {
-                                                toaster.update(loadingToast, error.data.message, "error");
-                                                return { success: 0 };
-                                            }
+                                        formData.append("file_data", compressedFile);
+                                        formData.append("uploader", pb.authStore.model.id);
+                                        formData.append('page', currentPage);
+                                        try {
+                                            const record = await pb.collection("files").create(formData);
+                                            toaster.update(loadingToast, "Image uploaded successfully!", "success");
+                                            return {
+                                                success: 1,
+                                                file: {
+                                                    fileId: record.id,
+                                                    imageMeta: imageMeta
+                                                },
+                                            };
+                                        } catch (error) {
+                                            toaster.update(loadingToast, error.data.message, "error");
+                                            return { success: 0 };
                                         }
+                                    }
 
-                                        return uploadbyFile(file)
-                                    },
+                                    return uploadbyFile(file)
                                 },
-                                currPage: currentPage
                             },
+                            currPage: currentPage
+                        },
 
-                        },
-                        nestedList: {
-                            class: NestedList,
-                            inlineToolbar: true,
-                            config: {
-                                defaultStyle: 'unordered'
-                            },
-                        },
-                        CheckList: {
-                            class: Checklist,
-                            inlineToolbar: true,
-                        },
-                        simpleEmbeds: {
-                            class: SimpleIframe,
-                            inlineToolbar: true,
-                            config: {
-                                storeFile: {
-                                    uploadFile(file) {
-                                        async function uploadbyFile(file) {
-                                            const loadingToast = await toaster.loading("Uploading")
-                                            const formData = new FormData();
-                                            formData.append("file_data", file);
-                                            formData.append("uploader", pb.authStore.model.id);
-                                            formData.append('page', currentPage)
-                                            try {
-                                                if (!file.name.endsWith(".pdf")) {
-                                                    toaster.update(loadingToast, 'File type not supported yet!', "error")
-                                                    return { success: 0 }
-                                                }
-                                                const record = await pb.collection("files").create(formData);
-
-                                                toaster.update(loadingToast, "File uploaded successfully!", "success")
-                                                return {
-                                                    success: 1,
-                                                    file: {
-                                                        recid: record.id,
-                                                    },
-                                                };
-
-                                            } catch (error) {
-                                                toaster.update(loadingToast, error.data.message, "error")
-                                                return { success: 0 }
-                                                // Handle error
-                                            }
-
-
-                                        }
-                                        return uploadbyFile(file)
-                                    },
-                                }
-
-                            }
-                        },
-                        table: {
-                            class: Table,
-                            inlineToolbar: true,
-                        },
-                        SimpleIframeWebpage: {
-                            class: SimpleIframeWebpage,
-                        },
-                        Video: {
-                            class: Video
-                        },
-                        InlineCode: {
-                            class: InlineCode,
-                            shortcut: 'CMD+SHIFT+M',
-                        },
-                        quote: {
-                            class: Quote,
-                            inlineToolbar: true,
-                        },
-                        break: {
-                            class: LineBreak,
-                        },
-                        list: {
-                            class: List,
-                            inlineToolbar: true,
+                    },
+                    nestedList: {
+                        class: NestedList,
+                        inlineToolbar: true,
+                        config: {
+                            defaultStyle: 'unordered'
                         },
                     },
-                    data: openPageData?.content || [],
-                    placeholder: "Enter some text...",
-                    autofocus: openPageData?.content && openPageData?.content?.blocks?.length >= 1 && (openPageData?.content?.blocks[0]?.type === 'image' || openPageData?.content?.blocks[0]?.type === 'Video' || openPageData?.content?.blocks[0]?.type === 'simpleEmbeds' || openPageData?.content?.blocks[0]?.type === 'SimpleIframeWebpage') ? false : true,
-                    onChange: (api) => {
-                        const urlParams = new URLSearchParams(window.location.search)
-                        if (urlParams.has("demo") && +urlParams.get("demo") === 1) {
-                            return
+                    CheckList: {
+                        class: Checklist,
+                        inlineToolbar: true,
+                    },
+                    simpleEmbeds: {
+                        class: SimpleIframe,
+                        inlineToolbar: true,
+                        config: {
+                            storeFile: {
+                                uploadFile(file) {
+                                    async function uploadbyFile(file) {
+                                        const loadingToast = await toaster.loading("Uploading")
+                                        const formData = new FormData();
+                                        formData.append("file_data", file);
+                                        formData.append("uploader", pb.authStore.model.id);
+                                        formData.append('page', currentPage)
+                                        try {
+                                            if (!file.name.endsWith(".pdf")) {
+                                                toaster.update(loadingToast, 'File type not supported yet!', "error")
+                                                return { success: 0 }
+                                            }
+                                            const record = await pb.collection("files").create(formData);
+
+                                            toaster.update(loadingToast, "File uploaded successfully!", "success")
+                                            return {
+                                                success: 1,
+                                                file: {
+                                                    recid: record.id,
+                                                },
+                                            };
+
+                                        } catch (error) {
+                                            toaster.update(loadingToast, error.data.message, "error")
+                                            return { success: 0 }
+                                            // Handle error
+                                        }
+
+
+                                    }
+                                    return uploadbyFile(file)
+                                },
+                            }
+
                         }
-                        if (openPageData?.read_only) {
-                            //TODO: When its read only make it so the editor uses the read only one.
-                            //The editor needs to take in the page data and the index page needs to handle getting the data for the loading with suspence fall back and selecting the read only or the editor editor
-                            console.warn(`The page ${openPageData.id} is marked as read only.\n- Saving has been disabled`)
-                            return
-                        }
-                        setSavingState("Unsaved")
-                        debounceSave(api.saver)
-                    }
-                })
-                editor.isReady.then(() => {
-                    console.log('Ready')
-                    Editor.current = editor
-                    setLoading(false)
-                })
-            }
+                    },
+                    table: {
+                        class: Table,
+                        inlineToolbar: true,
+                    },
+                    SimpleIframeWebpage: {
+                        class: SimpleIframeWebpage,
+                    },
+                    Video: {
+                        class: Video
+                    },
+                    InlineCode: {
+                        class: InlineCode,
+                        shortcut: 'CMD+SHIFT+M',
+                    },
+                    quote: {
+                        class: Quote,
+                        inlineToolbar: true,
+                    },
+                    break: {
+                        class: LineBreak,
+                    },
+                    list: {
+                        class: List,
+                        inlineToolbar: true,
+                    },
+                },
+                placeholder: "Enter some text...",
+                onChange: (api, event) => {
+
+                    setSavingMessage("Unsaved")
+                    debounceSave(api.saver, currentpageref.current)
+                }
+            })
+            editor.isReady.then(() => {
+                Editor.current = editor
+            })
+
         } catch (err) {
             console.log(err)
             toaster.error(err)
         }
-    }, [openPageData])
+    }, [editorElementRef])
 
+    useEffect(() => {
+        savingPermited.current = false
+        debounceSave.cancel()
+        if (openPageData.id !== currentPage) return
+        const editor = Editor.current
 
+        if (Editor.current) {
+            const count = editor.blocks.getBlocksCount()
+            if (count > 1 && openPageData?.content.blocks.length < 1) {
+                editor.clear()
+            } else if (openPageData?.content.blocks.length < 1 && count === 1) {
+
+            } else {
+                editor.blocks.render(openPageData.content)
+            }
+            if (!checkEditorContentMatchsServerOnFirstLoad(editor, openPageData)) {
+                toaster.error("Editor conflict. Reloading page")
+                return
+            }
+            savingPermited.current = true
+        }
+    }, [Editor, openPageData])
+
+    function checkEditorContentMatchsServerOnFirstLoad(editor, server) {
+        const editorData = editor.save()
+        const serverData = server.content
+        if (editorData.length !== serverData.length) {
+            return false
+        }
+        return true
+    }
 
     async function updateTitle(e) {
         try {
@@ -354,11 +340,6 @@ export default function EditorV3({ currentPage, peek }) {
         } catch (err) {
             console.error(err)
         }
-    }
-
-
-    if (loading) {
-        return <Loader />
     }
 
     if (multiRecordSearch.state) {
@@ -417,7 +398,7 @@ export default function EditorV3({ currentPage, peek }) {
                             </Suspense>
                         </div>
                     </div>
-                    <div ref={SaveRef} className="px-8" style={{ color: "var(--editor_text)" }} id={`editorjs-editor-${currentPage}`} />
+                    <div ref={editorElementRef} className="px-8" style={{ color: "var(--editor_text)" }} />
                 </div>
             </div>
         </editorV3Context.Provider>
