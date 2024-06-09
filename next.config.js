@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   images: {
     domains: ['127.0.0.1', 'noti.suddsy.dev', 'proti.suddsy.dev', 'images.unsplash.com', 'unsplash.com'],
   },

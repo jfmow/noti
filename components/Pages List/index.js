@@ -6,6 +6,7 @@ import { Plus, ChevronDown, ChevronRight } from 'lucide-react'
 import Router from 'next/router';
 import UserOptions from '@/components/user-info';
 import Loader from '@/components/Loader';
+import { handleInsertRecord, handleUpdateRecord, sortRecords } from './helpers';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 
 export default function UsersPages() {
@@ -33,7 +34,9 @@ export default function UsersPages() {
                 ) : (
                     <>
                         <div className='h-full w-full p-2 overflow-y-scroll'>
-                            {listedPageItems.length >= 1 && renderPagesTree("", pageId, listedPageItems, setListedPageItems)}
+                            {listedPageItems.length >= 1 && listedPageItems.map((item) => (
+                                <ListItem item={item} setListedPageItems={setListedPageItems} />
+                            ))}
                             <CreateNewPageButton setListedPageItems={setListedPageItems} />
                         </div>
 
@@ -43,37 +46,6 @@ export default function UsersPages() {
             </div>
         </>
     )
-}
-
-/**
- * 
- * @param {string} parentId The id of the parent item
- * @param {string} currentPageId the id of the currently open page in the editor
- * @param {Array} listedPageItems the list of pages in the main list
- * @param {Function} setListedPageItems function to update the above list
- * @returns 
- */
-function renderPagesTree(parentId = "", currentPageId, listedPageItems, setListedPageItems) {
-    const filteredItems = listedPageItems.filter(item => item.parentId === parentId);
-    if (filteredItems.length === 0) {
-        return (
-            <>
-                <CreateNewPageButton parentId={parentId} setListedPageItems={setListedPageItems} />
-            </>
-        );
-    }
-
-    return (
-        <ul style={parentId === "" ? { marginLeft: '0px' } : {}} className="flex flex-col ml-2">
-            {filteredItems.map(item => (
-                <>
-                    <ListItem item={item} pageId={currentPageId} listedPageItems={listedPageItems} setListedPageItems={setListedPageItems}>
-                        {renderPagesTree(item.id, currentPageId, listedPageItems, setListedPageItems)}
-                    </ListItem>
-                </>
-            ))}
-        </ul>
-    );
 }
 
 function CreateNewPageButton({ parentId = "", setListedPageItems }) {
@@ -184,7 +156,7 @@ function ListItem({ item, pageId, listedPageItems, setListedPageItems, children 
                     }} type='button' style={{ opacity: item.expanded ? 100 : 0 }} className='flex items-center justify-center p-1 rounded bg-none border-none hover:bg-[var(--pageListItemTextIconBackgroundHover)]'>
                         <Plus className='w-4 h-4' />
                     </button>
-                    <button aria-label='Expand children' onClick={(e) => { e.stopPropagation(); pb.collection("pages").update(item.id, { expanded: !item.expanded }); updateItem("expanded", "toggle", item.id, listedPageItems, setListedPageItems) }} type='button' className='flex items-center justify-center p-1 rounded bg-none border-none hover:bg-[var(--pageListItemTextIconBackgroundHover)]'>
+                    <button aria-label='Expand children' onClick={(e) => { e.stopPropagation(); pb.collection("pages").update(item.id, { expanded: !item.expanded }); handleUpdateRecord(item.id, { "expanded": !item.expanded }, setListedPageItems) }} type='button' className='flex items-center justify-center p-1 rounded bg-none border-none hover:bg-[var(--pageListItemTextIconBackgroundHover)]'>
                         {item.expanded ? (
                             <ChevronDown className='w-4 h-4' />
                         ) : (
@@ -194,10 +166,12 @@ function ListItem({ item, pageId, listedPageItems, setListedPageItems, children 
                 </div>
             </li >
             {
-                item.expanded ? (
-                    <>
-                        {children}
-                    </>
+                item.expanded && item.children ? (
+                    <ul className="flex flex-col ml-2">
+                        {item.children.map((item) => (
+                            <ListItem item={item} setListedPageItems={setListedPageItems} />
+                        ))}
+                    </ul>
                 ) : null
             }
         </>
@@ -205,62 +179,33 @@ function ListItem({ item, pageId, listedPageItems, setListedPageItems, children 
 }
 
 
-/**
- * 
- * @param {string} thingToUpdate 
- * @param {any} value 
- * @param {string} itemId 
- * @param {Array} listedPageItems 
- * @param {Function} setListedPageItems 
- * @returns
- */
-export async function updateItem(thingToUpdate = "", value = "", itemId = "", listedPageItems = [], setListedPageItems) {
-    if (itemId === "") return Error("No itemId provided")
-    let updatedItem = null
-    const newArrayOfItems = listedPageItems.map((item) => {
-        if (item.id === itemId) {
-            if (value === "toggle") {
-                item[thingToUpdate] = !item[thingToUpdate]
-            } else {
-                item[thingToUpdate] = value
-            }
 
-            updatedItem = item
-            return item
-        } else {
-            return item
-        }
-    })
-    setListedPageItems(newArrayOfItems)
-    return
-}
 
-async function createNewItem(parentId = "", setListedPageItems) {
-
-    const searchParams = new URLSearchParams(window.location.search)
+export async function createNewItem(parentId = "", setListedPageItems) {
+    const searchParams = new URLSearchParams(window.location.search);
 
     const newRecord = await pb.collection("pages").create({
         parentId: parentId, owner: pb.authStore.model.id, content: {
             "time": Date.now(),
             "blocks": []
         }
-    })
+    });
 
-    setListedPageItems(prevItems => [...prevItems, newRecord])
+    handleInsertRecord(newRecord, setListedPageItems);
 
-    searchParams.set("pm", "l")
-    searchParams.set("p", newRecord.id)
+    searchParams.set("pm", "l");
+    searchParams.set("p", newRecord.id);
 
-    Router.push(`/page?${searchParams.toString()}`)
-
+    Router.push(`/page?${searchParams.toString()}`);
 }
 
 async function getPages(showArchivedPages = false) {
     try {
-        const records = await pb.collection("pages_Bare").getFullList({
-            sort: '-created', skipTotal: true, filter: showArchivedPages ? `` : `archived = false`
+        const records = await pb.collection("pages").getFullList({
+            sort: '-created', skipTotal: true, filter: `owner = '${pb.authStore.model.id}'`, fields: "id, owner, title, expanded, parentId, icon, color, read_only, archived"
         });
-        return records
+
+        return sortRecords(records, showArchivedPages);
     } catch {
         toaster.error("An error occured while fetching pages.")
         return []

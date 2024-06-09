@@ -5,7 +5,7 @@ import MenuBar from '@/components/editor/Menubar';
 import Router, { useRouter } from 'next/router';
 import PeekPageBlock from '@/lib/Modals/PeekPage';
 import NewPageModal from '@/lib/Modals/NewPage';
-import UsersPages from '@/components/ListPages';
+import UsersPages from '@/components/Pages List';
 import EnableWebsiteThemes from '@/lib/Themes/everything';
 import SettingsPopover from '@/components/Settings';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);

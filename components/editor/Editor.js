@@ -94,20 +94,12 @@ export default function EditorV3({ currentPage, peek }) {
 
     }, [currentPage])
 
-    async function Save(editor) {
+    async function Save(content) {
         try {
             setSavingState("Saving...")
-            const content = await editor.save()
             const res = await pb.collection('pages').update(currentPage, { "content": content })
 
-            if (res.content === "" || (res.content.blocks.length !== content.blocks.length)) {
-                console.error("Database response does not contain what is on the page.")
-                toaster.info("An error occured while saving. We are trying again.")
-                allowUnload.current = false
-                debounceSave(editor)
-            } else {
-                allowUnload.current = true
-            }
+            allowUnload.current = true
 
             setSavingState("Saved")
             if (currentPage === res.id) {
@@ -316,7 +308,10 @@ export default function EditorV3({ currentPage, peek }) {
                             return
                         }
                         setSavingState("Unsaved")
-                        debounceSave(api.saver)
+                        api.saver.save().then((res) => {
+                            debounceSave(res)
+                        })
+
                     }
                 })
                 editor.isReady.then(() => {

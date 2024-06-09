@@ -6,7 +6,7 @@ import { useEditorContext } from '@/pages/page';
 import { DropDown, DropDownContainer, DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from '@/lib/Pop-Cards/DropDown';
 import Link from '@/components/Link';
 import { CalendarDays, CircleUser, BookDashed, Pencil, Share2, PartyPopper, Archive, ArchiveRestore, Baseline, CaseLower, Copy, Eye, EyeOff, Info, PanelRightDashed, Settings2, Share, Space, Trash2Icon, WholeWord } from 'lucide-react';
-import { updateItem } from '../../ListPages';
+import { handleFindRecordAndAncestors, handleUpdateRecord } from '@/components/Pages List/helpers';
 import { CountCharacters, CountWords } from './helpers';
 export default function MenuBar({ currentPageData }) {
     const { currentPage, visible, listedPageItems } = useEditorContext()
@@ -19,20 +19,7 @@ export default function MenuBar({ currentPageData }) {
         }
     }, [])
     useEffect(() => {
-        const mainItem = listedPageItems.find((Apage) => Apage.id === currentPage);
-        setActivePage(mainItem)
-        let tree = [mainItem];
-        let parent = mainItem;
-        while (parent?.parentId) {
-            parent = listedPageItems.find((Apage) => Apage.id === parent.parentId);
-            if (parent) {
-                tree.push(parent);
-            } else {
-                break;
-            }
-        }
-        tree.reverse();
-        setFilteredItems(tree);
+        setFilteredItems(handleFindRecordAndAncestors(currentPage, listedPageItems));
     }, [listedPageItems, currentPage]);
 
     return (
@@ -133,7 +120,7 @@ function DropDownMenu({ currentPageData }) {
             //return [...prevItems.filter(item => item.id !== currentPage), { ...oldItem, icon: `${e.unified}.png` }]
         })
 
-        updateItem("shared", data.shared, currentPage, listedPageItems, setListedPageItems)
+        handleUpdateRecord(currentPageData.id, { shared: data.shared }, setListedPageItems)
 
         await pb.collection("pages").update(currentPage, data);
     }
@@ -172,13 +159,13 @@ function DropDownMenu({ currentPageData }) {
 
     async function handleArchivePageToggle() {
         const newState = !listedPageItems.find((Apage) => Apage.id === currentPage).archived
-        updateItem("archived", newState, currentPage, listedPageItems, setListedPageItems)
+        handleUpdateRecord(currentPageData.id, { archived: newState }, setListedPageItems)
         await pb.collection('pages').update(currentPage, { archived: newState });
         toaster.success(`Page ${newState ? 'archived' : 'restored'} successfully`)
     }
     async function handleReadOnlyPageToggle() {
         const newState = !listedPageItems.find((Apage) => Apage.id === currentPage).read_only
-        updateItem("read_only", newState, currentPage, listedPageItems, setListedPageItems)
+        handleUpdateRecord(currentPageData.id, { read_only: newState }, setListedPageItems)
         await pb.collection('pages').update(currentPage, { read_only: newState });
         toaster.success(`Page ${newState ? 'set to read only' : 'editing allowed'} successfully`)
         setTimeout(() => {
