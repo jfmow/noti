@@ -9,6 +9,7 @@ import Icons from "@/components/editor/Page-cover-buttons/Icons-and-list-color/I
 import Gradient from '@/components/editor/Page-cover-buttons/Cover-image/gradient';
 import ColorSelector from '@/components/editor/Page-cover-buttons/Icons-and-list-color/ColorSelector';
 import { openPageContext } from '@/components/editor/Editor';
+import { handleUpdateRecord } from "@/components/Pages List/helpers";
 
 export default function MenuButtons({ currentPage }) {
     const { pb, setListedPageItems } = useEditorContext()
@@ -25,15 +26,7 @@ export default function MenuButtons({ currentPage }) {
             return new Error('Please include a new icon')
         }
         try {
-            setListedPageItems(prevItems => {
-                return prevItems.map((item) => {
-                    if (item.id === currentPage) {
-                        return { ...item, icon: newIcon.image }
-                    } else {
-                        return item
-                    }
-                })
-            })
+            handleUpdateRecord(currentPage, { icon: newIcon.image }, setListedPageItems)
             await pb.collection('pages').update(currentPage, { icon: newIcon.image });
         } catch {
             return new Error('Something went wrong updating the page icon')
@@ -45,15 +38,8 @@ export default function MenuButtons({ currentPage }) {
             return new Error('No color provided')
         }
         try {
-            setListedPageItems(prevItems => {
-                return prevItems.map((item) => {
-                    if (item.id === currentPage) {
-                        return { ...item, color: newColor }
-                    } else {
-                        return item
-                    }
-                })
-            })
+            handleUpdateRecord(currentPage, { color: newColor }, setListedPageItems)
+
             await pb.collection('pages').update(currentPage, { color: newColor });
         } catch {
             return new Error('An error occured while updating page color')
