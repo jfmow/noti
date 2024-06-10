@@ -24,6 +24,7 @@ import { Paragraph } from "@/components/UX-Components";
 import { Modal, ModalContent } from "@/lib/Modals/Modal";
 import { debounce } from "lodash";
 import Loader from "@/components/Loader";
+import { handleUpdateRecord } from "../Pages List/helpers";
 const MenuButtons = lazy(() => import("@/components/editor/Page-cover-buttons"))
 
 const editorV3Context = createContext();
@@ -334,15 +335,7 @@ export default function EditorV3({ currentPage, peek }) {
             /**
              * Update the listed page items (side bar)'s content to reflect the change of the title
              */
-            setListedPageItems(prevItems => {
-                return prevItems.map((item) => {
-                    if (item.id === currentPage) {
-                        return { ...item, title: titleText }
-                    } else {
-                        return item
-                    }
-                })
-            })
+            handleUpdateRecord(currentPage, { title: titleText }, setListedPageItems)
             //Make a request to the db to update the title
             await pb.collection('pages').update(currentPage, { "title": titleText })
 
