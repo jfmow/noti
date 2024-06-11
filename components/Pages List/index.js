@@ -35,7 +35,7 @@ export default function UsersPages() {
                     <>
                         <div className='h-full w-full p-2 overflow-y-scroll'>
                             {listedPageItems.length >= 1 && listedPageItems.map((item) => (
-                                <ListItem item={item} setListedPageItems={setListedPageItems} />
+                                <ListItem pageId={pageId} item={item} listedPageItems={listedPageItems} setListedPageItems={setListedPageItems} />
                             ))}
                             <CreateNewPageButton setListedPageItems={setListedPageItems} />
                         </div>
