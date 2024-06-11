@@ -79,7 +79,7 @@ function FolderList({ folderTree }) {
                                         <img src={`/emoji/twitter/64/${page.icon}`} />
                                     </div>
                                 ) : null}
-                                <span aria-label='Page title'>{page?.title || page.id}</span>
+                                <span aria-label='Page title' className='text-ellipsis text-nowrap overflow-hidden w-[clamp(100px,_10vw,_200px)]'>{page?.title || page.id}</span>
                             </Link>
                         </div>
                         {index < folderTree.length - 1 && (<div className='text-zinc-300 flex items-center justify-center mx-1'>/</div>)}
