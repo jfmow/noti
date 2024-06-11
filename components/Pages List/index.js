@@ -6,7 +6,7 @@ import { Plus, ChevronDown, ChevronRight } from 'lucide-react'
 import Router from 'next/router';
 import UserOptions from '@/components/user-info';
 import Loader from '@/components/Loader';
-import { handleInsertRecord, handleUpdateRecord, sortRecords } from './helpers';
+import { handleFindRecordAndAncestors, handleInsertRecord, handleUpdateRecord, sortRecords } from './helpers';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 
 export default function UsersPages() {
@@ -64,37 +64,14 @@ function ListItem({ item, pageId, listedPageItems, setListedPageItems, children 
 
     const [isDragingOver, setIsDragingOver] = useState(false)
 
-    function isChildOf(parentId, childId) {
+    function isChildOf(parentId, item) {
         // Find the parent item in the unsorted array
-        const parentItem = listedPageItems.find(item => item.id === parentId);
-
-        // If parentItem is not found, return false
-        if (!parentItem) {
-            return false;
+        const parentheirachy = handleFindRecordAndAncestors(item.id, listedPageItems)
+        if (parentheirachy.find((item) => item.id === parentId)) {
+            return true
+        } else {
+            return false
         }
-
-        // Check if childId is a direct child of parentItem
-        if (parentItem.id === childId) {
-            return true;
-        }
-
-        // Find all items in the unsorted array that have parentId as their parent
-        const children = listedPageItems.filter(item => item.parentId === parentId);
-
-        // Check if childId is a direct child of parentItem
-        if (children.some(item => item.id === childId)) {
-            return true;
-        }
-
-        // Recursively check if childId is a descendant of any children of parentItem
-        for (const child of children) {
-            if (isChildOf(child.id, childId)) {
-                return true;
-            }
-        }
-
-        // If childId is not found among direct children or descendants, return false
-        return false;
     }
 
     function handleDrop(event, item) {
@@ -107,7 +84,7 @@ function ListItem({ item, pageId, listedPageItems, setListedPageItems, children 
         const parentId = itemToMoveINTO.id;
 
         // Check if the item being moved is not a child of the item it's being moved into or any of its children
-        if (isChildOf(parentId, itemToMove) || isChildOf(itemToMove, parentId)) {
+        if (isChildOf(parentId, itemToMove)) {
             toaster.info("Cannot move item: It is a child of the target item or one of its descendants, or it's being moved into its own children.");
             return;
         }
