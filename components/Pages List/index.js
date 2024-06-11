@@ -94,7 +94,7 @@ function ListItem({ item, pageId, listedPageItems, setListedPageItems, children 
 
 
         pb.collection("pages").update(itemToMove, { parentId: itemToMoveINTO.id }).then(() => {
-            updateItem("parentId", itemToMoveINTO.id, itemToMove, listedPageItems, setListedPageItems)
+            handleUpdateRecord(itemToMove, { parentId: itemToMoveINTO.id }, setListedPageItems)
         })
 
     }
