@@ -145,8 +145,8 @@ function ListItem({ item, pageId, listedPageItems, setListedPageItems, children 
             {
                 item.expanded && item.children ? (
                     <ul className="flex flex-col ml-2">
-                        {item.children.map((item) => (
-                            <ListItem item={item} setListedPageItems={setListedPageItems} />
+                        {item.children.map((item2) => (
+                            <ListItem pageId={pageId} item={item2} listedPageItems={listedPageItems} setListedPageItems={setListedPageItems} />
                         ))}
                     </ul>
                 ) : null
