@@ -5,6 +5,7 @@ import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import Checklist from "@editorjs/checklist";
 import InlineCode from "@editorjs/inline-code";
+import Underline from '@editorjs/underline';
 import List from "@editorjs/list";
 import Quote from "@editorjs/quote";
 import Table from "@editorjs/table";
@@ -288,6 +289,10 @@ export default function EditorV3({ currentPage, peek }) {
                         },
                         break: {
                             class: LineBreak,
+                        },
+                        underline: {
+                            class: Underline,
+                            inlineToolbar: true,
                         },
                         list: {
                             class: List,
