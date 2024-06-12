@@ -6,7 +6,7 @@ import { Plus, ChevronDown, ChevronRight } from 'lucide-react'
 import Router from 'next/router';
 import UserOptions from '@/components/user-info';
 import Loader from '@/components/Loader';
-import { handleFindRecordAndAncestors, handleInsertRecord, handleUpdateRecord, sortRecords } from './helpers';
+import { handleFindRecordAndAncestors, handleInsertRecord, handleUpdateRecord, sortRecords, handleRemoveRecord } from './helpers';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 
 export default function UsersPages() {
@@ -64,10 +64,10 @@ function ListItem({ item, pageId, listedPageItems, setListedPageItems, children 
 
     const [isDragingOver, setIsDragingOver] = useState(false)
 
-    function isChildOf(parentId, item) {
+    function isChildOf(tomove, moveto) {
         // Find the parent item in the unsorted array
-        const parentheirachy = handleFindRecordAndAncestors(item.id, listedPageItems)
-        if (parentheirachy.find((item) => item.id === parentId)) {
+        const parentheirachy = handleFindRecordAndAncestors(moveto, listedPageItems)
+        if (parentheirachy.find((item) => item.id === tomove)) {
             return true
         } else {
             return false
@@ -81,10 +81,9 @@ function ListItem({ item, pageId, listedPageItems, setListedPageItems, children 
 
         if (itemToMove === itemToMoveINTO) return;
 
-        const parentId = itemToMoveINTO.id;
 
         // Check if the item being moved is not a child of the item it's being moved into or any of its children
-        if (isChildOf(parentId, itemToMove)) {
+        if (isChildOf(itemToMove, itemToMoveINTO.id)) {
             toaster.info("Cannot move item: It is a child of the target item or one of its descendants, or it's being moved into its own children.");
             return;
         }
@@ -93,8 +92,9 @@ function ListItem({ item, pageId, listedPageItems, setListedPageItems, children 
         // Your move logic here
 
 
-        pb.collection("pages").update(itemToMove, { parentId: itemToMoveINTO.id }).then(() => {
-            handleUpdateRecord(itemToMove, { parentId: itemToMoveINTO.id }, setListedPageItems)
+        pb.collection("pages").update(itemToMove, { parentId: itemToMoveINTO.id }).then((res) => {
+            handleRemoveRecord(res.id, setListedPageItems)
+            handleInsertRecord(res, setListedPageItems)
         })
 
     }

@@ -1,4 +1,5 @@
 export function sortRecords(records, includeArchived = false) {
+
     const recordMap = {};
     const sortedRecords = [];
     const archivedRecordIds = new Set();
@@ -33,6 +34,37 @@ export function sortRecords(records, includeArchived = false) {
 
 
     return sortedRecords;
+}
+
+export function sortRfecords(records, includeArchived = false){
+    const unsortedRecordsMap = {}
+    const sortedRecords = []
+
+    function addRecordsToMap(records){
+        records.forEach(record=>{
+            unsortedRecordsMap[record.id] = record
+            record.children = record.children || []
+            if(record.children.length >= 1){
+                addRecordsToMap(record.children)
+            }
+        })
+    }
+
+    addRecordsToMap(records)
+
+    records.forEach(record=>{
+        if (record.parentId && unsortedRecordsMap[record.parentId]) {
+            unsortedRecordsMap[record.parentId].children.push(record);
+        } else if (!record.parentId) {
+            sortedRecords.push(record);
+        }
+    })
+
+    console.log(records)
+    console.log(unsortedRecordsMap)
+    console.log(sortedRecords)
+
+    return unsortedRecordsMap, sortedRecords
 }
 
 // Function to update a record's property by its id
