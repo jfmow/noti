@@ -4,7 +4,7 @@ import 'react-pdf/dist/esm/Page/TextLayer.css';
 import { pdfjs } from 'react-pdf';
 import { debounce } from 'lodash';
 import Loader from '@/components/Loader';
-pdfjs.GlobalWorkerOptions.workerSrc = '/pdfworker.min.js';
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 export default function MyPdfViewer({ url, fileId }) {
   const [isLoading, setIsLoading] = useState(true)
   const [numPages, setNumPages] = useState(null);
