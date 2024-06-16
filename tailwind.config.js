@@ -57,7 +57,16 @@ module.exports = {
       fontFamily: {
         'inter': ['Inter'],
         sans: ['Inter', 'sans-serif'],
-      }
+        beba: ["Bebas Neue", 'sans-serif'],
+      },
+      colors: {
+        'hometext': '#1b0225',
+        'homebackground': '#f9edfe',
+        'homeprimary': '#b410f5',
+        'homesecondary': '#f96e96',
+        'homeaccent': '#f73e44',
+      },
+
     },
   },
   plugins: [
