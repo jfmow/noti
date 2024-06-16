@@ -81,7 +81,7 @@ export default function Home() {
                     </div>
                 </section>
 
-                <footer className="w-full p-8 border-t bg-homeaccent/20 flex justify-between">
+                <footer className="w-full p-8 border-t bg-homeprimary/20 flex justify-between">
                     <ul>
                         <li><a href="https://github.com/jfmow/noti">Github</a></li>
                         <li><a href="mailto:hi@suddsy.dev">Email</a></li>

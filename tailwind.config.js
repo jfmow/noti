@@ -60,12 +60,13 @@ module.exports = {
         beba: ["Bebas Neue", 'sans-serif'],
       },
       colors: {
-        'hometext': '#1b0225',
-        'homebackground': '#f9edfe',
-        'homeprimary': '#b410f5',
-        'homesecondary': '#f96e96',
-        'homeaccent': '#f73e44',
+        'hometext': '#03151e',
+        'homebackground': '#f4fbfe',
+        'homeprimary': '#26b6e7',
+        'homesecondary': '#a178f0',
+        'homeaccent': '#a54ceb',
       },
+
 
     },
   },
