@@ -1,6 +1,37 @@
 import Head from "next/head";
+import { useEffect, useState } from "react";
+import PocketBase from 'pocketbase'
+import Router from "next/router";
+const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
+pb.autoCancellation(false);
 
 export default function Home() {
+    const [mobile, setIsOnMobile] = useState(false)
+    useEffect(() => {
+        if (window) {
+            if (window.innerWidth < 640) {
+                setIsOnMobile(true)
+            }
+        }
+    }, [])
+    useEffect(() => {
+        function authRefresh() {
+            try {
+                pb.collection('users').authRefresh().then(((okres) => {
+                    if (pb.authStore.isValid) {
+                        Router.push("/page")
+                    }
+                    return
+                }), ((notokres) => {
+                    return
+                }));
+
+            } catch {
+
+            }
+        }
+        authRefresh()
+    }, [])
     return (
         <>
             <Head>
@@ -9,7 +40,7 @@ export default function Home() {
                 </style>
             </Head>
             <div className="w-full h-[100svh] overflow-y-scroll relative bg-homebackground text-hometext">
-                <nav className="w-full p-4 flex items-center justify-between border-b sticky top-0">
+                <nav className="w-full p-4 flex items-center justify-between  bg-homebackground z-[2] border-b sticky top-0">
                     <div className="flex gap-2 items-center">
                         <img src="/logo-small.webp" width={32} />
                         <ul className="flex gap-2 items-center">
@@ -24,7 +55,7 @@ export default function Home() {
 
                     <div className="text-center">
                         <h1 className="font-bold text-6xl word-wrap">Learn, <span className="bg-gradient-to-r from-homeprimary to-homeaccent bg-clip-text text-transparent">write</span>, revise, repeat</h1>
-                        <p className="mt-2 text-xl opacity-70">Let Note handle the rembering for you,<br /> so you can focus on performing your best</p>
+                        <p className="mt-2 text-xl opacity-70 text-balance">Let Note handle the rembering for you,{mobile ? "" : (<br />)} so you can focus on performing your best</p>
                     </div>
 
                     <div className="max-w-[1000px] mt-4 p-3">
@@ -38,7 +69,25 @@ export default function Home() {
 
                 </header>
 
+                <section className="ml-auto mr-auto min-h-[100svh] w-fit p-5 flex items-center justify-center flex-col">
+                    <div className="text-center">
+                        <h2 className="text-4xl">Why Note?</h2>
+                        <h2 className="pb-1 mt-3 tracking-wider font-beba text-7xl bg-gradient-to-r from-homeprimary to-homeaccent bg-clip-text text-transparent">Because it just works</h2>
+                    </div>
 
+                    <div className="grid sm:grid-cols-2 gap-4 items-center justify-items-center mt-4">
+                        <img width={512} src="/home/easy-boximg-2.webp" className="rounded shadow-lg" />
+                        <p className="text-center text-balance max-w-[400px] text-lg font-bold">Note is simple, minimal features for less clutter and optimal usage. Only including features that you need. Note supports many different types of text highlighting, formating, and difernt media types too.</p>
+                    </div>
+                </section>
+
+                <footer className="w-full p-8 border-t bg-homeaccent/20">
+                    <ul>
+                        <li><a href="https://github.com/jfmow/noti">Github</a></li>
+                        <li><a href="mailto:hi@suddsy.dev">Email</a></li>
+                        <li><a href="/demo">Demo</a></li>
+                    </ul>
+                </footer>
             </div>
         </>
     )
