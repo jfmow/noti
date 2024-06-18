@@ -179,7 +179,7 @@ export async function createNewItem(parentId = "", setListedPageItems) {
 async function getPages(showArchivedPages = false) {
     try {
         const records = await pb.collection("pages").getFullList({
-            sort: '-created', skipTotal: true, filter: `owner = '${pb.authStore.model.id}'`, fields: "id, owner, title, expanded, parentId, icon, color, read_only, archived"
+            sort: '-created', skipTotal: true, filter: `owner = '${pb.authStore.model.id}'`, fields: "id, owner, title, expanded, parentId, icon, color, read_only, archived, shared"
         });
 
         return sortRecords(records, showArchivedPages);
