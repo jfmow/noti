@@ -101,24 +101,6 @@ function DropDownMenu({ currentPageData }) {
         const data = {
             shared: !listedPageItems.find((Apage) => Apage.id === currentPage)?.shared,
         };
-        setListedPageItems(prevItems => {
-            // Remove any previous item with the same ID
-            const oldItem = listedPageItems.filter((item3) => item3.id === currentPage)[0]
-            const filteredItems = prevItems.filter(item3 => item3.id !== oldItem.id);
-
-            // Add the new record at the appropriate position based on its created date
-            let insertIndex = filteredItems.findIndex(item3 => item3.created < oldItem.created);
-            if (insertIndex === -1) {
-                insertIndex = filteredItems.length;
-            }
-
-            return [
-                ...filteredItems.slice(0, insertIndex),
-                { ...oldItem, shared: data.shared },
-                ...filteredItems.slice(insertIndex)
-            ];
-            //return [...prevItems.filter(item => item.id !== currentPage), { ...oldItem, icon: `${e.unified}.png` }]
-        })
 
         handleUpdateRecord(currentPageData.id, { shared: data.shared }, setListedPageItems)
 
