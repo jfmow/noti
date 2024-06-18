@@ -6,7 +6,7 @@ import { useEditorContext } from '@/pages/page';
 import { DropDown, DropDownContainer, DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from '@/lib/Pop-Cards/DropDown';
 import Link from '@/components/Link';
 import { CalendarDays, CircleUser, BookDashed, Pencil, Share2, PartyPopper, Archive, ArchiveRestore, Baseline, CaseLower, Copy, Eye, EyeOff, Info, PanelRightDashed, Settings2, Share, Space, Trash2Icon, WholeWord } from 'lucide-react';
-import { handleFindRecordAndAncestors, handleUpdateRecord } from '@/components/Pages List/helpers';
+import { handleFindRecordAndAncestors, handleFindRecordById, handleUpdateRecord } from '@/components/Pages List/helpers';
 import { CountCharacters, CountWords } from './helpers';
 export default function MenuBar({ currentPageData }) {
     const { currentPage, visible, listedPageItems } = useEditorContext()
@@ -99,7 +99,7 @@ function DropDownMenu({ currentPageData }) {
 
     async function handleSharePage() {
         const data = {
-            shared: !listedPageItems.find((Apage) => Apage.id === currentPage)?.shared,
+            shared: !handleFindRecordById(currentPage, listedPageItems).shared,
         };
 
         handleUpdateRecord(currentPageData.id, { shared: data.shared }, setListedPageItems)
@@ -282,7 +282,7 @@ function DropDownMenu({ currentPageData }) {
                                         Share
                                     </DropDownSectionTitle>
                                     <DropDownSection>
-                                        {listedPageItems.find((Apage) => Apage?.id === currentPage)?.shared ? (
+                                        {handleFindRecordById(currentPage, listedPageItems)?.shared ? (
                                             <>
                                                 <DropDownItem onClick={copyPageShareUrl}>
                                                     <Copy />

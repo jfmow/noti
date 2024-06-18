@@ -36,15 +36,15 @@ export function sortRecords(records, includeArchived = false) {
     return sortedRecords;
 }
 
-export function sortRfecords(records, includeArchived = false){
+export function sortRfecords(records, includeArchived = false) {
     const unsortedRecordsMap = {}
     const sortedRecords = []
 
-    function addRecordsToMap(records){
-        records.forEach(record=>{
+    function addRecordsToMap(records) {
+        records.forEach(record => {
             unsortedRecordsMap[record.id] = record
             record.children = record.children || []
-            if(record.children.length >= 1){
+            if (record.children.length >= 1) {
                 addRecordsToMap(record.children)
             }
         })
@@ -52,7 +52,7 @@ export function sortRfecords(records, includeArchived = false){
 
     addRecordsToMap(records)
 
-    records.forEach(record=>{
+    records.forEach(record => {
         if (record.parentId && unsortedRecordsMap[record.parentId]) {
             unsortedRecordsMap[record.parentId].children.push(record);
         } else if (!record.parentId) {
@@ -170,6 +170,40 @@ function findRecordAndAncestors(records, id) {
     return result;
 }
 
+
+// Function to find a record and its ancestors by id
+function findRecordById(records, id) {
+    let resultRecord = {};
+
+    function find(record, ancestors = []) {
+        // Push the current record into the ancestors array
+        ancestors.push(record);
+
+        if (record.id === id) {
+            // When the target record is found, copy the ancestors array to the result
+            resultRecord = record;
+            return true;
+        }
+
+        if (record.children) {
+            for (let child of record.children) {
+                if (find(child, [...ancestors])) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    for (let record of records) {
+        if (find(record)) {
+            break;
+        }
+    }
+
+    return resultRecord;
+}
+
 // Functions to handle state updates
 export const handleUpdateRecord = (id, updates, setListedPageItems) => {
     setListedPageItems(prevRecords => sortRecords(updateRecordById(prevRecords, id, updates)));
@@ -186,4 +220,8 @@ export const handleRemoveRecord = (id, setListedPageItems) => {
 export const handleFindRecordAndAncestors = (id, records) => {
     const ancestors = findRecordAndAncestors(records, id);
     return ancestors
+};
+export const handleFindRecordById = (id, records) => {
+    const record = findRecordById(records, id);
+    return record
 };
