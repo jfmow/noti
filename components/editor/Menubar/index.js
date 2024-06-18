@@ -1,4 +1,4 @@
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { toaster } from '@/components/toast';
 import { ToolTip, ToolTipCon, ToolTipTrigger } from '@/components/UX-Components/Tooltip';
@@ -53,7 +53,8 @@ export default function MenuBar({ currentPageData }) {
                         </div>
                     )}
                 </>
-                <div className="flex items-center justify-end gap-0  min-w-[100px]">
+                <div className="flex items-center justify-end gap-1  min-w-[100px]">
+                    <WordCountDisplay currentPageData={currentPageData} />
                     <DropDownMenu currentPageData={currentPageData} />
                 </div>
             </div>
@@ -91,11 +92,66 @@ function FolderList({ folderTree }) {
     )
 }
 
+function WordCountDisplay({ currentPageData }) {
+    const { pb, currentPage, setListedPageItems, listedPageItems } = useEditorContext()
+    const [pageInfo, setPageInfo] = useState({ wordCount: 0, uniqueWords: 0, chartersWithSpaces: 0, chartersWithoutSpaces: 0 })
+    const { query } = useRouter()
+    async function getPageData(pageData) {
+        try {
+            const record = pageData
+            const input = record.content
+            const { totalWords, uniqueWords } = CountWords(input)
+            const totalChartersWithSpaces = CountCharacters(input, true)
+            const totalChartersWithoutSpaces = CountCharacters(input, false)
+            //console.log(words, words.length)
+            setPageInfo({ wordCount: totalWords, uniqueWords: uniqueWords, chartersWithSpaces: totalChartersWithSpaces, chartersWithoutSpaces: totalChartersWithoutSpaces })
+        } catch {
+            return
+        }
+    }
+
+    useEffect(() => {
+        getPageData(currentPageData)
+    }, [currentPage, currentPageData])
+
+    if (query?.wordcount === "true") {
+        return (
+            <DropDownContainer>
+                <DropDownTrigger>
+                    <button className="text-xs font-medium text-nowrap h-[30px] flex items-center justify-center bg-none border-none text-zinc-800 cursor-pointer p-1 rounded relative w-fit hover:bg-zinc-200">
+                        {pageInfo.wordCount} Words
+                    </button>
+                </DropDownTrigger>
+                <DropDown>
+                    <DropDownSectionTitle>
+                        Word count
+                    </DropDownSectionTitle>
+                    <DropDownSection>
+                        <DropDownItem>
+                            <WholeWord />
+                            Unique Words: {pageInfo.uniqueWords}
+                        </DropDownItem>
+                        <DropDownItem>
+                            <CaseLower />
+                            Total charters: {pageInfo.chartersWithoutSpaces}
+                        </DropDownItem>
+                        <DropDownItem>
+                            <Space />
+                            With spaces: {pageInfo.chartersWithSpaces}
+                        </DropDownItem>
+                    </DropDownSection>
+                </DropDown>
+            </DropDownContainer>
+        )
+
+    } else {
+        return <></>
+    }
+}
+
 function DropDownMenu({ currentPageData }) {
     const { pb, currentPage, setListedPageItems, listedPageItems } = useEditorContext()
     const [pageInfo, setPageInfo] = useState({})
-
-
 
     async function handleSharePage() {
         const data = {
@@ -188,6 +244,20 @@ function DropDownMenu({ currentPageData }) {
         })
     }
 
+    function handleToggleShowWordCounter() {
+        const queryParams = new URLSearchParams(window.location.search)
+        if (queryParams.has("wordcount")) {
+            if (queryParams.get("wordcount") === "true") {
+                queryParams.set("wordcount", "false")
+            } else {
+                queryParams.set("wordcount", "true")
+            }
+        } else {
+            queryParams.set("wordcount", "true")
+        }
+        Router.push(`/page?${queryParams.toString()}`)
+    }
+
     useEffect(() => {
         //Update when the page is changed on nav, because sometimes is doesn't :(
         getPageData(currentPageData)
@@ -248,24 +318,6 @@ function DropDownMenu({ currentPageData }) {
                                             <PartyPopper />
                                             Icon: {pageInfo.icon && pageInfo.icon.includes('.png') ? (<img width='16' height='16' src={`/emoji/twitter/64/${pageInfo.icon}`} />) : (!isNaN(parseInt(pageInfo.icon, 16)) && String.fromCodePoint(parseInt(pageInfo.icon, 16)))}
 
-                                        </DropDownItem>
-                                    </DropDownSection>
-                                    <DropDownSection>
-                                        <DropDownItem>
-                                            <WholeWord />
-                                            Word Count: {pageInfo.wordCount}
-                                        </DropDownItem>
-                                        <DropDownItem>
-                                            <WholeWord />
-                                            Unique Words: {pageInfo.uniqueWords}
-                                        </DropDownItem>
-                                        <DropDownItem>
-                                            <CaseLower />
-                                            Total charters: {pageInfo.chartersWithoutSpaces}
-                                        </DropDownItem>
-                                        <DropDownItem>
-                                            <Space />
-                                            With spaces: {pageInfo.chartersWithSpaces}
                                         </DropDownItem>
                                     </DropDownSection>
                                 </DropDownExtension>
@@ -331,7 +383,10 @@ function DropDownMenu({ currentPageData }) {
                                     </>
                                 )}
                             </DropDownItem>
-
+                            <DropDownItem onClick={handleToggleShowWordCounter}>
+                                <WholeWord />
+                                Toggle Word Count
+                            </DropDownItem>
                             <DropDownItem
                                 onClick={() => handleDuplicatePage()} >
                                 <Copy />
