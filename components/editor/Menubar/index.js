@@ -140,13 +140,13 @@ function DropDownMenu({ currentPageData }) {
     }
 
     async function handleArchivePageToggle() {
-        const newState = !listedPageItems.find((Apage) => Apage.id === currentPage).archived
+        const newState = !handleFindRecordById(currentPage, listedPageItems).archived
         handleUpdateRecord(currentPageData.id, { archived: newState }, setListedPageItems)
         await pb.collection('pages').update(currentPage, { archived: newState });
         toaster.success(`Page ${newState ? 'archived' : 'restored'} successfully`)
     }
     async function handleReadOnlyPageToggle() {
-        const newState = !listedPageItems.find((Apage) => Apage.id === currentPage).read_only
+        const newState = !handleFindRecordById(currentPage, listedPageItems).read_only
         handleUpdateRecord(currentPageData.id, { read_only: newState }, setListedPageItems)
         await pb.collection('pages').update(currentPage, { read_only: newState });
         toaster.success(`Page ${newState ? 'set to read only' : 'editing allowed'} successfully`)
@@ -306,7 +306,7 @@ function DropDownMenu({ currentPageData }) {
                                 </DropDownExtension>
                             </DropDownExtensionContainer>
                             <DropDownItem onClick={() => handleArchivePageToggle()}>
-                                {listedPageItems.find((Apage) => Apage.id === currentPage)?.archived ? (
+                                {handleFindRecordById(currentPage, listedPageItems).archived ? (
                                     <>
                                         <ArchiveRestore />
                                         Un-archive
@@ -319,7 +319,7 @@ function DropDownMenu({ currentPageData }) {
                                 )}
                             </DropDownItem>
                             <DropDownItem onClick={() => handleReadOnlyPageToggle()}>
-                                {listedPageItems.find((Apage) => Apage.id === currentPage)?.read_only ? (
+                                {handleFindRecordById(currentPage, listedPageItems).read_only ? (
                                     <>
                                         <Pencil />
                                         Allow editing
