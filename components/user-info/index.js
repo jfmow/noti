@@ -7,7 +7,7 @@ export default function UserOptions({ clss }) {
     const { pb } = useEditorContext()
     return (
         <>
-            <div className={`${"relative w-full sm:w-full flex items-center justify-between px-4 md:px-2 h-[70px] text-[var(--userOptionText)] border-t border-[var(--userinfoSectionBordertop)] bg-[var(--background)]"} ${clss}`}>
+            <div className={`${"relative w-full sm:w-full flex items-center justify-between p-2 h-[70px] text-[var(--userOptionText)] border-t border-[var(--userinfoSectionBordertop)] bg-[var(--background)]"} ${clss}`}>
                 <div className='flex items-center h-full'>
                     <div className="flex items-center justify-center w-8 h-8 object-contain overflow-hidden rounded-[9999px]">
                         {pb.authStore.model?.avatar ? (
@@ -16,9 +16,9 @@ export default function UserOptions({ clss }) {
                             <UserCircle />
                         )}
                     </div>
-                    <div className='flex flex-col justify-center h-full ml-2'>
+                    <div className='select-none flex flex-col justify-center h-full ml-2'>
                         <span className='text-sm text-ellipsis overflow-hidden w-[calc(1em_*_13)]'>{pb.authStore.model?.username || 'Example'}</span>
-                        <span className='text-sm font-semibold underline text-ellipsis overflow-hidden w-[calc(1em_*_13)]'>{pb.authStore.model?.email || 'example@youremail.com'}</span>
+                        <span className='text-xs  font-light text-ellipsis overflow-hidden w-[calc(1em_*_13)]'>{pb.authStore.model?.email || 'example@youremail.com'}</span>
                     </div>
                 </div>
                 <div className="flex flex-col gap-1 relative">
