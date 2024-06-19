@@ -362,44 +362,49 @@ function DropDownMenu({ currentPageData }) {
                                     </DropDownItem>
                                 </DropDownExtensionTrigger>
                                 <DropDownExtension>
-                                    <DropDownItem onClick={() => handleReadOnlyPageToggle()}>
-                                        {handleFindRecordById(currentPage, listedPageItems).read_only ? (
-                                            <>
-                                                <Pencil />
-                                                Allow editing
-                                            </>
-                                        ) : (
-                                            <>
-                                                <BookDashed />
-                                                Make page read only
-                                            </>
-                                        )}
-                                    </DropDownItem>
-                                    <DropDownItem onClick={() => handleArchivePageToggle()}>
-                                        {handleFindRecordById(currentPage, listedPageItems).archived ? (
-                                            <>
-                                                <ArchiveRestore />
-                                                Un-archive
-                                            </>
-                                        ) : (
-                                            <>
-                                                <Archive />
-                                                Archive
-                                            </>
-                                        )}
-                                    </DropDownItem>
-                                    <DropDownItem
-                                        onClick={() => handleDuplicatePage()} >
-                                        <Copy />
-                                        Duplicate
+                                    <DropDownSectionTitle>
+                                        Page settings
+                                    </DropDownSectionTitle>
+                                    <DropDownSection>
+                                        <DropDownItem onClick={() => handleReadOnlyPageToggle()}>
+                                            {handleFindRecordById(currentPage, listedPageItems).read_only ? (
+                                                <>
+                                                    <Pencil />
+                                                    Allow editing
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <BookDashed />
+                                                    Make page read only
+                                                </>
+                                            )}
+                                        </DropDownItem>
+                                        <DropDownItem onClick={() => handleArchivePageToggle()}>
+                                            {handleFindRecordById(currentPage, listedPageItems).archived ? (
+                                                <>
+                                                    <ArchiveRestore />
+                                                    Un-archive
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Archive />
+                                                    Archive
+                                                </>
+                                            )}
+                                        </DropDownItem>
+                                        <DropDownItem
+                                            onClick={() => handleDuplicatePage()} >
+                                            <Copy />
+                                            Duplicate
 
-                                    </DropDownItem>
-                                    <DropDownItem
-                                        onClick={() => handleDeletePage()} >
-                                        <Trash2Icon />
-                                        Delete
+                                        </DropDownItem>
+                                        <DropDownItem
+                                            onClick={() => handleDeletePage()} >
+                                            <Trash2Icon />
+                                            Delete
 
-                                    </DropDownItem>
+                                        </DropDownItem>
+                                    </DropDownSection>
                                 </DropDownExtension>
                             </DropDownExtensionContainer>
 
