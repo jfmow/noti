@@ -5,7 +5,7 @@ import { ToolTip, ToolTipCon, ToolTipTrigger } from '@/components/UX-Components/
 import { useEditorContext } from '@/pages/page';
 import { DropDown, DropDownContainer, DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from '@/lib/Pop-Cards/DropDown';
 import Link from '@/components/Link';
-import { CalendarDays, CircleUser, BookDashed, Pencil, Share2, PartyPopper, Archive, ArchiveRestore, Baseline, CaseLower, Copy, Eye, EyeOff, Info, PanelRightDashed, Settings2, Share, Space, Trash2Icon, WholeWord } from 'lucide-react';
+import { CalendarDays, CircleUser, BookDashed, Pencil, Share2, PartyPopper, Archive, ArchiveRestore, Baseline, CaseLower, Copy, Eye, EyeOff, Info, PanelRightDashed, Settings2, Share, Space, Trash2Icon, WholeWord, Settings } from 'lucide-react';
 import { handleFindRecordAndAncestors, handleFindRecordById, handleUpdateRecord } from '@/components/Pages List/helpers';
 import { CountCharacters, CountWords } from './helpers';
 export default function MenuBar({ currentPageData }) {
@@ -354,48 +354,58 @@ function DropDownMenu({ currentPageData }) {
                                     </DropDownSection>
                                 </DropDownExtension>
                             </DropDownExtensionContainer>
-                            <DropDownItem onClick={() => handleArchivePageToggle()}>
-                                {handleFindRecordById(currentPage, listedPageItems).archived ? (
-                                    <>
-                                        <ArchiveRestore />
-                                        Un-archive
-                                    </>
-                                ) : (
-                                    <>
-                                        <Archive />
-                                        Archive
-                                    </>
-                                )}
-                            </DropDownItem>
-                            <DropDownItem onClick={() => handleReadOnlyPageToggle()}>
-                                {handleFindRecordById(currentPage, listedPageItems).read_only ? (
-                                    <>
-                                        <Pencil />
-                                        Allow editing
-                                    </>
-                                ) : (
-                                    <>
-                                        <BookDashed />
-                                        Make page read only
-                                    </>
-                                )}
-                            </DropDownItem>
+                            <DropDownExtensionContainer>
+                                <DropDownExtensionTrigger>
+                                    <Settings />
+                                    Manage page
+                                </DropDownExtensionTrigger>
+                                <DropDownExtension>
+                                    <DropDownItem onClick={() => handleReadOnlyPageToggle()}>
+                                        {handleFindRecordById(currentPage, listedPageItems).read_only ? (
+                                            <>
+                                                <Pencil />
+                                                Allow editing
+                                            </>
+                                        ) : (
+                                            <>
+                                                <BookDashed />
+                                                Make page read only
+                                            </>
+                                        )}
+                                    </DropDownItem>
+                                    <DropDownItem onClick={() => handleArchivePageToggle()}>
+                                        {handleFindRecordById(currentPage, listedPageItems).archived ? (
+                                            <>
+                                                <ArchiveRestore />
+                                                Un-archive
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Archive />
+                                                Archive
+                                            </>
+                                        )}
+                                    </DropDownItem>
+                                    <DropDownItem
+                                        onClick={() => handleDuplicatePage()} >
+                                        <Copy />
+                                        Duplicate
+
+                                    </DropDownItem>
+                                    <DropDownItem
+                                        onClick={() => handleDeletePage()} >
+                                        <Trash2Icon />
+                                        Delete
+
+                                    </DropDownItem>
+                                </DropDownExtension>
+                            </DropDownExtensionContainer>
+
                             <DropDownItem onClick={handleToggleShowWordCounter}>
                                 <WholeWord />
                                 Toggle Word Count
                             </DropDownItem>
-                            <DropDownItem
-                                onClick={() => handleDuplicatePage()} >
-                                <Copy />
-                                Duplicate
 
-                            </DropDownItem>
-                            <DropDownItem
-                                onClick={() => handleDeletePage()} >
-                                <Trash2Icon />
-                                Delete
-
-                            </DropDownItem>
                         </DropDownSection>
                     </DropDown >
                 </DropDownContainer>
