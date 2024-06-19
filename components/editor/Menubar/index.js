@@ -356,8 +356,10 @@ function DropDownMenu({ currentPageData }) {
                             </DropDownExtensionContainer>
                             <DropDownExtensionContainer>
                                 <DropDownExtensionTrigger>
-                                    <Settings />
-                                    Manage page
+                                    <DropDownItem>
+                                        <Settings />
+                                        Manage page
+                                    </DropDownItem>
                                 </DropDownExtensionTrigger>
                                 <DropDownExtension>
                                     <DropDownItem onClick={() => handleReadOnlyPageToggle()}>
