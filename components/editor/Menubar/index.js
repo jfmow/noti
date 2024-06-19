@@ -9,19 +9,7 @@ import { CalendarDays, CircleUser, BookDashed, Pencil, Share2, PartyPopper, Arch
 import { handleFindRecordAndAncestors, handleFindRecordById, handleUpdateRecord } from '@/components/Pages List/helpers';
 import { CountCharacters, CountWords } from './helpers';
 export default function MenuBar({ currentPageData }) {
-    const { currentPage, visible, listedPageItems } = useEditorContext()
-    const [activePage, setActivePage] = useState({})
-    const [filteredItems, setFilteredItems] = useState([]);
-    const [isMobile, setIsMobile] = useState(false)
-    useEffect(() => {
-        if (window.innerWidth < 640) {
-            setIsMobile(true)
-        }
-    }, [])
-    useEffect(() => {
-        setFilteredItems(handleFindRecordAndAncestors(currentPage, listedPageItems));
-    }, [listedPageItems, currentPage]);
-
+    const { visible } = useEditorContext()
     return (
         <>
             <div id="hidemewhenprinting" className="w-full h-[45px] min-h-[45px] max-h-[45px] pl-2 pr-2 flex justify-between items-center bg-zinc-50 overflow-y-hidden">
@@ -35,23 +23,7 @@ export default function MenuBar({ currentPageData }) {
                     </button>
                 </div>
                 <>
-                    {!isMobile ? (
-                        //Not mobile
-                        <>
-                            <FolderList folderTree={filteredItems} />
-                        </>
-                    ) : (
-                        <div className="flex items-center text-zinc-800 w-full">
-                            <div className="flex items-center justify-center relative cursor-pointer">
-                                <div className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200">
-                                    <div className="w-4 h-4 flex items-center justify-center">
-                                        {activePage?.icon && activePage?.icon.includes('.png') ? (<img src={`/emoji/twitter/64/${activePage?.icon}`} />) : null}
-                                    </div>
-                                    {activePage?.title || activePage?.id}
-                                </div>
-                            </div>
-                        </div>
-                    )}
+                    <FolderList currentPageData={currentPageData} />
                 </>
                 <div className="flex items-center justify-end gap-1  min-w-[100px]">
                     <WordCountDisplay currentPageData={currentPageData} />
@@ -63,31 +35,55 @@ export default function MenuBar({ currentPageData }) {
     );
 }
 
-function FolderList({ folderTree }) {
+function FolderList({ currentPageData }) {
+    const { currentPage, listedPageItems } = useEditorContext()
+    const [isMobile, setIsMobile] = useState(false)
+    const [folderTree, setFolderTree] = useState([])
+    useEffect(() => {
+        if (window.innerWidth < 640) {
+            setIsMobile(true)
+            return
+        }
+        setFolderTree(handleFindRecordAndAncestors(currentPage, listedPageItems))
+    }, [currentPage, listedPageItems])
     return (
         <>
-            <div className="flex items-center text-zinc-800 w-full">
-                {folderTree.length >= 1 && folderTree[0]?.id ? folderTree.map((page, index) => (
-                    <>
-                        <div className="flex items-center justify-center relative cursor-pointer relative" key={page.id + "-" + index}>
-                            <Link className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200" onClick={() => {
-                                const params = new URLSearchParams(window.location.search)
-                                params.set("edit", page.id)
-                                Router.push(`/page?${params.toString()}`);
-                            }}>
-                                {page?.icon && page?.icon.includes('.png') ? (
-                                    <div aria-label='page icon' className="w-4 h-4 flex items-center justify-center">
-                                        <img src={`/emoji/twitter/64/${page.icon}`} />
-                                    </div>
-                                ) : null}
-                                <span aria-label='Page title' className='text-ellipsis text-nowrap overflow-hidden max-w-[200px]'>{page?.title || page.id}</span>
-                            </Link>
-                        </div>
-                        {index < folderTree.length - 1 && (<div className='text-zinc-300 flex items-center justify-center mx-1'>/</div>)}
-                    </>
-                )) : null}
+            {!isMobile ? (
+                <div className="flex items-center text-zinc-800 w-full">
+                    {folderTree.length >= 1 && folderTree[0]?.id ? folderTree.map((page, index) => (
+                        <>
+                            <div className="flex items-center justify-center relative cursor-pointer relative" key={page.id + "-" + index}>
+                                <Link className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200" onClick={() => {
+                                    const params = new URLSearchParams(window.location.search)
+                                    params.set("edit", page.id)
+                                    Router.push(`/page?${params.toString()}`);
+                                }}>
+                                    {page?.icon && page?.icon.includes('.png') ? (
+                                        <div aria-label='page icon' className="w-4 h-4 flex items-center justify-center">
+                                            <img src={`/emoji/twitter/64/${page.icon}`} />
+                                        </div>
+                                    ) : null}
+                                    <span aria-label='Page title' className='text-ellipsis text-nowrap overflow-hidden max-w-[200px]'>{page?.title || page.id}</span>
+                                </Link>
+                            </div>
+                            {index < folderTree.length - 1 && (<div className='text-zinc-300 flex items-center justify-center mx-1'>/</div>)}
+                        </>
+                    )) : null}
 
-            </div>
+                </div>
+            ) : (
+                <div className="flex items-center text-zinc-800 w-full">
+                    <div className="flex items-center justify-center relative cursor-pointer">
+                        <div className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200">
+                            <div className="w-4 h-4 flex items-center justify-center">
+                                {Object.keys(currentPageData) && currentPageData.icon && currentPageData.icon.includes('.png') ? (<img src={`/emoji/twitter/64/${currentPageData.icon}`} />) : null}
+                            </div>
+                            {Object.keys(currentPageData) && currentPageData.title || currentPageData.id}
+                        </div>
+                    </div>
+                </div>
+            )}
+
         </>
     )
 }
@@ -201,6 +197,7 @@ function DropDownMenu({ currentPageData }) {
         await pb.collection('pages').update(currentPage, { archived: newState });
         toaster.success(`Page ${newState ? 'archived' : 'restored'} successfully`)
     }
+
     async function handleReadOnlyPageToggle() {
         const newState = !handleFindRecordById(currentPage, listedPageItems).read_only
         handleUpdateRecord(currentPageData.id, { read_only: newState }, setListedPageItems)
