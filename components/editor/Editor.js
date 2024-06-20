@@ -18,7 +18,6 @@ import ImageTool from "@/customEditorTools/Image";
 import SimpleIframe from "@/customEditorTools/SimpleEmbed";
 import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
 import LineBreak from "@/customEditorTools/LineBreak";
-import { handleCreateBlurHash } from '@/lib/idk'
 import { toaster } from "@/components/toast";
 import { useEditorContext } from "@/pages/page";
 import { Paragraph } from "@/components/UX-Components";
@@ -26,6 +25,7 @@ import { Modal, ModalContent } from "@/lib/Modals/Modal";
 import { debounce } from "lodash";
 import Loader from "@/components/Loader";
 import { handleUpdateRecord } from "../Pages List/helpers";
+import { enableFocusChangeEventListener } from "@/lib/Page state manager/focus-changes";
 const MenuButtons = lazy(() => import("@/components/editor/Page-cover-buttons"))
 
 const editorV3Context = createContext();
@@ -324,6 +324,7 @@ export default function EditorV3({ currentPage, peek }) {
                     console.log('Ready')
                     Editor.current = editor
                     setLoading(false)
+                    enableFocusChangeEventListener(editor, currentPage)
                 })
             }
         } catch (err) {

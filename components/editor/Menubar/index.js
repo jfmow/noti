@@ -5,7 +5,7 @@ import { ToolTip, ToolTipCon, ToolTipTrigger } from '@/components/UX-Components/
 import { useEditorContext } from '@/pages/page';
 import { DropDown, DropDownContainer, DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from '@/lib/Pop-Cards/DropDown';
 import Link from '@/components/Link';
-import { CalendarDays, CircleUser, BookDashed, Pencil, Share2, PartyPopper, Archive, ArchiveRestore, Baseline, CaseLower, Copy, Eye, EyeOff, Info, PanelRightDashed, Settings2, Share, Space, Trash2Icon, WholeWord, Settings } from 'lucide-react';
+import { CalendarDays, CircleUser, TextSelect, BookDashed, Pencil, Share2, PartyPopper, Archive, ArchiveRestore, Baseline, CaseLower, Copy, Eye, EyeOff, Info, PanelRightDashed, Settings2, Share, Space, Trash2Icon, WholeWord, Settings } from 'lucide-react';
 import { handleFindRecordAndAncestors, handleFindRecordById, handleUpdateRecord } from '@/components/Pages List/helpers';
 import { CountCharacters, CountWords } from './helpers';
 export default function MenuBar({ currentPageData }) {
@@ -409,7 +409,7 @@ function DropDownMenu({ currentPageData }) {
                             </DropDownExtensionContainer>
 
                             <DropDownItem onClick={handleToggleShowWordCounter}>
-                                <WholeWord />
+                            <TextSelect />
                                 Toggle Word Count
                             </DropDownItem>
 
