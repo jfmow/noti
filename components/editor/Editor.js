@@ -25,7 +25,6 @@ import { Modal, ModalContent } from "@/lib/Modals/Modal";
 import { debounce } from "lodash";
 import Loader from "@/components/Loader";
 import { handleUpdateRecord } from "../Pages List/helpers";
-import { enableFocusChangeEventListener } from "@/lib/Page state manager/focus-changes";
 import { RegisterEditorChangesBroadCast, SendEditorChangeMessage } from "@/lib/Page state manager/brodcast-changes";
 const MenuButtons = lazy(() => import("@/components/editor/Page-cover-buttons"))
 
