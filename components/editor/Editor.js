@@ -18,7 +18,6 @@ import ImageTool from "@/customEditorTools/Image";
 import SimpleIframe from "@/customEditorTools/SimpleEmbed";
 import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
 import LineBreak from "@/customEditorTools/LineBreak";
-import { handleCreateBlurHash } from '@/lib/idk'
 import { toaster } from "@/components/toast";
 import { useEditorContext } from "@/pages/page";
 import { Paragraph } from "@/components/UX-Components";
@@ -26,6 +25,7 @@ import { Modal, ModalContent } from "@/lib/Modals/Modal";
 import { debounce } from "lodash";
 import Loader from "@/components/Loader";
 import { handleUpdateRecord } from "../Pages List/helpers";
+import { RegisterEditorChangesBroadCast, SendEditorChangeMessage } from "@/lib/Page state manager/brodcast-changes";
 const MenuButtons = lazy(() => import("@/components/editor/Page-cover-buttons"))
 
 const editorV3Context = createContext();
@@ -37,7 +37,6 @@ export default function EditorV3({ currentPage, peek }) {
     const [openPageData, setOpenPageData] = useState({})
     const [multiRecordSearch, setMultiRecordSearch] = useState({ state: false, records: [] })
     const [loading, setLoading] = useState(false)
-    const [saving, setSavingState] = useState("")
     const allowUnload = useRef(true)
 
 
@@ -98,12 +97,10 @@ export default function EditorV3({ currentPage, peek }) {
 
     async function Save(content) {
         try {
-            setSavingState("Saving...")
             const res = await pb.collection('pages').update(currentPage, { "content": content })
 
             allowUnload.current = true
 
-            setSavingState("Saved")
             if (currentPage === res.id) {
                 setPrimaryVisiblePageData(oldData => {
                     if (oldData.id !== currentPage) {
@@ -115,8 +112,8 @@ export default function EditorV3({ currentPage, peek }) {
             }
 
         } catch (err) {
-            setSavingState("Unable to save file...")
-            toaster.error(err?.message || err)
+            console.error(err?.message || err)
+            toaster.error("Failed to save the page")
         }
     }
 
@@ -313,8 +310,9 @@ export default function EditorV3({ currentPage, peek }) {
                             console.warn(`The page ${openPageData.id} is marked as read only.\n- Saving has been disabled`)
                             return
                         }
-                        setSavingState("Unsaved")
+
                         api.saver.save().then((res) => {
+                            SendEditorChangeMessage(res, openPageData.id)
                             debounceSave(res)
                         })
 
@@ -324,6 +322,7 @@ export default function EditorV3({ currentPage, peek }) {
                     console.log('Ready')
                     Editor.current = editor
                     setLoading(false)
+                    RegisterEditorChangesBroadCast(editor, currentPage)
                 })
             }
         } catch (err) {
@@ -385,7 +384,7 @@ export default function EditorV3({ currentPage, peek }) {
     return (
         <editorV3Context.Provider value={{ openPageData, setOpenPageData, updateOpenPageData }}>
             <Head>
-                <title>{saving !== "" ? (saving + " | ") : ""} {openPageData.title}</title>
+                <title>{openPageData.title}</title>
                 {openPageData.icon !== "" && openPageData.icon !== undefined && openPageData?.icon.endsWith(".png") ? (
                     <link rel='icon' type='image/png' href={`/emoji/twitter/64/${openPageData.icon}`} />
                 ) : null}
