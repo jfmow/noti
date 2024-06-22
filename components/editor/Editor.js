@@ -48,7 +48,6 @@ export default function EditorV3({ currentPage }) {
                  */
                 try {
                     if (openPageData && openPageData.content && Object.keys(openPageData.content).includes("blocks")) {
-                        console.log(openPageData)
                         initNewEditor(openPageData)
                     } else {
                         setLoadingSlow(true)
@@ -69,7 +68,6 @@ export default function EditorV3({ currentPage }) {
 
     async function initNewEditor(pageData) {
         try {
-            console.log("INIT")
             if (Editor.current) {
                 await Editor.current.destroy()
             }

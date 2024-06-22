@@ -6,8 +6,7 @@ import Router, { useRouter } from 'next/router';
 import PeekPageBlock from '@/lib/Modals/PeekPage';
 import NewPageModal from '@/lib/Modals/NewPage';
 import UsersPages from '@/components/Pages List';
-import EnableWebsiteThemes from '@/lib/Themes/everything';
-import SettingsPopover from '@/components/Settings';
+import EnableWebsiteThemes from '@/lib/Themes';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 pb.autoCancellation(false);
 
@@ -82,7 +81,7 @@ function NotionEditor() {
                 <div className='flex flex-col sm:flex-row'>
                     <UsersPages />
                     <div style={{ flex: '1 1 0%', position: 'relative', display: 'flex', height: '100dvh', flexDirection: 'column', overflowX: 'hidden' }}>
-                        <MenuBar currentPageData={primaryVisiblePageData} />
+                        <MenuBar listedPageItems={listedPageItems} currentPage={pageId} currentPageData={primaryVisiblePageData} />
 
                         {pageId !== "" ? (
                             <Suspense fallback={<></>}>

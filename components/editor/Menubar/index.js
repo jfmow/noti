@@ -2,35 +2,61 @@ import Router, { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { toaster } from '@/components/toast';
 import { ToolTip, ToolTipCon, ToolTipTrigger } from '@/components/UX-Components/Tooltip';
-import { useEditorContext } from '@/pages/page';
 import { DropDown, DropDownContainer, DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from '@/lib/Pop-Cards/DropDown';
 import Link from '@/components/Link';
-import { CalendarDays, CircleUser, TextSelect, BookDashed, Pencil, Share2, PartyPopper, Archive, ArchiveRestore, Baseline, CaseLower, Copy, Eye, EyeOff, Info, PanelRightDashed, Settings2, Share, Space, Trash2Icon, WholeWord, Settings, PanelRight } from 'lucide-react';
-import { handleFindRecordAndAncestors, handleFindRecordById, handleUpdateRecord } from '@/components/Pages List/helpers';
+import { CalendarDays, CircleUser, TextSelect, BookDashed, Pencil, Share2, PartyPopper, Archive, ArchiveRestore, Baseline, CaseLower, Copy, Eye, EyeOff, Info, PanelRightDashed, Settings2, Share, Space, Trash2Icon, WholeWord, Settings, PanelRight, Paintbrush } from 'lucide-react';
+import { handleFindRecordById } from '@/components/Pages List/helpers';
 import { CountCharacters, CountWords } from './helpers';
 import { SendPageChanges } from '@/lib/Page state manager';
 import { findPageListPage } from '@/components/Pages List/list-functions';
-export default function MenuBar({ currentPageData }) {
-    const { visible } = useEditorContext()
+import pb from '@/lib/pocketbase';
+import ThemePickerPopup from '@/components/Themes';
+export default function MenuBar({ currentPageData, currentPage, listedPageItems, unauthed = false }) {
+
+    if (!listedPageItems || !currentPage || !currentPageData) {
+        return <></>
+    }
 
     function toggleSideParam() {
         const queryParams = new URLSearchParams(window.location.search)
-        queryParams.set("side", !visible)
+        const newState = queryParams.get("side") === "true" ? false : true
+        queryParams.set("side", newState)
         Router.push(`/page?${queryParams.toString()}`)
     }
 
     return (
         <>
-            <div id="hidemewhenprinting" className="w-full h-[45px] min-h-[45px] max-h-[45px] pl-2 pr-2 flex justify-between items-center bg-zinc-50 overflow-y-hidden">
+            <div id="hidemewhenprinting" className="overflow-x-hidden w-full h-[45px] min-h-[45px] max-h-[45px] pl-2 pr-2 flex justify-between items-center bg-zinc-50 overflow-y-hidden">
+
+
                 <div className='flex items-center h-full'>
-                    <button onClick={toggleSideParam} type='button' className="flex items-center justify-center bg-none border-none text-zinc-800 cursor-pointer p-1 rounded relative w-[30px] h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4">
-                        <PanelRight className='rotate-180' />
-                    </button>
+                    {!unauthed ? (
+                        <button onClick={toggleSideParam} type='button' className="flex items-center justify-center bg-none border-none text-zinc-800 cursor-pointer p-1 rounded relative w-[30px] h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4">
+                            <PanelRight className='rotate-180' />
+                        </button>
+                    ) : null}
                 </div>
-                <FolderList currentPageData={currentPageData} />
+                <FolderList currentPageData={currentPageData} currentPage={currentPage} listedPageItems={listedPageItems} />
                 <div className="flex items-center justify-end gap-1  min-w-[100px]">
-                    <WordCountDisplay currentPageData={currentPageData} />
-                    <DropDownMenu currentPageData={currentPageData} />
+                    <WordCountDisplay currentPageData={currentPageData} defaultVisible={unauthed} />
+                    <DropDownContainer>
+                        <DropDownTrigger>
+
+                            <button type='button' className="flex items-center justify-center bg-none border-none text-zinc-800 cursor-pointer p-1 rounded relative w-[30px] h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4">
+                                <Paintbrush className='w-4 h-4 cursor-pointer' />
+                            </button>
+                        </DropDownTrigger>
+                        <DropDown>
+                            <DropDownSectionTitle>
+                                Themes
+                            </DropDownSectionTitle>
+                            <ThemePickerPopup />
+                        </DropDown>
+                    </DropDownContainer>
+                    {!unauthed ? (
+                        <DropDownMenu currentPageData={currentPageData} listedPageItems={listedPageItems} currentPage={currentPage} pb={pb} />
+                    ) : null}
+
                 </div>
             </div>
 
@@ -38,8 +64,7 @@ export default function MenuBar({ currentPageData }) {
     );
 }
 
-function FolderList({ currentPageData }) {
-    const { currentPage, listedPageItems } = useEditorContext()
+function FolderList({ currentPageData, currentPage, listedPageItems }) {
     const [isMobile, setIsMobile] = useState(false)
     const [folderTree, setFolderTree] = useState([])
     useEffect(() => {
@@ -93,7 +118,7 @@ function FolderList({ currentPageData }) {
     return (
         <>
             {!isMobile ? (
-                <div className="flex items-center text-zinc-800 w-full">
+                <div className="flex items-center text-zinc-800 w-full overflow-x-auto">
                     {folderTree.length >= 1 && folderTree[0]?.id ? folderTree.map((page, index) => (
                         <>
                             <div className="flex items-center justify-center relative cursor-pointer relative" key={page.id + "-" + index}>
@@ -132,8 +157,7 @@ function FolderList({ currentPageData }) {
     )
 }
 
-function WordCountDisplay({ currentPageData }) {
-    const { pb, currentPage, setListedPageItems, listedPageItems } = useEditorContext()
+function WordCountDisplay({ currentPageData, defaultVisible }) {
     const [pageInfo, setPageInfo] = useState({ wordCount: 0, uniqueWords: 0, chartersWithSpaces: 0, chartersWithoutSpaces: 0 })
     const { query } = useRouter()
     async function getPageData(pageData) {
@@ -152,9 +176,9 @@ function WordCountDisplay({ currentPageData }) {
 
     useEffect(() => {
         getPageData(currentPageData)
-    }, [currentPage, currentPageData])
+    }, [currentPageData])
 
-    if (query?.wordcount === "true") {
+    if (query?.wordcount === "true" || defaultVisible) {
         return (
             <DropDownContainer>
                 <DropDownTrigger>
@@ -189,8 +213,7 @@ function WordCountDisplay({ currentPageData }) {
     }
 }
 
-function DropDownMenu({ currentPageData }) {
-    const { pb, currentPage, setListedPageItems, listedPageItems } = useEditorContext()
+function DropDownMenu({ currentPageData, listedPageItems, pb, currentPage }) {
     const [pageInfo, setPageInfo] = useState({})
 
     async function handleSharePage() {

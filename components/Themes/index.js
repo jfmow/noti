@@ -1,5 +1,5 @@
 import { DropDownItem, DropDownSection } from "@/lib/Pop-Cards/DropDown";
-import { GetThemes } from "@/lib/Themes/everything";
+import { GetThemes } from "@/lib/Themes";
 import { useEffect, useState } from "react";
 
 export default function ThemePickerPopup() {
