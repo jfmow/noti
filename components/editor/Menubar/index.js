@@ -5,26 +5,29 @@ import { ToolTip, ToolTipCon, ToolTipTrigger } from '@/components/UX-Components/
 import { useEditorContext } from '@/pages/page';
 import { DropDown, DropDownContainer, DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from '@/lib/Pop-Cards/DropDown';
 import Link from '@/components/Link';
-import { CalendarDays, CircleUser, TextSelect, BookDashed, Pencil, Share2, PartyPopper, Archive, ArchiveRestore, Baseline, CaseLower, Copy, Eye, EyeOff, Info, PanelRightDashed, Settings2, Share, Space, Trash2Icon, WholeWord, Settings } from 'lucide-react';
+import { CalendarDays, CircleUser, TextSelect, BookDashed, Pencil, Share2, PartyPopper, Archive, ArchiveRestore, Baseline, CaseLower, Copy, Eye, EyeOff, Info, PanelRightDashed, Settings2, Share, Space, Trash2Icon, WholeWord, Settings, PanelRight } from 'lucide-react';
 import { handleFindRecordAndAncestors, handleFindRecordById, handleUpdateRecord } from '@/components/Pages List/helpers';
 import { CountCharacters, CountWords } from './helpers';
+import { SendPageChanges } from '@/lib/Page state manager';
+import { findPageListPage } from '@/components/Pages List/list-functions';
 export default function MenuBar({ currentPageData }) {
     const { visible } = useEditorContext()
+
+    function toggleSideParam() {
+        const queryParams = new URLSearchParams(window.location.search)
+        queryParams.set("side", !visible)
+        Router.push(`/page?${queryParams.toString()}`)
+    }
+
     return (
         <>
             <div id="hidemewhenprinting" className="w-full h-[45px] min-h-[45px] max-h-[45px] pl-2 pr-2 flex justify-between items-center bg-zinc-50 overflow-y-hidden">
                 <div className='flex items-center h-full'>
-                    <button onClick={() => {
-                        const queryParams = new URLSearchParams(window.location.search)
-                        queryParams.set("side", !visible)
-                        Router.push(`/page?${queryParams.toString()}`)
-                    }} type='button' className="flex items-center justify-center bg-none border-none text-zinc-800 cursor-pointer p-1 rounded relative w-[30px] h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-panel-right rotate-180"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><line x1="15" x2="15" y1="3" y2="21" /></svg>
+                    <button onClick={toggleSideParam} type='button' className="flex items-center justify-center bg-none border-none text-zinc-800 cursor-pointer p-1 rounded relative w-[30px] h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4">
+                        <PanelRight className='rotate-180' />
                     </button>
                 </div>
-                <>
-                    <FolderList currentPageData={currentPageData} />
-                </>
+                <FolderList currentPageData={currentPageData} />
                 <div className="flex items-center justify-end gap-1  min-w-[100px]">
                     <WordCountDisplay currentPageData={currentPageData} />
                     <DropDownMenu currentPageData={currentPageData} />
@@ -44,7 +47,48 @@ function FolderList({ currentPageData }) {
             setIsMobile(true)
             return
         }
-        setFolderTree(handleFindRecordAndAncestors(currentPage, listedPageItems))
+        function findItemAndParentsUnsorted(data, id) {
+            // Create a map to store each object by its id for quick lookup
+            const idMap = {};
+            data.forEach(obj => {
+                idMap[obj.id] = obj;
+                obj.children = []; // Initialize children array for each object
+            });
+
+            // Function to find an item by its id
+            function findItemById(targetId) {
+                return idMap[targetId];
+            }
+
+            // Helper function to find all parents recursively
+            function findParents(item, parents = []) {
+                if (!item) {
+                    return parents;
+                }
+
+                parents.unshift(item); // Add current item to the beginning of parents array
+
+                // Recursively find parent until parentId is null (top level)
+                if (item.parentId !== null) {
+                    let parent = findItemById(item.parentId);
+                    return findParents(parent, parents);
+                } else {
+                    return parents; // Reached top level (parentId === null)
+                }
+            }
+
+            // Find the item by its id
+            const foundItem = findItemById(id);
+
+            if (foundItem) {
+                // Find all parents of the found item
+                const parents = findParents(foundItem);
+                return parents;
+            } else {
+                return []; // Return empty array if item with id not found
+            }
+        }
+        setFolderTree(findItemAndParentsUnsorted(listedPageItems, currentPage))
     }, [currentPage, listedPageItems])
     return (
         <>
@@ -154,7 +198,7 @@ function DropDownMenu({ currentPageData }) {
             shared: !handleFindRecordById(currentPage, listedPageItems).shared,
         };
 
-        handleUpdateRecord(currentPageData.id, { shared: data.shared }, setListedPageItems)
+        SendPageChanges(currentPage, { shared: data.shared })
 
         await pb.collection("pages").update(currentPage, data);
     }
@@ -181,9 +225,7 @@ function DropDownMenu({ currentPageData }) {
         try {
             await pb.collection("pages").delete(currentPage);
             toaster.success(`Page deleted`)
-            setListedPageItems(prevItems => {
-                return prevItems.filter((aitem) => aitem.id !== currentPage)
-            })
+            SendPageChanges(currentPage)
             window.location.replace(`/page`)
         } catch (err) {
             console.log(err)
@@ -192,15 +234,15 @@ function DropDownMenu({ currentPageData }) {
     }
 
     async function handleArchivePageToggle() {
-        const newState = !handleFindRecordById(currentPage, listedPageItems).archived
-        handleUpdateRecord(currentPageData.id, { archived: newState }, setListedPageItems)
+        const newState = !findPageListPage(currentPage, listedPageItems).archived
+        SendPageChanges(currentPage, { archived: newState })
         await pb.collection('pages').update(currentPage, { archived: newState });
         toaster.success(`Page ${newState ? 'archived' : 'restored'} successfully`)
     }
 
     async function handleReadOnlyPageToggle() {
         const newState = !handleFindRecordById(currentPage, listedPageItems).read_only
-        handleUpdateRecord(currentPageData.id, { read_only: newState }, setListedPageItems)
+        SendPageChanges(currentPage, { read_only: newState })
         await pb.collection('pages').update(currentPage, { read_only: newState });
         toaster.success(`Page ${newState ? 'set to read only' : 'editing allowed'} successfully`)
         setTimeout(() => {
@@ -409,7 +451,7 @@ function DropDownMenu({ currentPageData }) {
                             </DropDownExtensionContainer>
 
                             <DropDownItem onClick={handleToggleShowWordCounter}>
-                            <TextSelect />
+                                <TextSelect />
                                 Toggle Word Count
                             </DropDownItem>
 

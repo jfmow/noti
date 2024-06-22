@@ -8,17 +8,13 @@ import Img from "@/components/editor/Page-cover-buttons/Cover-image/unsplash"
 import Icons from "@/components/editor/Page-cover-buttons/Icons-and-list-color/Icons"
 import Gradient from '@/components/editor/Page-cover-buttons/Cover-image/gradient';
 import ColorSelector from '@/components/editor/Page-cover-buttons/Icons-and-list-color/ColorSelector';
-import { openPageContext } from '@/components/editor/Editor';
-import { handleUpdateRecord } from "@/components/Pages List/helpers";
+import { SendPageChanges } from "@/lib/Page state manager";
 
 export default function MenuButtons({ currentPage }) {
-    const { pb, setListedPageItems } = useEditorContext()
-    const { setOpenPageData } = openPageContext()
+    const { pb } = useEditorContext()
 
     async function setHeader(img) {
-        setOpenPageData(prevData => {
-            return { ...prevData, header_img: "", unsplash: img }
-        })
+        SendPageChanges(currentPage, { header_img: "", unsplash: img })
     }
 
     async function updateIcon(newIcon = '') {
@@ -26,7 +22,7 @@ export default function MenuButtons({ currentPage }) {
             return new Error('Please include a new icon')
         }
         try {
-            handleUpdateRecord(currentPage, { icon: newIcon.image }, setListedPageItems)
+            SendPageChanges(currentPage, { icon: newIcon.image })
             await pb.collection('pages').update(currentPage, { icon: newIcon.image });
         } catch {
             return new Error('Something went wrong updating the page icon')
@@ -38,7 +34,7 @@ export default function MenuButtons({ currentPage }) {
             return new Error('No color provided')
         }
         try {
-            handleUpdateRecord(currentPage, { color: newColor }, setListedPageItems)
+            SendPageChanges(currentPage, { color: newColor })
 
             await pb.collection('pages').update(currentPage, { color: newColor });
         } catch {

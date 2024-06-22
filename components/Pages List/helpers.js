@@ -1,4 +1,6 @@
-export function sortRecords(records, includeArchived = false) {
+export function sortRecords(unsortedRecords, includeArchived = false) {
+    debugger
+    const records = unsortedRecords
 
     const recordMap = {};
     const sortedRecords = [];
