@@ -6,7 +6,9 @@ import { Plus, ChevronDown, ChevronRight } from 'lucide-react'
 import Router from 'next/router';
 import UserOptions from '@/components/user-info';
 import Loader from '@/components/Loader';
-import { handleFindRecordAndAncestors, handleInsertRecord, handleUpdateRecord, sortRecords, handleRemoveRecord } from './helpers';
+import { handleFindRecordAndAncestors, handleInsertRecord, handleRemoveRecord } from './helpers';
+import { ListenForAllPageChanges, SendPageChanges } from '@/lib/Page state manager';
+import { sortAndNestObjects } from './list-functions';
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
 
 export default function UsersPages() {
@@ -16,12 +18,36 @@ export default function UsersPages() {
 
     useEffect(() => {
         async function run() {
+            setLoading(true)
             if (window.innerWidth < 640) {
                 setDefaultWidth("full")
             }
             const pages = await getPages(showArchivedPages)
             setListedPageItems(pages)
             setLoading(false)
+            ListenForAllPageChanges((data) => {
+                if (Object.keys(data).length === 1) {
+                    //The object was removed.
+                    setListedPageItems(prevItems => prevItems.filter((item) => item.id !== data.id))
+                } else {
+                    //The object was updated or created
+                    setListedPageItems(prevItems => {
+                        if (prevItems.find((item) => item.id === data.id)) {
+                            //The item exists
+                            return prevItems.map((item) => {
+                                if (item.id === data.id) {
+                                    return { ...item, ...data }
+                                } else {
+                                    return item
+                                }
+                            })
+                        } else {
+                            //The item doesn't exist
+                            return [...prevItems, data]
+                        }
+                    })
+                }
+            })
         }
         run()
     }, [showArchivedPages])
@@ -33,12 +59,12 @@ export default function UsersPages() {
                     <Loader />
                 ) : (
                     <>
-                        <div className='h-full w-full p-2 overflow-y-scroll'>
-                            {listedPageItems.length >= 1 && listedPageItems.map((item) => (
-                                <ListItem pageId={pageId} item={item} listedPageItems={listedPageItems} setListedPageItems={setListedPageItems} />
+                        <ul className='h-full w-full p-2 overflow-y-scroll'>
+                            {listedPageItems.length >= 1 && sortAndNestObjects(listedPageItems).map((item) => (
+                                <PageListItem data={item} />
                             ))}
                             <CreateNewPageButton setListedPageItems={setListedPageItems} />
-                        </div>
+                        </ul>
 
                         <UserOptions />
                     </>
@@ -48,9 +74,82 @@ export default function UsersPages() {
     )
 }
 
-function CreateNewPageButton({ parentId = "", setListedPageItems }) {
+
+
+function PageListItem({ data }) {
+    const { showArchivedPages } = useEditorContext()
+    if (data?.archived && !showArchivedPages) {
+        return <></>
+    }
+
+    const isDragingOver = false
+
+    function openPage() {
+        const urlParams = new URLSearchParams(window.location.search)
+        if (window.innerWidth < 640) {
+            urlParams.set("side", false)
+        }
+        urlParams.set("edit", data.id)
+        Router.push(`/page?${urlParams.toString()}`);
+    }
+
+    function togglePagesChildren(e) {
+        //Prevent the open page event
+        e.stopPropagation()
+        pb.collection("pages").update(data.id, { expanded: !data.expanded });
+        SendPageChanges(data.id, { "expanded": !data.expanded })
+    }
+
+    function createANewChildPage(e) {
+        e.preventDefault()
+        //TODO: change the create function
+        createNewItem(data.id, null)
+    }
+
     return (
-        <button aria-label='Create new page without parent' onClick={() => createNewItem(parentId, setListedPageItems)} className='w-full text-[var(--pageListItemTextIcon)] text-sm opacity-50 hover:opacity-60 flex items-center justify-center bg-[var(--pageListItemHover)] gap-1 cursor-pointer p-2 mb-2 hover:bg-[var(--pageListItemHover)] hover:shadow-sm rounded-lg'>
+        <>
+            <li aria-label='Page item' key={data.id} onClick={openPage} style={{ background: data.color }} className={`flex items-center justify-between gap-1 cursor-pointer p-2 mb-2 text-[var(--pageListItemTextIcon)] hover:bg-[var(--pageListItemHover)] hover:border-zinc-200 border border-[transparent] rounded-md ${isDragingOver ? "!bg-red-300" : ""}`}>
+
+                {data.icon != "" ? (
+                    <div className='w-6 h-6'>
+                        <img src={`/emoji/twitter/64/${data.icon}`} className='object-contain h-full w-full' loading='lazy' />
+                    </div>
+                ) : (
+                    <></>
+                )}
+                <div className='text-left w-full font-medium text-sm'>
+                    {data.title || data.id}
+                </div>
+                <div className='flex items-center'>
+                    <button disabled={!data.expanded} aria-label='Create a new sub page' onClick={createANewChildPage} type='button' style={{ opacity: data.expanded ? 100 : 0 }} className='flex items-center justify-center p-1 rounded bg-none border-none hover:bg-[var(--pageListItemTextIconBackgroundHover)]'>
+                        <Plus className='w-4 h-4' />
+                    </button>
+
+                    <button aria-label='Expand children' onClick={togglePagesChildren} type='button' className='flex items-center justify-center p-1 rounded bg-none border-none hover:bg-[var(--pageListItemTextIconBackgroundHover)]'>
+                        {data.expanded ? (
+                            <ChevronDown className='w-4 h-4' />
+                        ) : (
+                            <ChevronRight className='w-4 h-4' />
+                        )}
+                    </button>
+                </div>
+            </li >
+            {
+                data.expanded && data.children ? (
+                    <ul className="flex flex-col ml-2">
+                        {data.children.map((childItemData) => (
+                            <PageListItem data={childItemData} />
+                        ))}
+                    </ul>
+                ) : null
+            }
+        </>
+    )
+}
+
+function CreateNewPageButton({ parentId = "" }) {
+    return (
+        <button aria-label='Create new page without parent' onClick={() => createNewItem(parentId)} className='w-full text-[var(--pageListItemTextIcon)] text-sm opacity-50 hover:opacity-60 flex items-center justify-center bg-[var(--pageListItemHover)] gap-1 cursor-pointer p-2 mb-2 hover:bg-[var(--pageListItemHover)] hover:shadow-sm rounded-lg'>
             <Plus className='w-4 h-4' />
             New page
         </button>
@@ -133,7 +232,7 @@ function ListItem({ item, pageId, listedPageItems, setListedPageItems, children 
                     }} type='button' style={{ opacity: item.expanded ? 100 : 0 }} className='flex items-center justify-center p-1 rounded bg-none border-none hover:bg-[var(--pageListItemTextIconBackgroundHover)]'>
                         <Plus className='w-4 h-4' />
                     </button>
-                    <button aria-label='Expand children' onClick={(e) => { e.stopPropagation(); pb.collection("pages").update(item.id, { expanded: !item.expanded }); handleUpdateRecord(item.id, { "expanded": !item.expanded }, setListedPageItems) }} type='button' className='flex items-center justify-center p-1 rounded bg-none border-none hover:bg-[var(--pageListItemTextIconBackgroundHover)]'>
+                    <button aria-label='Expand children' onClick={(e) => { e.stopPropagation(); pb.collection("pages").update(item.id, { expanded: !item.expanded }); SendPageChanges(item.id, { "expanded": !item.expanded }) }} type='button' className='flex items-center justify-center p-1 rounded bg-none border-none hover:bg-[var(--pageListItemTextIconBackgroundHover)]'>
                         {item.expanded ? (
                             <ChevronDown className='w-4 h-4' />
                         ) : (
@@ -158,7 +257,7 @@ function ListItem({ item, pageId, listedPageItems, setListedPageItems, children 
 
 
 
-export async function createNewItem(parentId = "", setListedPageItems) {
+export async function createNewItem(parentId = "") {
     const searchParams = new URLSearchParams(window.location.search);
 
     const newRecord = await pb.collection("pages").create({
@@ -168,10 +267,13 @@ export async function createNewItem(parentId = "", setListedPageItems) {
         }
     });
 
-    handleInsertRecord(newRecord, setListedPageItems);
+    SendPageChanges(newRecord.id, newRecord)
 
-    searchParams.set("pm", "l");
-    searchParams.set("p", newRecord.id);
+    if (window.innerWidth > 640) {
+        //Is not a phone
+        searchParams.set("pm", "l");
+        searchParams.set("p", newRecord.id);
+    }
 
     Router.push(`/page?${searchParams.toString()}`);
 }
@@ -179,10 +281,10 @@ export async function createNewItem(parentId = "", setListedPageItems) {
 async function getPages(showArchivedPages = false) {
     try {
         const records = await pb.collection("pages").getFullList({
-            sort: '-created', skipTotal: true, filter: `owner = '${pb.authStore.model.id}'`, fields: "id, owner, title, expanded, parentId, icon, color, read_only, archived, shared"
+            sort: '-created', skipTotal: true, filter: `owner = '${pb.authStore.model.id}' ${showArchivedPages ? "" : "&& archived = false"}`, fields: "id, owner, title, expanded, parentId, icon, color, read_only, archived, shared"
         });
 
-        return sortRecords(records, showArchivedPages);
+        return records
     } catch {
         toaster.error("An error occured while fetching pages.")
         return []

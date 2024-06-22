@@ -110,12 +110,6 @@ export default class SimpleIframe {
     root.render(<MyPdfViewer fileId={fileId} url={fileUrl} />);
   }
 
-  removed() {
-    if (this.data.fileId) {
-      pb.collection('files').delete(file);
-    }
-  }
-
   save(blockContent) {
     try {
       const container = blockContent.querySelector('[level="root-container"]')

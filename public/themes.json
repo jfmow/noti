@@ -5,7 +5,7 @@
         "color": "#f9f9f9",
         "data": {
             "--background": "#f9f9f9",
-            "--editor_text": "#000",
+            "--editortext": "#000",
             "--pageListItemHover": "#d8d8d8",
             "--pageListItemOpen": "#00000029",
             "--pageListItemTextIconBackgroundHover": "#c4c4c4",
@@ -25,7 +25,7 @@
         "color": "#0d1427",
         "data": {
             "--background": "#020617",
-            "--editor_text": "#bec3d9",
+            "--editortext": "#bec3d9",
             "--pageListItemHover": "#0e393d",
             "--pageListItemOpen": "#6f6f6f29",
             "--pageListItemTextIconBackgroundHover": "#074045",
@@ -46,7 +46,7 @@
         "data": {
             "--margin_toast": "20px",
             "--background": "#bbc8ff",
-            "--editor_text": "#373737",
+            "--editortext": "#373737",
             "--pageListItemHover": "#abbbff",
             "--pageListItemOpen": "linear-gradient(20deg, #98adff, #54e1ff73)",
             "--pageListItemTextIconBackgroundHover": "#a4b5ff",
@@ -66,7 +66,7 @@
         "color": "#fdf8ff",
         "data": {
             "--background": "#fdf8ff",
-            "--editor_text": "#291b2e",
+            "--editortext": "#291b2e",
             "--pageListItemHover": "#d8d8d8",
             "--pageListItemOpen": "#00000029",
             "--pageListItemTextIconBackgroundHover": "#c4c4c4",
@@ -86,7 +86,7 @@
         "color": "#fff7f9",
         "data": {
             "--background": "#fff7f9",
-            "--editor_text": "#ff5781",
+            "--editortext": "#ff5781",
             "--pageListItemHover": "#efe3e6",
             "--pageListItemOpen": "#00000029",
             "--pageListItemTextIconBackgroundHover": "#c4c4c4",
@@ -106,7 +106,7 @@
         "color": "#000000",
         "data": {
             "--background": "#0c0c0c",
-            "--editor_text": "#f4f4f4",
+            "--editortext": "#f4f4f4",
             "--pageListItemHover": "#b196ff36",
             "--pageListItemOpen": "#000000",
             "--pageListItemTextIconBackgroundHover": "#a889ff36",

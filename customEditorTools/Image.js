@@ -213,12 +213,6 @@ export default class ImageTool {
     return true;
   }
 
-  removed() {
-    if (this.data.fileId) {
-      pb.collection('files').delete(this.data.fileId);
-    }
-  }
-
   save(blockContent) {
     try {
       const iframe = blockContent.querySelector("div[fileid]");
