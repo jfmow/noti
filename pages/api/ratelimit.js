@@ -1,8 +1,5 @@
 import rateLimit from 'express-rate-limit'
 import slowDown from 'express-slow-down'
-import PocketBase from "pocketbase";
-const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
-pb.autoCancellation(false);
 
 const applyMiddleware = middleware => (request, response) =>
     new Promise((resolve, reject) => {
@@ -43,8 +40,8 @@ export default async function handler(request, response) {
     } catch {
         return response.status(429).send('Too Many Requests')
     }
-    if(request.method != 'GET'){
-        return    response.status(405).send('Method not allowed');
+    if (request.method != 'GET') {
+        return response.status(405).send('Method not allowed');
     }
     response.status(200).send('Allowed')
 }

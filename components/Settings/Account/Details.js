@@ -1,8 +1,8 @@
 import { Button, useSettingsPopoverContext } from "@/components/Settings"
 import { toaster } from "@/components/toast"
-
+import pb from "@/lib/pocketbase"
 export default function Details() {
-    const { pb, rerenderPage } = useSettingsPopoverContext()
+    const { rerenderPage } = useSettingsPopoverContext()
 
     function handleChangeUsername() {
         const currentUsername = pb.authStore.model.username

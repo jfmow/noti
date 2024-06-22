@@ -1,10 +1,7 @@
 import rateLimit from 'express-rate-limit'
 import slowDown from 'express-slow-down'
 import validator from 'validator';
-import PocketBase from "pocketbase";
 import { isNumber } from 'lodash';
-const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
-pb.autoCancellation(false);
 
 const applyMiddleware = middleware => (request, response) =>
     new Promise((resolve, reject) => {

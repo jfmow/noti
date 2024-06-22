@@ -25,9 +25,10 @@ import { ListenForPageChange, SendPageChanges } from "@/lib/Page state manager";
 import { findPageListPage } from "../Pages List/list-functions";
 import Loader from "../Loader";
 const MenuButtons = lazy(() => import("@/components/editor/Page-cover-buttons"))
+import pb from "@/lib/pocketbase"
 
 export default function EditorV3({ currentPage }) {
-    const { pb, listedPageItems } = useEditorContext()
+    const { listedPageItems } = useEditorContext()
     const Editor = useRef(null)
     const EditorElement = useRef(null)
     const [loadingSlow, setLoadingSlow] = useState(false)

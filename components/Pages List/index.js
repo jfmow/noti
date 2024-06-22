@@ -1,4 +1,3 @@
-import PocketBase from 'pocketbase'
 import { toaster } from '@/components/toast';
 import { useEditorContext } from '@/pages/page';
 import { useEffect, useState } from 'react';
@@ -9,12 +8,12 @@ import Loader from '@/components/Loader';
 import { handleFindRecordAndAncestors, handleInsertRecord, handleRemoveRecord } from './helpers';
 import { ListenForAllPageChanges, SendPageChanges } from '@/lib/Page state manager';
 import { sortAndNestObjects } from './list-functions';
-const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
+import pb from "@/lib/pocketbase"
 
 export default function UsersPages() {
     const [defaultWidth, setDefaultWidth] = useState(260)
     const [loading, setLoading] = useState(true)
-    const { showArchivedPages, listedPageItems, setListedPageItems, visible, pageId } = useEditorContext()
+    const { showArchivedPages, listedPageItems, setListedPageItems, visible } = useEditorContext()
 
     useEffect(() => {
         async function run() {

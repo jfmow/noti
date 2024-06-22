@@ -8,8 +8,9 @@ import UsageTab from "./Usage";
 
 const SettingsPopoverContext = createContext()
 const forceUpdateReducer = (x) => x + 1;
+import pb from "@/lib/pocketbase"
 
-export default function SettingsPopover({ pb, children }) {
+export default function SettingsPopover({ children }) {
     const [popoverOpen, setPopoverOpen] = useState(false)
     const [opentab, setTab] = useState("account")
     const [, rerenderPage] = useReducer(forceUpdateReducer, 0);
@@ -33,7 +34,7 @@ export default function SettingsPopover({ pb, children }) {
     }
 
     return (
-        <SettingsPopoverContext.Provider value={{ pb, rerenderPage }}>
+        <SettingsPopoverContext.Provider value={{ rerenderPage }}>
             <>
                 <button onClick={() => setPopoverOpen(prev => !prev)}>
                     {children}

@@ -54,7 +54,7 @@ export default function MenuBar({ currentPageData, currentPage, listedPageItems,
                         </DropDown>
                     </DropDownContainer>
                     {!unauthed ? (
-                        <DropDownMenu currentPageData={currentPageData} listedPageItems={listedPageItems} currentPage={currentPage} pb={pb} />
+                        <DropDownMenu currentPageData={currentPageData} listedPageItems={listedPageItems} currentPage={currentPage} />
                     ) : null}
 
                 </div>
@@ -213,7 +213,7 @@ function WordCountDisplay({ currentPageData, defaultVisible }) {
     }
 }
 
-function DropDownMenu({ currentPageData, listedPageItems, pb, currentPage }) {
+function DropDownMenu({ currentPageData, listedPageItems, currentPage }) {
     const [pageInfo, setPageInfo] = useState({})
 
     async function handleSharePage() {

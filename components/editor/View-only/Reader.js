@@ -17,10 +17,8 @@ import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
 import LineBreak from "@/customEditorTools/LineBreak";
 import { toaster } from "@/components/toast";
 import Loader from "../../Loader";
-import PocketBase from 'pocketbase'
 import MenuBar from "../Menubar";
-const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
-pb.autoCancellation(false)
+import pb from "@/lib/pocketbase"
 
 export default function EditorV3({ page }) {
     const currentPage = page;

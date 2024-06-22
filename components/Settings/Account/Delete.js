@@ -1,8 +1,7 @@
-import { Button, useSettingsPopoverContext } from "@/components/Settings"
+import { Button } from "@/components/Settings"
 import { toaster } from "@/components/toast"
-
+import pb from "@/lib/pocketbase"
 export default function DeleteAccount() {
-    const { pb, rerenderPage } = useSettingsPopoverContext()
 
     async function handleDeleteAccount() {
         const confirmPropmt = prompt("Please type DELETE to confirm")

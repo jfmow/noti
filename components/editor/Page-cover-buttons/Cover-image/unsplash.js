@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import PocketBase from 'pocketbase';
+import pb from "@/lib/pocketbase"
 import debounce from 'lodash/debounce';
 import Link from '@/components/Link';
 import { toaster } from '@/components/toast';
 import { Input } from '@/components/UX-Components';
 
-const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
 
 export default function Unsplash({ page, setArticleHeader, close }) {
     const [images, setImages] = useState([]);

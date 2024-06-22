@@ -1,9 +1,8 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import PocketBase from 'pocketbase'
+import pb from "@/lib/pocketbase"
 import Router from "next/router";
-const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
-pb.autoCancellation(false);
+
 
 export default function Home() {
     const [mobile, setIsOnMobile] = useState(false)

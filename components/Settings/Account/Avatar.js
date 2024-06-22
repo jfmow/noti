@@ -2,9 +2,9 @@ import { useSettingsPopoverContext } from "@/components/Settings";
 import compressImage from "@/lib/CompressImg";
 import { useReducer, useRef } from "react";
 import { Pencil } from "lucide-react"
-
+import pb from "@/lib/pocketbase"
 export default function Avatar() {
-    const { pb, rerenderPage } = useSettingsPopoverContext()
+    const { rerenderPage } = useSettingsPopoverContext()
 
 
     const fileInputRef = useRef(null);
