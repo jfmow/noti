@@ -7,6 +7,7 @@ import NewPageModal from '@/lib/Modals/NewPage';
 import UsersPages from '@/components/Pages List';
 import EnableWebsiteThemes from '@/lib/Themes';
 import pb from "@/lib/pocketbase"
+import { findPageListPage } from '@/components/Pages List/list-functions';
 
 const EditorContext = React.createContext();
 const Editor = lazy(() => import('../../components/editor/Editor'));
@@ -79,7 +80,7 @@ function NotionEditor() {
                 <div className='flex flex-col sm:flex-row'>
                     <UsersPages />
                     <div style={{ flex: '1 1 0%', position: 'relative', display: 'flex', height: '100dvh', flexDirection: 'column', overflowX: 'hidden' }}>
-                        <MenuBar listedPageItems={listedPageItems} currentPage={pageId} currentPageData={primaryVisiblePageData} />
+                        <MenuBar listedPageItems={listedPageItems} currentPage={pageId} currentPageData={findPageListPage(pageId, listedPageItems)} />
 
                         {pageId !== "" ? (
                             <Suspense fallback={<></>}>
