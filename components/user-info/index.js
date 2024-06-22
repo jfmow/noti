@@ -1,8 +1,7 @@
-import { useEditorContext } from '@/pages/page';
 import { Settings2, UserCircle } from 'lucide-react';
 import SettingsPopover from '../Settings';
+import pb from "@/lib/pocketbase"
 export default function UserOptions({ clss }) {
-    const { pb } = useEditorContext()
     return (
         <>
             <div className={`${"relative w-full sm:w-full flex items-center justify-between p-2 h-[70px] text-[var(--userOptionText)] border-t border-[var(--userinfoSectionBordertop)] bg-[var(--background)]"} ${clss}`}>
@@ -20,7 +19,7 @@ export default function UserOptions({ clss }) {
                     </div>
                 </div>
                 <div className="flex flex-col gap-1 relative">
-                    <SettingsPopover pb={pb}>
+                    <SettingsPopover>
                         <span className='sr-only'>Account settings</span>
                         <Settings2 className='w-4 h-4 cursor-pointer' />
                     </SettingsPopover>
