@@ -3,10 +3,8 @@ import { ToolTip, ToolTipCon, ToolTipTrigger } from "@/components/UX-Components/
 import { toaster } from "@/components/toast"
 import { ArrowLeft, LinkIcon, Loader2, Unlink } from "lucide-react"
 import { useRouter } from "next/router"
-import PocketBase from 'pocketbase'
 import { useEffect, useState } from "react"
-const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
-pb.autoCancellation(false)
+import pb from "@/lib/pocketbase"
 export default function OAuthManager() {
 
     return (

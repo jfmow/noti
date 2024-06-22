@@ -25,9 +25,10 @@ import { ListenForPageChange, SendPageChanges } from "@/lib/Page state manager";
 import { findPageListPage } from "../Pages List/list-functions";
 import Loader from "../Loader";
 const MenuButtons = lazy(() => import("@/components/editor/Page-cover-buttons"))
+import pb from "@/lib/pocketbase"
 
 export default function EditorV3({ currentPage }) {
-    const { pb, listedPageItems } = useEditorContext()
+    const { listedPageItems } = useEditorContext()
     const Editor = useRef(null)
     const EditorElement = useRef(null)
     const [loadingSlow, setLoadingSlow] = useState(false)
@@ -48,7 +49,6 @@ export default function EditorV3({ currentPage }) {
                  */
                 try {
                     if (openPageData && openPageData.content && Object.keys(openPageData.content).includes("blocks")) {
-                        console.log(openPageData)
                         initNewEditor(openPageData)
                     } else {
                         setLoadingSlow(true)
@@ -69,7 +69,6 @@ export default function EditorV3({ currentPage }) {
 
     async function initNewEditor(pageData) {
         try {
-            console.log("INIT")
             if (Editor.current) {
                 await Editor.current.destroy()
             }

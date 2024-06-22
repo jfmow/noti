@@ -1,10 +1,8 @@
 import LoginPage, { LoginButton, LoginInput, LoginMessage } from "@/components/Auth/login";
 import { toaster } from "@/components/toast";
 import Router from "next/router";
-import PocketBase from 'pocketbase'
 import { useEffect, useState } from "react";
-const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
-pb.autoCancellation(false)
+import pb from "@/lib/pocketbase"
 
 export default function Login() {
     const [loading, setLoading] = useState(false)

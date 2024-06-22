@@ -1,15 +1,12 @@
 import Loader from '@/components/Loader';
-import PocketBase from 'pocketbase'
 import React, { Suspense, lazy, useContext, useEffect, useState } from 'react';
 import MenuBar from '@/components/editor/Menubar';
 import Router, { useRouter } from 'next/router';
 import PeekPageBlock from '@/lib/Modals/PeekPage';
 import NewPageModal from '@/lib/Modals/NewPage';
 import UsersPages from '@/components/Pages List';
-import EnableWebsiteThemes from '@/lib/Themes/everything';
-import SettingsPopover from '@/components/Settings';
-const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL);
-pb.autoCancellation(false);
+import EnableWebsiteThemes from '@/lib/Themes';
+import pb from "@/lib/pocketbase"
 
 const EditorContext = React.createContext();
 const Editor = lazy(() => import('../../components/editor/Editor'));
@@ -77,12 +74,12 @@ function NotionEditor() {
     }
 
     return (
-        <EditorContext.Provider value={{ showArchivedPages, setShowArchivedPages, listedPageItems, pb, setListedPageItems, visible, setVisible, currentPage: pageId, pageId, listedPageItemsFilter, setListedPageItemsFilters, setPrimaryVisiblePageData, primaryVisiblePageData }}>
+        <EditorContext.Provider value={{ showArchivedPages, setShowArchivedPages, listedPageItems, setListedPageItems, visible, setVisible, currentPage: pageId, pageId, listedPageItemsFilter, setListedPageItemsFilters, setPrimaryVisiblePageData, primaryVisiblePageData }}>
             <div>
                 <div className='flex flex-col sm:flex-row'>
                     <UsersPages />
                     <div style={{ flex: '1 1 0%', position: 'relative', display: 'flex', height: '100dvh', flexDirection: 'column', overflowX: 'hidden' }}>
-                        <MenuBar currentPageData={primaryVisiblePageData} />
+                        <MenuBar listedPageItems={listedPageItems} currentPage={pageId} currentPageData={primaryVisiblePageData} />
 
                         {pageId !== "" ? (
                             <Suspense fallback={<></>}>

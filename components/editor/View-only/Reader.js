@@ -10,15 +10,15 @@ import Table from "@editorjs/table";
 import Video from '@/customEditorTools/Video'
 import NestedList from '@editorjs/nested-list';
 import MarkerTool from "@/customEditorTools/Marker";
+import Underline from '@editorjs/underline';
 import Image from "@/customEditorTools/Image";
 import SimpleIframe from "@/customEditorTools/SimpleEmbed";
 import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
 import LineBreak from "@/customEditorTools/LineBreak";
 import { toaster } from "@/components/toast";
 import Loader from "../../Loader";
-import PocketBase from 'pocketbase'
-const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
-pb.autoCancellation(false)
+import MenuBar from "../Menubar";
+import pb from "@/lib/pocketbase"
 
 export default function EditorV3({ page }) {
     const currentPage = page;
@@ -120,6 +120,10 @@ export default function EditorV3({ page }) {
                         break: {
                             class: LineBreak,
                         },
+                        underline: {
+                            class: Underline,
+                            inlineToolbar: true,
+                        },
                         list: {
                             class: List,
                             inlineToolbar: true,
@@ -149,6 +153,10 @@ export default function EditorV3({ page }) {
             <Head>
                 <title>{openPageData.title}</title>
             </Head>
+
+            <MenuBar currentPageData={openPageData} listedPageItems={[openPageData]} currentPage={currentPage} unauthed>
+
+            </MenuBar>
             <div className="flex flex-col w-full h-full overflow-scroll" id={`editor-container-${currentPage}`}>
                 <div className="relative w-full min-h-[300px] h-[300px] bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400 flex items-center justify-center mb-5">
                     <div className="absolute top-0 left-0 right-0 bottom-0 w-full h-full overflow-hidden">
@@ -162,7 +170,7 @@ export default function EditorV3({ page }) {
                         <h1 contentEditable onBlur={(e) => updateTitle(e)} className="outline-none scroll-m-20 text-4xl font-bold tracking-tight lg:text-4xl">{openPageData.title || "Untitled page"}</h1>
                     </div>
                 </div>
-                <div ref={SaveRef} className="px-3" style={{ color: "var(--editor_text)" }} id={`editorjs-editor-${currentPage}`} />
+                <div ref={SaveRef} className="px-3 text-[var(--editortext)]" id={`editorjs-editor-${currentPage}`} />
             </div>
         </>
     )

@@ -1,7 +1,5 @@
-import { DropDown, DropDownContainer, DropDownSectionTitle, DropDownTrigger } from '@/lib/Pop-Cards/DropDown';
-import ThemePicker from '@/components/user-info/Themes'
 import { useEditorContext } from '@/pages/page';
-import { Paintbrush, Settings2, UserCircle } from 'lucide-react';
+import { Settings2, UserCircle } from 'lucide-react';
 import SettingsPopover from '../Settings';
 export default function UserOptions({ clss }) {
     const { pb } = useEditorContext()
@@ -22,19 +20,6 @@ export default function UserOptions({ clss }) {
                     </div>
                 </div>
                 <div className="flex flex-col gap-1 relative">
-                    <DropDownContainer>
-                        <DropDownTrigger>
-                            <span className='sr-only'>Theme picker</span>
-                            <Paintbrush className='w-4 h-4 cursor-pointer' />
-                        </DropDownTrigger>
-                        <DropDown>
-                            <DropDownSectionTitle>
-                                Themes
-                            </DropDownSectionTitle>
-                            <ThemePicker />
-                        </DropDown>
-                    </DropDownContainer>
-
                     <SettingsPopover pb={pb}>
                         <span className='sr-only'>Account settings</span>
                         <Settings2 className='w-4 h-4 cursor-pointer' />

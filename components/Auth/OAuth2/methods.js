@@ -1,9 +1,7 @@
 import { toaster } from "@/components/toast";
 import Router from "next/router";
-import PocketBase from 'pocketbase'
-const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETURL)
+import pb from "@/lib/pocketbase"
 import { Github } from "lucide-react"
-pb.autoCancellation(false)
 export default function OAuth2LoginButtons() {
 
     async function OAuthLogin(provider) {

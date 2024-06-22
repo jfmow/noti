@@ -1,10 +1,6 @@
-import { Button, useSettingsPopoverContext } from "@/components/Settings"
-import { toaster } from "@/components/toast"
+import { Button } from "@/components/Settings"
 import { useEditorContext } from "@/pages/page"
-import Router from "next/router"
-
 export default function Pages() {
-    const { pb, rerenderPage } = useSettingsPopoverContext()
     const { setShowArchivedPages } = useEditorContext()
 
     return (
