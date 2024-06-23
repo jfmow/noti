@@ -330,7 +330,7 @@ export default function EditorV3({ currentPage }) {
                         </div>
                     </div>
                     {loadingSlow ? (<Loader />) : null}
-                    <div ref={EditorElement} className={`px-8 text-[var(--editortext);] ${loadingSlow ? "hidden" : ""}`} />
+                    <div ref={EditorElement} className={`w-full px-8 text-[var(--editortext);] ${loadingSlow ? "hidden" : ""}`} />
                 </div>
             </div>
         </>

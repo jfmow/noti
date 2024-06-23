@@ -21,7 +21,7 @@ export function sortAndNestObjects(data) {
                 parent.children.push(obj);
             } else {
                 // Handle case where parentId doesn't match any existing id (optional)
-                console.error(`Parent object with id ${parentId} not found for object with id ${obj.id}`);
+                //console.error(`Parent object with id ${parentId} not found for object with id ${obj.id}`);
             }
         } else {
             // If parentId is null, it's a root object
