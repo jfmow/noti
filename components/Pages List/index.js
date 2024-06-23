@@ -5,7 +5,6 @@ import { Plus, ChevronDown, ChevronRight } from 'lucide-react'
 import Router from 'next/router';
 import UserOptions from '@/components/user-info';
 import Loader from '@/components/Loader';
-import { handleFindRecordAndAncestors, handleInsertRecord, handleRemoveRecord } from './helpers';
 import { ListenForAllPageChanges, SendPageChanges } from '@/lib/Page state manager';
 import { sortAndNestObjects } from './list-functions';
 import pb from "@/lib/pocketbase"
@@ -158,7 +157,7 @@ function CreateNewPageButton({ parentId = "" }) {
 /**
  * @returns Component
  */
-function ListItem({ item, pageId, listedPageItems, setListedPageItems, children }) {
+/*function ListItem({ item, pageId, listedPageItems, setListedPageItems, children }) {
 
     const [isDragingOver, setIsDragingOver] = useState(false)
 
@@ -251,7 +250,7 @@ function ListItem({ item, pageId, listedPageItems, setListedPageItems, children 
             }
         </>
     )
-}
+}*/
 
 
 

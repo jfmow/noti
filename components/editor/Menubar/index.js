@@ -5,7 +5,6 @@ import { ToolTip, ToolTipCon, ToolTipTrigger } from '@/components/UX-Components/
 import { DropDown, DropDownContainer, DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from '@/lib/Pop-Cards/DropDown';
 import Link from '@/components/Link';
 import { CalendarDays, CircleUser, TextSelect, BookDashed, Pencil, Share2, PartyPopper, Archive, ArchiveRestore, Baseline, CaseLower, Copy, Eye, EyeOff, Info, PanelRightDashed, Settings2, Share, Space, Trash2Icon, WholeWord, Settings, PanelRight, Paintbrush } from 'lucide-react';
-import { handleFindRecordById } from '@/components/Pages List/helpers';
 import { CountCharacters, CountWords } from './helpers';
 import { SendPageChanges } from '@/lib/Page state manager';
 import { findPageListPage } from '@/components/Pages List/list-functions';
@@ -218,7 +217,7 @@ function DropDownMenu({ currentPageData, listedPageItems, currentPage }) {
 
     async function handleSharePage() {
         const data = {
-            shared: !handleFindRecordById(currentPage, listedPageItems).shared,
+            shared: !findPageListPage(currentPage, listedPageItems).shared,
         };
 
         SendPageChanges(currentPage, { shared: data.shared })
@@ -264,7 +263,7 @@ function DropDownMenu({ currentPageData, listedPageItems, currentPage }) {
     }
 
     async function handleReadOnlyPageToggle() {
-        const newState = !handleFindRecordById(currentPage, listedPageItems).read_only
+        const newState = !findPageListPage(currentPage, listedPageItems).read_only
         SendPageChanges(currentPage, { read_only: newState })
         await pb.collection('pages').update(currentPage, { read_only: newState });
         toaster.success(`Page ${newState ? 'set to read only' : 'editing allowed'} successfully`)
@@ -396,7 +395,7 @@ function DropDownMenu({ currentPageData, listedPageItems, currentPage }) {
                                         Share
                                     </DropDownSectionTitle>
                                     <DropDownSection>
-                                        {handleFindRecordById(currentPage, listedPageItems)?.shared ? (
+                                        {findPageListPage(currentPage, listedPageItems)?.shared ? (
                                             <>
                                                 <DropDownItem onClick={copyPageShareUrl}>
                                                     <Copy />
@@ -432,7 +431,7 @@ function DropDownMenu({ currentPageData, listedPageItems, currentPage }) {
                                     </DropDownSectionTitle>
                                     <DropDownSection>
                                         <DropDownItem onClick={() => handleReadOnlyPageToggle()}>
-                                            {handleFindRecordById(currentPage, listedPageItems).read_only ? (
+                                            {findPageListPage(currentPage, listedPageItems).read_only ? (
                                                 <>
                                                     <Pencil />
                                                     Allow editing
@@ -445,7 +444,7 @@ function DropDownMenu({ currentPageData, listedPageItems, currentPage }) {
                                             )}
                                         </DropDownItem>
                                         <DropDownItem onClick={() => handleArchivePageToggle()}>
-                                            {handleFindRecordById(currentPage, listedPageItems).archived ? (
+                                            {findPageListPage(currentPage, listedPageItems).archived ? (
                                                 <>
                                                     <ArchiveRestore />
                                                     Un-archive
