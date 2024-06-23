@@ -34,7 +34,7 @@ export default function SettingsPopover({ children }) {
     }
 
     return (
-        <SettingsPopoverContext.Provider value={{ rerenderPage }}>
+        <SettingsPopoverContext.Provider value={{ rerenderPage, pb }}>
             <>
                 <button onClick={() => setPopoverOpen(prev => !prev)}>
                     {children}
