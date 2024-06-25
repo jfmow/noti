@@ -18,7 +18,7 @@ export default function MenuBar({ currentPageData, currentPage, listedPageItems,
 
     function toggleSideParam() {
         const queryParams = new URLSearchParams(window.location.search)
-        const newState = queryParams.get("side") === "true" ? false : true
+        const newState = queryParams.has("side") && queryParams.get("side") === "false" ? "true" : "false"
         queryParams.set("side", newState)
         Router.push(`/page?${queryParams.toString()}`)
     }
