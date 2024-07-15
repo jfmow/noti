@@ -23,7 +23,6 @@ import { useEditorContext } from "@/pages/page";
 import { debounce } from "lodash";
 import { ListenForPageChange, SendPageChanges } from "@/lib/Page state manager";
 import { findPageListPage } from "../Pages List/list-functions";
-import Loader from "../Loader";
 const MenuButtons = lazy(() => import("@/components/editor/Page-cover-buttons"))
 import pb from "@/lib/pocketbase"
 
@@ -31,9 +30,8 @@ export default function EditorV3({ currentPage }) {
     const { listedPageItems } = useEditorContext()
     const Editor = useRef(null)
     const EditorElement = useRef(null)
-    const [loadingSlow, setLoadingSlow] = useState(false)
+    const [openPageData, setOpenPageData] = useState({})
 
-    const openPageData = findPageListPage(currentPage, listedPageItems)
 
 
     useEffect(() => {
@@ -47,15 +45,16 @@ export default function EditorV3({ currentPage }) {
                  * It then sets the state value with the returned record.
                  * This record contains all the data, title, owner, content, header images etc
                  */
+
                 try {
-                    if (openPageData && openPageData.content && Object.keys(openPageData.content).includes("blocks")) {
-                        initNewEditor(openPageData)
+                    setOpenPageData({})
+                    const cachedPage = findPageListPage(currentPage, listedPageItems)
+                    if (cachedPage && cachedPage.content && Object.keys(cachedPage.content).includes("blocks")) {
+                        initNewEditor(cachedPage)
                     } else {
-                        setLoadingSlow(true)
                         const record = await pb.collection('pages').getOne(page)
                         SendPageChanges(page, record)
                         initNewEditor(record)
-                        setLoadingSlow(false)
                     }
                 } catch {
                     Router.push("/page")
@@ -69,6 +68,7 @@ export default function EditorV3({ currentPage }) {
 
     async function initNewEditor(pageData) {
         try {
+            setOpenPageData(pageData)
             if (Editor.current) {
                 await Editor.current.destroy()
             }
@@ -259,7 +259,7 @@ export default function EditorV3({ currentPage }) {
             editor.isReady.then(() => {
                 console.log("ready")
                 Editor.current = editor
-                ListenForPageChange(currentPage, async (data) => {
+                ListenForPageChange(pageData.id, async (data) => {
                     if (document.hidden && Editor.current) {
                         if (data.content && Object.keys(data.content).includes("blocks")) {
                             await Editor.current.render(data.content)
@@ -314,11 +314,13 @@ export default function EditorV3({ currentPage }) {
                 <div className="flex flex-col w-full h-full overflow-scroll" id={`editor-container-${currentPage}`}>
                     <div className="relative w-full min-h-[300px] h-[300px] bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400 flex items-center justify-center mb-5">
                         <div className="absolute top-0 left-0 right-0 bottom-0 w-full h-full overflow-hidden" id="dontchangemewhenprinting">
-                            {openPageData.unsplash || openPageData.header_img ? (
-                                <img src={openPageData.unsplash || `${process.env.NEXT_PUBLIC_POCKETURL}/api/files/${openPageData.collectionId}/${openPageData.id}/${openPageData.header_img}`} className="w-full h-full object-cover" />
-                            ) : (
-                                <div />
-                            )}
+                            {openPageData.unsplash !== "" ? (
+                                <img src={openPageData.unsplash} className="w-full h-full object-cover" />
+                            ) : null}
+                            {openPageData.header_img !== "" ? (
+                                <img src={`${process.env.NEXT_PUBLIC_POCKETURL}/api/files/${openPageData.collectionId}/${openPageData.id}/${openPageData.header_img}`} className="w-full h-full object-cover" />
+                            ) : null}
+
                         </div>
                         <div className="z-3 relative ">
                             <h1 contentEditable onBlur={(e) => updateTitle(e)} className="text-zinc-50 px-3 text-balance text-center outline-none scroll-m-20 text-4xl font-bold tracking-tight lg:text-4xl">{openPageData.title || "Untitled page"}</h1>
@@ -329,8 +331,7 @@ export default function EditorV3({ currentPage }) {
                             </Suspense>
                         </div>
                     </div>
-                    {loadingSlow ? (<Loader />) : null}
-                    <div ref={EditorElement} className={`w-full px-8 text-[var(--editortext);] ${loadingSlow ? "hidden" : ""}`} />
+                    <div ref={EditorElement} className={`w-full px-8 text-[var(--editortext);]`} />
                 </div>
             </div>
         </>
