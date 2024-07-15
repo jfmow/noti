@@ -49,6 +49,7 @@ export default function EditorV3({ currentPage }) {
                 try {
                     setOpenPageData({})
                     const cachedPage = findPageListPage(currentPage, listedPageItems)
+                    console.log(cachedPage)
                     if (cachedPage && cachedPage.content && Object.keys(cachedPage.content).includes("blocks")) {
                         initNewEditor(cachedPage)
                     } else {
@@ -317,7 +318,7 @@ export default function EditorV3({ currentPage }) {
                             {openPageData.unsplash !== "" ? (
                                 <img src={openPageData.unsplash} className="w-full h-full object-cover" />
                             ) : null}
-                            {openPageData.header_img !== "" ? (
+                            {openPageData.header_img ? (
                                 <img src={`${process.env.NEXT_PUBLIC_POCKETURL}/api/files/${openPageData.collectionId}/${openPageData.id}/${openPageData.header_img}`} className="w-full h-full object-cover" />
                             ) : null}
 
