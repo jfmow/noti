@@ -49,7 +49,6 @@ export default function EditorV3({ currentPage }) {
                 try {
                     setOpenPageData({})
                     const cachedPage = findPageListPage(currentPage, listedPageItems)
-                    console.log(cachedPage)
                     if (cachedPage && cachedPage.content && Object.keys(cachedPage.content).includes("blocks")) {
                         initNewEditor(cachedPage)
                     } else {
