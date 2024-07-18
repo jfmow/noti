@@ -65,7 +65,6 @@ export default function EditorV3({ currentPage }) {
 
     async function initNewEditor(pageData) {
         try {
-            setOpenPageData(pageData)
             if (Editor.current) {
                 await Editor.current.destroy()
             }
