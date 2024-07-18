@@ -31,7 +31,7 @@ export default function Login() {
             setLoading(true)
             const req = await pb.send("/api/collections/users/auth-with-sso/finishsignup", { method: "POST", body: formData })
             window.localStorage.setItem("pocketbase_auth", JSON.stringify(req))
-            Router.push("/page")
+            window.location.replace("/page")
         } catch (err) {
             toaster.error(err.message)
         } finally {
