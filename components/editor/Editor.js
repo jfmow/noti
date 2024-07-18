@@ -30,9 +30,8 @@ export default function EditorV3({ currentPage }) {
     const { listedPageItems } = useEditorContext()
     const Editor = useRef(null)
     const EditorElement = useRef(null)
-    const [openPageData, setOpenPageData] = useState({})
 
-
+    const openPageData = findPageListPage(currentPage, listedPageItems)
 
     useEffect(() => {
         //Check that there is a current page
@@ -47,10 +46,8 @@ export default function EditorV3({ currentPage }) {
                  */
 
                 try {
-                    setOpenPageData({})
-                    const cachedPage = findPageListPage(currentPage, listedPageItems)
-                    if (cachedPage && cachedPage.content && Object.keys(cachedPage.content).includes("blocks")) {
-                        initNewEditor(cachedPage)
+                    if (openPageData && openPageData.content && Object.keys(openPageData.content).includes("blocks")) {
+                        initNewEditor(openPageData)
                     } else {
                         const record = await pb.collection('pages').getOne(page)
                         SendPageChanges(page, record)
