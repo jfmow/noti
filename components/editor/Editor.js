@@ -29,8 +29,7 @@ import pb from "@/lib/pocketbase"
 export default function EditorV3({ currentPage, listedPageItems }) {
     const Editor = useRef(null)
     const EditorElement = useRef(null)
-
-    const openPageData = findPageListPage(currentPage, listedPageItems)
+    const [openPageData, setOpenPageData] = useState({})
 
     useEffect(() => {
         //Check that there is a current page
@@ -45,13 +44,10 @@ export default function EditorV3({ currentPage, listedPageItems }) {
                  */
 
                 try {
-                    if (openPageData && openPageData.content && Object.keys(openPageData.content).includes("blocks")) {
-                        initNewEditor(openPageData)
-                    } else {
-                        const record = await pb.collection('pages').getOne(page)
-                        SendPageChanges(page, record)
-                        initNewEditor(record)
-                    }
+                    const record = await pb.collection('pages').getOne(page)
+                    setOpenPageData(record)
+                    initNewEditor(record)
+
                 } catch {
                     Router.push("/page")
                 }
@@ -122,7 +118,7 @@ export default function EditorV3({ currentPage, listedPageItems }) {
 
                                         formData.append("file_data", compressedFile);
                                         formData.append("uploader", pb.authStore.model.id);
-                                        formData.append('page', currentPage);
+                                        formData.append('page', pageData.id);
                                         try {
                                             const record = await pb.collection("files").create(formData);
                                             toaster.update(loadingToast, "Image uploaded successfully!", "success");
@@ -168,7 +164,7 @@ export default function EditorV3({ currentPage, listedPageItems }) {
                                         const formData = new FormData();
                                         formData.append("file_data", file);
                                         formData.append("uploader", pb.authStore.model.id);
-                                        formData.append('page', currentPage)
+                                        formData.append('page', pageData.id)
                                         try {
                                             if (!file.name.endsWith(".pdf")) {
                                                 toaster.update(loadingToast, 'File type not supported yet!', "error")
@@ -245,8 +241,7 @@ export default function EditorV3({ currentPage, listedPageItems }) {
                     }
 
                     api.saver.save().then((res) => {
-                        SendPageChanges(pageData.id, { content: res })
-                        debounceSave(res)
+                        debounceSave(res, pageData.id)
                     })
 
                 }
@@ -254,23 +249,14 @@ export default function EditorV3({ currentPage, listedPageItems }) {
             editor.isReady.then(() => {
                 console.log("ready")
                 Editor.current = editor
-                ListenForPageChange(pageData.id, async (data) => {
-                    if (document.hidden && Editor.current) {
-                        if (data.content && Object.keys(data.content).includes("blocks")) {
-                            await Editor.current.render(data.content)
-                            debounceSave.cancel()
-                        }
-
-                    }
-                })
             })
         } catch (err) {
             console.error("Editor error:\n" + err)
         }
     }
 
-    function Save(content) {
-        pb.collection('pages').update(currentPage, { "content": content }).then((successRes) => {
+    function Save(content, pageid) {
+        pb.collection('pages').update(pageid, { "content": content }).then((successRes) => {
             return
         }, (errorRes) => {
             console.error(errorRes?.message || errorRes)
@@ -289,7 +275,6 @@ export default function EditorV3({ currentPage, listedPageItems }) {
             SendPageChanges(currentPage, { title: titleText })
             //Make a request to the db to update the title
             await pb.collection('pages').update(currentPage, { "title": titleText })
-
         } catch (err) {
             console.error(err)
         }
