@@ -27,7 +27,6 @@ const MenuButtons = lazy(() => import("@/components/editor/Page-cover-buttons"))
 import pb from "@/lib/pocketbase"
 
 export default function EditorV3({ currentPage, listedPageItems }) {
-    const { listedPageItems } = useEditorContext()
     const Editor = useRef(null)
     const EditorElement = useRef(null)
 
