@@ -82,9 +82,9 @@ function NotionEditor() {
                     <div style={{ flex: '1 1 0%', position: 'relative', display: 'flex', height: '100dvh', flexDirection: 'column', overflowX: 'hidden' }}>
                         <MenuBar listedPageItems={listedPageItems} currentPage={pageId} currentPageData={findPageListPage(pageId, listedPageItems)} />
 
-                        {pageId !== "" ? (
+                        {pageId && listedPageItems && listedPageItems.length >= 1 !== "" ? (
                             <Suspense fallback={<></>}>
-                                <Editor currentPage={pageId} page={pageId} />
+                                <Editor currentPage={pageId} page={pageId} listedPageItems={listedPageItems} />
                             </Suspense>
                         ) : null}
                     </div>
