@@ -4,7 +4,7 @@ import pb from "@/lib/pocketbase"
 export default function UserOptions({ clss }) {
     return (
         <>
-            <div className={`${"relative w-full sm:w-full flex items-center justify-between p-2 h-[70px] text-[var(--userOptionText)] border-t border-[var(--userinfoSectionBordertop)] bg-[var(--background)]"} ${clss}`}>
+            <div className={`${"absolute bottom-0 z-[2] w-full sm:w-full flex items-center justify-between p-2 h-[70px] text-[var(--userOptionText)] border-t border-[var(--userinfoSectionBordertop)] bg-[var(--background)]"} ${clss}`}>
                 <div className='flex items-center h-full'>
                     <div className="flex items-center justify-center w-8 h-8 object-contain overflow-hidden rounded-[9999px]">
                         {pb.authStore.model?.avatar ? (
