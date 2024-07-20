@@ -23,7 +23,6 @@ export default function MenuButtons({ currentPage }) {
         }
         try {
             SendPageChanges(currentPage, { icon: newIcon.image })
-            await pb.collection('pages').update(currentPage, { icon: newIcon.image });
         } catch {
             return new Error('Something went wrong updating the page icon')
         }
@@ -35,8 +34,6 @@ export default function MenuButtons({ currentPage }) {
         }
         try {
             SendPageChanges(currentPage, { color: newColor })
-
-            await pb.collection('pages').update(currentPage, { color: newColor });
         } catch {
             return new Error('An error occured while updating page color')
         }

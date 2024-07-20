@@ -221,8 +221,6 @@ function DropDownMenu({ currentPageData, listedPageItems, currentPage }) {
         };
 
         SendPageChanges(currentPage, { shared: data.shared })
-
-        await pb.collection("pages").update(currentPage, data);
     }
 
     async function handleCopyTextToClipboard(data, e) {
@@ -247,7 +245,7 @@ function DropDownMenu({ currentPageData, listedPageItems, currentPage }) {
         try {
             await pb.collection("pages").delete(currentPage);
             toaster.success(`Page deleted`)
-            SendPageChanges(currentPage)
+            SendPageChanges(currentPage, null, true)
             window.location.replace(`/page`)
         } catch (err) {
             console.log(err)
@@ -258,14 +256,12 @@ function DropDownMenu({ currentPageData, listedPageItems, currentPage }) {
     async function handleArchivePageToggle() {
         const newState = !findPageListPage(currentPage, listedPageItems).archived
         SendPageChanges(currentPage, { archived: newState })
-        await pb.collection('pages').update(currentPage, { archived: newState });
         toaster.success(`Page ${newState ? 'archived' : 'restored'} successfully`)
     }
 
     async function handleReadOnlyPageToggle() {
         const newState = !findPageListPage(currentPage, listedPageItems).read_only
         SendPageChanges(currentPage, { read_only: newState })
-        await pb.collection('pages').update(currentPage, { read_only: newState });
         toaster.success(`Page ${newState ? 'set to read only' : 'editing allowed'} successfully`)
         setTimeout(() => {
             window.location.reload()

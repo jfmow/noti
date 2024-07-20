@@ -19,24 +19,22 @@ import SimpleIframe from "@/customEditorTools/SimpleEmbed";
 import SimpleIframeWebpage from "@/customEditorTools/SimpleIframe";
 import LineBreak from "@/customEditorTools/LineBreak";
 import { toaster } from "@/components/toast";
-import { useEditorContext } from "@/pages/page";
-import { debounce } from "lodash";
-import { ListenForPageChange, SendPageChanges } from "@/lib/Page state manager";
-import { findPageListPage } from "../Pages List/list-functions";
+import { ListenForPageChange, pageUpdaterDebounce, SendPageChanges } from "@/lib/Page state manager";
 const MenuButtons = lazy(() => import("@/components/editor/Page-cover-buttons"))
 import pb from "@/lib/pocketbase"
-
-const queryParams = new URLSearchParams(window.location.search)
 
 export default function EditorV3({ currentPage, listedPageItems }) {
     const Editor = useRef(null)
     const EditorElement = useRef(null)
     const [openPageData, setOpenPageData] = useState({})
+    const [previousPageId, setPrevPageId] = useState(null)
+    const savingAllowed = useRef(false)
+    const latestPageId = useRef(null)
 
 
     useEffect(() => {
         //Check that there is a current page
-        debounceSave.cancel()
+        pageUpdaterDebounce.cancelAll()
 
         if (currentPage) {
             async function RetriveOpenPageData(page) {
@@ -47,9 +45,23 @@ export default function EditorV3({ currentPage, listedPageItems }) {
                  */
 
                 try {
+                    savingAllowed.current = false
+
                     const record = await pb.collection('pages').getOne(page)
                     setOpenPageData(record)
-                    initNewEditor(record)
+                    if (!Editor.current) {
+                        await initNewEditor(record)
+                    }
+
+                    await Editor.current.readOnly.toggle(isRecordReadOnly(record))
+
+
+                    await Editor.current.render(record.content)
+
+                    setPrevPageId(record.id)
+
+                    savingAllowed.current = true
+                    latestPageId.current = record.id
 
                 } catch {
                     Router.push("/page")
@@ -61,11 +73,20 @@ export default function EditorV3({ currentPage, listedPageItems }) {
 
     }, [currentPage])
 
+    function onchangeevent(pageId) {
+        if (!Editor.current.readOnly.isEnabled && savingAllowed.current) {
+            Editor.current.saver.save().then((res) => {
+                SendPageChanges(pageId, { content: res })
+            })
+        }
+    }
+
     async function initNewEditor(pageData) {
         try {
             if (Editor.current) {
                 await Editor.current.destroy()
             }
+
             const editor = new EditorJS({
                 holder: EditorElement.current,
                 tools: {
@@ -227,61 +248,47 @@ export default function EditorV3({ currentPage, listedPageItems }) {
                         inlineToolbar: true,
                     },
                 },
-                readOnly: isRecordReadOnly(pageData),
-                data: pageData?.content || [],
                 placeholder: "Enter some text...",
                 onChange: (api, event) => {
-                    if (document.hidden) return
-                    const urlParams = new URLSearchParams(window.location.search)
-                    if (urlParams.has("demo") && +urlParams.get("demo") === 1) {
-                        return
+                    onchangeevent(latestPageId.current)
+                    if (event.type === "block-removed") {
+                        if (event.detail.target.name === "image" || event.detail.target.name === "simpleEmbeds") {
+                            if (event.detail.target.holder.children[0].lastChild.classList.contains("simple-image")) {
+                                //Attempt to delete the file from the db
+                                const file = event.detail.target.holder.children[0].lastChild.lastChild.getAttribute("fileid")
+                                pb.collection("files").delete(file)
+                            }
+                        }
                     }
-                    if (pageData?.read_only) {
-                        //TODO: When its read only make it so the editor uses the read only one.
-                        //The editor needs to take in the page data and the index page needs to handle getting the data for the loading with suspence fall back and selecting the read only or the editor editor
-                        console.warn(`The page ${pageData.id} is marked as read only.\n- Saving has been disabled`)
-                        return
-                    }
-
-                    api.saver.save().then((res) => {
-                        SendPageChanges(pageData.id, { content: res })
-                        debounceSave(res, pageData.id)
-                    })
-
                 }
             })
-            editor.isReady.then(() => {
-                console.log("ready")
-                Editor.current = editor
+
+            await editor.isReady
+            console.log("ready")
+            Editor.current = editor
+            ListenForPageChange(pageData.id, async (data) => {
+                if (document.hidden && Editor.current) {
+                    if (data.content && Object.keys(data.content).includes("blocks")) {
+                        await Editor.current.render(data.content)
+                        pageUpdaterDebounce.cancel(pageData.id)
+
+                    }
+                }
+                setOpenPageData(prevData => { return { ...prevData, ...data } })
             })
+
         } catch (err) {
             console.error("Editor error:\n" + err)
         }
     }
 
-    function Save(content, pageid) {
-        pb.collection('pages').update(pageid, { "content": content }).then((successRes) => {
-            return
-        }, (errorRes) => {
-            console.error(errorRes?.message || errorRes)
-            toaster.error("Failed to save the page")
-        })
+    function updateTitle(e) {
+        const titleText = e.target.innerText.trim();
+        SendPageChanges(currentPage, { title: titleText })
     }
 
-    const debounceSave = debounce(Save, 420)
-
-    async function updateTitle(e) {
-        try {
-            const titleText = e.target.innerText.trim();
-            /**
-             * Update the listed page items (side bar)'s content to reflect the change of the title
-             */
-            SendPageChanges(currentPage, { title: titleText })
-            //Make a request to the db to update the title
-            await pb.collection('pages').update(currentPage, { "title": titleText })
-        } catch (err) {
-            console.error(err)
-        }
+    function isRecordReadOnly(record) {
+        return record.read_only
     }
 
 
@@ -304,7 +311,6 @@ export default function EditorV3({ currentPage, listedPageItems }) {
                             {openPageData.header_img ? (
                                 <img src={`${process.env.NEXT_PUBLIC_POCKETURL}/api/files/${openPageData.collectionId}/${openPageData.id}/${openPageData.header_img}`} className="w-full h-full object-cover" />
                             ) : null}
-
                         </div>
                         <div className="z-3 relative ">
                             <h1 contentEditable onBlur={(e) => updateTitle(e)} className="text-zinc-50 px-3 text-balance text-center outline-none scroll-m-20 text-4xl font-bold tracking-tight lg:text-4xl">{openPageData.title || "Untitled page"}</h1>
@@ -321,7 +327,4 @@ export default function EditorV3({ currentPage, listedPageItems }) {
         </>
     )
 
-}
-function isRecordReadOnly(record) {
-    return record.read_only
 }

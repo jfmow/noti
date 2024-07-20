@@ -94,7 +94,6 @@ function PageListItem({ data }) {
     function togglePagesChildren(e) {
         //Prevent the open page event
         e.stopPropagation()
-        pb.collection("pages").update(data.id, { expanded: !data.expanded });
         SendPageChanges(data.id, { "expanded": !data.expanded })
     }
 
@@ -265,7 +264,7 @@ export async function createNewItem(parentId = "") {
         }
     });
 
-    SendPageChanges(newRecord.id, newRecord)
+    SendPageChanges(newRecord.id, newRecord, true)
 
     if (window.innerWidth > 640) {
         //Is not a phone
