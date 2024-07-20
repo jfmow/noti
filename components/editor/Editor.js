@@ -241,6 +241,7 @@ export default function EditorV3({ currentPage, listedPageItems }) {
                     }
 
                     api.saver.save().then((res) => {
+                        SendPageChanges(pageData.id {content: res})
                         debounceSave(res, pageData.id)
                     })
 
