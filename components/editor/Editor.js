@@ -26,10 +26,13 @@ import { findPageListPage } from "../Pages List/list-functions";
 const MenuButtons = lazy(() => import("@/components/editor/Page-cover-buttons"))
 import pb from "@/lib/pocketbase"
 
+const queryParams = new URLSearchParams(window.location.search)
+
 export default function EditorV3({ currentPage, listedPageItems }) {
     const Editor = useRef(null)
     const EditorElement = useRef(null)
     const [openPageData, setOpenPageData] = useState({})
+
 
     useEffect(() => {
         //Check that there is a current page
@@ -224,9 +227,9 @@ export default function EditorV3({ currentPage, listedPageItems }) {
                         inlineToolbar: true,
                     },
                 },
+                readOnly: isRecordReadOnly(pageData),
                 data: pageData?.content || [],
                 placeholder: "Enter some text...",
-                autofocus: pageData?.content && pageData?.content?.blocks?.length >= 1 && (pageData?.content?.blocks[0]?.type === 'image' || pageData?.content?.blocks[0]?.type === 'Video' || pageData?.content?.blocks[0]?.type === 'simpleEmbeds' || pageData?.content?.blocks[0]?.type === 'SimpleIframeWebpage') ? false : true,
                 onChange: (api, event) => {
                     if (document.hidden) return
                     const urlParams = new URLSearchParams(window.location.search)
@@ -318,4 +321,7 @@ export default function EditorV3({ currentPage, listedPageItems }) {
         </>
     )
 
+}
+function isRecordReadOnly(record) {
+    return record.read_only
 }
