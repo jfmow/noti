@@ -49,19 +49,51 @@ export default function EditorV3({ currentPage, listedPageItems }) {
 
                     const record = await pb.collection('pages').getOne(page)
                     setOpenPageData(record)
-                    if (!Editor.current) {
-                        await initNewEditor(record)
+
+                    let editorjs = Editor.current || null
+
+                    //Check if an editor already exists
+                    if (!editorjs) {
+                        editorjs = await initNewEditor(record)
+                        //Asing the editor to the ref
+                        Editor.current = editorjs
+                    } else {
+                        //Make the editor read only to prevent typing on accident
+                        editorjs.readOnly.toggle(true)
                     }
 
-                    await Editor.current.readOnly.toggle(isRecordReadOnly(record))
+                    //Render the blocks on the page
+                    await editorjs.render(record.content)
 
+                    function CheckRenderIsCorrect(editor, contentToMatch){
+                        const editorContent = editor.saver.save()
 
-                    await Editor.current.render(record.content)
+                        if(editorContent.blocks.length !== contentToMatch.blocks.length){
+                            return false
+                        } else{
+                            return true
+                        }
+                    }
+
+                    if(!CheckRenderIsCorrect(editorjs, record.content)){
+                        //Try again
+                        await editorjs.render(record.content)
+                        if(!CheckRenderIsCorrect(editorjs, record.content)){
+                            //Display a warning and stop execution
+                            console.error("Editor failed to render content correctly")
+                            toaster.error("An error has occured while trying to render the page. \nPlease refresh to try again")
+                            return
+                        }
+                        console.warn("Editor failed to render first try")
+                    }
 
                     setPrevPageId(record.id)
 
                     savingAllowed.current = true
                     latestPageId.current = record.id
+
+                    //It's now safe to allow typing
+                    await editorjs.readOnly.toggle(isRecordReadOnly(record))
 
                 } catch {
                     Router.push("/page")
@@ -265,7 +297,6 @@ export default function EditorV3({ currentPage, listedPageItems }) {
 
             await editor.isReady
             console.log("ready")
-            Editor.current = editor
             ListenForPageChange(pageData.id, async (data) => {
                 if (document.hidden && Editor.current) {
                     if (data.content && Object.keys(data.content).includes("blocks")) {
@@ -276,6 +307,8 @@ export default function EditorV3({ currentPage, listedPageItems }) {
                 }
                 setOpenPageData(prevData => { return { ...prevData, ...data } })
             })
+
+            return editor
 
         } catch (err) {
             console.error("Editor error:\n" + err)
