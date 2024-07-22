@@ -23,6 +23,8 @@ import { ListenForPageChange, pageUpdaterDebounce, SendPageChanges } from "@/lib
 const MenuButtons = lazy(() => import("@/components/editor/Page-cover-buttons"))
 import pb from "@/lib/pocketbase"
 
+//TODO: Use a custom paragraph block
+
 export default function EditorV3({ currentPage, listedPageItems }) {
     const Editor = useRef(null)
     const EditorElement = useRef(null)
