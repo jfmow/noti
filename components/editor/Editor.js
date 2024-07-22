@@ -66,9 +66,8 @@ export default function EditorV3({ currentPage, listedPageItems }) {
                     await editorjs.render(record.content)
 
                     function CheckRenderIsCorrect(editor, contentToMatch){
-                        const editorContent = editor.saver.save()
 
-                        if(editorContent.blocks.length !== contentToMatch.blocks.length){
+                        if(editor.blocks.getBlocksCount() !== contentToMatch.blocks.length){
                             return false
                         } else{
                             return true
