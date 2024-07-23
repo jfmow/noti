@@ -49,43 +49,23 @@ export default function EditorV3({ currentPage, listedPageItems }) {
                 try {
                     savingAllowed.current = false
 
+                    if (Editor.current){
+                        Editor.current.destroy()
+                    }
+
                     const record = await pb.collection('pages').getOne(page)
                     setOpenPageData(record)
 
-                    let editorjs = Editor.current || null
+                    const editorjs = await initNewEditor(record)
+                    Editor.current = editorjs
 
-                    //Check if an editor already exists
-                    if (!editorjs) {
-                        editorjs = await initNewEditor(record)
-                        //Asing the editor to the ref
-                        Editor.current = editorjs
-                    } else {
-                        //Make the editor read only to prevent typing on accident
-                        editorjs.readOnly.toggle(true)
-                    }
-
-                    //Render the blocks on the page
-                    await editorjs.render(record.content)
 
                     function CheckRenderIsCorrect(editor, contentToMatch){
-
                         if(editor.blocks.getBlocksCount() !== contentToMatch.blocks.length){
                             return false
                         } else{
                             return true
                         }
-                    }
-
-                    if(!CheckRenderIsCorrect(editorjs, record.content)){
-                        //Try again
-                        await editorjs.render(record.content)
-                        if(!CheckRenderIsCorrect(editorjs, record.content)){
-                            //Display a warning and stop execution
-                            console.error("Editor failed to render content correctly")
-                            toaster.error("An error has occured while trying to render the page. \nPlease refresh to try again")
-                            return
-                        }
-                        console.warn("Editor failed to render first try")
                     }
 
                     setPrevPageId(record.id)
@@ -116,10 +96,6 @@ export default function EditorV3({ currentPage, listedPageItems }) {
 
     async function initNewEditor(pageData) {
         try {
-            if (Editor.current) {
-                await Editor.current.destroy()
-            }
-
             const editor = new EditorJS({
                 holder: EditorElement.current,
                 tools: {
@@ -282,6 +258,7 @@ export default function EditorV3({ currentPage, listedPageItems }) {
                     },
                 },
                 placeholder: "Enter some text...",
+                data: pageData.content || {}
                 onChange: (api, event) => {
                     onchangeevent(latestPageId.current)
                     if (event.type === "block-removed") {
