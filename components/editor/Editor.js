@@ -50,7 +50,7 @@ export default function EditorV3({ currentPage, listedPageItems }) {
                     savingAllowed.current = false
 
                     if (Editor.current){
-                        Editor.current.destroy()
+                        await Editor.current.destroy()
                     }
 
                     const record = await pb.collection('pages').getOne(page)
