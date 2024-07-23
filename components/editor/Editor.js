@@ -258,7 +258,7 @@ export default function EditorV3({ currentPage, listedPageItems }) {
                     },
                 },
                 placeholder: "Enter some text...",
-                data: pageData.content || {}
+                data: pageData.content || {},
                 onChange: (api, event) => {
                     onchangeevent(latestPageId.current)
                     if (event.type === "block-removed") {
