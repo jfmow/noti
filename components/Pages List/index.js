@@ -52,19 +52,21 @@ export default function UsersPages() {
 
     return (
         <>
-            <div id="hidemewhenprinting" style={defaultWidth === "full" ? { width: "100vw", position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 2, height: "100svh", display: visible ? "flex" : "none" } : { width: defaultWidth + "px", height: "100dvh" }} className={`bg-[var(--background)] pb-[70px] relative flex-col overflow-hidden ${defaultWidth === "full" ? "" : (visible ? "animate-slideout" : "animate-slidein")}`}>
+            <div id="hidemewhenprinting" style={defaultWidth === "full" ? { width: "100vw", position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 2, height: "100svh", display: visible ? "flex" : "none" } : { width: defaultWidth + "px", height: "100dvh" }} className={`bg-[var(--background)] border-r border-zinc-600/20 pt-[70px] relative flex-col overflow-hidden ${defaultWidth === "full" ? "" : (visible ? "animate-slideout" : "animate-slidein")}`}>
                 {loading ? (
                     <Loader />
                 ) : (
                     <>
-                        <ul className='h-full w-full p-2 overflow-y-scroll'>
+
+                        <UserOptions />
+
+                        <ul className='h-full w-full px-5 py-2 overflow-y-scroll'>
                             {listedPageItems.length >= 1 && sortAndNestObjects(listedPageItems).map((item) => (
                                 <PageListItem data={item} />
                             ))}
                             <CreateNewPageButton setListedPageItems={setListedPageItems} />
                         </ul>
 
-                        <UserOptions />
                     </>
                 )}
             </div>
