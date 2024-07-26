@@ -21,6 +21,11 @@ export default function Login() {
             formData.set("email", urlParams.get("user"))
             LoginWithCode(formData)
         }
+        if (urlParams.has("2fa")) {
+            if (urlParams.get("2fa") === "1") {
+                twofaCodeRequired(true)
+            }
+        }
     }, [])
 
     async function HandleForm(e) {
