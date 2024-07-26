@@ -8,6 +8,7 @@ import pb from "@/lib/pocketbase"
 export default function Login() {
     const [loading, setLoading] = useState(false)
     const [codeRequested, setCodeRequested] = useState(false)
+    const [twofaCodeRequired, set2FARequired] = useState(false)
 
     const [queryParams, setQueryParams] = useState(null)
 
@@ -49,9 +50,13 @@ export default function Login() {
         const formData = new FormData(e.target)
         try {
             setLoading(true)
-            await pb.send("/api/collections/users/auth-with-sso/startlogin", { method: "POST", body: formData })
+            const req = await pb.send("/api/collections/users/auth-with-sso/startlogin", { method: "POST", body: formData })
             toaster.info(`A code has been emailed to ${formData.get("email")}`)
             setCodeRequested(true)
+            if (req["2fa"] === "required") {
+                toaster.info("Please enter your 2FA code in the next step!")
+                set2FARequired(true)
+            }
         } catch (err) {
             toaster.error(err.message)
         } finally {
@@ -70,7 +75,12 @@ export default function Login() {
                 <LoginInput readonly={codeRequested} placeholder="Email | hi@example.com" type="email" name="email" required />
                 {codeRequested ? (
                     <>
-                        <LoginInput placeholder="Code" name="token" required type="text" />
+                        <LoginInput placeholder="Emailed code" name="token" required type="text" />
+                    </>
+                ) : null}
+                {codeRequested && twofaCodeRequired ? (
+                    <>
+                        <LoginInput placeholder="2FA Code: e.g 123456" name="2fa" required type="number" minlength={6} />
                     </>
                 ) : null}
                 <LoginButton loading={loading}>{codeRequested ? "Login" : "Request magic link"}</LoginButton>

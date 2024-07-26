@@ -172,6 +172,7 @@ function FolderList({ currentPageData, currentPage, listedPageItems }) {
 
         </>
     )
+    //TODO: Make above menubarbutton too for mobile
 }
 
 function WordCountDisplay({ currentPageData, defaultVisible }) {
