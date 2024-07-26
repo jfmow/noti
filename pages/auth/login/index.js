@@ -19,13 +19,15 @@ export default function Login() {
             const formData = new FormData()
             formData.set("token", urlParams.get("token"))
             formData.set("email", urlParams.get("user"))
-            LoginWithCode(formData)
-        }
-        if (urlParams.has("2fa")) {
-            if (urlParams.get("2fa") === "1") {
-                twofaCodeRequired(true)
+            if (urlParams.has("2fa")) {
+                if (urlParams.get("2fa") === "1") {
+                    twofaCodeRequired(true)
+                }
+            } else {
+                LoginWithCode(formData)
             }
         }
+
     }, [])
 
     async function HandleForm(e) {
