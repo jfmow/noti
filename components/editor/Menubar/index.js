@@ -25,7 +25,7 @@ export default function MenuBar({ currentPageData, currentPage, listedPageItems,
 
     return (
         <>
-            <div id="hidemewhenprinting" className="overflow-x-hidden w-full h-[45px] min-h-[45px] max-h-[45px] pl-2 pr-2 flex justify-between items-center bg-zinc-50 overflow-y-hidden">
+            <div id="hidemewhenprinting" className="overflow-x-hidden w-full h-[40px] min-h-[40px] max-h-[40px] pl-2 pr-2 flex justify-between items-center bg-zinc-50 overflow-y-hidden">
 
 
                 <div className='flex items-center h-full'>
