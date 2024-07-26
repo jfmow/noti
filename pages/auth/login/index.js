@@ -9,16 +9,19 @@ export default function Login() {
     const [loading, setLoading] = useState(false)
     const [codeRequested, setCodeRequested] = useState(false)
     const [twofaCodeRequired, set2FARequired] = useState(false)
+    const [defaultData, setDefaultData] = useState({})
 
     const [queryParams, setQueryParams] = useState(null)
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search)
         setQueryParams(urlParams)
-        if (urlParams.has("token") && urlParams.has("user")) {
+        if (urlParams.has("token") && urlParams.has("email")) {
             const formData = new FormData()
             formData.set("token", urlParams.get("token"))
-            formData.set("email", urlParams.get("user"))
+            formData.set("email", urlParams.get("email"))
+            codeRequested(true)
+            setDefaultData({ email: urlParams.get("email") })
             if (urlParams.has("2fa")) {
                 if (urlParams.get("2fa") === "1") {
                     twofaCodeRequired(true)
@@ -79,7 +82,7 @@ export default function Login() {
                     <div />
                     <LoginShortcutLink href={"/auth/signup"}>Signup</LoginShortcutLink>
                 </div>
-                <LoginInput readonly={codeRequested} placeholder="Email | hi@example.com" type="email" name="email" required />
+                <LoginInput defaultValue={defaultData?.email || ""} readonly={codeRequested} placeholder="Email | hi@example.com" type="email" name="email" required />
                 {codeRequested ? (
                     <>
                         <LoginInput placeholder="Emailed code" name="token" required type="text" />
