@@ -20,11 +20,11 @@ export default function Login() {
             const formData = new FormData()
             formData.set("token", urlParams.get("token"))
             formData.set("email", urlParams.get("email"))
-            codeRequested(true)
-            setDefaultData({ email: urlParams.get("email") })
+            setCodeRequested(true)
+            setDefaultData({ email: urlParams.get("email"), code: urlParams.get("token") })
             if (urlParams.has("2fa")) {
                 if (urlParams.get("2fa") === "1") {
-                    twofaCodeRequired(true)
+                    set2FARequired(true)
                 }
             } else {
                 LoginWithCode(formData)
@@ -85,7 +85,7 @@ export default function Login() {
                 <LoginInput defaultValue={defaultData?.email || ""} readonly={codeRequested} placeholder="Email | hi@example.com" type="email" name="email" required />
                 {codeRequested ? (
                     <>
-                        <LoginInput placeholder="Emailed code" name="token" required type="text" />
+                        <LoginInput defaultValue={defaultData?.code || ""} placeholder="Emailed code" name="token" required type="text" />
                     </>
                 ) : null}
                 {codeRequested && twofaCodeRequired ? (
