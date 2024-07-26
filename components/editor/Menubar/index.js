@@ -10,6 +10,22 @@ import { SendPageChanges } from '@/lib/Page state manager';
 import { findPageListPage } from '@/components/Pages List/list-functions';
 import pb from '@/lib/pocketbase';
 import ThemePickerPopup from '@/components/Themes';
+
+function MenuBarButton({ ...props }) {
+    if (props.type === "button") {
+        return (
+            <button {...props} className={`flex items-center justify-center bg-none border-none text-[12px] font-[600] text-zinc-600 cursor-pointer p-1 rounded relative min-w-[30px] min-h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4 ${props.className}`}>
+                {props.children}
+            </button>
+        )
+    }
+    return (
+        <div {...props} className={`flex items-center justify-center bg-none border-none text-[12px] font-[600] text-zinc-600 cursor-pointer p-1 rounded relative min-w-[30px] min-h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4 ${props.className}`}>
+            {props.children}
+        </div>
+    )
+}
+
 export default function MenuBar({ currentPageData, currentPage, listedPageItems, unauthed = false }) {
 
     if (!listedPageItems || !currentPage || !currentPageData) {
@@ -26,13 +42,11 @@ export default function MenuBar({ currentPageData, currentPage, listedPageItems,
     return (
         <>
             <div id="hidemewhenprinting" className="overflow-x-hidden w-full h-[40px] min-h-[40px] max-h-[40px] pl-2 pr-2 flex justify-between items-center bg-zinc-50 overflow-y-hidden">
-
-
                 <div className='flex items-center h-full'>
                     {!unauthed ? (
-                        <button onClick={toggleSideParam} type='button' className="flex items-center justify-center bg-none border-none text-zinc-800 cursor-pointer p-1 rounded relative w-[30px] h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4">
+                        <MenuBarButton onClick={toggleSideParam} type='button'>
                             <PanelRight className='rotate-180 text-zinc-600' />
-                        </button>
+                        </MenuBarButton>
                     ) : null}
                 </div>
                 <FolderList currentPageData={currentPageData} currentPage={currentPage} listedPageItems={listedPageItems} />
@@ -40,12 +54,11 @@ export default function MenuBar({ currentPageData, currentPage, listedPageItems,
                     <WordCountDisplay currentPageData={currentPageData} defaultVisible={unauthed} />
                     <DropDownContainer>
                         <DropDownTrigger>
-
                             <ToolTipCon>
                                 <ToolTipTrigger>
-                                    <button type='button' className="flex items-center justify-center bg-none border-none text-zinc-800 cursor-pointer p-1 rounded relative w-[30px] h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4">
-                                        <Paintbrush className='w-4 h-4 cursor-pointer text-zinc-600' />
-                                    </button>
+                                    <MenuBarButton>
+                                        <Paintbrush className='text-zinc-600' />
+                                    </MenuBarButton>
                                 </ToolTipTrigger>
                                 <ToolTip>
                                     Themes
@@ -127,20 +140,18 @@ function FolderList({ currentPageData, currentPage, listedPageItems }) {
                 <div className="flex items-center text-zinc-800 w-full overflow-x-auto h-full py-2">
                     {folderTree.length >= 1 && folderTree[0]?.id ? folderTree.map((page, index) => (
                         <>
-                            <div className="flex items-center justify-center relative cursor-pointer relative hover:bg-zinc-200 p-1 rounded h-full" key={page.id + "-" + index}>
-                                <Link className="flex gap-1 items-center text-[12px] font-[600] text-zinc-600 " onClick={() => {
-                                    const params = new URLSearchParams(window.location.search)
-                                    params.set("edit", page.id)
-                                    Router.push(`/page?${params.toString()}`);
-                                }}>
-                                    {page?.icon && page?.icon.includes('.png') ? (
-                                        <div aria-label='page icon' className="w-4 h-4 flex items-center justify-center">
-                                            <img src={`/emoji/twitter/64/${page.icon}`} />
-                                        </div>
-                                    ) : null}
-                                    <span aria-label='Page title' className='text-ellipsis text-nowrap overflow-hidden max-w-[200px]'>{page?.title || page.id}</span>
-                                </Link>
-                            </div>
+                            <MenuBarButton type="button" onClick={() => {
+                                const params = new URLSearchParams(window.location.search)
+                                params.set("edit", page.id)
+                                Router.push(`/page?${params.toString()}`);
+                            }}>
+                                {page?.icon && page?.icon.includes('.png') ? (
+                                    <div aria-label='page icon' className="w-4 h-4 flex items-center justify-center">
+                                        <img src={`/emoji/twitter/64/${page.icon}`} />
+                                    </div>
+                                ) : null}
+                                <span aria-label='Page title' className='text-ellipsis text-nowrap overflow-hidden max-w-[200px]'>{page?.title || page.id}</span>
+                            </MenuBarButton>
                             {index < folderTree.length - 1 && (<div className='text-zinc-300 flex items-center justify-center mx-1'>/</div>)}
                         </>
                     )) : null}
@@ -333,9 +344,9 @@ function DropDownMenu({ currentPageData, listedPageItems, currentPage }) {
                 <DropDownContainer>
                     <ToolTipTrigger>
                         <DropDownTrigger afterTrigger={() => getPageData()}>
-                            <button className="flex items-center justify-center bg-none border-none text-zinc-800 cursor-pointer p-1 rounded relative w-[30px] h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4">
+                            <MenuBarButton>
                                 <Settings2 className='text-zinc-600' />
-                            </button>
+                            </MenuBarButton>
                         </DropDownTrigger>
                     </ToolTipTrigger>
                     <ToolTip>
