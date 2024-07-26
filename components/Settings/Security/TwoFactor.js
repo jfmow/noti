@@ -80,6 +80,7 @@ export default function TwoFactorAuth() {
             <div className="flex justify-between items-center">
                 <div className="grid">
                     <span className="font-medium text-sm text-zinc-600 flex items-center"><SquareAsterisk className="w-4 h-4 mr-1" />Authenticator app</span>
+
                 </div>
 
                 <Button onClick={() => toggle2FAState()}>
@@ -94,6 +95,7 @@ export default function TwoFactorAuth() {
                         <div className="grid mb-2">
                             <span className="font-medium text-sm text-zinc-600 flex items-center"><QrCode className="w-4 h-4 mr-1" />Scan to add to authenticator app</span>
                             <p className="text-sm text-gray-500">This can only be viewed now and will not show up again!</p>
+                            <p className="text-sm text-gray-500">2FA codes are not required for OAuth sign-ins</p>
                         </div>
                         <div className="flex justify-center items-center py-2">
                             <QRCodeComponent text={twoFaUrl} />
