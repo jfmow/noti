@@ -105,28 +105,28 @@ function PageListItem({ data }) {
 
     return (
         <>
-            <li aria-label='Page item' key={data.id} onClick={openPage} style={{ background: data.color }} className={`flex items-center justify-between gap-1 cursor-pointer p-2 mb-2 text-[var(--pageListItemTextIcon)] hover:bg-[var(--pageListItemHover)] hover:border-zinc-200 border border-[transparent] rounded-md ${isDragingOver ? "!bg-red-300" : ""}`}>
+            <li aria-label='Page item' key={data.id} onClick={openPage} style={{ background: data.color }} className={`flex items-center justify-between gap-1 cursor-pointer p-1 mb-2 text-[var(--pageListItemTextIcon)] hover:bg-[var(--pageListItemHover)] rounded ${isDragingOver ? "!bg-red-300" : ""}`}>
 
                 {data.icon != "" ? (
-                    <div className='w-6 h-6'>
+                    <div className='w-5 h-5'>
                         <img src={`/emoji/twitter/64/${data.icon}`} className='object-contain h-full w-full' loading='lazy' />
                     </div>
                 ) : (
                     <></>
                 )}
-                <div className='text-left w-full font-medium text-sm'>
+                <div className='text-left w-full font-medium text-xs'>
                     {data.title || data.id}
                 </div>
                 <div className='flex items-center'>
-                    <button disabled={!data.expanded} aria-label='Create a new sub page' onClick={createANewChildPage} type='button' style={{ opacity: data.expanded ? 100 : 0 }} className='flex items-center justify-center p-1 rounded bg-none border-none hover:bg-[var(--pageListItemTextIconBackgroundHover)]'>
-                        <Plus className='w-4 h-4' />
+                    <button disabled={!data.expanded} aria-label='Create a new sub page' onClick={createANewChildPage} type='button' style={{ opacity: data.expanded ? 100 : 0 }} className='flex items-center justify-center p-1 rounded-md bg-none border-none hover:bg-[var(--pageListItemTextIconBackgroundHover)]'>
+                        <Plus className='w-3 h-3' />
                     </button>
 
-                    <button aria-label='Expand children' onClick={togglePagesChildren} type='button' className='flex items-center justify-center p-1 rounded bg-none border-none hover:bg-[var(--pageListItemTextIconBackgroundHover)]'>
+                    <button aria-label='Expand children' onClick={togglePagesChildren} type='button' className='flex items-center justify-center p-1 rounded-md bg-none border-none hover:bg-[var(--pageListItemTextIconBackgroundHover)]'>
                         {data.expanded ? (
-                            <ChevronDown className='w-4 h-4' />
+                            <ChevronDown className='w-3 h-3' />
                         ) : (
-                            <ChevronRight className='w-4 h-4' />
+                            <ChevronRight className='w-3 h-3' />
                         )}
                     </button>
                 </div>

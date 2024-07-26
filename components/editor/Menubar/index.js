@@ -31,7 +31,7 @@ export default function MenuBar({ currentPageData, currentPage, listedPageItems,
                 <div className='flex items-center h-full'>
                     {!unauthed ? (
                         <button onClick={toggleSideParam} type='button' className="flex items-center justify-center bg-none border-none text-zinc-800 cursor-pointer p-1 rounded relative w-[30px] h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4">
-                            <PanelRight className='rotate-180' />
+                            <PanelRight className='rotate-180 text-zinc-600' />
                         </button>
                     ) : null}
                 </div>
@@ -41,9 +41,16 @@ export default function MenuBar({ currentPageData, currentPage, listedPageItems,
                     <DropDownContainer>
                         <DropDownTrigger>
 
-                            <button type='button' className="flex items-center justify-center bg-none border-none text-zinc-800 cursor-pointer p-1 rounded relative w-[30px] h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4">
-                                <Paintbrush className='w-4 h-4 cursor-pointer' />
-                            </button>
+                            <ToolTipCon>
+                                <ToolTipTrigger>
+                                    <button type='button' className="flex items-center justify-center bg-none border-none text-zinc-800 cursor-pointer p-1 rounded relative w-[30px] h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4">
+                                        <Paintbrush className='w-4 h-4 cursor-pointer text-zinc-600' />
+                                    </button>
+                                </ToolTipTrigger>
+                                <ToolTip>
+                                    Themes
+                                </ToolTip>
+                            </ToolTipCon>
                         </DropDownTrigger>
                         <DropDown>
                             <DropDownSectionTitle>
@@ -117,11 +124,11 @@ function FolderList({ currentPageData, currentPage, listedPageItems }) {
     return (
         <>
             {!isMobile ? (
-                <div className="flex items-center text-zinc-800 w-full overflow-x-auto">
+                <div className="flex items-center text-zinc-800 w-full overflow-x-auto h-full py-2">
                     {folderTree.length >= 1 && folderTree[0]?.id ? folderTree.map((page, index) => (
                         <>
-                            <div className="flex items-center justify-center relative cursor-pointer relative" key={page.id + "-" + index}>
-                                <Link className="flex gap-1 items-center text-[14px] font-[600] text-zinc-600 rounded p-[0.5em] hover:bg-zinc-200" onClick={() => {
+                            <div className="flex items-center justify-center relative cursor-pointer relative hover:bg-zinc-200 p-1 rounded h-full" key={page.id + "-" + index}>
+                                <Link className="flex gap-1 items-center text-[12px] font-[600] text-zinc-600 " onClick={() => {
                                     const params = new URLSearchParams(window.location.search)
                                     params.set("edit", page.id)
                                     Router.push(`/page?${params.toString()}`);
@@ -181,7 +188,7 @@ function WordCountDisplay({ currentPageData, defaultVisible }) {
         return (
             <DropDownContainer>
                 <DropDownTrigger>
-                    <button className="text-xs font-medium text-nowrap h-[30px] flex items-center justify-center bg-none border-none text-zinc-800 cursor-pointer p-1 rounded relative w-fit hover:bg-zinc-200">
+                    <button className="text-zinc-600 text-xs font-medium text-nowrap h-[30px] flex items-center justify-center bg-none border-none cursor-pointer p-1 rounded relative w-fit hover:bg-zinc-200">
                         {pageInfo.wordCount} Words
                     </button>
                 </DropDownTrigger>
@@ -327,7 +334,7 @@ function DropDownMenu({ currentPageData, listedPageItems, currentPage }) {
                     <ToolTipTrigger>
                         <DropDownTrigger afterTrigger={() => getPageData()}>
                             <button className="flex items-center justify-center bg-none border-none text-zinc-800 cursor-pointer p-1 rounded relative w-[30px] h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4">
-                                <Settings2 />
+                                <Settings2 className='text-zinc-600' />
                             </button>
                         </DropDownTrigger>
                     </ToolTipTrigger>
