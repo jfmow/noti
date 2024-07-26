@@ -23,6 +23,8 @@ import { ListenForPageChange, pageUpdaterDebounce, SendPageChanges } from "@/lib
 const MenuButtons = lazy(() => import("@/components/editor/Page-cover-buttons"))
 import pb from "@/lib/pocketbase"
 
+//TODO: Use a custom paragraph block
+
 export default function EditorV3({ currentPage, listedPageItems }) {
     const Editor = useRef(null)
     const EditorElement = useRef(null)
@@ -47,21 +49,32 @@ export default function EditorV3({ currentPage, listedPageItems }) {
                 try {
                     savingAllowed.current = false
 
-                    const record = await pb.collection('pages').getOne(page)
-                    setOpenPageData(record)
-                    if (!Editor.current) {
-                        await initNewEditor(record)
+                    if (Editor.current){
+                        await Editor.current.destroy()
                     }
 
-                    await Editor.current.readOnly.toggle(isRecordReadOnly(record))
+                    const record = await pb.collection('pages').getOne(page)
+                    setOpenPageData(record)
+
+                    const editorjs = await initNewEditor(record)
+                    Editor.current = editorjs
 
 
-                    await Editor.current.render(record.content)
+                    function CheckRenderIsCorrect(editor, contentToMatch){
+                        if(editor.blocks.getBlocksCount() !== contentToMatch.blocks.length){
+                            return false
+                        } else{
+                            return true
+                        }
+                    }
 
                     setPrevPageId(record.id)
 
                     savingAllowed.current = true
                     latestPageId.current = record.id
+
+                    //It's now safe to allow typing
+                    await editorjs.readOnly.toggle(isRecordReadOnly(record))
 
                 } catch {
                     Router.push("/page")
@@ -83,10 +96,6 @@ export default function EditorV3({ currentPage, listedPageItems }) {
 
     async function initNewEditor(pageData) {
         try {
-            if (Editor.current) {
-                await Editor.current.destroy()
-            }
-
             const editor = new EditorJS({
                 holder: EditorElement.current,
                 tools: {
@@ -249,6 +258,7 @@ export default function EditorV3({ currentPage, listedPageItems }) {
                     },
                 },
                 placeholder: "Enter some text...",
+                data: pageData.content || {},
                 onChange: (api, event) => {
                     onchangeevent(latestPageId.current)
                     if (event.type === "block-removed") {
@@ -265,7 +275,6 @@ export default function EditorV3({ currentPage, listedPageItems }) {
 
             await editor.isReady
             console.log("ready")
-            Editor.current = editor
             ListenForPageChange(pageData.id, async (data) => {
                 if (document.hidden && Editor.current) {
                     if (data.content && Object.keys(data.content).includes("blocks")) {
@@ -276,6 +285,8 @@ export default function EditorV3({ currentPage, listedPageItems }) {
                 }
                 setOpenPageData(prevData => { return { ...prevData, ...data } })
             })
+
+            return editor
 
         } catch (err) {
             console.error("Editor error:\n" + err)
