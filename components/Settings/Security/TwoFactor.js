@@ -89,8 +89,11 @@ export default function TwoFactorAuth() {
                 </div>
 
                 <Button disabled={enabled === "loading" ? true : false} onClick={() => toggle2FAState(enabled)}>
-{enabled === "loading" ? ("Loading"):null}
-                    {enabled && enabled !== "loading" ? ("Disable") : ("Enable")}
+{enabled === "loading" ? ("Loading"):(<>
+     {enabled ? ("Disable") : ("Enable")}
+    </>)}
+
+                   
                 </Button>
 
 
