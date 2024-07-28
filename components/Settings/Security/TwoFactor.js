@@ -7,7 +7,7 @@ import QRCodeComponent from "@/components/QRCode";
 import { Modal, ModalContent } from "@/lib/Modals/Modal";
 import { Input } from "@/components/UX-Components";
 export default function TwoFactorAuth() {
-    const [enabled, setOTPState] = useState(false)
+    const [enabled, setOTPState] = useState("loading")
     const [twoFaUrl, set2faUrl] = useState("")
 
     useEffect(() => {
@@ -88,8 +88,9 @@ export default function TwoFactorAuth() {
 
                 </div>
 
-                <Button onClick={() => toggle2FAState(enabled)}>
-                    {enabled ? ("Disable") : ("Enable")}
+                <Button disabled={enabled === "loading" ? true : false} onClick={() => toggle2FAState(enabled)}>
+{enabled === "loading" ? ("Loading"):null}
+                    {enabled && enabled !== "loading" ? ("Disable") : ("Enable")}
                 </Button>
 
 
