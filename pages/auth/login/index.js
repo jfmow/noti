@@ -90,7 +90,7 @@ export default function Login() {
                 ) : null}
                 {codeRequested && twofaCodeRequired ? (
                     <>
-                        <LoginInput placeholder="2FA Code: e.g 123456" name="2fa" required type="number" minlength={6} />
+                        <LoginInput placeholder="2FA Code: e.g 123456" name="code" required type="number" minlength={6} />
                     </>
                 ) : null}
                 <LoginButton loading={loading}>{codeRequested ? "Login" : "Request magic link"}</LoginButton>

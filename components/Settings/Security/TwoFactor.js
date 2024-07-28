@@ -16,7 +16,7 @@ export default function TwoFactorAuth() {
         async function get2FAState() {
             const req = await pb.send("/api/collections/users/2fa/state")
             if (req.code !== 200) {
-                toaster.error("An error occured getting the 2FA state.")
+                toaster.error("An error occurred getting the 2FA state.")
             } else {
                 setOTPState(req.state)
             }
@@ -27,16 +27,21 @@ export default function TwoFactorAuth() {
 
     })
 
-    function toggle2FAState() {
-        pb.send("/api/collections/users/2fa/toggle", { method: "POST" }).then((successRes) => {
+    function toggle2FAState(currentState) {
+        const sure = confirm("Are you sure?")
+        if (!sure) {
+            return
+        }
+        pb.send(`/api/collections/users/2fa/${currentState ? "disable" : "enable"}`, { method: "POST" }).then((successRes) => {
             setOTPState(successRes.state)
             if (successRes.state) {
-                set2faUrl(successRes.url)
+                set2faUrl({ url: successRes.url, secret: successRes.secret })
             } else {
                 set2faUrl("")
+
             }
         }, (errorRes) => {
-            toaster.error(errorRes.message || "An error has occured")
+            toaster.error(errorRes.message || "An error has occurred")
         })
     }
 
@@ -65,10 +70,10 @@ export default function TwoFactorAuth() {
             toaster.error("Code must be 6 numbers long")
             return
         }
-        pb.send("/api/collections/users/2fa/setup-verify", { method: "POST", body: formData }).then((successRes) => {
-            toaster.success("Code verified.")
+        pb.send("/api/collections/users/2fa/finish-setup", { method: "POST", body: formData }).then((successRes) => {
+            toaster.success("Code verified. You can now use 2FA when you login")
         }, (errorRes) => {
-            toaster.error(errorRes.message || "An error has occured")
+            toaster.error(errorRes.message || "An error has occurred")
         })
     }
 
@@ -83,7 +88,7 @@ export default function TwoFactorAuth() {
 
                 </div>
 
-                <Button onClick={() => toggle2FAState()}>
+                <Button onClick={() => toggle2FAState(enabled)}>
                     {enabled ? ("Disable") : ("Enable")}
                 </Button>
 
@@ -98,14 +103,14 @@ export default function TwoFactorAuth() {
                             <p className="text-sm text-gray-500">2FA codes are not required for OAuth sign-ins</p>
                         </div>
                         <div className="flex justify-center items-center py-2">
-                            <QRCodeComponent text={twoFaUrl} />
+                            <QRCodeComponent text={twoFaUrl.url} />
                         </div>
                         <div className="flex justify-between items-center">
                             <div className="grid mb-2">
                                 <span className="font-medium text-sm text-zinc-600 flex items-center">Or manualy copy setup link</span>
                             </div>
                             <div className="flex flex-nowrap gap-2 items-center justify-center">
-                                <Button onClick={(e) => handleCopyTextToClipboard(twoFaUrl, e)}>Copy</Button>
+                                <Button onClick={(e) => handleCopyTextToClipboard(twoFaUrl.secret, e)}>Copy</Button>
                             </div>
                         </div>
                         <div className="grid grid-cols-1">
