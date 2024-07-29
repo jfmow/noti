@@ -4,7 +4,7 @@ import pb from "@/lib/pocketbase"
 export default function UserOptions({ clss }) {
     return (
         <>
-            <div className={`${"absolute top-0 z-[2] w-full sm:w-full grid grid-cols-[1fr_3fr_1fr] items-center justify-items-center justify-between p-0 h-[40px] text-[var(--userOptionText)] shadow bg-[var(--background)]"} ${clss}`}>
+            <div className={`${"relative sm:min-w-[260px] min-w-[100vw]  grid grid-cols-[1fr_3fr_1fr] items-center justify-items-center justify-between p-0 h-full text-[var(--userOptionText)] shadow bg-[var(--background)]"} ${clss}`}>
                 <div className="flex items-center justify-center w-6 h-6 object-contain overflow-hidden rounded-[9999px]">
                     {pb.authStore.model?.avatar ? (
                         <img src={`${process.env.NEXT_PUBLIC_POCKETURL}/api/files/users/${pb.authStore.model?.id}/${pb.authStore.model?.avatar}?thumb=100x100`} />

@@ -10,6 +10,8 @@ import { SendPageChanges } from '@/lib/Page state manager';
 import { findPageListPage } from '@/components/Pages List/list-functions';
 import pb from '@/lib/pocketbase';
 import ThemePickerPopup from '@/components/Themes';
+import UserOptions from '@/components/user-info';
+import isMobileScreen from '@/lib/ismobile';
 
 function MenuBarButton({ ...props }) {
     if (props.type === "button") {
@@ -26,7 +28,7 @@ function MenuBarButton({ ...props }) {
     )
 }
 
-export default function MenuBar({ currentPageData, currentPage, listedPageItems, unauthed = false }) {
+export default function MenuBar({ sidebarstate, currentPageData, currentPage, listedPageItems, unauthed = false }) {
 
     if (!listedPageItems || !currentPage || !currentPageData) {
         return <></>
@@ -41,7 +43,9 @@ export default function MenuBar({ currentPageData, currentPage, listedPageItems,
 
     return (
         <>
-            <div id="hidemewhenprinting" className="overflow-x-hidden w-full h-[40px] min-h-[40px] max-h-[40px] pl-2 pr-2 flex justify-between items-center bg-zinc-50 overflow-y-hidden">
+
+            <div id="hidemewhenprinting" className="overflow-x-hidden w-full h-[40px] min-h-[40px] max-h-[40px] z-[3] pl-0 pr-2 flex justify-between items-center bg-zinc-50 overflow-y-hidden">
+                <UserOptions clss={isMobileScreen() ? (sidebarstate ? "" : "hidden") : ""} />
                 <div className='flex items-center h-full'>
                     {!unauthed ? (
                         <MenuBarButton onClick={toggleSideParam} type='button'>

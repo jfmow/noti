@@ -17,8 +17,8 @@ module.exports = {
         'fade-in-slow-middle': 'fadeinslowmiddle 0.3s 1 ease',
         "background-shine": "background-shine 2s linear infinite",
         "fade-in": "fade-in 0.3s ease-in",
-        "slidein": "slideout 0.3s ease-in-out forwards",
-        "slideout": "slidein 0.3s ease-in-out forwards",
+        "slidein": "slideout 0.8s ease-in-out forwards",
+        "slideout": "slidein 0.8s ease-in-out forwards",
       },
       keyframes: {
         fadeinquick: {
@@ -46,12 +46,12 @@ module.exports = {
           }
         },
         slideout: {
-          "0%": { transform: "translateX(0px)", "margin-right": "0px", "filter": "blur(0px)" },
-          "100%": { transform: "translateX(-260px)", "margin-right": "-260px", display: "none", "filter": "blur(3px)" }
+          "0%": { transform: "translateY(0px)", "filter": "blur(0px)" },
+          "100%": { transform: "translateY(-100dvh)", display: "none", "filter": "blur(3px)" }
         },
         slidein: {
-          "0%": { transform: "translateX(-260px)", "margin-right": "-260px", "filter": "blur(3px)" },
-          "100%": { transform: "translateX(0px)", "margin-right": "0px", display: "flex", "filter": "blur(0px)" }
+          "0%": { transform: "translateY(-100dvh)", "filter": "blur(3px)" },
+          "100%": { transform: "translateY(0px)", display: "flex", "filter": "blur(0px)" }
         }
       },
       fontFamily: {

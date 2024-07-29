@@ -80,7 +80,7 @@ function NotionEditor() {
                 <div className='flex flex-col sm:flex-row'>
                     <UsersPages />
                     <div style={{ flex: '1 1 0%', position: 'relative', display: 'flex', height: '100dvh', flexDirection: 'column', overflowX: 'hidden' }}>
-                        <MenuBar listedPageItems={listedPageItems} currentPage={pageId} currentPageData={findPageListPage(pageId, listedPageItems)} />
+                        <MenuBar sidebarstate={visible} listedPageItems={listedPageItems} currentPage={pageId} currentPageData={findPageListPage(pageId, listedPageItems)} />
 
                         {pageId && listedPageItems && listedPageItems.length >= 1 !== "" ? (
                             <Suspense fallback={<></>}>
