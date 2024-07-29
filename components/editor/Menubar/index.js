@@ -150,7 +150,7 @@ function FolderList({ currentPageData, currentPage, listedPageItems }) {
                                 Router.push(`/page?${params.toString()}`);
                             }}>
                                 {page?.icon && page?.icon.includes('.png') ? (
-                                    <div aria-label='page icon' className="w-4 h-4 flex items-center justify-center">
+                                    <div aria-label='page icon' className="w-4 h-4 mr-2 flex items-center justify-center">
                                         <img src={`/emoji/twitter/64/${page.icon}`} />
                                     </div>
                                 ) : null}
