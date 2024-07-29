@@ -20,7 +20,7 @@ const nextConfig = {
                 frame-src *;
                 connect-src 'self' unsplash.com api.unsplash.com images.unsplash.com noti.suddsy.dev proti.suddsy.dev;
                 img-src 'self' noti.suddsy.dev proti.suddsy.dev p.suddsy.dev images.unsplash.com unsplash.com data: blob:;
-                worker-src 'self' unpkg.com https://cdn.jsdelivr.net;
+                worker-src 'self' unpkg.com https://cdn.jsdelivr.net blob:;
               `.replace(/\s{2,}/g, ' ').trim() // Minimize the string for cleaner CSP
             },
           ],
