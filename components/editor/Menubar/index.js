@@ -45,15 +45,19 @@ export default function MenuBar({ sidebarstate, currentPageData, currentPage, li
         <>
 
             <div id="hidemewhenprinting" className="overflow-x-hidden w-full h-[40px] min-h-[40px] max-h-[40px] z-[3] pl-2 pr-2 flex justify-between items-center bg-zinc-50 overflow-y-hidden">
-                <UserOptions clss={isMobileScreen() ? (sidebarstate ? "" : "hidden") : ""} />
+                {!unauthed ? (
+                    <>
+                        <UserOptions clss={isMobileScreen() ? (sidebarstate ? "" : "hidden") : ""} />
 
-                <div className='flex items-center h-full mr-1'>
-                    {!unauthed ? (
-                        <MenuBarButton onClick={toggleSideParam} type='button'>
-                            <PanelRight className='rotate-180 text-zinc-600' />
-                        </MenuBarButton>
-                    ) : null}
-                </div>
+                        <div className='flex items-center h-full mr-1'>
+
+                            <MenuBarButton onClick={toggleSideParam} type='button'>
+                                <PanelRight className='rotate-180 text-zinc-600' />
+                            </MenuBarButton>
+                        </div>
+                    </>
+                ) : null}
+
 
                 <FolderList currentPageData={currentPageData} currentPage={currentPage} listedPageItems={listedPageItems} />
                 <div className="flex items-center justify-end gap-1  min-w-[100px]">
