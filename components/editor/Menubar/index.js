@@ -13,7 +13,7 @@ import ThemePickerPopup from '@/components/Themes';
 import UserOptions from '@/components/user-info';
 import isMobileScreen from '@/lib/ismobile';
 
-function MenuBarButton({ ...props }) {
+export function MenuBarButton({ ...props }) {
     if (props.type === "button") {
         return (
             <button {...props} className={`flex items-center justify-center bg-none border-none text-[12px] font-[600] text-zinc-600 cursor-pointer p-1 rounded relative min-w-[30px] min-h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4 ${props.className}`}>
@@ -44,15 +44,17 @@ export default function MenuBar({ sidebarstate, currentPageData, currentPage, li
     return (
         <>
 
-            <div id="hidemewhenprinting" className="overflow-x-hidden w-full h-[40px] min-h-[40px] max-h-[40px] z-[3] pl-0 pr-2 flex justify-between items-center bg-zinc-50 overflow-y-hidden">
+            <div id="hidemewhenprinting" className="overflow-x-hidden w-full h-[40px] min-h-[40px] max-h-[40px] z-[3] pl-2 pr-2 flex justify-between items-center bg-zinc-50 overflow-y-hidden">
                 <UserOptions clss={isMobileScreen() ? (sidebarstate ? "" : "hidden") : ""} />
-                <div className='flex items-center h-full'>
+
+                <div className='flex items-center h-full mr-1'>
                     {!unauthed ? (
                         <MenuBarButton onClick={toggleSideParam} type='button'>
                             <PanelRight className='rotate-180 text-zinc-600' />
                         </MenuBarButton>
                     ) : null}
                 </div>
+
                 <FolderList currentPageData={currentPageData} currentPage={currentPage} listedPageItems={listedPageItems} />
                 <div className="flex items-center justify-end gap-1  min-w-[100px]">
                     <WordCountDisplay currentPageData={currentPageData} defaultVisible={unauthed} />

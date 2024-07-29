@@ -9,6 +9,7 @@ import UsageTab from "./Usage";
 const SettingsPopoverContext = createContext()
 const forceUpdateReducer = (x) => x + 1;
 import pb from "@/lib/pocketbase"
+import { MenuBarButton } from "../editor/Menubar";
 
 export default function SettingsPopover({ children }) {
     const [popoverOpen, setPopoverOpen] = useState(false)
@@ -36,9 +37,9 @@ export default function SettingsPopover({ children }) {
     return (
         <SettingsPopoverContext.Provider value={{ rerenderPage, pb }}>
             <>
-                <button onClick={() => setPopoverOpen(prev => !prev)}>
+                <MenuBarButton onClick={() => setPopoverOpen(prev => !prev)}>
                     {children}
-                </button>
+                </MenuBarButton>
                 {popoverOpen ? (
                     <>
                         {createPortal(
