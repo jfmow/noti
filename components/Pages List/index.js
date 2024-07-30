@@ -52,7 +52,7 @@ export default function UsersPages() {
 
     return (
         <>
-            <div id="hidemewhenprinting" style={defaultWidth === "full" ? { width: "100vw", position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 2, height: "100svh", display: visible ? "flex" : "none" } : { width: defaultWidth + "px", height: "100dvh" }} className={`bg-[var(--background)] shadow pt-[40px] fixed z-[2] flex-col rounded-br-xl overflow-hidden ${defaultWidth === "full" ? "" : (visible ? "animate-slideout" : "animate-slidein")}`}>
+            <div id="hidemewhenprinting" style={defaultWidth === "full" ? { width: "100vw", position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 2, height: "100svh", display: visible ? "flex" : "none" } : { width: defaultWidth + "px", height: "90dvh" }} className={`bg-[var(--background)] shadow-lg pt-[40px] fixed z-[2] flex-col rounded-br-xl overflow-hidden ${defaultWidth === "full" ? "" : (visible ? "animate-slideout" : "animate-slidein")}`}>
                 {loading ? (
                     <Loader />
                 ) : (
