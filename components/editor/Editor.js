@@ -11,6 +11,7 @@ import Quote from "@editorjs/quote";
 import Table from "@editorjs/table";
 import Video from '@/customEditorTools/Video'
 import compressImage from "@/lib/CompressImg";
+import Paragraph from '@editorjs/paragraph';
 import Router from "next/router";
 import NestedList from '@editorjs/nested-list';
 import MarkerTool from "@/customEditorTools/Marker";
@@ -49,7 +50,7 @@ export default function EditorV3({ currentPage, listedPageItems }) {
                 try {
                     savingAllowed.current = false
 
-                    if (Editor.current){
+                    if (Editor.current) {
                         await Editor.current.destroy()
                     }
 
@@ -60,10 +61,10 @@ export default function EditorV3({ currentPage, listedPageItems }) {
                     Editor.current = editorjs
 
 
-                    function CheckRenderIsCorrect(editor, contentToMatch){
-                        if(editor.blocks.getBlocksCount() !== contentToMatch.blocks.length){
+                    function CheckRenderIsCorrect(editor, contentToMatch) {
+                        if (editor.blocks.getBlocksCount() !== contentToMatch.blocks.length) {
                             return false
-                        } else{
+                        } else {
                             return true
                         }
                     }
@@ -99,6 +100,13 @@ export default function EditorV3({ currentPage, listedPageItems }) {
             const editor = new EditorJS({
                 holder: EditorElement.current,
                 tools: {
+                    paragraph: {
+                        class: Paragraph,
+                        inlineToolbar: true,
+                        config: {
+                            preserveBlank: true
+                        }
+                    },
                     header: {
                         class: Header,
                         inlineToolbar: true,
@@ -280,7 +288,6 @@ export default function EditorV3({ currentPage, listedPageItems }) {
                     if (data.content && Object.keys(data.content).includes("blocks")) {
                         await Editor.current.render(data.content)
                         pageUpdaterDebounce.cancel(pageData.id)
-
                     }
                 }
                 setOpenPageData(prevData => { return { ...prevData, ...data } })
