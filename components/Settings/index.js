@@ -37,9 +37,9 @@ export default function SettingsPopover({ children }) {
     return (
         <SettingsPopoverContext.Provider value={{ rerenderPage, pb }}>
             <>
-                <MenuBarButton onClick={() => setPopoverOpen(prev => !prev)}>
+                <button type="button" onClick={() => setPopoverOpen(prev => !prev)}>
                     {children}
-                </MenuBarButton>
+                </button>
                 {popoverOpen ? (
                     <>
                         {createPortal(
