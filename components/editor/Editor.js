@@ -321,8 +321,8 @@ export default function EditorV3({ currentPage, listedPageItems }) {
 
             <div style={{ display: 'flex', height: '100%', overflow: 'hidden' }}>
                 <div className="flex flex-col w-full h-full overflow-scroll" id={`editor-container-${currentPage}`}>
-                    <div className="relative w-full min-h-[300px] h-[300px] bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400 flex items-center justify-center mb-5">
-                        <div className="absolute top-0 left-0 right-0 bottom-0 w-full h-full overflow-hidden" id="dontchangemewhenprinting">
+                    <div className="relative w-full min-h-[300px] h-[300px] flex items-center justify-center mb-5">
+                        <div className="print:rounded-lg absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400 w-full h-full overflow-hidden" id="dontchangemewhenprinting">
                             {openPageData.unsplash !== "" ? (
                                 <img src={openPageData.unsplash} className="w-full h-full object-cover" />
                             ) : null}
