@@ -269,6 +269,7 @@ export default function EditorV3({ currentPage, listedPageItems }) {
                 data: pageData.content || {},
                 onChange: (api, event) => {
                     onchangeevent(latestPageId.current)
+                    /* Causes images to be deleted when other tab with same page is updated
                     if (event.type === "block-removed") {
                         if (event.detail.target.name === "image" || event.detail.target.name === "simpleEmbeds") {
                             if (event.detail.target.holder.children[0].lastChild.classList.contains("simple-image")) {
@@ -278,6 +279,7 @@ export default function EditorV3({ currentPage, listedPageItems }) {
                             }
                         }
                     }
+                    */
                 }
             })
 
