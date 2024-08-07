@@ -26,6 +26,7 @@ export default function EditorV3({ page }) {
     const SaveRef = useRef(null)
     const [openPageData, setOpenPageData] = useState([])
     const [loading, setLoading] = useState(false)
+    const [blurPage, setBlurPage] = useState(false)
 
     useEffect(() => {
         /*
@@ -144,6 +145,28 @@ export default function EditorV3({ page }) {
         }
     }, [openPageData])
 
+    useEffect(() => {
+        if (window && document) {
+            document.addEventListener("mouseleave", function (event) {
+                SaveRef.current.style.display = "none"
+                setBlurPage(true)
+
+
+            })
+            document.addEventListener("mouseenter", function (event) {
+                SaveRef.current.style.display = ""
+                setBlurPage(false)
+            })
+
+            window.addEventListener("keyup", (event) => {
+                if (event.key === "PrintScreen") {
+                    SaveRef.current.style.display = "none"
+                    setBlurPage(true)
+                }
+            })
+        }
+    }, [window])
+
     if (loading) {
         return <Loader />
     }
@@ -153,6 +176,8 @@ export default function EditorV3({ page }) {
             <Head>
                 <title>{openPageData.title}</title>
             </Head>
+
+
 
             <MenuBar currentPageData={openPageData} listedPageItems={[openPageData]} currentPage={currentPage} unauthed>
 
@@ -170,6 +195,7 @@ export default function EditorV3({ page }) {
                         <h1 onBlur={(e) => updateTitle(e)} className="outline-none scroll-m-20 text-4xl font-bold tracking-tight lg:text-4xl">{openPageData.title || "Untitled page"}</h1>
                     </div>
                 </div>
+
                 <div ref={SaveRef} className="px-3 text-[var(--editortext)]" id={`editorjs-editor-${currentPage}`} />
             </div>
         </>
