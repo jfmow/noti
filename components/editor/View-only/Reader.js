@@ -157,7 +157,7 @@ export default function EditorV3({ page }) {
             <MenuBar currentPageData={openPageData} listedPageItems={[openPageData]} currentPage={currentPage} unauthed>
 
             </MenuBar>
-            <div className="flex flex-col w-full h-full overflow-scroll" id={`editor-container-${currentPage}`}>
+            <div className="select-none flex flex-col w-full h-full overflow-scroll" id={`editor-container-${currentPage}`}>
                 <div className="relative w-full min-h-[300px] h-[300px] bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400 flex items-center justify-center mb-5">
                     <div className="absolute top-0 left-0 right-0 bottom-0 w-full h-full overflow-hidden">
                         {openPageData.unsplash || openPageData.header_img ? (
@@ -167,7 +167,7 @@ export default function EditorV3({ page }) {
                         )}
                     </div>
                     <div className="z-3 relative ">
-                        <h1 contentEditable onBlur={(e) => updateTitle(e)} className="outline-none scroll-m-20 text-4xl font-bold tracking-tight lg:text-4xl">{openPageData.title || "Untitled page"}</h1>
+                        <h1 onBlur={(e) => updateTitle(e)} className="outline-none scroll-m-20 text-4xl font-bold tracking-tight lg:text-4xl">{openPageData.title || "Untitled page"}</h1>
                     </div>
                 </div>
                 <div ref={SaveRef} className="px-3 text-[var(--editortext)]" id={`editorjs-editor-${currentPage}`} />
