@@ -4,7 +4,7 @@ import { toaster } from '@/components/toast';
 import { ToolTip, ToolTipCon, ToolTipTrigger } from '@/components/UX-Components/Tooltip';
 import { DropDown, DropDownContainer, DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from '@/lib/Pop-Cards/DropDown';
 import Link from '@/components/Link';
-import { CalendarDays, CircleUser, TextSelect, BookDashed, Pencil, Share2, PartyPopper, Archive, ArchiveRestore, Baseline, CaseLower, Copy, Eye, EyeOff, Info, PanelRightDashed, Settings2, Share, Space, Trash2Icon, WholeWord, Settings, PanelRight, Paintbrush } from 'lucide-react';
+import { CalendarDays, CircleUser, TextSelect, BookDashed, Pencil, Share2, PartyPopper, Archive, ArchiveRestore, Baseline, CaseLower, Copy, Eye, EyeOff, Info, PanelRightDashed, Settings2, Share, Space, Trash2Icon, WholeWord, Settings, PanelRight, Paintbrush, Printer } from 'lucide-react';
 import { CountCharacters, CountWords } from './helpers';
 import { SendPageChanges } from '@/lib/Page state manager';
 import { findPageListPage } from '@/components/Pages List/list-functions';
@@ -82,6 +82,16 @@ export default function MenuBar({ sidebarstate, currentPageData, currentPage, li
                             <ThemePickerPopup />
                         </DropDown>
                     </DropDownContainer>
+                    <ToolTipCon>
+                        <ToolTip>
+                            Print
+                        </ToolTip>
+                        <ToolTipTrigger>
+                            <MenuBarButton type="button" onClick={() => print()}>
+                                <Printer />
+                            </MenuBarButton>
+                        </ToolTipTrigger>
+                    </ToolTipCon>
                     {!unauthed ? (
                         <DropDownMenu currentPageData={currentPageData} listedPageItems={listedPageItems} currentPage={currentPage} />
                     ) : null}
