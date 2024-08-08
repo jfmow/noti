@@ -145,28 +145,6 @@ export default function EditorV3({ page }) {
         }
     }, [openPageData])
 
-    useEffect(() => {
-        if (window && document) {
-            document.addEventListener("mouseleave", function (event) {
-                SaveRef.current.style.display = "none"
-                setBlurPage(true)
-
-
-            })
-            document.addEventListener("mouseenter", function (event) {
-                SaveRef.current.style.display = ""
-                setBlurPage(false)
-            })
-
-            window.addEventListener("keyup", (event) => {
-                if (event.key === "PrintScreen") {
-                    SaveRef.current.style.display = "none"
-                    setBlurPage(true)
-                }
-            })
-        }
-    }, [window])
-
     if (loading) {
         return <Loader />
     }
@@ -182,7 +160,7 @@ export default function EditorV3({ page }) {
             <MenuBar currentPageData={openPageData} listedPageItems={[openPageData]} currentPage={currentPage} unauthed>
 
             </MenuBar>
-            <div className="select-none flex flex-col w-full h-full overflow-scroll" id={`editor-container-${currentPage}`}>
+            <div className="pointer-events-none select-none flex flex-col w-full h-full overflow-scroll" id={`editor-container-${currentPage}`}>
                 <div className="relative w-full min-h-[300px] h-[300px] flex items-center justify-center mb-5">
                     <div className="print:rounded-lg absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400 w-full h-full overflow-hidden" id="dontchangemewhenprinting">
                         {openPageData.unsplash || openPageData.header_img ? (
