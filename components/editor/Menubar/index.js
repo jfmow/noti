@@ -47,9 +47,9 @@ export default function MenuBar({ sidebarstate, currentPageData, currentPage, li
             <div id="hidemewhenprinting" className="overflow-x-hidden w-full h-[40px] min-h-[40px] max-h-[40px] z-[3] pl-2 pr-2 flex justify-between items-center bg-zinc-50 overflow-y-hidden">
                 {!unauthed ? (
                     <>
-                        <UserOptions clss={isMobileScreen() ? (sidebarstate ? "" : "hidden") : ""} />
+                        <UserOptions />
 
-                        <div className='flex items-center h-full mr-1'>
+                        <div className='flex items-center h-full mx-1'>
 
                             <MenuBarButton onClick={toggleSideParam} type='button'>
                                 <PanelRight className='rotate-180 text-zinc-600' />

@@ -37,9 +37,9 @@ export default function SettingsPopover({ children }) {
     return (
         <SettingsPopoverContext.Provider value={{ rerenderPage, pb }}>
             <>
-                <button type="button" onClick={() => setPopoverOpen(prev => !prev)}>
+                <MenuBarButton type="button" onClick={() => setPopoverOpen(prev => !prev)}>
                     {children}
-                </button>
+                </MenuBarButton>
                 {popoverOpen ? (
                     <>
                         {createPortal(
@@ -97,6 +97,6 @@ export const useSettingsPopoverContext = () => {
 
 export function Button({ ...props }) {
     return (
-        <button type="button" className="text-sm px-3 py-1 rounded border border-gray-300 cursor-pointer hover:bg-gray-200" {...props}>{...props.children}</button>
+        <button type="button" className="text-sm px-3 py-1 rounded border border-gray-300 cursor-pointer hover:bg-gray-200" {...props}>{props.children}</button>
     )
 }
