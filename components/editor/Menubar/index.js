@@ -9,7 +9,6 @@ import { CountCharacters, CountWords } from './helpers';
 import { SendPageChanges } from '@/lib/Page state manager';
 import { findPageListPage } from '@/components/Pages List/list-functions';
 import pb from '@/lib/pocketbase';
-import ThemePickerPopup from '@/components/Themes';
 import UserOptions from '@/components/user-info';
 import isMobileScreen from '@/lib/ismobile';
 
@@ -62,26 +61,7 @@ export default function MenuBar({ sidebarstate, currentPageData, currentPage, li
                 <FolderList currentPageData={currentPageData} currentPage={currentPage} listedPageItems={listedPageItems} />
                 <div className="flex items-center justify-end gap-1  min-w-[100px]">
                     <WordCountDisplay currentPageData={currentPageData} defaultVisible={unauthed} />
-                    <DropDownContainer>
-                        <DropDownTrigger>
-                            <ToolTipCon>
-                                <ToolTipTrigger>
-                                    <MenuBarButton>
-                                        <Paintbrush className='text-zinc-600' />
-                                    </MenuBarButton>
-                                </ToolTipTrigger>
-                                <ToolTip>
-                                    Themes
-                                </ToolTip>
-                            </ToolTipCon>
-                        </DropDownTrigger>
-                        <DropDown>
-                            <DropDownSectionTitle>
-                                Themes
-                            </DropDownSectionTitle>
-                            <ThemePickerPopup />
-                        </DropDown>
-                    </DropDownContainer>
+
                     <ToolTipCon>
                         <ToolTip>
                             Print

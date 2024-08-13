@@ -1,4 +1,4 @@
-import { UserCircle, HeartHandshake, PieChart, Pencil } from "lucide-react"
+import { UserCircle, HeartHandshake, PieChart, Pencil, Paintbrush2 } from "lucide-react"
 import { createContext, useContext, useEffect, useReducer, useRef, useState } from "react";
 
 import { createPortal } from "react-dom";
@@ -10,6 +10,7 @@ const SettingsPopoverContext = createContext()
 const forceUpdateReducer = (x) => x + 1;
 import pb from "@/lib/pocketbase"
 import { MenuBarButton } from "../editor/Menubar";
+import ThemeTab from "./Theme";
 
 export default function SettingsPopover({ children }) {
     const [popoverOpen, setPopoverOpen] = useState(false)
@@ -58,6 +59,7 @@ export default function SettingsPopover({ children }) {
                                                     <li onClick={() => setOpenTab("account")} className="flex items-center hover:bg-gray-200 py-1 px-2 rounded-lg hover:cursor-pointer"><UserCircle className="w-4 h-4 mr-1" /> Account</li>
                                                     <li onClick={() => setOpenTab("security")} className="flex items-center hover:bg-gray-200 py-1 px-2 rounded-lg hover:cursor-pointer"><HeartHandshake className="w-4 h-4 mr-1" /> Security</li>
                                                     <li onClick={() => setOpenTab("usage")} className="flex items-center hover:bg-gray-200 py-1 px-2 rounded-lg hover:cursor-pointer"><PieChart className="w-4 h-4 mr-1" /> Usage</li>
+                                                    <li onClick={() => setOpenTab("theme")} className="flex items-center hover:bg-gray-200 py-1 px-2 rounded-lg hover:cursor-pointer"><Paintbrush2 className="w-4 h-4 mr-1" /> Theme</li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -65,7 +67,7 @@ export default function SettingsPopover({ children }) {
                                     {!menuHidden && isonmobile ? null : (
                                         <main className="flex-1 text-gray-800 h-full overflow-y-scroll" id="showscrollbaronme">
                                             {menuHidden && isonmobile ? (<div className="p-3 border-b">
-                                                <Button onClick={() => setMenuHidden(false)}>Menu</Button>
+                                                <Button onClick={() => setMenuHidden(false)}>Back</Button>
                                             </div>) : null}
                                             {opentab === "" || opentab === "account" ? (
                                                 <AccountTab />
@@ -75,6 +77,9 @@ export default function SettingsPopover({ children }) {
                                             ) : null}
                                             {opentab === "usage" ? (
                                                 <UsageTab />
+                                            ) : null}
+                                            {opentab === "theme" ? (
+                                                <ThemeTab />
                                             ) : null}
 
                                         </main>
