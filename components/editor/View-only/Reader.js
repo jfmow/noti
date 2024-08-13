@@ -170,7 +170,7 @@ export default function EditorV3({ page }) {
                         )}
                     </div>
                     <div className="z-3 relative ">
-                        <h1 onBlur={(e) => updateTitle(e)} className="outline-none scroll-m-20 text-4xl font-bold tracking-tight lg:text-4xl">{openPageData.title || "Untitled page"}</h1>
+                        <h1 onBlur={(e) => updateTitle(e)} className="text-zinc-50 outline-none scroll-m-20 text-4xl font-bold tracking-tight lg:text-4xl">{openPageData.title || "Untitled page"}</h1>
                     </div>
                 </div>
 
