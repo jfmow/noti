@@ -7,7 +7,7 @@ const Reader = lazy(() => import('../../../components/editor/View-only/Reader'))
 function NotionEditor({ pageId }) {
 
   useEffect(() => {
-    EnableWebsiteThemes()
+    EnableWebsiteThemes("light")
   }, [])
 
   return (
