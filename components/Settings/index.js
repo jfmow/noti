@@ -53,7 +53,7 @@ export default function SettingsPopover({ children }) {
                                         <div className="select-none flex-none min-w-[200px] w-fit h-full grid p-1 px-2">
                                             <div>
                                                 <div className="p-3">
-                                                    <h4 className="text-xs text-gray-300">Account</h4>
+                                                    <h4 className="text-xs text-gray-300">Settings</h4>
                                                 </div>
                                                 <ul className="text-gray-600 flex flex-col text-sm">
                                                     <li onClick={() => setOpenTab("account")} className="flex items-center hover:bg-gray-200 py-1 px-2 rounded-lg hover:cursor-pointer"><UserCircle className="w-4 h-4 mr-1" /> Account</li>
