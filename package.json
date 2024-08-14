@@ -25,7 +25,7 @@
     "@editorjs/quote": "^2.5.0",
     "@editorjs/table": "^2.2.1",
     "@editorjs/underline": "^1.1.0",
-    "axios": "^1.6.0",
+    "axios": "^1.7.4",
     "blurhash": "^2.0.5",
     "chart.js": "^4.3.0",
     "crypto-js": "^4.2.0",
