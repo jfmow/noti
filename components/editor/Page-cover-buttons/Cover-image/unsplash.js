@@ -4,9 +4,10 @@ import debounce from 'lodash/debounce';
 import Link from '@/components/Link';
 import { toaster } from '@/components/toast';
 import { Input } from '@/components/UX-Components';
+import { SendPageChanges } from '@/lib/Page state manager';
 
 
-export default function Unsplash({ page, setArticleHeader, close }) {
+export default function Unsplash({ page }) {
     const [images, setImages] = useState([]);
     const [currentPageNumber, setPageNumber] = useState(1);
     const [totalPages, setTotalPages] = useState(-1);
@@ -52,10 +53,9 @@ export default function Unsplash({ page, setArticleHeader, close }) {
 
         const fullImageUrl = data.urls.full;
         setLoading(data.id);
-        setArticleHeader(fullImageUrl);
 
         try {
-            await pb.collection("pages").update(page, { "unsplash": fullImageUrl, header_img: null });
+            SendPageChanges(page, { "unsplash": fullImageUrl, header_img: null });
             const response = await fetch(data.links.download_location + `&client_id=${process.env.NEXT_PUBLIC_UNSPLASH}`, {
                 method: "GET",
             });
@@ -79,8 +79,7 @@ export default function Unsplash({ page, setArticleHeader, close }) {
         };
 
         try {
-            await pb.collection('pages').update(page, data);
-            setArticleHeader(null);
+            SendPageChanges(page, data)
         } catch (error) {
             console.error('Error removing cover:', error);
             // Handle the error, e.g., set an error state or show an error message

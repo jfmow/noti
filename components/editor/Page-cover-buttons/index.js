@@ -13,10 +13,6 @@ import { SendPageChanges } from "@/lib/Page state manager";
 export default function MenuButtons({ currentPage }) {
     const { pb } = useEditorContext()
 
-    async function setHeader(img) {
-        SendPageChanges(currentPage, { header_img: "", unsplash: img })
-    }
-
     async function updateIcon(newIcon = '') {
         if (!newIcon) {
             return new Error('Please include a new icon')
@@ -74,7 +70,7 @@ export default function MenuButtons({ currentPage }) {
                                     <Paragraph>
                                         Chose a cover for your page from unsplash's image libary
                                     </Paragraph>
-                                    <Img setArticleHeader={setHeader} page={currentPage} />
+                                    <Img page={currentPage} />
                                 </Popup>
                             </PopupContainer>
                             <PopupContainer>
@@ -89,7 +85,7 @@ export default function MenuButtons({ currentPage }) {
                                     <Paragraph>
                                         Choose a gradient cover for your page
                                     </Paragraph>
-                                    <Gradient setArticleHeader={setHeader} page={currentPage} pb={pb} />
+                                    <Gradient page={currentPage} pb={pb} />
                                 </Popup>
                             </PopupContainer>
 

@@ -2,8 +2,10 @@ import React, { useEffect, useState, useRef } from "react";
 import { PopUpCardsGlobalButton } from "@/lib/Pop-Cards/Popup";
 import { gradient } from "@/components/editor/Page-cover-buttons/Cover-image/gradient/init";
 import compressImage from "@/lib/CompressImg";
+import { SendPageChanges } from "@/lib/Page state manager";
+import pb from "@/lib/pocketbase";
 
-export default function Gradient({ setArticleHeader, page, pb }) {
+export default function Gradient({ page }) {
     const canvasRef = useRef(null);
     const [colors, setColors] = useState([
         "#eb75b6",
@@ -43,14 +45,12 @@ export default function Gradient({ setArticleHeader, page, pb }) {
         const compressedBlob = await compressImage(blob, 200); // Maximum file size in KB (200KB in this example)
         const file = new File([compressedBlob], 'generated-gradient.png', { type: blob.type });
         const reader = new FileReader();
-        reader.onload = () => {
-            setArticleHeader(reader.result);
-        };
         reader.readAsDataURL(file);
         let formData = new FormData()
         formData.append("header_img", file)
         formData.append("unsplash", "")
         const record = await pb.collection('pages').update(page, formData);
+        SendPageChanges(page, { "unsplash": "", "header_img": record.header_img }, false)
     }
 
     return (

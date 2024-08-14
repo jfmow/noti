@@ -328,7 +328,7 @@ export default function EditorV3({ currentPage, listedPageItems }) {
                             {openPageData.unsplash !== "" ? (
                                 <img src={openPageData.unsplash} className="w-full h-full object-cover" />
                             ) : null}
-                            {openPageData.header_img ? (
+                            {openPageData.header_img !== "" ? (
                                 <img src={`${process.env.NEXT_PUBLIC_POCKETURL}/api/files/${openPageData.collectionId}/${openPageData.id}/${openPageData.header_img}`} className="w-full h-full object-cover" />
                             ) : null}
                         </div>
