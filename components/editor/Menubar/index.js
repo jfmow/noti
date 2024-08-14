@@ -343,7 +343,7 @@ function DropDownMenu({ currentPageData, listedPageItems, currentPage }) {
                 <DropDownContainer>
                     <ToolTipTrigger>
                         <DropDownTrigger afterTrigger={() => getPageData()}>
-                            <MenuBarButton>
+                            <MenuBarButton type="button">
                                 <Settings2 className='text-zinc-600' />
                             </MenuBarButton>
                         </DropDownTrigger>
