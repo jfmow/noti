@@ -7,7 +7,7 @@ export default function ThemesList() {
 
     useEffect(() => {
         GetThemes().then((res) => setThemes(res))
-    }, [themes])
+    }, [])
 
     function updateTheme(theme) {
         window.localStorage.setItem('theme', theme);
