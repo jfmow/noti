@@ -13,13 +13,13 @@ import UserOptions from '@/components/user-info';
 export function MenuBarButton({ ...props }) {
     if (props.type === "button") {
         return (
-            <button {...props} className={`flex items-center justify-center bg-none border-none text-[12px] font-[600] text-zinc-600 cursor-pointer p-1 rounded relative min-w-[30px] min-h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4 ${props.className}`}>
+            <button {...props} className={`flex items-center justify-center bg-none border-none text-[12px] font-[600] text-zinc-600 [&>svg]:text-zinc-600 cursor-pointer p-1 rounded relative min-w-[30px] min-h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4 ${props.className}`}>
                 {props.children}
             </button>
         )
     }
     return (
-        <div {...props} className={`flex items-center justify-center bg-none border-none text-[12px] font-[600] text-zinc-600 cursor-pointer p-1 rounded relative min-w-[30px] min-h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4 ${props.className}`}>
+        <div {...props} className={`flex items-center justify-center bg-none border-none text-[12px] font-[600] text-zinc-600 [&>svg]:text-zinc-600 cursor-pointer p-1 rounded relative min-w-[30px] min-h-[30px] hover:bg-zinc-200 [&>svg]:w-4 [&>svg]:h-4 ${props.className}`}>
             {props.children}
         </div>
     )
