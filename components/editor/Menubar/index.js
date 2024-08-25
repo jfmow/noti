@@ -135,7 +135,7 @@ function FolderList({ currentPageData, currentPage, listedPageItems }) {
     return (
         <>
             {!isMobile ? (
-                <div className="flex items-center text-zinc-800 w-full overflow-x-auto h-full py-2">
+                <div className="flex items-center text-zinc-800 w-full overflow-x-auto overflow-y-hidden h-full py-2">
                     {folderTree.length >= 1 && folderTree[0]?.id ? folderTree.map((page, index) => (
                         <>
                             <MenuBarButton type="button" onClick={() => {
