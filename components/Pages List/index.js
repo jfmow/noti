@@ -9,6 +9,8 @@ import { ListenForAllPageChanges, SendPageChanges } from '@/lib/Page state manag
 import { sortAndNestObjects } from './list-functions';
 import pb from "@/lib/pocketbase"
 
+//TODO: add back DnD
+
 export default function UsersPages() {
     const [defaultWidth, setDefaultWidth] = useState(260)
     const [loading, setLoading] = useState(true)
@@ -52,7 +54,7 @@ export default function UsersPages() {
 
     return (
         <>
-            <div id="hidemewhenprinting" style={defaultWidth === "full" ? { width: "100vw", position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 2, height: "100svh", display: visible ? "flex" : "none" } : { width: defaultWidth + "px", height: "fit-content", maxHeight: "90dvh" }} className={`bg-[var(--background)] shadow-lg pt-[40px] fixed z-[2] flex-col rounded-br-xl overflow-x-hidden overflow-y-scroll ${defaultWidth === "full" ? "" : (visible ? "animate-slideout" : "animate-slidein")}`}>
+            <div id="hidemewhenprinting" style={defaultWidth === "full" ? { width: "100vw", position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 2, height: "100svh", display: visible ? "flex" : "none" } : { width: defaultWidth + "px", height: "fit-content", minHeight: "50vh", maxHeight: "90dvh" }} className={`bg-[var(--background)] shadow-lg pt-[40px] fixed z-[2] flex-col rounded-br-xl overflow-x-hidden overflow-y-scroll ${defaultWidth === "full" ? "" : (visible ? "animate-slideout" : "animate-slidein")}`}>
                 {loading ? (
                     <Loader />
                 ) : (
