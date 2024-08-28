@@ -163,7 +163,7 @@ function PageListItem({ data }) {
                 onDragStart={(e) => e.dataTransfer.setData("text/plain", data.id)}
                 onDrop={(e) => handleDrop(e, data)}
                 onDragOver={(e) => { e.preventDefault() }}
-                aria-label='Page item' key={data.id} onClick={openPage} style={{ background: data.color }} className={`flex items-center justify-between gap-1 cursor-pointer p-1 mb-2 text-[var(--pageListItemTextIcon)] hover:bg-[var(--pageListItemHover)] rounded ${isDragingOver ? "!bg-red-300" : ""}`}
+                aria-label='Page item' key={data.id} onClick={openPage} style={{ background: data.color }} className={`shadow flex items-center justify-between gap-1 cursor-pointer p-1 mb-2 text-[var(--pageListItemTextIcon)] hover:bg-[var(--pageListItemHover)] rounded ${isDragingOver ? "!bg-red-300" : ""}`}
             >
 
                 {data.icon != "" ? (
