@@ -77,12 +77,63 @@ export default function UsersPages() {
 
 
 function PageListItem({ data }) {
-    const { showArchivedPages } = useEditorContext()
+    const { showArchivedPages, listedPageItems } = useEditorContext()
     if (data?.archived && !showArchivedPages) {
         return <></>
     }
 
-    const isDragingOver = false
+    const [isDragingOver, setIsDragingOver] = useState(false)
+
+    function isChildOf(parentId, childId) {
+        // Find the parent item in the unsorted array
+        const parentItem = listedPageItems.find(item => item.id === parentId);
+
+        // If parentItem is not found, return false
+        if (!parentItem) {
+            return false;
+        }
+
+        // Check if childId is a direct child of parentItem
+        if (parentItem.id === childId) {
+            return true;
+        }
+
+        // Find all items in the unsorted array that have parentId as their parent
+        const children = listedPageItems.filter(item => item.parentId === parentId);
+
+        // Check if childId is a direct child of parentItem
+        if (children.some(item => item.id === childId)) {
+            return true;
+        }
+
+        // Recursively check if childId is a descendant of any children of parentItem
+        for (const child of children) {
+            if (isChildOf(child.id, childId)) {
+                return true;
+            }
+        }
+
+        // If childId is not found among direct children or descendants, return false
+        return false;
+    }
+
+    function handleDrop(event, item) {
+        setIsDragingOver(false)
+        const itemToMove = event.dataTransfer.getData("text/plain");
+        const itemToMoveINTO = item;
+
+        if (itemToMove === itemToMoveINTO) return;
+
+        const parentId = itemToMoveINTO.id;
+
+        // Check if the item being moved is not a child of the item it's being moved into or any of its children
+        if (isChildOf(parentId, itemToMove) || isChildOf(itemToMove, parentId)) {
+            toaster.info("Cannot move item: It is a child of the target item or one of its descendants, or it's being moved into its own children.");
+            return;
+        }
+        SendPageChanges(itemToMove, { parentId: itemToMoveINTO.id })
+
+    }
 
     function openPage() {
         const urlParams = new URLSearchParams(window.location.search)
@@ -107,7 +158,13 @@ function PageListItem({ data }) {
 
     return (
         <>
-            <li aria-label='Page item' key={data.id} onClick={openPage} style={{ background: data.color }} className={`flex items-center justify-between gap-1 cursor-pointer p-1 mb-2 text-[var(--pageListItemTextIcon)] hover:bg-[var(--pageListItemHover)] rounded ${isDragingOver ? "!bg-red-300" : ""}`}>
+            <li
+                draggable
+                onDragStart={(e) => e.dataTransfer.setData("text/plain", data.id)}
+                onDrop={(e) => handleDrop(e, data)}
+                onDragOver={(e) => { e.preventDefault() }}
+                aria-label='Page item' key={data.id} onClick={openPage} style={{ background: data.color }} className={`flex items-center justify-between gap-1 cursor-pointer p-1 mb-2 text-[var(--pageListItemTextIcon)] hover:bg-[var(--pageListItemHover)] rounded ${isDragingOver ? "!bg-red-300" : ""}`}
+            >
 
                 {data.icon != "" ? (
                     <div className='w-5 h-5'>
