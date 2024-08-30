@@ -40,27 +40,6 @@
         }
     },
     {
-        "id": "bluey",
-        "display_name": "Bluey",
-        "color": "#5476ff",
-        "data": {
-            "--margin_toast": "20px",
-            "--background": "#bbc8ff",
-            "--editortext": "#373737",
-            "--pageListItemHover": "#abbbff",
-            "--pageListItemOpen": "linear-gradient(20deg, #98adff, #54e1ff73)",
-            "--pageListItemTextIconBackgroundHover": "#a4b5ff",
-            "--pageListItemHover_drag": "#ff7777",
-            "--createNewPageBtnText": "#8ea3ff",
-            "--pageListItemTextIcon": "#313131",
-            "--modalTextColor": "#222",
-            "--popupBackground": "#9cb0ff",
-            "--popupButtonBg": "#8589ff70",
-            "--userinfoSectionBordertop": "#b2c1ff",
-            "--userOptionText": "#252525"
-        }
-    },
-    {
         "id": "purple",
         "display_name": "Purple",
         "color": "#fdf8ff",
