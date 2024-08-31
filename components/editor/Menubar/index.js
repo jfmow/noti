@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { toaster } from '@/components/toast';
 import { ToolTip, ToolTipCon, ToolTipTrigger } from '@/components/UX-Components/Tooltip';
 import { DropDown, DropDownContainer, DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from '@/lib/Pop-Cards/DropDown';
-import { CalendarDays, CircleUser, TextSelect, BookDashed, Pencil, Share2, PartyPopper, Archive, ArchiveRestore, Baseline, CaseLower, Copy, Eye, EyeOff, Info, PanelRightDashed, Settings2, Share, Space, Trash2Icon, WholeWord, Settings, PanelRight, Paintbrush, Printer } from 'lucide-react';
+import { CalendarDays, CircleUser, TextSelect, BookDashed, Pencil, Share2, PartyPopper, Archive, ArchiveRestore, Baseline, CaseLower, Copy, Eye, EyeOff, Info, PanelRightDashed, Settings2, Share, Space, Trash2Icon, WholeWord, Settings, PanelRight, Paintbrush, Printer, Glasses } from 'lucide-react';
 import { CountCharacters, CountWords } from './helpers';
 import { SendPageChanges } from '@/lib/Page state manager';
 import { findPageListPage } from '@/components/Pages List/list-functions';
@@ -194,6 +194,20 @@ function WordCountDisplay({ currentPageData, defaultVisible }) {
         getPageData(currentPageData)
     }, [currentPageData])
 
+    function convertDecimalToMinSec(decimalMinutes) {
+        // Extract minutes (integer part)
+        const minutes = Math.floor(decimalMinutes);
+
+        // Extract seconds (fractional part)
+        const seconds = Math.round((decimalMinutes - minutes) * 60);
+
+        // Format seconds to always be two digits
+        //const formattedSeconds = seconds.toString().padStart(2, '0');
+
+        // Return the formatted time
+        return `${minutes ? minutes + "min" : ""} ${seconds ? seconds + "sec" : ""}`;
+    }
+
     if (query?.wordcount === "true" || defaultVisible) {
         return (
             <DropDownContainer>
@@ -218,6 +232,10 @@ function WordCountDisplay({ currentPageData, defaultVisible }) {
                         <DropDownItem>
                             <Space />
                             With spaces: {pageInfo.chartersWithSpaces}
+                        </DropDownItem>
+                        <DropDownItem>
+                            <Glasses />
+                            Reading time: {convertDecimalToMinSec(pageInfo.wordCount / 238)}
                         </DropDownItem>
                     </DropDownSection>
                 </DropDown>

@@ -55,6 +55,7 @@ export default function EditorV3({ currentPage, listedPageItems }) {
 
                 const record = await pb.collection('pages').getOne(page)
                 setOpenPageData(record)
+                SendPageChanges(page, record, true)
 
                 const editorjs = await initNewEditor(record)
                 Editor.current = editorjs
