@@ -39,50 +39,66 @@ export default function EditorV3({ currentPage, listedPageItems }) {
         //Check that there is a current page
         pageUpdaterDebounce.cancelAll()
 
+        async function RetriveOpenPageData(page) {
+            /**
+             * Uses the pocketbase js sdk to query the db for the record with the id `page`
+             * It then sets the state value with the returned record.
+             * This record contains all the data, title, owner, content, header images etc
+             */
+
+            try {
+                savingAllowed.current = false
+
+                if (Editor.current) {
+                    await Editor.current.destroy()
+                }
+
+                const record = await pb.collection('pages').getOne(page)
+                setOpenPageData(record)
+
+                const editorjs = await initNewEditor(record)
+                Editor.current = editorjs
+
+
+                function CheckRenderIsCorrect(editor, contentToMatch) {
+                    if (editor.blocks.getBlocksCount() !== contentToMatch.blocks.length) {
+                        return false
+                    } else {
+                        return true
+                    }
+                }
+
+                setPrevPageId(record.id)
+
+                savingAllowed.current = true
+                latestPageId.current = record.id
+
+                //It's now safe to allow typing
+                await editorjs.readOnly.toggle(isRecordReadOnly(record))
+
+            } catch {
+                Router.push("/page")
+            }
+        }
+
         if (currentPage) {
-            async function RetriveOpenPageData(page) {
-                /**
-                 * Uses the pocketbase js sdk to query the db for the record with the id `page`
-                 * It then sets the state value with the returned record.
-                 * This record contains all the data, title, owner, content, header images etc
-                 */
+            RetriveOpenPageData(currentPage)
+        }
 
-                try {
-                    savingAllowed.current = false
-
-                    if (Editor.current) {
-                        await Editor.current.destroy()
-                    }
-
-                    const record = await pb.collection('pages').getOne(page)
-                    setOpenPageData(record)
-
-                    const editorjs = await initNewEditor(record)
-                    Editor.current = editorjs
-
-
-                    function CheckRenderIsCorrect(editor, contentToMatch) {
-                        if (editor.blocks.getBlocksCount() !== contentToMatch.blocks.length) {
-                            return false
-                        } else {
-                            return true
-                        }
-                    }
-
-                    setPrevPageId(record.id)
-
-                    savingAllowed.current = true
-                    latestPageId.current = record.id
-
-                    //It's now safe to allow typing
-                    await editorjs.readOnly.toggle(isRecordReadOnly(record))
-
-                } catch {
-                    Router.push("/page")
+        var wakeUpWorker = new Worker("/workers/DetectWakeup.js");
+        wakeUpWorker.onmessage = function (ev) {
+            if (ev && ev.data === 'wakeup') {
+                // wakeup function here
+                if (currentPage) {
+                    //console.log("Wake up event")
+                    RetriveOpenPageData(currentPage)
                 }
             }
+        }
 
-            RetriveOpenPageData(currentPage)
+        return () => {
+            //console.log("term")
+            wakeUpWorker.terminate()
         }
 
     }, [currentPage])
