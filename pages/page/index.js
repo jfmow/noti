@@ -92,7 +92,7 @@ function NotionEditor() {
                         <NewPageModal pageId={query.p} />
                     ) : null}
                     {query.pm === "s" ? (
-                        <div className='bg-zinc-200 max-w-[35%] w-[800px] h-[100dvh] overflow-hidden'>
+                        <div id='hidemewhenprinting' className='bg-zinc-200 max-w-[35%] w-[800px] h-[100dvh] overflow-hidden'>
                             <PeekPageBlock pageId={query.p} />
                         </div>
                     ) : null}
