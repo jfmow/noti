@@ -358,7 +358,7 @@ export default function EditorV3({ currentPage, listedPageItems }) {
                             </Suspense>
                         </div>
                     </div>
-                    <div ref={EditorElement} className={`w-full px-8 text-[var(--editortext);]`} />
+                    <div ref={EditorElement} className={`w-full px-8 text-[var(--editortext);] print:text-[#000000]`} />
                 </div>
             </div>
         </>
