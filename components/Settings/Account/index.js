@@ -3,10 +3,10 @@ import { useSettingsPopoverContext } from "@/components/Settings"
 import Details from "@/components/Settings/Account/Details"
 import Pages from "@/components/Settings/Account/Pages"
 import DeleteAccount from "@/components/Settings/Account/Delete"
+import { Button } from "@/components/UI"
+import pb from "@/lib/pocketbase"
 
 export default function AccountTab() {
-
-    const { pb } = useSettingsPopoverContext()
 
     return (
         <div className="w-full h-full p-4 flex flex-col gap-4">
@@ -24,6 +24,7 @@ export default function AccountTab() {
             <Details />
             <Pages />
             <DeleteAccount />
+            <Button onClick={() => { pb.authStore.clear(); window.location.replace("/") }}>Logout</Button>
         </div>
     )
 }

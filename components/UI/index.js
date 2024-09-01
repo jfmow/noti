@@ -1,6 +1,7 @@
 import { Loader2, X } from "lucide-react";
 import { createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
+//TODO: Add invert to all
 
 export function TextInput({ ...props }) {
     props.className = "font-light bg-zinc-100 border border-zinc-300 rounded-md py-2 px-3 text-zinc-800 shadow-sm text-sm" + " " + props.className
@@ -31,18 +32,28 @@ export function NumberInput({ ...props }) {
     );
 }
 
-export function Button({ filled = false, ...props }) {
-    let className = "text-sm py-2 px-3 rounded-md border border-zinc-300 text-zinc-800 flex items-center justify-center cursor-pointer hover:bg-zinc-200 [&>svg]:text-zinc-800 [&>svg]:mr-1 [&>svg]:w-4 [&>svg]:h-4 " + props.className
+export function Button({ filled = false, inverted = false, loading = false, ...props }) {
+    let className
+    if (!inverted) {
+        className = "text-sm py-2 px-3 rounded-md border border-zinc-300 text-zinc-800 flex items-center justify-center cursor-pointer hover:bg-zinc-200 [&>svg]:text-zinc-800 [&>svg]:mr-1 [&>svg]:w-4 [&>svg]:h-4 " + props.className
+    } else {
+        className = "text-sm py-2 px-3 rounded-md border border-zinc-700 text-zinc-300 flex items-center justify-center cursor-pointer hover:bg-zinc-700 [&>svg]:text-zinc-300 [&>svg]:mr-1 [&>svg]:w-4 [&>svg]:h-4 " + props.className
+    }
     if (filled) {
-        className = "bg-zinc-100 " + className
+        if (!inverted) {
+            className = "bg-zinc-100 " + className
+        } else {
+            className = "bg-zinc-900 " + className
+        }
+
     }
     props.className = className
     return (
         <button {...props}>
-            {props.loading ? (
+            {loading ? (
                 <>
                     {"​"}
-                    <Loader2 className="mr-1 h-4 w-4 animate-spin" />
+                    <Loader2 className="h-4 w-4 animate-spin" style={{ margin: "unset !important" }} />
                     {"​"}
                 </>
             ) : (
