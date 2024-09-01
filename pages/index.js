@@ -42,7 +42,7 @@ export default function HomePageRedo() {
                     <img src="/home/easy-boximg-2.webp" className="shadow-md rounded-xl" />
                 </div>
                 <div className="h-[70vh] grid sm:grid-cols-2 items-center justify-items-center max-w-[1200px] mx-auto p-4">
-                    <div className="text-left text-balance ">
+                    <div className="text-center sm:text-left text-balance ">
                         <h2 className="text-4xl mb-2">Take notes anywhere</h2>
                         <p className="mb-2 ">Use Note on your phone, in the car, on the train, heck even in a <span className="bg-gradient-to-r from-red-600 to-orange-300 bg-clip-text text-transparent">plane</span>!</p>
                     </div>
