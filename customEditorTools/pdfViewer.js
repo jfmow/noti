@@ -52,15 +52,41 @@ export default function MyPdfViewer({ url, fileId }) {
 
   function handleZoomIn() {
     if (scaleRef.current < 4) {
+      const container = containerRef.current;
+
+      // Calculate the center of the viewport before zooming
+      const rect = container.getBoundingClientRect();
+      const viewportCenterY = container.scrollTop + rect.height / 2;
+
+      // Calculate the position of the center relative to the total scroll height
+      const centerRatio = viewportCenterY / container.scrollHeight;
+
+      // Increase the zoom level
       scaleRef.current = Math.min(scaleRef.current + 0.1, 4);
       setPageScale(scaleRef.current, +0.1);
+
+      // Adjust the scrollTop to keep the content centered
+      container.scrollTop = centerRatio * container.scrollHeight - rect.height / 2;
     }
   }
 
   function handleZoomOut() {
     if (scaleRef.current > 0.1) {
+      const container = containerRef.current;
+
+      // Calculate the center of the viewport before zooming
+      const rect = container.getBoundingClientRect();
+      const viewportCenterY = container.scrollTop + rect.height / 2;
+
+      // Calculate the position of the center relative to the total scroll height
+      const centerRatio = viewportCenterY / container.scrollHeight;
+
+      // Decrease the zoom level
       scaleRef.current = Math.max(scaleRef.current - 0.1, 0.1);
       setPageScale(scaleRef.current, -0.1);
+
+      // Adjust the scrollTop to keep the content centered
+      container.scrollTop = centerRatio * container.scrollHeight - rect.height / 2;
     }
   }
 
