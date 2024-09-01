@@ -178,9 +178,8 @@ function Navigation() {
 function Header() {
     return (
         <header className="h-screen flex items-center justify-center flex-col max-w-[1200px] mx-auto p-4">
-            <hero className="overflow-hidden">
-                <img alt="Preview of note, phone and desktop" className="object-contain max-h-[50vh]" src="/home/full-preview.webp" />
-            </hero>
+            <img alt="Preview of note, phone and desktop" className="object-contain max-h-[50vh] rounded-xl sm:shadow-xl" src="/home/full-preview.webp" />
+
             <div>
                 <h1 className="text-6xl text-balance text-center p-2 bg-gradient-to-r from-cyan-400 to-violet-700 bg-clip-text text-transparent">Write your notes,<br /> your way!</h1>
                 <div className="mt-4 grid sm:grid-cols-2 gap-2">
