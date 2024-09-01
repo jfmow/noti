@@ -2,8 +2,8 @@ import Loader from '@/components/Loader';
 import React, { Suspense, lazy, useContext, useEffect, useState } from 'react';
 import MenuBar from '@/components/editor/Menubar';
 import Router, { useRouter } from 'next/router';
-import PeekPageBlock from '@/lib/Modals/PeekPage';
-import NewPageModal from '@/lib/Modals/NewPage';
+import PeekPageBlock from '@/components/editor/Peeks/PeekPage';
+import NewPageModal from '@/components/editor/Peeks/NewPage';
 import UsersPages from '@/components/Pages List';
 import EnableWebsiteThemes from '@/lib/Themes';
 import pb from "@/lib/pocketbase"

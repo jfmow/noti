@@ -44,7 +44,7 @@ export default function SettingsPopover({ children }) {
                 {popoverOpen ? (
                     <>
                         {createPortal(
-                            <div onClick={() => setPopoverOpen(false)} className="overflow-hidden fixed z-[50] top-0 left-0 right-0 bottom-0 h-[100svh] w-full bg-zinc-800/20 backdrop-blur-sm flex items-center justify-center">
+                            <div onClick={() => setPopoverOpen(false)} className="overflow-hidden fixed z-[12] top-0 left-0 right-0 bottom-0 h-[100svh] w-full bg-zinc-800/20 backdrop-blur-sm flex items-center justify-center">
                                 <div onClick={(e) => e.stopPropagation()} className="w-[600px] h-[500px] bg-gray-100 mx-3 sm:mx-0 rounded-xl overflow-hidden shadow-lg flex p-1 animate-fade-up animate-once animate-duration-[350ms] animate-ease-in-out animate-normal animate-fill-both">
                                     {menuHidden ? (
                                         <>

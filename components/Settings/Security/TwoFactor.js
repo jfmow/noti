@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react"
-import { Button } from "@/components/UI";
+import { Button, Modal, ModalContent } from "@/components/UI";
 import { QrCode, SquareAsterisk } from "lucide-react";
 import pb from "@/lib/pocketbase";
 import { toaster } from "@/components/toast";
 import QRCodeComponent from "@/components/QRCode";
-import { Modal, ModalContent } from "@/lib/Modals/Modal";
 import { NumberInput } from "@/components/UI";
 export default function TwoFactorAuth() {
     const [enabled, setOTPState] = useState("loading")
@@ -99,33 +98,35 @@ export default function TwoFactorAuth() {
 
             </div>
             {twoFaUrl ? (
-                <Modal visibleDef={true}>
-                    <ModalContent>
-                        <div className="grid mb-2">
-                            <span className="font-medium text-sm text-zinc-600 flex items-center"><QrCode className="w-4 h-4 mr-1" />Scan to add to authenticator app</span>
-                            <p className="text-sm text-gray-500">This can only be viewed now and will not show up again!</p>
-                            <p className="text-sm text-gray-500">2FA codes are not required for OAuth sign-ins</p>
-                        </div>
-                        <div className="flex justify-center items-center py-2">
-                            <QRCodeComponent text={twoFaUrl.url} />
-                        </div>
-                        <div className="flex justify-between items-center">
+                <Modal defaultOpen={true}>
+                    <ModalContent width="">
+                        <div className="p-4">
                             <div className="grid mb-2">
-                                <span className="font-medium text-sm text-zinc-600 flex items-center">Or manualy copy setup link</span>
+                                <span className="font-medium text-sm text-zinc-600 flex items-center"><QrCode className="w-4 h-4 mr-1" />Scan to add to authenticator app</span>
+                                <p className="text-sm text-gray-500">This can only be viewed now and will not show up again!</p>
+                                <p className="text-sm text-gray-500">2FA codes are not required for OAuth sign-ins</p>
                             </div>
-                            <div className="flex flex-nowrap gap-2 items-center justify-center">
-                                <Button onClick={(e) => handleCopyTextToClipboard(twoFaUrl.secret, e)}>Copy</Button>
+                            <div className="flex justify-center items-center py-2">
+                                <QRCodeComponent text={twoFaUrl.url} />
                             </div>
-                        </div>
-                        <div className="grid grid-cols-1">
-                            <div className="grid mb-2">
-                                <span className="font-medium text-sm text-red-600 flex items-center">Verify code</span>
+                            <div className="flex justify-between items-center">
+                                <div className="grid mb-2">
+                                    <span className="font-medium text-sm text-zinc-600 flex items-center">Or manualy copy setup link</span>
+                                </div>
+                                <div className="flex flex-nowrap gap-2 items-center justify-center">
+                                    <Button onClick={(e) => handleCopyTextToClipboard(twoFaUrl.secret, e)}>Copy</Button>
+                                </div>
                             </div>
-                            <div>
-                                <form onSubmit={(e) => verify2FACode(e)} className="flex flex-nowrap gap-2 items-center justify-center">
-                                    <NumberInput className="w-full" name="code" placeholder={"Enter authenticator app code: e.g 123456"} />
-                                    <Button type="submit">Verify</Button>
-                                </form>
+                            <div className="grid grid-cols-1">
+                                <div className="grid mb-2">
+                                    <span className="font-medium text-sm text-red-600 flex items-center">Verify code</span>
+                                </div>
+                                <div>
+                                    <form onSubmit={(e) => verify2FACode(e)} className="flex flex-nowrap gap-2 items-center justify-center">
+                                        <NumberInput className="w-full" name="code" placeholder={"Enter authenticator app code: e.g 123456"} />
+                                        <Button type="submit">Verify</Button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </ModalContent>

@@ -117,7 +117,7 @@ export function ModalContent({ width = "normal", children }) {
     return (
         <>
             {createPortal(
-                <div onClick={CloseModal} className="fixed z-[11] top-0 left-0 right-0 bottom-0 w-full h-[100dvh] backdrop-blur-sm bg-zinc-800/20 flex items-center justify-center">
+                <div onClick={CloseModal} className="fixed z-[13] top-0 left-0 right-0 bottom-0 w-full h-[100dvh] backdrop-blur-sm bg-zinc-800/20 flex items-center justify-center">
                     <div onClick={(e) => e.stopPropagation()} className={className}>
                         <div className="fixed top-5 right-4 cursor-pointer" title="close" onClick={CloseModal}>
                             <X className="w-4 h-4  text-zinc-800" />
