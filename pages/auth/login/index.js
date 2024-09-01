@@ -4,6 +4,7 @@ import { toaster } from "@/components/toast";
 import Router from "next/router";
 import { useEffect, useState } from "react";
 import pb from "@/lib/pocketbase"
+import { Button, NumberInput, TextInput } from "@/components/UI";
 
 export default function Login() {
     const [loading, setLoading] = useState(false)
@@ -64,7 +65,7 @@ export default function Login() {
             toaster.info(`A code has been emailed to ${formData.get("email")}`)
             setCodeRequested(true)
             if (req["2fa"] === "required") {
-                toaster.info("Please enter your 2FA code in the next step!")
+                toaster.info("Please also enter your 2FA code in the next step!")
                 set2FARequired(true)
             }
         } catch (err) {
@@ -82,18 +83,18 @@ export default function Login() {
                     <div />
                     <LoginShortcutLink href={"/auth/signup"}>Signup</LoginShortcutLink>
                 </div>
-                <LoginInput defaultValue={defaultData?.email || ""} readonly={codeRequested} placeholder="Email | hi@example.com" type="email" name="email" required />
+                <TextInput className="w-full my-2" defaultValue={defaultData?.email || ""} readonly={codeRequested} placeholder="Email | hi@example.com" type="email" name="email" required />
                 {codeRequested ? (
                     <>
-                        <LoginInput defaultValue={defaultData?.code || ""} placeholder="Emailed code" name="token" required type="text" />
+                        <TextInput className="w-full mb-2" defaultValue={defaultData?.code || ""} placeholder="Emailed code" name="token" required type="text" />
                     </>
                 ) : null}
                 {codeRequested && twofaCodeRequired ? (
                     <>
-                        <LoginInput placeholder="2FA Code: e.g 123456" name="2fa" required type="number" minlength={6} />
+                        <NumberInput className="w-full mb-2" placeholder="2FA Code: e.g 123456" name="2fa" required type="number" minlength={6} />
                     </>
                 ) : null}
-                <LoginButton loading={loading}>{codeRequested ? "Login" : "Request magic link"}</LoginButton>
+                <Button className="w-full" filled loading={loading}>{codeRequested ? "Login" : "Request magic link"}</Button>
             </form>
             <OAuth2LoginButtons />
         </LoginPage>

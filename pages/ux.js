@@ -1,5 +1,5 @@
 import { MenuBarButton } from "@/components/editor/Menubar";
-import Icons from "@/components/editor/Page-cover-buttons/Icons-and-list-color/Icons";
+import Icons from "@/components/editor/Page-cover-buttons/Icons";
 import { Button, CheckBox, Modal, ModalContent, ModalHeader, ModalTrigger, NumberInput, TextInput } from "@/components/UI";
 import pb from "@/lib/pocketbase";
 import { DropDown, DropDownContainer, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from "@/lib/Pop-Cards/DropDown";

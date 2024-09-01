@@ -2,19 +2,12 @@ import OAuth2LoginButtons from "@/components/Auth/OAuth2/methods";
 import LoginPage, { LoginButton, LoginInput, LoginShortcutLink } from "@/components/Auth/login";
 import { toaster } from "@/components/toast";
 import Router from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import pb from "@/lib/pocketbase"
+import { Button, TextInput } from "@/components/UI";
 
 export default function Login() {
     const [loading, setLoading] = useState(false)
-
-    const [queryParams, setQueryParams] = useState(null)
-
-    useEffect(() => {
-        //TODO: Support plans -> ?plan=pro / ?plan=normal
-        const urlParams = new URLSearchParams(window.location.search)
-        setQueryParams(urlParams)
-    }, [])
 
     async function HandleForm(e) {
         e.preventDefault()
@@ -43,8 +36,8 @@ export default function Login() {
                     <div />
                     <LoginShortcutLink href={"/auth/login"}>Login</LoginShortcutLink>
                 </div>
-                <LoginInput placeholder="Email | hi@example.com" type="email" name="email" required />
-                <LoginButton loading={loading}>Continue</LoginButton>
+                <TextInput className="my-2 w-full" placeholder="Email | hi@example.com" type="email" name="email" required />
+                <Button filled className="w-full" loading={loading}>Continue</Button>
             </form>
             <OAuth2LoginButtons />
         </LoginPage>

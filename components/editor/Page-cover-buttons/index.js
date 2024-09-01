@@ -4,9 +4,9 @@ import { Paragraph } from "@/components/UI";
 import { PopUpTrigger, Popup, PopupContainer } from "@/lib/Pop-Cards/Popup";
 import { TabContent, TabGroup, TabMenu, TabMenuItem, TabsProvider, Tabtrigger } from "@/lib/Pop-Cards/Tabs";
 import Img from "@/components/editor/Page-cover-buttons/Cover-image/unsplash"
-import Icons from "@/components/editor/Page-cover-buttons/Icons-and-list-color/Icons"
+import Icons from "@/components/editor/Page-cover-buttons/Icons"
 import Gradient from '@/components/editor/Page-cover-buttons/Cover-image/gradient';
-import ColorSelector from '@/components/editor/Page-cover-buttons/Icons-and-list-color/ColorSelector';
+import ColorSelector from '@/components/editor/Page-cover-buttons/ColorSelector';
 import { SendPageChanges } from "@/lib/Page state manager";
 import { Paintbrush, Trash2, Waves } from "lucide-react";
 

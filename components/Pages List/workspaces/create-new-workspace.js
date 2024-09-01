@@ -1,4 +1,4 @@
-import Icons from "@/components/editor/Page-cover-buttons/Icons-and-list-color/Icons";
+import Icons from "@/components/editor/Page-cover-buttons/Icons";
 import { toaster } from "@/components/toast";
 import { Button, Modal, ModalContent, ModalHeader, ModalTrigger, TextInput } from "@/components/UI";
 import pb from "@/lib/pocketbase";

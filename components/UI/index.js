@@ -1,9 +1,9 @@
-import { X } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import { createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
 
 export function TextInput({ ...props }) {
-    props.className = "font-light bg-zinc-100 border border-zinc-300 rounded-md p-2 text-zinc-800 shadow-sm text-input" + " " + props.className
+    props.className = "font-light bg-zinc-100 border border-zinc-300 rounded-md py-2 px-3 text-zinc-800 shadow-sm text-sm" + " " + props.className
     return (
         <>
             <input {...props} />
@@ -31,10 +31,27 @@ export function NumberInput({ ...props }) {
     );
 }
 
-export function Button({ ...props }) {
-    props.className = "text-sm px-3 py-1 rounded border border-gray-300 text-zinc-800 flex items-center justify-center cursor-pointer hover:bg-gray-200 [&>svg]:text-zinc-800 [&>svg]:mr-1 [&>svg]:w-4 [&>svg]:h-4" + " " + props.className
+export function Button({ filled = false, ...props }) {
+    let className = "text-sm py-2 px-3 rounded-md border border-zinc-300 text-zinc-800 flex items-center justify-center cursor-pointer hover:bg-zinc-200 [&>svg]:text-zinc-800 [&>svg]:mr-1 [&>svg]:w-4 [&>svg]:h-4 " + props.className
+    if (filled) {
+        className = "bg-zinc-100 " + className
+    }
+    props.className = className
     return (
-        <button {...props}>{props.children}</button>
+        <button {...props}>
+            {props.loading ? (
+                <>
+                    {"​"}
+                    <Loader2 className="mr-1 h-4 w-4 animate-spin" />
+                    {"​"}
+                </>
+            ) : (
+                <>
+                    {props.children}
+                </>
+            )
+            }
+        </button>
     )
 }
 
