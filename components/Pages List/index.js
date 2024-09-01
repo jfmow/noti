@@ -3,7 +3,6 @@ import { useEditorContext } from '@/pages/page';
 import { useEffect, useState } from 'react';
 import { Plus, ChevronDown, ChevronRight } from 'lucide-react'
 import Router from 'next/router';
-import UserOptions from '@/components/user-info';
 import Loader from '@/components/Loader';
 import { ListenForAllPageChanges, SendPageChanges } from '@/lib/Page state manager';
 import { sortAndNestObjects } from './list-functions';
@@ -342,7 +341,7 @@ async function getPages(showArchivedPages = false) {
 
         return records
     } catch {
-        toaster.error("An error occured while fetching pages.")
+        toaster.error("An error occurred while fetching pages.")
         return []
     }
 }

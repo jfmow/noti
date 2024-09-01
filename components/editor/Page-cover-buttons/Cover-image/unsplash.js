@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import pb from "@/lib/pocketbase"
 import debounce from 'lodash/debounce';
 import Link from '@/components/Link';
 import { toaster } from '@/components/toast';
-import { Input } from '@/components/UX-Components';
+import { Button, TextInput } from '@/components/UI';
 import { SendPageChanges } from '@/lib/Page state manager';
 
 
@@ -72,23 +71,10 @@ export default function Unsplash({ page }) {
         }
     }
 
-    async function removeCover() {
-        const data = {
-            "unsplash": "",
-            "header_img": null
-        };
-
-        try {
-            SendPageChanges(page, data)
-        } catch (error) {
-            console.error('Error removing cover:', error);
-            // Handle the error, e.g., set an error state or show an error message
-        }
-    }
-
     return (
         <>
-            <Input
+            <TextInput
+                className="w-full mb-2"
                 placeholder="Search for an image..."
                 onKeyDown={(e) => {
                     if (e.key === 'Enter') {
@@ -116,15 +102,12 @@ export default function Unsplash({ page }) {
                 ))}
             </div>
             <div className="flex items-center justify-center gap-3 w-full mt-4">
-                <button className="rounded flex items-center justify-center px-3 py-1 aspect-[3/1] bg-zinc-800 text-zinc-50 cursor-pointer hover:bg-zinc-900 text-[14px] font-[300] disabled:bg-red-500 disabled:opacity-45" type="button" onClick={() => setPageNumber((prev) => prev - 1)} disabled={currentPageNumber <= 1}>
+                <Button type="button" onClick={() => setPageNumber((prev) => prev - 1)} disabled={currentPageNumber <= 1}>
                     Back
-                </button>
-                <button className="rounded flex items-center justify-center px-3 py-1 aspect-[3/1] bg-zinc-800 text-zinc-50 cursor-pointer hover:bg-zinc-900 text-[14px] font-[300] disabled:bg-red-500 disabled:opacity-45" type="button" onClick={() => setPageNumber((prev) => prev + 1)} disabled={currentPageNumber >= totalPages || totalPages === -1}>
+                </Button>
+                <Button type="button" onClick={() => setPageNumber((prev) => prev + 1)} disabled={currentPageNumber >= totalPages || totalPages === -1}>
                     Next
-                </button>
-                <button className="rounded flex items-center justify-center px-3 py-1 aspect-[3/1] bg-zinc-800 text-zinc-50 cursor-pointer hover:bg-zinc-900 text-[14px] font-[300] disabled:bg-red-500 disabled:opacity-45" type="button" onClick={() => removeCover()}>
-                    Remove cover
-                </button>
+                </Button>
             </div>
         </>
     );

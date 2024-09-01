@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button } from "..";
+import { Button } from "@/components/UI";
 import { GetThemes } from "@/lib/Themes";
 
 export default function ThemesList() {

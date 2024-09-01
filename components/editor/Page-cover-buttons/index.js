@@ -1,7 +1,6 @@
-import { ToolTip, ToolTipCon, ToolTipTrigger } from "@/components/UX-Components/Tooltip";
-import { useEditorContext } from "@/pages/page";
+import { ToolTip, ToolTipCon, ToolTipTrigger } from "@/components/UI/Tooltip";
 import { DropDown, DropDownContainer, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from "@/lib/Pop-Cards/DropDown";
-import { Paragraph } from "@/components/UX-Components";
+import { Paragraph } from "@/components/UI";
 import { PopUpTrigger, Popup, PopupContainer } from "@/lib/Pop-Cards/Popup";
 import { TabContent, TabGroup, TabMenu, TabMenuItem, TabsProvider, Tabtrigger } from "@/lib/Pop-Cards/Tabs";
 import Img from "@/components/editor/Page-cover-buttons/Cover-image/unsplash"
@@ -9,9 +8,9 @@ import Icons from "@/components/editor/Page-cover-buttons/Icons-and-list-color/I
 import Gradient from '@/components/editor/Page-cover-buttons/Cover-image/gradient';
 import ColorSelector from '@/components/editor/Page-cover-buttons/Icons-and-list-color/ColorSelector';
 import { SendPageChanges } from "@/lib/Page state manager";
+import { Paintbrush, Trash2, Waves } from "lucide-react";
 
 export default function MenuButtons({ currentPage }) {
-    const { pb } = useEditorContext()
 
     async function updateIcon(newIcon = '') {
         if (!newIcon) {
@@ -32,6 +31,20 @@ export default function MenuButtons({ currentPage }) {
             SendPageChanges(currentPage, { color: newColor })
         } catch {
             return new Error('An error occured while updating page color')
+        }
+    }
+
+    async function removePageCover() {
+        const data = {
+            "unsplash": "",
+            "header_img": null
+        };
+
+        try {
+            SendPageChanges(currentPage, data)
+        } catch (error) {
+            console.error('Error removing cover:', error);
+            // Handle the error, e.g., set an error state or show an error message
         }
     }
 
@@ -76,7 +89,7 @@ export default function MenuButtons({ currentPage }) {
                             <PopupContainer>
                                 <PopUpTrigger >
                                     <DropDownItem>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-paintbrush-2"><path d="M14 19.9V16h3a2 2 0 0 0 2-2v-2H5v2c0 1.1.9 2 2 2h3v3.9a2 2 0 1 0 4 0Z" /><path d="M6 12V2h12v10" /><path d="M14 2v4" /><path d="M10 2v2" /></svg>
+                                        <Waves />
                                         <p>Gradient</p>
                                     </DropDownItem>
                                 </PopUpTrigger>
@@ -85,10 +98,13 @@ export default function MenuButtons({ currentPage }) {
                                     <Paragraph>
                                         Choose a gradient cover for your page
                                     </Paragraph>
-                                    <Gradient page={currentPage} pb={pb} />
+                                    <Gradient page={currentPage} />
                                 </Popup>
                             </PopupContainer>
-
+                            <DropDownItem onClick={() => removePageCover()}>
+                                <Trash2 />
+                                Remove Cover
+                            </DropDownItem>
 
 
                         </DropDownSection>

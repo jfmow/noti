@@ -1,4 +1,4 @@
-import { Button } from "@/components/Settings"
+import { Button } from "@/components/UI"
 import { useEditorContext } from "@/pages/page"
 export default function Pages() {
     const { setShowArchivedPages } = useEditorContext()

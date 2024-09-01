@@ -1,5 +1,6 @@
-import { Button, useSettingsPopoverContext } from "@/components/Settings"
+import { useSettingsPopoverContext } from "@/components/Settings"
 import { toaster } from "@/components/toast"
+import { Button } from "@/components/UI"
 import pb from "@/lib/pocketbase"
 export default function Details() {
     const { rerenderPage } = useSettingsPopoverContext()

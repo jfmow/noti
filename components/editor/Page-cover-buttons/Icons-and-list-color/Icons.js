@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import emojis from 'emoji-datasource-twitter';
 import { PopUpCardsGlobalButton } from "@/lib/Pop-Cards/Popup";
-import { Input } from "@/components/UX-Components";
+import { TextInput } from "@/components/UI";
 
 export default function Icons({ Select, Selected, Close }) {
     const [searchTerm, setSearchTerm] = useState('');
@@ -51,15 +51,11 @@ export default function Icons({ Select, Selected, Close }) {
 
     return (
         <>
-            <Input
+            <TextInput
                 type="text"
                 placeholder="Search for a emoji"
-                onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                        debouncedSearch();
-                    }
-                }}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full my-2"
             />
             <div className="flex items-center flex-wrap gap-2 mb-1">
                 <button
@@ -95,10 +91,10 @@ export default function Icons({ Select, Selected, Close }) {
                             return (
                                 <div
                                     key={emoji.unified}
-                                    className="p-1 cursor-pointer m-[-5px]"
                                     style={{ transform: 'scale(0.8)' }}
                                     onClick={() => setNewIcon(emoji)}
                                     title={emoji.short_name}
+                                    className={((Selected === emoji || Selected === emoji.image) ? "bg-red-300 rounded-md" : "") + " p-1 cursor-pointer m-[-5px]"}
                                 >
                                     <img
                                         loading={index > 250 ? "lazy" : "eager"}

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
-import { Button } from "@/components/Settings";
-import { Camera, QrCode, SquareAsterisk } from "lucide-react";
+import { Button } from "@/components/UI";
+import { QrCode, SquareAsterisk } from "lucide-react";
 import pb from "@/lib/pocketbase";
 import { toaster } from "@/components/toast";
 import QRCodeComponent from "@/components/QRCode";
 import { Modal, ModalContent } from "@/lib/Modals/Modal";
-import { Input } from "@/components/UX-Components";
+import { NumberInput } from "@/components/UI";
 export default function TwoFactorAuth() {
     const [enabled, setOTPState] = useState("loading")
     const [twoFaUrl, set2faUrl] = useState("")
@@ -89,11 +89,11 @@ export default function TwoFactorAuth() {
                 </div>
 
                 <Button disabled={enabled === "loading" ? true : false} onClick={() => toggle2FAState(enabled)}>
-{enabled === "loading" ? ("Loading"):(<>
-     {enabled ? ("Disable") : ("Enable")}
-    </>)}
+                    {enabled === "loading" ? ("Loading") : (<>
+                        {enabled ? ("Disable") : ("Enable")}
+                    </>)}
 
-                   
+
                 </Button>
 
 
@@ -123,7 +123,7 @@ export default function TwoFactorAuth() {
                             </div>
                             <div>
                                 <form onSubmit={(e) => verify2FACode(e)} className="flex flex-nowrap gap-2 items-center justify-center">
-                                    <Input name="code" placeholder={"Enter authenticator app code: e.g 123456"} />
+                                    <NumberInput className="w-full" name="code" placeholder={"Enter authenticator app code: e.g 123456"} />
                                     <Button type="submit">Verify</Button>
                                 </form>
                             </div>

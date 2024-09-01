@@ -1,4 +1,4 @@
-import { Button } from "@/components/Settings"
+import { Button } from "@/components/UI"
 import { toaster } from "@/components/toast"
 import pb from "@/lib/pocketbase"
 export default function DeleteAccount() {

@@ -66,7 +66,9 @@ module.exports = {
         'homesecondary': '#a178f0',
         'homeaccent': '#a54ceb',
       },
-
+      fontSize: {
+        input: '14px',
+      }
 
     },
   },

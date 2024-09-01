@@ -1,5 +1,6 @@
-import { Button, useSettingsPopoverContext } from "@/components/Settings";
+import { useSettingsPopoverContext } from "@/components/Settings";
 import { toaster } from "@/components/toast";
+import { Button } from "@/components/UI";
 import { Github, Skull } from "lucide-react"
 import { useEffect, useState } from "react";
 export default function OAuth() {

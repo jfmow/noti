@@ -1,5 +1,5 @@
 import Link from "@/components/Link"
-import { ToolTip, ToolTipCon, ToolTipTrigger } from "@/components/UX-Components/Tooltip"
+import { ToolTip, ToolTipCon, ToolTipTrigger } from "@/components/UI/Tooltip"
 import { toaster } from "@/components/toast"
 import { ArrowLeft, LinkIcon, Loader2, Unlink } from "lucide-react"
 import { useRouter } from "next/router"

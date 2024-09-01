@@ -1,6 +1,4 @@
-import { PopUpCardsGlobalButton } from '@/lib/Pop-Cards/Popup';
 import React from 'react';
-import { useState } from 'react';
 
 const colors = [
     '#FF00001a', // Red with opacity 1a
@@ -80,33 +78,10 @@ const colors = [
 
 
 const ColorSelector = ({ onSelectColor, page, close }) => {
-    const [colorsWithBackground, setColorsWithBackground] = useState([]);
-
-    // Function to generate random backgrounds for the colors
-    const generateRandomBackgrounds = () => {
-        const updatedColors = colors.map((color) => {
-            const width = 32 + Math.random() * 41;
-            const bg = color;
-            const linbg = `linear-gradient(45deg, ${color} ${width}%, transparent ${100 - width}%)`;
-            return {
-                color: color,
-                background: bg,
-                linearbg: linbg
-            };
-        });
-        setColorsWithBackground(updatedColors);
-    };
-
-
-    // Initial generation of random backgrounds when the component mounts
-    useState(() => {
-        generateRandomBackgrounds();
-    }, []);
-
     return (
         <>
             <div style={{ height: '100%', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly' }}>
-                {colorsWithBackground.map((colorObj, index) => {
+                {colors.map((color, index) => {
                     return (
                         <>
                             <div
@@ -114,28 +89,16 @@ const ColorSelector = ({ onSelectColor, page, close }) => {
                                 style={{
                                     width: '50px',
                                     height: '50px',
-                                    background: colorObj.background,
+                                    background: color,
                                     margin: '10px',
                                     cursor: 'pointer',
                                 }}
-                                onClick={() => onSelectColor(colorObj.background, page)}
-                            />
-                            <div
-                                key={index + 'lin'}
-                                style={{
-                                    width: '50px',
-                                    height: '50px',
-                                    background: colorObj.linearbg,
-                                    margin: '10px',
-                                    cursor: 'pointer',
-                                }}
-                                onClick={() => onSelectColor(colorObj.linearbg, page)}
+                                onClick={() => onSelectColor(color, page)}
                             />
                         </>
                     );
                 })}
             </div>
-            <PopUpCardsGlobalButton style={{ width: '100%', margin: '5px' }} click={generateRandomBackgrounds}>Refresh gradients</PopUpCardsGlobalButton>
         </>
     );
 };
