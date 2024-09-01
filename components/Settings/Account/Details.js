@@ -57,22 +57,12 @@ export default function Details() {
 
     return (
         <div className="grid p-1 gap-4">
-            <div className="flex justify-between items-center">
-                <div className="grid">
-                    <span className="font-medium text-xs text-zinc-600">Email</span>
-                    <span className="font-medium text-sm">{pb.authStore.model.email}</span>
-                </div>
+            <div className="grid grid-cols-2 gap-2">
                 <Button onClick={handleChangeEmail}>
-                    Change
+                    Change email
                 </Button>
-            </div>
-            <div className="flex justify-between items-center">
-                <div className="grid">
-                    <span className="font-medium text-xs text-zinc-600">Username</span>
-                    <span className="font-medium text-sm">{pb.authStore.model.username}</span>
-                </div>
                 <Button onClick={handleChangeUsername}>
-                    Change
+                    Change username
                 </Button>
             </div>
             <div className="border-t pt-2">
