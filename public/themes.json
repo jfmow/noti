@@ -60,6 +60,19 @@
         }
     },
     {
+        "id": "Orange_chocolate",
+        "display_name": "Orange Chocolate",
+        "color": "#716151",
+        "data": {
+            "--background": "#3a322a",
+            "--editortext": "#fff3e7",
+            "--pageListItemHover": "#716151",
+            "--pageListItemTextIconBackgroundHover": "#665849",
+            "--pageListItemHover_drag": "#ff7777",
+            "--pageListItemTextIcon": "#fff3e7",
+        }
+    },
+    {
         "id": "pink",
         "display_name": "Pink",
         "color": "#fff7f9",
