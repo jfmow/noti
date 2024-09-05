@@ -69,7 +69,7 @@
             "--pageListItemHover": "#716151",
             "--pageListItemTextIconBackgroundHover": "#665849",
             "--pageListItemHover_drag": "#ff7777",
-            "--pageListItemTextIcon": "#fff3e7",
+            "--pageListItemTextIcon": "#fff3e7"
         }
     },
     {
