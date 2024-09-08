@@ -8,7 +8,7 @@ export default function PeekPageBlock({ pageId }) {
     return (
         <>
             <>
-                <div id="hidemewhenprinting" onClick={() => Router.push(window.location.pathname)} className="flex items-center justify-center w-full h-screen">
+                <div onClick={() => Router.push(window.location.pathname)} className="print:hidden print:collapse flex items-center justify-center w-full h-screen">
                     <div onClick={(e) => e.stopPropagation()} className="relative w-full bg-[var(--background)] h-full overflow-hidden">
                         <div className="overflow-x-hidden w-full h-[40px] min-h-[40px] max-h-[40px] z-[3] pl-2 pr-2 flex justify-between items-center bg-zinc-50 overflow-y-hidden">
                             <div></div>

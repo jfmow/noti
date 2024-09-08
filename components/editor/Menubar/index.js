@@ -41,7 +41,7 @@ export default function MenuBar({ sidebarstate, currentPageData, currentPage, li
     return (
         <>
 
-            <div id="hidemewhenprinting" className="overflow-x-hidden w-full h-[40px] min-h-[40px] max-h-[40px] z-[3] pl-2 pr-2 flex justify-between items-center bg-zinc-50 overflow-y-hidden">
+            <div className="print:hidden print:collapse fixed top-0 left-0 right-0  z-[5] overflow-x-hidden w-full h-[40px] min-h-[40px] max-h-[40px] z-[3] pl-2 pr-2 flex justify-between items-center bg-zinc-50 overflow-y-hidden">
                 {!unauthed ? (
                     <>
                         <UserOptions />

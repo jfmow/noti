@@ -291,17 +291,12 @@ a {
     --boxshadow_primary: #f3f3f39e !important;
   }
 
-  #hidemewhenprinting {
-    display: none !important;
-  }
-
   #vanishmewhenprinting {
     visibility: hidden !important;
   }
 
   *:not(#dontchangemewhenprinting) {
     overflow: visible !important;
-
   }
 
   body {

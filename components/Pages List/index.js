@@ -7,20 +7,15 @@ import Loader from '@/components/Loader';
 import { ListenForAllPageChanges, SendPageChanges } from '@/lib/Page state manager';
 import { sortAndNestObjects } from './list-functions';
 import pb from "@/lib/pocketbase"
-
-//TODO: add back DnD
+import isMobileScreen from '@/lib/ismobile';
 
 export default function UsersPages() {
-    const [defaultWidth, setDefaultWidth] = useState(260)
     const [loading, setLoading] = useState(true)
     const { showArchivedPages, listedPageItems, setListedPageItems, visible } = useEditorContext()
 
     useEffect(() => {
         async function run() {
             setLoading(true)
-            if (window.innerWidth < 640) {
-                setDefaultWidth("full")
-            }
             const pages = await getPages(showArchivedPages)
             setListedPageItems(pages)
             setLoading(false)
@@ -51,9 +46,17 @@ export default function UsersPages() {
         run()
     }, [showArchivedPages])
 
+    const defaultStyles = " print:hidden print:collapse bg-[var(--background)] pt-[40px] flex-col overflow-x-hidden overflow-y-scroll "
+    const mobile = ` w-[100vw] h-[100svh] fixed top-0 left-0 right-0 bottom-0 z-[2] ${visible ? "flex" : "hidden"} `
+    const desktopStyles = ` w-[260px] relative [h-100dvh] ${visible ? "animate-slideout" : "animate-slidein"} `
+
     return (
         <>
-            <div id="hidemewhenprinting" style={defaultWidth === "full" ? { width: "100vw", position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 2, height: "100svh", display: visible ? "flex" : "none" } : { width: defaultWidth + "px", height: "fit-content", minHeight: "50vh", maxHeight: "90dvh" }} className={`bg-[var(--background)] shadow-lg pt-[40px] fixed z-[2] flex-col rounded-br-xl overflow-x-hidden overflow-y-scroll ${defaultWidth === "full" ? "" : (visible ? "animate-slideout" : "animate-slidein")}`}>
+            <div
+
+                className={defaultStyles + (isMobileScreen() ? mobile : desktopStyles)}>
+
+
                 {loading ? (
                     <Loader />
                 ) : (

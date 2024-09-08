@@ -8,6 +8,7 @@ import UsersPages from '@/components/Pages List';
 import EnableWebsiteThemes from '@/lib/Themes';
 import pb from "@/lib/pocketbase"
 import { findPageListPage } from '@/components/Pages List/list-functions';
+import isMobileScreen from '@/lib/ismobile';
 
 const EditorContext = React.createContext();
 const Editor = lazy(() => import('../../components/editor/Editor'));
@@ -77,10 +78,11 @@ function NotionEditor() {
     return (
         <EditorContext.Provider value={{ showArchivedPages, setShowArchivedPages, listedPageItems, setListedPageItems, visible, setVisible, currentPage: pageId, pageId, listedPageItemsFilter, setListedPageItemsFilters, setPrimaryVisiblePageData, primaryVisiblePageData }}>
             <div>
-                <div className='flex flex-col sm:flex-row'>
+                <div className='flex flex-row'>
+                    <MenuBar sidebarstate={visible} listedPageItems={listedPageItems} currentPage={pageId} currentPageData={findPageListPage(pageId, listedPageItems)} />
+
                     <UsersPages />
-                    <div style={{ flex: '1 1 0%', position: 'relative', display: 'flex', height: '100dvh', flexDirection: 'column', overflowX: 'hidden' }}>
-                        <MenuBar sidebarstate={visible} listedPageItems={listedPageItems} currentPage={pageId} currentPageData={findPageListPage(pageId, listedPageItems)} />
+                    <div className={`flex flex-col relative h-[100dvh] overflow-x-hidden flex-1 pt-[40px] print:pt-[0px] bg-[var(--background)] ${isMobileScreen() && visible ? "pointer-events-none select-none" : ""}`}>
 
                         {pageId && listedPageItems && listedPageItems.length >= 1 !== "" ? (
                             <Suspense fallback={<></>}>
@@ -92,7 +94,7 @@ function NotionEditor() {
                         <NewPageModal pageId={query.p} />
                     ) : null}
                     {query.pm === "s" ? (
-                        <div id='hidemewhenprinting' className='bg-zinc-200 max-w-[35%] w-[800px] h-[100dvh] overflow-hidden'>
+                        <div className='print:hidden print:collapse bg-zinc-200 max-w-[35%] w-[800px] h-[100dvh] overflow-hidden'>
                             <PeekPageBlock pageId={query.p} />
                         </div>
                     ) : null}
