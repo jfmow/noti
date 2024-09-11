@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { toaster } from '@/components/toast';
 import { ToolTip, ToolTipCon, ToolTipTrigger } from '@/components/UI/Tooltip';
 import { DropDown, DropDownContainer, DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from '@/lib/Pop-Cards/DropDown';
-import { CalendarDays, CircleUser, TextSelect, BookDashed, Pencil, Share2, PartyPopper, Archive, ArchiveRestore, Baseline, CaseLower, Copy, Eye, EyeOff, Info, PanelRightDashed, Settings2, Share, Space, Trash2Icon, WholeWord, Settings, PanelRight, Paintbrush, Printer, Glasses, Folder } from 'lucide-react';
+import { CalendarDays, CircleUser, TextSelect, BookDashed, Pencil, Share2, PartyPopper, Archive, ArchiveRestore, Baseline, CaseLower, Copy, Eye, EyeOff, Info, PanelRightDashed, Settings2, Share, Space, Trash2Icon, WholeWord, Settings, PanelRight, Paintbrush, Printer, Glasses, Folder, Fullscreen, X, PanelRightClose } from 'lucide-react';
 import { CountCharacters, CountWords } from './helpers';
 import { SendPageChanges } from '@/lib/Page state manager';
 import { findPageListPage } from '@/components/Pages List/list-functions';
@@ -25,7 +25,7 @@ export function MenuBarButton({ ...props }) {
     )
 }
 
-export default function MenuBar({ sidebarstate, currentPageData, currentPage, listedPageItems, unauthed = false }) {
+export default function MenuBar({ sidebarstate, currentPageData, currentPage, listedPageItems, unauthed = false, peekPageOpen = false }) {
 
     if (!listedPageItems || !currentPage || !currentPageData) {
         return <></>
@@ -75,6 +75,46 @@ export default function MenuBar({ sidebarstate, currentPageData, currentPage, li
                     ) : null}
 
                 </div>
+
+
+
+                {peekPageOpen ? (
+                    <div className='max-w-[35vw] w-[800px] h-full -mr-2 pr-2 shrink-0 flex items-center justify-end gap-1'>
+                        <ToolTipCon>
+                            <ToolTipTrigger>
+                                <MenuBarButton onClick={() => {
+                                    const queryParams = new URLSearchParams(window.location.search)
+                                    const page = queryParams.get("p")
+                                    queryParams.set("edit", page)
+                                    queryParams.delete("pm")
+                                    queryParams.delete("p")
+                                    window.location.replace(`/page?${queryParams.toString()}`)
+                                }} type="button">
+                                    <Fullscreen />
+                                </MenuBarButton>
+                            </ToolTipTrigger>
+                            <ToolTip>
+                                Fullscreen
+                            </ToolTip>
+                        </ToolTipCon>
+                        <ToolTipCon>
+                            <ToolTipTrigger>
+                                <MenuBarButton onClick={() => {
+                                    const queryParams = new URLSearchParams(window.location.search)
+                                    queryParams.delete("pm")
+                                    queryParams.delete("p")
+                                    window.location.replace(`/page?${queryParams.toString()}`)
+                                }}>
+                                    <PanelRightClose />
+                                </MenuBarButton>
+                            </ToolTipTrigger>
+                            <ToolTip>
+                                Close
+                            </ToolTip>
+                        </ToolTipCon>
+                    </div>
+                ) : null}
+
             </div>
 
         </>

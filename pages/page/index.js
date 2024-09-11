@@ -79,11 +79,10 @@ function NotionEditor() {
         <EditorContext.Provider value={{ showArchivedPages, setShowArchivedPages, listedPageItems, setListedPageItems, visible, setVisible, currentPage: pageId, pageId, listedPageItemsFilter, setListedPageItemsFilters, setPrimaryVisiblePageData, primaryVisiblePageData }}>
             <div>
                 <div className='flex flex-row'>
-                    <MenuBar sidebarstate={visible} listedPageItems={listedPageItems} currentPage={pageId} currentPageData={findPageListPage(pageId, listedPageItems)} />
+                    <MenuBar peekPageOpen={query.pm === "s"} sidebarstate={visible} listedPageItems={listedPageItems} currentPage={pageId} currentPageData={findPageListPage(pageId, listedPageItems)} />
 
                     <UsersPages />
                     <div className={`flex flex-col relative h-[100dvh] overflow-x-hidden flex-1 pt-[40px] print:pt-[0px] bg-[var(--background)] ${isMobileScreen() && visible ? "pointer-events-none select-none" : ""}`}>
-
                         {pageId && listedPageItems && listedPageItems.length >= 1 !== "" ? (
                             <Suspense fallback={<></>}>
                                 <Editor currentPage={pageId} page={pageId} listedPageItems={listedPageItems} />
@@ -94,7 +93,7 @@ function NotionEditor() {
                         <NewPageModal pageId={query.p} />
                     ) : null}
                     {query.pm === "s" ? (
-                        <div className='print:hidden print:collapse bg-zinc-200 max-w-[35%] w-[800px] h-[100dvh] overflow-hidden'>
+                        <div className='shrink-0 print:hidden print:collapse bg-zinc-200 max-w-[35vw] w-[800px] h-[100dvh] overflow-hidden'>
                             <PeekPageBlock pageId={query.p} />
                         </div>
                     ) : null}
