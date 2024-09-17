@@ -128,7 +128,7 @@ export function ModalContent({ width = "normal", children }) {
     return (
         <>
             {createPortal(
-                <div onClick={CloseModal} className="fixed z-[13] top-0 left-0 right-0 bottom-0 w-full h-[100dvh] backdrop-blur-sm bg-zinc-800/20 flex items-center justify-center">
+                <div onClick={CloseModal} className="fixed z-[100] top-0 left-0 right-0 bottom-0 w-full h-[100dvh] backdrop-blur-sm bg-zinc-800/20 flex items-center justify-center">
                     <div onClick={(e) => e.stopPropagation()} className={className}>
                         <div className="fixed top-5 right-4 cursor-pointer" title="close" onClick={CloseModal}>
                             <X className="w-4 h-4  text-zinc-800" />
@@ -144,7 +144,7 @@ export function ModalContent({ width = "normal", children }) {
 }
 
 export function ModalHeader({ ...props }) {
-    props.className = "w-full p-2 border-b mb-2" + " " + props.className
+    props.className = "w-full p-4 border-b mb-2" + " " + props.className
     return (
         <div {...props}>
             <h3 className="text-md w-full mb-1 text-zinc-800">{props.children}</h3>

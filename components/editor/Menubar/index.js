@@ -3,12 +3,13 @@ import { useEffect, useState } from 'react';
 import { toaster } from '@/components/toast';
 import { ToolTip, ToolTipCon, ToolTipTrigger } from '@/components/UI/Tooltip';
 import { DropDown, DropDownContainer, DropDownExtension, DropDownExtensionContainer, DropDownExtensionTrigger, DropDownItem, DropDownSection, DropDownSectionTitle, DropDownTrigger } from '@/lib/Pop-Cards/DropDown';
-import { CalendarDays, CircleUser, TextSelect, BookDashed, Pencil, Share2, PartyPopper, Archive, ArchiveRestore, Baseline, CaseLower, Copy, Eye, EyeOff, Info, PanelRightDashed, Settings2, Share, Space, Trash2Icon, WholeWord, Settings, PanelRight, Paintbrush, Printer, Glasses, Folder, Fullscreen, X, PanelRightClose } from 'lucide-react';
+import { CalendarDays, CircleUser, TextSelect, BookDashed, Pencil, Share2, PartyPopper, Archive, ArchiveRestore, Baseline, CaseLower, Copy, Eye, EyeOff, Info, PanelRightDashed, Settings2, Share, Space, Trash2Icon, WholeWord, Settings, PanelRight, Paintbrush, Printer, Glasses, Folder, Fullscreen, X, PanelRightClose, Trash } from 'lucide-react';
 import { CountCharacters, CountWords } from './helpers';
 import { SendPageChanges } from '@/lib/Page state manager';
 import { findPageListPage } from '@/components/Pages List/list-functions';
 import pb from '@/lib/pocketbase';
 import UserOptions from '@/components/user-info';
+import { Button, Modal, ModalContent, ModalHeader, ModalTrigger, Paragraph } from '@/components/UI';
 
 export function MenuBarButton({ ...props }) {
     if (props.type === "button") {
@@ -533,12 +534,30 @@ function DropDownMenu({ currentPageData, listedPageItems, currentPage }) {
                                             Duplicate
 
                                         </DropDownItem>
-                                        <DropDownItem
-                                            onClick={() => handleDeletePage()} >
-                                            <Trash2Icon />
-                                            Delete
+                                        <Modal>
+                                            <ModalTrigger asChild>
+                                                <DropDownItem>
+                                                    <Trash2Icon />
+                                                    Delete
+                                                </DropDownItem>
+                                            </ModalTrigger>
+                                            <ModalContent width='small'>
+                                                <ModalHeader>
+                                                    Delete page
+                                                </ModalHeader>
+                                                <div className='p-4 grid items-center gap-4'>
+                                                    <Paragraph>
+                                                        This will completely remove the page and it will be unrecoverable.
+                                                        <br />
+                                                        There is no grace period for recovery!
+                                                    </Paragraph>
+                                                    <Button filled inverted onClick={() => handleDeletePage()} >
+                                                        <Trash /> Delete
+                                                    </Button>
+                                                </div>
 
-                                        </DropDownItem>
+                                            </ModalContent>
+                                        </Modal>
                                     </DropDownSection>
                                 </DropDownExtension>
                             </DropDownExtensionContainer>
