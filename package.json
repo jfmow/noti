@@ -37,7 +37,7 @@
     "framer-motion": "^10.12.16",
     "lodash": "^4.17.21",
     "lucide-react": "^0.416.0",
-    "next": "14.2.10",
+    "next": "14.2.15",
     "pocketbase": "^0.16.0",
     "qrcode": "^1.5.3",
     "react": "18.2.0",
