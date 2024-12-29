@@ -46,7 +46,7 @@ export default function UsersPages() {
         run()
     }, [showArchivedPages])
 
-    const defaultStyles = " print:hidden print:collapse bg-[var(--background)] pt-[40px] flex-col overflow-x-hidden overflow-y-scroll "
+    const defaultStyles = " print:hidden print:collapse print:w-[0_!important] bg-[var(--background)] pt-[40px] flex-col overflow-x-hidden overflow-y-scroll "
     const mobile = ` w-[100vw] h-[100svh] fixed top-0 left-0 right-0 bottom-0 z-[2] ${visible ? "flex" : "hidden"} `
     const desktopStyles = ` w-[260px] relative h-[100dvh] ${visible ? "animate-slideout" : "animate-slidein"} `
 
