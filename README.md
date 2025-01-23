@@ -13,3 +13,4 @@ Online note editor for work & school
 Read the docs folder :)
 
 Start at introduction.md  
+ 
